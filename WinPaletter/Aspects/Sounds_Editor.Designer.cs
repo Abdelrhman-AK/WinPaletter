@@ -992,6 +992,7 @@ namespace WinPaletter
             // titlebarExtender1
             // 
             this.titlebarExtender1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
+            this.titlebarExtender1.ForeColor = System.Drawing.Color.White;
             this.titlebarExtender1.Size = new System.Drawing.Size(874, 52);
             // 
             // BackgroundWorker1
@@ -13126,6 +13127,7 @@ namespace WinPaletter
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.CanGeneratePalette = true;
             this.ClientSize = new System.Drawing.Size(874, 666);
             this.Controls.Add(this.button347);
             this.Controls.Add(this.alertBox1);

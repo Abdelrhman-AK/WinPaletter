@@ -1,26 +1,74 @@
 ﻿using Octokit;
 using Serilog.Events;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography;
-using System.Security.Policy;
-using System.Text;
+using System.Media;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WinPaletter.TypesExtensions;
+using static System.Windows.Forms.ListView;
 
 namespace WinPaletter.GitHub
 {
     public static partial class FileSystem
     {
+        #region Fields
+
+        private static UI.WP.ContextMenuStrip contextMenu_all = new();
+        private static UI.WP.ContextMenuStrip contextMenu_item = new();
+        private static List<ListViewItem> cutItems;
+        private static List<ListViewItem> copiedItems;
+        private static ListViewItem itemBeingEdited;
+        private static CancellationTokenSource cts = new();
+        private static SoundPlayer SP = new();
+        private static bool AltPlayingMethod = false;
+
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets the current repository path being viewed.
+        /// </summary>
+        public static string CurrentPath { get; set; } = _root;
+
+        /// <summary>
+        /// Gets whether backward navigation is possible.
+        /// </summary>
+        public static bool CanGoBack => backStack.Count > 0;
+
+        /// <summary>
+        /// Gets whether forward navigation is possible.
+        /// </summary>
+        public static bool CanGoForward => forwardStack.Count > 0;
+
+        /// <summary>
+        /// Gets whether navigation to the parent directory is possible.
+        /// </summary>
+        public static bool CanGoUp => !string.IsNullOrEmpty(CurrentPath) && CurrentPath != _root;
+
+        private static bool CanPaste => (cutItems?.Count ?? 0) > 0 || (copiedItems?.Count ?? 0) > 0;
+
+        public static bool ShowHiddenFiles
+        {
+            get => showHiddenFiles;
+            set
+            {
+                if (showHiddenFiles != value)
+                {
+                    showHiddenFiles = value;
+                    Task.Run(() => PopulateListViewAsync(CurrentPath));
+                }
+            }
+        }
+        private static bool showHiddenFiles = true;
+
+        #endregion
+
+        #region Data functions
+
         private class NavigationState
         {
             public string Path { get; set; }
@@ -39,6 +87,10 @@ namespace WinPaletter.GitHub
             return NativeMethods.Shell32.GetExtensionDescription(GetExtension(entry.Name));
         };
 
+        #endregion
+
+        #region Bound Controls
+
         /// <summary>
         /// The ListView currently bound to the FileSystem for navigation and display.
         /// </summary>
@@ -48,6 +100,15 @@ namespace WinPaletter.GitHub
         /// The TreeView currently bound to the FileSystem for navigation and display.
         /// </summary>
         private static UI.WP.TreeView _boundTree;
+
+        /// <summary>
+        /// The Breadcrumb currently bound to the FileSystem for navigation and display.
+        /// </summary>
+        private static UI.WP.Breadcrumb _boundbreadcrumbControl;
+
+        #endregion
+
+        #region ImageLists
 
         /// <summary>
         /// ImageList containing small icons for ListView and TreeView items.
@@ -63,6 +124,10 @@ namespace WinPaletter.GitHub
         /// ImageList containing icons for TreeView items.
         /// </summary>
         private static ImageList _treeIcons;
+
+        #endregion
+
+        #region History stacks and data
 
         /// <summary>
         /// Stores the navigation history for backward navigation within the application.
@@ -82,57 +147,54 @@ namespace WinPaletter.GitHub
         public static string _root = $"Themes/{_owner}";
 
         /// <summary>
-        /// Gets or sets the current repository path being viewed.
-        /// </summary>
-        public static string CurrentPath { get; set; } = _root;
-
-        /// <summary>
         /// To remember the last entered folder for navigation purposes.
         /// </summary>
         private static string _lastEnteredFolderPath;
 
-        /// <summary>
-        /// Gets whether backward navigation is possible.
-        /// </summary>
-        public static bool CanGoBack => backStack.Count > 0;
+        #endregion
 
-        /// <summary>
-        /// Gets whether forward navigation is possible.
-        /// </summary>
-        public static bool CanGoForward => forwardStack.Count > 0;
+        #region Context Menus Fields
 
-        /// <summary>
-        /// Gets whether navigation to the parent directory is possible.
-        /// </summary>
-        public static bool CanGoUp => !string.IsNullOrEmpty(CurrentPath) && CurrentPath != _root;
+        // Views list
+        public static readonly List<(string label, Bitmap icon, Bitmap glyph, View view)> Views =
+        [
+            (Program.Lang.Strings.GitHubStrings.Explorer_View_LargeIcons, Assets.GitHubMgr.Icons_Large, Assets.GitHubMgr.Glyph_View_Large, View.LargeIcon),
+            (Program.Lang.Strings.GitHubStrings.Explorer_View_SmallIcons, Assets.GitHubMgr.Icons_Small, Assets.GitHubMgr.Glyph_View_Small, View.SmallIcon),
+            (Program.Lang.Strings.GitHubStrings.Explorer_View_List, Assets.GitHubMgr.Icons_List, Assets.GitHubMgr.Glyph_View_List, View.List),
+            (Program.Lang.Strings.GitHubStrings.Explorer_View_Details, Assets.GitHubMgr.Icons_Details, Assets.GitHubMgr.Glyph_View_Details, View.Details),
+            (Program.Lang.Strings.GitHubStrings.Explorer_View_Tiles, Assets.GitHubMgr.Icons_Tile, Assets.GitHubMgr.Glyph_View_Tile, View.Tile)
+        ];
 
-        /// <summary>
-        /// Event triggered whenever navigation occurs.
-        /// </summary>
-        public static event EventHandler<string> Navigated;
+        // Global menu items
+        private static ToolStripMenuItem menu_view;
+        private static ToolStripSeparator separator_0;
+        private static ToolStripMenuItem menu_paste;
+        private static ToolStripSeparator separator_1;
+        private static ToolStripMenuItem menu_newItem;
+        private static ToolStripMenuItem menu_newTheme;
+        private static ToolStripMenuItem menu_newFolder;
+        private static ToolStripSeparator separator_2;
+        private static ToolStripMenuItem menu_properties;
 
-        public static bool ShowHiddenFiles
-        {
-            get => showHiddenFiles;
-            set
-            {
-                if (showHiddenFiles != value)
-                {
-                    showHiddenFiles = value;
-                    Task.Run(() => PopulateListViewAsync(_boundList, CurrentPath, null));
-                }
-            }
-        }
-        private static bool showHiddenFiles = true;
+        // Item menu
+        private static ToolStripMenuItem menu_Open;
+        private static ToolStripMenuItem menu_Download;
+        private static ToolStripSeparator separator_item_1;
+        private static ToolStripMenuItem menu_CopyPath;
+        private static ToolStripMenuItem menu_CopyURL;
+        private static ToolStripMenuItem menu_Copy;
+        private static ToolStripMenuItem menu_Cut;
+        private static ToolStripSeparator separator_item_2;
+        private static ToolStripMenuItem menu_Delete;
+        private static ToolStripMenuItem menu_Rename;
+        private static ToolStripSeparator separator_item_3;
+        private static ToolStripMenuItem menu_item_properties;
 
-        /// <summary>
-        /// Invokes the Navigated event.
-        /// </summary>
-        /// <param name="path">The path that was navigated to.</param>
-        private static void OnNavigated(string path)
-        {
-            Navigated?.Invoke(null, path);
-        }
+        #endregion
+
+        #endregion
+
+        #region Branch setting and repository population
 
         /// <summary>
         /// Set the branch to use for repository access.
@@ -148,10 +210,10 @@ namespace WinPaletter.GitHub
         /// Set the branch to use for repository access.
         /// </summary>
         /// <param name="branch"></param>
-        public static async Task SetBranch(string branch, UI.WP.TreeView tree, UI.WP.ListView list, UI.WP.Breadcrumb breadCrumb, CancellationTokenSource cts = null)
+        public static async Task SetBranch(string branch, UI.WP.TreeView tree, UI.WP.ListView list, UI.WP.Breadcrumb breadCrumb)
         {
             SetBranch(branch);
-            await PopulateRepositoryAsync(tree, list, breadCrumb, cts);
+            await PopulateRepositoryAsync(tree, list, breadCrumb);
         }
 
         /// <summary>
@@ -174,18 +236,20 @@ namespace WinPaletter.GitHub
         /// <param name="cts">Optional cancellation token source.</param>
         /// <param name="reportProgress">Optional callback reporting fetch progress.</param>
         /// <returns>A task that completes when repository data is fully loaded.</returns>
-        public static async Task PopulateRepositoryAsync(UI.WP.TreeView tree, UI.WP.ListView list, UI.WP.Breadcrumb breadCrumb, CancellationTokenSource cts = null, Action<int> reportProgress = null)
+        public static async Task PopulateRepositoryAsync(UI.WP.TreeView tree, UI.WP.ListView list, UI.WP.Breadcrumb breadCrumb, Action<int> reportProgress = null)
         {
             Program.Log?.Write(LogEventLevel.Information, "PopulateRepositoryAsync started");
-
-            cts ??= new();
 
             try
             {
                 Program.Log?.Write(LogEventLevel.Information, "Resetting Tree and List controls");
 
-                ResetTree(tree, list);
-                InitializeImageLists(list, tree);
+                _boundbreadcrumbControl = breadCrumb;
+                _boundList = list;
+                _boundTree = tree;
+
+                ResetTree();
+                InitializeImageLists();
 
                 breadCrumb?.StartMarquee();
                 breadCrumb.Value = breadCrumb.Minimum;
@@ -219,19 +283,21 @@ namespace WinPaletter.GitHub
                 {
                     try
                     {
+                        InitializeMenus();
+
                         Program.Log?.Write(LogEventLevel.Information, "Building TreeView");
-                        BuildTree(tree);
+                        BuildTree();
 
                         tree.Nodes[0].Expand();
 
                         Program.Log?.Write(LogEventLevel.Information, "Populating ListView");
-                        _ = PopulateListViewAsync(list, _root, cts);
+                        _ = PopulateListViewAsync(_root);
 
                         Program.Log?.Write(LogEventLevel.Information, "Hooking Tree/List events");
-                        HookEvents(tree, list);
+                        HookEvents();
 
                         breadCrumb?.FinishLoadingAnimation();
-                        breadCrumb.BoundTreeView = tree;
+                        breadCrumb.BoundTreeView = _boundTree;
 
                         Program.Log?.Write(LogEventLevel.Information, "UI updated successfully");
                     }
@@ -272,363 +338,99 @@ namespace WinPaletter.GitHub
         }
 
         /// <summary>
-        /// Resets the specified tree view and list view by clearing all nodes and items, and deselecting any selected
-        /// node in the tree view.
+        /// Clears all caches, fetches repository data again, rebuilds the directory tree,
+        /// and restores the previously selected path.
         /// </summary>
-        /// <param name="tree">The tree view control whose nodes will be cleared and selection reset.</param>
-        /// <param name="list">The list view control whose items will be cleared.</param>
-        static void ResetTree(UI.WP.TreeView tree, UI.WP.ListView list)
+        /// <param name="tree">TreeView to refresh.</param>
+        /// <param name="list">ListView to refresh.</param>
+        /// <param name="breadCrumb">Breadcrumb control to update.</param>
+        /// <param name="cts">Optional cancellation token source.</param>
+        /// <returns>A task representing the refresh operation.</returns>
+        public static async Task RefreshAsync()
         {
-            tree.Nodes.Clear();
-            tree.SelectedNode = null;
+            Program.Log?.Write(LogEventLevel.Information, "RefreshAsync started");
 
-            list.Items.Clear();
-        }
+            string pathBeforeRefresh = CurrentPath;
 
-        /// <summary>
-        /// Selects the tree node in the specified tree view that corresponds to the given path, creating any missing
-        /// nodes along the path if necessary.
-        /// </summary>
-        /// <remarks>If the root node of the tree does not match the first segment of the path, no
-        /// selection is performed. Newly created nodes use the 'folder' image key and are expanded to ensure
-        /// visibility. The method does not modify the list view parameter.</remarks>
-        /// <param name="list">The list view associated with the tree view. This parameter is not modified by the method.</param>
-        /// <param name="tree">The tree view in which to select the node. Must contain at least one node; otherwise, no selection is made.</param>
-        /// <param name="path">The hierarchical path, delimited by '/', identifying the node to select. If nodes along the path do not
-        /// exist, they are created dynamically.</param>
-        public static void UpdateTreeNode(UI.WP.TreeView tree, string path, bool selectAfterUpdate)
-        {
-            Program.Log?.Write(LogEventLevel.Information, $"[UpdateTreeNode] Called for path='{path}'");
+            // Clear caches first
+            Cache.Clear();
 
-            if (tree.Nodes.Count == 0)
+            _boundbreadcrumbControl?.StartMarquee();
+
+            try
             {
-                Program.Log?.Write(LogEventLevel.Information, "[UpdateTreeNode] Tree has no nodes, exiting");
-                return;
-            }
+                Program.Log?.Write(LogEventLevel.Information, "Refreshing: FetchRecursive started");
 
-            TreeNode rootNode = tree.Nodes[0];
-            if (rootNode.Tag == null) rootNode.Tag = _root;
+                List<RepositoryContent> entries = [];
+                await FetchRecursive(_root, entries, null, cts);
 
-            path = path?.Trim().TrimEnd('/');
-
-            Program.Log?.Write(LogEventLevel.Information, $"[UpdateTreeNode] Raw normalized path='{path}'");
-
-            if (string.Equals(path, _root, StringComparison.OrdinalIgnoreCase))
-            {
-                PruneDeletedNodes(rootNode);
-                tree.SelectedNode = rootNode;
-                rootNode.EnsureVisible();
-                Program.Log?.Write(LogEventLevel.Information, "[UpdateTreeNode] Path is root, selected root node");
-                return;
-            }
-
-            if (!path.StartsWith(_root + "/", StringComparison.OrdinalIgnoreCase)) path = _root + "/" + path.TrimStart('/');
-
-            Program.Log?.Write(LogEventLevel.Information, $"[UpdateTreeNode] Final normalized path='{path}'");
-
-            string relativePath = path.Substring(_root.Length + 1);
-            string[] segments = relativePath.Split('/');
-
-            TreeNode currentNode = rootNode;
-
-            Program.Log?.Write(LogEventLevel.Information, "[UpdateTreeNode] Pruning deleted nodes before traversal");
-            PruneDeletedNodes(rootNode);
-
-            foreach (string segment in segments)
-            {
-                Program.Log?.Write(LogEventLevel.Information, $"[UpdateTreeNode] Processing segment='{segment}'");
-
-                foreach (TreeNode child in currentNode.Nodes.Cast<TreeNode>().ToList())
+                // After this, store entries in _infoCache
+                foreach (var entry in entries)
                 {
-                    string childPath = child.Tag as string;
-                    if (!Cache.Contains(childPath))
+                    if (entry == null) continue;
+
+                    var e = new Entry
                     {
-                        Program.Log?.Write(LogEventLevel.Information, $"[UpdateTreeNode] Removing deleted node '{childPath}'");
-                        currentNode.Nodes.Remove(child);
-                    }
-                }
-
-                TreeNode childNode = currentNode.Nodes.Cast<TreeNode>()
-                    .FirstOrDefault(n => string.Equals(n.Text, segment, StringComparison.OrdinalIgnoreCase));
-
-                if (childNode == null)
-                {
-                    string parentPath = currentNode.Tag as string ?? _root;
-                    string fullPath = parentPath + "/" + segment;
-
-                    childNode = new TreeNode(segment)
-                    {
-                        Tag = fullPath,
-                        ImageKey = "folder",
-                        SelectedImageKey = "folder"
+                        Path = entry.Path,
+                        Content = entry,
+                        Type = entry.Type == Octokit.ContentType.Dir ? FileSystem.EntryType.Dir : FileSystem.EntryType.File,
+                        FetchedAt = DateTime.UtcNow
                     };
 
-                    currentNode.Nodes.Add(childNode);
-                    Program.Log?.Write(LogEventLevel.Information, $"[UpdateTreeNode] Created missing node '{fullPath}'");
+                    Cache.Add(e);
                 }
 
-                currentNode.Expand();
-                currentNode = childNode;
-            }
+                Program.Log?.Write(LogEventLevel.Information, $"RefreshAsync: fetched {entries.Count} entries");
 
-            Program.Log?.Write(LogEventLevel.Information, "[UpdateTreeNode] Pruning deleted nodes after traversal");
-            PruneDeletedNodes(rootNode);
-
-            if (selectAfterUpdate)
-            {
-                tree.SelectedNode = currentNode;
-                Program.Log?.Write(LogEventLevel.Information, $"[UpdateTreeNode] Selected node '{currentNode.Tag}'");
-            }
-
-            currentNode.EnsureVisible();
-            Program.Log?.Write(LogEventLevel.Information, "[UpdateTreeNode] UpdateTreeNode completed");
-        }
-
-        private static void PruneDeletedNodes(TreeNode node)
-        {
-            foreach (TreeNode child in node.Nodes.Cast<TreeNode>().ToList())
-            {
-                string childPath = child.Tag as string;
-                if (!Cache.Contains(childPath))
+                if (_boundTree.InvokeRequired)
                 {
-                    Program.Log?.Write(LogEventLevel.Information, $"[PruneDeletedNodes] Pruning deleted node '{childPath}'");
-                    node.Nodes.Remove(child);
+                    Program.Log?.Write(LogEventLevel.Information, "Invoking BuildTree on UI thread");
+                    _boundTree.Invoke(new MethodInvoker(() => BuildTree()));
                 }
                 else
                 {
-                    PruneDeletedNodes(child);
+                    Program.Log?.Write(LogEventLevel.Information, "Building tree on same thread");
+                    BuildTree();
                 }
+
+                Program.Log?.Write(LogEventLevel.Information, $"Navigating back to '{pathBeforeRefresh}'");
+                await NavigateTo(pathBeforeRefresh, false);
             }
-        }
-
-        /// <summary>
-        /// Navigates to the specified repository path, updates navigation history,
-        /// repopulates the ListView, and selects the corresponding TreeView node.
-        /// </summary>
-        /// <param name="newPath">The target repository path.</param>
-        /// <param name="list">The ListView to update.</param>
-        /// <param name="tree">The TreeView to update.</param>
-        /// <param name="updateStacks">Whether to update back/forward navigation history.</param>
-        /// <returns>A task representing the navigation operation.</returns>
-        /// <summary>
-        /// Central method to navigate to a new path. Handles stack updates consistently.
-        /// </summary>
-        /// Central method to navigate to a new path. Handles stack updates consistently.
-        /// </summary>
-        public static async Task NavigateTo(string newPath, UI.WP.ListView list, UI.WP.TreeView tree, bool addToHistory = true)
-        {
-            if (string.IsNullOrEmpty(newPath)) return;
-
-            // Ensure path starts with root
-            if (!newPath.StartsWith(_root, StringComparison.OrdinalIgnoreCase))
-                newPath = _root + "/" + newPath.TrimStart('/');
-
-            string resolvedPath = newPath;
-            while (!Cache.Contains(resolvedPath) && !string.Equals(resolvedPath, _root, StringComparison.OrdinalIgnoreCase))
-                resolvedPath = UppermostRoot(resolvedPath) ?? _root;
-
-            if (string.Equals(resolvedPath, CurrentPath, StringComparison.OrdinalIgnoreCase))
+            catch (Exception ex)
             {
-                if (addToHistory) forwardStack.Clear();
-                return;
+                Program.Log?.Write(LogEventLevel.Error, "RefreshAsync failed", ex);
+                throw;
             }
-
-            // Remember currently selected item's Path
-            string selectedPath = list.SelectedItems.Count > 0 && list.SelectedItems[0].Tag is RepositoryContent rc
-                ? rc.Path
-                : null;
-
-            if (addToHistory)
+            finally
             {
-                backStack.Push(new NavigationState
+                Program.Log?.Write(LogEventLevel.Information, "RefreshAsync UI finalization");
+
+                _boundbreadcrumbControl?.StopMarquee();
+                _boundbreadcrumbControl?.FinishLoadingAnimation();
+                _boundbreadcrumbControl.BoundTreeView = _boundTree;
+
+                HookEvents();
+
+                _ = PopulateListViewAsync(pathBeforeRefresh);
+
+                if (_boundTree.Nodes[0] is not null)
                 {
-                    Path = CurrentPath,
-                    SelectedItemPath = selectedPath
-                });
-                forwardStack.Clear();
-            }
-
-            CurrentPath = resolvedPath;
-            OnNavigated(CurrentPath);
-
-            await PopulateListViewAsync(list, CurrentPath);
-
-            // Restore previously selected item by Path
-            if (!string.IsNullOrEmpty(selectedPath))
-            {
-                ListViewItem itemToSelect = list.Items
-                    .Cast<ListViewItem>()
-                    .FirstOrDefault(i => i.Tag is RepositoryContent rc && rc.Path == selectedPath);
-
-                if (itemToSelect != null)
-                {
-                    itemToSelect.Selected = true;
-                    itemToSelect.EnsureVisible();
-                    list.HideSelection = false;
-                    list.Focus();
+                    _boundTree.SelectedNode = _boundTree.Nodes[0];
                 }
-            }
-
-            UpdateTreeNode(tree, CurrentPath, true);
-        }
-
-        /// <summary>
-        /// Go back in history.
-        /// </summary>
-        public static async Task GoBack(UI.WP.TreeView tree, UI.WP.ListView list)
-        {
-            if (!CanGoBack) return;
-
-            var previousState = backStack.Pop();
-            forwardStack.Push(new NavigationState
-            {
-                Path = CurrentPath,
-                SelectedItemPath = list.SelectedItems.Count > 0 && list.SelectedItems[0].Tag is RepositoryContent rc
-                    ? rc.Path
-                    : null
-            });
-
-            await NavigateTo(previousState.Path, list, tree, addToHistory: false);
-
-            // Restore selection by Path
-            if (!string.IsNullOrEmpty(previousState.SelectedItemPath))
-            {
-                ListViewItem itemToSelect = list.Items
-                    .Cast<ListViewItem>()
-                    .FirstOrDefault(i => i.Tag is RepositoryContent rc && rc.Path == previousState.SelectedItemPath);
-
-                if (itemToSelect != null)
+                else
                 {
-                    itemToSelect.Selected = true;
-                    itemToSelect.EnsureVisible();
-                    list.HideSelection = false;
-                    list.Focus();
+                    Program.Log?.Write(LogEventLevel.Warning, "Tree is empty after refresh; clearing UI lists");
+                    _boundTree.Nodes.Clear();
+                    _boundList.Items.Clear();
                 }
+
+                Program.Log?.Write(LogEventLevel.Information, "RefreshAsync completed");
             }
         }
 
-        /// <summary>
-        /// Go forward in history.
-        /// </summary>
-        public static async Task GoForward(UI.WP.TreeView tree, UI.WP.ListView list)
-        {
-            if (!CanGoForward) return;
+        #endregion
 
-            var nextState = forwardStack.Pop();
-            backStack.Push(new NavigationState
-            {
-                Path = CurrentPath,
-                SelectedItemPath = list.SelectedItems.Count > 0 && list.SelectedItems[0].Tag is RepositoryContent rc
-                    ? rc.Path
-                    : null
-            });
-
-            await NavigateTo(nextState.Path, list, tree, addToHistory: false);
-
-            // Restore selection by Path
-            if (!string.IsNullOrEmpty(nextState.SelectedItemPath))
-            {
-                ListViewItem itemToSelect = list.Items
-                    .Cast<ListViewItem>()
-                    .FirstOrDefault(i => i.Tag is RepositoryContent rc && rc.Path == nextState.SelectedItemPath);
-
-                if (itemToSelect != null)
-                {
-                    itemToSelect.Selected = true;
-                    itemToSelect.EnsureVisible();
-                    list.HideSelection = false;
-                    list.Focus();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Navigate to parent directory.
-        /// </summary>
-        public static async Task GoUp(UI.WP.TreeView tree, UI.WP.ListView list)
-        {
-            if (!CanGoUp) return;
-
-            string parent = GetParent(CurrentPath) ?? _root;
-
-            // Push current state to back stack
-            backStack.Push(new NavigationState
-            {
-                Path = CurrentPath,
-                SelectedItemPath = list.SelectedItems.Count > 0 && list.SelectedItems[0].Tag is RepositoryContent rc
-                    ? rc.Path
-                    : null
-            });
-
-            forwardStack.Clear();
-
-            await NavigateTo(parent, list, tree, addToHistory: false);
-
-            // After moving up, select the folder we came from using full path
-            if (!string.IsNullOrEmpty(_lastEnteredFolderPath))
-            {
-                ListViewItem itemToSelect = list.Items
-                    .Cast<ListViewItem>()
-                    .FirstOrDefault(i => i.Tag is RepositoryContent rc && rc.Path == _lastEnteredFolderPath);
-
-                if (itemToSelect != null)
-                {
-                    itemToSelect.Selected = true;
-                    itemToSelect.EnsureVisible();
-                    list.HideSelection = false;
-                    list.Focus();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets the correct root to be used in navigation
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public static string UppermostRoot(string path)
-        {
-            if (string.IsNullOrEmpty(path) || path == _root)
-                return null;
-
-            int lastSlash = path.LastIndexOf('/');
-            if (lastSlash < _root.Length) return _root; // important: < instead of <=
-
-            return path.Substring(0, lastSlash);
-        }
-
-        /// <summary>
-        /// Initializes and assigns image lists for the specified list and tree controls, configuring icon sizes for
-        /// each control type.
-        /// </summary>
-        /// <remarks>This method sets up image lists with appropriate icon sizes for list and tree
-        /// controls. After calling this method, the controls will display icons according to the assigned image lists.
-        /// Existing image lists on the controls will be replaced.</remarks>
-        /// <param name="list">The list view control to which small and large image lists will be assigned.</param>
-        /// <param name="tree">The tree view control to which the image list will be assigned.</param>
-        private static void InitializeImageLists(UI.WP.ListView list, UI.WP.TreeView tree)
-        {
-            int small = 16;
-            int large = 48;
-
-            _smallIcons = new ImageList { ImageSize = new Size(small, small), ColorDepth = ColorDepth.Depth32Bit };
-            _largeIcons = new ImageList { ImageSize = new Size(large, large), ColorDepth = ColorDepth.Depth32Bit };
-            _treeIcons = new ImageList { ImageSize = new Size(small, small), ColorDepth = ColorDepth.Depth32Bit };
-
-            AddStockIcons(_smallIcons);
-            AddStockIcons(_largeIcons);
-            AddStockIcons(_treeIcons);
-
-            AddSpecialIcons(_smallIcons, small);
-            AddSpecialIcons(_largeIcons, large);
-
-            ProcessGhostIcons(_smallIcons);
-            ProcessGhostIcons(_largeIcons);
-
-            list.SmallImageList = _smallIcons;
-            list.LargeImageList = _largeIcons;
-            tree.ImageList = _treeIcons;
-        }
+        #region Images helpers
 
         /// <summary>
         /// Adds a predefined set of folder and file icons to the specified image list at the given size.
@@ -679,6 +481,265 @@ namespace WinPaletter.GitHub
             }
         }
 
+        #endregion
+
+        #region List/Tree views operations
+
+        public static async Task UpdateExplorerView(string path)
+        {
+            await PopulateListViewAsync(path);
+            UpdateTreeNode(path, false);
+        }
+
+        /// <summary>
+        /// Populates the ListView with the files and directories inside a specified repository path.
+        /// </summary>
+        /// <param name="list">The ListView to fill.</param>
+        /// <param name="path">The GitHub repository directory path.</param>
+        /// <param name="cts">Optional cancellation token source.</param>
+        /// <returns>A task representing the asynchronous population operation.</returns>
+        public static async Task PopulateListViewAsync(string path)
+        {
+            Program.Log?.Write(LogEventLevel.Information, $"PopulateListViewAsync started for '{path}'");
+
+            if (_boundList.InvokeRequired)
+            {
+                _boundList.Invoke(new Func<Task>(() => PopulateListViewAsync(path)));
+                return;
+            }
+
+            try
+            {
+                _boundList.Cursor = Cursors.WaitCursor;
+                _boundList.BeginUpdate();
+
+                // Store selected items before clearing
+                var selectedItemsInfo = _boundList.SelectedItems.Cast<ListViewItem>().Where(i => i.Tag is RepositoryContent rc).Select(i => new { Path = GitHub.FileSystem.GetParent(((RepositoryContent)i.Tag).Path), Name = i.Text }).ToList();
+
+                if (_boundList.Columns.Count == 0)
+                {
+                    Program.Log?.Write(LogEventLevel.Information, "PopulateListViewAsync initialized columns");
+
+                    _boundList.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Name, 230);
+                    _boundList.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Type, 200);
+                    _boundList.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Size, 80);
+                    _boundList.Columns.Add("MD5", 120);
+                    _boundList.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_URL, 220);
+                }
+
+                if (!Cache.Contains(path))
+                {
+                    Program.Log?.Write(LogEventLevel.Warning, $"PopulateListViewAsync: DirectoryMap has no entry for '{path}'");
+                    _boundList.Items.Clear();
+                    return;
+                }
+
+                _boundList.Items.Clear();
+
+                int count = 0;
+                foreach (Entry entry in Cache.GetSubEntries(NormalizePath(path), sort: Cache.EntrySort.Default))
+                {
+                    if (entry.Content is null) continue;
+
+                    cts?.Token.ThrowIfCancellationRequested();
+
+                    bool isHidden = entry.Name.StartsWith(".");
+                    if (!isHidden || isHidden && showHiddenFiles)
+                    {
+                        ListViewItem item = new(entry.Name) { Tag = entry.Content };
+
+                        item.SubItems.Add(FileTypeProvider?.Invoke(entry.Content) ?? Program.Lang.Strings.Extensions.File);
+
+                        long size = entry.Type == EntryType.Dir && Cache.Contains(entry.Path) ? Cache.GetSize(entry.Path) : entry.Size;
+
+                        item.SubItems.Add(size.ToStringFileSize());
+                        item.SubItems.Add(Cache.ShaToMd5(entry.Content.Sha).ToUpper());
+                        item.SubItems.Add(entry.Content.HtmlUrl);
+                        item.SubItems.Add(entry.Content.Content);
+
+                        if (entry.Type == EntryType.Dir) item.ImageKey = "folder";
+                        else if (entry.Name.EndsWith(".wpth", StringComparison.OrdinalIgnoreCase)) item.ImageKey = "wpth";
+                        else if (entry.Name.EndsWith(".wptp", StringComparison.OrdinalIgnoreCase)) item.ImageKey = "wptp";
+                        else if (!string.IsNullOrWhiteSpace(entry.Name))
+                        {
+                            string ext = GetExtension(entry.Name);
+                            if (!string.IsNullOrWhiteSpace(ext))
+                            {
+                                if (!_boundList.SmallImageList.Images.ContainsKey(ext))
+                                {
+                                    using (Icon ico = NativeMethods.Shell32.GetIconFromExtension(ext, true))
+                                    using (Icon ico_resized = ico?.FromSize(16))
+                                    using (Bitmap bmp = ico_resized?.ToBitmap())
+                                    {
+                                        _boundList.AddImagesToSmallImageList(new List<(Image, string)> { (bmp, ext) });
+                                    }
+                                    ProcessGhostIcons(_boundList.SmallImageList);
+                                }
+
+                                if (!_boundList.LargeImageList.Images.ContainsKey(ext))
+                                {
+                                    using (Icon ico = NativeMethods.Shell32.GetIconFromExtension(ext))
+                                    using (Icon ico_resized = ico?.FromSize(48))
+                                    {
+                                        _boundList.LargeImageList.Images.Add(ext, ico_resized?.ToBitmap());
+                                        ProcessGhostIcons(_boundList.LargeImageList);
+                                    }
+                                }
+
+                                item.ImageKey = ext;
+                            }
+                            else
+                            {
+                                item.ImageKey = "file";
+                            }
+                        }
+                        else item.ImageKey = "file";
+
+                        if (isHidden) item.ImageKey = $"ghost_{item.ImageKey}";
+
+                        _boundList.Items.Add(item);
+
+                        // Restore selection if matches old path & name (with blue focus)
+                        if (selectedItemsInfo.Any(si => string.Equals(si.Path, GitHub.FileSystem.GetParent(entry.Path), StringComparison.OrdinalIgnoreCase) && string.Equals(si.Name, entry.Name, StringComparison.OrdinalIgnoreCase)))
+                        {
+                            item.Selected = true;
+                            item.EnsureVisible();
+                            _boundList.HideSelection = false;
+                            _boundList.Focus();
+                        }
+                    }
+
+                    count++;
+                    if (count % 50 == 0) await Task.Yield();
+                }
+            }
+            catch (Exception ex)
+            {
+                Forms.BugReport.ThrowError(ex);
+                Program.Log?.Write(LogEventLevel.Error, $"PopulateListViewAsync failed for '{path}'", ex);
+            }
+            finally
+            {
+                _boundList.HideSelection = false;
+                _boundList?.EndUpdate();
+                _boundList?.Cursor = Cursors.Default;
+                Program.Log?.Write(LogEventLevel.Information, $"PopulateListViewAsync finished for '{path}'");
+            }
+        }
+
+        /// <summary>
+        /// Selects the tree node in the specified tree view that corresponds to the given path, creating any missing
+        /// nodes along the path if necessary.
+        /// </summary>
+        /// <remarks>If the root node of the tree does not match the first segment of the path, no
+        /// selection is performed. Newly created nodes use the 'folder' image key and are expanded to ensure
+        /// visibility. The method does not modify the list view parameter.</remarks>
+        /// <param name="list">The list view associated with the tree view. This parameter is not modified by the method.</param>
+        /// <param name="tree">The tree view in which to select the node. Must contain at least one node; otherwise, no selection is made.</param>
+        /// <param name="path">The hierarchical path, delimited by '/', identifying the node to select. If nodes along the path do not
+        /// exist, they are created dynamically.</param>
+        public static void UpdateTreeNode(string path, bool selectAfterUpdate)
+        {
+            try
+            {
+                if (_boundTree.Nodes.Count == 0) return;
+
+                TreeNode rootNode = _boundTree.Nodes[0];
+                if (rootNode.Tag == null) rootNode.Tag = _root;
+
+                path = path?.Trim().TrimEnd('/');
+
+                if (string.Equals(path, _root, StringComparison.OrdinalIgnoreCase))
+                {
+                    PruneDeletedNodes(rootNode);
+                    _boundTree.SelectedNode = rootNode;
+                    rootNode.EnsureVisible();
+                    return;
+                }
+
+                if (!path.StartsWith(_root + "/", StringComparison.OrdinalIgnoreCase)) path = _root + "/" + path.TrimStart('/');
+
+                string relativePath = path.Substring(_root.Length + 1);
+                string[] segments = relativePath.Split('/');
+
+                TreeNode currentNode = rootNode;
+
+                PruneDeletedNodes(rootNode);
+
+                foreach (string segment in segments)
+                {
+                    foreach (TreeNode child in currentNode.Nodes.Cast<TreeNode>().ToList())
+                    {
+                        string childPath = child.Tag as string;
+                        if (!Cache.Contains(childPath))
+                        {
+                            currentNode.Nodes.Remove(child);
+                            Program.Log?.Write(LogEventLevel.Information, $"[Tree] Removed deleted node '{childPath}'");
+                        }
+                    }
+
+                    TreeNode childNode = currentNode.Nodes.Cast<TreeNode>().FirstOrDefault(n => string.Equals(n.Text, segment, StringComparison.OrdinalIgnoreCase));
+
+                    if (childNode == null)
+                    {
+                        string parentPath = currentNode.Tag as string ?? _root;
+                        string fullPath = parentPath + "/" + segment;
+
+                        childNode = new TreeNode(segment) { Tag = fullPath, ImageKey = "folder", SelectedImageKey = "folder" };
+                        currentNode.Nodes.Add(childNode);
+
+                        Program.Log?.Write(LogEventLevel.Information, $"[Tree] Created node '{fullPath}'");
+                    }
+
+                    currentNode.Expand();
+                    currentNode = childNode;
+                }
+
+                PruneDeletedNodes(rootNode);
+
+                if (selectAfterUpdate)
+                {
+                    _boundTree.SelectedNode = currentNode;
+                    Program.Log?.Write(LogEventLevel.Information, $"[Tree] Selected '{currentNode.Tag}'");
+                }
+
+                currentNode.EnsureVisible();
+            }
+            catch (Exception ex)
+            {
+                Program.Log?.Write(LogEventLevel.Error, "[Tree] UpdateTreeNode failed", ex);
+                throw;
+            }
+        }
+
+        #endregion
+
+        #region List/Tree views helpers
+
+        /// <summary>
+        /// Recursively searches for a TreeNode with the specified path tag starting from the given node.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        private static TreeNode FindNode(TreeNode node, string path)
+        {
+            if (node == null) return null;
+
+            if ((node.Tag as string) == path) return node;
+
+            foreach (TreeNode child in node.Nodes)
+            {
+                TreeNode match = FindNode(child, path);
+                if (match != null)
+                {
+                    return match;
+                }
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// Initializes the specified tree view control with nodes representing the hierarchical structure of the root
         /// object.
@@ -687,12 +748,12 @@ namespace WinPaletter.GitHub
         /// the root object. The method clears any existing nodes before rebuilding the tree. The operation is performed
         /// within a batch update to minimize UI flicker.</remarks>
         /// <param name="tree">The tree view control to populate with nodes. Must not be null.</param>
-        private static void BuildTree(UI.WP.TreeView tree)
+        private static void BuildTree()
         {
             Program.Log?.Write(LogEventLevel.Information, "BuildTree started");
 
-            tree.BeginUpdate();
-            tree.Nodes.Clear();
+            _boundTree.BeginUpdate();
+            _boundTree.Nodes.Clear();
 
             // Use last segment of _root as the root node text
             string rootText = _root.Split('/').Last();
@@ -702,13 +763,13 @@ namespace WinPaletter.GitHub
                 ImageKey = "home",
                 SelectedImageKey = "home"
             };
-            tree.Nodes.Add(root);
+            _boundTree.Nodes.Add(root);
 
             // Add children starting from parent of last segment
             string parentPath = string.Join("/", _root.Split('/').Take(_root.Split('/').Length - 1));
             AddChildren(root, _root); // still pass full _root, AddChildren will now add only children
 
-            tree.EndUpdate();
+            _boundTree.EndUpdate();
             Program.Log?.Write(LogEventLevel.Information, "BuildTree finished");
         }
 
@@ -747,31 +808,300 @@ namespace WinPaletter.GitHub
         }
 
         /// <summary>
+        /// Resets the specified tree view and list view by clearing all nodes and items, and deselecting any selected
+        /// node in the tree view.
+        /// </summary>
+        /// <param name="tree">The tree view control whose nodes will be cleared and selection reset.</param>
+        /// <param name="list">The list view control whose items will be cleared.</param>
+        static void ResetTree()
+        {
+            _boundTree.Nodes.Clear();
+            _boundTree.SelectedNode = null;
+            _boundList.Items.Clear();
+        }
+
+        private static void PruneDeletedNodes(TreeNode node)
+        {
+            foreach (TreeNode child in node.Nodes.Cast<TreeNode>().ToList())
+            {
+                string childPath = child.Tag as string;
+                if (!Cache.Contains(childPath))
+                {
+                    Program.Log?.Write(LogEventLevel.Information, $"[PruneDeletedNodes] Pruning deleted node '{childPath}'");
+                    node.Nodes.Remove(child);
+                }
+                else
+                {
+                    PruneDeletedNodes(child);
+                }
+            }
+        }
+
+        #endregion
+
+        #region  Initializers
+
+        /// <summary>
+        /// Initializes and assigns image lists for the specified list and tree controls, configuring icon sizes for
+        /// each control type.
+        /// </summary>
+        /// <remarks>This method sets up image lists with appropriate icon sizes for list and tree
+        /// controls. After calling this method, the controls will display icons according to the assigned image lists.
+        /// Existing image lists on the controls will be replaced.</remarks>
+        /// <param name="list">The list view control to which small and large image lists will be assigned.</param>
+        /// <param name="tree">The tree view control to which the image list will be assigned.</param>
+        private static void InitializeImageLists()
+        {
+            int small = 16;
+            int large = 48;
+
+            _smallIcons = new ImageList { ImageSize = new Size(small, small), ColorDepth = ColorDepth.Depth32Bit };
+            _largeIcons = new ImageList { ImageSize = new Size(large, large), ColorDepth = ColorDepth.Depth32Bit };
+            _treeIcons = new ImageList { ImageSize = new Size(small, small), ColorDepth = ColorDepth.Depth32Bit };
+
+            AddStockIcons(_smallIcons);
+            AddStockIcons(_largeIcons);
+            AddStockIcons(_treeIcons);
+
+            AddSpecialIcons(_smallIcons, small);
+            AddSpecialIcons(_largeIcons, large);
+
+            ProcessGhostIcons(_smallIcons);
+            ProcessGhostIcons(_largeIcons);
+
+            _boundList.SmallImageList = _smallIcons;
+            _boundList.LargeImageList = _largeIcons;
+            _boundTree.ImageList = _treeIcons;
+        }
+
+        public static void Init_NewDirectory()
+        {
+            ListViewItem item = new(GetAvailableItemText(Program.Lang.Strings.Extensions.NewFolder))
+            {
+                ImageKey = "folder",
+                Tag = "NEWFOLDER_PENDING",
+                Selected = true,
+                Focused = true
+            };
+
+            _boundList.Items.Add(item);
+            item?.Selected = true;
+            item?.Focused = true;
+            item?.BeginEdit();
+        }
+
+        public static void Init_Cut()
+        {
+            if (_boundList.SelectedItems.Count > 0)
+            {
+                copiedItems?.Clear();
+                cutItems?.Clear();
+                cutItems = [.. _boundList.SelectedItems.Cast<ListViewItem>()];
+
+                foreach (ListViewItem cutItem in _boundList.SelectedItems)
+                {
+                    if (cutItem is not null && !cutItem.ImageKey.StartsWith("ghost", StringComparison.OrdinalIgnoreCase))
+                    {
+                        cutItem?.ImageKey = $"ghost_{cutItem?.ImageKey}";
+                    }
+                }
+
+                foreach (ListViewItem notCutItem in _boundList.Items.Cast<ListViewItem>().Where(i => !i.Selected && !i.Text.StartsWith(".") && i.ImageKey.StartsWith("ghost", StringComparison.OrdinalIgnoreCase)))
+                {
+                    notCutItem.ImageKey = notCutItem.ImageKey.Replace("ghost_", string.Empty);
+                }
+            }
+
+            CanPasteChanged?.Invoke(null, CanPaste);
+        }
+
+        public static void Init_Copy()
+        {
+            foreach (ListViewItem item in _boundList.Items.Cast<ListViewItem>().Where(i => !i.Text.StartsWith(".") && i.ImageKey.StartsWith("ghost", StringComparison.OrdinalIgnoreCase)))
+            {
+                item.ImageKey = item.ImageKey.Replace("ghost_", string.Empty);
+            }
+
+            if (_boundList.SelectedItems.Count > 0)
+            {
+                cutItems?.Clear();
+                copiedItems?.Clear();
+                copiedItems = [.. _boundList.SelectedItems.Cast<ListViewItem>()];
+            }
+
+            CanPasteChanged?.Invoke(null, CanPaste);
+        }
+
+        #region Context Menus Initialization
+
+        private static void InitializeMenus()
+        {
+            InitializeMenu_Global();
+            InitializeMenu_Item();
+        }
+
+        private static void InitializeMenu_Global()
+        {
+            // Create view menu items dynamically
+            menu_view = new ToolStripMenuItem(Program.Lang.Strings.GitHubStrings.Explorer_View)
+            {
+                DropDown = new UI.WP.ContextMenuStrip() { ShowImageMargin = true }
+            };
+
+            foreach (var view in Views)
+            {
+                ToolStripMenuItem item = new(view.label, view.icon)
+                {
+                    CheckOnClick = true,
+                    Checked = _boundList.View == view.view,
+                    Tag = view
+                };
+
+                item.Click -= Menu_ViewItem_Click;
+                item.Click += Menu_ViewItem_Click;
+
+                menu_view.DropDown.Items.Add(item);
+            }
+
+            separator_0 = new ToolStripSeparator();
+            separator_1 = new ToolStripSeparator();
+            separator_2 = new ToolStripSeparator();
+
+            menu_paste = new ToolStripMenuItem(Program.Lang.Strings.General.Paste) { Enabled = false };
+            menu_paste.Click += Menu_paste_Click;
+
+            menu_newFolder = new ToolStripMenuItem(Program.Lang.Strings.Extensions.Folder, Assets.GitHubMgr.folder_web_48.Resize(16, 16));
+            menu_newFolder.Click -= Menu_NewFolder_Click;
+            menu_newFolder.Click += Menu_NewFolder_Click;
+
+            using (Icon ico = Properties.Resources.fileextension.FromSize(20))
+            {
+                menu_newTheme = new ToolStripMenuItem(Program.Lang.Strings.Extensions.WinPaletterTheme, ico.ToBitmap());
+            }
+
+            menu_newItem = new ToolStripMenuItem(Program.Lang.Strings.General.New)
+            {
+                DropDown = new UI.WP.ContextMenuStrip() { ShowImageMargin = true }
+            };
+            menu_newItem.DropDown.Items.AddRange([menu_newFolder, menu_newTheme]);
+
+            menu_properties = new ToolStripMenuItem(Program.Lang.Strings.GitHubStrings.Explorer_Properties);
+
+            contextMenu_all.Items.AddRange(
+            [
+                menu_view,
+                separator_0,
+                menu_paste,
+                separator_1,
+                menu_newItem,
+                separator_2,
+                menu_properties
+            ]);
+        }
+
+        private static void InitializeMenu_Item()
+        {
+            menu_Open = new ToolStripMenuItem("Open", Assets.GitHubMgr.folder_web_16);
+            menu_Open.Click -= Menu_Open_Click;
+            menu_Open.Click += Menu_Open_Click;
+
+            menu_Download = new ToolStripMenuItem("Download", Assets.GitHubMgr.ContextMenu_Download);
+
+            separator_item_1 = new ToolStripSeparator();
+
+            menu_CopyPath = new ToolStripMenuItem("Copy as path");
+            menu_CopyPath.Click -= Menu_CopyPath_Click;
+            menu_CopyPath.Click += Menu_CopyPath_Click;
+
+            menu_CopyURL = new ToolStripMenuItem("Copy URL");
+            menu_CopyURL.Click -= Menu_CopyURL_Click;
+            menu_CopyURL.Click += Menu_CopyURL_Click;
+
+            menu_Copy = new ToolStripMenuItem("Copy");
+            menu_Copy.Click -= Menu_Copy_Click;
+            menu_Copy.Click += Menu_Copy_Click;
+
+            menu_Cut = new ToolStripMenuItem("Cut");
+            menu_Cut.Click -= Menu_Cut_Click;
+            menu_Cut.Click += Menu_Cut_Click;
+
+            separator_item_2 = new ToolStripSeparator();
+
+            menu_Delete = new ToolStripMenuItem("Delete");
+            menu_Delete.Click -= Menu_Delete_Click;
+            menu_Delete.Click += Menu_Delete_Click;
+
+            menu_Rename = new ToolStripMenuItem("Rename");
+            menu_Rename.Click -= Menu_Rename_Click;
+            menu_Rename.Click += Menu_Rename_Click;
+
+            separator_item_3 = new ToolStripSeparator();
+
+            menu_item_properties = new ToolStripMenuItem(Program.Lang.Strings.GitHubStrings.Explorer_Properties);
+            menu_item_properties.Click -= Menu_ItemProperties_Click;
+            menu_item_properties.Click += Menu_ItemProperties_Click;
+
+            contextMenu_item.Items.AddRange(
+            [
+                menu_Open,
+                menu_Download,
+                separator_item_1,
+                menu_CopyPath,
+                menu_CopyURL,
+                menu_Copy,
+                menu_Cut,
+                separator_item_2,
+                menu_Delete,
+                menu_Rename,
+                separator_item_3,
+                menu_item_properties
+            ]);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Events
+
+        public static event EventHandler<bool> CanPasteChanged;
+
+        public static event EventHandler<bool> CanDoIOChanged;
+
+        public static event EventHandler<string> Navigated;
+
+        public static event EventHandler<string> StatusLabelChanged;
+
+        /// <summary>
         /// Attaches event handlers to the specified tree and list controls for navigation and interaction.
         /// </summary>
         /// <param name="tree"></param>
         /// <param name="list"></param>
-        private static void HookEvents(UI.WP.TreeView tree, UI.WP.ListView list)
+        private static void HookEvents()
         {
-            Program.Log?.Write(LogEventLevel.Information, "HookEvents attaching");
+            _boundTree.AfterSelect -= Tree_AfterSelect;
+            _boundList.DoubleClick -= List_DoubleClick;
+            _boundList.MouseUp -= List_MouseUp;
+            _boundList.BeforeLabelEdit -= List_BeforeLabelEdit;
+            _boundList.AfterLabelEdit -= List_AfterLabelEdit;
+            _boundList.KeyUp -= List_KeyUp;
+            _boundList.SelectedIndexChanged -= ListView_SelectedIndexChanged;
+            _boundList.ItemChecked -= ListView_ItemChecked;
+            _boundList.ItemActivate -= ListView_ItemActivate;
 
-            tree.AfterSelect -= Tree_AfterSelect;
-            list.DoubleClick -= List_DoubleClick;
-
-            _boundList = list;
-            _boundTree = tree;
-
-            tree.AfterSelect += Tree_AfterSelect;
-            list.DoubleClick += List_DoubleClick;
+            _boundTree.AfterSelect += Tree_AfterSelect;
+            _boundList.DoubleClick += List_DoubleClick;
+            _boundList.MouseUp += List_MouseUp;
+            _boundList.BeforeLabelEdit += List_BeforeLabelEdit;
+            _boundList.AfterLabelEdit += List_AfterLabelEdit;
+            _boundList.KeyUp += List_KeyUp;
+            _boundList.SelectedIndexChanged += ListView_SelectedIndexChanged;
+            _boundList.ItemChecked += ListView_ItemChecked;
+            _boundList.ItemActivate += ListView_ItemActivate;
 
             Program.Log?.Write(LogEventLevel.Information, "HookEvents attached");
         }
 
-        /// <summary>
-        /// Handles the AfterSelect event of the TreeView control to navigate to the selected node's path
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private static async void Tree_AfterSelect(object sender, TreeViewEventArgs e)
         {
             if (e.Node == null || _boundList == null || _boundTree == null) return;
@@ -783,14 +1113,9 @@ namespace WinPaletter.GitHub
             if (newPath == CurrentPath) return;
 
             // Navigate properly: update history
-            await NavigateTo(newPath, _boundList, _boundTree, true);
+            await NavigateTo(newPath, true);
         }
 
-        /// <summary>
-        /// Handles the DoubleClick event of the ListView control to navigate into directories
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         public static async void List_DoubleClick(object sender, EventArgs e)
         {
             if (_boundList == null || _boundTree == null) return;
@@ -801,268 +1126,1009 @@ namespace WinPaletter.GitHub
             _lastEnteredFolderPath = entry.Path;
 
             // Navigate normally, history will be updated inside NavigateTo
-            await NavigateTo(entry.Path, _boundList, _boundTree, addToHistory: true);
+            await NavigateTo(entry.Path, addToHistory: true);
         }
 
-        /// <summary>
-        /// Recursively searches for a TreeNode with the specified path tag starting from the given node.
-        /// </summary>
-        /// <param name="node"></param>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        private static TreeNode FindNode(TreeNode node, string path)
+        private static void List_MouseUp(object sender, MouseEventArgs e)
         {
-            if (node == null) return null;
-
-            if ((node.Tag as string) == path) return node;
-
-            foreach (TreeNode child in node.Nodes)
+            if (e.Button == MouseButtons.Right)
             {
-                TreeNode match = FindNode(child, path);
-                if (match != null)
+                // Hit test to check if mouse is over an item
+                var info = _boundList.HitTest(e.Location);
+                if (info.Item != null)
                 {
-                    return match;
+                    // Right-click on an item
+                    if (_boundList.SelectedItems.Count > 0)
+                    {
+                        RepositoryContent rc = _boundList.SelectedItems[0]?.Tag as RepositoryContent;
+                        menu_Open.Enabled = rc?.Type == ContentType.Dir;
+                    }
+                    else
+                    {
+                        menu_Open.Enabled = false;
+                    }
+                    contextMenu_item.Show(_boundList, e.Location);
+                }
+                else
+                {
+                    // Right-click on empty space
+                    menu_paste.Enabled = CanPaste;
+                    contextMenu_all.Show(_boundList, e.Location);
                 }
             }
-
-            return null;
         }
 
-        public static async Task UpdateExplorerView(UI.WP.TreeView tree, UI.WP.ListView list, string path, CancellationTokenSource cts = null)
+        private static async void List_AfterLabelEdit(object sender, LabelEditEventArgs e)
         {
-            await PopulateListViewAsync(list, path, cts);
-            UpdateTreeNode(tree, path, false);
-        }
+            ListViewItem item = _boundList.Items[e.Item];
 
-        /// <summary>
-        /// Populates the ListView with the files and directories inside a specified repository path.
-        /// </summary>
-        /// <param name="list">The ListView to fill.</param>
-        /// <param name="path">The GitHub repository directory path.</param>
-        /// <param name="cts">Optional cancellation token source.</param>
-        /// <returns>A task representing the asynchronous population operation.</returns>
-        public static async Task PopulateListViewAsync(UI.WP.ListView list, string path, CancellationTokenSource cts = null)
-        {
-            Program.Log?.Write(LogEventLevel.Information, $"PopulateListViewAsync started for '{path}'");
-
-            cts ??= new();
-
-            if (list.InvokeRequired)
+            string newName;
+            if (e.Label == null)
             {
-                list.Invoke(new Func<Task>(() => PopulateListViewAsync(list, path, cts)));
+                // return will cancel the operation
+                // but Windows continues creating the folder with the same name
+                // so we will simulate what Windows does
+
+                newName = item.Text;
+            }
+            else
+            {
+                newName = e.Label.Trim();
+            }
+
+            if (string.IsNullOrWhiteSpace(newName))
+            {
+                e.CancelEdit = true;
+                return;
+            }
+            else if (!GitHub.FileSystem.IsValidGitWindowsUrlSafeName(newName))
+            {
+                Program.ToolTip.Show(_boundTree, Program.Lang.Strings.GitHubStrings.Explorer_InvalidCharToolTip,
+                    $"{GitHub.FileSystem.InvalidCharsToolTip}\r\n{GitHub.FileSystem.InvalidNamesToolTip}",
+                    Properties.Resources.checker_disabled, item.Bounds.Location);
+
+                item?.Remove();
+                e.CancelEdit = true;
+                return;
+            }
+            else if (_boundList.Items.Cast<ListViewItem>().Any(i => i != item && string.Equals(i.Text, newName, StringComparison.OrdinalIgnoreCase)))
+            {
+                Program.ToolTip.Show(_boundTree, Program.Lang.Strings.GitHubStrings.Explorer_EntryExists, string.Empty, Properties.Resources.checker_disabled, item.Bounds.Location);
+
+                item?.Remove();
+                e.CancelEdit = true;
                 return;
             }
 
-            try
+            if (item.Tag is string str_tag && str_tag == "NEWFOLDER_PENDING")
             {
-                list.Cursor = Cursors.WaitCursor;
-                list.BeginUpdate();
+                item.Text = newName;
+                NewDirectory(item, e);
+            }
+            else
+            {
+                item.Text = newName;
+            }
 
-                // Store selected items before clearing
-                var selectedItemsInfo = list.SelectedItems.Cast<ListViewItem>().Where(i => i.Tag is RepositoryContent rc).Select(i => new { Path = GitHub.FileSystem.GetParent(((RepositoryContent)i.Tag).Path), Name = i.Text }).ToList();
-
-                if (list.Columns.Count == 0)
+            if (item.Tag is RepositoryContent content)
+            {
+                if (content.Type == ContentType.Dir)
                 {
-                    Program.Log?.Write(LogEventLevel.Information, "PopulateListViewAsync initialized columns");
-
-                    list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Name, 230);
-                    list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Type, 200);
-                    list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Size, 80);
-                    list.Columns.Add("MD5", 120);
-                    list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_URL, 220);
+                    RenameDirectory(item, e);
                 }
-
-                if (!Cache.Contains(path))
+                else if (content.Type == ContentType.File)
                 {
-                    Program.Log?.Write(LogEventLevel.Warning, $"PopulateListViewAsync: DirectoryMap has no entry for '{path}'");
-                    list.Items.Clear();
-                    return;
-                }
+                    string oldText = content.Name;
+                    string oldBaseName = Path.GetFileNameWithoutExtension(oldText);
+                    string newBaseName = Path.GetFileNameWithoutExtension(newName);
+                    string ext = Path.GetExtension(oldText);
+                    string parentDirPath = FileSystem.CurrentPath;
 
-                list.Items.Clear();
+                    // Determine linked extension
+                    string linkedExt = ext.Equals(".wpth", StringComparison.OrdinalIgnoreCase) ? ".wptp"
+                                     : ext.Equals(".wptp", StringComparison.OrdinalIgnoreCase) ? ".wpth"
+                                     : null;
 
-                int count = 0;
-                foreach (Entry entry in Cache.GetSubEntries(NormalizePath(path), sort: Cache.EntrySort.Default))
-                {
-                    if (entry.Content is null) continue;
-
-                    cts?.Token.ThrowIfCancellationRequested();
-
-                    bool isHidden = entry.Name.StartsWith(".");
-                    if (!isHidden || isHidden && showHiddenFiles)
+                    if (linkedExt != null)
                     {
-                        ListViewItem item = new(entry.Name) { Tag = entry.Content };
-
-                        item.SubItems.Add(FileTypeProvider?.Invoke(entry.Content) ?? Program.Lang.Strings.Extensions.File);
-
-                        long size = entry.Type == EntryType.Dir && Cache.Contains(entry.Path) ? Cache.GetSize(entry.Path) : entry.Size;
-
-                        item.SubItems.Add(size.ToStringFileSize());
-                        item.SubItems.Add(Cache.ShaToMd5(entry.Content.Sha).ToUpper());
-                        item.SubItems.Add(entry.Content.HtmlUrl);
-                        item.SubItems.Add(entry.Content.Content);
-
-                        if (entry.Type == EntryType.Dir) item.ImageKey = "folder";
-                        else if (entry.Name.EndsWith(".wpth", StringComparison.OrdinalIgnoreCase)) item.ImageKey = "wpth";
-                        else if (entry.Name.EndsWith(".wptp", StringComparison.OrdinalIgnoreCase)) item.ImageKey = "wptp";
-                        else if (!string.IsNullOrWhiteSpace(entry.Name))
-                        {
-                            string ext = GetExtension(entry.Name);
-                            if (!string.IsNullOrWhiteSpace(ext))
+                        // Find linked item BEFORE any rename
+                        ListViewItem linkedItem = _boundList.Items.Cast<ListViewItem>()
+                            .FirstOrDefault(i =>
                             {
-                                if (!list.SmallImageList.Images.ContainsKey(ext))
+                                if (i.Tag is RepositoryContent rc)
                                 {
-                                    using (Icon ico = NativeMethods.Shell32.GetIconFromExtension(ext, true))
-                                    using (Icon ico_resized = ico?.FromSize(16))
-                                    using (Bitmap bmp = ico_resized?.ToBitmap())
-                                    {
-                                        list.AddImagesToSmallImageList(new List<(Image, string)> { (bmp, ext) });
-                                    }
-                                    ProcessGhostIcons(list.SmallImageList);
+                                    string rcBase = Path.GetFileNameWithoutExtension(rc.Name);
+                                    string rcExt = Path.GetExtension(rc.Name);
+                                    bool match = rcBase.Equals(oldBaseName, StringComparison.OrdinalIgnoreCase)
+                                                 && rcExt.Equals(linkedExt, StringComparison.OrdinalIgnoreCase);
+                                    if (match) return match;
                                 }
+                                return false;
+                            });
 
-                                if (!list.LargeImageList.Images.ContainsKey(ext))
-                                {
-                                    using (Icon ico = NativeMethods.Shell32.GetIconFromExtension(ext))
-                                    using (Icon ico_resized = ico?.FromSize(48))
-                                    {
-                                        list.LargeImageList.Images.Add(ext, ico_resized?.ToBitmap());
-                                        ProcessGhostIcons(list.LargeImageList);
-                                    }
-                                }
-
-                                item.ImageKey = ext;
-                            }
-                            else
-                            {
-                                item.ImageKey = "file";
-                            }
-                        }
-                        else item.ImageKey = "file";
-
-                        if (isHidden) item.ImageKey = $"ghost_{item.ImageKey}";
-
-                        list.Items.Add(item);
-
-                        // Restore selection if matches old path & name (with blue focus)
-                        if (selectedItemsInfo.Any(si => string.Equals(si.Path, GitHub.FileSystem.GetParent(entry.Path), StringComparison.OrdinalIgnoreCase) && string.Equals(si.Name, entry.Name, StringComparison.OrdinalIgnoreCase)))
+                        if (linkedItem is not null)
                         {
-                            item.Selected = true;
-                            item.EnsureVisible();
-                            list.HideSelection = false;
-                            list.Focus();
+                            // Rename linked item after main item
+                            item.Text = newName;
+                            await RenameFile(item, parentDirPath, e);
+
+                            string linkedNewName = $"{newBaseName}{linkedExt}";
+                            linkedItem.Text = linkedNewName;
+                            await RenameFile(linkedItem, parentDirPath);
                         }
                     }
+                    else
+                    {
+                        // Just rename main item
+                        item.Text = newName;
+                        await RenameFile(item, parentDirPath, e);
+                    }
+                }
+            }
+        }
 
-                    count++;
-                    if (count % 50 == 0) await Task.Yield();
+        private static async void List_KeyUp(object sender, KeyEventArgs e)
+        {
+            ListViewItem item = _boundList.SelectedItems.Count > 0 ? _boundList.SelectedItems[0] : null;
+
+            if (e.KeyCode == Keys.Enter)
+            {
+                if (itemBeingEdited is not null && item is not null)
+                {
+                    item?.EndEdit();
+                    e.Handled = true; // prevent beep sound
+                }
+                else if (_boundList.SelectedItems.Count > 0 && item.Tag is RepositoryContent rc && rc.Type == ContentType.Dir)
+                {
+                    // Navigate into directory
+                    await GitHub.FileSystem.NavigateTo(rc.Path);
+                }
+
+                itemBeingEdited = null;
+            }
+            else if (e.KeyCode == Keys.F2 || (e.Control && e.KeyCode == Keys.R))
+            {
+                // Rename selected file or directory
+                item?.BeginEdit();
+            }
+            else if (e.KeyCode == Keys.Back || (e.Alt && e.KeyCode == Keys.Left))
+            {
+                // Navigate backward
+                if (FileSystem.CanGoBack) await GitHub.FileSystem.GoBack();
+            }
+            else if (e.Alt && e.KeyCode == Keys.Right)
+            {
+                // Navigate forward
+                if (FileSystem.CanGoForward) await GitHub.FileSystem.GoForward();
+            }
+            else if (e.Control && e.KeyCode == Keys.A)
+            {
+                // Select all items
+                foreach (ListViewItem childItem in _boundList.Items) childItem.Selected = true;
+            }
+            else if (e.Control && e.KeyCode == Keys.N)
+            {
+                // Initiate new directory creation
+                Init_NewDirectory();
+            }
+            else if (e.KeyCode == Keys.Delete)
+            {
+                // Delete selected file or directory
+                DeleteSelectedElementsAsync();
+            }
+            else if (e.KeyCode == Keys.F5)
+            {
+                // Refresh current directory
+                await GitHub.FileSystem.RefreshAsync();
+            }
+            else if (e.Control && e.KeyCode == Keys.C)
+            {
+                // Copy selected item(s)
+                Init_Copy();
+            }
+            else if (e.Control && e.KeyCode == Keys.X)
+            {
+                // Cut selected item(s)
+                Init_Cut();
+            }
+            else if (e.Control && e.KeyCode == Keys.V)
+            {
+                // Paste item(s)
+                Paste();
+            }
+            else if (e.Control && e.KeyCode == Keys.Shift && e.KeyCode == Keys.N)
+            {
+                // Create new file
+            }
+            else if (e.Alt && e.KeyCode == Keys.Enter)
+            {
+                // Show properties/details of selected item
+            }
+            else if (e.Control && e.KeyCode == Keys.F)
+            {
+                // Search in current directory
+            }
+        }
+
+        private static void List_BeforeLabelEdit(object sender, LabelEditEventArgs e)
+        {
+            itemBeingEdited = _boundList.Items[e.Item];
+            SelectLabelEditWithoutExtension(itemBeingEdited);
+        }
+
+        private static void ListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            StatusLabelChanged?.Invoke(null, FileSystem.StatusLabel);
+            CanDoIOChanged?.Invoke(null, _boundList.SelectedItems.Count > 0);
+        }
+
+        private static void ListView_ItemChecked(object sender, ItemCheckedEventArgs e)
+        {
+            StatusLabelChanged?.Invoke(null, FileSystem.StatusLabel);
+        }
+
+        private static void ListView_ItemActivate(object sender, EventArgs e)
+        {
+            StatusLabelChanged?.Invoke(null, FileSystem.StatusLabel);
+        }
+
+        #region Context Menus Event Handlers
+
+        private static void Menu_ViewItem_Click(object sender, EventArgs e)
+        {
+            if (sender is not ToolStripMenuItem item) return;
+
+            foreach (ToolStripMenuItem other in menu_view.DropDown.Items) if (other != item) other.Checked = false;
+
+            (string label, Bitmap icon, Bitmap glyph, View view) viewData = ((string label, Bitmap icon, Bitmap glyph, View view))item.Tag;
+            _boundList.View = viewData.view;
+            Forms.GitHubMgrForm.UpdateViewButton(viewData);
+            item.Checked = true;
+        }
+
+        private static void Menu_NewFolder_Click(object sender, EventArgs e) => Init_NewDirectory();
+
+        private static void Menu_paste_Click(object sender, EventArgs e)
+        {
+            Paste();
+        }
+
+        private static void Menu_Open_Click(object sender, EventArgs e) => FileSystem.List_DoubleClick(_boundList, new());
+
+        private static void Menu_CopyPath_Click(object sender, EventArgs e)
+        {
+            if (_boundList.SelectedItems.Count > 0)
+            {
+                var rc = _boundList.SelectedItems[0].Tag as RepositoryContent;
+                Clipboard.SetText(rc.Path);
+            }
+        }
+
+        private static void Menu_CopyURL_Click(object sender, EventArgs e)
+        {
+            if (_boundList.SelectedItems.Count > 0)
+            {
+                var rc = _boundList.SelectedItems[0].Tag as RepositoryContent;
+                Clipboard.SetText(rc.HtmlUrl);
+            }
+        }
+
+        private static void Menu_Copy_Click(object sender, EventArgs e) => Init_Copy();
+
+        private static void Menu_Cut_Click(object sender, EventArgs e) => Init_Cut();
+
+        private static void Menu_Delete_Click(object sender, EventArgs e) => DeleteSelectedElementsAsync();
+
+        private static void Menu_Rename_Click(object sender, EventArgs e) => _boundList.SelectedItems[0]?.BeginEdit();
+
+        private static void Menu_ItemProperties_Click(object sender, EventArgs e)
+        {
+            // TODO: Show properties
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Files\Directories operations
+
+        /// <summary>
+        /// Navigates to the specified repository path, updates navigation history,
+        /// repopulates the ListView, and selects the corresponding TreeView node.
+        /// </summary>
+        /// <param name="newPath">The target repository path.</param>
+        /// <param name="list">The ListView to update.</param>
+        /// <param name="tree">The TreeView to update.</param>
+        /// <param name="updateStacks">Whether to update back/forward navigation history.</param>
+        /// <returns>A task representing the navigation operation.</returns>
+        /// <summary>
+        /// Central method to navigate to a new path. Handles stack updates consistently.
+        /// </summary>
+        /// Central method to navigate to a new path. Handles stack updates consistently.
+        /// </summary>
+        public static async Task NavigateTo(string newPath, bool addToHistory = true)
+        {
+            if (string.IsNullOrEmpty(newPath)) return;
+            bool willPlayAudio = CurrentPath is not null && !CurrentPath.Equals(newPath, StringComparison.OrdinalIgnoreCase);
+
+            // Ensure path starts with root
+            if (!newPath.StartsWith(_root, StringComparison.OrdinalIgnoreCase))
+                newPath = _root + "/" + newPath.TrimStart('/');
+
+            string resolvedPath = newPath;
+            while (!Cache.Contains(resolvedPath) && !string.Equals(resolvedPath, _root, StringComparison.OrdinalIgnoreCase))
+                resolvedPath = UppermostRoot(resolvedPath) ?? _root;
+
+            if (string.Equals(resolvedPath, CurrentPath, StringComparison.OrdinalIgnoreCase))
+            {
+                if (addToHistory) forwardStack.Clear();
+                return;
+            }
+
+            // Remember currently selected item's Path
+            string selectedPath = _boundList.SelectedItems.Count > 0 && _boundList.SelectedItems[0].Tag is RepositoryContent rc
+                ? rc.Path
+                : null;
+
+            if (addToHistory)
+            {
+                backStack.Push(new NavigationState
+                {
+                    Path = CurrentPath,
+                    SelectedItemPath = selectedPath
+                });
+                forwardStack.Clear();
+            }
+
+            CurrentPath = resolvedPath;
+            Navigated?.Invoke(null, CurrentPath);
+
+            await PopulateListViewAsync(CurrentPath);
+
+            // Restore previously selected item by Path
+            if (!string.IsNullOrEmpty(selectedPath))
+            {
+                ListViewItem itemToSelect = _boundList.Items
+                    .Cast<ListViewItem>()
+                    .FirstOrDefault(i => i.Tag is RepositoryContent rc && rc.Path == selectedPath);
+
+                if (itemToSelect != null)
+                {
+                    itemToSelect.Selected = true;
+                    itemToSelect.EnsureVisible();
+                    _boundList.HideSelection = false;
+                    _boundList.Focus();
+                }
+            }
+
+            UpdateTreeNode(CurrentPath, true);
+
+            if (willPlayAudio)
+            {
+                StopAudio();
+                PlayAudio(Program.TM.Sounds.Snd_Explorer_Navigating);
+            }
+        }
+
+        /// <summary>
+        /// Go back in history.
+        /// </summary>
+        public static async Task GoBack()
+        {
+            if (!CanGoBack) return;
+
+            var previousState = backStack.Pop();
+            forwardStack.Push(new NavigationState
+            {
+                Path = CurrentPath,
+                SelectedItemPath = _boundList.SelectedItems.Count > 0 && _boundList.SelectedItems[0].Tag is RepositoryContent rc
+                    ? rc.Path
+                    : null
+            });
+
+            await NavigateTo(previousState.Path, addToHistory: false);
+
+            // Restore selection by Path
+            if (!string.IsNullOrEmpty(previousState.SelectedItemPath))
+            {
+                ListViewItem itemToSelect = _boundList.Items
+                    .Cast<ListViewItem>()
+                    .FirstOrDefault(i => i.Tag is RepositoryContent rc && rc.Path == previousState.SelectedItemPath);
+
+                if (itemToSelect != null)
+                {
+                    itemToSelect.Selected = true;
+                    itemToSelect.EnsureVisible();
+                    _boundList.HideSelection = false;
+                    _boundList.Focus();
+                }
+            }
+
+
+        }
+
+        /// <summary>
+        /// Go forward in history.
+        /// </summary>
+        public static async Task GoForward()
+        {
+            if (!CanGoForward) return;
+
+            var nextState = forwardStack.Pop();
+            backStack.Push(new NavigationState
+            {
+                Path = CurrentPath,
+                SelectedItemPath = _boundList.SelectedItems.Count > 0 && _boundList.SelectedItems[0].Tag is RepositoryContent rc
+                    ? rc.Path
+                    : null
+            });
+
+            await NavigateTo(nextState.Path, addToHistory: false);
+
+            // Restore selection by Path
+            if (!string.IsNullOrEmpty(nextState.SelectedItemPath))
+            {
+                ListViewItem itemToSelect = _boundList.Items
+                    .Cast<ListViewItem>()
+                    .FirstOrDefault(i => i.Tag is RepositoryContent rc && rc.Path == nextState.SelectedItemPath);
+
+                if (itemToSelect != null)
+                {
+                    itemToSelect.Selected = true;
+                    itemToSelect.EnsureVisible();
+                    _boundList.HideSelection = false;
+                    _boundList.Focus();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Navigate to parent directory.
+        /// </summary>
+        public static async Task GoUp()
+        {
+            if (!CanGoUp) return;
+
+            string parent = GetParent(CurrentPath) ?? _root;
+
+            // Push current state to back stack
+            backStack.Push(new NavigationState
+            {
+                Path = CurrentPath,
+                SelectedItemPath = _boundList.SelectedItems.Count > 0 && _boundList.SelectedItems[0].Tag is RepositoryContent rc
+                    ? rc.Path
+                    : null
+            });
+
+            forwardStack.Clear();
+
+            await NavigateTo(parent, addToHistory: false);
+
+            // After moving up, select the folder we came from using full path
+            if (!string.IsNullOrEmpty(_lastEnteredFolderPath))
+            {
+                ListViewItem itemToSelect = _boundList.Items
+                    .Cast<ListViewItem>()
+                    .FirstOrDefault(i => i.Tag is RepositoryContent rc && rc.Path == _lastEnteredFolderPath);
+
+                if (itemToSelect != null)
+                {
+                    itemToSelect.Selected = true;
+                    itemToSelect.EnsureVisible();
+                    _boundList.HideSelection = false;
+                    _boundList.Focus();
+                }
+            }
+        }
+
+        static async void NewDirectory(ListViewItem item, LabelEditEventArgs e = null)
+        {
+            _boundbreadcrumbControl.StartMarquee();
+
+            string initPath = FileSystem.CurrentPath;
+            string itemText = item.Text.Trim();
+            string path = $"{GitHub.FileSystem.CurrentPath}/{itemText}";
+
+            try
+            {
+                RepositoryContent dirContent = (await GitHub.FileSystem.CreateDirectoryAsync(path, cts)).Content;
+                item.Tag = dirContent;
+
+                if (initPath.Equals(FileSystem.CurrentPath, StringComparison.OrdinalIgnoreCase))
+                {
+                    await GitHub.FileSystem.UpdateExplorerView(CurrentPath);
+
+                    _boundList.Items.Cast<ListViewItem>().Where(i => i.Tag is RepositoryContent && i.Text.Equals(itemText, StringComparison.OrdinalIgnoreCase)).ToList()
+                        .ForEach(i => i.Selected = true);
                 }
             }
             catch (Exception ex)
             {
                 Forms.BugReport.ThrowError(ex);
-                Program.Log?.Write(LogEventLevel.Error, $"PopulateListViewAsync failed for '{path}'", ex);
+                e?.CancelEdit = true;
             }
             finally
             {
-                list.EndUpdate();
-                list.Cursor = Cursors.Default;
-                Program.Log?.Write(LogEventLevel.Information, $"PopulateListViewAsync finished for '{path}'");
+                _boundbreadcrumbControl.StopMarquee();
             }
+            return;
         }
 
-        /// <summary>
-        /// Clears all caches, fetches repository data again, rebuilds the directory tree,
-        /// and restores the previously selected path.
-        /// </summary>
-        /// <param name="tree">TreeView to refresh.</param>
-        /// <param name="list">ListView to refresh.</param>
-        /// <param name="breadCrumb">Breadcrumb control to update.</param>
-        /// <param name="cts">Optional cancellation token source.</param>
-        /// <returns>A task representing the refresh operation.</returns>
-        public static async Task RefreshAsync(UI.WP.TreeView tree, UI.WP.ListView list, UI.WP.Breadcrumb breadCrumb, CancellationTokenSource cts = null)
+        static async void RenameDirectory(ListViewItem item, LabelEditEventArgs e)
         {
-            Program.Log?.Write(LogEventLevel.Information, "RefreshAsync started");
+            string initPath = FileSystem.CurrentPath;
+            string oldPath = (item.Tag as RepositoryContent).Path;
+            string itemText = item.Text.Trim();
+            string newPath = oldPath.Substring(0, oldPath.LastIndexOf('/') + 1) + itemText;
 
-            cts ??= new();
+            if (oldPath.Equals(newPath, StringComparison.OrdinalIgnoreCase)) return;
 
-            string pathBeforeRefresh = CurrentPath;
-
-            // Clear caches first
-            Cache.Clear();
-
-            breadCrumb?.StartMarquee();
+            _boundbreadcrumbControl.StartMarquee();
 
             try
             {
-                Program.Log?.Write(LogEventLevel.Information, "Refreshing: FetchRecursive started");
+                item.Tag = (await GitHub.FileSystem.MoveDirectoryAsync(oldPath, newPath, cts)).Content;
 
-                List<RepositoryContent> entries = [];
-                await FetchRecursive(_root, entries, null, cts);
-
-                // After this, store entries in _infoCache
-                foreach (var entry in entries)
+                if (initPath.Equals(FileSystem.CurrentPath, StringComparison.OrdinalIgnoreCase))
                 {
-                    if (entry == null) continue;
+                    await GitHub.FileSystem.UpdateExplorerView(FileSystem.CurrentPath);
 
-                    var e = new Entry
-                    {
-                        Path = entry.Path,
-                        Content = entry,
-                        Type = entry.Type == Octokit.ContentType.Dir ? FileSystem.EntryType.Dir : FileSystem.EntryType.File,
-                        FetchedAt = DateTime.UtcNow
-                    };
-
-                    Cache.Add(e);
+                    _boundList.Items.Cast<ListViewItem>().Where(i => i.Tag is RepositoryContent && i.Text.Equals(itemText, StringComparison.OrdinalIgnoreCase)).ToList()
+                        .ForEach(i => i.Selected = true);
                 }
-
-                Program.Log?.Write(LogEventLevel.Information, $"RefreshAsync: fetched {entries.Count} entries");
-
-                if (tree.InvokeRequired)
-                {
-                    Program.Log?.Write(LogEventLevel.Information, "Invoking BuildTree on UI thread");
-                    tree.Invoke(new MethodInvoker(() => BuildTree(tree)));
-                }
-                else
-                {
-                    Program.Log?.Write(LogEventLevel.Information, "Building tree on same thread");
-                    BuildTree(tree);
-                }
-
-                Program.Log?.Write(LogEventLevel.Information, $"Navigating back to '{pathBeforeRefresh}'");
-                await NavigateTo(pathBeforeRefresh, list, tree, false);
             }
-            catch (Exception ex)
+            catch
             {
-                Program.Log?.Write(LogEventLevel.Error, "RefreshAsync failed", ex);
-                throw;
+                e.CancelEdit = true;
             }
             finally
             {
-                Program.Log?.Write(LogEventLevel.Information, "RefreshAsync UI finalization");
+                _boundbreadcrumbControl.StopMarquee();
+            }
+        }
 
-                breadCrumb?.StopMarquee();
-                breadCrumb?.FinishLoadingAnimation();
-                breadCrumb.BoundTreeView = tree;
+        static async Task RenameFile(ListViewItem item, string parentDirPath, LabelEditEventArgs e = null)
+        {
+            string oldPath = (item.Tag as RepositoryContent).Path;
+            string itemText = item.Text.Trim();
+            string newPath = $"{GitHub.FileSystem.GetParent(oldPath)}/{itemText}";
 
-                HookEvents(tree, list);
+            if (oldPath.Equals(newPath, StringComparison.OrdinalIgnoreCase)) return;
 
-                _ = PopulateListViewAsync(list, pathBeforeRefresh, cts);
+            _boundbreadcrumbControl.StartMarquee();
 
-                if (tree.Nodes[0] is not null)
+            try
+            {
+                item.Tag = (await GitHub.FileSystem.MoveFileAsync(oldPath, newPath, cts)).Content;
+
+                if (parentDirPath.Equals(FileSystem.CurrentPath, StringComparison.OrdinalIgnoreCase))
                 {
-                    tree.SelectedNode = tree.Nodes[0];
+                    await GitHub.FileSystem.UpdateExplorerView(FileSystem.CurrentPath);
+
+                    _boundList.Items.Cast<ListViewItem>().Where(i => i.Tag is RepositoryContent && i.Text.Equals(itemText, StringComparison.OrdinalIgnoreCase)).ToList()
+                        .ForEach(i => i.Selected = true);
+                }
+            }
+            catch (Exception ex)
+            {
+                Forms.BugReport.ThrowError(ex);
+                e?.CancelEdit = true;
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Error in renaming file {oldPath} to {itemText}", ex);
+            }
+            finally
+            {
+                _boundbreadcrumbControl.StopMarquee();
+            }
+        }
+
+        public static async void Paste()
+        {
+            if ((copiedItems?.Count ?? 0) > 0 || (cutItems?.Count ?? 0) > 0)
+            {
+                string initPath = GitHub.FileSystem.CurrentPath;
+                string destDir = GitHub.FileSystem.NormalizePath(initPath);
+
+                _boundbreadcrumbControl.Value = 0;
+                _boundbreadcrumbControl.StartMarquee();
+
+                // Helper to process items
+                async Task ProcessItemsAsync(IList<ListViewItem> items, bool isCopy)
+                {
+                    _boundbreadcrumbControl.Value = 0;
+                    _boundbreadcrumbControl.StartMarquee();
+
+                    // Separate files and directories
+                    string[] filePaths = [.. items.Select(i => i.Tag as RepositoryContent).Where(rc => rc != null && rc.Type == ContentType.File).Select(rc => rc.Path)];
+                    string[] dirPaths = [.. items.Select(i => i.Tag as RepositoryContent).Where(rc => rc != null && rc.Type == ContentType.Dir).Select(rc => rc.Path)];
+
+                    // Files
+                    if (filePaths.Length > 0)
+                    {
+                        if (isCopy)
+                        {
+                            await GitHub.FileSystem.CopyFilesAsync(filePaths, destDir, cts, progress =>
+                            {
+                                if (_boundbreadcrumbControl.IsMarquee) _boundbreadcrumbControl.StopMarquee();
+                                _boundbreadcrumbControl.Value = progress;
+                            });
+
+                            if (!_boundbreadcrumbControl.IsMarquee) _boundbreadcrumbControl.StartMarquee();
+                        }
+                        else
+                        {
+                            await GitHub.FileSystem.MoveFilesAsync(filePaths, destDir, cts, progress =>
+                            {
+                                if (_boundbreadcrumbControl.IsMarquee) _boundbreadcrumbControl.StopMarquee();
+                                _boundbreadcrumbControl.Value = progress;
+                            });
+
+                            if (!_boundbreadcrumbControl.IsMarquee) _boundbreadcrumbControl.StartMarquee();
+                        }
+                    }
+
+                    // Directories
+                    if (dirPaths.Length > 0)
+                    {
+                        if (isCopy)
+                        {
+                            await GitHub.FileSystem.CopyDirectoriesAsync(dirPaths, destDir, cts, progress =>
+                            {
+                                if (_boundbreadcrumbControl.IsMarquee) _boundbreadcrumbControl.StopMarquee();
+                                _boundbreadcrumbControl.Value = progress;
+                            });
+
+                            if (!_boundbreadcrumbControl.IsMarquee) _boundbreadcrumbControl.StartMarquee();
+                        }
+                        else
+                        {
+                            await GitHub.FileSystem.MoveDirectoriesAsync(dirPaths, destDir, cts, progress =>
+                            {
+                                if (_boundbreadcrumbControl.IsMarquee) _boundbreadcrumbControl.StopMarquee();
+                                _boundbreadcrumbControl.Value = progress;
+                            });
+
+                            if (!_boundbreadcrumbControl.IsMarquee) _boundbreadcrumbControl.StartMarquee();
+                        }
+                    }
+
+                    // Update ListView items
+                    foreach (ListViewItem item in items)
+                    {
+                        if (item.Tag is RepositoryContent rc)
+                        {
+                            string newPath = GitHub.FileSystem.NormalizePath($"{destDir}/{FileSystem.FileName(rc.Path)}");
+                            var entry = await GitHub.FileSystem.GetInfoRefreshAsync(newPath, cts: cts);
+                            item.Tag = entry?.Content;
+                        }
+
+                        if (!item.Text.StartsWith(".")) item.ImageKey = item.ImageKey.Replace("ghost_", string.Empty);
+                        if (!isCopy) item.Remove();
+                    }
+
+                    _boundbreadcrumbControl.StopMarquee();
+                }
+
+                // Process copied items
+                if ((copiedItems?.Count ?? 0) > 0) await ProcessItemsAsync(copiedItems, isCopy: true);
+
+                // Process cut items
+                if ((cutItems?.Count ?? 0) > 0)
+                {
+                    await ProcessItemsAsync(cutItems, isCopy: false);
+                }
+
+                if (initPath.Equals(FileSystem.CurrentPath, StringComparison.OrdinalIgnoreCase))
+                {
+                    await GitHub.FileSystem.UpdateExplorerView(FileSystem.CurrentPath);
+
+                    HashSet<string> copiedNames =
+                    [
+                        .. (copiedItems ?? [])
+                        .Select(i => i.Text)
+                        .Where(t => !string.IsNullOrEmpty(t))
+                    ];
+
+                    HashSet<string> cutNames =
+                    [
+                        .. (cutItems ?? [])
+                        .Select(i => i.Text)
+                        .Where(t => !string.IsNullOrEmpty(t))
+                    ];
+
+                    _boundList.Items
+                        .Cast<ListViewItem>()
+                        .Where(i => i.Tag is RepositoryContent rc && (copiedNames.Contains(i.Text) || cutNames.Contains(i.Text)))
+                        .ToList()
+                        .ForEach(i => i.Selected = true);
+                }
+
+                // Remove cut items from memory
+                if ((cutItems?.Count ?? 0) > 0) cutItems.Clear();
+
+                CanPasteChanged?.Invoke(null, CanPaste);
+
+                _boundbreadcrumbControl.FinishLoadingAnimation();
+            }
+        }
+
+        public static async void DeleteSelectedElementsAsync()
+        {
+            SelectedListViewItemCollection items = _boundList.SelectedItems;
+
+            if (items == null || items.Count == 0) return;
+
+            string initPath = GitHub.FileSystem.CurrentPath;
+            string destDir = GitHub.FileSystem.NormalizePath(initPath);
+
+            // Snapshot items (SelectedListViewItemCollection is not safe to mutate)
+            List<ListViewItem> snapshot = [.. items.Cast<ListViewItem>()];
+
+            try
+            {
+                _boundbreadcrumbControl.Value = 0;
+                _boundbreadcrumbControl.StartMarquee();
+
+                // Get all files from snapshot
+                List<RepositoryContent> allFiles = [.. snapshot.Select(i => i.Tag as RepositoryContent).Where(rc => rc != null && rc.Type != ContentType.Dir)];
+
+                List<string> filePaths;
+
+                if (allFiles.Count > 1)
+                {
+                    // Ask once for multiple files
+                    var totalSize = allFiles.Sum(rc => rc.Size);
+                    var result = Forms.GitHub_FileAction.ConfirmFilesDelete(allFiles.Count, totalSize);
+
+                    if (result == DialogResult.Yes)
+                    {
+                        filePaths = allFiles.Select(rc => rc.Path).ToList();
+                    }
+                    else
+                    {
+                        filePaths = [];
+                    }
                 }
                 else
                 {
-                    Program.Log?.Write(LogEventLevel.Warning, "Tree is empty after refresh; clearing UI lists");
-                    tree.Nodes.Clear();
-                    list.Items.Clear();
+                    // Single file: ask normally
+                    filePaths = [.. allFiles
+                        .Where(rc =>
+                        {
+                            ListViewItem lvi = snapshot.FirstOrDefault(x => (x.Tag as RepositoryContent)?.Path == rc.Path);
+                            Bitmap icon = null;
+
+                            if (lvi != null && lvi.ImageKey != null && _boundList.LargeImageList.Images.ContainsKey(lvi.ImageKey))
+                                icon = _boundList.LargeImageList.Images[lvi.ImageKey] as Bitmap;
+
+                            return Forms.GitHub_FileAction.ConfirmFileDelete(rc.Name, GitHub.FileSystem.FileTypeProvider?.Invoke(rc) ?? Program.Lang.Strings.Extensions.File, rc.Size, icon) == DialogResult.Yes;
+                        }).Select(rc => rc.Path)];
                 }
 
-                Program.Log?.Write(LogEventLevel.Information, "RefreshAsync completed");
+                // Get all directories from snapshot
+                List<RepositoryContent> allDirs = [.. snapshot.Select(i => i.Tag as RepositoryContent).Where(rc => rc != null && rc.Type == ContentType.Dir)];
+
+                List<string> dirPaths;
+
+                if (allDirs.Count > 1)
+                {
+                    // Ask once for multiple directories
+                    var result = Forms.GitHub_FileAction.ConfirmFoldersDelete(allDirs.Count, allDirs.Sum(rc => FileSystem.Cache.GetSize(rc.Path)));
+
+                    if (result == DialogResult.Yes)
+                    {
+                        dirPaths = [.. allDirs.Select(rc => rc.Path)];
+                    }
+                    else
+                    {
+                        dirPaths = [];
+                    }
+                }
+                else
+                {
+                    // Single directory: ask normally
+                    dirPaths = [.. allDirs.Where(rc => Forms.GitHub_FileAction.ConfirmFolderDelete(rc.Name, FileSystem.Cache.GetSize(rc.Path)) == DialogResult.Yes).Select(rc => rc.Path)];
+                }
+
+                async Task ProcessDeletionAsync(List<string> paths, bool isDirectory)
+                {
+                    if (paths.Count == 0) return;
+
+                    Action<int> progressCallback = progress =>
+                    {
+                        if (_boundbreadcrumbControl.IsMarquee) _boundbreadcrumbControl.StopMarquee();
+                        _boundbreadcrumbControl.Value = progress;
+                    };
+
+                    if (isDirectory)
+                        await GitHub.FileSystem.DeleteDirectoriesAsync(paths, cts, progressCallback);
+                    else
+                        await GitHub.FileSystem.DeleteFilesAsync(paths, cts, progressCallback);
+
+                    foreach (string path in paths)
+                    {
+                        ListViewItem lvi = snapshot.FirstOrDefault(i => (i.Tag as RepositoryContent)?.Path == path);
+                        lvi?.Remove();
+                    }
+
+                    if (isDirectory) GitHub.FileSystem.UpdateTreeNode(GitHub.FileSystem.CurrentPath, true);
+                }
+
+                if (filePaths.Count > 0) await ProcessDeletionAsync(filePaths, false);
+                if (dirPaths.Count > 0) await ProcessDeletionAsync(dirPaths, true);
+
+                items.Clear();
+
+                if (initPath.Equals(FileSystem.CurrentPath, StringComparison.OrdinalIgnoreCase))
+                    await GitHub.FileSystem.UpdateExplorerView(FileSystem.CurrentPath);
+            }
+            catch (Exception ex)
+            {
+                Forms.BugReport.ThrowError(ex);
+            }
+            finally
+            {
+                _boundbreadcrumbControl.FinishLoadingAnimation();
+                _boundbreadcrumbControl.StopMarquee();
+                _boundbreadcrumbControl.Value = 0;
+
+                StopAudio();
+                PlayAudio(Program.TM.Sounds.Snd_Explorer_EmptyRecycleBin);
             }
         }
+
+        #endregion
+
+        #region Files\Directories helpers
+
+        public static string StatusLabel
+        {
+            get
+            {
+                if (_boundList is null) return null;
+
+                if (_boundList?.Items.Count == 0)
+                {
+                    return $"0 {Program.Lang.Strings.GitHubStrings.Explorer_Item} |";
+                }
+
+                int totalItems = _boundList.Items.Count;
+                int selectedItems = _boundList.SelectedItems.Count;
+                long selectedSize = 0;
+
+                foreach (ListViewItem item in _boundList.SelectedItems)
+                {
+                    if (item.Tag is RepositoryContent entry)
+                    {
+                        if (entry.Type == ContentType.File)
+                        {
+                            selectedSize += entry.Size;
+                        }
+                        else if (entry.Type == ContentType.Dir)
+                        {
+                            selectedSize += FileSystem.Cache.GetSize(entry.Path);
+                        }
+                    }
+                }
+
+
+                string itemsText = $"{totalItems} {(totalItems > 1 ? Program.Lang.Strings.GitHubStrings.Explorer_Items : Program.Lang.Strings.GitHubStrings.Explorer_Item)} |";
+
+                if (selectedItems == 0)
+                {
+                    return itemsText;
+                }
+                else
+                {
+                    string selectedText = $"{selectedItems} {(selectedItems > 1 ? Program.Lang.Strings.GitHubStrings.Explorer_Items : Program.Lang.Strings.GitHubStrings.Explorer_Item)} {Program.Lang.Strings.GitHubStrings.Explorer_Selected}";
+                    return $"{itemsText} {selectedText} {selectedSize.ToStringFileSize()} |";
+                }
+            }
+        }
+
+        private static string GetAvailableItemText(string baseName)
+        {
+            string name = baseName;
+            int i = 1;
+
+            bool Exists(string text)
+            {
+                foreach (ListViewItem it in _boundList.Items)
+                    if (string.Equals(it.Text, text, StringComparison.OrdinalIgnoreCase))
+                        return true;
+                return false;
+            }
+
+            while (Exists(name))
+            {
+                i++;
+                name = $"{baseName} ({i})";
+            }
+
+            return name;
+        }
+
+        private static void SelectLabelEditWithoutExtension(ListViewItem item)
+        {
+            if (_boundList == null || item == null) return;
+
+            _boundList.BeginInvoke((Action)(() =>
+            {
+                IntPtr hEdit = NativeMethods.User32.FindEditControl(_boundList.Handle);
+                if (hEdit == IntPtr.Zero) return;
+
+                string text = item.Text;
+                int dot = text.LastIndexOf('.');
+                if (dot <= 0) return;
+
+                NativeMethods.User32.SendMessage(hEdit, NativeMethods.User32.EM_SETSEL, IntPtr.Zero, new IntPtr(dot));
+            }));
+        }
+
+        public static void CancelCurrentOperation()
+        {
+            cts?.Cancel();
+            cts = new();
+        }
+
+        #endregion
+
+        #region Audio helpers
+
+        private static void PlayAudio(string snd)
+        {
+            AltPlayingMethod = false;
+           
+            if (File.Exists(snd))
+            {
+                if (SP is not null)
+                {
+                    SP?.Stop();
+                    SP?.Dispose();
+                }
+
+                try
+                {
+                    using (FileStream FS = new(snd, System.IO.FileMode.Open, FileAccess.Read))
+                    {
+                        SP = new(FS);
+                        SP?.Load();
+                        SP?.Play();
+                    }
+                }
+                catch // Use method #2
+                {
+                    AltPlayingMethod = true;
+                    NativeMethods.Helpers.PlayAudio(snd);
+                }
+            }
+
+            else
+            {
+                if (AltPlayingMethod)
+                    NativeMethods.Helpers.StopAudio();
+
+                if (SP is not null)
+                {
+                    SP?.Stop();
+                    SP?.Dispose();
+                }
+            }
+        }
+
+        private static void StopAudio()
+        {
+            if (AltPlayingMethod) NativeMethods.Helpers.StopAudio();
+
+            if (SP is not null)
+            {
+                SP?.Stop();
+                SP?.Dispose();
+            }
+        }
+
+        #endregion
+
+        #region Search
 
         /// <summary>
         /// Asynchronously searches cached repository entries under the current path
@@ -1072,37 +2138,35 @@ namespace WinPaletter.GitHub
         /// <param name="keyword">The search keyword. Can include '*' and '?' as wildcards.</param>
         /// <param name="cts">Optional cancellation token source to cancel the search.</param>
         /// <returns>A task representing the asynchronous search operation.</returns>
-        public static async Task SearchAsync(UI.WP.ListView list, string keyword, CancellationTokenSource cts = null)
+        public static async Task SearchAsync(string keyword)
         {
             Program.Log?.Write(LogEventLevel.Information, $"SearchAsync started for keyword='{keyword}' in currentPath='{CurrentPath}'");
 
             if (string.IsNullOrWhiteSpace(keyword))
             {
                 // Reset view to current path
-                await PopulateListViewAsync(list, CurrentPath, cts);
+                await PopulateListViewAsync(CurrentPath);
                 return;
             }
 
-            cts ??= new();
-
-            if (list.InvokeRequired)
+            if (_boundList.InvokeRequired)
             {
-                list.Invoke(new Func<Task>(() => SearchAsync(list, keyword, cts)));
+                _boundList.Invoke(new Func<Task>(() => SearchAsync(keyword)));
                 return;
             }
 
             try
             {
-                list.Cursor = Cursors.WaitCursor;
-                list.BeginUpdate();
+                _boundList.Cursor = Cursors.WaitCursor;
+                _boundList.BeginUpdate();
 
-                if (list.Columns.Count == 0)
+                if (_boundList.Columns.Count == 0)
                 {
-                    list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Name, 230);
-                    list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Type, 200);
-                    list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Size, 80);
-                    list.Columns.Add("MD5", 120);
-                    list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_URL, 220);
+                    _boundList.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Name, 230);
+                    _boundList.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Type, 200);
+                    _boundList.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Size, 80);
+                    _boundList.Columns.Add("MD5", 120);
+                    _boundList.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_URL, 220);
                 }
 
                 bool hasWildcard = keyword.Contains("*") || keyword.Contains("?");
@@ -1149,7 +2213,7 @@ namespace WinPaletter.GitHub
 
                 Program.Log?.Write(LogEventLevel.Information, $"SearchAsync found {matches.Count} matching entries under '{CurrentPath}'");
 
-                list.Items.Clear();
+                _boundList.Items.Clear();
 
                 int count = 0;
                 foreach (var entry in matches)
@@ -1179,28 +2243,28 @@ namespace WinPaletter.GitHub
                             string ext = GetExtension(entry.Name);
                             if (!string.IsNullOrWhiteSpace(ext))
                             {
-                                if (!list.SmallImageList.Images.ContainsKey(ext))
+                                if (!_boundList.SmallImageList.Images.ContainsKey(ext))
                                 {
                                     using (Icon ico = NativeMethods.Shell32.GetIconFromExtension(ext, true))
                                     using (Icon ico_resized = ico?.FromSize(16))
                                     using (Bitmap bmp = ico_resized?.ToBitmap())
                                     {
-                                        list.AddImagesToSmallImageList(new List<(Image, string)>
+                                        _boundList.AddImagesToSmallImageList(new List<(Image, string)>
                                 {
                                     (bmp, ext)
                                 });
                                     }
 
-                                    ProcessGhostIcons(list.SmallImageList);
+                                    ProcessGhostIcons(_boundList.SmallImageList);
                                 }
 
-                                if (!list.LargeImageList.Images.ContainsKey(ext))
+                                if (!_boundList.LargeImageList.Images.ContainsKey(ext))
                                 {
                                     using (Icon ico = NativeMethods.Shell32.GetIconFromExtension(ext))
                                     using (Icon ico_resized = ico?.FromSize(48))
                                     {
-                                        list.LargeImageList.Images.Add(ext, ico_resized?.ToBitmap());
-                                        ProcessGhostIcons(list.LargeImageList);
+                                        _boundList.LargeImageList.Images.Add(ext, ico_resized?.ToBitmap());
+                                        ProcessGhostIcons(_boundList.LargeImageList);
                                     }
                                 }
 
@@ -1215,7 +2279,7 @@ namespace WinPaletter.GitHub
 
                         if (isHidden) item.ImageKey = $"ghost_{item.ImageKey}";
 
-                        list.Items.Add(item);
+                        _boundList.Items.Add(item);
                     }
 
                     count++;
@@ -1232,10 +2296,12 @@ namespace WinPaletter.GitHub
             }
             finally
             {
-                list.EndUpdate();
-                list.Cursor = Cursors.Default;
+                _boundList.EndUpdate();
+                _boundList.Cursor = Cursors.Default;
                 Program.Log?.Write(LogEventLevel.Information, $"SearchAsync finished for keyword='{keyword}' in currentPath='{CurrentPath}'");
             }
         }
+
+        #endregion
     }
 }

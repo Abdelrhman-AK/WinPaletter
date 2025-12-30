@@ -48,6 +48,22 @@ namespace WinPaletter.GitHub
             return path.Substring(secondLastSlash + 1, lastSlash - secondLastSlash - 1);
         }
 
+        /// <summary>
+        /// Gets the correct root to be used in navigation
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static string UppermostRoot(string path)
+        {
+            if (string.IsNullOrEmpty(path) || path == _root)
+                return null;
+
+            int lastSlash = path.LastIndexOf('/');
+            if (lastSlash < _root.Length) return _root; // important: < instead of <=
+
+            return path.Substring(0, lastSlash);
+        }
+
         public static string CombinePath(params string[] parts)
         {
             if (parts == null || parts.Length == 0) return string.Empty;
@@ -320,7 +336,7 @@ namespace WinPaletter.GitHub
 
                     reportProgress?.Invoke(100);
 
-                    if (workingDir.Equals(CurrentPath, StringComparison.OrdinalIgnoreCase)) await UpdateExplorerView(_boundTree, _boundList, workingDir, cts);
+                    if (workingDir.Equals(CurrentPath, StringComparison.OrdinalIgnoreCase)) await UpdateExplorerView(workingDir);
 
                     return newEntry;
                 }
@@ -331,7 +347,7 @@ namespace WinPaletter.GitHub
                 throw;
             }
 
-            if (workingDir.Equals(CurrentPath, StringComparison.OrdinalIgnoreCase)) await UpdateExplorerView(_boundTree, _boundList, workingDir, cts);
+            if (workingDir.Equals(CurrentPath, StringComparison.OrdinalIgnoreCase)) await UpdateExplorerView(workingDir);
 
             return null;
         }
@@ -352,7 +368,7 @@ namespace WinPaletter.GitHub
 
             Entry dirEntry = await Entry.FromRepositoryContent(await GetRepositoryContentAsync(GetParent(fileEntry.Path)));
             Cache.Add(dirEntry);
-            if (workingDir.Equals(CurrentPath, StringComparison.OrdinalIgnoreCase)) await UpdateExplorerView(_boundTree, _boundList, workingDir, cts);
+            if (workingDir.Equals(CurrentPath, StringComparison.OrdinalIgnoreCase)) await UpdateExplorerView(workingDir);
 
             Program.Log?.Write(LogEventLevel.Information, $"Directory {normalizedPath} created");
             return dirEntry;
@@ -477,7 +493,7 @@ namespace WinPaletter.GitHub
 
                 Entry copiedEntry = await GetInfoRefreshAsync(destPath, false, cts: cts);
                 Cache.Add(destPath, copiedEntry);
-                if (destDir.Equals(CurrentPath, StringComparison.OrdinalIgnoreCase)) await UpdateExplorerView(_boundTree, _boundList, destDir, cts);
+                if (destDir.Equals(CurrentPath, StringComparison.OrdinalIgnoreCase)) await UpdateExplorerView(destDir);
 
                 processed++;
                 reportProgress?.Invoke(processed * 100 / entriesToCopy.Count);
@@ -638,7 +654,7 @@ namespace WinPaletter.GitHub
                 await foreach (Entry entry in EnumerateEntriesAsync(destDirFull, recursive: true))
                 {
                     Cache.Add(entry);
-                    if (destDirRoot.Equals(CurrentPath, StringComparison.OrdinalIgnoreCase)) await UpdateExplorerView(_boundTree, _boundList, destDirRoot, cts);
+                    if (destDirRoot.Equals(CurrentPath, StringComparison.OrdinalIgnoreCase)) await UpdateExplorerView(destDirRoot);
                 }
             }
 
@@ -768,7 +784,7 @@ namespace WinPaletter.GitHub
 
                     Entry updatedEntry = await GetInfoRefreshAsync(dest, false);
                     Cache.Add(dest, updatedEntry);
-                    if (destDir.Equals(CurrentPath, StringComparison.OrdinalIgnoreCase)) await UpdateExplorerView(_boundTree, _boundList, destDir, cts);
+                    if (destDir.Equals(CurrentPath, StringComparison.OrdinalIgnoreCase)) await UpdateExplorerView(destDir);
                 }
             }
 
@@ -856,7 +872,7 @@ namespace WinPaletter.GitHub
             // This adds the new entry in cache too
             Entry updatedEntry = await GetInfoRefreshAsync(dest, false, cts: cts);
             Cache.Add(updatedEntry);
-            if (workingDir.Equals(CurrentPath, StringComparison.OrdinalIgnoreCase)) await UpdateExplorerView(_boundTree, _boundList, workingDir, cts);
+            if (workingDir.Equals(CurrentPath, StringComparison.OrdinalIgnoreCase)) await UpdateExplorerView(workingDir);
 
             return updatedEntry;
         }
@@ -1012,7 +1028,7 @@ namespace WinPaletter.GitHub
                     await foreach (Entry entry in EnumerateEntriesAsync(destDirFull, recursive: true))
                     {
                         Cache.Add(entry);
-                        if (destDirRoot.Equals(CurrentPath, StringComparison.OrdinalIgnoreCase)) await UpdateExplorerView(_boundTree, _boundList, destDirRoot, cts);
+                        if (destDirRoot.Equals(CurrentPath, StringComparison.OrdinalIgnoreCase)) await UpdateExplorerView(destDirRoot);
                     }
                 }
             }
@@ -1125,7 +1141,7 @@ namespace WinPaletter.GitHub
             Cache.Remove(srcDir);
             Entry updatedEntry = await Entry.FromRepositoryContent(await GetRepositoryContentAsync(dstRootFull));
             Cache.Add(updatedEntry);
-            if (dstRootFull.Equals(CurrentPath, StringComparison.OrdinalIgnoreCase)) await UpdateExplorerView(_boundTree, _boundList, dstRootFull, cts);
+            if (dstRootFull.Equals(CurrentPath, StringComparison.OrdinalIgnoreCase)) await UpdateExplorerView(dstRootFull);
 
             reportProgress?.Invoke(100);
 
@@ -1169,7 +1185,7 @@ namespace WinPaletter.GitHub
                     await Program.GitHub.Client.Repository.Content.DeleteFile(_owner, GitHub.Repository.repositoryName, file.Path, deleteRequest);
 
                     Cache.Remove(normalizedPath);
-                    if (workingDir.Equals(CurrentPath, StringComparison.OrdinalIgnoreCase)) await UpdateExplorerView(_boundTree, _boundList, workingDir, cts);
+                    if (workingDir.Equals(CurrentPath, StringComparison.OrdinalIgnoreCase)) await UpdateExplorerView(workingDir);
 
                     processed++;
                     reportProgress?.Invoke(processed * 100 / total);
@@ -1187,7 +1203,7 @@ namespace WinPaletter.GitHub
                     reportProgress?.Invoke(processed * 100 / total);
                 }
 
-                if (workingDir.Equals(CurrentPath, StringComparison.OrdinalIgnoreCase)) await UpdateExplorerView(_boundTree, _boundList, workingDir, cts);
+                if (workingDir.Equals(CurrentPath, StringComparison.OrdinalIgnoreCase)) await UpdateExplorerView(workingDir);
             }
 
             reportProgress?.Invoke(100);
@@ -1244,7 +1260,7 @@ namespace WinPaletter.GitHub
 
                     // Remove cache regardless of whether directory had files
                     Cache.Remove(dir);
-                    await UpdateExplorerView(_boundTree, _boundList, workingDir, cts);
+                    await UpdateExplorerView(workingDir);
 
                     processed++;
                     reportProgress?.Invoke(processed * 100 / total);
@@ -1267,19 +1283,19 @@ namespace WinPaletter.GitHub
             }
             catch (OperationCanceledException)
             {
-                await UpdateExplorerView(_boundTree, _boundList, CurrentPath, cts);
+                await UpdateExplorerView(CurrentPath);
                 reportProgress?.Invoke(0);
                 throw;
             }
             catch (Exception ex)
             {
-                await UpdateExplorerView(_boundTree, _boundList, CurrentPath, cts);
+                await UpdateExplorerView(CurrentPath);
                 Forms.BugReport.ThrowError(ex);
                 Program.Log?.Write(LogEventLevel.Error, $"DeleteDirectoriesAsync failed", ex);
             }
             finally
             {
-                await UpdateExplorerView(_boundTree, _boundList, CurrentPath, cts);
+                await UpdateExplorerView(CurrentPath);
                 reportProgress?.Invoke(100);
             }
         }

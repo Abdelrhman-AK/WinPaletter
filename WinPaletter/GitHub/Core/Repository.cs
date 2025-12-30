@@ -43,33 +43,36 @@ namespace WinPaletter.GitHub
         /// Lists all branches in the repository.
         /// </summary>
         /// <returns>A list of branch names.</returns>
-        public static async Task<List<string>> GetBranchesAsync()
+        public static async Task<List<Branch>> GetBranchesAsync()
         {
             IReadOnlyList<Branch> branches = await Program.GitHub.Client.Repository.Branch.GetAll(_owner, repositoryName);
-            return [.. branches.Select(b => b.Name)];
+            return [.. branches];
         }
 
         /// <summary>
-        /// Creates a new branch from a base branch.
+        /// Creates a new branch from a base branch and returns the created branch.
         /// </summary>
         /// <param name="newBranchName">Name of the new branch.</param>
         /// <param name="baseBranchName">Base branch to branch from (default is current _branch).</param>
-        /// <returns>True if created successfully, false otherwise.</returns>
-        public static async Task<bool> CreateBranchAsync(string newBranchName, string baseBranchName = "main")
+        /// <returns>The created <see cref="Branch"/> if successful, null otherwise.</returns>
+        public static async Task<Branch> CreateBranchAsync(string newBranchName, string baseBranchName = "main")
         {
             try
             {
                 // Get the reference for the base branch
                 var baseRef = await Program.GitHub.Client.Git.Reference.Get(_owner, repositoryName, $"heads/{baseBranchName}");
 
-                // Create the new branch
+                // Create the new branch reference
                 var newRef = new NewReference($"refs/heads/{newBranchName}", baseRef.Object.Sha);
                 await Program.GitHub.Client.Git.Reference.Create(_owner, repositoryName, newRef);
-                return true;
+
+                // Fetch and return the newly created branch
+                Branch createdBranch = await Program.GitHub.Client.Repository.Branch.Get(_owner, repositoryName, newBranchName);
+                return createdBranch;
             }
             catch
             {
-                return false;
+                return null;
             }
         }
 
@@ -178,79 +181,156 @@ namespace WinPaletter.GitHub
             }
         }
 
-        /// <summary>
-        /// Determines whether a forked repository branch is up-to-date with its upstream branch.
-        /// </summary>
-        /// <param name="originalOwner">The upstream repository owner.</param>
-        /// <param name="repoName">The repository name.</param>
-        /// <param name="branch">Branch name to compare. Defaults to <c>main</c>.</param>
-        /// <returns>
-        /// <c>true</c> if both branches share the same commit SHA; otherwise <c>false</c>.
-        /// </returns>
-        public static async Task<bool> IsSyncedAsync(string originalOwner = originalOwner, string repoName = repositoryName, string branch = "main")
+        public static async Task<bool> IsUpdatedAsync(Branch branch, string originalBranch = "main")
         {
             if (!Program.IsNetworkAvailable) return false;
 
             try
             {
-                Branch upstreamBranch = await _client.Repository.Branch.Get(originalOwner, repoName, branch).ConfigureAwait(false);
-                Branch forkBranch = await _client.Repository.Branch.Get(_owner, repoName, branch).ConfigureAwait(false);
+                // Use provided branch or fetch by name
+                Branch forkBranch = branch ?? await _client.Repository.Branch.Get(_owner, repositoryName, branch.Name).ConfigureAwait(false);
+                if (forkBranch?.Commit == null)
+                {
+                    Program.Log?.Write(LogEventLevel.Warning, $"Source branch '{branch.Name}' not found in {_owner}/{repositoryName}.");
+                    return false;
+                }
 
-                bool synced = upstreamBranch.Commit.Sha == forkBranch.Commit.Sha;
+                // Try to get target branch
+                Branch upstreamBranch = null;
+                try
+                {
+                    upstreamBranch = await _client.Repository.Branch.Get(originalOwner, repositoryName, originalBranch).ConfigureAwait(false);
+                }
+                catch (Octokit.NotFoundException)
+                {
+                    Program.Log?.Write(LogEventLevel.Information, $"Target branch '{originalBranch}' not found in {originalOwner}/{repositoryName}. Treating source branch as updated.");
+                    return true; // Treat as updated if target branch does not exist
+                }
 
-                Program.Log?.Write(LogEventLevel.Information, $"IsSynced = {synced} | upstream={upstreamBranch.Commit.Sha} | fork={forkBranch.Commit.Sha}");
+                // Compare (base = upstream, head = fork)
+                CompareResult compare = await _client.Repository.Commit.Compare(originalOwner, repositoryName, upstreamBranch.Commit.Sha, forkBranch.Commit.Sha);
 
-                return synced;
+                bool updated = compare.BehindBy == 0;
+
+                Program.Log?.Write(LogEventLevel.Information, $"IsUpdated({branch.Name}) = {updated} | AheadBy={compare.AheadBy} | BehindBy={compare.BehindBy}");
+                return updated;
             }
             catch (Exception ex)
             {
-                Program.Log?.Write(LogEventLevel.Error, $"Error checking sync state for {_owner}/{repoName}", ex);
+                Program.Log?.Write(LogEventLevel.Error, $"Error checking update state for {_owner}/{repositoryName}", ex);
+                return false;
+            }
+        }
+
+        public static async Task<bool> IsUpdatedAsync(string branch, string originalBranch = "main")
+        {
+            if (!Program.IsNetworkAvailable) return false;
+
+            try
+            {
+                // Get fork/source branch
+                Branch forkBranch = await _client.Repository.Branch.Get(_owner, repositoryName, branch).ConfigureAwait(false);
+                if (forkBranch?.Commit == null)
+                {
+                    Program.Log?.Write(LogEventLevel.Warning, $"Source branch '{branch}' not found in {_owner}/{repositoryName}.");
+                    return false;
+                }
+
+                // Try to get target branch
+                Branch upstreamBranch = null;
+                try
+                {
+                    upstreamBranch = await _client.Repository.Branch.Get(originalOwner, repositoryName, originalBranch).ConfigureAwait(false);
+                }
+                catch (Octokit.NotFoundException)
+                {
+                    Program.Log?.Write(LogEventLevel.Information, $"Target branch '{originalBranch}' not found in {originalOwner}/{repositoryName}. Treating source branch as updated.");
+                    return true; // Treat as updated if target branch does not exist
+                }
+
+                // Correct Compare order: base = upstream, head = fork
+                CompareResult compare = await _client.Repository.Commit.Compare(originalOwner, repositoryName, upstreamBranch.Commit.Sha, forkBranch.Commit.Sha);
+
+                // If BehindBy == 0, source branch is up-to-date (may be equal or ahead)
+                bool updated = compare.BehindBy == 0;
+
+                Program.Log?.Write(LogEventLevel.Information, $"IsUpdated = {updated} | AheadBy={compare.AheadBy} | BehindBy={compare.BehindBy}");
+                return updated;
+            }
+            catch (Exception ex)
+            {
+                Program.Log?.Write(LogEventLevel.Error, $"Error checking update state for {_owner}/{repositoryName}", ex);
                 return false;
             }
         }
 
         /// <summary>
-        /// Syncs a forked repository branch with its upstream repository using GitHub's
-        /// <c>merge-upstream</c> API endpoint.
+        /// Syncs a branch in a forked repository with a branch in the upstream repository.
         /// </summary>
-        /// <param name="originalOwner">The upstream repository owner.</param>
-        /// <param name="repoName">The repository name.</param>
-        /// <param name="branch">The branch to sync. Defaults to <c>main</c>.</param>
-        /// <returns>
-        /// <c>true</c> if the sync succeeds or the fork is already up-to-date; otherwise <c>false</c>.
-        /// </returns>
-        /// <remarks>
-        /// This method uses a raw <see cref="GitHubClient.Connection"/> call because Octokit
-        /// does not provide a wrapper for <c>merge-upstream</c>.
-        /// </remarks>
-        public static async Task<bool> SyncAsync(string originalOwner = originalOwner, string repoName = repositoryName, string branch = "main")
+        /// <param name="forkBranch">Branch in the fork to sync.</param>
+        /// <param name="upstreamBranch">Branch in the upstream repo to sync from.</param>
+        /// <returns>True if sync succeeds or already up-to-date; false otherwise.</returns>
+        public static async Task<bool> SyncBranchAsync(string forkBranch = "main", string upstreamBranch = "main")
         {
             if (!Program.IsNetworkAvailable) return false;
 
             try
             {
-                Uri endpoint = new($"repos/{_owner}/{repoName}/merge-upstream", UriKind.Relative);
+                // Get upstream branch
+                var upstream = await Program.GitHub.Client.Repository.Branch.Get(originalOwner, repositoryName, upstreamBranch);
+                if (upstream?.Commit == null) throw new Exception($"Upstream branch '{upstreamBranch}' not found.");
 
-                object payload = new
+                // Get fork branch
+                var fork = await Program.GitHub.Client.Repository.Branch.Get(FileSystem._owner, repositoryName, forkBranch);
+                if (fork?.Commit == null) throw new Exception($"Fork branch '{forkBranch}' not found.");
+
+                // Already up-to-date?
+                if (fork.Commit.Sha == upstream.Commit.Sha)
                 {
-                    branch = branch
+                    Program.Log?.Write(LogEventLevel.Information, $"Branch '{forkBranch}' is already up-to-date with '{originalOwner}/{upstreamBranch}'.");
+                    return true;
+                }
+
+                // Try merge-upstream if branch names match
+                if (forkBranch == upstreamBranch)
+                {
+                    try
+                    {
+                        Uri endpoint = new($"repos/{FileSystem._owner}/{repositoryName}/merge-upstream", UriKind.Relative);
+                        object payload = new { branch = forkBranch };
+                        await Program.GitHub.Client.Connection.Put<object>(endpoint, payload, "application/json");
+                        Program.Log?.Write(LogEventLevel.Information, $"merge-upstream: {FileSystem._owner}/{forkBranch} synced with {originalOwner}/{upstreamBranch}.");
+                        return true;
+                    }
+                    catch (Octokit.ApiValidationException)
+                    {
+                        Program.Log?.Write(LogEventLevel.Information, $"merge-upstream: {FileSystem._owner}/{forkBranch} already up-to-date.");
+                        return true;
+                    }
+                    catch (Octokit.NotFoundException)
+                    {
+                        Program.Log?.Write(LogEventLevel.Warning, $"merge-upstream not available for {FileSystem._owner}/{forkBranch}, falling back to Merge API.");
+                    }
+                }
+
+                // Fallback: Merge API for cross-branch or different branch names
+                var mergeRequest = new Octokit.NewMerge(forkBranch, $"{originalOwner}:{upstreamBranch}")
+                {
+                    CommitMessage = $"Merge {originalOwner}/{upstreamBranch} into {forkBranch}"
                 };
 
-                // Raw HTTP PUT because Octokit does not yet expose merge-upstream API.
-                IApiResponse<MergeUpstreamResponse> response = await _client.Connection.Put<MergeUpstreamResponse>(endpoint, payload, "application/json").ConfigureAwait(false);
-
-                Program.Log?.Write(LogEventLevel.Information, $"Fork synced: {_owner}/{repoName} → {response.Body?.MergeCommitSha}");
-
+                var mergeResult = await Program.GitHub.Client.Repository.Merging.Create(FileSystem._owner, repositoryName, mergeRequest);
+                Program.Log?.Write(LogEventLevel.Information, $"Merged {originalOwner}/{upstreamBranch} into {FileSystem._owner}/{forkBranch}: {mergeResult.Sha}");
                 return true;
             }
-            catch (ApiValidationException)
+            catch (Octokit.ApiException ex) when (ex.HttpResponse?.StatusCode == System.Net.HttpStatusCode.Conflict)
             {
-                Program.Log?.Write(LogEventLevel.Information, $"Fork already up-to-date: {_owner}/{repoName}");
-                return true;
+                Program.Log?.Write(LogEventLevel.Warning, $"Merge conflict when syncing {FileSystem._owner}/{forkBranch} with {originalOwner}/{upstreamBranch}");
+                return false;
             }
             catch (Exception ex)
             {
-                Program.Log?.Write(LogEventLevel.Error, $"Error syncing fork {_owner}/{repoName}", ex);
+                Program.Log?.Write(LogEventLevel.Error, $"Error syncing {FileSystem._owner}/{forkBranch} with {originalOwner}/{upstreamBranch}", ex);
                 return false;
             }
         }
