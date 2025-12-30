@@ -420,9 +420,9 @@
             this.button15.ImageGlyphEnabled = false;
             this.button15.Location = new System.Drawing.Point(9, 6);
             this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(130, 37);
+            this.button15.Size = new System.Drawing.Size(210, 37);
             this.button15.TabIndex = 35;
-            this.button15.Text = "Exit";
+            this.button15.Text = "GitHub Manager (TESTING)";
             this.button15.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button15.UseVisualStyleBackColor = false;
             this.button15.Click += new System.EventHandler(this.button15_Click);

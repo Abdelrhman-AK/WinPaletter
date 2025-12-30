@@ -63,6 +63,16 @@ namespace WinPaletter.Assets {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ContextMenu_Download {
+            get {
+                object obj = ResourceManager.GetObject("ContextMenu_Download", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap folder_web_16 {
             get {
                 object obj = ResourceManager.GetObject("folder_web_16", resourceCulture);

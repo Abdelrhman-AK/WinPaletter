@@ -22,22 +22,14 @@ namespace WinPaletter
     public partial class GitHubMgrForm : Form
     {
         CancellationTokenSource cts = new();
-
-        private readonly List<(string, Bitmap, Bitmap, View)> views = new()
-            {
-                { (Program.Lang.Strings.GitHubStrings.Explorer_View_LargeIcons, Assets.GitHubMgr.Icons_Large, Assets.GitHubMgr.Glyph_View_Large, View.LargeIcon) },
-                { (Program.Lang.Strings.GitHubStrings.Explorer_View_SmallIcons, Assets.GitHubMgr.Icons_Small, Assets.GitHubMgr.Glyph_View_Small, View.SmallIcon) },
-                { (Program.Lang.Strings.GitHubStrings.Explorer_View_List, Assets.GitHubMgr.Icons_List, Assets.GitHubMgr.Glyph_View_List, View.List) },
-                { (Program.Lang.Strings.GitHubStrings.Explorer_View_Details, Assets.GitHubMgr.Icons_Details, Assets.GitHubMgr.Glyph_View_Details, View.Details) },
-                { (Program.Lang.Strings.GitHubStrings.Explorer_View_Tiles, Assets.GitHubMgr.Icons_Tile, Assets.GitHubMgr.Glyph_View_Tile, View.Tile) }
-            };
-
         UI.WP.ContextMenuStrip contextMenu_all = new();
         UI.WP.ContextMenuStrip contextMenu_item = new();
         List<ListViewItem> cutItems;
         List<ListViewItem> copiedItems;
 
         ListViewItem itemBeingEdited;
+
+        private bool canPaste => (cutItems?.Count ?? 0) > 0 || (copiedItems?.Count ?? 0) > 0;
 
         public GitHubMgrForm()
         {
@@ -74,75 +66,232 @@ namespace WinPaletter
             UpdateExplorerLayout();
         }
 
-        private void FileSystem_Navigated(object sender, string path)
+        #region Context Menus
+
+        #region Context Menus Fields
+
+        // Views list
+        private readonly List<(string label, Bitmap icon, Bitmap glyph, View view)> views = new()
         {
-            UpdateExplorerLayout();
+            (Program.Lang.Strings.GitHubStrings.Explorer_View_LargeIcons, Assets.GitHubMgr.Icons_Large, Assets.GitHubMgr.Glyph_View_Large, View.LargeIcon),
+            (Program.Lang.Strings.GitHubStrings.Explorer_View_SmallIcons, Assets.GitHubMgr.Icons_Small, Assets.GitHubMgr.Glyph_View_Small, View.SmallIcon),
+            (Program.Lang.Strings.GitHubStrings.Explorer_View_List, Assets.GitHubMgr.Icons_List, Assets.GitHubMgr.Glyph_View_List, View.List),
+            (Program.Lang.Strings.GitHubStrings.Explorer_View_Details, Assets.GitHubMgr.Icons_Details, Assets.GitHubMgr.Glyph_View_Details, View.Details),
+            (Program.Lang.Strings.GitHubStrings.Explorer_View_Tiles, Assets.GitHubMgr.Icons_Tile, Assets.GitHubMgr.Glyph_View_Tile, View.Tile)
+        };
+
+        // Global menu items
+        private ToolStripMenuItem menu_view;
+        private ToolStripSeparator separator_0;
+        private ToolStripMenuItem menu_paste;
+        private ToolStripSeparator separator_1;
+        private ToolStripMenuItem menu_newItem;
+        private ToolStripMenuItem menu_newTheme;
+        private ToolStripMenuItem menu_newFolder;
+        private ToolStripSeparator separator_2;
+        private ToolStripMenuItem menu_properties;
+
+        // Item menu
+        private ToolStripMenuItem menu_Open;
+        private ToolStripMenuItem menu_Download;
+        private ToolStripSeparator separator_item_1;
+        private ToolStripMenuItem menu_CopyPath;
+        private ToolStripMenuItem menu_CopyURL;
+        private ToolStripMenuItem menu_Copy;
+        private ToolStripMenuItem menu_Cut;
+        private ToolStripSeparator separator_item_2;
+        private ToolStripMenuItem menu_Delete;
+        private ToolStripMenuItem menu_Rename;
+        private ToolStripSeparator separator_item_3;
+        private ToolStripMenuItem menu_item_properties;
+
+        #endregion
+
+        #region Context Menus Initialization
+
+        private void InitializeMenus()
+        {
+            InitializeMenu_Global();
+            InitializeMenu_Item();
         }
 
-        void AddViewsToButton()
+        private void InitializeMenu_Global()
         {
-            button7.Menu.Items.Clear();
-
-            // Create ToolStripMenuItems as radio buttons
-            foreach ((string, Bitmap, Bitmap, View) view in views)
+            // Create view menu items dynamically
+            menu_view = new ToolStripMenuItem(Program.Lang.Strings.GitHubStrings.Explorer_View)
             {
-                ToolStripMenuItem item = new(view.Item1)
+                DropDown = new UI.WP.ContextMenuStrip() { ShowImageMargin = true }
+            };
+
+            foreach (var view in views)
+            {
+                ToolStripMenuItem item = new(view.label, view.icon)
                 {
                     CheckOnClick = true,
-                    Image = view.Item2,
-                    Checked = listView1.View == view.Item4,
-                    Tag = view // store the View in Tag for easy access
+                    Checked = listView1.View == view.view,
+                    Tag = view
                 };
 
-                // Click handler
-                item.Click += (s, e) =>
-                {
-                    // Uncheck all other items
-                    foreach (ToolStripMenuItem other in button7.Menu.Items)
-                    {
-                        if (other != item) other.Checked = false;
-                    }
+                item.Click -= Menu_ViewItem_Click;
+                item.Click += Menu_ViewItem_Click;
 
-                    // Set the ListView view
-                    listView1.View = (((string, Bitmap, Bitmap, View))item.Tag).Item4;
-                    button7.ImageGlyph = (((string, Bitmap, Bitmap, View))item.Tag).Item3;
-
-                    // Ensure this one is checked
-                    item.Checked = true;
-                };
-
-                button7.Menu.Items.Add(item);
+                menu_view.DropDown.Items.Add(item);
             }
-        }
 
-        private void button7_Click(object sender, EventArgs e)
-        {
-            // Define the ordered views
-            View[] views = [View.LargeIcon, View.SmallIcon, View.List, View.Details, View.Tile];
+            separator_0 = new ToolStripSeparator();
+            separator_1 = new ToolStripSeparator();
+            separator_2 = new ToolStripSeparator();
 
-            // Find the index of the current view
-            int currentIndex = Array.IndexOf(views, listView1.View);
-            int nextIndex = (currentIndex + 1) % views.Length;
+            menu_paste = new ToolStripMenuItem(Program.Lang.Strings.General.Paste) { Enabled = false };
+            menu_paste.Click += Menu_paste_Click;
 
-            // Set the next view
-            View nextView = views[nextIndex];
-            listView1.View = nextView;
+            menu_newFolder = new ToolStripMenuItem(Program.Lang.Strings.Extensions.Folder, Assets.GitHubMgr.folder_web_48.Resize(16, 16));
+            menu_newFolder.Click -= Menu_NewFolder_Click;
+            menu_newFolder.Click += Menu_NewFolder_Click;
 
-            // Update the menu items to match
-            foreach (ToolStripMenuItem item in button7.Menu.Items)
+            using (Icon ico = Properties.Resources.fileextension.FromSize(20))
             {
-                (string, Bitmap, Bitmap, View) view = ((string, Bitmap, Bitmap, View))item.Tag;
-                if (view.Item4 == nextView)
-                {
-                    item.Checked = true;
-                    button7.ImageGlyph = view.Item3;
-                }
-                else
-                {
-                    item.Checked = false;
-                }
+                menu_newTheme = new ToolStripMenuItem(Program.Lang.Strings.Extensions.WinPaletterTheme, ico.ToBitmap());
+            }
+
+            menu_newItem = new ToolStripMenuItem(Program.Lang.Strings.General.New)
+            {
+                DropDown = new UI.WP.ContextMenuStrip() { ShowImageMargin = true }
+            };
+            menu_newItem.DropDown.Items.AddRange([menu_newFolder, menu_newTheme]);
+
+            menu_properties = new ToolStripMenuItem(Program.Lang.Strings.GitHubStrings.Explorer_Properties);
+
+            contextMenu_all.Items.AddRange(
+            [
+                menu_view,
+                separator_0,
+                menu_paste,
+                separator_1,
+                menu_newItem,
+                separator_2,
+                menu_properties
+            ]);
+        }
+
+        private void InitializeMenu_Item()
+        {
+            menu_Open = new ToolStripMenuItem("Open", Assets.GitHubMgr.folder_web_16);
+            menu_Open.Click -= Menu_Open_Click;
+            menu_Open.Click += Menu_Open_Click;
+
+            menu_Download = new ToolStripMenuItem("Download", Assets.GitHubMgr.ContextMenu_Download);
+
+            separator_item_1 = new ToolStripSeparator();
+
+            menu_CopyPath = new ToolStripMenuItem("Copy as path");
+            menu_CopyPath.Click -= Menu_CopyPath_Click;
+            menu_CopyPath.Click += Menu_CopyPath_Click;
+
+            menu_CopyURL = new ToolStripMenuItem("Copy URL");
+            menu_CopyURL.Click -= Menu_CopyURL_Click;
+            menu_CopyURL.Click += Menu_CopyURL_Click;
+
+            menu_Copy = new ToolStripMenuItem("Copy");
+            menu_Copy.Click -= Menu_Copy_Click;
+            menu_Copy.Click += Menu_Copy_Click;
+
+            menu_Cut = new ToolStripMenuItem("Cut");
+            menu_Cut.Click -= Menu_Cut_Click;
+            menu_Cut.Click += Menu_Cut_Click;
+
+            separator_item_2 = new ToolStripSeparator();
+
+            menu_Delete = new ToolStripMenuItem("Delete");
+            menu_Delete.Click -= Menu_Delete_Click;
+            menu_Delete.Click += Menu_Delete_Click;
+
+            menu_Rename = new ToolStripMenuItem("Rename");
+            menu_Rename.Click -= Menu_Rename_Click;
+            menu_Rename.Click += Menu_Rename_Click;
+
+            separator_item_3 = new ToolStripSeparator();
+
+            menu_item_properties = new ToolStripMenuItem(Program.Lang.Strings.GitHubStrings.Explorer_Properties);
+            menu_item_properties.Click -= Menu_ItemProperties_Click;
+            menu_item_properties.Click += Menu_ItemProperties_Click;
+
+            contextMenu_item.Items.AddRange(
+            [
+                menu_Open,
+                menu_Download,
+                separator_item_1,
+                menu_CopyPath,
+                menu_CopyURL,
+                menu_Copy,
+                menu_Cut,
+                separator_item_2,
+                menu_Delete,
+                menu_Rename,
+                separator_item_3,
+                menu_item_properties
+            ]);
+        }
+
+        #endregion
+
+        #region Context Menus Event Handlers
+
+        private void Menu_ViewItem_Click(object sender, EventArgs e)
+        {
+            if (sender is not ToolStripMenuItem item) return;
+
+            foreach (ToolStripMenuItem other in menu_view.DropDown.Items) if (other != item) other.Checked = false;
+
+            var viewData = ((string, Bitmap, Bitmap, View))item.Tag;
+            listView1.View = viewData.Item4;
+            button7.ImageGlyph = viewData.Item3;
+            item.Checked = true;
+        }
+
+        private void Menu_NewFolder_Click(object sender, EventArgs e) => Init_NewDirectory();
+
+        private void Menu_paste_Click(object sender, EventArgs e)
+        {
+            Paste();
+        }
+
+        private void Menu_Open_Click(object sender, EventArgs e) => FileSystem.List_DoubleClick(listView1, new());
+
+        private void Menu_CopyPath_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count > 0)
+            {
+                var rc = listView1.SelectedItems[0].Tag as RepositoryContent;
+                Clipboard.SetText(rc.Path);
             }
         }
+
+        private void Menu_CopyURL_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count > 0)
+            {
+                var rc = listView1.SelectedItems[0].Tag as RepositoryContent;
+                Clipboard.SetText(rc.Url);
+            }
+        }
+
+        private void Menu_Copy_Click(object sender, EventArgs e) => Init_Copy();
+
+        private void Menu_Cut_Click(object sender, EventArgs e) => Init_Cut();
+
+        private void Menu_Delete_Click(object sender, EventArgs e) => DeleteElementsAsync(listView1.SelectedItems, cts);
+
+        private void Menu_Rename_Click(object sender, EventArgs e) => listView1.SelectedItems[0]?.BeginEdit();
+
+        private void Menu_ItemProperties_Click(object sender, EventArgs e)
+        {
+            // TODO: Show properties
+        }
+
+        #endregion
+        
+        #endregion
 
         public async Task UpdateGitHubLoginData()
         {
@@ -173,18 +322,15 @@ namespace WinPaletter
                     updated_lbl.Text = ToFriendlyString(User.GitHub.UpdatedAt);
                 });
 
-                if (User.GitHub_LoggedIn)
+                // Wait for avatar to exist
+                if (User.GitHub_Avatar is null)
                 {
-                    // Wait for avatar to exist
-                    if (User.GitHub_Avatar is null)
-                    {
-                        await User.DownloadAvatarAsync();
-                    }
+                    await User.DownloadAvatarAsync();
+                }
 
-                    if (User.GitHub_Avatar != null)
-                    {
-                        avatar = User.GitHub_Avatar;
-                    }
+                if (User.GitHub_Avatar != null)
+                {
+                    avatar = User.GitHub_Avatar;
                 }
             }
 
@@ -202,6 +348,76 @@ namespace WinPaletter
                     pictureBox2.Image = avatar_resized_2.ToCircular();
                 }
             });
+        }
+
+        private void FileSystem_Navigated(object sender, string path)
+        {
+            UpdateExplorerLayout();
+        }
+
+        void AddViewsToButton()
+        {
+            button7.Menu.Items.Clear();
+
+            // Create ToolStripMenuItems as radio buttons
+            foreach ((string label, Bitmap icon, Bitmap glyph, View view) view in views)
+            {
+                ToolStripMenuItem item = new(view.label)
+                {
+                    CheckOnClick = true,
+                    Image = view.icon,
+                    Checked = listView1.View == view.view,
+                    Tag = view // store the View in Tag for easy access
+                };
+
+                // Click handler
+                item.Click += (s, e) =>
+                {
+                    // Uncheck all other items
+                    foreach (ToolStripMenuItem other in button7.Menu.Items)
+                    {
+                        if (other != item) other.Checked = false;
+                    }
+
+                    // Set the ListView view
+                    listView1.View = (((string label, Bitmap icon, Bitmap glyph, View view))item.Tag).view;
+                    button7.ImageGlyph = (((string label, Bitmap icon, Bitmap glyph, View view))item.Tag).glyph;
+
+                    // Ensure this one is checked
+                    item.Checked = true;
+                };
+
+                button7.Menu.Items.Add(item);
+            }
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            // Define the ordered views
+            View[] views = [View.LargeIcon, View.SmallIcon, View.List, View.Details, View.Tile];
+
+            // Find the index of the current view
+            int currentIndex = Array.IndexOf(views, listView1.View);
+            int nextIndex = (currentIndex + 1) % views.Length;
+
+            // Set the next view
+            View nextView = views[nextIndex];
+            listView1.View = nextView;
+
+            // Update the menu items to match
+            foreach (ToolStripMenuItem item in button7.Menu.Items)
+            {
+                (string label, Bitmap icon, Bitmap glyph, View view) view = ((string label, Bitmap icon, Bitmap glyph, View view))item.Tag;
+                if (view.view == nextView)
+                {
+                    item.Checked = true;
+                    button7.ImageGlyph = view.glyph;
+                }
+                else
+                {
+                    item.Checked = false;
+                }
+            }
         }
 
         public string ToFriendlyString(DateTimeOffset dateTime)
@@ -262,7 +478,7 @@ namespace WinPaletter
 
         private async void button6_Click(object sender, EventArgs e)
         {
-            await GitHub.FileSystem.RefreshAsync(treeView1, listView1, breadcrumbControl1, cts);
+            await GitHub.FileSystem.UpdateExplorerView(treeView1, listView1, FileSystem.CurrentPath, cts);
         }
 
         private void breadcrumbControl1_StopRequested()
@@ -285,12 +501,9 @@ namespace WinPaletter
 
         private async void textBox1_TextChanged(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(textBox1.Text)) await GitHub.FileSystem.PopulateListViewAsync(listView1, GitHub.FileSystem.currentPath);
+            if (string.IsNullOrEmpty(textBox1.Text)) await GitHub.FileSystem.PopulateListViewAsync(listView1, GitHub.FileSystem.CurrentPath);
         }
 
-        /// <summary>
-        /// Update status label after selection status change
-        /// </summary>
         public void UpdateStatusSelections()
         {
             if (listView1.Items.Count == 0)
@@ -335,6 +548,13 @@ namespace WinPaletter
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateStatusSelections();
+
+            bool hasSelectedItems = listView1.SelectedItems.Count > 0;
+
+            btn_cut.Enabled = hasSelectedItems;
+            btn_copy.Enabled = hasSelectedItems;
+            btn_rename.Enabled = hasSelectedItems;
+            btn_delete.Enabled = hasSelectedItems;
         }
 
         private void listView1_ItemChecked(object sender, ItemCheckedEventArgs e)
@@ -379,8 +599,16 @@ namespace WinPaletter
 
             Program.Animator.HideSync(tablessControl1);
             tablessControl1.SelectedIndex = 1;
-            GitHub.FileSystem.SetBranch(comboBox1.SelectedItem?.ToString(), treeView1, listView1, breadcrumbControl1, cts);
+
+            groupBox4.Enabled = false;
+            groupBox1.Enabled = false;
+
             Program.Animator.ShowSync(tablessControl1);
+
+            await GitHub.FileSystem.SetBranch(comboBox1.SelectedItem?.ToString(), treeView1, listView1, breadcrumbControl1, cts);
+
+            groupBox4.Enabled = true;
+            groupBox1.Enabled = true;
 
             Cursor = Cursors.Default;
         }
@@ -388,7 +616,7 @@ namespace WinPaletter
         private async void button12_Click(object sender, EventArgs e)
         {
         Retry:
-            string branchName = InputBox("Create a new themes upload session branch", string.Empty, "Name your new branch for this theme upload. You can continue editing this branch until your Pull Request is approved.");
+            string branchName = InputBox(Program.Lang.Strings.GitHubStrings.NewBranch, string.Empty, Program.Lang.Strings.GitHubStrings.NewBranch_Instructions);
             branchName = Regex.Replace(branchName.ToLowerInvariant(), @"[^a-z0-9\-_/]", "-");
 
             if (!string.IsNullOrWhiteSpace(branchName))
@@ -414,14 +642,14 @@ namespace WinPaletter
                     }
                     else
                     {
-                        MsgBox($"Couldn't create branch `{branchName}`. Try creating it manually in your browser.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MsgBox(string.Format(Program.Lang.Strings.GitHubStrings.NewBranch_Error, success), MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
 
                     groupBox6.Enabled = true;
                 }
                 else
                 {
-                    MsgBox("Your forked repository already has this branch. Try again with another branch name.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MsgBox(Program.Lang.Strings.GitHubStrings.NewBranch_AlreadyExists, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     goto Retry;
                 }
             }
@@ -430,7 +658,7 @@ namespace WinPaletter
         private async void button10_Click(object sender, EventArgs e)
         {
             string branchName = comboBox1.SelectedItem.ToString();
-            if (MsgBox($"Are you sure you want to delete branch `{branchName}`?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MsgBox(string.Format(Program.Lang.Strings.GitHubStrings.Branch_Delete, branchName), MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 Cursor = Cursors.WaitCursor;
                 breadcrumbControl1.StartMarquee();
@@ -443,7 +671,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    MsgBox($"Couldn't delete branch `{branchName}`. Try deleting it manually in your browser.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MsgBox(string.Format(Program.Lang.Strings.GitHubStrings.Branch_Delete_Error, branchName), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 breadcrumbControl1.StopMarquee();
@@ -454,12 +682,6 @@ namespace WinPaletter
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             groupBox5.Enabled = comboBox1.SelectedItem is not null;
-        }
-
-        private async void button14_Click(object sender, EventArgs e)
-        {
-            await GitHub.Repository.CommitAsync("newCommit", FileSystem.Cache.BuildChanges());
-            FileSystem.Cache.Clear();
         }
 
         private async void button13_Click(object sender, EventArgs e)
@@ -516,131 +738,24 @@ Generated automatically by WinPaletter.";
                 if (info.Item != null)
                 {
                     // Right-click on an item
-
+                    if (listView1.SelectedItems.Count > 0)
+                    {
+                        RepositoryContent rc = listView1.SelectedItems[0]?.Tag as RepositoryContent;
+                        menu_Open.Enabled = rc?.Type == ContentType.Dir;
+                    }
+                    else
+                    {
+                        menu_Open.Enabled = false;
+                    }
+                    contextMenu_item.Show(listView1, e.Location);
                 }
                 else
                 {
                     // Right-click on empty space
+                    menu_paste.Enabled = canPaste;
                     contextMenu_all.Show(listView1, e.Location);
                 }
             }
-        }
-
-        void InitializeMenus()
-        {
-            (string, Bitmap, Bitmap, View) view = views.Where(v => v.Item4 == View.LargeIcon).FirstOrDefault();
-            ToolStripMenuItem menu_largeIconsView = new(view.Item1, view.Item2)
-            {
-                CheckOnClick = true,
-                Checked = listView1.View == view.Item4,
-                Tag = view
-            };
-
-            view = views.Where(v => v.Item4 == View.SmallIcon).FirstOrDefault();
-            ToolStripMenuItem menu_smallIconsView = new(view.Item1, view.Item2)
-            {
-                CheckOnClick = true,
-                Checked = listView1.View == view.Item4,
-                Tag = view
-            };
-
-            view = views.Where(v => v.Item4 == View.List).FirstOrDefault();
-            ToolStripMenuItem menu_listView = new(view.Item1, view.Item2)
-            {
-                CheckOnClick = true,
-                Checked = listView1.View == view.Item4,
-                Tag = view
-            };
-
-            view = views.Where(v => v.Item4 == View.Details).FirstOrDefault();
-            ToolStripMenuItem menu_detailsView = new(view.Item1, view.Item2)
-            {
-                CheckOnClick = true,
-                Checked = listView1.View == view.Item4,
-                Tag = view
-            };
-
-            view = views.Where(v => v.Item4 == View.Tile).FirstOrDefault();
-            ToolStripMenuItem menu_tileView = new(view.Item1, view.Item2)
-            {
-                CheckOnClick = true,
-                Checked = listView1.View == view.Item4,
-                Tag = view
-            };
-
-            ToolStripMenuItem menu_view = new("View")
-            {
-                DropDown = new UI.WP.ContextMenuStrip() { ShowImageMargin = true }
-            };
-
-            menu_view.DropDown.Items.AddRange(
-            [
-                menu_largeIconsView,
-                menu_smallIconsView,
-                menu_listView,
-                menu_detailsView,
-                menu_tileView
-            ]);
-
-            foreach (ToolStripMenuItem item in menu_view.DropDown.Items)
-            {
-                // Click handler
-                item.Click += (s, e) =>
-                {
-                    // Uncheck all other items
-                    foreach (ToolStripMenuItem other in menu_view.DropDown.Items)
-                    {
-                        if (other != item) other.Checked = false;
-                    }
-                    // Set the ListView view
-                    listView1.View = (((string, Bitmap, Bitmap, View))item.Tag).Item4;
-                    button7.ImageGlyph = (((string, Bitmap, Bitmap, View))item.Tag).Item3;
-                    // Ensure this one is checked
-                    item.Checked = true;
-                };
-            }
-
-            ToolStripSeparator separator_0 = new();
-
-            ToolStripMenuItem menu_paste = new("Paste") { Enabled = false };
-
-            ToolStripSeparator separator_1 = new();
-
-            ToolStripMenuItem menu_newItem = new("New")
-            {
-                DropDown = new UI.WP.ContextMenuStrip() { ShowImageMargin = true }
-            };
-
-            ToolStripMenuItem menu_newTheme;
-            using (Icon ico = Properties.Resources.fileextension.FromSize(20))
-            {
-                menu_newTheme = new(Program.Lang.Strings.Extensions.WinPaletterTheme, ico.ToBitmap());
-            }
-
-            ToolStripMenuItem menu_newFolder = new(Program.Lang.Strings.Extensions.Folder, Assets.GitHubMgr.folder_web_48.Resize(20, 20));
-
-            menu_newFolder.Click += async (s, e) => Init_NewDirectory();
-
-            menu_newItem.DropDown.Items.AddRange(
-            [
-                menu_newFolder,
-                menu_newTheme,
-            ]);
-
-            ToolStripSeparator separator_2 = new();
-
-            ToolStripMenuItem menu_properties = new("Properties");
-
-            contextMenu_all.Items.AddRange(
-            [
-                menu_view,
-                separator_0,
-                menu_paste,
-                separator_1,
-                menu_newItem,
-                separator_2,
-                menu_properties
-            ]);
         }
 
         private async void listView1_AfterLabelEdit(object sender, LabelEditEventArgs e)
@@ -703,46 +818,55 @@ Generated automatically by WinPaletter.";
                 }
                 else if (content.Type == ContentType.File)
                 {
-                    //string filename = content.Name;
-                    //string filenameWithoutExt = FileNameWithoutExtension(filename);
-                    //string ext = Path.GetExtension(filename);
-                    //string dir = GitHub.FileSystem.GetParent(content.Path);
+                    string oldText = content.Name;
+                    string oldBaseName = Path.GetFileNameWithoutExtension(oldText);
+                    string newBaseName = Path.GetFileNameWithoutExtension(newName);
+                    string ext = Path.GetExtension(oldText);
+                    string parentDirPath = FileSystem.CurrentPath;
 
-                    //if (string.Equals(".wpth", ext, StringComparison.OrdinalIgnoreCase))
-                    //{
-                    //    string wptp = $"{dir}/{filenameWithoutExt}.wptp";
-                    //    if (await GitHub.FileSystem.FileExistsAsync(wptp, cts))
-                    //    {
-                    //        ListViewItem wptpItem = listView1.Items.Cast<ListViewItem>().Where(i => i.Text.ToLower() == $"{filenameWithoutExt.ToLower()}.wptp").FirstOrDefault();
-                    //        if (wptpItem != null)
-                    //        {
-                    //            wptpItem.Text = $"{filenameWithoutExt}.wptp";
-                    //            RenameFile(wptpItem, new(listView1.Items.IndexOf(wptpItem)));
-                    //        }
-                    //    }
-                    //}
-                    //else if (string.Equals(".wptp", ext, StringComparison.OrdinalIgnoreCase))
-                    //{
-                    //    string wpth = $"{dir}/{filenameWithoutExt}.wpth";
-                    //    if (await GitHub.FileSystem.FileExistsAsync(wpth, cts))
-                    //    {
-                    //        ListViewItem wpthItem = listView1.Items.Cast<ListViewItem>().Where(i => i.Text.ToLower() == $"{filenameWithoutExt.ToLower()}.wpth").FirstOrDefault();
-                    //        if (wpthItem != null)
-                    //        {
-                    //            wpthItem.Text = $"{filenameWithoutExt}.wpth";
-                    //            RenameFile(wpthItem, new(listView1.Items.IndexOf(wpthItem)));
-                    //        }
-                    //    }
-                    //}
+                    // Determine linked extension
+                    string linkedExt = ext.Equals(".wpth", StringComparison.OrdinalIgnoreCase) ? ".wptp"
+                                     : ext.Equals(".wptp", StringComparison.OrdinalIgnoreCase) ? ".wpth"
+                                     : null;
 
-                    RenameFile(item, e);
+                    if (linkedExt != null)
+                    {
+                        // Find linked item BEFORE any rename
+                        ListViewItem linkedItem = listView1.Items.Cast<ListViewItem>()
+                            .FirstOrDefault(i =>
+                            {
+                                if (i.Tag is RepositoryContent rc)
+                                {
+                                    string rcBase = Path.GetFileNameWithoutExtension(rc.Name);
+                                    string rcExt = Path.GetExtension(rc.Name);
+                                    bool match = rcBase.Equals(oldBaseName, StringComparison.OrdinalIgnoreCase)
+                                                 && rcExt.Equals(linkedExt, StringComparison.OrdinalIgnoreCase);
+                                    if (match) return match;
+                                }
+                                return false;
+                            });
+
+                        if (linkedItem is not null)
+                        {
+                            // Rename linked item after main item
+                            item.Text = newName;
+                            await RenameFile(item, parentDirPath, e);
+
+                            string linkedNewName = $"{newBaseName}{linkedExt}";
+                            linkedItem.Text = linkedNewName;
+                            await RenameFile(linkedItem, parentDirPath);
+                        }
+                    }
+                    else
+                    {
+                        // Just rename main item
+                        item.Text = newName;
+                        await RenameFile(item, parentDirPath, e);
+                    }
                 }
             }
         }
 
-        /// <summary>
-        /// Initiate creation of a new directory with beginning of label edit
-        /// </summary>
         void Init_NewDirectory()
         {
             ListViewItem item = new(GetAvailableItemText(Program.Lang.Strings.Extensions.NewFolder, listView1))
@@ -754,9 +878,9 @@ Generated automatically by WinPaletter.";
             };
 
             listView1.Items.Add(item);
-            item.Selected = true;
-            item.Focused = true;
-            item.BeginEdit();
+            item?.Selected = true;
+            item?.Focused = true;
+            item?.BeginEdit();
         }
 
         void Init_Cut()
@@ -780,6 +904,8 @@ Generated automatically by WinPaletter.";
                     notCutItem.ImageKey = notCutItem.ImageKey.Replace("ghost_", string.Empty);
                 }
             }
+
+            btn_paste.Enabled = canPaste;
         }
 
         void Init_Copy()
@@ -795,25 +921,26 @@ Generated automatically by WinPaletter.";
                 copiedItems?.Clear();
                 copiedItems = [.. listView1.SelectedItems.Cast<ListViewItem>()];
             }
+
+            btn_paste.Enabled = canPaste;
         }
 
         async void NewDirectory(ListViewItem item, LabelEditEventArgs e = null)
         {
-            Cursor = Cursors.WaitCursor;
             breadcrumbControl1.StartMarquee();
 
-            string initPath = FileSystem.currentPath;
+            string initPath = FileSystem.CurrentPath;
             string itemText = item.Text.Trim();
-            string path = $"{GitHub.FileSystem.currentPath}/{itemText}";
+            string path = $"{GitHub.FileSystem.CurrentPath}/{itemText}";
 
             try
             {
                 RepositoryContent dirContent = (await GitHub.FileSystem.CreateDirectoryAsync(path, cts)).Content;
                 item.Tag = dirContent;
 
-                if (initPath.Equals(FileSystem.currentPath, StringComparison.OrdinalIgnoreCase))
+                if (initPath.Equals(FileSystem.CurrentPath, StringComparison.OrdinalIgnoreCase))
                 {
-                    await GitHub.FileSystem.UpdateExplorerView(treeView1, listView1, FileSystem.currentPath, cts);
+                    await GitHub.FileSystem.UpdateExplorerView(treeView1, listView1, FileSystem.CurrentPath, cts);
 
                     listView1.Items.Cast<ListViewItem>().Where(i => i.Tag is RepositoryContent && i.Text.Equals(itemText, StringComparison.OrdinalIgnoreCase)).ToList()
                         .ForEach(i => i.Selected = true);
@@ -827,30 +954,28 @@ Generated automatically by WinPaletter.";
             finally
             {
                 breadcrumbControl1.StopMarquee();
-                Cursor = Cursors.Default;
             }
             return;
         }
 
         async void RenameDirectory(ListViewItem item, LabelEditEventArgs e)
         {
-            string initPath = FileSystem.currentPath;
+            string initPath = FileSystem.CurrentPath;
             string oldPath = (item.Tag as RepositoryContent).Path;
             string itemText = item.Text.Trim();
             string newPath = oldPath.Substring(0, oldPath.LastIndexOf('/') + 1) + itemText;
 
             if (oldPath.Equals(newPath, StringComparison.OrdinalIgnoreCase)) return;
 
-            Cursor = Cursors.WaitCursor;
             breadcrumbControl1.StartMarquee();
 
             try
             {
                 item.Tag = (await GitHub.FileSystem.MoveDirectoryAsync(oldPath, newPath, cts)).Content;
 
-                if (initPath.Equals(FileSystem.currentPath, StringComparison.OrdinalIgnoreCase))
+                if (initPath.Equals(FileSystem.CurrentPath, StringComparison.OrdinalIgnoreCase))
                 {
-                    await GitHub.FileSystem.UpdateExplorerView(treeView1, listView1, FileSystem.currentPath, cts);
+                    await GitHub.FileSystem.UpdateExplorerView(treeView1, listView1, FileSystem.CurrentPath, cts);
 
                     listView1.Items.Cast<ListViewItem>().Where(i => i.Tag is RepositoryContent && i.Text.Equals(itemText, StringComparison.OrdinalIgnoreCase)).ToList()
                         .ForEach(i => i.Selected = true);
@@ -863,29 +988,26 @@ Generated automatically by WinPaletter.";
             finally
             {
                 breadcrumbControl1.StopMarquee();
-                Cursor = Cursors.Default;
             }
         }
 
-        async void RenameFile(ListViewItem item, LabelEditEventArgs e)
+        async Task RenameFile(ListViewItem item, string parentDirPath, LabelEditEventArgs e = null)
         {
-            string initPath = FileSystem.currentPath;
             string oldPath = (item.Tag as RepositoryContent).Path;
             string itemText = item.Text.Trim();
             string newPath = $"{GitHub.FileSystem.GetParent(oldPath)}/{itemText}";
 
             if (oldPath.Equals(newPath, StringComparison.OrdinalIgnoreCase)) return;
 
-            Cursor = Cursors.WaitCursor;
             breadcrumbControl1.StartMarquee();
 
             try
             {
                 item.Tag = (await GitHub.FileSystem.MoveFileAsync(oldPath, newPath, cts)).Content;
 
-                if (initPath.Equals(FileSystem.currentPath, StringComparison.OrdinalIgnoreCase))
+                if (parentDirPath.Equals(FileSystem.CurrentPath, StringComparison.OrdinalIgnoreCase))
                 {
-                    await GitHub.FileSystem.UpdateExplorerView(treeView1, listView1, FileSystem.currentPath, cts);
+                    await GitHub.FileSystem.UpdateExplorerView(treeView1, listView1, FileSystem.CurrentPath, cts);
 
                     listView1.Items.Cast<ListViewItem>().Where(i => i.Tag is RepositoryContent && i.Text.Equals(itemText, StringComparison.OrdinalIgnoreCase)).ToList()
                         .ForEach(i => i.Selected = true);
@@ -893,13 +1015,13 @@ Generated automatically by WinPaletter.";
             }
             catch (Exception ex)
             {
-                e.CancelEdit = true;
+                Forms.BugReport.ThrowError(ex);
+                e?.CancelEdit = true;
                 Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Error in renaming file {oldPath} to {itemText}", ex);
             }
             finally
             {
                 breadcrumbControl1.StopMarquee();
-                Cursor = Cursors.Default;
             }
         }
 
@@ -909,7 +1031,7 @@ Generated automatically by WinPaletter.";
 
             cts ??= new();
 
-            string initPath = GitHub.FileSystem.currentPath;
+            string initPath = GitHub.FileSystem.CurrentPath;
             string destDir = GitHub.FileSystem.NormalizePath(initPath);
 
             // Snapshot items (SelectedListViewItemCollection is not safe to mutate)
@@ -917,7 +1039,6 @@ Generated automatically by WinPaletter.";
 
             try
             {
-                Cursor = Cursors.WaitCursor;
                 breadcrumbControl1.Value = 0;
                 breadcrumbControl1.StartMarquee();
 
@@ -938,7 +1059,7 @@ Generated automatically by WinPaletter.";
                     }
                     else
                     {
-                        filePaths = new List<string>();
+                        filePaths = [];
                     }
                 }
                 else
@@ -1003,7 +1124,7 @@ Generated automatically by WinPaletter.";
                         lvi?.Remove();
                     }
 
-                    if (isDirectory) GitHub.FileSystem.UpdateTreeNode(treeView1, GitHub.FileSystem.currentPath, true);
+                    if (isDirectory) GitHub.FileSystem.UpdateTreeNode(treeView1, GitHub.FileSystem.CurrentPath, true);
                 }
 
                 if (filePaths.Count > 0) await ProcessDeletionAsync(filePaths, false);
@@ -1011,8 +1132,8 @@ Generated automatically by WinPaletter.";
 
                 items.Clear();
 
-                if (initPath.Equals(FileSystem.currentPath, StringComparison.OrdinalIgnoreCase))
-                    await GitHub.FileSystem.UpdateExplorerView(treeView1, listView1, FileSystem.currentPath, cts);
+                if (initPath.Equals(FileSystem.CurrentPath, StringComparison.OrdinalIgnoreCase))
+                    await GitHub.FileSystem.UpdateExplorerView(treeView1, listView1, FileSystem.CurrentPath, cts);
             }
             catch (Exception ex)
             {
@@ -1023,7 +1144,6 @@ Generated automatically by WinPaletter.";
                 breadcrumbControl1.FinishLoadingAnimation();
                 breadcrumbControl1.StopMarquee();
                 breadcrumbControl1.Value = 0;
-                Cursor = Cursors.Default;
             }
         }
 
@@ -1031,7 +1151,7 @@ Generated automatically by WinPaletter.";
         {
             if ((copiedItems?.Count ?? 0) > 0 || (cutItems?.Count ?? 0) > 0)
             {
-                string initPath = GitHub.FileSystem.currentPath;
+                string initPath = GitHub.FileSystem.CurrentPath;
                 string destDir = GitHub.FileSystem.NormalizePath(initPath);
 
                 breadcrumbControl1.Value = 0;
@@ -1040,7 +1160,6 @@ Generated automatically by WinPaletter.";
                 // Helper to process items
                 async Task ProcessItemsAsync(IList<ListViewItem> items, bool isCopy)
                 {
-                    Cursor = Cursors.WaitCursor;
                     breadcrumbControl1.Value = 0;
                     breadcrumbControl1.StartMarquee();
 
@@ -1113,7 +1232,6 @@ Generated automatically by WinPaletter.";
                     }
 
                     breadcrumbControl1.StopMarquee();
-                    Cursor = Cursors.Default;
                 }
 
                 // Process copied items
@@ -1125,9 +1243,9 @@ Generated automatically by WinPaletter.";
                     await ProcessItemsAsync(cutItems, isCopy: false);
                 }
 
-                if (initPath.Equals(FileSystem.currentPath, StringComparison.OrdinalIgnoreCase))
+                if (initPath.Equals(FileSystem.CurrentPath, StringComparison.OrdinalIgnoreCase))
                 {
-                    await GitHub.FileSystem.UpdateExplorerView(treeView1, listView1, FileSystem.currentPath, cts);
+                    await GitHub.FileSystem.UpdateExplorerView(treeView1, listView1, FileSystem.CurrentPath, cts);
 
                     HashSet<string> copiedNames =
                     [
@@ -1152,6 +1270,8 @@ Generated automatically by WinPaletter.";
 
                 // Remove cut items from memory
                 if ((cutItems?.Count ?? 0) > 0) cutItems.Clear();
+
+                btn_paste.Enabled = canPaste;
 
                 breadcrumbControl1.FinishLoadingAnimation();
             }
@@ -1248,11 +1368,63 @@ Generated automatically by WinPaletter.";
         private void listView1_BeforeLabelEdit(object sender, LabelEditEventArgs e)
         {
             itemBeingEdited = listView1.Items[e.Item];
+            SelectLabelEditWithoutExtension(listView1, itemBeingEdited);
         }
 
         private void toggle1_CheckedChanged(object sender, EventArgs e)
         {
             GitHub.FileSystem.ShowHiddenFiles = toggle1.Checked;
+        }
+
+        private void btn_rename_Click(object sender, EventArgs e)
+        {
+            if (listView1.SelectedItems.Count < 1) return;
+            listView1.SelectedItems[0]?.BeginEdit();
+        }
+
+        private void btn_copy_Click(object sender, EventArgs e)
+        {
+            Init_Copy();
+        }
+
+        private void btn_cut_Click(object sender, EventArgs e)
+        {
+            Init_Cut();
+        }
+
+        private void btn_delete_Click(object sender, EventArgs e)
+        {
+            DeleteElementsAsync(listView1.SelectedItems, cts);
+        }
+
+        private void btn_paste_Click(object sender, EventArgs e)
+        {
+            Paste();
+        }
+
+        private void SelectLabelEditWithoutExtension(ListView listView, ListViewItem item)
+        {
+            if (listView == null || item == null) return;
+
+            listView.BeginInvoke((Action)(() =>
+            {
+                IntPtr hEdit = NativeMethods.User32.FindEditControl(listView.Handle);
+                if (hEdit == IntPtr.Zero) return;
+
+                string text = item.Text;
+                int dot = text.LastIndexOf('.');
+                if (dot <= 0) return;
+
+                NativeMethods.User32.SendMessage(hEdit, NativeMethods.User32.EM_SETSEL, IntPtr.Zero, new IntPtr(dot));
+            }));
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            GitHub.FileSystem.Cache.Clear();
+            Program.Animator.HideSync(tablessControl1);
+            tablessControl1.SelectedIndex = 0;
+            Program.Animator.ShowSync(tablessControl1);
         }
     }
 }

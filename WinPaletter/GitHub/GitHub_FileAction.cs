@@ -44,7 +44,7 @@ namespace WinPaletter
             pictureBox1.Image = Properties.Resources.IO_Dlg_Delete_File;
 
             pictureBox2.Image = Properties.Resources.file_48;
-            label2.Text = $"{Program.Lang.Strings.Extensions.File}: {count}";
+            label2.Text = $"{Program.Lang.Strings.Extensions.Files}: {count}";
             label5.Text = Program.Lang.Strings.Extensions.Files;
             label6.Text = size.ToStringFileSize();
 

@@ -253,6 +253,26 @@ namespace WinPaletter.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Glyph_Cut {
+            get {
+                object obj = ResourceManager.GetObject("Glyph_Cut", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Glyph_Delete {
+            get {
+                object obj = ResourceManager.GetObject("Glyph_Delete", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Glyph_Down {
             get {
                 object obj = ResourceManager.GetObject("Glyph_Down", resourceCulture);
@@ -343,6 +363,16 @@ namespace WinPaletter.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Glyph_Paste_16 {
+            get {
+                object obj = ResourceManager.GetObject("Glyph_Paste_16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Glyph_Play {
             get {
                 object obj = ResourceManager.GetObject("Glyph_Play", resourceCulture);
@@ -366,6 +396,16 @@ namespace WinPaletter.Properties {
         internal static System.Drawing.Bitmap Glyph_Remove {
             get {
                 object obj = ResourceManager.GetObject("Glyph_Remove", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Glyph_Rename {
+            get {
+                object obj = ResourceManager.GetObject("Glyph_Rename", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

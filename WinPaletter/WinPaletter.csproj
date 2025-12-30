@@ -481,6 +481,7 @@
     <Compile Include="ColorsAndPalettesHandlers\PaletteGenerator.Designer.cs">
       <DependentUpon>PaletteGenerator.cs</DependentUpon>
     </Compile>
+    <Compile Include="Program\Classes\ActionQueue.cs" />
     <Compile Include="Program\Classes\Animator.cs" />
     <Compile Include="ColorsAndPalettesHandlers\ColorEffect.cs" />
     <Compile Include="Program\Classes\ClassicTheme.cs" />
@@ -498,23 +499,23 @@
     <Compile Include="Program\Filters.cs" />
     <Compile Include="Program\Variables\Links.cs" />
     <Compile Include="Program\TypesExtensions\Forms.cs" />
-    <Compile Include="Users\GitHub\Cache.cs" />
-    <Compile Include="Users\GitHub\Entry.cs" />
-    <Compile Include="Users\GitHub\Navigation.cs" />
-    <Compile Include="Users\GitHub\VirtualRepositoryExplorer.cs" />
-    <Compile Include="Users\GitHub\FileSystem.cs" />
-    <Compile Include="Users\GitHub\Repository.cs" />
+    <Compile Include="GitHub\Core\Cache.cs" />
+    <Compile Include="GitHub\Core\Entry.cs" />
+    <Compile Include="GitHub\Core\Navigation.cs" />
+    <Compile Include="GitHub\Core\VirtualRepositoryExplorer.cs" />
+    <Compile Include="GitHub\Core\FileSystem.cs" />
+    <Compile Include="GitHub\Core\Repository.cs" />
     <Compile Include="Settings\Setup.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Settings\Setup.Designer.cs">
       <DependentUpon>Setup.cs</DependentUpon>
     </Compile>
-    <Compile Include="Users\GitHub\GitHubAuth.cs" />
-    <Compile Include="Users\GitHubLogin.cs">
+    <Compile Include="GitHub\Core\GitHubAuth.cs" />
+    <Compile Include="GitHub\GitHubLogin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Users\GitHubLogin.Designer.cs">
+    <Compile Include="GitHub\GitHubLogin.Designer.cs">
       <DependentUpon>GitHubLogin.cs</DependentUpon>
     </Compile>
     <Compile Include="Tabs\TabData.cs" />
@@ -693,29 +694,29 @@
     <Compile Include="Dialogs\ThemeLog.Designer.cs">
       <DependentUpon>ThemeLog.cs</DependentUpon>
     </Compile>
-    <Compile Include="Users\GitHubMgrForm.cs">
+    <Compile Include="GitHub\GitHubMgrForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Users\GitHubMgrForm.Designer.cs">
+    <Compile Include="GitHub\GitHubMgrForm.Designer.cs">
       <DependentUpon>GitHubMgrForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Users\GitHub\Streaming.cs" />
-    <Compile Include="Users\GitHub_FileAction.cs">
+    <Compile Include="GitHub\Core\Streaming.cs" />
+    <Compile Include="GitHub\GitHub_FileAction.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Users\GitHub_FileAction.Designer.cs">
+    <Compile Include="GitHub\GitHub_FileAction.Designer.cs">
       <DependentUpon>GitHub_FileAction.cs</DependentUpon>
     </Compile>
-    <Compile Include="Users\GitHub_FileConflict.cs">
+    <Compile Include="GitHub\GitHub_FileConflict.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Users\GitHub_FileConflict.Designer.cs">
+    <Compile Include="GitHub\GitHub_FileConflict.Designer.cs">
       <DependentUpon>GitHub_FileConflict.cs</DependentUpon>
     </Compile>
-    <Compile Include="Users\GitHub_FilesCompare.cs">
+    <Compile Include="GitHub\GitHub_FilesCompare.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Users\GitHub_FilesCompare.Designer.cs">
+    <Compile Include="GitHub\GitHub_FilesCompare.Designer.cs">
       <DependentUpon>GitHub_FilesCompare.cs</DependentUpon>
     </Compile>
     <Compile Include="Users\UserSwitch.cs">
@@ -1417,16 +1418,16 @@
     <EmbeddedResource Include="Dialogs\ThemeLog.resx">
       <DependentUpon>ThemeLog.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Users\GitHubMgrForm.resx">
+    <EmbeddedResource Include="GitHub\GitHubMgrForm.resx">
       <DependentUpon>GitHubMgrForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Users\GitHub_FileAction.resx">
+    <EmbeddedResource Include="GitHub\GitHub_FileAction.resx">
       <DependentUpon>GitHub_FileAction.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Users\GitHub_FileConflict.resx">
+    <EmbeddedResource Include="GitHub\GitHub_FileConflict.resx">
       <DependentUpon>GitHub_FileConflict.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Users\GitHub_FilesCompare.resx">
+    <EmbeddedResource Include="GitHub\GitHub_FilesCompare.resx">
       <DependentUpon>GitHub_FilesCompare.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Users\UserSwitch.resx">
@@ -1537,7 +1538,7 @@
     <EmbeddedResource Include="Store\Store_ThemeLicense.resx">
       <DependentUpon>Store_ThemeLicense.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Users\GitHubLogin.resx">
+    <EmbeddedResource Include="GitHub\GitHubLogin.resx">
       <DependentUpon>GitHubLogin.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Templates\BorderlessForm.resx">

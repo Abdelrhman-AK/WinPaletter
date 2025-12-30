@@ -101,6 +101,16 @@ namespace WinPaletter.NativeMethods
         [DllImport("user32.dll")]
         public static extern bool SetSysColors(int cElements, int[] lpaElements, uint[] lpaRgbValues);
 
+        public const int EM_SETSEL = 0x00B1;
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr FindWindowEx(IntPtr parent, IntPtr childAfter, string className, string windowTitle);
+
+        public static IntPtr FindEditControl(IntPtr listViewHandle)
+        {
+            return FindWindowEx(listViewHandle, IntPtr.Zero, "Edit", null);
+        }
+
         /// <summary>
         /// Retrieves the current color of a specified display element.
         /// </summary>

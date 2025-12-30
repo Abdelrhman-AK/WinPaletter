@@ -412,7 +412,7 @@ namespace WinPaletter
             // Use spans and caching for faster string ops
             var associations = new (string ext, string cls, string desc, string icon)[]
             {
-                (".wpth", "WinPaletter.ThemeFile", Lang.Strings.Extensions.WinPaletterTheme, $"{SysPaths.appData}\\fileextension.ico"),
+                (".wpth", "WinPaletter.ThemeFile", Lang.Strings.Extensions.WinPaletterThemeFiles, $"{SysPaths.appData}\\fileextension.ico"),
                 (".wpsf", "WinPaletter.SettingsFile", Lang.Strings.Extensions.WinPaletterSettings, $"{SysPaths.appData}\\settingsfile.ico"),
                 (".wptp", "WinPaletter.ThemeResourcesPack", Lang.Strings.Extensions.WinPaletterResourcesPack, $"{SysPaths.appData}\\themerespack.ico")
             };

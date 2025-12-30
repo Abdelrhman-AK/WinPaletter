@@ -158,7 +158,7 @@ namespace WinPaletter.GitHub
 
                 Cache.Add(targetPath, entry);
 
-                string directory = DirectoryName(targetPath);
+                string directory = ParentDirectoryName(targetPath);
 
                 Cache.Add(directory, entry);
 

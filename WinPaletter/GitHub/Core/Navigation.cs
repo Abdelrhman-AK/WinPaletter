@@ -33,7 +33,7 @@ namespace WinPaletter.GitHub
         public static Func<RepositoryContent, string> FileTypeProvider { get; set; } = entry =>
         {
             if (entry.Type == Octokit.ContentType.Dir) return Program.Lang.Strings.GitHubStrings.Explorer_Type_Folder;
-            if (entry.Name.EndsWith(".wpth", StringComparison.OrdinalIgnoreCase)) return Program.Lang.Strings.Extensions.WinPaletterTheme;
+            if (entry.Name.EndsWith(".wpth", StringComparison.OrdinalIgnoreCase)) return Program.Lang.Strings.Extensions.WinPaletterThemeFiles;
             if (entry.Name.EndsWith(".wptp", StringComparison.OrdinalIgnoreCase)) return Program.Lang.Strings.Extensions.WinPaletterResourcesPack;
             if (entry.Name.EndsWith(".gitkeep", StringComparison.OrdinalIgnoreCase)) return ".gitkeep file";
             return NativeMethods.Shell32.GetExtensionDescription(GetExtension(entry.Name));
@@ -84,7 +84,7 @@ namespace WinPaletter.GitHub
         /// <summary>
         /// Gets or sets the current repository path being viewed.
         /// </summary>
-        public static string currentPath = _root;
+        public static string CurrentPath { get; set; } = _root;
 
         /// <summary>
         /// To remember the last entered folder for navigation purposes.
@@ -104,7 +104,7 @@ namespace WinPaletter.GitHub
         /// <summary>
         /// Gets whether navigation to the parent directory is possible.
         /// </summary>
-        public static bool CanGoUp => !string.IsNullOrEmpty(currentPath) && currentPath != _root;
+        public static bool CanGoUp => !string.IsNullOrEmpty(CurrentPath) && CurrentPath != _root;
 
         /// <summary>
         /// Event triggered whenever navigation occurs.
@@ -119,7 +119,7 @@ namespace WinPaletter.GitHub
                 if (showHiddenFiles != value)
                 {
                     showHiddenFiles = value;
-                    Task.Run(() => PopulateListViewAsync(_boundList, currentPath, null));
+                    Task.Run(() => PopulateListViewAsync(_boundList, CurrentPath, null));
                 }
             }
         }
@@ -148,7 +148,7 @@ namespace WinPaletter.GitHub
         /// Set the branch to use for repository access.
         /// </summary>
         /// <param name="branch"></param>
-        public static async void SetBranch(string branch, UI.WP.TreeView tree, UI.WP.ListView list, UI.WP.Breadcrumb breadCrumb, CancellationTokenSource cts = null)
+        public static async Task SetBranch(string branch, UI.WP.TreeView tree, UI.WP.ListView list, UI.WP.Breadcrumb breadCrumb, CancellationTokenSource cts = null)
         {
             SetBranch(branch);
             await PopulateRepositoryAsync(tree, list, breadCrumb, cts);
@@ -427,7 +427,7 @@ namespace WinPaletter.GitHub
             while (!Cache.Contains(resolvedPath) && !string.Equals(resolvedPath, _root, StringComparison.OrdinalIgnoreCase))
                 resolvedPath = UppermostRoot(resolvedPath) ?? _root;
 
-            if (string.Equals(resolvedPath, currentPath, StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(resolvedPath, CurrentPath, StringComparison.OrdinalIgnoreCase))
             {
                 if (addToHistory) forwardStack.Clear();
                 return;
@@ -442,16 +442,16 @@ namespace WinPaletter.GitHub
             {
                 backStack.Push(new NavigationState
                 {
-                    Path = currentPath,
+                    Path = CurrentPath,
                     SelectedItemPath = selectedPath
                 });
                 forwardStack.Clear();
             }
 
-            currentPath = resolvedPath;
-            OnNavigated(currentPath);
+            CurrentPath = resolvedPath;
+            OnNavigated(CurrentPath);
 
-            await PopulateListViewAsync(list, currentPath);
+            await PopulateListViewAsync(list, CurrentPath);
 
             // Restore previously selected item by Path
             if (!string.IsNullOrEmpty(selectedPath))
@@ -469,7 +469,7 @@ namespace WinPaletter.GitHub
                 }
             }
 
-            UpdateTreeNode(tree, currentPath, true);
+            UpdateTreeNode(tree, CurrentPath, true);
         }
 
         /// <summary>
@@ -482,7 +482,7 @@ namespace WinPaletter.GitHub
             var previousState = backStack.Pop();
             forwardStack.Push(new NavigationState
             {
-                Path = currentPath,
+                Path = CurrentPath,
                 SelectedItemPath = list.SelectedItems.Count > 0 && list.SelectedItems[0].Tag is RepositoryContent rc
                     ? rc.Path
                     : null
@@ -517,7 +517,7 @@ namespace WinPaletter.GitHub
             var nextState = forwardStack.Pop();
             backStack.Push(new NavigationState
             {
-                Path = currentPath,
+                Path = CurrentPath,
                 SelectedItemPath = list.SelectedItems.Count > 0 && list.SelectedItems[0].Tag is RepositoryContent rc
                     ? rc.Path
                     : null
@@ -549,12 +549,12 @@ namespace WinPaletter.GitHub
         {
             if (!CanGoUp) return;
 
-            string parent = GetParent(currentPath) ?? _root;
+            string parent = GetParent(CurrentPath) ?? _root;
 
             // Push current state to back stack
             backStack.Push(new NavigationState
             {
-                Path = currentPath,
+                Path = CurrentPath,
                 SelectedItemPath = list.SelectedItems.Count > 0 && list.SelectedItems[0].Tag is RepositoryContent rc
                     ? rc.Path
                     : null
@@ -780,7 +780,7 @@ namespace WinPaletter.GitHub
             if (string.IsNullOrEmpty(newPath)) return;
 
             // If the user selects the currently shown folder, do nothing
-            if (newPath == currentPath) return;
+            if (newPath == CurrentPath) return;
 
             // Navigate properly: update history
             await NavigateTo(newPath, _boundList, _boundTree, true);
@@ -791,7 +791,7 @@ namespace WinPaletter.GitHub
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private static async void List_DoubleClick(object sender, EventArgs e)
+        public static async void List_DoubleClick(object sender, EventArgs e)
         {
             if (_boundList == null || _boundTree == null) return;
             if (_boundList.SelectedItems.Count == 0) return;
@@ -858,6 +858,9 @@ namespace WinPaletter.GitHub
                 list.Cursor = Cursors.WaitCursor;
                 list.BeginUpdate();
 
+                // Store selected items before clearing
+                var selectedItemsInfo = list.SelectedItems.Cast<ListViewItem>().Where(i => i.Tag is RepositoryContent rc).Select(i => new { Path = GitHub.FileSystem.GetParent(((RepositoryContent)i.Tag).Path), Name = i.Text }).ToList();
+
                 if (list.Columns.Count == 0)
                 {
                     Program.Log?.Write(LogEventLevel.Information, "PopulateListViewAsync initialized columns");
@@ -866,7 +869,7 @@ namespace WinPaletter.GitHub
                     list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Type, 200);
                     list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Size, 80);
                     list.Columns.Add("MD5", 120);
-                    list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_URL, 120);
+                    list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_URL, 220);
                 }
 
                 if (!Cache.Contains(path))
@@ -904,7 +907,6 @@ namespace WinPaletter.GitHub
                         else if (entry.Name.EndsWith(".wptp", StringComparison.OrdinalIgnoreCase)) item.ImageKey = "wptp";
                         else if (!string.IsNullOrWhiteSpace(entry.Name))
                         {
-                            // Get icon from Windows and add it into image lists
                             string ext = GetExtension(entry.Name);
                             if (!string.IsNullOrWhiteSpace(ext))
                             {
@@ -914,12 +916,8 @@ namespace WinPaletter.GitHub
                                     using (Icon ico_resized = ico?.FromSize(16))
                                     using (Bitmap bmp = ico_resized?.ToBitmap())
                                     {
-                                        list.AddImagesToSmallImageList(new List<(Image, string)>
-                                {
-                                    (bmp, ext)
-                                });
+                                        list.AddImagesToSmallImageList(new List<(Image, string)> { (bmp, ext) });
                                     }
-
                                     ProcessGhostIcons(list.SmallImageList);
                                 }
 
@@ -945,6 +943,15 @@ namespace WinPaletter.GitHub
                         if (isHidden) item.ImageKey = $"ghost_{item.ImageKey}";
 
                         list.Items.Add(item);
+
+                        // Restore selection if matches old path & name (with blue focus)
+                        if (selectedItemsInfo.Any(si => string.Equals(si.Path, GitHub.FileSystem.GetParent(entry.Path), StringComparison.OrdinalIgnoreCase) && string.Equals(si.Name, entry.Name, StringComparison.OrdinalIgnoreCase)))
+                        {
+                            item.Selected = true;
+                            item.EnsureVisible();
+                            list.HideSelection = false;
+                            list.Focus();
+                        }
                     }
 
                     count++;
@@ -979,7 +986,7 @@ namespace WinPaletter.GitHub
 
             cts ??= new();
 
-            string pathBeforeRefresh = currentPath;
+            string pathBeforeRefresh = CurrentPath;
 
             // Clear caches first
             Cache.Clear();
@@ -1067,12 +1074,12 @@ namespace WinPaletter.GitHub
         /// <returns>A task representing the asynchronous search operation.</returns>
         public static async Task SearchAsync(UI.WP.ListView list, string keyword, CancellationTokenSource cts = null)
         {
-            Program.Log?.Write(LogEventLevel.Information, $"SearchAsync started for keyword='{keyword}' in currentPath='{currentPath}'");
+            Program.Log?.Write(LogEventLevel.Information, $"SearchAsync started for keyword='{keyword}' in currentPath='{CurrentPath}'");
 
             if (string.IsNullOrWhiteSpace(keyword))
             {
                 // Reset view to current path
-                await PopulateListViewAsync(list, currentPath, cts);
+                await PopulateListViewAsync(list, CurrentPath, cts);
                 return;
             }
 
@@ -1095,7 +1102,7 @@ namespace WinPaletter.GitHub
                     list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Type, 200);
                     list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Size, 80);
                     list.Columns.Add("MD5", 120);
-                    list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_URL, 120);
+                    list.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_URL, 220);
                 }
 
                 bool hasWildcard = keyword.Contains("*") || keyword.Contains("?");
@@ -1135,12 +1142,12 @@ namespace WinPaletter.GitHub
                 });
 
                 matches = matches
-                    .Where(e => e.Path.StartsWith(currentPath, StringComparison.OrdinalIgnoreCase))
+                    .Where(e => e.Path.StartsWith(CurrentPath, StringComparison.OrdinalIgnoreCase))
                     .OrderBy(e => e.Type == Octokit.ContentType.Dir ? 0 : 1)
                     .ThenBy(e => e.Name)
                     .ToList();
 
-                Program.Log?.Write(LogEventLevel.Information, $"SearchAsync found {matches.Count} matching entries under '{currentPath}'");
+                Program.Log?.Write(LogEventLevel.Information, $"SearchAsync found {matches.Count} matching entries under '{CurrentPath}'");
 
                 list.Items.Clear();
 
@@ -1227,7 +1234,7 @@ namespace WinPaletter.GitHub
             {
                 list.EndUpdate();
                 list.Cursor = Cursors.Default;
-                Program.Log?.Write(LogEventLevel.Information, $"SearchAsync finished for keyword='{keyword}' in currentPath='{currentPath}'");
+                Program.Log?.Write(LogEventLevel.Information, $"SearchAsync finished for keyword='{keyword}' in currentPath='{CurrentPath}'");
             }
         }
     }

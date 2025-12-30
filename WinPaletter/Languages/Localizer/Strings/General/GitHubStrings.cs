@@ -23,6 +23,14 @@ public partial class Localizer
             public string Timing_Yesterday { get; set; } = "Yesterday";
             public string Timing_Tomorrow { get; set; } = "Tomorrow";
             public string Explorer_FileNotFound { get; set; } = "{0} can't find '{1}'. Check the spelling and try again.";
+            public string NewBranch { get; set; } = "Create a new themes upload session branch";
+            public string NewBranch_Instructions { get; set; } = "Name your new branch for this theme upload. You can continue editing this branch until your Pull Request is approved.";
+            public string NewBranch_Error { get; set; } = "Couldn't create branch `{0}`. Try creating it manually in your browser.";
+            public string NewBranch_AlreadyExists { get; set; } = "Your forked repository already has this branch. Try again with another branch name.";
+            public string Branch_Delete { get; set; } = "Are you sure you want to delete branch `{0}`?";
+            public string Branch_Delete_Error { get; set; } = "Couldn't delete branch `{0}`. Try deleting it manually in your browser.";
+            public string Explorer_Properties { get; set; } = "Properties";
+            public string Explorer_View { get; set; } = "View";
             public string Explorer_View_LargeIcons { get; set; } = "Large Icons";
             public string Explorer_View_SmallIcons { get; set; } = "Small Icons";
             public string Explorer_View_List { get; set; } = "List";

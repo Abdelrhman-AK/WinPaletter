@@ -28,8 +28,8 @@ namespace WinPaletter
             _info = info;
 
             int count = info.TotalCount;
-            string sourceDir = DirectoryName(info.SourcePath);
-            string destDir = DirectoryName(info.DestinationPath);
+            string sourceDir = ParentDirectoryName(info.SourcePath);
+            string destDir = ParentDirectoryName(info.DestinationPath);
             string fileName = FileName(info.SourcePath);
 
             // Label1: operation info

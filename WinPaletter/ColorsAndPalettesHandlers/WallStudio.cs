@@ -651,6 +651,12 @@ namespace WinPaletter
             TM.Cursors.Enabled = true;
             TM.AppTheme.Enabled = true;
             TM.Accessibility.Enabled = false;
+            TM.Sounds.Enabled = false;
+            TM.Icons.Enabled = false;
+            TM.WindowsEffects.Enabled = false;
+            TM.AltTab.Enabled = false;
+            TM.ScreenSaver.Enabled = false;
+            TM.MetricsFonts.Enabled = false;
 
             TM.Info.ThemeName = Text;
             TM.Info.Author = Application.CompanyName;
