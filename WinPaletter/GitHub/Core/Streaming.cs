@@ -55,7 +55,7 @@ namespace WinPaletter.GitHub
             var blob = new Octokit.NewBlob { Content = base64Content, Encoding = Octokit.EncodingType.Base64 };
             var blobRef = await client.Git.Blob.Create(_owner, GitHub.Repository.repositoryName, blob);
 
-            var masterRef = await client.Git.Reference.Get(_owner, GitHub.Repository.repositoryName, $"heads/{GitHub.Repository.branch}");
+            var masterRef = await client.Git.Reference.Get(_owner, GitHub.Repository.repositoryName, $"heads/{GitHub.Repository.Branch.Name}");
             var latestCommit = await client.Git.Commit.Get(_owner, GitHub.Repository.repositoryName, masterRef.Object.Sha);
             var baseTree = await client.Git.Tree.Get(_owner, GitHub.Repository.repositoryName, latestCommit.Tree.Sha);
 
@@ -71,10 +71,10 @@ namespace WinPaletter.GitHub
             var createdTree = await client.Git.Tree.Create(_owner, GitHub.Repository.repositoryName, newTree);
             var newCommit = new Octokit.NewCommit(commitMessage, createdTree.Sha, latestCommit.Sha);
             var commit = await client.Git.Commit.Create(_owner, GitHub.Repository.repositoryName, newCommit);
-            await client.Git.Reference.Update(_owner, GitHub.Repository.repositoryName, $"heads/{GitHub.Repository.branch}", new Octokit.ReferenceUpdate(commit.Sha));
+            await client.Git.Reference.Update(_owner, GitHub.Repository.repositoryName, $"heads/{GitHub.Repository.Branch.Name}", new Octokit.ReferenceUpdate(commit.Sha));
 
             // Update cache and maps using helper
-            var content = await client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.repositoryName, githubPath, GitHub.Repository.branch);
+            var content = await client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.repositoryName, githubPath, GitHub.Repository.Branch.Name);
             var entry = new Entry { Path = githubPath, Type = EntryType.File, Content = content[0], FetchedAt = DateTime.UtcNow };
 
             Cache.Add(githubPath, entry);
@@ -112,7 +112,7 @@ namespace WinPaletter.GitHub
                 return;
             }
 
-            var masterRef = await client.Git.Reference.Get(_owner, GitHub.Repository.repositoryName, $"heads/{GitHub.Repository.branch}");
+            var masterRef = await client.Git.Reference.Get(_owner, GitHub.Repository.repositoryName, $"heads/{GitHub.Repository.Branch.Name}");
             var latestCommit = await client.Git.Commit.Get(_owner, GitHub.Repository.repositoryName, masterRef.Object.Sha);
             var baseTree = await client.Git.Tree.Get(_owner, GitHub.Repository.repositoryName, latestCommit.Tree.Sha);
             var newTree = new Octokit.NewTree { BaseTree = baseTree.Sha };
@@ -153,7 +153,7 @@ namespace WinPaletter.GitHub
                 });
 
                 // Update cache and maps
-                var content = await client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.repositoryName, targetPath, GitHub.Repository.branch);
+                var content = await client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.repositoryName, targetPath, GitHub.Repository.Branch.Name);
                 var entry = new Entry { Path = targetPath, Type = EntryType.File, Content = content[0], FetchedAt = DateTime.UtcNow };
 
                 Cache.Add(targetPath, entry);
@@ -169,7 +169,7 @@ namespace WinPaletter.GitHub
             var createdTree = await client.Git.Tree.Create(_owner, GitHub.Repository.repositoryName, newTree);
             var newCommit = new Octokit.NewCommit($"Upload directory `{githubPath}` by {_owner}", createdTree.Sha, latestCommit.Sha);
             var commit = await client.Git.Commit.Create(_owner, GitHub.Repository.repositoryName, newCommit);
-            await client.Git.Reference.Update(_owner, GitHub.Repository.repositoryName, $"heads/{GitHub.Repository.branch}", new Octokit.ReferenceUpdate(commit.Sha));
+            await client.Git.Reference.Update(_owner, GitHub.Repository.repositoryName, $"heads/{GitHub.Repository.Branch.Name}", new Octokit.ReferenceUpdate(commit.Sha));
 
             reportProgress?.Invoke(100);
         }
@@ -192,7 +192,7 @@ namespace WinPaletter.GitHub
         public static async Task DownloadFileAsync(string githubPath, string localSavePath, CancellationTokenSource cts = null, Action<int> reportProgress = null, Action onCompleted = null, Action<Exception> onError = null, Action onCancelled = null)
         {
             cts ??= new();
-            string url = $"https://raw.githubusercontent.com/{_owner}/{GitHub.Repository.repositoryName}/{GitHub.Repository.branch}/{githubPath}";
+            string url = $"https://raw.githubusercontent.com/{_owner}/{GitHub.Repository.repositoryName}/{GitHub.Repository.Branch.Name}/{githubPath}";
 
             using DownloadManager dm = new();
 
@@ -279,7 +279,7 @@ namespace WinPaletter.GitHub
         //                dm.DownloadFileCompleted += (s, e) => fileCompleted?.Invoke(localFile);
         //                dm.DownloadErrorOccurred += (s, msg) => fileError?.Invoke(localFile, new Exception(msg));
 
-        //                await dm.DownloadFileAsync($"https://raw.githubusercontent.com/{_owner}/{GitHub.Repository.repositoryName}/{GitHub.Repository.branch}/{entry.Path}", localFile, cts);
+        //                await dm.DownloadFileAsync($"https://raw.githubusercontent.com/{_owner}/{GitHub.Repository.repositoryName}/{GitHub.Repository.Branch.Name}/{entry.Path}", localFile, cts);
 
         //                Interlocked.Add(ref downloadedBytes, entry.Size);
         //                overallProgress?.Invoke(totalBytes > 0 ? (int)(downloadedBytes * 100 / totalBytes) : 0);

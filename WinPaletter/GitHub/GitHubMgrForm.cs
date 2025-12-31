@@ -5,19 +5,29 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.GitHub;
 using WinPaletter.NativeMethods;
+using static WinPaletter.Settings.Structures;
 
 namespace WinPaletter
 {
     public partial class GitHubMgrForm : Form
     {
+        sealed class PendingBranch
+        {
+            public string BaseBranch { get; set; } = "main";
+        }
+
         public GitHubMgrForm()
         {
             InitializeComponent();
         }
+
+        Octokit.Repository repo;
+        Branch upstreamBranch;
 
         private async void GitHubManager_Load(object sender, EventArgs e)
         {
@@ -32,6 +42,7 @@ namespace WinPaletter
 
             label8.Text = forked ? Program.Lang.Strings.GitHubStrings.ExplorerStatus_Forked : $"{Program.Lang.Strings.GitHubStrings.ExplorerStatus_NotForked} {Program.Lang.Strings.GitHubStrings.ExplorerStatus_SyncAndForkToManage}";
             groupBox6.Enabled = forked;
+            tablessControl2.SelectedIndex = 0;
 
             if (forked)
             {
@@ -51,70 +62,117 @@ namespace WinPaletter
 
         async Task GetBranches()
         {
+            branchesView.Cursor = Cursors.WaitCursor;
+            groupBox5.Enabled = false;
+
             branchesView.BeginUpdate();
             branchesView.Columns.Clear();
-
             branchesView.SmallImageList = imageList1;
-
-            branchesView.Columns.Add("Branch", 250);
-            branchesView.Columns.Add("Protected", 60, HorizontalAlignment.Center);
-            branchesView.Columns.Add("Updated", 60, HorizontalAlignment.Center);
-            branchesView.Columns.Add("Ahead", 80, HorizontalAlignment.Right);
-            branchesView.Columns.Add("Behind", 80);
-            branchesView.Columns.Add("SHA", 70);
+            branchesView.Columns.Add("Branch", 200);
             branchesView.Columns.Add("Last updated", 220);
+            branchesView.Columns.Add("Ahead", 120, HorizontalAlignment.Right);
+            branchesView.Columns.Add("Behind", 120);
             branchesView.Columns.Add("Committer", 140);
             branchesView.Columns.Add("Last commit message", 380);
-            branchesView.Columns.Add("Files count", 80, HorizontalAlignment.Center);
-            branchesView.Columns.Add("Verified", 80, HorizontalAlignment.Center);
-
+            branchesView.Columns.Add("SHA", 70);
             branchesView.EndUpdate();
 
-            Octokit.Repository repo = await Program.GitHub.Client.Repository.Get(FileSystem._owner, GitHub.Repository.repositoryName);
-            Branch upstreamBranch = await Program.GitHub.Client.Repository.Branch.Get(GitHub.Repository.originalOwner, GitHub.Repository.repositoryName, "main");
+            IReadOnlyList<Branch> branches = await GitHub.Repository.Branch.GetBranchesAsync();
 
-            branchesView.Cursor = Cursors.WaitCursor;
+            SemaphoreSlim gate = new(6);
+            List<Task<ListViewItem>> tasks = new(branches.Count);
 
-            foreach (Branch branch in await GitHub.Repository.GetBranchesAsync())
+            foreach (Branch branch in branches)
             {
-                //if (branch.Name != "main")
-                //{
-                    branchesView.Items.Add(await NewBranch(repo, branch, upstreamBranch));
-                //}
+                tasks.Add(Task.Run(async () =>
+                {
+                    await gate.WaitAsync();
+                    try { return await NewItemFromBranch(repo, branch, upstreamBranch); }
+                    finally { gate.Release(); }
+                }));
             }
 
+            ListViewItem[] items = await Task.WhenAll(tasks);
+
+            branchesView.BeginUpdate();
+            branchesView.Items.AddRange(items);
+            branchesView.EndUpdate();
+
+            if (items.Count() > 0)
+            {
+                Program.Animator.HideSync(tablessControl2);
+                tablessControl2.SelectedIndex = 1;
+                Program.Animator.ShowSync(tablessControl2);
+            }
+            else
+            {
+                tablessControl2.SelectedIndex = 0;
+            }
+
+            groupBox5.Enabled = true;
             branchesView.Cursor = Cursors.Default;
         }
 
-        async Task<ListViewItem> NewBranch(Octokit.Repository repo, Branch branch, Branch upstreamBranch)
+        async Task<ListViewItem> NewItemFromBranch(Octokit.Repository repo, Branch branch, Branch upstreamBranch)
         {
-            GitHubCommit commit = await Program.GitHub.Client.Repository.Commit.Get(repo.Id, branch.Commit.Sha);
-            CompareResult compare = await Program.GitHub.Client.Repository.Commit.Compare(GitHub.Repository.originalOwner, GitHub.Repository.repositoryName, upstreamBranch.Commit.Sha, branch.Commit.Sha);
+            GitHubClient client = Program.GitHub.Client;
 
-            ListViewItem item = new()
-            {
-                Text = branch.Name,
-                Tag = branch,
-                ImageKey = "Branch"
-            };
+            GitHubCommit commit = await client.Repository.Commit.Get(repo.Id, branch.Commit.Sha);
+            CompareResult compare = await client.Repository.Commit.Compare(GitHub.Repository.originalOwner, GitHub.Repository.repositoryName, upstreamBranch.Commit.Sha, branch.Commit.Sha);
+
+            ListViewItem item = new() { Text = branch.Name, Tag = branch };
 
             DateTimeOffset lastUpdated = commit.Commit.Committer.Date;
             bool updated = compare.BehindBy == 0;
+            bool isVerified = commit.Commit.Verification != null && commit.Commit.Verification.Verified;
+            int ahead = compare.AheadBy;
+            int behind = compare.BehindBy;
+            int total = ahead + behind;
 
-            item.SubItems.Add(branch.Protected ? Program.Lang.Strings.General.Yes : Program.Lang.Strings.General.No);
-            item.SubItems.Add(updated ? Program.Lang.Strings.General.Yes : Program.Lang.Strings.General.No);
-            item.SubItems.Add(compare.AheadBy.ToString());
-            item.SubItems.Add(compare.BehindBy.ToString());
-            item.SubItems.Add(commit.Sha.Substring(0, 7));
             item.SubItems.Add(ToFriendlyString(lastUpdated));
+            item.SubItems.Add(BuildAheadBar(ahead, behind));
+            item.SubItems.Add(BuildBehindBar(ahead, behind));
             item.SubItems.Add(commit.Committer != null ? commit.Committer.Login : commit.Commit.Committer.Name);
             item.SubItems.Add(commit.Commit.Message?.Split('\n')[0] ?? string.Empty);
-            item.SubItems.Add(commit.Files.Count.ToString());
+            item.SubItems.Add(commit.Sha);
 
-            /* Verified (GPG) */
-            item.SubItems.Add(commit.Commit.Verification != null && commit.Commit.Verification.Verified ? Program.Lang.Strings.General.Yes : Program.Lang.Strings.General.No);
+            item.ImageKey = ImageKey(branch, updated);
 
             return item;
+        }
+
+        string ImageKey(Branch branch, bool updated)
+        {
+            if (branch.Protected && updated) return "Branch_Protected_Updated";
+            if (branch.Protected && !updated) return "Branch_Protected_Unupdated";
+            if (!branch.Protected && updated) return "Branch_Unprotected_Updated";
+            return "Branch_Unprotected_Unupdated";
+        }
+
+        static string BuildAheadBar(int ahead, int behind, int maxBlocks = 7)
+        {
+            int total = ahead + behind;
+            if (total == 0 || ahead == 0) return "0";
+
+            // Compute proportion of total for Ahead
+            int blocks = (int)Math.Round((double)ahead / total * maxBlocks, MidpointRounding.AwayFromZero);
+            if (blocks == 0 && ahead > 0) blocks = 1; // ensure visibility
+
+            string bar = new string('█', blocks).PadRight(maxBlocks);
+            return ahead + " " + bar;
+        }
+
+        static string BuildBehindBar(int ahead, int behind, int maxBlocks = 7)
+        {
+            int total = ahead + behind;
+            if (total == 0 || behind == 0) return "0";
+
+            // Compute proportion of total for Behind
+            int blocks = (int)Math.Round((double)behind / total * maxBlocks, MidpointRounding.AwayFromZero);
+            if (blocks == 0 && behind > 0) blocks = 1; // ensure visibility
+
+            string bar = new string('█', blocks).PadRight(maxBlocks);
+            return bar + " " + behind;
         }
 
         private void FileSystem_CanPasteChanged(object sender, bool e)
@@ -184,6 +242,9 @@ namespace WinPaletter
                 {
                     avatar = User.GitHub_Avatar;
                 }
+
+                repo = await Program.GitHub.Client.Repository.Get(FileSystem._owner, GitHub.Repository.repositoryName);
+                upstreamBranch = await Program.GitHub.Client.Repository.Branch.Get(GitHub.Repository.originalOwner, GitHub.Repository.repositoryName, "main");
             }
 
             if (avatar is null)
@@ -364,7 +425,7 @@ namespace WinPaletter
             label8.Text = forked ? Program.Lang.Strings.GitHubStrings.ExplorerStatus_Forked : $"{Program.Lang.Strings.GitHubStrings.ExplorerStatus_NotForked} {Program.Lang.Strings.GitHubStrings.ExplorerStatus_SyncAndForkToManage}";
             if (forked)
             {
-               await GetBranches();
+                await GetBranches();
             }
             groupBox6.Enabled = forked;
 
@@ -372,48 +433,6 @@ namespace WinPaletter
 
             breadcrumbControl1.StopMarquee();
             Cursor = Cursors.Default;
-        }
-
-        private async void button12_Click(object sender, EventArgs e)
-        {
-        Retry:
-            string branchName = InputBox(Program.Lang.Strings.GitHubStrings.NewBranch, string.Empty, Program.Lang.Strings.GitHubStrings.NewBranch_Instructions);
-            branchName = Regex.Replace(branchName.ToLowerInvariant(), @"[^a-z0-9\-_/]", "-");
-
-            if (!string.IsNullOrWhiteSpace(branchName))
-            {
-                if (!branchesView.Items.Cast<ListViewItem>().Any(i => i.Text == branchName))
-                {
-                    Cursor = Cursors.WaitCursor;
-                    breadcrumbControl1.StartMarquee();
-                    groupBox6.Enabled = false;
-
-                    bool syncSuccess = await GitHub.Repository.IsUpdatedAsync("main") || await GitHub.Repository.SyncBranchAsync();
-                    Branch branch = await GitHub.Repository.CreateBranchAsync(branchName);
-                    bool success = syncSuccess && branch is not null;
-
-                    breadcrumbControl1.StopMarquee();
-                    Cursor = Cursors.Default;
-
-                    if (success)
-                    {
-                        Octokit.Repository repo = await Program.GitHub.Client.Repository.Get(FileSystem._owner, GitHub.Repository.repositoryName);
-                        Branch upstreamBranch = await Program.GitHub.Client.Repository.Branch.Get(GitHub.Repository.originalOwner, GitHub.Repository.repositoryName, "main");
-                        branchesView.Items.Add(await NewBranch(repo, branch, upstreamBranch));
-                    }
-                    else
-                    {
-                        MsgBox(string.Format(Program.Lang.Strings.GitHubStrings.NewBranch_Error, branchName), MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-
-                    groupBox6.Enabled = true;
-                }
-                else
-                {
-                    MsgBox(Program.Lang.Strings.GitHubStrings.NewBranch_AlreadyExists, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    goto Retry;
-                }
-            }
         }
 
         private async void button10_Click(object sender, EventArgs e)
@@ -425,12 +444,18 @@ namespace WinPaletter
 
             if (string.IsNullOrEmpty(branchName)) return;
 
+            if (item.Tag is Branch branch && branch.Protected)
+            {
+                MsgBox(string.Format(Program.Lang.Strings.GitHubStrings.Branch_CannotDoOperation_Protected, branch.Name), MessageBoxButtons.OK, MessageBoxIcon.Error, Program.Lang.Strings.GitHubStrings.Branch_CannotAccess_Protected_Tip);
+                return;
+            }
+
             if (MsgBox(string.Format(Program.Lang.Strings.GitHubStrings.Branch_Delete, branchName), MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 Cursor = Cursors.WaitCursor;
-                breadcrumbControl1.StartMarquee();
+                progressBar1.Visible = true;
 
-                bool success = await GitHub.Repository.DeleteBranchAsync(branchName);
+                bool success = await GitHub.Repository.Branch.DeleteBranchAsync(branchName);
 
                 if (success)
                 {
@@ -441,7 +466,7 @@ namespace WinPaletter
                     MsgBox(string.Format(Program.Lang.Strings.GitHubStrings.Branch_Delete_Error, branchName), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
-                breadcrumbControl1.StopMarquee();
+                progressBar1.Visible = false;
                 Cursor = Cursors.Default;
             }
         }
@@ -513,6 +538,12 @@ Generated automatically by WinPaletter.";
             if (branchesView.SelectedItems.Count == 0) return;
             ListViewItem item = branchesView.SelectedItems[0];
 
+            if (item.Tag is Branch branch && branch.Protected)
+            {
+                MsgBox(string.Format(Program.Lang.Strings.GitHubStrings.Branch_CannotAccess_Protected, branch.Name), MessageBoxButtons.OK, MessageBoxIcon.Error, Program.Lang.Strings.GitHubStrings.Branch_CannotAccess_Protected_Tip);
+                return;
+            }
+
             Cursor = Cursors.WaitCursor;
 
             Program.Animator.HideSync(tablessControl1);
@@ -529,6 +560,262 @@ Generated automatically by WinPaletter.";
             groupBox1.Enabled = true;
 
             Cursor = Cursors.Default;
+        }
+
+        private async void button18_Click(object sender, EventArgs e)
+        {
+            string branchName = GitHub.Repository.Branch.SanitizeBranchName(GetAvailableItemText("new-themes-branch"));
+
+            ListViewItem item = new() { Text = branchName, ImageKey = "Branch_Unprotected_Unupdated", Tag = new PendingBranch() { BaseBranch = "main" } };
+            branchesView.Items.Add(item);
+            item.BeginEdit();
+        }
+
+        private async void branchesView_AfterLabelEdit(object sender, LabelEditEventArgs e)
+        {
+            try
+            {
+                ListViewItem item = branchesView.Items[e.Item];
+                string newName;
+
+                if (e.Label == null)
+                {
+                    // return will cancel the operation
+                    // but Windows continues creating the folder with the same name
+                    // so we will simulate what Windows does
+
+                    newName = item.Text;
+                }
+                else
+                {
+                    newName = e.Label.Trim();
+                }
+
+                newName = GitHub.Repository.Branch.SanitizeBranchName(newName);
+
+                if (string.IsNullOrWhiteSpace(newName))
+                {
+                    e.CancelEdit = true;
+                    if (item.Tag is PendingBranch) branchesView.Items[e.Item].Remove();
+                    return;
+                }
+                else if (!GitHub.Repository.Branch.IsValidBranchName(newName))
+                {
+                    MsgBox(Program.Lang.Strings.GitHubStrings.Branch_InvalidName, MessageBoxButtons.OK, MessageBoxIcon.Error, Program.Lang.Strings.GitHubStrings.Branch_NamingRules);
+                    e.CancelEdit = true;
+                    if (item.Tag is PendingBranch) item.Remove();
+                    return;
+                }
+                else if (item.Tag is PendingBranch pb)
+                {
+                    progressBar1.Visible = true;
+
+                    if (await GitHub.Repository.Branch.GetBranch(newName) is not null)
+                    {
+                        MsgBox(Program.Lang.Strings.GitHubStrings.NewBranch_AlreadyExists, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        e.CancelEdit = true;
+                        item.Remove();
+                        return;
+                    }
+
+                    Cursor previous = Cursor;
+                    Cursor = Cursors.WaitCursor;
+
+                    try
+                    {
+                        bool syncOk = await GitHub.Repository.Branch.IsUpdatedAsync(pb.BaseBranch, "main") || await GitHub.Repository.Branch.SyncBranchAsync(pb.BaseBranch, "main");
+                        if (!syncOk)
+                        {
+                            MsgBox(Program.Lang.Strings.GitHubStrings.NewBranch_Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            item.Remove();
+                            return;
+                        }
+
+                        Branch branch = await GitHub.Repository.Branch.CreateBranchAsync(newName, pb.BaseBranch);
+                        if (branch == null)
+                        {
+                            MsgBox(string.Format(Program.Lang.Strings.GitHubStrings.NewBranch_Error, newName), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            item.Remove();
+                            return;
+                        }
+
+                        if (branch.Protected) branch = await GitHub.Repository.Branch.SetBranchProtectionAsync(branch.Name, false);
+
+                        branchesView.Items[e.Item] = await NewItemFromBranch(repo, branch, upstreamBranch);
+                    }
+                    finally
+                    {
+                        progressBar1.Visible = false;
+                        Cursor = previous;
+                    }
+
+                    return;
+                }
+                else if (item.Tag is Branch existingBranch)
+                {
+                    string oldName = item.Text;
+
+                    if (oldName.Equals(newName, StringComparison.Ordinal)) return;
+
+                    if (newName.Equals("main", StringComparison.OrdinalIgnoreCase))
+                    {
+                        MsgBox(string.Format(Program.Lang.Strings.GitHubStrings.Branch_CannotDoOperation_Protected, "main"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        e.CancelEdit = true;
+                        return;
+                    }
+                    if (existingBranch.Protected)
+                    {
+                        MsgBox(string.Format(Program.Lang.Strings.GitHubStrings.Branch_CannotDoOperation_Protected, existingBranch.Name), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        e.CancelEdit = true;
+                        return;
+                    }
+
+                    progressBar1.Visible = true;
+
+                    try
+                    {
+
+                        if (await GitHub.Repository.Branch.GetBranch(newName) is not null)
+                        {
+                            MsgBox(Program.Lang.Strings.GitHubStrings.Branch_Rename_AlreadyExists, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            e.CancelEdit = true;
+                            return;
+                        }
+
+                        Branch renamed = await GitHub.Repository.Branch.RenameBranchAsync(oldName, newName);
+                        if (renamed == null)
+                        {
+                            e.CancelEdit = true;
+                            item.Text = oldName;
+                            return;
+                        }
+
+                        branchesView.Items[e.Item] = await NewItemFromBranch(repo, renamed, upstreamBranch);
+                        branchesView.Items[e.Item].Selected = true;
+                        branchesView.Items[e.Item].EnsureVisible();
+                        branchesView.HideSelection = false;
+                        branchesView.Focus();
+                    }
+                    finally
+                    {
+                        progressBar1.Visible = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MsgBox(ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private string GetAvailableItemText(string baseName)
+        {
+            string name = baseName;
+            int i = 1;
+
+            bool Exists(string text)
+            {
+                foreach (ListViewItem it in branchesView.Items) if (string.Equals(it.Text, text, StringComparison.OrdinalIgnoreCase)) return true;
+                return false;
+            }
+
+            while (Exists(name))
+            {
+                i++;
+                name = $"{baseName}-{i}";
+            }
+
+            return name;
+        }
+
+        private async void button12_Click(object sender, EventArgs e)
+        {
+            if (branchesView.SelectedItems.Count > 0)
+            {
+                ListViewItem item = branchesView.SelectedItems[0];
+                if (item.Tag is Branch branch)
+                {
+                    try
+                    {
+                        Cursor = Cursors.WaitCursor;
+                        progressBar1.Visible = true;
+
+                        Branch newBranch = await GitHub.Repository.Branch.SetBranchProtectionAsync(branch.Name, !branch.Protected);
+
+                        if (newBranch != null)
+                        {
+                            CompareResult compare = await Program.GitHub.Client.Repository.Commit.Compare(GitHub.Repository.originalOwner, GitHub.Repository.repositoryName, upstreamBranch.Commit.Sha, branch.Commit.Sha);
+                            bool updated = compare.BehindBy == 0;
+
+                            branchesView.SelectedItems[0].Tag = newBranch;
+                            branchesView.SelectedItems[0].ImageKey = ImageKey(newBranch, updated);
+                            branchesView.SelectedItems[0].Selected = true;
+                            branchesView.SelectedItems[0].EnsureVisible();
+                            branchesView.HideSelection = false;
+                            branchesView.Focus();
+                        }
+                    }
+                    finally
+                    {
+                        progressBar1.Visible = false;
+                        Cursor = Cursors.Default;
+                    }
+                }
+            }
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            if (branchesView.SelectedItems.Count > 0)
+            {
+                ListViewItem item_selected = branchesView.SelectedItems[0];
+                string branchName = GitHub.Repository.Branch.SanitizeBranchName(GetAvailableItemText($"cloned-branch-from-{item_selected.Text}"));
+
+                ListViewItem item = new() { Text = branchName, ImageKey = item_selected.ImageKey, Tag = new PendingBranch() { BaseBranch = (item_selected.Tag as Branch).Name } };
+                branchesView.Items.Add(item);
+                item.BeginEdit();
+            }
+        }
+
+        private void branchesView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (branchesView.SelectedItems.Count > 0)
+            {
+                button14.Enabled = true;
+                button10.Enabled = true;
+                button11.Enabled = true;
+                button12.Enabled = true;
+            }
+            else
+            {
+                button14.Enabled = false;
+                button10.Enabled = false;
+                button11.Enabled = false;
+                button12.Enabled = false;
+            }
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            if (branchesView.SelectedItems.Count > 0)
+            {
+                ListViewItem item = branchesView.SelectedItems[0];
+                item?.BeginEdit();
+            }
+        }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+            Program.Animator.HideSync(tablessControl2);
+            tablessControl2.SelectedIndex = 0;
+            Program.Animator.ShowSync(tablessControl2);
+        }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+            Program.Animator.HideSync(tablessControl2);
+            tablessControl2.SelectedIndex = 1;
+            Program.Animator.ShowSync(tablessControl2);
         }
     }
 }

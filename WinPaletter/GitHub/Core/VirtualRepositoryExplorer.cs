@@ -105,7 +105,7 @@ namespace WinPaletter.GitHub
             if (maxDepth >= 0 && currentDepth > maxDepth) return;
 
             IReadOnlyList<RepositoryContent> items;
-            try { items = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.repositoryName, path, GitHub.Repository.branch); }
+            try { items = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.repositoryName, path, GitHub.Repository.Branch.Name); }
             catch { return; }
 
             int total = items.Count;
@@ -137,7 +137,7 @@ namespace WinPaletter.GitHub
 
                 IReadOnlyList<RepositoryContent> parentContents =
                     await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(
-                        _owner, Repository.repositoryName, parent, Repository.branch);
+                        _owner, Repository.repositoryName, parent, Repository.Branch.Name);
 
                 // Find the exact item in the parent folder
                 return parentContents.FirstOrDefault(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
@@ -247,7 +247,7 @@ namespace WinPaletter.GitHub
             IReadOnlyList<RepositoryContent> contents;
             try
             {
-                contents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.repositoryName, path, GitHub.Repository.branch);
+                contents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.repositoryName, path, GitHub.Repository.Branch.Name);
             }
             catch
             {
@@ -327,7 +327,7 @@ namespace WinPaletter.GitHub
             try
             {
                 // Attempt to get directory contents
-                IReadOnlyList<RepositoryContent> contents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.repositoryName, path, GitHub.Repository.branch);
+                IReadOnlyList<RepositoryContent> contents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.repositoryName, path, GitHub.Repository.Branch.Name);
 
                 // If the path is empty or contains multiple children → directory
                 entry = new Entry
@@ -353,7 +353,7 @@ namespace WinPaletter.GitHub
                 // If not found as directory, try as file
                 try
                 {
-                    var fileContents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.repositoryName, path, GitHub.Repository.branch);
+                    var fileContents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.repositoryName, path, GitHub.Repository.Branch.Name);
 
                     if (fileContents.Count == 1)
                     {
@@ -408,7 +408,7 @@ namespace WinPaletter.GitHub
             IReadOnlyList<RepositoryContent> contents;
             try
             {
-                contents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.repositoryName, path, GitHub.Repository.branch);
+                contents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.repositoryName, path, GitHub.Repository.Branch.Name);
             }
             catch (Octokit.NotFoundException)
             {

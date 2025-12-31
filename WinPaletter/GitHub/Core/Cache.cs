@@ -62,7 +62,7 @@ namespace WinPaletter.GitHub
 
             private static async Task<bool> RepositoryTreeChangedAsync()
             {
-                var reference = await Program.GitHub.Client.Git.Reference.Get(_owner, GitHub.Repository.repositoryName, $"heads/{GitHub.Repository.branch}");
+                var reference = await Program.GitHub.Client.Git.Reference.Get(_owner, GitHub.Repository.repositoryName, $"heads/{GitHub.Repository.Branch.Name}");
                 string currentSha = reference.Object.Sha;
 
                 if (_lastRepoTreeSha == currentSha) return false;
@@ -442,7 +442,7 @@ namespace WinPaletter.GitHub
                         _owner,
                         GitHub.Repository.repositoryName,
                         path,
-                        GitHub.Repository.branch);
+                        GitHub.Repository.Branch.Name);
 
                 foreach (RepositoryContent item in contents)
                 {

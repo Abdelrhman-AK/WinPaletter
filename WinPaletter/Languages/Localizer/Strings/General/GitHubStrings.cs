@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using WinPaletter;
 
 public partial class Localizer
 {
@@ -23,12 +26,22 @@ public partial class Localizer
             public string Timing_Yesterday { get; set; } = "Yesterday";
             public string Timing_Tomorrow { get; set; } = "Tomorrow";
             public string Explorer_FileNotFound { get; set; } = "{0} can't find '{1}'. Check the spelling and try again.";
-            public string NewBranch { get; set; } = "Create a new themes upload session branch";
-            public string NewBranch_Instructions { get; set; } = "Name your new branch for this theme upload. You can continue editing this branch until your Pull Request is approved.";
             public string NewBranch_Error { get; set; } = "Couldn't create branch `{0}`. Try creating it manually in your browser.";
             public string NewBranch_AlreadyExists { get; set; } = "Your forked repository already has this branch. Try again with another branch name.";
+            public string Branch_InvalidName { get; set; } = "Branch name `{0}` is invalid. Try another name.";
+            public string Branch_NamingRules { get; set; } = "Branch names cannot be empty and must not contain spaces, control characters, or any of these symbols: ~ ^ : ? * [ \\ . They also cannot start or end with a slash (/), contain consecutive slashes (//), consecutive dots (..), or end with '.lock'.";
+            public string Branch_CannotAccess_Protected { get; set; } = "You cannot access branch `{0}` because it is protected.";
+            public string Branch_CannotAccess_Protected_Tip { get; set; } = "Protected branches help prevent accidental changes. To access this branch, either unprotect it or clone it as an unprotected branch if you want to keep a protected instance.";
+            public string Branch_CannotDoOperation_Protected { get; set; } = "Cannot perform this operation on branch `{0}` because it is protected.";
+            public string BranchProtection_ProtectConfirm { get; set; } = "Are you sure you want to protect the branch '{0}'?";
+            public string BranchProtection_UnprotectConfirm { get; set; } = "Are you sure you want to unprotect the branch '{0}'?";
+            public string BranchProtection_ProtectDetails { get; set; } = "Protected branches help prevent force pushes and deletion, and can enforce pull request reviews.";
+            public string BranchProtection_UnprotectDetails { get; set; } = "Unprotecting this branch will remove restrictions such as preventing force pushes, deletions, and mandatory pull request reviews. Make sure this is safe before proceeding.";
+            public string BranchProtection_ProtectFailed { get; set; } = "Failed to protect branch '{0}': {1}";
+            public string BranchProtection_UnprotectFailed { get; set; } = "Failed to unprotect branch '{0}': {1}";
             public string Branch_Delete { get; set; } = "Are you sure you want to delete branch `{0}`?";
             public string Branch_Delete_Error { get; set; } = "Couldn't delete branch `{0}`. Try deleting it manually in your browser.";
+            public string Branch_Rename_AlreadyExists { get; set; } = "Your forked repository already has this branch. Try again with another branch name.";
             public string Explorer_Properties { get; set; } = "Properties";
             public string Explorer_View { get; set; } = "View";
             public string Explorer_View_LargeIcons { get; set; } = "Large Icons";

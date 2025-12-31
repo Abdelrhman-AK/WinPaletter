@@ -202,7 +202,7 @@ namespace WinPaletter.GitHub
         /// <param name="branch"></param>
         public static async void SetBranch(string branch)
         {
-            GitHub.Repository.branch = branch;
+            GitHub.Repository.Branch.Name = branch;
             Cache.Clear();
         }
 

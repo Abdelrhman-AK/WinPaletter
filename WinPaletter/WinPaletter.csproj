@@ -435,6 +435,7 @@
     <Compile Include="ColorsAndPalettesHandlers\ColorEffectControl.Designer.cs">
       <DependentUpon>ColorEffectControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="GitHub\Core\Branch.cs" />
     <Compile Include="GUI\Elements\AdvancedControls\Breadcrumb.cs">
       <SubType>UserControl</SubType>
     </Compile>
