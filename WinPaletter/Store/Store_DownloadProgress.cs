@@ -36,6 +36,9 @@ namespace WinPaletter
         /// </summary>
         private readonly Stopwatch SW = new();
 
+        private static readonly TimeSpan SpeedUpdateInterval = TimeSpan.FromMilliseconds(400);
+        private DateTime _lastSpeedUpdate = DateTime.UtcNow;
+        private long _lastBytes = 0;
 
         private DownloadManager _ThemeDownloader;
         /// <summary>
@@ -92,29 +95,51 @@ namespace WinPaletter
             await ThemeDownloader.DownloadFileAsync(URL, File);
         }
 
-        private void ThemeDownloader_DownloadProgressChanged(object sender, DownloadManager.DownloadProgressEventArgs e)
+        private void ThemeDownloader_DownloadProgressChanged(
+          object sender,
+          DownloadManager.DownloadProgressEventArgs e)
         {
-            // GetTextAndImageRectangles the download speed
-            long Speed = (long)Math.Round(e.BytesReceived / SW.Elapsed.TotalSeconds, 2);
-            Label3.SetText(Speed.ToStringFileSize(true));
-
-            // Update the progress bar and labels
+            // Progress bar is cheap → update always
             if (e.TotalBytesToReceive > 0L)
             {
                 ProgressBar1.Style = UI.WP.ProgressBar.ProgressBarStyle.Continuous;
                 ProgressBar1.Value = (int)e.ProgressPercentage;
                 Label2.SetText($"{e.BytesReceived.ToStringFileSize()}/{e.TotalBytesToReceive.ToStringFileSize()}");
-                TimeSpan time = TimeSpan.FromSeconds((e.TotalBytesToReceive - e.BytesReceived) / Speed);
-                Label4.SetText(time.ToString(@"mm\:ss"));
             }
             else
             {
-                // Marquee style for indeterminate progress
                 ProgressBar1.Style = UI.WP.ProgressBar.ProgressBarStyle.Marquee;
                 ProgressBar1.Value = 0;
                 Label2.SetText(e.BytesReceived.ToStringFileSize());
                 Label4.SetText(string.Empty);
+                return;
             }
+
+            // Throttle speed + ETA updates
+            DateTime now = DateTime.UtcNow;
+            TimeSpan elapsed = now - _lastSpeedUpdate;
+
+            if (elapsed < SpeedUpdateInterval) return;
+
+            long bytesDelta = e.BytesReceived - _lastBytes;
+            if (bytesDelta <= 0) return;
+
+            double speedBps = bytesDelta / elapsed.TotalSeconds;
+            if (speedBps <= 0) return;
+
+            // Speed
+            long speed = (long)speedBps;
+            Label3.SetText(speed.ToStringFileSize(true));
+
+            // Remaining time
+            double remainingSeconds = (e.TotalBytesToReceive - e.BytesReceived) / speedBps;
+
+            TimeSpan remaining = TimeSpan.FromSeconds(Math.Max(0, remainingSeconds));
+            Label4.SetText(remaining.ToString(@"mm\:ss"));
+
+            // Update tracking values
+            _lastBytes = e.BytesReceived;
+            _lastSpeedUpdate = now;
         }
 
         private void ThemeDownloader_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)

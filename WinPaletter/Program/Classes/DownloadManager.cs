@@ -27,7 +27,8 @@ namespace WinPaletter
 
         private readonly object lockObject = new();
         private CancellationTokenSource cancellationTokenSource;
-        private readonly HttpClient client = new();
+        private readonly HttpClient client;
+        private bool disposed = false;
 
         #endregion
 
@@ -608,14 +609,23 @@ namespace WinPaletter
         /// operation was in progress. It ensures thread safety by locking the operation during execution.</remarks>
         /// <param name="canceled">A value indicating whether the download was canceled by the user. If <see langword="true"/>, the operation is marked
         /// as canceled; otherwise, it is stopped normally.</param>
-        public void StopDownload(bool canceled = false, bool disposed = false)
+        public void StopDownload(bool canceled = false)
         {
             lock (lockObject)
             {
-                Program.Log?.Write(LogEventLevel.Information, $"Download {(disposed ? "manager has been disposed" : (canceled ? "canceled" : "finished"))}.");
-                cancellationTokenSource?.Cancel();
+                if (disposed) return;
+
+                Program.Log?.Write(LogEventLevel.Information, $"Download {(canceled ? "canceled" : "finished")}.");
+                try
+                {
+                    cancellationTokenSource?.Cancel();
+                }
+                catch (ObjectDisposedException)
+                {
+                    // Already disposed, ignore
+                }
+
                 if (IsBusy) OnDownloadCompleted(new(null, true, new object()));
-                // Additional cleanup if needed
             }
         }
 
@@ -690,9 +700,14 @@ namespace WinPaletter
         /// </summary>
         public void Dispose()
         {
-            StopDownload(false, true);
-            client?.Dispose();
-            cancellationTokenSource?.Dispose();
+            lock (lockObject)
+            {
+                if (disposed) return;
+                disposed = true;
+                StopDownload(false);
+                client?.Dispose();
+                cancellationTokenSource?.Dispose();
+            }
         }
 
         #endregion

@@ -327,13 +327,14 @@ namespace WinPaletter.GitHub
 
                 // Open verification URL
                 ProcessStartInfo pci = new() { FileName = deviceFlow.VerificationUri, UseShellExecute = true };
-                Process process = Process.Start(pci);
-
-                if (process != null)
+                using (Process process = Process.Start(pci))
                 {
-                    await Task.Delay(1000).ConfigureAwait(false);
-                    NativeMethods.User32.SetForegroundWindow(process.Handle);
-                    Program.Log?.Write(LogEventLevel.Information, $"Opened verification URL: {deviceFlow.VerificationUri}");
+                    if (process != null)
+                    {
+                        await Task.Delay(1000).ConfigureAwait(false);
+                        NativeMethods.User32.SetForegroundWindow(process.Handle);
+                        Program.Log?.Write(LogEventLevel.Information, $"Opened verification URL: {deviceFlow.VerificationUri}");
+                    }
                 }
 
                 OnDeviceFlowInitiated?.Invoke(deviceFlow.UserCode, deviceFlow.ExpiresIn, deviceFlow.VerificationUri);
@@ -531,16 +532,17 @@ namespace WinPaletter.GitHub
 
                 // Open GitHub applications settings page for user to revoke token manually, maximized, focused and brought to top
                 ProcessStartInfo pci = new() { FileName = "https://github.com/settings/applications", UseShellExecute = true };
-                Process process = Process.Start(pci);
-
-                if (process != null)
+                using (Process process = Process.Start(pci))
                 {
-                    // Wait a bit for the window to appear
-                    await Task.Delay(1000).ConfigureAwait(false);
+                    if (process != null)
+                    {
+                        // Wait a bit for the window to appear
+                        await Task.Delay(1000).ConfigureAwait(false);
 
-                    // Bring to front using Win32 API
-                    NativeMethods.User32.SetForegroundWindow(process.Handle);
-                    Program.Log?.Write(LogEventLevel.Information, "Opened GitHub applications settings page in browser.");
+                        // Bring to front using Win32 API
+                        NativeMethods.User32.SetForegroundWindow(process.Handle);
+                        Program.Log?.Write(LogEventLevel.Information, "Opened GitHub applications settings page in browser.");
+                    }
                 }
 
                 // Update user info

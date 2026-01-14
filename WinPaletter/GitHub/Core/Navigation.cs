@@ -1,4 +1,5 @@
 ﻿using Octokit;
+using Ookii.Dialogs.WinForms;
 using Serilog.Events;
 using System;
 using System.Collections.Generic;
@@ -478,6 +479,41 @@ namespace WinPaletter.GitHub
 
                 Bitmap ghost = bmp.Ghost();
                 imgList.AddWithAlpha(ghostKey, ghost);
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the icon associated with the specified file name, returning it as a bitmap image. The icon size
+        /// can be specified as large or small.
+        /// </summary>
+        /// <remarks>The method caches icons by file extension to improve performance on subsequent calls.
+        /// If the icon for the specified extension has already been retrieved, the cached version is
+        /// returned.</remarks>
+        /// <param name="fileName">The full name or path of the file whose associated icon is to be retrieved. The file extension is used to
+        /// determine the icon.</param>
+        /// <param name="large">true to retrieve a large icon (typically 48x48 pixels); false to retrieve a small icon (typically 16x16
+        /// pixels). The default is true.</param>
+        /// <returns>A Bitmap containing the icon associated with the file's extension, or null if no icon is found.</returns>
+        public static Bitmap GetIconByFileName(string fileName, bool large = true)
+        {
+            string ext = GitHub.FileSystem.GetExtension(fileName).Remove(0, 1);
+
+            ImageList imagelst = large ? ref _largeIcons : ref _smallIcons;
+
+            if (imagelst.Images.ContainsKey(ext))
+            {
+                return (Bitmap)imagelst.Images[ext];
+            }
+            else
+            {
+                using (Icon ico = NativeMethods.Shell32.GetIconFromExtension(ext, !large))
+                using (Icon ico_resized = ico?.FromSize(large ? 48 : 16))
+                {
+                    Bitmap bmp = ico_resized?.ToBitmap();
+                    imagelst.AddWithAlpha(ext, bmp);
+                    ProcessGhostIcons(imagelst);
+                    return bmp;
+                }
             }
         }
 
@@ -968,6 +1004,7 @@ namespace WinPaletter.GitHub
             separator_2 = new ToolStripSeparator();
 
             menu_paste = new ToolStripMenuItem(Program.Lang.Strings.General.Paste) { Enabled = false };
+            menu_paste.Click -= Menu_paste_Click;
             menu_paste.Click += Menu_paste_Click;
 
             menu_newFolder = new ToolStripMenuItem(Program.Lang.Strings.Extensions.Folder, Assets.GitHubMgr.folder_web_48.Resize(16, 16));
@@ -1006,6 +1043,8 @@ namespace WinPaletter.GitHub
             menu_Open.Click += Menu_Open_Click;
 
             menu_Download = new ToolStripMenuItem("Download", Assets.GitHubMgr.ContextMenu_Download);
+            menu_Download.Click -= Menu_Download_Click;
+            menu_Download.Click += Menu_Download_Click;
 
             separator_item_1 = new ToolStripSeparator();
 
@@ -1424,6 +1463,39 @@ namespace WinPaletter.GitHub
         private static void Menu_ItemProperties_Click(object sender, EventArgs e)
         {
             // TODO: Show properties
+        }
+
+        private static void Menu_Download_Click(object sender, EventArgs e)
+        {
+            GitHub_DownloadFile dm = new();
+
+            string selectedPath = string.Empty;
+
+            if (!OS.WXP)
+            {
+                using (VistaFolderBrowserDialog FD = new())
+                {
+                    if (FD.ShowDialog() == DialogResult.OK) selectedPath = FD.SelectedPath;
+                }
+            }
+            else
+            {
+                using (FolderBrowserDialog FD = new())
+                {
+                    if (FD.ShowDialog() == DialogResult.OK) selectedPath = FD.SelectedPath;
+                }
+            }
+
+            if (System.IO.Directory.Exists(selectedPath))
+            {
+                foreach (ListViewItem item in _boundList.SelectedItems)
+                {
+                    if (item.Tag is RepositoryContent rc)
+                    {
+                        dm.DownloadFileAsync(rc.DownloadUrl, selectedPath);
+                    }
+                }
+            }
         }
 
         #endregion
@@ -2077,7 +2149,7 @@ namespace WinPaletter.GitHub
         private static void PlayAudio(string snd)
         {
             AltPlayingMethod = false;
-           
+
             if (File.Exists(snd))
             {
                 if (SP is not null)

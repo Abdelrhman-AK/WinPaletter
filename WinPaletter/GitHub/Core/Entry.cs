@@ -181,7 +181,7 @@ namespace WinPaletter.GitHub
             /// <seealso cref="Octokit.GitHubCommit"/>
             public static async Task<Entry> FromRepositoryContent(RepositoryContent content, string path)
             {
-                GitHubCommit latestCommit = (await Program.GitHub.Client.Repository.Commit.GetAll(_owner, GitHub.Repository.repositoryName, new CommitRequest { Path = path })).FirstOrDefault();
+                GitHubCommit latestCommit = (await Program.GitHub.Client.Repository.Commit.GetAll(_owner, GitHub.Repository.Name, new CommitRequest { Path = path })).FirstOrDefault();
 
                 EntryType type = content.Type.StringValue.ToLowerInvariant() switch
                 {

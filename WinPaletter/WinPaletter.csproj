@@ -88,10 +88,6 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Animator, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Animator.1.0.3\lib\net20\Animator.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="CommandLine, Version=2.9.1.0, Culture=neutral, PublicKeyToken=5a870481e358d379, processorArchitecture=MSIL">
       <HintPath>..\packages\CommandLineParser.2.9.1\lib\net461\CommandLine.dll</HintPath>
       <Private>False</Private>
@@ -104,16 +100,16 @@
       <HintPath>..\..\Workspace\WinPaletter_WorkingArea\3. Assemblies\Devcorp.Controls.VisualStyles.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="FastCloner, Version=3.3.20.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\FastCloner.3.3.20\lib\net46\FastCloner.dll</HintPath>
+    <Reference Include="FastCloner, Version=3.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FastCloner.3.4.0\lib\net46\FastCloner.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="FluentTransitions, Version=2.0.3.0, Culture=neutral, PublicKeyToken=121ceb2df72b2338, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentTransitions.2.0.3\lib\net48\FluentTransitions.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=10.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.10.0.1\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=10.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.10.0.2\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Bcl.HashCode, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -131,7 +127,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.13.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.13.0.5-beta1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Octokit, Version=14.0.0.0, Culture=neutral, PublicKeyToken=0be8860aee462442, processorArchitecture=MSIL">
@@ -161,16 +157,16 @@
       <HintPath>..\packages\System.Buffers.4.6.1\lib\net462\System.Buffers.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Collections.Immutable, Version=10.0.0.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Collections.Immutable.10.0.1\lib\net462\System.Collections.Immutable.dll</HintPath>
+    <Reference Include="System.Collections.Immutable, Version=10.0.0.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Immutable.10.0.2\lib\net462\System.Collections.Immutable.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Design">
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Diagnostics.DiagnosticSource, Version=10.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.10.0.1\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    <Reference Include="System.Diagnostics.DiagnosticSource, Version=10.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.10.0.2\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.DirectoryServices.AccountManagement">
@@ -180,11 +176,11 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Drawing.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Drawing.Common.10.0.1\lib\net462\System.Drawing.Common.dll</HintPath>
+      <HintPath>..\packages\System.Drawing.Common.10.0.2\lib\net462\System.Drawing.Common.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Formats.Nrbf, Version=10.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Formats.Nrbf.10.0.1\lib\net462\System.Formats.Nrbf.dll</HintPath>
+    <Reference Include="System.Formats.Nrbf, Version=10.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Formats.Nrbf.10.0.2\lib\net462\System.Formats.Nrbf.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.IO.Compression">
@@ -205,12 +201,12 @@
       <HintPath>..\packages\System.Numerics.Vectors.4.6.1\lib\net462\System.Numerics.Vectors.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Reflection.Metadata, Version=10.0.0.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Reflection.Metadata.10.0.1\lib\net462\System.Reflection.Metadata.dll</HintPath>
+    <Reference Include="System.Reflection.Metadata, Version=10.0.0.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reflection.Metadata.10.0.2\lib\net462\System.Reflection.Metadata.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="System.Resources.Extensions, Version=10.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Resources.Extensions.10.0.1\lib\net462\System.Resources.Extensions.dll</HintPath>
+    <Reference Include="System.Resources.Extensions, Version=10.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Resources.Extensions.10.0.2\lib\net462\System.Resources.Extensions.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -218,8 +214,8 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Security" />
-    <Reference Include="System.Threading.Channels, Version=10.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Channels.10.0.1\lib\net462\System.Threading.Channels.dll</HintPath>
+    <Reference Include="System.Threading.Channels, Version=10.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Channels.10.0.2\lib\net462\System.Threading.Channels.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.4.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -436,6 +432,18 @@
       <DependentUpon>ColorEffectControl.cs</DependentUpon>
     </Compile>
     <Compile Include="GitHub\Core\Branch.cs" />
+    <Compile Include="GitHub\GitHub_DownloadFiles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GitHub\GitHub_DownloadFiles.Designer.cs">
+      <DependentUpon>GitHub_DownloadFiles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GitHub\GitHub_DownloadFile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GitHub\GitHub_DownloadFile.Designer.cs">
+      <DependentUpon>GitHub_DownloadFile.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\Elements\AdvancedControls\Breadcrumb.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -482,6 +490,32 @@
     <Compile Include="ColorsAndPalettesHandlers\PaletteGenerator.Designer.cs">
       <DependentUpon>PaletteGenerator.cs</DependentUpon>
     </Compile>
+    <Compile Include="Program\Assemblies\Animator\Animation.cs" />
+    <Compile Include="Program\Assemblies\Animator\Animator.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Program\Assemblies\Animator\Controller.cs" />
+    <Compile Include="Program\Assemblies\Animator\DoubleBitmapControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Program\Assemblies\Animator\DoubleBitmapControl.Designer.cs">
+      <DependentUpon>DoubleBitmapControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program\Assemblies\Animator\DoubleBitmapForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Program\Assemblies\Animator\DoubleBitmapForm.designer.cs">
+      <DependentUpon>DoubleBitmapForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program\Assemblies\Animator\ExtendedControls\TabControlEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Program\Assemblies\Animator\ExtendedControls\TabControlEx.Designer.cs">
+      <DependentUpon>TabControlEx.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program\Assemblies\Animator\Flags.cs" />
+    <Compile Include="Program\Assemblies\Animator\PointFConverter.cs" />
+    <Compile Include="Program\Assemblies\Animator\TransfromHelper.cs" />
     <Compile Include="Program\Classes\ActionQueue.cs" />
     <Compile Include="Program\Classes\Animator.cs" />
     <Compile Include="ColorsAndPalettesHandlers\ColorEffect.cs" />
@@ -1398,6 +1432,12 @@
     <EmbeddedResource Include="ColorsAndPalettesHandlers\ColorEffectControl.resx">
       <DependentUpon>ColorEffectControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GitHub\GitHub_DownloadFiles.resx">
+      <DependentUpon>GitHub_DownloadFiles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GitHub\GitHub_DownloadFile.resx">
+      <DependentUpon>GitHub_DownloadFile.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GUI\GlassWindow.resx">
       <DependentUpon>GlassWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -1430,6 +1470,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GitHub\GitHub_FilesCompare.resx">
       <DependentUpon>GitHub_FilesCompare.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Program\Assemblies\Animator\DoubleBitmapForm.resx">
+      <DependentUpon>DoubleBitmapForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Users\UserSwitch.resx">
       <DependentUpon>UserSwitch.cs</DependentUpon>

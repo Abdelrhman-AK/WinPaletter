@@ -105,7 +105,7 @@ namespace WinPaletter.GitHub
             if (maxDepth >= 0 && currentDepth > maxDepth) return;
 
             IReadOnlyList<RepositoryContent> items;
-            try { items = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.repositoryName, path, GitHub.Repository.Branch.Name); }
+            try { items = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.Name, path, GitHub.Repository.Branch.Name); }
             catch { return; }
 
             int total = items.Count;
@@ -137,7 +137,7 @@ namespace WinPaletter.GitHub
 
                 IReadOnlyList<RepositoryContent> parentContents =
                     await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(
-                        _owner, Repository.repositoryName, parent, Repository.Branch.Name);
+                        _owner, Repository.Name, parent, Repository.Branch.Name);
 
                 // Find the exact item in the parent folder
                 return parentContents.FirstOrDefault(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
@@ -162,7 +162,7 @@ namespace WinPaletter.GitHub
             try
             {
                 // Fetch latest commits for this path
-                GitHubCommit latestCommit = (await Program.GitHub.Client.Repository.Commit.GetAll(_owner, GitHub.Repository.repositoryName, new CommitRequest { Path = path })).FirstOrDefault();
+                GitHubCommit latestCommit = (await Program.GitHub.Client.Repository.Commit.GetAll(_owner, GitHub.Repository.Name, new CommitRequest { Path = path })).FirstOrDefault();
 
                 // File entry validation
                 if (cachedEntry.Type == EntryType.File)
@@ -182,7 +182,7 @@ namespace WinPaletter.GitHub
                     // Fetch latest SHAs for all children
                     foreach (string childPath in childPaths)
                     {
-                        GitHubCommit latest = (await Program.GitHub.Client.Repository.Commit.GetAll(_owner, GitHub.Repository.repositoryName, new CommitRequest { Path = childPath })).FirstOrDefault();
+                        GitHubCommit latest = (await Program.GitHub.Client.Repository.Commit.GetAll(_owner, GitHub.Repository.Name, new CommitRequest { Path = childPath })).FirstOrDefault();
                         if (latest != null) latestShas[childPath] = latest.Sha;
                     }
 
@@ -247,7 +247,7 @@ namespace WinPaletter.GitHub
             IReadOnlyList<RepositoryContent> contents;
             try
             {
-                contents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.repositoryName, path, GitHub.Repository.Branch.Name);
+                contents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.Name, path, GitHub.Repository.Branch.Name);
             }
             catch
             {
@@ -273,7 +273,7 @@ namespace WinPaletter.GitHub
                     if (useShaValidation && Cache.TryGetValue(item.Path, out Cache.CacheData cachedChildTuple))
                     {
                         Entry cachedChild = cachedChildTuple.Entry;
-                        GitHubCommit latest = (await Program.GitHub.Client.Repository.Commit.GetAll(_owner, GitHub.Repository.repositoryName, new CommitRequest { Path = item.Path })).FirstOrDefault();
+                        GitHubCommit latest = (await Program.GitHub.Client.Repository.Commit.GetAll(_owner, GitHub.Repository.Name, new CommitRequest { Path = item.Path })).FirstOrDefault();
 
                         if (latest != null && cachedChild.CommitSha == latest.Sha) childEntry = cachedChild;
                     }
@@ -327,7 +327,7 @@ namespace WinPaletter.GitHub
             try
             {
                 // Attempt to get directory contents
-                IReadOnlyList<RepositoryContent> contents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.repositoryName, path, GitHub.Repository.Branch.Name);
+                IReadOnlyList<RepositoryContent> contents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.Name, path, GitHub.Repository.Branch.Name);
 
                 // If the path is empty or contains multiple children → directory
                 entry = new Entry
@@ -353,7 +353,7 @@ namespace WinPaletter.GitHub
                 // If not found as directory, try as file
                 try
                 {
-                    var fileContents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.repositoryName, path, GitHub.Repository.Branch.Name);
+                    var fileContents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.Name, path, GitHub.Repository.Branch.Name);
 
                     if (fileContents.Count == 1)
                     {
@@ -408,7 +408,7 @@ namespace WinPaletter.GitHub
             IReadOnlyList<RepositoryContent> contents;
             try
             {
-                contents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.repositoryName, path, GitHub.Repository.Branch.Name);
+                contents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.Name, path, GitHub.Repository.Branch.Name);
             }
             catch (Octokit.NotFoundException)
             {

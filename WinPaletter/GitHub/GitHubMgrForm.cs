@@ -1,4 +1,5 @@
-﻿using Octokit;
+﻿using FluentTransitions;
+using Octokit;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -38,7 +39,7 @@ namespace WinPaletter
 
             await UpdateGitHubLoginData();
 
-            bool forked = await GitHub.Repository.ExistsAsync();
+            bool forked = await GitHub.Repository.ExistsAsync(GitHub.Repository.Name);
 
             label8.Text = forked ? Program.Lang.Strings.GitHubStrings.ExplorerStatus_Forked : $"{Program.Lang.Strings.GitHubStrings.ExplorerStatus_NotForked} {Program.Lang.Strings.GitHubStrings.ExplorerStatus_SyncAndForkToManage}";
             groupBox6.Enabled = forked;
@@ -52,8 +53,8 @@ namespace WinPaletter
             FileSystem.Navigated += FileSystem_Navigated;
             FileSystem.CanPasteChanged += FileSystem_CanPasteChanged;
             FileSystem.StatusLabelChanged += FileSystem_StatusLabelChanged;
-            FileSystem.CanDoIOChanged += FileSystem_CanDoIOChanged
-                ;
+            FileSystem.CanDoIOChanged += FileSystem_CanDoIOChanged;
+
             toggle1.Checked = GitHub.FileSystem.ShowHiddenFiles;
 
             // After populating the tree for the first time
@@ -77,7 +78,7 @@ namespace WinPaletter
             branchesView.Columns.Add("SHA", 70);
             branchesView.EndUpdate();
 
-            IReadOnlyList<Branch> branches = await GitHub.Repository.Branch.GetBranchesAsync();
+            IReadOnlyList<Branch> branches = await GitHub.Repository.Branch.GetBranchesAsync(true);
 
             SemaphoreSlim gate = new(6);
             List<Task<ListViewItem>> tasks = new(branches.Count);
@@ -98,11 +99,16 @@ namespace WinPaletter
             branchesView.Items.AddRange(items);
             branchesView.EndUpdate();
 
+            progressBar1.Visible = false;
+
             if (items.Count() > 0)
             {
-                Program.Animator.HideSync(tablessControl2);
-                tablessControl2.SelectedIndex = 1;
-                Program.Animator.ShowSync(tablessControl2);
+                if (tablessControl2.SelectedIndex == 0)
+                {
+                    Program.Animator.HideSync(tablessControl2);
+                    tablessControl2.SelectedIndex = 1;
+                    Program.Animator.ShowSync(tablessControl2);
+                }
             }
             else
             {
@@ -118,7 +124,7 @@ namespace WinPaletter
             GitHubClient client = Program.GitHub.Client;
 
             GitHubCommit commit = await client.Repository.Commit.Get(repo.Id, branch.Commit.Sha);
-            CompareResult compare = await client.Repository.Commit.Compare(GitHub.Repository.originalOwner, GitHub.Repository.repositoryName, upstreamBranch.Commit.Sha, branch.Commit.Sha);
+            CompareResult compare = await client.Repository.Commit.Compare(GitHub.Repository.originalOwner, GitHub.Repository.Name, upstreamBranch.Commit.Sha, branch.Commit.Sha);
 
             ListViewItem item = new() { Text = branch.Name, Tag = branch };
 
@@ -243,8 +249,8 @@ namespace WinPaletter
                     avatar = User.GitHub_Avatar;
                 }
 
-                repo = await Program.GitHub.Client.Repository.Get(FileSystem._owner, GitHub.Repository.repositoryName);
-                upstreamBranch = await Program.GitHub.Client.Repository.Branch.Get(GitHub.Repository.originalOwner, GitHub.Repository.repositoryName, "main");
+                repo = await Program.GitHub.Client.Repository.Get(FileSystem._owner, GitHub.Repository.Name);
+                upstreamBranch = await Program.GitHub.Client.Repository.Branch.Get(GitHub.Repository.originalOwner, GitHub.Repository.Name, "main");
             }
 
             if (avatar is null)
@@ -418,9 +424,8 @@ namespace WinPaletter
 
             groupBox3.Enabled = false;
 
-            bool forked = await GitHub.Repository.ExistsAsync();
-            if (!forked) await GitHub.Repository.ForkAsync();
-            forked = await GitHub.Repository.ExistsAsync();
+            bool forked = await GitHub.Repository.ExistsAsync(GitHub.Repository.Name);
+            if (!forked) forked = await GitHub.Repository.ForkAsync(GitHub.Repository.Name) is not null;
 
             label8.Text = forked ? Program.Lang.Strings.GitHubStrings.ExplorerStatus_Forked : $"{Program.Lang.Strings.GitHubStrings.ExplorerStatus_NotForked} {Program.Lang.Strings.GitHubStrings.ExplorerStatus_SyncAndForkToManage}";
             if (forked)
@@ -454,6 +459,8 @@ namespace WinPaletter
             {
                 Cursor = Cursors.WaitCursor;
                 progressBar1.Visible = true;
+                groupBox5.Enabled = false;
+                branchesView.Enabled = false;
 
                 bool success = await GitHub.Repository.Branch.DeleteBranchAsync(branchName);
 
@@ -466,6 +473,8 @@ namespace WinPaletter
                     MsgBox(string.Format(Program.Lang.Strings.GitHubStrings.Branch_Delete_Error, branchName), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
+                groupBox5.Enabled = true;
+                branchesView.Enabled = true;
                 progressBar1.Visible = false;
                 Cursor = Cursors.Default;
             }
@@ -671,6 +680,8 @@ Generated automatically by WinPaletter.";
                     }
 
                     progressBar1.Visible = true;
+                    groupBox5.Enabled = false;
+                    branchesView.Enabled = false;
 
                     try
                     {
@@ -698,6 +709,8 @@ Generated automatically by WinPaletter.";
                     }
                     finally
                     {
+                        groupBox5.Enabled = true;
+                        branchesView.Enabled = true;
                         progressBar1.Visible = false;
                     }
                 }
@@ -739,12 +752,14 @@ Generated automatically by WinPaletter.";
                     {
                         Cursor = Cursors.WaitCursor;
                         progressBar1.Visible = true;
+                        groupBox5.Enabled = false;
+                        branchesView.Enabled = false;
 
                         Branch newBranch = await GitHub.Repository.Branch.SetBranchProtectionAsync(branch.Name, !branch.Protected);
 
                         if (newBranch != null)
                         {
-                            CompareResult compare = await Program.GitHub.Client.Repository.Commit.Compare(GitHub.Repository.originalOwner, GitHub.Repository.repositoryName, upstreamBranch.Commit.Sha, branch.Commit.Sha);
+                            CompareResult compare = await Program.GitHub.Client.Repository.Commit.Compare(GitHub.Repository.originalOwner, GitHub.Repository.Name, upstreamBranch.Commit.Sha, branch.Commit.Sha);
                             bool updated = compare.BehindBy == 0;
 
                             branchesView.SelectedItems[0].Tag = newBranch;
@@ -757,6 +772,8 @@ Generated automatically by WinPaletter.";
                     }
                     finally
                     {
+                        groupBox5.Enabled = true;
+                        branchesView.Enabled = true;
                         progressBar1.Visible = false;
                         Cursor = Cursors.Default;
                     }
@@ -816,6 +833,16 @@ Generated automatically by WinPaletter.";
             Program.Animator.HideSync(tablessControl2);
             tablessControl2.SelectedIndex = 1;
             Program.Animator.ShowSync(tablessControl2);
+        }
+
+        private void button14_MouseEnter(object sender, EventArgs e)
+        {
+            Transition.With(label12, nameof(label12.Text), ((sender as UI.WP.Button).Tag ?? string.Empty).ToString()).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+        }
+
+        private void button14_MouseLeave(object sender, EventArgs e)
+        {
+            Transition.With(label12, nameof(label12.Text), string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
         }
     }
 }

@@ -178,7 +178,7 @@ namespace WinPaletter.UI.WP
                 using (Graphics G = Graphics.FromImage(bmp))
                 {
                     // Draw header background
-                    G.Clear(Program.Style.Schemes.Main.Colors.Button);
+                    G.Clear(Enabled ? Program.Style.Schemes.Main.Colors.Button : Program.Style.Schemes.Disabled.Colors.Button);
 
                     int x = 0;
 
@@ -193,7 +193,7 @@ namespace WinPaletter.UI.WP
                         // Draw splitter line (except after last column)
                         if (i < Columns.Count - 1)
                         {
-                            using (Pen splitterPen = new(Program.Style.Schemes.Main.Colors.Line_Hover()))
+                            using (Pen splitterPen = new(Enabled ? Program.Style.Schemes.Main.Colors.Line_Hover() : Program.Style.Schemes.Disabled.Colors.Line_Hover()))
                             {
                                 int splitterX = x + colWidth - 2; // right edge of the column
                                 G.DrawLine(splitterPen, splitterX, 2, splitterX, rect.bottom - 2);

@@ -34,7 +34,7 @@ namespace WinPaletter.GitHub
         /// <summary>
         /// The default repository name for WinPaletter Store.
         /// </summary>
-        public const string repositoryName = "WinPaletter-Store";
+        public static string Name { get; } = "WinPaletter-Store";
 
         /// <summary>
         /// Checks whether a GitHub repository exists for the current authenticated user.
@@ -46,7 +46,7 @@ namespace WinPaletter.GitHub
         /// <remarks>
         /// Network availability is checked before executing the request.
         /// </remarks>
-        public static async Task<bool> ExistsAsync(string repository = repositoryName)
+        public static async Task<bool> ExistsAsync(string repository = null)
         {
             if (!Program.IsNetworkAvailable) return false;
 
@@ -79,7 +79,7 @@ namespace WinPaletter.GitHub
         /// GitHub API handles asynchronous fork creation; the returned repository
         /// may not yet be fully ready for operations.
         /// </remarks>
-        public static async Task<Octokit.Repository> ForkAsync(string repository = repositoryName)
+        public static async Task<Octokit.Repository> ForkAsync(string repository = null)
         {
             if (!Program.IsNetworkAvailable) return null;
 
@@ -114,12 +114,12 @@ namespace WinPaletter.GitHub
             try
             {
                 NewPullRequest newPR = new(title, $"{_owner}:{Branch.Name}", "main") { Body = body };
-                PullRequest pr = await _client.PullRequest.Create(originalOwner, repositoryName, newPR).ConfigureAwait(false);
+                PullRequest pr = await _client.PullRequest.Create(originalOwner, Name, newPR).ConfigureAwait(false);
                 Program.Log?.Write(LogEventLevel.Information, $"Pull request created: {pr.HtmlUrl}");
             }
             catch (Exception ex)
             {
-                Program.Log?.Write(LogEventLevel.Error, $"Error creating pull request to {originalOwner}/{repositoryName}", ex);
+                Program.Log?.Write(LogEventLevel.Error, $"Error creating pull request to {originalOwner}/{Name}", ex);
             }
         }
 
@@ -158,14 +158,14 @@ namespace WinPaletter.GitHub
                 // Get current branch reference
                 var branchRef = await _client.Git.Reference.Get(
                     _owner,
-                    repositoryName,
+                    Name,
                     $"heads/{Branch.Name}"
                 ).ConfigureAwait(false);
 
                 // Get latest commit
                 var commit = await _client.Git.Commit.Get(
                     _owner,
-                    repositoryName,
+                    Name,
                     branchRef.Object.Sha
                 ).ConfigureAwait(false);
 
@@ -188,7 +188,7 @@ namespace WinPaletter.GitHub
 
                     var blob = await _client.Git.Blob.Create(
                         _owner,
-                        repositoryName,
+                        Name,
                         new NewBlob
                         {
                             Content = kv.Value,
@@ -218,14 +218,14 @@ namespace WinPaletter.GitHub
 
                 var createdTree = await _client.Git.Tree.Create(
                     _owner,
-                    repositoryName,
+                    Name,
                     newTree
                 ).ConfigureAwait(false);
 
                 // Create commit
                 var newCommit = await _client.Git.Commit.Create(
                     _owner,
-                    repositoryName,
+                    Name,
                     new NewCommit(
                         message,
                         createdTree.Sha,
@@ -236,7 +236,7 @@ namespace WinPaletter.GitHub
                 // Update branch ref
                 await _client.Git.Reference.Update(
                     _owner,
-                    repositoryName,
+                    Name,
                     $"heads/{Branch.Name}",
                     new ReferenceUpdate(newCommit.Sha)
                 ).ConfigureAwait(false);
@@ -270,14 +270,14 @@ namespace WinPaletter.GitHub
                 // Branch must exist on fork
                 await _client.Git.Reference.Get(
                     _owner,
-                    repositoryName,
+                    Name,
                     $"heads/{Branch.Name}"
                 ).ConfigureAwait(false);
 
                 // Must have commits
                 var compare = await _client.Repository.Commit.Compare(
                     originalOwner,
-                    repositoryName,
+                    Name,
                     "main",
                     $"{_owner}:{Branch.Name}"
                 ).ConfigureAwait(false);
@@ -291,7 +291,7 @@ namespace WinPaletter.GitHub
                 // No duplicate PR
                 var prs = await _client.PullRequest.GetAllForRepository(
                     originalOwner,
-                    repositoryName,
+                    Name,
                     new PullRequestRequest
                     {
                         State = ItemStateFilter.Open,
