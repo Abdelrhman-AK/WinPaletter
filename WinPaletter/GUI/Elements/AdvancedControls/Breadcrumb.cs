@@ -437,7 +437,7 @@ namespace WinPaletter.UI.WP
 
             _isMarquee = true;
 
-            _marqueeTimer = new() { Interval = 10 };
+            _marqueeTimer = new() { Interval = 20 };
             _marqueeTimer.Tick += (s, e) =>
             {
                 _marqueeOffset += 0.01f;
@@ -686,14 +686,10 @@ namespace WinPaletter.UI.WP
             bool isInProgress = _animatedValue > progressMinimum;
 
             using (SolidBrush br = new(Program.Style.Schemes.Main.Colors.Back(parentLevel)))
-            using (Pen p = new(Program.Style.Schemes.Main.Colors.Line_Hover(parentLevel)))
             using (SolidBrush br_hover = new(Color.FromArgb(_hoverAlpha, Program.Style.Schemes.Main.Colors.Back_Checked)))
-            using (Pen p_hover = new(Color.FromArgb(_hoverAlpha, Program.Style.Schemes.Main.Colors.Line_Checked)))
             {
                 G.FillRoundedRect(br, rect);
                 G.FillRoundedRect(br_hover, rect);
-                G.DrawRoundedRect(p, rect);
-                G.DrawRoundedRect(p_hover, rect);
             }
 
             float progressWidth;
@@ -703,21 +699,45 @@ namespace WinPaletter.UI.WP
                 float segmentWidth = rect.Width * 0.25f;
                 float offsetX = rect.Width * _marqueeOffset;
 
-                if (offsetX + segmentWidth > rect.Width)
-                {
-                    RectangleF leftRect = new(offsetX, 0, rect.Width - offsetX, Height - 1);
-                    G.FillRoundedRect(new SolidBrush(Color.FromArgb(_alpha, Program.Style.Schemes.Tertiary.Colors.Accent)), leftRect);
-                    G.DrawRoundedRect(new Pen(Color.FromArgb(_alpha, Program.Style.Schemes.Tertiary.Colors.ForeColor_Accent)), leftRect);
+                // Define the marquee rectangle
+                RectangleF marqueeRect = new(offsetX, 0, segmentWidth, rect.Height);
 
-                    RectangleF rightRect = new(0, 0, segmentWidth - (rect.Width - offsetX), Height - 1);
-                    G.FillRoundedRect(new SolidBrush(Color.FromArgb(_alpha, Program.Style.Schemes.Tertiary.Colors.Accent)), rightRect);
-                    G.DrawRoundedRect(new Pen(Color.FromArgb(_alpha, Program.Style.Schemes.Tertiary.Colors.ForeColor_Accent)), rightRect);
-                }
-                else
+                // Create a horizontal gradient brush for the marquee
+                using (LinearGradientBrush brush = new(marqueeRect, Color.Transparent, Color.Transparent, LinearGradientMode.Horizontal))
                 {
-                    RectangleF progRect = new(offsetX, 0, segmentWidth, Height - 1);
-                    G.FillRoundedRect(new SolidBrush(Color.FromArgb(_alpha, Program.Style.Schemes.Tertiary.Colors.Accent)), progRect);
-                    G.DrawRoundedRect(new Pen(Color.FromArgb(_alpha, Program.Style.Schemes.Tertiary.Colors.ForeColor_Accent)), progRect);
+                    // ColorBlend with transparent edges and solid center
+                    ColorBlend cb = new()
+                    {
+                        Colors = [Color.Transparent, Color.FromArgb(_alpha, Program.Style.Schemes.Tertiary.Colors.Accent), Color.Transparent],
+                        Positions = [0f, 0.5f, 1f]
+                    };
+
+                    brush.InterpolationColors = cb;
+
+                    // Check if marquee wraps around the right edge
+                    if (offsetX + segmentWidth > rect.Width)
+                    {
+                        // Right segment
+                        float rightWidth = rect.Width - offsetX;
+                        RectangleF rightRect = new(offsetX, 0, rightWidth, rect.Height);
+                        G.FillRoundedRect(brush, rightRect);  // Fill with gradient
+
+                        // Left segment
+                        float leftWidth = segmentWidth - rightWidth;
+                        RectangleF leftRect = new(0, 0, leftWidth, rect.Height);
+
+                        // Adjust gradient for left segment
+                        using (LinearGradientBrush leftBrush = new(leftRect, Color.Transparent, Color.Transparent, LinearGradientMode.Horizontal))
+                        {
+                            leftBrush.InterpolationColors = cb;
+                            G.FillRoundedRect(leftBrush, leftRect);
+                        }
+                    }
+                    else
+                    {
+                        // Normal marquee (no wrap)
+                        G.FillRoundedRect(brush, marqueeRect);
+                    }
                 }
             }
             else if (_animatedValue > progressMinimum)
@@ -725,11 +745,18 @@ namespace WinPaletter.UI.WP
                 progressWidth = rect.Width * (_animatedValue - progressMinimum) / (progressMaximum - progressMinimum);
                 RectangleF progRect = new(0, 0, progressWidth, Height - 1);
                 using (SolidBrush br = new(Color.FromArgb(_alpha, Program.Style.Schemes.Tertiary.Colors.Accent)))
-                using (Pen p = new(Color.FromArgb(_alpha, Program.Style.Schemes.Tertiary.Colors.ForeColor_Accent)))
+                //using (Pen p = new(Color.FromArgb(_alpha, Program.Style.Schemes.Tertiary.Colors.ForeColor_Accent)))
                 {
                     G.FillRoundedRect(br, progRect);
-                    G.DrawRoundedRect(p, progRect);
+                    //G.DrawRoundedRect(p, progRect);
                 }
+            }
+
+            using (Pen p = new(Color.FromArgb(200, Program.Style.Schemes.Main.Colors.Line_Hover(parentLevel))))
+            using (Pen p_hover = new(Color.FromArgb(_hoverAlpha, Program.Style.Schemes.Main.Colors.Line_Checked)))
+            {
+                G.DrawRoundedRect(p, rect);
+                G.DrawRoundedRect(p_hover, rect);
             }
 
             Bitmap img = !isInProgress && !_isMarquee

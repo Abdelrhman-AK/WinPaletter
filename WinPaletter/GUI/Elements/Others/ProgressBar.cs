@@ -307,6 +307,21 @@ namespace WinPaletter.UI.WP
         }
         #endregion
 
+        public new bool Visible
+        {
+            get => base.Visible;
+            set
+            {
+                // Don't do equality check, if control is inside a tabPage not selected, nothing will be updated
+
+                base.Visible = value;
+
+                if (value) { UpdateTaskbar(); } else { SetProgressState(TaskbarProgressBarState.NoProgress); }
+
+                Invalidate();
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -468,13 +483,6 @@ namespace WinPaletter.UI.WP
             Marquee
         }
         #endregion
-
-        protected override void OnVisibleChanged(EventArgs e)
-        {
-            base.OnVisibleChanged(e);
-
-            if (Visible) { UpdateTaskbar(); } else { SetProgressState(TaskbarProgressBarState.NoProgress); }
-        }
 
         protected override void OnPaintBackground(PaintEventArgs pevent)
         {

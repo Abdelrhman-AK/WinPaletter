@@ -148,7 +148,8 @@ namespace WinPaletter.TypesExtensions
                     // Horizontal pass
                     for (int y = 0; y < height; y++)
                     {
-                        cancellationToken.ThrowIfCancellationRequested();
+                        if (cancellationToken.IsCancellationRequested) return null;
+
                         int row = y * stride;
                         for (int x = 0; x < width; x++)
                         {
@@ -178,7 +179,8 @@ namespace WinPaletter.TypesExtensions
                     // Vertical pass
                     for (int x = 0; x < width; x++)
                     {
-                        cancellationToken.ThrowIfCancellationRequested();
+                        if (cancellationToken.IsCancellationRequested) return null;
+
                         int colOffset = x * bytesPerPixel;
                         for (int y = 0; y < height; y++)
                         {
@@ -1264,7 +1266,7 @@ namespace WinPaletter.TypesExtensions
 
                 for (int yStart = 0; yStart < height; yStart += batchSize)
                 {
-                    settings.CancellationToken.ThrowIfCancellationRequested();
+                    if (settings.CancellationToken.IsCancellationRequested) return null;
 
                     int yEnd = Math.Min(yStart + batchSize, height);
                     List<Color> batchPixels = new();
@@ -1389,7 +1391,7 @@ namespace WinPaletter.TypesExtensions
 
             for (int iter = 0; iter < iterations; iter++)
             {
-                settings?.CancellationToken.ThrowIfCancellationRequested();
+                if (settings.CancellationToken.IsCancellationRequested) return null;
 
                 List<List<Color>> clusters = new(kEffective);
                 for (int i = 0; i < kEffective; i++) clusters.Add(new List<Color>());

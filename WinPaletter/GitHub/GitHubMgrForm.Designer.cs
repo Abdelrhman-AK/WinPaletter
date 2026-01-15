@@ -72,6 +72,7 @@
             this.groupBox7 = new WinPaletter.UI.WP.GroupBox();
             this.branchesView = new WinPaletter.UI.WP.ListView();
             this.groupBox5 = new WinPaletter.UI.WP.GroupBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.progressBar1 = new WinPaletter.UI.WP.ProgressBar();
             this.button14 = new WinPaletter.UI.WP.Button();
             this.button12 = new WinPaletter.UI.WP.Button();
@@ -116,7 +117,8 @@
             this.button3 = new WinPaletter.UI.WP.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.toggle2 = new WinPaletter.UI.WP.Toggle();
             this.tablessControl1.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -722,6 +724,17 @@
             this.groupBox5.UseDecorationPattern = false;
             this.groupBox5.UseSharpStyle = false;
             // 
+            // label12
+            // 
+            this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label12.BackColor = System.Drawing.Color.Transparent;
+            this.label12.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(192, 8);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(580, 22);
+            this.label12.TabIndex = 24;
+            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // progressBar1
             // 
             this.progressBar1.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -910,6 +923,8 @@
             this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox4.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox4.Controls.Add(this.label14);
+            this.groupBox4.Controls.Add(this.toggle2);
             this.groupBox4.Controls.Add(this.separatorV4);
             this.groupBox4.Controls.Add(this.btn_rename);
             this.groupBox4.Controls.Add(this.btn_delete);
@@ -1051,7 +1066,7 @@
             this.separatorV3.AlternativeLook = false;
             this.separatorV3.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.separatorV3.BackColor = System.Drawing.Color.Transparent;
-            this.separatorV3.Location = new System.Drawing.Point(811, 6);
+            this.separatorV3.Location = new System.Drawing.Point(582, 6);
             this.separatorV3.Name = "separatorV3";
             this.separatorV3.Size = new System.Drawing.Size(1, 26);
             this.separatorV3.TabIndex = 18;
@@ -1431,16 +1446,28 @@
             this.label2.Text = "0";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // label12
+            // label14
             // 
-            this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label12.BackColor = System.Drawing.Color.Transparent;
-            this.label12.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(192, 8);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(580, 22);
-            this.label12.TabIndex = 24;
-            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label14.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label14.BackColor = System.Drawing.Color.Transparent;
+            this.label14.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(589, 9);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(177, 20);
+            this.label14.TabIndex = 23;
+            this.label14.Text = "Themes files operations linking";
+            this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // toggle2
+            // 
+            this.toggle2.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.toggle2.Checked = true;
+            this.toggle2.DarkLight_Toggler = false;
+            this.toggle2.Location = new System.Drawing.Point(772, 9);
+            this.toggle2.Name = "toggle2";
+            this.toggle2.Size = new System.Drawing.Size(40, 20);
+            this.toggle2.TabIndex = 22;
+            this.toggle2.CheckedChanged += new System.EventHandler(this.toggle2_CheckedChanged);
             // 
             // GitHubMgrForm
             // 
@@ -1579,5 +1606,7 @@
         private UI.WP.Button button16;
         private UI.WP.ProgressBar progressBar1;
         private System.Windows.Forms.Label label12;
+        internal System.Windows.Forms.Label label14;
+        private UI.WP.Toggle toggle2;
     }
 }

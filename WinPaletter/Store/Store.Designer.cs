@@ -2908,7 +2908,7 @@ namespace WinPaletter
             // 
             this.search_btn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.search_btn.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(103)))), ((int)(((byte)(217)))), ((int)(((byte)(251)))));
-            this.search_btn.Flag = WinPaletter.UI.WP.Button.Flags.AlwaysCustomColor;
+            this.search_btn.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.search_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.search_btn.ForeColor = System.Drawing.Color.White;
             this.search_btn.Image = null;
@@ -2946,7 +2946,7 @@ namespace WinPaletter
             // 
             this.search_filter_btn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.search_filter_btn.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(237)))), ((int)(((byte)(108)))), ((int)(((byte)(71)))));
-            this.search_filter_btn.Flag = WinPaletter.UI.WP.Button.Flags.AlwaysCustomColor;
+            this.search_filter_btn.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.search_filter_btn.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.search_filter_btn.ForeColor = System.Drawing.Color.White;
             this.search_filter_btn.Image = null;

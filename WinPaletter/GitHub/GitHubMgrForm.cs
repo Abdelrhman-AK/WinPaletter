@@ -844,5 +844,10 @@ Generated automatically by WinPaletter.";
         {
             Transition.With(label12, nameof(label12.Text), string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
         }
+
+        private void toggle2_CheckedChanged(object sender, EventArgs e)
+        {
+            GitHub.FileSystem.FilesOperationsLinking = toggle2.Checked;
+        }
     }
 }

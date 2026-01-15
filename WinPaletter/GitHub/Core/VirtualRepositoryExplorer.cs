@@ -112,7 +112,7 @@ namespace WinPaletter.GitHub
             int processed = 0;
             foreach (RepositoryContent entry in items)
             {
-                cts?.Token.ThrowIfCancellationRequested();
+                if (cts is not null && cts.Token.IsCancellationRequested) return;
 
                 if ((onlyDirs && entry.Type == Octokit.ContentType.Dir) || (!onlyDirs && entry.Type != Octokit.ContentType.Dir))
                     output.Add(entry.Path);
@@ -223,7 +223,7 @@ namespace WinPaletter.GitHub
         public static async Task<Entry> GetInfoAsync(string path, bool recursive = true, bool useShaValidation = true, bool useTtlCache = true, bool forceRefresh = false, int maxDepth = 20, CancellationTokenSource cts = default)
         {
             if (string.IsNullOrEmpty(path)) return null;
-            cts?.Token.ThrowIfCancellationRequested();
+            if (cts is not null && cts.Token.IsCancellationRequested) return null;
 
             // 1. Check cache
             if (!forceRefresh && Cache.TryGetValue(path, out Cache.CacheData cachedTuple))
@@ -313,7 +313,7 @@ namespace WinPaletter.GitHub
             if (string.IsNullOrEmpty(path)) return null;
 
             cts ??= new();
-            cts.Token.ThrowIfCancellationRequested();
+            if (cts is not null && cts.Token.IsCancellationRequested) return null;
 
             // Return cached entry if fresh
             if (!forceRefresh && Cache.TryGetValue(path, out Cache.CacheData cachedTuple) &&
@@ -342,7 +342,7 @@ namespace WinPaletter.GitHub
                 {
                     foreach (var item in contents)
                     {
-                        cts.Token.ThrowIfCancellationRequested();
+                        if (cts is not null && cts.Token.IsCancellationRequested) return null;
                         Entry childEntry = await GetEntryCachedAsync(item.Path, forceRefresh, maxDepth - 1, cts);
                         if (childEntry != null) entry.Children.Add(childEntry);
                     }
@@ -382,7 +382,7 @@ namespace WinPaletter.GitHub
         private static async Task<List<Entry>> GetEntriesCachedAsync(string path, bool forceRefresh = false, CancellationTokenSource cts = null)
         {
             cts ??= new();
-            cts.Token.ThrowIfCancellationRequested();
+            if (cts is not null && cts.Token.IsCancellationRequested) return null;
 
             var result = new List<Entry>();
 
@@ -463,7 +463,7 @@ namespace WinPaletter.GitHub
 
             foreach (Entry child in entry.Children)
             {
-                cts?.Token.ThrowIfCancellationRequested();
+                if (cts is not null && cts.Token.IsCancellationRequested) return;
 
                 if ((includeFiles && child.Type == EntryType.File) || (includeDirs && child.Type == EntryType.Dir))
                 {

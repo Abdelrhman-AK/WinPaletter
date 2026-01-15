@@ -177,7 +177,7 @@ namespace WinPaletter.GitHub
             cts ??= new();
             try
             {
-                cts?.Token.ThrowIfCancellationRequested();
+                if (cts is not null && cts.Token.IsCancellationRequested) return false;
                 var info = await GetInfoFastAsync(path, cts);
                 return info != null && info.Type == EntryType.File;
             }
@@ -189,7 +189,7 @@ namespace WinPaletter.GitHub
             cts ??= new();
             try
             {
-                cts?.Token.ThrowIfCancellationRequested();
+                if (cts is not null && cts.Token.IsCancellationRequested) return false;
                 var entries = await GetEntriesCachedAsync(path, forceRefresh: true);
                 return entries != null && entries.Count > 0;
             }
@@ -249,19 +249,15 @@ namespace WinPaletter.GitHub
         public static async Task<byte[]> ReadFileBytesAsync(string path, CancellationTokenSource cts = null)
         {
             cts ??= new();
-            try
-            {
-                cts?.Token.ThrowIfCancellationRequested();
+            if (cts is not null && cts.Token.IsCancellationRequested) return null;
 
-                // Get fresh file info without recursion
-                var info = await FileSystem.GetInfoRefreshAsync(path, recursive: false, cts: cts);
-                if (info == null || info.Type != EntryType.File)
-                    throw new FileNotFoundException($"File `{path}` does not exist on GitHub.");
+            // Get fresh file info without recursion
+            var info = await FileSystem.GetInfoRefreshAsync(path, recursive: false, cts: cts);
+            if (info == null || info.Type != EntryType.File)
+                throw new FileNotFoundException($"File `{path}` does not exist on GitHub.");
 
-                var content = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.Name, path, GitHub.Repository.Branch.Name);
-                return Convert.FromBase64String(content[0].Content);
-            }
-            catch (OperationCanceledException) { throw; }
+            var content = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.Name, path, GitHub.Repository.Branch.Name);
+            return Convert.FromBase64String(content[0].Content);
         }
 
         public static async Task<string> ReadFileAsync(string path, CancellationTokenSource cts = null)
@@ -294,57 +290,53 @@ namespace WinPaletter.GitHub
 
             IRepositoryContentsClient client = Program.GitHub.Client.Repository.Content;
 
-            try
-            {
-                cts.Token.ThrowIfCancellationRequested();
-
-                // Fetch existing entry
-                var existing = await FileSystem.GetInfoRefreshAsync(normalizedPath, recursive: false, cts: cts);
-
-                if (existing == null)
-                {
-                    await client.CreateFile(
-                        _owner,
-                        GitHub.Repository.Name,
-                        normalizedPath,
-                        new CreateFileRequest(commitMessage, contentToSend) { Branch = GitHub.Repository.Branch.Name });
-                }
-                else
-                {
-                    string sha = existing.Content?.Sha;
-
-                    if (string.IsNullOrEmpty(sha))
-                    {
-                        var remote = await client.GetAllContentsByRef(_owner, GitHub.Repository.Name, normalizedPath, GitHub.Repository.Branch.Name);
-                        sha = remote[0].Sha;
-                    }
-
-                    await client.UpdateFile(
-                        _owner,
-                        GitHub.Repository.Name,
-                        normalizedPath,
-                        new UpdateFileRequest(commitMessage, contentToSend, sha) { Branch = GitHub.Repository.Branch.Name });
-                }
-
-                // Update cache
-                var updatedContent = await client.GetAllContentsByRef(_owner, GitHub.Repository.Name, normalizedPath, GitHub.Repository.Branch.Name);
-
-                if (updatedContent.Count > 0)
-                {
-                    Entry newEntry = await Entry.FromRepositoryContent(updatedContent[0]);
-                    Cache.Add(normalizedPath, newEntry);
-
-                    reportProgress?.Invoke(100);
-
-                    if (workingDir.Equals(CurrentPath, StringComparison.OrdinalIgnoreCase)) await UpdateExplorerView(workingDir);
-
-                    return newEntry;
-                }
-            }
-            catch (OperationCanceledException)
+            if (cts is not null && cts.Token.IsCancellationRequested)
             {
                 reportProgress?.Invoke(0);
-                throw;
+                return null;
+            }
+
+            // Fetch existing entry
+            var existing = await FileSystem.GetInfoRefreshAsync(normalizedPath, recursive: false, cts: cts);
+
+            if (existing == null)
+            {
+                await client.CreateFile(
+                    _owner,
+                    GitHub.Repository.Name,
+                    normalizedPath,
+                    new CreateFileRequest(commitMessage, contentToSend) { Branch = GitHub.Repository.Branch.Name });
+            }
+            else
+            {
+                string sha = existing.Content?.Sha;
+
+                if (string.IsNullOrEmpty(sha))
+                {
+                    var remote = await client.GetAllContentsByRef(_owner, GitHub.Repository.Name, normalizedPath, GitHub.Repository.Branch.Name);
+                    sha = remote[0].Sha;
+                }
+
+                await client.UpdateFile(
+                    _owner,
+                    GitHub.Repository.Name,
+                    normalizedPath,
+                    new UpdateFileRequest(commitMessage, contentToSend, sha) { Branch = GitHub.Repository.Branch.Name });
+            }
+
+            // Update cache
+            var updatedContent = await client.GetAllContentsByRef(_owner, GitHub.Repository.Name, normalizedPath, GitHub.Repository.Branch.Name);
+
+            if (updatedContent.Count > 0)
+            {
+                Entry newEntry = await Entry.FromRepositoryContent(updatedContent[0]);
+                Cache.Add(normalizedPath, newEntry);
+
+                reportProgress?.Invoke(100);
+
+                if (workingDir.Equals(CurrentPath, StringComparison.OrdinalIgnoreCase)) await UpdateExplorerView(workingDir);
+
+                return newEntry;
             }
 
             if (workingDir.Equals(CurrentPath, StringComparison.OrdinalIgnoreCase)) await UpdateExplorerView(workingDir);
@@ -355,20 +347,25 @@ namespace WinPaletter.GitHub
         public static async Task<Entry> CreateDirectoryAsync(string path, CancellationTokenSource cts = null)
         {
             cts ??= new();
-            cts.Token.ThrowIfCancellationRequested();
 
             string normalizedPath = NormalizePath(path);
             string workingDir = ParentDirectoryName(normalizedPath);
 
-            cts.Token.ThrowIfCancellationRequested();
+            if (cts is not null && cts.Token.IsCancellationRequested) return null;
 
             bool exists = await GetEntryCachedAsync(normalizedPath, forceRefresh: true, cts: cts) != null;
+            if (cts is not null && cts.Token.IsCancellationRequested) return null;
+
             if (exists) return null;
             Entry fileEntry = await WriteFileAsync($"{normalizedPath}/.gitkeep", string.Empty, false, $"Create directory {normalizedPath} by {_owner}", cts);
+            if (cts is not null && cts.Token.IsCancellationRequested) return null;
 
             Entry dirEntry = await Entry.FromRepositoryContent(await GetRepositoryContentAsync(GetParent(fileEntry.Path)));
+            if (cts is not null && cts.Token.IsCancellationRequested) return null;
+
             Cache.Add(dirEntry);
             if (workingDir.Equals(CurrentPath, StringComparison.OrdinalIgnoreCase)) await UpdateExplorerView(workingDir);
+            if (cts is not null && cts.Token.IsCancellationRequested) return null;
 
             Program.Log?.Write(LogEventLevel.Information, $"Directory {normalizedPath} created");
             return dirEntry;
@@ -412,7 +409,7 @@ namespace WinPaletter.GitHub
             // Gather all entries and detect initial conflicts
             foreach (var srcPath in sourcePaths)
             {
-                cts.Token.ThrowIfCancellationRequested();
+                if (cts is not null && cts.Token.IsCancellationRequested) return;
 
                 FileFilterAction filterAction = FileOperationDialogs.FilterFile?.Invoke(new FileFilterInfo
                 {
@@ -439,7 +436,7 @@ namespace WinPaletter.GitHub
             // Resolve conflicts and apply Windows-style numbering
             foreach (var (srcEntry, originalDestPath, destEntry) in entriesToCopy)
             {
-                cts.Token.ThrowIfCancellationRequested();
+                if (cts is not null && cts.Token.IsCancellationRequested) return;
                 string destPath = originalDestPath;
 
                 if (destEntry != null)
@@ -541,7 +538,7 @@ namespace WinPaletter.GitHub
 
             foreach (var sourceDir in sourceDirs)
             {
-                cts.Token.ThrowIfCancellationRequested();
+                if (cts is not null && cts.Token.IsCancellationRequested) return;
 
                 string src = NormalizePath(sourceDir).TrimEnd('/');
                 string dstFull = $"{destDirRoot}/{FileName(src)}";
@@ -579,7 +576,7 @@ namespace WinPaletter.GitHub
 
                 foreach (var (srcEntry, originalDestPath, destEntry) in entriesToCopy)
                 {
-                    cts.Token.ThrowIfCancellationRequested();
+                    if (cts is not null && cts.Token.IsCancellationRequested) return;
                     string destPath = originalDestPath;
 
                     if (srcEntry.Type == EntryType.File)
@@ -691,10 +688,10 @@ namespace WinPaletter.GitHub
             List<Entry> destEntries = new();
 
             // Gather all entries
-            List<(Entry srcEntry, string destPath, Entry destEntry)> entriesToMove = new();
+            List<(Entry srcEntry, string destPath, Entry destEntry)> entriesToMove = [];
             for (int i = 0; i < sourcePaths.Count; i++)
             {
-                cts.Token.ThrowIfCancellationRequested();
+                if (cts is not null && cts.Token.IsCancellationRequested) return;
 
                 FileFilterAction filterAction = FileOperationDialogs.FilterFile?.Invoke(new FileFilterInfo
                 {
@@ -819,7 +816,7 @@ namespace WinPaletter.GitHub
                 };
             }
 
-            cts.Token.ThrowIfCancellationRequested();
+            if (cts is not null && cts.Token.IsCancellationRequested) return null;
 
             Entry srcEntry = await GetInfoRefreshAsync(src, false, cts: cts);
             if (srcEntry == null || srcEntry.Type != EntryType.File) return srcEntry;
@@ -914,7 +911,7 @@ namespace WinPaletter.GitHub
 
             foreach (var sourceDir in sourceDirs)
             {
-                cts.Token.ThrowIfCancellationRequested();
+                if (cts is not null && cts.Token.IsCancellationRequested) return;
 
                 string srcDir = NormalizePath(sourceDir).TrimEnd('/');
                 string destRootFull = destDirRoot + "/" + FileName(srcDir);
@@ -937,7 +934,7 @@ namespace WinPaletter.GitHub
             // 2. Handle conflicts and prepare Git tree
             foreach (var (srcPath, destPath, destEntry) in allEntries)
             {
-                cts.Token.ThrowIfCancellationRequested();
+                if (cts is not null && cts.Token.IsCancellationRequested) return;
 
                 Entry freshSrcEntry = await GetInfoRefreshAsync(srcPath, false, cts: cts);
                 if (freshSrcEntry == null || freshSrcEntry.Type != EntryType.File)
@@ -1081,7 +1078,7 @@ namespace WinPaletter.GitHub
 
             foreach (var (srcEntry, destPath, destEntry) in allEntries)
             {
-                cts.Token.ThrowIfCancellationRequested();
+                if (cts is not null && cts.Token.IsCancellationRequested) return null;
 
                 if (destEntry != null)
                 {
@@ -1162,7 +1159,7 @@ namespace WinPaletter.GitHub
 
             foreach (var path in paths)
             {
-                cts.Token.ThrowIfCancellationRequested();
+                if (cts is not null && cts.Token.IsCancellationRequested) return;
 
                 string normalizedPath = NormalizePath(path);
                 string workingDir = ParentDirectoryName(normalizedPath);
@@ -1242,7 +1239,8 @@ namespace WinPaletter.GitHub
                 // Collect files to delete from all directories
                 foreach (var dir in normalizedDirs)
                 {
-                    cts.Token.ThrowIfCancellationRequested();
+                    if (cts is not null && cts.Token.IsCancellationRequested) return;
+
                     string workingDir = ParentDirectoryName(dir);
 
                     var files = tree.Tree
@@ -1326,7 +1324,8 @@ namespace WinPaletter.GitHub
 
             foreach (var item in contents)
             {
-                ct.ThrowIfCancellationRequested();
+                if (ct.IsCancellationRequested) yield return null;
+
                 if (item == null || string.IsNullOrEmpty(item.Path)) continue;
 
                 EntryType entryType = item.Type == Octokit.ContentType.Dir ? EntryType.Dir : EntryType.File;

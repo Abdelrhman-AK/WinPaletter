@@ -11,146 +11,6 @@ namespace WinPaletter.GitHub
 {
     public static partial class FileSystem
     {
-        /// <summary>
-        /// Downloads a file from the GitHub repository to a local destination.
-        /// </summary>
-        public static async Task DownloadFileAsync(string githubURL, string localSavePath, CancellationTokenSource cts = null, Action<long, long> reportProgress = null, Action onCompleted = null, Action<Exception> onError = null, Action onCancelled = null)
-        {
-            cts ??= new();
-
-            using DownloadManager dm = new();
-
-            dm.DownloadProgressChanged += (s, e) =>
-            {
-                reportProgress?.Invoke(e.BytesReceived, e.TotalBytesToReceive);
-            };
-
-            dm.DownloadFileCompleted += (s, e) =>
-            {
-                if (cts.Token.IsCancellationRequested)
-                    onCancelled?.Invoke();
-                else
-                    onCompleted?.Invoke();
-            };
-
-            dm.DownloadErrorOccurred += (s, msg) =>
-            {
-                onError?.Invoke(new Exception(msg));
-            };
-
-            try
-            {
-                await dm.DownloadFileAsync(githubURL, localSavePath, cts);
-            }
-            catch (OperationCanceledException)
-            {
-                onCancelled?.Invoke();
-            }
-            catch (Exception ex)
-            {
-                onError?.Invoke(ex);
-            }
-        }
-
-        /// <summary>
-        /// Downloads an entire directory (recursive) from a GitHub repository
-        /// and recreates its structure locally.
-        /// </summary>
-        public static async Task DownloadDirectoryAsync(string githubPath, string localPath, CancellationTokenSource cts = null,
-            Action<int> overallProgress = null,
-            Action<string, long> currentFileBeingDownloaded = null,
-            Action<string, long, long> fileProgress = null,
-            Action<string> fileCompleted = null,
-            Action<string, Exception> fileError = null,
-            Action<string> fileCancelled = null,
-            Action onCompleted = null,
-            Action onCancelled = null)
-        {
-            cts ??= new CancellationTokenSource();
-
-            long totalBytes = 0;
-            long downloadedBytes = 0;
-
-            // Enumerate repository entries first
-            List<Entry> entries = [];
-            await foreach (Entry entry in EnumerateEntriesAsync(githubPath, recursive: true, ct: cts.Token))
-            {
-                entries.Add(entry);
-
-                if (entry.Type == EntryType.File && entry.Size > 0) totalBytes += entry.Size;
-            }
-
-            foreach (Entry entry in entries)
-            {
-                cts.Token.ThrowIfCancellationRequested();
-
-                string relativePath = GitHub.FileSystem.NormalizePath(entry.Path);
-
-                string localFile = Path.Combine(localPath, relativePath);
-
-                try
-                {
-                    if (entry.Type == EntryType.Dir)
-                    {
-                        Directory.CreateDirectory(localFile);
-                        continue;
-                    }
-
-                    Directory.CreateDirectory(Path.GetDirectoryName(localFile));
-
-                    // File start
-                    currentFileBeingDownloaded?.Invoke(localFile, entry.Size);
-
-                    using DownloadManager dm = new();
-
-                    long fileDownloaded = 0;
-
-                    dm.DownloadProgressChanged += (s, e) =>
-                    {
-                        long previous = fileDownloaded;
-                        fileDownloaded = e.BytesReceived;
-
-                        long delta = fileDownloaded - previous;
-                        if (delta <= 0) return;
-
-                        Interlocked.Add(ref downloadedBytes, delta);
-
-                        fileProgress?.Invoke(localFile, entry.Size, fileDownloaded);
-
-                        // Overall progress
-                        int overallPercent = totalBytes > 0 ? (int)(downloadedBytes * 100 / totalBytes) : 0;
-
-                        overallProgress?.Invoke(overallPercent);
-                    };
-
-                    dm.DownloadFileCompleted += (s, e) => fileCompleted?.Invoke(localFile);
-
-                    dm.DownloadErrorOccurred += (s, msg) => fileError?.Invoke(localFile, new Exception(msg));
-
-                    string fileUrl = $"https://raw.githubusercontent.com/{_owner}/{GitHub.Repository.Name}/{GitHub.Repository.Branch.Name}/{entry.Path}";
-
-                    await dm.DownloadFileAsync(fileUrl, localFile, cts);
-
-                    // Ensure final state
-                    fileProgress?.Invoke(localFile, entry.Size, 100);
-                }
-                catch (OperationCanceledException)
-                {
-                    fileCancelled?.Invoke(localFile);
-                    break;
-                }
-                catch (Exception ex)
-                {
-                    fileError?.Invoke(localFile, ex);
-                }
-            }
-
-            if (cts.Token.IsCancellationRequested)
-                onCancelled?.Invoke();
-            else
-                onCompleted?.Invoke();
-        }
-
         ///// <summary>
         ///// Uploads a single file to the GitHub repository at the specified path.
         ///// </summary>
@@ -184,7 +44,7 @@ namespace WinPaletter.GitHub
 
         //    while ((bytesRead = await fs.ReadAsync(buffer, 0, buffer.Length, ct)) > 0)
         //    {
-        //        ct.ThrowIfCancellationRequested();
+        //        if (ct.IsCancellationRequested) return;
         //        await ms.WriteAsync(buffer, 0, bytesRead, ct);
         //        read += bytesRead;
         //        reportProgress?.Invoke((int)(read * 100L / total));
@@ -262,7 +122,7 @@ namespace WinPaletter.GitHub
 
         //    foreach (string file in files)
         //    {
-        //        cts?.Token.ThrowIfCancellationRequested();
+        //        if (cts is not null && cts.Token.IsCancellationRequested) return;
 
         //        string relative = NormalizePath(file.Substring(localPath.Length));
         //        string targetPath = $"{githubPath}/{relative}";
@@ -274,7 +134,7 @@ namespace WinPaletter.GitHub
         //            int bytesRead;
         //            while ((bytesRead = await fs.ReadAsync(buffer = new byte[81920], 0, buffer.Length, cts.Token)) > 0)
         //            {
-        //                cts?.Token.ThrowIfCancellationRequested();
+        //                if (cts is not null && cts.Token.IsCancellationRequested) return;
         //                await ms.WriteAsync(buffer, 0, bytesRead, cts.Token);
         //            }
         //            buffer = ms.ToArray();

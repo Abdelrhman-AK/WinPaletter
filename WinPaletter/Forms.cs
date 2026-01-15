@@ -159,18 +159,6 @@ namespace WinPaletter
         private static GitHub_FilesCompare _GitHub_FilesCompare;
 
         /// <summary>
-        /// Gets the instance of the form <see cref="GitHub_DownloadFile"/> to download GitHub files.
-        /// </summary>
-        public static GitHub_DownloadFile GitHub_DownloadFile => Get(ref _GitHub_DownloadFile);
-        private static GitHub_DownloadFile _GitHub_DownloadFile;
-
-        /// <summary>
-        /// Gets the instance of the form <see cref="GitHub_DownloadFiles"/> to download GitHub files.
-        /// </summary>
-        public static GitHub_DownloadFiles GitHub_DownloadFiles => Get(ref _GitHub_DownloadFiles);
-        private static GitHub_DownloadFiles _GitHub_DownloadFiles;
-
-        /// <summary>
         /// Gets the instance of the form <see cref="GitHubMgrForm"/> to manage GitHub repositories and files.
         /// </summary>
         public static GitHubMgrForm GitHubMgrForm => Get(ref _GitHubMgrForm);
@@ -327,10 +315,10 @@ namespace WinPaletter
         private static Store _Store;
 
         /// <summary>
-        /// Gets the instance of the form <see cref="Store_DownloadProgress"/> to show the store theme download progress.
+        /// Gets the instance of the form <see cref="DownloadManager_Dlg"/> to show the download manager.
         /// </summary>
-        public static Store_DownloadProgress Store_DownloadProgress => Get(ref _Store_DownloadProgress);
-        private static Store_DownloadProgress _Store_DownloadProgress;
+        public static DownloadManager_Dlg DownloadManager_Dlg => Get(ref _DownloadManager_Dlg);
+        private static DownloadManager_Dlg _DownloadManager_Dlg;
 
         /// <summary>
         /// Gets the instance of the form <see cref="Store_Hover"/> to show the store theme hover.

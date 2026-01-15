@@ -26,7 +26,7 @@ namespace WinPaletter
         #region Fields
 
         private readonly object lockObject = new();
-        private CancellationTokenSource cancellationTokenSource;
+        private CancellationTokenSource cts;
         private readonly HttpClient client;
         private bool disposed = false;
 
@@ -138,7 +138,7 @@ namespace WinPaletter
         /// <param name="url"></param>
         /// <param name="destinationPath"></param>
         /// <returns></returns>
-        public async Task DownloadFileAsync(string url, string destinationPath, CancellationTokenSource cts = null)
+        public async Task DownloadFileAsync(string url, string destinationPath)
         {
             if (url.Contains("github.com"))
             {
@@ -152,12 +152,12 @@ namespace WinPaletter
             IsBusy = true;
 
             // Create a new CancellationTokenSource
-            cancellationTokenSource = cts ?? new();
+            cts ??= new();
 
             try
             {
                 // Send a GET request to the URL and get the response
-                using (HttpResponseMessage response = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationTokenSource.Token).ConfigureAwait(false))
+                using (HttpResponseMessage response = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cts.Token).ConfigureAwait(false))
                 {
                     // Ensure the response is successful
                     response.EnsureSuccessStatusCode();
@@ -179,7 +179,7 @@ namespace WinPaletter
                         long totalBytesRead = 0;
 
                         // Read the data in chunks and write it to the file stream
-                        while ((bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length, cancellationTokenSource.Token).ConfigureAwait(false)) > 0)
+                        while ((bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length, cts.Token).ConfigureAwait(false)) > 0)
                         {
                             // Write the downloaded data
                             fileStream.Write(buffer, 0, bytesRead);
@@ -189,13 +189,23 @@ namespace WinPaletter
                             OnDownloadProgressChanged(new DownloadProgressEventArgs(totalBytesRead, totalBytes));
 
                             // Check if the download is cancelled
-                            if (cancellationTokenSource.Token.IsCancellationRequested) break;
+                            if (cts is not null && cts.Token.IsCancellationRequested) return;
                         }
                     }
                 }
 
                 // Raise the DownloadCompleted event when the download is completed
                 OnDownloadCompleted(new(null, false, null));
+            }
+            catch (OperationCanceledException)
+            {
+                // Cancellation requested — NOT an error
+                OnDownloadCompleted(new(null, true, null)); // mark as canceled
+            }
+            catch (ObjectDisposedException)
+            {
+                // CTS was disposed during download — treat as cancellation
+                OnDownloadCompleted(new(null, true, null));
             }
             catch (Exception ex)
             {
@@ -235,7 +245,7 @@ namespace WinPaletter
             IsBusy = true;
 
             // Create a new CancellationTokenSource
-            cancellationTokenSource = new CancellationTokenSource();
+            cts = new CancellationTokenSource();
 
             try
             {
@@ -243,12 +253,12 @@ namespace WinPaletter
                 HttpRequestMessage request = new(HttpMethod.Get, url)
                 {
                     Headers =
-            {
-                Range = new RangeHeaderValue(startByte, endByte)
-            }
+                    {
+                        Range = new RangeHeaderValue(startByte, endByte)
+                    }
                 };
 
-                HttpResponseMessage response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationTokenSource.Token).ConfigureAwait(false);
+                HttpResponseMessage response = await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cts.Token).ConfigureAwait(false);
 
                 // Ensure the response is successful
                 response.EnsureSuccessStatusCode();
@@ -264,7 +274,7 @@ namespace WinPaletter
                     int bytesRead;
                     long totalBytesRead = 0;
 
-                    while ((bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length, cancellationTokenSource.Token).ConfigureAwait(false)) > 0)
+                    while ((bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length, cts.Token).ConfigureAwait(false)) > 0)
                     {
                         // Write the downloaded data
                         fileStream.Write(buffer, 0, bytesRead);
@@ -274,13 +284,22 @@ namespace WinPaletter
                         OnDownloadProgressChanged(new DownloadProgressEventArgs(totalBytesRead, endByte - startByte + 1));
 
                         // Check if the download is cancelled
-                        if (cancellationTokenSource.Token.IsCancellationRequested)
-                            break;
+                        if (cts is not null && cts.Token.IsCancellationRequested) return;
                     }
                 }
 
                 // Raise the DownloadCompleted event when the download is completed
                 OnDownloadCompleted(new(null, false, null));
+            }
+            catch (OperationCanceledException)
+            {
+                // Cancellation requested — NOT an error
+                OnDownloadCompleted(new(null, true, null)); // mark as canceled
+            }
+            catch (ObjectDisposedException)
+            {
+                // CTS was disposed during download — treat as cancellation
+                OnDownloadCompleted(new(null, true, null));
             }
             catch (Exception ex)
             {
@@ -409,12 +428,12 @@ namespace WinPaletter
             IsBusy = true;
 
             // Create a new CancellationTokenSource
-            cancellationTokenSource = new();
+            cts = new();
 
             try
             {
                 // Send a GET request to the URL and get the response
-                using (HttpResponseMessage response = client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cancellationTokenSource.Token).Result)
+                using (HttpResponseMessage response = client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, cts.Token).Result)
                 {
                     // Ensure the response is successful
                     response.EnsureSuccessStatusCode();
@@ -433,7 +452,7 @@ namespace WinPaletter
                         int bytesRead;
                         long totalBytesRead = 0;
 
-                        while ((bytesRead = stream.ReadAsync(buffer, 0, buffer.Length, cancellationTokenSource.Token).Result) > 0)
+                        while ((bytesRead = stream.ReadAsync(buffer, 0, buffer.Length, cts.Token).Result) > 0)
                         {
                             // Write the downloaded data
                             fileStream.Write(buffer, 0, bytesRead);
@@ -443,14 +462,23 @@ namespace WinPaletter
                             OnDownloadProgressChanged(new DownloadProgressEventArgs(totalBytesRead, totalBytes));
 
                             // Check if the download is cancelled
-                            if (cancellationTokenSource.Token.IsCancellationRequested)
-                                break;
+                            if (cts is not null && cts.Token.IsCancellationRequested) return;
                         }
                     }
                 }
                 // Raise the DownloadCompleted event when the download is completed
                 IsBusy = false;
                 OnDownloadCompleted(new(null, false, new object()));
+            }
+            catch (OperationCanceledException)
+            {
+                // Cancellation requested — NOT an error
+                OnDownloadCompleted(new(null, true, null)); // mark as canceled
+            }
+            catch (ObjectDisposedException)
+            {
+                // CTS was disposed during download — treat as cancellation
+                OnDownloadCompleted(new(null, true, null));
             }
             catch (Exception ex)
             {
@@ -488,7 +516,7 @@ namespace WinPaletter
             IsBusy = true;
 
             // Create a new CancellationTokenSource
-            cancellationTokenSource = new CancellationTokenSource();
+            cts = new CancellationTokenSource();
 
             try
             {
@@ -496,12 +524,12 @@ namespace WinPaletter
                 HttpRequestMessage request = new(HttpMethod.Get, url)
                 {
                     Headers =
-            {
-                Range = new RangeHeaderValue(startByte, endByte)
-            }
+                    {
+                        Range = new RangeHeaderValue(startByte, endByte)
+                    }
                 };
 
-                HttpResponseMessage response = client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationTokenSource.Token).Result;
+                HttpResponseMessage response = client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cts.Token).Result;
 
                 // Ensure the response is successful
                 response.EnsureSuccessStatusCode();
@@ -527,14 +555,23 @@ namespace WinPaletter
                         OnDownloadProgressChanged(new DownloadProgressEventArgs(totalBytesRead, endByte - startByte + 1));
 
                         // Check if the download is cancelled
-                        if (cancellationTokenSource.Token.IsCancellationRequested)
-                            break;
+                        if (cts is not null && cts.Token.IsCancellationRequested) return;
                     }
                 }
 
                 // Raise the DownloadCompleted event when the download is completed
                 IsBusy = false;
                 OnDownloadCompleted(new(null, false, new object()));
+            }
+            catch (OperationCanceledException)
+            {
+                // Cancellation requested — NOT an error
+                OnDownloadCompleted(new(null, true, null)); // mark as canceled
+            }
+            catch (ObjectDisposedException)
+            {
+                // CTS was disposed during download — treat as cancellation
+                OnDownloadCompleted(new(null, true, null));
             }
             catch (Exception ex)
             {
@@ -598,7 +635,7 @@ namespace WinPaletter
             lock (lockObject)
             {
                 Program.Log?.Write(LogEventLevel.Information, $"Download is paused.");
-                cancellationTokenSource?.Cancel();
+                cts?.Cancel();
             }
         }
 
@@ -616,14 +653,7 @@ namespace WinPaletter
                 if (disposed) return;
 
                 Program.Log?.Write(LogEventLevel.Information, $"Download {(canceled ? "canceled" : "finished")}.");
-                try
-                {
-                    cancellationTokenSource?.Cancel();
-                }
-                catch (ObjectDisposedException)
-                {
-                    // Already disposed, ignore
-                }
+                cts?.Cancel();
 
                 if (IsBusy) OnDownloadCompleted(new(null, true, new object()));
             }
@@ -706,7 +736,7 @@ namespace WinPaletter
                 disposed = true;
                 StopDownload(false);
                 client?.Dispose();
-                cancellationTokenSource?.Dispose();
+                cts?.Dispose();
             }
         }
 

@@ -66,6 +66,8 @@ namespace WinPaletter.GitHub
         }
         private static bool showHiddenFiles = true;
 
+        public static bool FilesOperationsLinking { get; set; } = true;
+
         #endregion
 
         #region Data functions
@@ -482,41 +484,6 @@ namespace WinPaletter.GitHub
             }
         }
 
-        /// <summary>
-        /// Retrieves the icon associated with the specified file name, returning it as a bitmap image. The icon size
-        /// can be specified as large or small.
-        /// </summary>
-        /// <remarks>The method caches icons by file extension to improve performance on subsequent calls.
-        /// If the icon for the specified extension has already been retrieved, the cached version is
-        /// returned.</remarks>
-        /// <param name="fileName">The full name or path of the file whose associated icon is to be retrieved. The file extension is used to
-        /// determine the icon.</param>
-        /// <param name="large">true to retrieve a large icon (typically 48x48 pixels); false to retrieve a small icon (typically 16x16
-        /// pixels). The default is true.</param>
-        /// <returns>A Bitmap containing the icon associated with the file's extension, or null if no icon is found.</returns>
-        public static Bitmap GetIconByFileName(string fileName, bool large = true)
-        {
-            string ext = GitHub.FileSystem.GetExtension(fileName).Remove(0, 1);
-
-            ImageList imagelst = large ? ref _largeIcons : ref _smallIcons;
-
-            if (imagelst.Images.ContainsKey(ext))
-            {
-                return (Bitmap)imagelst.Images[ext];
-            }
-            else
-            {
-                using (Icon ico = NativeMethods.Shell32.GetIconFromExtension(ext, !large))
-                using (Icon ico_resized = ico?.FromSize(large ? 48 : 16))
-                {
-                    Bitmap bmp = ico_resized?.ToBitmap();
-                    imagelst.AddWithAlpha(ext, bmp);
-                    ProcessGhostIcons(imagelst);
-                    return bmp;
-                }
-            }
-        }
-
         #endregion
 
         #region List/Tree views operations
@@ -577,7 +544,7 @@ namespace WinPaletter.GitHub
                 {
                     if (entry.Content is null) continue;
 
-                    cts?.Token.ThrowIfCancellationRequested();
+                    if (cts is not null && cts.Token.IsCancellationRequested) return;
 
                     bool isHidden = entry.Name.StartsWith(".");
                     if (!isHidden || isHidden && showHiddenFiles)
@@ -1268,10 +1235,10 @@ namespace WinPaletter.GitHub
                                      : ext.Equals(".wptp", StringComparison.OrdinalIgnoreCase) ? ".wpth"
                                      : null;
 
-                    if (linkedExt != null)
+                    if (FilesOperationsLinking && linkedExt != null)
                     {
                         // Find linked item BEFORE any rename
-                        ListViewItem linkedItem = _boundList.Items.Cast<ListViewItem>()
+                        ListViewItem linkedItem = FilesOperationsLinking ? _boundList.Items.Cast<ListViewItem>()
                             .FirstOrDefault(i =>
                             {
                                 if (i.Tag is RepositoryContent rc)
@@ -1283,7 +1250,7 @@ namespace WinPaletter.GitHub
                                     if (match) return match;
                                 }
                                 return false;
-                            });
+                            }) : null;
 
                         if (linkedItem is not null)
                         {
@@ -1465,10 +1432,8 @@ namespace WinPaletter.GitHub
             // TODO: Show properties
         }
 
-        private static void Menu_Download_Click(object sender, EventArgs e)
+        private async static void Menu_Download_Click(object sender, EventArgs e)
         {
-            GitHub_DownloadFile dm = new();
-
             string selectedPath = string.Empty;
 
             if (!OS.WXP)
@@ -1486,16 +1451,9 @@ namespace WinPaletter.GitHub
                 }
             }
 
-            if (System.IO.Directory.Exists(selectedPath))
-            {
-                foreach (ListViewItem item in _boundList.SelectedItems)
-                {
-                    if (item.Tag is RepositoryContent rc)
-                    {
-                        dm.DownloadFileAsync(rc.DownloadUrl, selectedPath);
-                    }
-                }
-            }
+            if (!string.IsNullOrEmpty(selectedPath) && !Directory.Exists(selectedPath)) { Directory.CreateDirectory(selectedPath); }
+
+            await DownloadSelectedItemsAsync(selectedPath, cts);
         }
 
         #endregion
@@ -2048,6 +2006,124 @@ namespace WinPaletter.GitHub
             }
         }
 
+        public static async Task DownloadSelectedItemsAsync(string directory, CancellationTokenSource cts)
+        {
+            if (!Directory.Exists(directory))  return;
+
+            var downloads_files = new List<(string url, string saveAs, long size, Bitmap icon)>();
+
+            // --- Step 1: Gather all files in the ListView ---
+            var selectedFiles = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            var availableFiles = new Dictionary<string, RepositoryContent>(StringComparer.OrdinalIgnoreCase);
+
+            foreach (ListViewItem item in _boundList.Items)
+            {
+                if (item.Tag is RepositoryContent rc && rc.Type == ContentType.File)
+                {
+                    availableFiles[rc.Name] = rc;
+                    if (item.Selected) selectedFiles.Add(rc.Name);
+                }
+            }
+
+            // --- Step 2: Handle selected items ---
+            foreach (ListViewItem item in _boundList.SelectedItems)
+            {
+                if (cts?.Token.IsCancellationRequested ?? false) return;
+
+                if (item.Tag is not RepositoryContent rc) continue;
+
+                if (rc.Type == ContentType.File)
+                {
+                    string saveAs = Path.Combine(directory, rc.Name);
+                    string parentDir = Path.GetDirectoryName(saveAs);
+                    if (!Directory.Exists(parentDir)) Directory.CreateDirectory(parentDir);
+
+                    Bitmap icon = item.ImageList?.Images[item.ImageKey] as Bitmap;
+                    downloads_files.Add((rc.DownloadUrl, saveAs, rc.Size, icon));
+                }
+                else if (rc.Type == ContentType.Dir)
+                {
+                    // --- Step 2a: Enumerate all entries in the directory ---
+                    var entries = new List<Entry>();
+                    await foreach (Entry entry in EnumerateEntriesAsync(rc.Path, recursive: true, ct: cts.Token)) entries.Add(entry);
+
+                    string topFolderName = rc.Name; // folder to strip parent paths
+
+                    foreach (Entry entry in entries)
+                    {
+                        if (cts?.Token.IsCancellationRequested ?? false) return;
+
+                        string normalizedPath = GitHub.FileSystem.NormalizePath(entry.Path);
+                        string[] parts = normalizedPath.Split('/');
+                        int topFolderIndex = Array.FindIndex(parts, p => p.Equals(topFolderName, StringComparison.OrdinalIgnoreCase));
+                        if (topFolderIndex < 0) continue;
+
+                        string relativePath = Path.Combine(parts.Skip(topFolderIndex).ToArray());
+                        string localFile = Path.Combine(directory, relativePath);
+
+                        if (entry.Type == EntryType.Dir)
+                        {
+                            Directory.CreateDirectory(localFile);
+                            continue;
+                        }
+
+                        string parentDir = Path.GetDirectoryName(localFile);
+                        if (!Directory.Exists(parentDir)) Directory.CreateDirectory(parentDir);
+
+                        Bitmap icon = null;
+                        if (_boundList.SmallImageList != null && _boundList.SmallImageList.Images.ContainsKey(entry.Name))
+                            icon = _boundList.SmallImageList.Images[entry.Name] as Bitmap;
+
+                        downloads_files.Add((entry.Content.DownloadUrl, localFile, entry.Size, icon));
+                    }
+                }
+            }
+
+            // --- Step 3: Handle paired files (.wpth / .wptp) ---
+            foreach (var fileName in selectedFiles.ToList())
+            {
+                string baseName = Path.GetFileNameWithoutExtension(fileName);
+                string ext = Path.GetExtension(fileName).ToLower();
+
+                string pairedExt = ext switch
+                {
+                    ".wpth" => ".wptp",
+                    ".wptp" => ".wpth",
+                    _ => null
+                };
+                if (pairedExt == null) continue;
+
+                string pairedFileName = baseName + pairedExt;
+
+                if (availableFiles.TryGetValue(pairedFileName, out var pairedRc) && !selectedFiles.Contains(pairedFileName))
+                {
+                    var result = FilesOperationsLinking ? MsgBox(
+                        "Paired File Detected",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question,
+                        $"A paired file '{pairedFileName}' exists but is not selected.\nDo you want to add it to the download?") : DialogResult.No;
+
+                    if (result == DialogResult.Yes)
+                    {
+                        selectedFiles.Add(pairedFileName);
+
+                        string saveAs = Path.Combine(directory, pairedFileName);
+                        string parentDir = Path.GetDirectoryName(saveAs);
+                        if (!Directory.Exists(parentDir)) Directory.CreateDirectory(parentDir);
+
+                        Bitmap icon = null;
+                        if (_boundList.SmallImageList != null && _boundList.SmallImageList.Images.ContainsKey(pairedFileName))
+                            icon = _boundList.SmallImageList.Images[pairedFileName] as Bitmap;
+
+                        downloads_files.Add((pairedRc.DownloadUrl, saveAs, pairedRc.Size, icon));
+                    }
+                }
+            }
+
+            // --- Step 4: Start download ---
+            Forms.DownloadManager_Dlg.DownloadFile(downloads_files);
+        }
+
         #endregion
 
         #region Files\Directories helpers
@@ -2255,7 +2331,8 @@ namespace WinPaletter.GitHub
 
                         foreach (var entry in Cache.Values.Select(v => v.Entry.Content))
                         {
-                            cts.Token.ThrowIfCancellationRequested();
+                            if (cts is not null && cts.Token.IsCancellationRequested) return;
+
                             if (entry == null) continue;
 
                             string name = entry.Name;
@@ -2268,7 +2345,8 @@ namespace WinPaletter.GitHub
                     {
                         foreach (var entry in Cache.Values.Select(v => v.Entry.Content))
                         {
-                            cts.Token.ThrowIfCancellationRequested();
+                            if (cts is not null && cts.Token.IsCancellationRequested) return;
+
                             if (entry == null) continue;
 
                             if (entry.Name.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0)
@@ -2290,7 +2368,7 @@ namespace WinPaletter.GitHub
                 int count = 0;
                 foreach (var entry in matches)
                 {
-                    cts.Token.ThrowIfCancellationRequested();
+                    if (cts is not null && cts.Token.IsCancellationRequested) return;
 
                     bool isHidden = entry.Name.StartsWith(".");
                     if (!isHidden || isHidden && showHiddenFiles)

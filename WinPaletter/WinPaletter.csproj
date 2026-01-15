@@ -432,18 +432,6 @@
       <DependentUpon>ColorEffectControl.cs</DependentUpon>
     </Compile>
     <Compile Include="GitHub\Core\Branch.cs" />
-    <Compile Include="GitHub\GitHub_DownloadFiles.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GitHub\GitHub_DownloadFiles.Designer.cs">
-      <DependentUpon>GitHub_DownloadFiles.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GitHub\GitHub_DownloadFile.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GitHub\GitHub_DownloadFile.Designer.cs">
-      <DependentUpon>GitHub_DownloadFile.cs</DependentUpon>
-    </Compile>
     <Compile Include="GUI\Elements\AdvancedControls\Breadcrumb.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -530,7 +518,7 @@
     <Compile Include="Program\TypesExtensions\Images.cs" />
     <Compile Include="Program\TypesExtensions\Stream.cs" />
     <Compile Include="Program\TypesExtensions\Types.cs" />
-    <Compile Include="Program\Classes\DownloadManager.cs" />
+    <Compile Include="DownloadManager\DownloadManager.cs" />
     <Compile Include="Program\Filters.cs" />
     <Compile Include="Program\Variables\Links.cs" />
     <Compile Include="Program\TypesExtensions\Forms.cs" />
@@ -1155,10 +1143,10 @@
     <Compile Include="GUI\Elements\AdvancedControls\StoreItem.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Store\Store_DownloadProgress.Designer.cs">
-      <DependentUpon>Store_DownloadProgress.cs</DependentUpon>
+    <Compile Include="DownloadManager\DownloadManager_Dlg.Designer.cs">
+      <DependentUpon>DownloadManager_Dlg.cs</DependentUpon>
     </Compile>
-    <Compile Include="Store\Store_DownloadProgress.cs">
+    <Compile Include="DownloadManager\DownloadManager_Dlg.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Store\Store_Hover.Designer.cs">
@@ -1432,12 +1420,6 @@
     <EmbeddedResource Include="ColorsAndPalettesHandlers\ColorEffectControl.resx">
       <DependentUpon>ColorEffectControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="GitHub\GitHub_DownloadFiles.resx">
-      <DependentUpon>GitHub_DownloadFiles.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="GitHub\GitHub_DownloadFile.resx">
-      <DependentUpon>GitHub_DownloadFile.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="GUI\GlassWindow.resx">
       <DependentUpon>GlassWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -1567,8 +1549,8 @@
     <EmbeddedResource Include="Store\Store.resx">
       <DependentUpon>Store.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Store\Store_DownloadProgress.resx">
-      <DependentUpon>Store_DownloadProgress.cs</DependentUpon>
+    <EmbeddedResource Include="DownloadManager\DownloadManager_Dlg.resx">
+      <DependentUpon>DownloadManager_Dlg.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Store\Store_Hover.resx">
       <DependentUpon>Store_Hover.cs</DependentUpon>

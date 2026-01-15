@@ -422,11 +422,10 @@ namespace WinPaletter
                     string themepackfilename = $@"{selectedPath}\{new FileInfo(selectedItem.FileName).Name}";
                     themepackfilename = themepackfilename.Replace(themepackfilename.Split('.').Last(), "wptp");
 
-                    Forms.Store_DownloadProgress.URL = selectedItem.URL_PackFile;
-                    Forms.Store_DownloadProgress.File = themepackfilename;
-                    Forms.Store_DownloadProgress.ThemeName = selectedItem.TM.Info.ThemeName;
-                    Forms.Store_DownloadProgress.ThemeVersion = selectedItem.TM.Info.ThemeVersion;
-                    Forms.Store_DownloadProgress.ShowDialog();
+                    using (Bitmap icon = Properties.Resources.ThemesResIcon.ToBitmap())
+                    {
+                        Forms.DownloadManager_Dlg.DownloadFile(selectedItem.URL_PackFile, themepackfilename, -1, icon.Resize(24, 24));
+                    }
                 }
             }
         }
@@ -465,11 +464,11 @@ namespace WinPaletter
                 {
                     if (File.Exists($@"{Dir}\{FileName}") && (Program.CalculateMD5($"{Dir}\\{FileName}") ?? string.Empty) != (selectedItem.MD5_PackFile ?? string.Empty) || !File.Exists($@"{Dir}\{FileName}"))
                     {
-                        Forms.Store_DownloadProgress.URL = selectedItem.URL_PackFile;
-                        Forms.Store_DownloadProgress.File = $@"{Dir}\{FileName}";
-                        Forms.Store_DownloadProgress.ThemeName = selectedItem.TM.Info.ThemeName;
-                        Forms.Store_DownloadProgress.ThemeVersion = selectedItem.TM.Info.ThemeVersion;
-                        if (Forms.Store_DownloadProgress.ShowDialog() == DialogResult.OK) DoActionsAfterPackDownload();
+                        using (Bitmap icon = Properties.Resources.ThemesResIcon.ToBitmap())
+                        {
+                            if (Forms.DownloadManager_Dlg.DownloadFile(selectedItem.URL_PackFile, $"{Dir}\\{FileName}", -1, icon.Resize(24, 24)) == DialogResult.OK) 
+                                DoActionsAfterPackDownload();
+                        }
                     }
                     else
                     {
@@ -1599,11 +1598,11 @@ namespace WinPaletter
                 {
                     if (File.Exists($@"{Dir}\{FileName}") && (Program.CalculateMD5($"{Dir}\\{FileName}") ?? string.Empty) != (selectedItem.MD5_PackFile ?? string.Empty) || !File.Exists($@"{Dir}\{FileName}"))
                     {
-                        Forms.Store_DownloadProgress.URL = selectedItem.URL_PackFile;
-                        Forms.Store_DownloadProgress.File = $@"{Dir}\{FileName}";
-                        Forms.Store_DownloadProgress.ThemeName = selectedItem.TM.Info.ThemeName;
-                        Forms.Store_DownloadProgress.ThemeVersion = selectedItem.TM.Info.ThemeVersion;
-                        if (Forms.Store_DownloadProgress.ShowDialog() == DialogResult.OK) DoActionsAfterPackDownload();
+                        using (Bitmap icon = Properties.Resources.ThemesResIcon.ToBitmap())
+                        {
+                            if (Forms.DownloadManager_Dlg.DownloadFile(selectedItem.URL_PackFile, $"{Dir}\\{FileName}", -1, icon.Resize(24, 24)) == DialogResult.OK)
+                                DoActionsAfterPackDownload();
+                        }
                     }
                     else
                     {
