@@ -873,5 +873,18 @@ Generated automatically by WinPaletter.";
 
             await FileSystem.DownloadSelectedItemsAsync(selectedPath);
         }
+
+        private void btn_new_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog dlg = new())
+            {
+                dlg.Filter = "*.*|*.*";
+                dlg.Multiselect = true;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    FileSystem.Upload(dlg.FileName);
+                }
+            }
+        }
     }
 }

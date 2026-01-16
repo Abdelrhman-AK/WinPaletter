@@ -729,7 +729,6 @@
     <Compile Include="GitHub\GitHubMgrForm.Designer.cs">
       <DependentUpon>GitHubMgrForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="GitHub\Core\Streaming.cs" />
     <Compile Include="GitHub\GitHub_FileAction.cs">
       <SubType>Form</SubType>
     </Compile>

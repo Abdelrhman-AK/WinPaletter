@@ -1103,6 +1103,7 @@
             this.btn_new.TabIndex = 19;
             this.btn_new.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btn_new.UseVisualStyleBackColor = true;
+            this.btn_new.Click += new System.EventHandler(this.btn_new_Click);
             // 
             // separatorV3
             // 

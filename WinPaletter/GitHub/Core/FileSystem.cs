@@ -371,6 +371,134 @@ namespace WinPaletter.GitHub
             return dirEntry;
         }
 
+        /// <summary>
+        /// Uploads or updates a single file in the GitHub repository using the Contents API.
+        /// Automatically creates parent directories if they do not exist.
+        /// </summary>
+        /// <param name="githubPath">The target path inside the GitHub repository.</param>
+        /// <param name="localFilePath">The absolute local file path.</param>
+        /// <param name="commitMessage">Optional commit message.</param>
+        /// <param name="cts">Optional CancellationTokenSource.</param>
+        public static async Task<Entry> UploadFileAsync(string githubPathDirectory, string localFilePath, string commitMessage = null, CancellationTokenSource cts = null)
+        {
+            if (!System.IO.File.Exists(localFilePath)) return null;
+
+            cts ??= new();
+
+            githubPathDirectory = NormalizePath(githubPathDirectory);
+            commitMessage ??= $"Uploaded `{Path.GetFileName(localFilePath)}` into `{githubPathDirectory}` by {_owner}";
+
+            if (cts is not null && cts.IsCancellationRequested) return null;
+
+            var client = Program.GitHub.Client;
+
+            if (cts is not null && cts.IsCancellationRequested) return null;
+
+            if (cts is not null && cts.IsCancellationRequested) return null;
+
+            // 1. Read file
+            byte[] fileBytes;
+
+            using (var fs = new FileStream(localFilePath, System.IO.FileMode.Open, FileAccess.Read, FileShare.Read, 81920, useAsync: true))
+            {
+                using var ms = new MemoryStream();
+                await fs.CopyToAsync(ms, 81920, cts.Token).ConfigureAwait(false);
+                fileBytes = ms.ToArray();
+            }
+
+            if (cts is not null && cts.IsCancellationRequested) return null;
+
+            string githubPath = string.Join("/", githubPathDirectory, Path.GetFileName(localFilePath));
+
+            // 2. Detect if file is binary
+            bool isBinary = false;
+            const int sampleSize = 8000;
+            int length = Math.Min(fileBytes.Length, sampleSize);
+            for (int i = 0; i < length; i++)
+            {
+                if (fileBytes[i] == 0)
+                {
+                    isBinary = true;
+                    break;
+                }
+            }
+
+            if (!isBinary)
+            {
+                // 3. TEXT FILE → Contents API
+                string content = Encoding.UTF8.GetString(fileBytes);
+
+                RepositoryContent existingContent = null;
+
+                try
+                {
+                    var existing = await client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.Name, githubPath, GitHub.Repository.Branch.Name).ConfigureAwait(false);
+                    existingContent = existing.FirstOrDefault();
+                }
+                catch (NotFoundException) { }
+
+                if (cts is not null && cts.IsCancellationRequested) return null;
+
+                if (existingContent is null)
+                {
+                    var create = new CreateFileRequest(commitMessage, content, GitHub.Repository.Branch.Name);
+                    await client.Repository.Content.CreateFile(_owner, GitHub.Repository.Name, githubPath, create).ConfigureAwait(false);
+                }
+                else
+                {
+                    var update = new UpdateFileRequest(commitMessage, content, existingContent.Sha, GitHub.Repository.Branch.Name);
+                    await client.Repository.Content.UpdateFile(_owner, GitHub.Repository.Name, githubPath, update).ConfigureAwait(false);
+                }
+            }
+            else
+            {
+                // 4. BINARY FILE → Git Data API
+                if (cts is not null && cts.IsCancellationRequested) return null;
+
+                var blob = new Octokit.NewBlob
+                {
+                    Content = Convert.ToBase64String(fileBytes),
+                    Encoding = Octokit.EncodingType.Base64
+                };
+
+                var blobRef = await client.Git.Blob.Create(_owner, GitHub.Repository.Name, blob).ConfigureAwait(false);
+                var branchRef = await client.Git.Reference.Get(_owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}").ConfigureAwait(false);
+                var latestCommit = await client.Git.Commit.Get(_owner, GitHub.Repository.Name, branchRef.Object.Sha).ConfigureAwait(false);
+                var baseTree = await client.Git.Tree.Get(_owner, GitHub.Repository.Name, latestCommit.Tree.Sha).ConfigureAwait(false);
+
+                var newTree = new Octokit.NewTree { BaseTree = baseTree.Sha };
+                newTree.Tree.Add(new Octokit.NewTreeItem
+                {
+                    Path = githubPath,
+                    Mode = "100644",
+                    Type = Octokit.TreeType.Blob,
+                    Sha = blobRef.Sha
+                });
+
+                var createdTree = await client.Git.Tree.Create(_owner, GitHub.Repository.Name, newTree).ConfigureAwait(false);
+                var newCommit = new Octokit.NewCommit(commitMessage, createdTree.Sha, latestCommit.Sha);
+                var commit = await client.Git.Commit.Create(_owner, GitHub.Repository.Name, newCommit).ConfigureAwait(false);
+                await client.Git.Reference.Update(_owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}", new Octokit.ReferenceUpdate(commit.Sha)).ConfigureAwait(false);
+            }
+
+            if (cts is not null && cts.IsCancellationRequested) return null;
+
+            // 5. Refresh cache
+            var refreshed = await client.Repository.Content.GetAllContentsByRef(_owner, GitHub.Repository.Name, githubPath, GitHub.Repository.Branch.Name).ConfigureAwait(false);
+
+            var entry = new Entry
+            {
+                Path = githubPath,
+                Type = EntryType.File,
+                Content = refreshed[0],
+                FetchedAt = DateTime.UtcNow
+            };
+
+            Cache.Add(githubPath, entry);
+
+            return entry;
+        }
+
         public static async Task CopyFileAsync(string sourcePath, string destDirectory, CancellationTokenSource cts = null, Action<int> reportProgress = null)
         {
             await CopyFilesAsync([sourcePath], destDirectory, cts, reportProgress);

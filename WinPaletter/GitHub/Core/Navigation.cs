@@ -1942,6 +1942,36 @@ namespace WinPaletter.GitHub
             }
         }
 
+        public static async void Upload(string filePath)
+        {
+            if (File.Exists(filePath))
+            {
+                _boundbreadcrumbControl.Value = 0;
+                _boundbreadcrumbControl.StartMarquee();
+
+                string initPath = GitHub.FileSystem.CurrentPath;
+                string destDir = GitHub.FileSystem.NormalizePath(initPath);
+
+                Entry uploadedEntry = await UploadFileAsync(destDir, filePath, cts: cts);
+
+                if (uploadedEntry is not null && initPath.Equals(FileSystem.CurrentPath, StringComparison.OrdinalIgnoreCase))
+                {
+                    await GitHub.FileSystem.UpdateExplorerView(FileSystem.CurrentPath);
+                    // Select uploaded item
+                    if (uploadedEntry?.Content != null)
+                    {
+                        _boundList.Items
+                            .Cast<ListViewItem>()
+                            .Where(i => i.Tag is RepositoryContent rc && rc.Path.Equals(uploadedEntry.Content.Path, StringComparison.OrdinalIgnoreCase))
+                            .ToList()
+                            .ForEach(i => i.Selected = true);
+                    }
+                }
+
+                _boundbreadcrumbControl.FinishLoadingAnimation();
+            }
+        }
+
         public static async Task DeleteSelectedElementsAsync()
         {
             var items = _boundList.SelectedItems;

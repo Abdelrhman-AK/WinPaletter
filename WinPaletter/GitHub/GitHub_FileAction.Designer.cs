@@ -69,7 +69,7 @@
             // 
             // pictureBox2
             // 
-            this.pictureBox2.Location = new System.Drawing.Point(53, 43);
+            this.pictureBox2.Location = new System.Drawing.Point(53, 42);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(64, 64);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -80,7 +80,7 @@
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.Location = new System.Drawing.Point(124, 43);
+            this.label2.Location = new System.Drawing.Point(124, 42);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(330, 20);
             this.label2.TabIndex = 126;
@@ -136,7 +136,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flowLayoutPanel1.Controls.Add(this.label3);
             this.flowLayoutPanel1.Controls.Add(this.label5);
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(121, 66);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(121, 65);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(333, 18);
             this.flowLayoutPanel1.TabIndex = 131;
@@ -147,7 +147,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.flowLayoutPanel2.Controls.Add(this.label4);
             this.flowLayoutPanel2.Controls.Add(this.label6);
-            this.flowLayoutPanel2.Location = new System.Drawing.Point(121, 89);
+            this.flowLayoutPanel2.Location = new System.Drawing.Point(121, 88);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
             this.flowLayoutPanel2.Size = new System.Drawing.Size(333, 18);
             this.flowLayoutPanel2.TabIndex = 132;
@@ -158,9 +158,9 @@
             this.bottom_buttons.Controls.Add(this.button2);
             this.bottom_buttons.Controls.Add(this.button1);
             this.bottom_buttons.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.bottom_buttons.Location = new System.Drawing.Point(0, 123);
+            this.bottom_buttons.Location = new System.Drawing.Point(0, 116);
             this.bottom_buttons.Name = "bottom_buttons";
-            this.bottom_buttons.Size = new System.Drawing.Size(466, 48);
+            this.bottom_buttons.Size = new System.Drawing.Size(466, 45);
             this.bottom_buttons.TabIndex = 122;
             this.bottom_buttons.UseDecorationPattern = false;
             this.bottom_buttons.UseSharpStyle = false;
@@ -178,7 +178,7 @@
             this.button2.ImageGlyphEnabled = false;
             this.button2.Location = new System.Drawing.Point(345, 7);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(115, 34);
+            this.button2.Size = new System.Drawing.Size(115, 31);
             this.button2.TabIndex = 18;
             this.button2.Text = "No";
             this.button2.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
@@ -197,7 +197,7 @@
             this.button1.ImageGlyphEnabled = false;
             this.button1.Location = new System.Drawing.Point(224, 7);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(115, 34);
+            this.button1.Size = new System.Drawing.Size(115, 31);
             this.button1.TabIndex = 17;
             this.button1.Text = "Yes";
             this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
@@ -211,7 +211,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CancelButton = this.button2;
-            this.ClientSize = new System.Drawing.Size(466, 171);
+            this.ClientSize = new System.Drawing.Size(466, 161);
             this.Controls.Add(this.flowLayoutPanel2);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.label2);
