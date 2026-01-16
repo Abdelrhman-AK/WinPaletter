@@ -232,6 +232,8 @@ namespace WinPaletter
             radioImage3.Checked = !Sets.AspectsControl.ClassicColors_Advanced;
             radioImage8.Checked = Sets.AspectsControl.MetricsFonts_Advanced;
             radioImage7.Checked = !Sets.AspectsControl.MetricsFonts_Advanced;
+
+            toggle43.Checked = Sets.UsersServices.GitHub_AutoOperateOnLinkedFiles;
         }
 
         /// <summary>
@@ -569,6 +571,8 @@ namespace WinPaletter
             Sets.AspectsControl.ClassicColors_Advanced = radioImage4.Checked;
             Sets.AspectsControl.MetricsFonts_Advanced = radioImage8.Checked;
             Sets.AspectsControl.Accessibility = checkBox16.Checked;
+
+            Sets.UsersServices.GitHub_AutoOperateOnLinkedFiles = toggle43.Checked;
 
             Sets.Save(Mode, File);
         }

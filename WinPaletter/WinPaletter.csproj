@@ -432,6 +432,12 @@
       <DependentUpon>ColorEffectControl.cs</DependentUpon>
     </Compile>
     <Compile Include="GitHub\Core\Branch.cs" />
+    <Compile Include="GitHub\GitHub_LinkedFilesConfirmation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GitHub\GitHub_LinkedFilesConfirmation.Designer.cs">
+      <DependentUpon>GitHub_LinkedFilesConfirmation.cs</DependentUpon>
+    </Compile>
     <Compile Include="GUI\Elements\AdvancedControls\Breadcrumb.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -1419,6 +1425,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ColorsAndPalettesHandlers\ColorEffectControl.resx">
       <DependentUpon>ColorEffectControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GitHub\GitHub_LinkedFilesConfirmation.resx">
+      <DependentUpon>GitHub_LinkedFilesConfirmation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GUI\GlassWindow.resx">
       <DependentUpon>GlassWindow.cs</DependentUpon>

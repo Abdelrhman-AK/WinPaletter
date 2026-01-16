@@ -457,6 +457,10 @@ namespace WinPaletter
             this.Label38 = new System.Windows.Forms.Label();
             this.AlertBox20 = new WinPaletter.UI.WP.AlertBox();
             this.tabPage22 = new System.Windows.Forms.TabPage();
+            this.groupBox63 = new WinPaletter.UI.WP.GroupBox();
+            this.label99 = new System.Windows.Forms.Label();
+            this.toggle43 = new WinPaletter.UI.WP.Toggle();
+            this.pictureBox72 = new System.Windows.Forms.PictureBox();
             this.banner11 = new WinPaletter.UI.WP.Banner();
             this.groupBox48 = new WinPaletter.UI.WP.GroupBox();
             this.label58 = new System.Windows.Forms.Label();
@@ -672,6 +676,8 @@ namespace WinPaletter
             this.groupBox31.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox53)).BeginInit();
             this.tabPage22.SuspendLayout();
+            this.groupBox63.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox72)).BeginInit();
             this.groupBox48.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox75)).BeginInit();
             this.groupBox47.SuspendLayout();
@@ -6336,6 +6342,7 @@ namespace WinPaletter
             // tabPage22
             // 
             this.tabPage22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.tabPage22.Controls.Add(this.groupBox63);
             this.tabPage22.Controls.Add(this.banner11);
             this.tabPage22.Controls.Add(this.groupBox48);
             this.tabPage22.Controls.Add(this.groupBox47);
@@ -6344,6 +6351,55 @@ namespace WinPaletter
             this.tabPage22.Size = new System.Drawing.Size(823, 591);
             this.tabPage22.TabIndex = 13;
             this.tabPage22.Text = "Users and services";
+            // 
+            // groupBox63
+            // 
+            this.groupBox63.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox63.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox63.Controls.Add(this.label99);
+            this.groupBox63.Controls.Add(this.toggle43);
+            this.groupBox63.Controls.Add(this.pictureBox72);
+            this.groupBox63.Location = new System.Drawing.Point(3, 263);
+            this.groupBox63.Name = "groupBox63";
+            this.groupBox63.Size = new System.Drawing.Size(817, 48);
+            this.groupBox63.TabIndex = 206;
+            this.groupBox63.UseDecorationPattern = false;
+            this.groupBox63.UseSharpStyle = false;
+            // 
+            // label99
+            // 
+            this.label99.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label99.Cursor = System.Windows.Forms.Cursors.Default;
+            this.label99.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label99.Location = new System.Drawing.Point(41, 7);
+            this.label99.Name = "label99";
+            this.label99.Size = new System.Drawing.Size(719, 34);
+            this.label99.TabIndex = 18;
+            this.label99.Text = "Automatically do operations for linked themes and resources pack files (*.wpth, *" +
+    ".wptp) inside GitHub themes explorer";
+            this.label99.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // toggle43
+            // 
+            this.toggle43.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.toggle43.Checked = false;
+            this.toggle43.DarkLight_Toggler = false;
+            this.toggle43.Location = new System.Drawing.Point(766, 14);
+            this.toggle43.Name = "toggle43";
+            this.toggle43.Size = new System.Drawing.Size(40, 20);
+            this.toggle43.TabIndex = 0;
+            // 
+            // pictureBox72
+            // 
+            this.pictureBox72.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.pictureBox72.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox72.Image")));
+            this.pictureBox72.Location = new System.Drawing.Point(11, 12);
+            this.pictureBox72.Name = "pictureBox72";
+            this.pictureBox72.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox72.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox72.TabIndex = 54;
+            this.pictureBox72.TabStop = false;
             // 
             // banner11
             // 
@@ -7252,6 +7308,8 @@ namespace WinPaletter
             this.groupBox31.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox53)).EndInit();
             this.tabPage22.ResumeLayout(false);
+            this.groupBox63.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox72)).EndInit();
             this.groupBox48.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox75)).EndInit();
             this.groupBox47.ResumeLayout(false);
@@ -7751,5 +7809,9 @@ namespace WinPaletter
         internal PictureBox pictureBox60;
         internal Label label52;
         private UI.WP.Toggle toggle42;
+        private UI.WP.GroupBox groupBox63;
+        internal Label label99;
+        private UI.WP.Toggle toggle43;
+        internal PictureBox pictureBox72;
     }
 }

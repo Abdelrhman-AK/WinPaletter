@@ -17,6 +17,8 @@
                 public string Retry { get; set; } = "Retry";
                 public string Error { get; set; } = "Error";
                 public string Copy { get; set; } = "Copy";
+                public string Copy_AsPath { get; set; } = "Copy as path";
+                public string Copy_URL { get; set; } = "Copy URL";
                 public string Copy_HSL { get; set; } = "Copy in HSL format";
                 public string Copy_HEX { get; set; } = "Copy in HEX format";
                 public string Copy_RGB { get; set; } = "Copy in RGB format";
@@ -29,9 +31,12 @@
                 public string Copy_CMYK { get; set; } = "Copy in CMYK format";
                 public string Copy_KnownName { get; set; } = "Copy as known name";
                 public string Copy_CSS { get; set; } = "Copy in CSS format";
+                public string Open { get; set; } = "Open";
                 public string Paste { get; set; } = "Paste";
                 public string Cut { get; set; } = "Cut";
                 public string Delete { get; set; } = "Delete";
+                public string Rename { get; set; } = "Rename";
+                public string Download { get; set; } = "Download";
                 public string New { get; set; } = "New";
                 public string Edit { get; set; } = "Edit";
                 public string SaveAs { get; set; } = "Save as ...";

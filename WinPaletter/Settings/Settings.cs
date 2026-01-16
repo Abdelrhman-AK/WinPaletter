@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms;
 
 namespace WinPaletter
@@ -42,6 +43,7 @@ namespace WinPaletter
             static readonly string REG_WindowsTerminals = $"{REG}\\WindowsTerminals";
             static readonly string REG_Store = $"{REG}\\Store";
             static readonly string REG_NerdStats = $"{REG}\\NerdStats";
+            static readonly string REG_UsersServices = $"{REG}\\UsersServices";
             static readonly string REG_Miscellaneous = $"{REG}\\Miscellaneous";
             static readonly string REG_Backup = $"{REG}\\Backup";
             static readonly string REG_AspectsControl = $"{REG}\\AspectsControl";
@@ -1074,11 +1076,16 @@ namespace WinPaletter
                 public UsersServices() { }
 
                 /// <summary>
+                /// Determines if WinPaletter's GitHub mananger can automatically do operations on linked files without confirmation or not.
+                /// </summary>
+                public bool GitHub_AutoOperateOnLinkedFiles { get; set; } = false;
+
+                /// <summary>
                 /// Load settings from registry
                 /// </summary>
                 public void Load()
                 {
-
+                    GitHub_AutoOperateOnLinkedFiles = ReadReg(REG_UsersServices, nameof(GitHub_AutoOperateOnLinkedFiles), false);
                 }
 
                 /// <summary>
@@ -1086,7 +1093,7 @@ namespace WinPaletter
                 /// </summary>
                 public void Save()
                 {
-
+                    WriteReg(REG_NerdStats, nameof(GitHub_AutoOperateOnLinkedFiles), GitHub_AutoOperateOnLinkedFiles);
                 }
             }
 

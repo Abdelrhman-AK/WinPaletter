@@ -1,17 +1,16 @@
 ﻿using FluentTransitions;
 using Octokit;
+using Ookii.Dialogs.WinForms;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.GitHub;
-using WinPaletter.NativeMethods;
-using static WinPaletter.Settings.Structures;
 
 namespace WinPaletter
 {
@@ -69,12 +68,12 @@ namespace WinPaletter
             branchesView.BeginUpdate();
             branchesView.Columns.Clear();
             branchesView.SmallImageList = imageList1;
-            branchesView.Columns.Add("Branch", 200);
-            branchesView.Columns.Add("Last updated", 220);
-            branchesView.Columns.Add("Ahead", 120, HorizontalAlignment.Right);
-            branchesView.Columns.Add("Behind", 120);
-            branchesView.Columns.Add("Committer", 140);
-            branchesView.Columns.Add("Last commit message", 380);
+            branchesView.Columns.Add(Program.Lang.Strings.GitHubStrings.Branch, 200);
+            branchesView.Columns.Add(Program.Lang.Strings.GitHubStrings.LastUpdated, 220);
+            branchesView.Columns.Add(Program.Lang.Strings.GitHubStrings.Branch_Ahead, 120, HorizontalAlignment.Right);
+            branchesView.Columns.Add(Program.Lang.Strings.GitHubStrings.Branch_Behind, 120);
+            branchesView.Columns.Add(Program.Lang.Strings.GitHubStrings.Committer, 140);
+            branchesView.Columns.Add(Program.Lang.Strings.GitHubStrings.LastCommitMsg, 380);
             branchesView.Columns.Add("SHA", 70);
             branchesView.EndUpdate();
 
@@ -202,6 +201,7 @@ namespace WinPaletter
             btn_copy.Enabled = e;
             btn_rename.Enabled = e;
             btn_delete.Enabled = e;
+            btn_download.Enabled = e;
         }
 
         public void UpdateViewButton((string label, Bitmap icon, Bitmap glyph, View view) data)
@@ -524,9 +524,9 @@ Generated automatically by WinPaletter.";
             FileSystem.Init_Cut();
         }
 
-        private void btn_delete_Click(object sender, EventArgs e)
+        private async void btn_delete_Click(object sender, EventArgs e)
         {
-            FileSystem.DeleteSelectedElementsAsync();
+            await FileSystem.DeleteSelectedElementsAsync();
         }
 
         private void btn_paste_Click(object sender, EventArgs e)
@@ -848,6 +848,30 @@ Generated automatically by WinPaletter.";
         private void toggle2_CheckedChanged(object sender, EventArgs e)
         {
             GitHub.FileSystem.FilesOperationsLinking = toggle2.Checked;
+        }
+
+        private async void button17_Click(object sender, EventArgs e)
+        {
+            string selectedPath = string.Empty;
+
+            if (!OS.WXP)
+            {
+                using (VistaFolderBrowserDialog FD = new())
+                {
+                    if (FD.ShowDialog() == DialogResult.OK) selectedPath = FD.SelectedPath;
+                }
+            }
+            else
+            {
+                using (FolderBrowserDialog FD = new())
+                {
+                    if (FD.ShowDialog() == DialogResult.OK) selectedPath = FD.SelectedPath;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(selectedPath) && !Directory.Exists(selectedPath)) { Directory.CreateDirectory(selectedPath); }
+
+            await FileSystem.DownloadSelectedItemsAsync(selectedPath);
         }
     }
 }

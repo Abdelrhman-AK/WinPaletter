@@ -85,6 +85,9 @@
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.groupBox4 = new WinPaletter.UI.WP.GroupBox();
+            this.btn_download = new WinPaletter.UI.WP.Button();
+            this.label14 = new System.Windows.Forms.Label();
+            this.toggle2 = new WinPaletter.UI.WP.Toggle();
             this.separatorV4 = new WinPaletter.UI.WP.SeparatorV();
             this.btn_rename = new WinPaletter.UI.WP.Button();
             this.btn_delete = new WinPaletter.UI.WP.Button();
@@ -117,8 +120,6 @@
             this.button3 = new WinPaletter.UI.WP.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.toggle2 = new WinPaletter.UI.WP.Toggle();
             this.tablessControl1.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -923,6 +924,7 @@
             this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox4.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox4.Controls.Add(this.btn_download);
             this.groupBox4.Controls.Add(this.label14);
             this.groupBox4.Controls.Add(this.toggle2);
             this.groupBox4.Controls.Add(this.separatorV4);
@@ -943,12 +945,53 @@
             this.groupBox4.UseDecorationPattern = false;
             this.groupBox4.UseSharpStyle = false;
             // 
+            // btn_download
+            // 
+            this.btn_download.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.btn_download.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(242)))));
+            this.btn_download.Enabled = false;
+            this.btn_download.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.btn_download.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btn_download.Image = null;
+            this.btn_download.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Down;
+            this.btn_download.ImageGlyphEnabled = true;
+            this.btn_download.Location = new System.Drawing.Point(44, 6);
+            this.btn_download.Name = "btn_download";
+            this.btn_download.Size = new System.Drawing.Size(31, 26);
+            this.btn_download.TabIndex = 24;
+            this.btn_download.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btn_download.UseVisualStyleBackColor = true;
+            this.btn_download.Click += new System.EventHandler(this.button17_Click);
+            // 
+            // label14
+            // 
+            this.label14.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.label14.BackColor = System.Drawing.Color.Transparent;
+            this.label14.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(592, 9);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(174, 20);
+            this.label14.TabIndex = 23;
+            this.label14.Text = "Themes files operations linking";
+            this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // toggle2
+            // 
+            this.toggle2.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.toggle2.Checked = true;
+            this.toggle2.DarkLight_Toggler = false;
+            this.toggle2.Location = new System.Drawing.Point(772, 9);
+            this.toggle2.Name = "toggle2";
+            this.toggle2.Size = new System.Drawing.Size(40, 20);
+            this.toggle2.TabIndex = 22;
+            this.toggle2.CheckedChanged += new System.EventHandler(this.toggle2_CheckedChanged);
+            // 
             // separatorV4
             // 
             this.separatorV4.AlternativeLook = false;
             this.separatorV4.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.separatorV4.BackColor = System.Drawing.Color.Transparent;
-            this.separatorV4.Location = new System.Drawing.Point(229, 6);
+            this.separatorV4.Location = new System.Drawing.Point(266, 6);
             this.separatorV4.Name = "separatorV4";
             this.separatorV4.Size = new System.Drawing.Size(1, 26);
             this.separatorV4.TabIndex = 21;
@@ -965,7 +1008,7 @@
             this.btn_rename.Image = null;
             this.btn_rename.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Rename;
             this.btn_rename.ImageGlyphEnabled = true;
-            this.btn_rename.Location = new System.Drawing.Point(155, 6);
+            this.btn_rename.Location = new System.Drawing.Point(192, 6);
             this.btn_rename.Name = "btn_rename";
             this.btn_rename.Size = new System.Drawing.Size(31, 26);
             this.btn_rename.TabIndex = 4;
@@ -983,7 +1026,7 @@
             this.btn_delete.Image = null;
             this.btn_delete.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Delete;
             this.btn_delete.ImageGlyphEnabled = true;
-            this.btn_delete.Location = new System.Drawing.Point(192, 6);
+            this.btn_delete.Location = new System.Drawing.Point(229, 6);
             this.btn_delete.Name = "btn_delete";
             this.btn_delete.Size = new System.Drawing.Size(31, 26);
             this.btn_delete.TabIndex = 1;
@@ -1001,7 +1044,7 @@
             this.btn_paste.Image = null;
             this.btn_paste.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Paste_16;
             this.btn_paste.ImageGlyphEnabled = true;
-            this.btn_paste.Location = new System.Drawing.Point(118, 6);
+            this.btn_paste.Location = new System.Drawing.Point(155, 6);
             this.btn_paste.Name = "btn_paste";
             this.btn_paste.Size = new System.Drawing.Size(31, 26);
             this.btn_paste.TabIndex = 0;
@@ -1019,7 +1062,7 @@
             this.btn_copy.Image = null;
             this.btn_copy.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Copy;
             this.btn_copy.ImageGlyphEnabled = true;
-            this.btn_copy.Location = new System.Drawing.Point(81, 6);
+            this.btn_copy.Location = new System.Drawing.Point(118, 6);
             this.btn_copy.Name = "btn_copy";
             this.btn_copy.Size = new System.Drawing.Size(31, 26);
             this.btn_copy.TabIndex = 2;
@@ -1037,7 +1080,7 @@
             this.btn_cut.Image = null;
             this.btn_cut.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Cut;
             this.btn_cut.ImageGlyphEnabled = true;
-            this.btn_cut.Location = new System.Drawing.Point(44, 6);
+            this.btn_cut.Location = new System.Drawing.Point(81, 6);
             this.btn_cut.Name = "btn_cut";
             this.btn_cut.Size = new System.Drawing.Size(31, 26);
             this.btn_cut.TabIndex = 20;
@@ -1066,7 +1109,7 @@
             this.separatorV3.AlternativeLook = false;
             this.separatorV3.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.separatorV3.BackColor = System.Drawing.Color.Transparent;
-            this.separatorV3.Location = new System.Drawing.Point(582, 6);
+            this.separatorV3.Location = new System.Drawing.Point(591, 6);
             this.separatorV3.Name = "separatorV3";
             this.separatorV3.Size = new System.Drawing.Size(1, 26);
             this.separatorV3.TabIndex = 18;
@@ -1106,7 +1149,7 @@
             this.button7.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button7.ImageGlyph = null;
             this.button7.ImageGlyphEnabled = true;
-            this.button7.Location = new System.Drawing.Point(236, 6);
+            this.button7.Location = new System.Drawing.Point(273, 6);
             this.button7.Name = "button7";
             this.button7.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.button7.Size = new System.Drawing.Size(78, 26);
@@ -1446,29 +1489,6 @@
             this.label2.Text = "0";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // label14
-            // 
-            this.label14.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label14.BackColor = System.Drawing.Color.Transparent;
-            this.label14.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(589, 9);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(177, 20);
-            this.label14.TabIndex = 23;
-            this.label14.Text = "Themes files operations linking";
-            this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // toggle2
-            // 
-            this.toggle2.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.toggle2.Checked = true;
-            this.toggle2.DarkLight_Toggler = false;
-            this.toggle2.Location = new System.Drawing.Point(772, 9);
-            this.toggle2.Name = "toggle2";
-            this.toggle2.Size = new System.Drawing.Size(40, 20);
-            this.toggle2.TabIndex = 22;
-            this.toggle2.CheckedChanged += new System.EventHandler(this.toggle2_CheckedChanged);
-            // 
             // GitHubMgrForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1608,5 +1628,6 @@
         private System.Windows.Forms.Label label12;
         internal System.Windows.Forms.Label label14;
         private UI.WP.Toggle toggle2;
+        private UI.WP.Button btn_download;
     }
 }

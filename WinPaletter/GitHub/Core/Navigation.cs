@@ -895,24 +895,54 @@ namespace WinPaletter.GitHub
 
         public static void Init_Cut()
         {
-            if (_boundList.SelectedItems.Count > 0)
-            {
-                copiedItems?.Clear();
-                cutItems?.Clear();
-                cutItems = [.. _boundList.SelectedItems.Cast<ListViewItem>()];
+            if (_boundList.SelectedItems.Count == 0) return;
 
-                foreach (ListViewItem cutItem in _boundList.SelectedItems)
+            copiedItems?.Clear();
+            cutItems?.Clear();
+
+            // Start with selected items
+            var itemsToCut = new HashSet<ListViewItem>(_boundList.SelectedItems.Cast<ListViewItem>());
+
+            // Build lookup for all files in ListView
+            var allFiles = _boundList.Items.Cast<ListViewItem>().Where(i => i.Tag is RepositoryContent rc && rc.Type == ContentType.File).ToDictionary(i => i.Text, i => i, StringComparer.OrdinalIgnoreCase);
+
+            foreach (ListViewItem item in _boundList.SelectedItems)
+            {
+                if (item.Tag is not RepositoryContent rc || rc.Type != ContentType.File) continue;
+
+                string ext = Path.GetExtension(rc.Name).ToLowerInvariant();
+                if (ext != ".wpth" && ext != ".wptp") continue;
+
+                string baseName = Path.GetFileNameWithoutExtension(rc.Name);
+                string linkedExt = ext == ".wpth" ? ".wptp" : ".wpth";
+                string linkedName = baseName + linkedExt;
+
+                if (allFiles.TryGetValue(linkedName, out var linkedItem))
                 {
-                    if (cutItem is not null && !cutItem.ImageKey.StartsWith("ghost", StringComparison.OrdinalIgnoreCase))
+                    // Skip if already selected / included
+                    if (!itemsToCut.Contains(linkedItem))
                     {
-                        cutItem?.ImageKey = $"ghost_{cutItem?.ImageKey}";
+                        // Confirmation or Auto-apply
+                        if (FilesOperationsLinking && (Program.Settings.UsersServices.GitHub_AutoOperateOnLinkedFiles || Forms.GitHub_LinkedFilesConfirmation.ShowDialog(baseName, GitHub_LinkedFilesConfirmation.Operation.Cut) == DialogResult.Yes))
+                        {
+                            itemsToCut.Add(linkedItem);
+                        }
                     }
                 }
+            }
 
-                foreach (ListViewItem notCutItem in _boundList.Items.Cast<ListViewItem>().Where(i => !i.Selected && !i.Text.StartsWith(".") && i.ImageKey.StartsWith("ghost", StringComparison.OrdinalIgnoreCase)))
-                {
-                    notCutItem.ImageKey = notCutItem.ImageKey.Replace("ghost_", string.Empty);
-                }
+            cutItems = [.. itemsToCut];
+
+            // Update ghost icons for cut items
+            foreach (var cutItem in cutItems)
+            {
+                if (cutItem != null && !cutItem.ImageKey.StartsWith("ghost", StringComparison.OrdinalIgnoreCase)) cutItem.ImageKey = $"ghost_{cutItem.ImageKey}";
+            }
+
+            // Restore ghost icons for items that are not cut
+            foreach (var notCutItem in _boundList.Items.Cast<ListViewItem>().Where(i => !cutItems.Contains(i) && !i.Text.StartsWith(".") && i.ImageKey.StartsWith("ghost", StringComparison.OrdinalIgnoreCase)))
+            {
+                notCutItem.ImageKey = notCutItem.ImageKey.Replace("ghost_", string.Empty);
             }
 
             CanPasteChanged?.Invoke(null, CanPaste);
@@ -920,6 +950,7 @@ namespace WinPaletter.GitHub
 
         public static void Init_Copy()
         {
+            // Restore ghost icons
             foreach (ListViewItem item in _boundList.Items.Cast<ListViewItem>().Where(i => !i.Text.StartsWith(".") && i.ImageKey.StartsWith("ghost", StringComparison.OrdinalIgnoreCase)))
             {
                 item.ImageKey = item.ImageKey.Replace("ghost_", string.Empty);
@@ -929,7 +960,39 @@ namespace WinPaletter.GitHub
             {
                 cutItems?.Clear();
                 copiedItems?.Clear();
-                copiedItems = [.. _boundList.SelectedItems.Cast<ListViewItem>()];
+
+                // Start with selected items
+                var itemsToCopy = new HashSet<ListViewItem>(_boundList.SelectedItems.Cast<ListViewItem>());
+
+                // Build lookup for all files in ListView
+                var allFiles = _boundList.Items.Cast<ListViewItem>().Where(i => i.Tag is RepositoryContent rc && rc.Type == ContentType.File).ToDictionary(i => i.Text, i => i, StringComparer.OrdinalIgnoreCase);
+
+                foreach (ListViewItem item in _boundList.SelectedItems)
+                {
+                    if (item.Tag is not RepositoryContent rc || rc.Type != ContentType.File) continue;
+
+                    string ext = Path.GetExtension(rc.Name).ToLowerInvariant();
+                    if (ext != ".wpth" && ext != ".wptp") continue;
+
+                    string baseName = Path.GetFileNameWithoutExtension(rc.Name);
+                    string linkedExt = ext == ".wpth" ? ".wptp" : ".wpth";
+                    string linkedName = baseName + linkedExt;
+
+                    if (allFiles.TryGetValue(linkedName, out var linkedItem))
+                    {
+                        // Skip if already selected / included
+                        if (!itemsToCopy.Contains(linkedItem))
+                        {
+                            // Confirmation or Auto-apply
+                            if (FilesOperationsLinking && (Program.Settings.UsersServices.GitHub_AutoOperateOnLinkedFiles || Forms.GitHub_LinkedFilesConfirmation.ShowDialog(baseName, GitHub_LinkedFilesConfirmation.Operation.Copy) == DialogResult.Yes))
+                            {
+                                itemsToCopy.Add(linkedItem);
+                            }
+                        }
+                    }
+                }
+
+                copiedItems = [.. itemsToCopy];
             }
 
             CanPasteChanged?.Invoke(null, CanPaste);
@@ -1005,39 +1068,39 @@ namespace WinPaletter.GitHub
 
         private static void InitializeMenu_Item()
         {
-            menu_Open = new ToolStripMenuItem("Open", Assets.GitHubMgr.folder_web_16);
+            menu_Open = new ToolStripMenuItem(Program.Lang.Strings.General.Open, Assets.GitHubMgr.folder_web_16);
             menu_Open.Click -= Menu_Open_Click;
             menu_Open.Click += Menu_Open_Click;
 
-            menu_Download = new ToolStripMenuItem("Download", Assets.GitHubMgr.ContextMenu_Download);
+            menu_Download = new ToolStripMenuItem(Program.Lang.Strings.General.Download, Assets.GitHubMgr.ContextMenu_Download);
             menu_Download.Click -= Menu_Download_Click;
             menu_Download.Click += Menu_Download_Click;
 
             separator_item_1 = new ToolStripSeparator();
 
-            menu_CopyPath = new ToolStripMenuItem("Copy as path");
+            menu_CopyPath = new ToolStripMenuItem(Program.Lang.Strings.General.Copy_AsPath);
             menu_CopyPath.Click -= Menu_CopyPath_Click;
             menu_CopyPath.Click += Menu_CopyPath_Click;
 
-            menu_CopyURL = new ToolStripMenuItem("Copy URL");
+            menu_CopyURL = new ToolStripMenuItem(Program.Lang.Strings.General.Copy_URL);
             menu_CopyURL.Click -= Menu_CopyURL_Click;
             menu_CopyURL.Click += Menu_CopyURL_Click;
 
-            menu_Copy = new ToolStripMenuItem("Copy");
+            menu_Copy = new ToolStripMenuItem(Program.Lang.Strings.General.Copy);
             menu_Copy.Click -= Menu_Copy_Click;
             menu_Copy.Click += Menu_Copy_Click;
 
-            menu_Cut = new ToolStripMenuItem("Cut");
+            menu_Cut = new ToolStripMenuItem(Program.Lang.Strings.General.Cut);
             menu_Cut.Click -= Menu_Cut_Click;
             menu_Cut.Click += Menu_Cut_Click;
 
             separator_item_2 = new ToolStripSeparator();
 
-            menu_Delete = new ToolStripMenuItem("Delete");
+            menu_Delete = new ToolStripMenuItem(Program.Lang.Strings.General.Delete);
             menu_Delete.Click -= Menu_Delete_Click;
             menu_Delete.Click += Menu_Delete_Click;
 
-            menu_Rename = new ToolStripMenuItem("Rename");
+            menu_Rename = new ToolStripMenuItem(Program.Lang.Strings.General.Rename);
             menu_Rename.Click -= Menu_Rename_Click;
             menu_Rename.Click += Menu_Rename_Click;
 
@@ -1235,7 +1298,7 @@ namespace WinPaletter.GitHub
                                      : ext.Equals(".wptp", StringComparison.OrdinalIgnoreCase) ? ".wpth"
                                      : null;
 
-                    if (FilesOperationsLinking && linkedExt != null)
+                    if (linkedExt != null)
                     {
                         // Find linked item BEFORE any rename
                         ListViewItem linkedItem = FilesOperationsLinking ? _boundList.Items.Cast<ListViewItem>()
@@ -1245,19 +1308,17 @@ namespace WinPaletter.GitHub
                                 {
                                     string rcBase = Path.GetFileNameWithoutExtension(rc.Name);
                                     string rcExt = Path.GetExtension(rc.Name);
-                                    bool match = rcBase.Equals(oldBaseName, StringComparison.OrdinalIgnoreCase)
-                                                 && rcExt.Equals(linkedExt, StringComparison.OrdinalIgnoreCase);
+                                    bool match = rcBase.Equals(oldBaseName, StringComparison.OrdinalIgnoreCase) && rcExt.Equals(linkedExt, StringComparison.OrdinalIgnoreCase);
                                     if (match) return match;
                                 }
                                 return false;
                             }) : null;
 
-                        if (linkedItem is not null)
-                        {
-                            // Rename linked item after main item
-                            item.Text = newName;
-                            await RenameFile(item, parentDirPath, e);
+                        item.Text = newName;
+                        await RenameFile(item, parentDirPath, e);
 
+                        if (linkedItem is not null && newName != oldText && (Program.Settings.UsersServices.GitHub_AutoOperateOnLinkedFiles || Forms.GitHub_LinkedFilesConfirmation.ShowDialog(oldBaseName, newBaseName, GitHub_LinkedFilesConfirmation.Operation.Rename) == DialogResult.Yes))
+                        {
                             string linkedNewName = $"{newBaseName}{linkedExt}";
                             linkedItem.Text = linkedNewName;
                             await RenameFile(linkedItem, parentDirPath);
@@ -1423,7 +1484,7 @@ namespace WinPaletter.GitHub
 
         private static void Menu_Cut_Click(object sender, EventArgs e) => Init_Cut();
 
-        private static void Menu_Delete_Click(object sender, EventArgs e) => DeleteSelectedElementsAsync();
+        private static async void Menu_Delete_Click(object sender, EventArgs e) => await DeleteSelectedElementsAsync();
 
         private static void Menu_Rename_Click(object sender, EventArgs e) => _boundList.SelectedItems[0]?.BeginEdit();
 
@@ -1453,7 +1514,7 @@ namespace WinPaletter.GitHub
 
             if (!string.IsNullOrEmpty(selectedPath) && !Directory.Exists(selectedPath)) { Directory.CreateDirectory(selectedPath); }
 
-            await DownloadSelectedItemsAsync(selectedPath, cts);
+            await DownloadSelectedItemsAsync(selectedPath);
         }
 
         #endregion
@@ -1881,17 +1942,16 @@ namespace WinPaletter.GitHub
             }
         }
 
-        public static async void DeleteSelectedElementsAsync()
+        public static async Task DeleteSelectedElementsAsync()
         {
-            SelectedListViewItemCollection items = _boundList.SelectedItems;
-
+            var items = _boundList.SelectedItems;
             if (items == null || items.Count == 0) return;
 
             string initPath = GitHub.FileSystem.CurrentPath;
             string destDir = GitHub.FileSystem.NormalizePath(initPath);
 
             // Snapshot items (SelectedListViewItemCollection is not safe to mutate)
-            List<ListViewItem> snapshot = [.. items.Cast<ListViewItem>()];
+            List<ListViewItem> snapshot = items.Cast<ListViewItem>().ToList();
 
             try
             {
@@ -1901,67 +1961,79 @@ namespace WinPaletter.GitHub
                 // Get all files from snapshot
                 List<RepositoryContent> allFiles = [.. snapshot.Select(i => i.Tag as RepositoryContent).Where(rc => rc != null && rc.Type != ContentType.Dir)];
 
-                List<string> filePaths;
+                // --- Step 1: Include linked files if needed ---
+                if (FilesOperationsLinking)
+                {
+                    var allFileDict = _boundList.Items.Cast<ListViewItem>().Where(i => i.Tag is RepositoryContent rc && rc.Type != ContentType.Dir).ToDictionary(i => i.Text, i => i.Tag as RepositoryContent, StringComparer.OrdinalIgnoreCase);
 
+                    List<RepositoryContent> toAdd = [];
+
+                    foreach (var rc in allFiles)
+                    {
+                        string ext = Path.GetExtension(rc.Name).ToLowerInvariant();
+                        if (ext != ".wpth" && ext != ".wptp") continue;
+
+                        string baseName = Path.GetFileNameWithoutExtension(rc.Name);
+                        string linkedExt = ext == ".wpth" ? ".wptp" : ".wpth";
+                        string linkedName = baseName + linkedExt;
+
+                        if (allFileDict.TryGetValue(linkedName, out var linkedRc) && !allFiles.Contains(linkedRc))
+                        {
+                            // Ask user or auto-apply
+                            bool includeLinked = Program.Settings.UsersServices.GitHub_AutoOperateOnLinkedFiles || Forms.GitHub_LinkedFilesConfirmation.ShowDialog(baseName, GitHub_LinkedFilesConfirmation.Operation.Delete) == DialogResult.Yes;
+
+                            if (includeLinked) toAdd.Add(linkedRc);
+                        }
+                    }
+
+                    allFiles.AddRange(toAdd);
+                }
+
+                // --- Step 2: Ask for confirmation for files ---
+                List<string> filePaths = [];
                 if (allFiles.Count > 1)
                 {
-                    // Ask once for multiple files
-                    var totalSize = allFiles.Sum(rc => rc.Size);
-                    var result = Forms.GitHub_FileAction.ConfirmFilesDelete(allFiles.Count, totalSize);
-
-                    if (result == DialogResult.Yes)
-                    {
-                        filePaths = allFiles.Select(rc => rc.Path).ToList();
-                    }
-                    else
-                    {
-                        filePaths = [];
-                    }
+                    int totalSize = allFiles.Sum(rc => rc.Size);
+                    DialogResult result = Forms.GitHub_FileAction.ConfirmFilesDelete(allFiles.Count, totalSize);
+                    if (result == DialogResult.Yes) filePaths = allFiles.Select(rc => rc.Path).ToList();
                 }
                 else
                 {
-                    // Single file: ask normally
-                    filePaths = [.. allFiles
-                        .Where(rc =>
+                    foreach (var rc in allFiles)
+                    {
+                        var lvi = snapshot.FirstOrDefault(x => (x.Tag as RepositoryContent)?.Path == rc.Path);
+                        Bitmap icon = null;
+                        if (lvi != null && lvi.ImageKey != null && _boundList.LargeImageList.Images.ContainsKey(lvi.ImageKey))
+                            icon = _boundList.LargeImageList.Images[lvi.ImageKey] as Bitmap;
+
+                        if (Forms.GitHub_FileAction.ConfirmFileDelete(rc.Name, GitHub.FileSystem.FileTypeProvider?.Invoke(rc) ?? Program.Lang.Strings.Extensions.File, rc.Size, icon) == DialogResult.Yes)
                         {
-                            ListViewItem lvi = snapshot.FirstOrDefault(x => (x.Tag as RepositoryContent)?.Path == rc.Path);
-                            Bitmap icon = null;
-
-                            if (lvi != null && lvi.ImageKey != null && _boundList.LargeImageList.Images.ContainsKey(lvi.ImageKey))
-                                icon = _boundList.LargeImageList.Images[lvi.ImageKey] as Bitmap;
-
-                            return Forms.GitHub_FileAction.ConfirmFileDelete(rc.Name, GitHub.FileSystem.FileTypeProvider?.Invoke(rc) ?? Program.Lang.Strings.Extensions.File, rc.Size, icon) == DialogResult.Yes;
-                        }).Select(rc => rc.Path)];
+                            filePaths.Add(rc.Path);
+                        }
+                    }
                 }
 
-                // Get all directories from snapshot
+                // --- Step 3: Ask for confirmation for directories ---
                 List<RepositoryContent> allDirs = [.. snapshot.Select(i => i.Tag as RepositoryContent).Where(rc => rc != null && rc.Type == ContentType.Dir)];
 
-                List<string> dirPaths;
-
+                List<string> dirPaths = [];
                 if (allDirs.Count > 1)
                 {
-                    // Ask once for multiple directories
-                    var result = Forms.GitHub_FileAction.ConfirmFoldersDelete(allDirs.Count, allDirs.Sum(rc => FileSystem.Cache.GetSize(rc.Path)));
-
-                    if (result == DialogResult.Yes)
-                    {
-                        dirPaths = [.. allDirs.Select(rc => rc.Path)];
-                    }
-                    else
-                    {
-                        dirPaths = [];
-                    }
+                    DialogResult result = Forms.GitHub_FileAction.ConfirmFoldersDelete(allDirs.Count, allDirs.Sum(rc => FileSystem.Cache.GetSize(rc.Path)));
+                    if (result == DialogResult.Yes) dirPaths = allDirs.Select(rc => rc.Path).ToList();
                 }
                 else
                 {
-                    // Single directory: ask normally
-                    dirPaths = [.. allDirs.Where(rc => Forms.GitHub_FileAction.ConfirmFolderDelete(rc.Name, FileSystem.Cache.GetSize(rc.Path)) == DialogResult.Yes).Select(rc => rc.Path)];
+                    foreach (RepositoryContent rc in allDirs)
+                    {
+                        if (Forms.GitHub_FileAction.ConfirmFolderDelete(rc.Name, FileSystem.Cache.GetSize(rc.Path)) == DialogResult.Yes)  dirPaths.Add(rc.Path);
+                    }
                 }
 
+                // --- Step 4: Process deletion ---
                 async Task ProcessDeletionAsync(List<string> paths, bool isDirectory)
                 {
-                    if (paths.Count == 0) return;
+                    if (!paths.Any()) return;
 
                     Action<int> progressCallback = progress =>
                     {
@@ -1976,7 +2048,7 @@ namespace WinPaletter.GitHub
 
                     foreach (string path in paths)
                     {
-                        ListViewItem lvi = snapshot.FirstOrDefault(i => (i.Tag as RepositoryContent)?.Path == path);
+                        var lvi = snapshot.FirstOrDefault(i => (i.Tag as RepositoryContent)?.Path == path);
                         lvi?.Remove();
                     }
 
@@ -2006,9 +2078,9 @@ namespace WinPaletter.GitHub
             }
         }
 
-        public static async Task DownloadSelectedItemsAsync(string directory, CancellationTokenSource cts)
+        public static async Task DownloadSelectedItemsAsync(string directory)
         {
-            if (!Directory.Exists(directory))  return;
+            if (!Directory.Exists(directory)) return;
 
             var downloads_files = new List<(string url, string saveAs, long size, Bitmap icon)>();
 
@@ -2097,13 +2169,7 @@ namespace WinPaletter.GitHub
 
                 if (availableFiles.TryGetValue(pairedFileName, out var pairedRc) && !selectedFiles.Contains(pairedFileName))
                 {
-                    var result = FilesOperationsLinking ? MsgBox(
-                        "Paired File Detected",
-                        MessageBoxButtons.YesNo,
-                        MessageBoxIcon.Question,
-                        $"A paired file '{pairedFileName}' exists but is not selected.\nDo you want to add it to the download?") : DialogResult.No;
-
-                    if (result == DialogResult.Yes)
+                    if (FilesOperationsLinking && (Program.Settings.UsersServices.GitHub_AutoOperateOnLinkedFiles || Forms.GitHub_LinkedFilesConfirmation.ShowDialog(baseName, GitHub_LinkedFilesConfirmation.Operation.Download) == DialogResult.Yes))
                     {
                         selectedFiles.Add(pairedFileName);
 

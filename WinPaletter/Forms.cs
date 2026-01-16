@@ -159,6 +159,12 @@ namespace WinPaletter
         private static GitHub_FilesCompare _GitHub_FilesCompare;
 
         /// <summary>
+        /// Gets the instance of the form <see cref="GitHub_LinkedFilesConfirmation"/> for linked files confirmation.
+        /// </summary>
+        public static GitHub_LinkedFilesConfirmation GitHub_LinkedFilesConfirmation => Get(ref _GitHub_LinkedFilesConfirmation);
+        private static GitHub_LinkedFilesConfirmation _GitHub_LinkedFilesConfirmation;
+
+        /// <summary>
         /// Gets the instance of the form <see cref="GitHubMgrForm"/> to manage GitHub repositories and files.
         /// </summary>
         public static GitHubMgrForm GitHubMgrForm => Get(ref _GitHubMgrForm);
