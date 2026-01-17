@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using WinPaletter.Dialogs;
+using WinPaletter.GitHub;
 using WinPaletter.Tabs;
 
 namespace WinPaletter
@@ -135,10 +136,16 @@ namespace WinPaletter
         private static UserSwitch _UserSwitch;
 
         /// <summary>
-        /// Gets the instance of the form <see cref="GitHubLogin"/> to sign in to GitHub.
+        /// Gets the instance of the form <see cref="GitHub_Login"/> to sign in to GitHub.
         /// </summary>
-        public static GitHubLogin GitHubLogin => Get(ref _GitHubLogin);
-        private static GitHubLogin _GitHubLogin;
+        public static GitHub_Login GitHub_Login => Get(ref _GitHub_Login);
+        private static GitHub_Login _GitHub_Login;
+
+        /// <summary>
+        /// Gets the instance of the form <see cref="GitHub_ThemeUpload"/> to upload themes.
+        /// </summary>
+        public static GitHub_ThemeUpload GitHub_ThemeUpload => Get(ref _GitHub_ThemeUpload);
+        private static GitHub_ThemeUpload _GitHub_ThemeUpload;
 
         /// <summary>
         /// Gets the instance of the form <see cref="GitHub_FileAction"/> to perform actions on a GitHub file.
@@ -165,10 +172,10 @@ namespace WinPaletter
         private static GitHub_LinkedFilesConfirmation _GitHub_LinkedFilesConfirmation;
 
         /// <summary>
-        /// Gets the instance of the form <see cref="GitHubMgrForm"/> to manage GitHub repositories and files.
+        /// Gets the instance of the form <see cref="GitHub_Mgr"/> to manage GitHub repositories and files.
         /// </summary>
-        public static GitHubMgrForm GitHubMgrForm => Get(ref _GitHubMgrForm);
-        private static GitHubMgrForm _GitHubMgrForm;
+        public static GitHub_Mgr GitHub_Mgr => Get(ref _GitHub_Mgr);
+        private static GitHub_Mgr _GitHub_Mgr;
 
         /// <summary>
         /// Gets the instance of the form <see cref="ArgsHelp"/> to show the arguments help.

@@ -570,7 +570,7 @@ namespace WinPaletter.GitHub
                             {
                                 if (!_boundList.SmallImageList.Images.ContainsKey(ext))
                                 {
-                                    using (Icon ico = NativeMethods.Shell32.GetIconFromExtension(ext, true))
+                                    using (Icon ico = NativeMethods.Shell32.GetIconFromExtension(ext, NativeMethods.Shell32.IconSize.Small))
                                     using (Icon ico_resized = ico?.FromSize(16))
                                     using (Bitmap bmp = ico_resized?.ToBitmap())
                                     {
@@ -1051,6 +1051,8 @@ namespace WinPaletter.GitHub
                 DropDown = new UI.WP.ContextMenuStrip() { ShowImageMargin = true }
             };
             menu_newItem.DropDown.Items.AddRange([menu_newFolder, menu_newTheme]);
+            menu_newTheme.Click -= Menu_newTheme_Click;
+            menu_newTheme.Click += Menu_newTheme_Click;
 
             menu_properties = new ToolStripMenuItem(Program.Lang.Strings.GitHubStrings.Explorer_Properties);
 
@@ -1381,7 +1383,7 @@ namespace WinPaletter.GitHub
             else if (e.KeyCode == Keys.Delete)
             {
                 // Delete selected file or directory
-                DeleteSelectedElementsAsync();
+                await DeleteSelectedElementsAsync();
             }
             else if (e.KeyCode == Keys.F5)
             {
@@ -1449,7 +1451,7 @@ namespace WinPaletter.GitHub
 
             (string label, Bitmap icon, Bitmap glyph, View view) viewData = ((string label, Bitmap icon, Bitmap glyph, View view))item.Tag;
             _boundList.View = viewData.view;
-            Forms.GitHubMgrForm.UpdateViewButton(viewData);
+            Forms.GitHub_Mgr.UpdateViewButton(viewData);
             item.Checked = true;
         }
 
@@ -1515,6 +1517,11 @@ namespace WinPaletter.GitHub
             if (!string.IsNullOrEmpty(selectedPath) && !Directory.Exists(selectedPath)) { Directory.CreateDirectory(selectedPath); }
 
             await DownloadSelectedItemsAsync(selectedPath);
+        }
+
+        private static void Menu_newTheme_Click(object sender, EventArgs e)
+        {
+            Forms.GitHub_ThemeUpload.ShowDialog();
         }
 
         #endregion
@@ -1828,6 +1835,15 @@ namespace WinPaletter.GitHub
                     _boundbreadcrumbControl.Value = 0;
                     _boundbreadcrumbControl.StartMarquee();
 
+                    // Add initial placeholder items
+                    List<ListViewItem> placeholderItems = [];
+                    foreach (ListViewItem item in items)
+                    {
+                        ListViewItem fakeItem = new() { Text = item.Text, Tag = null, ImageKey = item.ImageKey };
+                        placeholderItems.Add(fakeItem);
+                        _boundList?.Items.Add(fakeItem);
+                    }
+
                     // Separate files and directories
                     string[] filePaths = [.. items.Select(i => i.Tag as RepositoryContent).Where(rc => rc != null && rc.Type == ContentType.File).Select(rc => rc.Path)];
                     string[] dirPaths = [.. items.Select(i => i.Tag as RepositoryContent).Where(rc => rc != null && rc.Type == ContentType.Dir).Select(rc => rc.Path)];
@@ -1896,6 +1912,9 @@ namespace WinPaletter.GitHub
                         if (!isCopy) item.Remove();
                     }
 
+                    // Remove placeholders that remain
+                    foreach (var ph in placeholderItems.Where(p => p.Tag == null).ToList()) ph.Remove();
+
                     _boundbreadcrumbControl.StopMarquee();
                 }
 
@@ -1903,10 +1922,8 @@ namespace WinPaletter.GitHub
                 if ((copiedItems?.Count ?? 0) > 0) await ProcessItemsAsync(copiedItems, isCopy: true);
 
                 // Process cut items
-                if ((cutItems?.Count ?? 0) > 0)
-                {
-                    await ProcessItemsAsync(cutItems, isCopy: false);
-                }
+                if ((cutItems?.Count ?? 0) > 0) await ProcessItemsAsync(cutItems, isCopy: false);
+
 
                 if (initPath.Equals(FileSystem.CurrentPath, StringComparison.OrdinalIgnoreCase))
                 {
@@ -1988,8 +2005,8 @@ namespace WinPaletter.GitHub
                 _boundbreadcrumbControl.Value = 0;
                 _boundbreadcrumbControl.StartMarquee();
 
-                // Get all files from snapshot
-                List<RepositoryContent> allFiles = [.. snapshot.Select(i => i.Tag as RepositoryContent).Where(rc => rc != null && rc.Type != ContentType.Dir)];
+                // Get all files from snapshot, skip .gitkeep
+                List<RepositoryContent> allFiles = [.. snapshot.Select(i => i.Tag as RepositoryContent).Where(rc => rc != null && rc.Type != ContentType.Dir && !rc.Name.Equals(".gitkeep", StringComparison.OrdinalIgnoreCase))];
 
                 // --- Step 1: Include linked files if needed ---
                 if (FilesOperationsLinking)
@@ -2083,6 +2100,13 @@ namespace WinPaletter.GitHub
                     }
 
                     if (isDirectory) GitHub.FileSystem.UpdateTreeNode(GitHub.FileSystem.CurrentPath, true);
+                }
+
+                foreach (ListViewItem itemToDel in _boundList.SelectedItems.Cast<ListViewItem>().ToArray())
+                {
+                    if (itemToDel.Tag is RepositoryContent rc && rc.Name.Equals(".gitkeep", StringComparison.OrdinalIgnoreCase)) continue; // skip .gitkeep
+
+                    itemToDel.Remove();
                 }
 
                 if (filePaths.Count > 0) await ProcessDeletionAsync(filePaths, false);
@@ -2491,7 +2515,7 @@ namespace WinPaletter.GitHub
                             {
                                 if (!_boundList.SmallImageList.Images.ContainsKey(ext))
                                 {
-                                    using (Icon ico = NativeMethods.Shell32.GetIconFromExtension(ext, true))
+                                    using (Icon ico = NativeMethods.Shell32.GetIconFromExtension(ext, NativeMethods.Shell32.IconSize.Small))
                                     using (Icon ico_resized = ico?.FromSize(16))
                                     using (Bitmap bmp = ico_resized?.ToBitmap())
                                     {

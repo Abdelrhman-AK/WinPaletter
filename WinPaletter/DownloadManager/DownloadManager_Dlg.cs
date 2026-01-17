@@ -96,7 +96,7 @@ namespace WinPaletter
                 item.SubItems.Add(0.ToStringFileSize());
                 item.SubItems.Add(finalSize.ToStringFileSize());
 
-                using (Icon ico = icon != null ? null : NativeMethods.Shell32.GetIconFromExtension(Path.GetExtension(saveAs), true))
+                using (Icon ico = icon != null ? null : NativeMethods.Shell32.GetIconFromExtension(Path.GetExtension(saveAs), NativeMethods.Shell32.IconSize.Small))
                 {
                     item.Tag = new FileState
                     {

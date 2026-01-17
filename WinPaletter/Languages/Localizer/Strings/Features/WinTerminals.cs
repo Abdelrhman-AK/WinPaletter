@@ -18,7 +18,7 @@
                     public string ThemeNotCloneable { get; set; } = @"Default themes (Dark\Light\System) are not cloneable. Please select a different theme or create a new theme if you want to clone.";
                     public string TypeSchemeName { get; set; } = "Type the theme name here:";
                     public string EmptyError { get; set; } = "The terminal name can't be empty. Please enter a valid one.";
-                    public string NotExist { get; set; } = "The terminal doesn't exist. Please enter a valid one.";
+                    public string NotExist { get; set; } = "The terminal does not exist. Please enter a valid one.";
                     public string Reserved { get; set; } = "This terminal is reserved for the system. Please try again with another one.";
                     public string Exists { get; set; } = "This terminal already exists. Please try again with another one.";
                     public string ConsoleSample { get; set; } = "Console sample";

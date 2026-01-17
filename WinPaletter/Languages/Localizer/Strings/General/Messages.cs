@@ -10,7 +10,11 @@
                 public string SettingsSaved { get; set; } = "Settings are saved";
                 public string Bug_NoReport { get; set; } = "There are no saved reports located in '{0}'";
                 public string InvalidTheme { get; set; } = "Error: Invalid theme file.";
-                public string SettingsFileNotExist { get; set; } = "Settings file doesn't exist.";
+                public string ThemeFileNotExist { get; set; } = "Theme file does not exist.";
+                public string ThemesDirectoryNotExist { get; set; } = "Directory containing themes files does not exist.";
+                public string NoValidThemesFound { get; set; } = "No valid themes were found in the specified directory.";
+                public string ThemeResPackNotExist { get; set; } = "Theme resources pack file does not exist.";
+                public string SettingsFileNotExist { get; set; } = "Settings file does not exist.";
                 public string SettingsFileNotJSON { get; set; } = "This settings file is not a valid JSON.";
                 public string AltTab_Unsupported { get; set; } = "Windows Switcher isn't supported in {0} as it is a classic switcher that can't be changed by registry. Change the preview to another OS and try again.";
                 public string VistaLogonNotSupported { get; set; } = "Editing Windows Vista LogonUI with the registry is not supported. Change the preview to another OS and try again.";
@@ -50,7 +54,7 @@
                 public string SecureUxTheme_Uninstalled { get; set; } = "SecureUxTheme has been uninstalled successfully.";
                 public string SecureUxTheme_Restart { get; set; } = "Please restart your Windows to apply the changes.";
                 public string SecureUxThemeNotInstalled0 { get; set; } = "SecureUxTheme is not installed. Please use the official tool from its GitHub repository instead.";
-                public string SecureUxThemeNotInstalled1 { get; set; } = "If it still doesn't work, please visit SecureUxTheme's GitHub repository and follow the instructions provided there. Alternatively, you can report any issues directly in the SecureUxTheme repository, rather than the WinPaletter repository.";
+                public string SecureUxThemeNotInstalled1 { get; set; } = "If it still does not work, please visit SecureUxTheme's GitHub repository and follow the instructions provided there. Alternatively, you can report any issues directly in the SecureUxTheme repository, rather than the WinPaletter repository.";
                 public string Win12_Preview_Msg0 { get; set; } = "Windows 12 is not fully supported yet. WinPaletter will treat it as Windows 11 until Windows 12 is officially released.";
                 public string Win12_Preview_Msg1 { get; set; } = "The main reason is that WinPaletter may not be maintained when Windows 12 is released.";
                 public string OpenTabs_Close { get; set; } = "There are open forms in tabs. Do you want to exit WinPaletter anyway?";

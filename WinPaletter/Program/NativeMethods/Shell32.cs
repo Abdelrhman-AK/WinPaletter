@@ -6,6 +6,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Web;
+using static WinPaletter.NativeMethods.UxTheme;
 
 namespace WinPaletter.NativeMethods
 {
@@ -93,12 +94,8 @@ namespace WinPaletter.NativeMethods
         [DllImport("shell32.dll", SetLastError = false)]
         public static extern int SHGetStockIconInfo(SHSTOCKICONID siid, SHGSI uFlags, ref SHSTOCKICONINFO psii);
 
-        private const uint SHGFI_TYPENAME = 0x000000400;
-        private const uint SHGFI_USEFILEATTRIBUTES = 0x000000010;
-        private const uint SHGFI_ICON = 0x000000100;
-        private const uint FILE_ATTRIBUTE_NORMAL = 0x00000080;
-        private const uint SHGFI_SMALLICON = 0x000000001;
-        private const uint SHGFI_LARGEICON = 0x000000000;
+        [DllImport("shell32.dll")]
+        public static extern int SHGetImageList(int iImageList, ref Guid riid, out IImageList ppv);
 
         [StructLayout(LayoutKind.Sequential)]
         struct SHFILEINFO
@@ -152,24 +149,6 @@ namespace WinPaletter.NativeMethods
             }
 
             return !string.IsNullOrEmpty(description) ? description : $"{extension} {Program.Lang.Strings.Extensions.File}";
-        }
-
-        /// <summary>
-        /// Extracts the icon from Windows system, provided by extension
-        /// </summary>
-        /// <param name="extension"></param>
-        /// <param name="small"></param>
-        /// <returns></returns>
-        public static Icon GetIconFromExtension(string extension, bool smallIcons = false)
-        {
-            if (string.IsNullOrEmpty(extension)) return null;
-            if (!extension.StartsWith(".")) extension = "." + extension;
-
-            SHFILEINFO info;
-
-            SHGetFileInfo(extension, FILE_ATTRIBUTE_NORMAL, out info, (uint)Marshal.SizeOf(typeof(SHFILEINFO)), SHGFI_ICON | SHGFI_USEFILEATTRIBUTES | (smallIcons ? SHGFI_SMALLICON : SHGFI_LARGEICON));
-
-            return Icon.FromHandle(info.hIcon);
         }
 
         /// <summary>
@@ -716,6 +695,106 @@ namespace WinPaletter.NativeMethods
             /// Identifier list flag used in shell notifications.
             /// </summary>
             public const int SHCNF_IDLIST = 0;
+        }
+
+        private const uint SHGFI_SYSICONINDEX = 0x00004000;
+        private const uint SHGFI_USEFILEATTRIBUTES = 0x00000010;
+        private const uint FILE_ATTRIBUTE_NORMAL = 0x00000080;
+
+        private const uint SHGFI_SMALLICON = 0x00000001;
+        private const uint SHGFI_LARGEICON = 0x00000000;
+        private const uint SHGFI_ICON = 0x000000100;
+
+        private const int SHIL_SMALL = 0;
+        private const int SHIL_LARGE = 1;
+        private const int SHIL_EXTRALARGE = 2;
+        private const int SHIL_JUMBO = 4;
+
+        private static readonly Guid IID_IImageList = new("46EB5926-582E-4017-9FDF-E8998DAA0950");
+
+        [ComImport]
+        [Guid("46EB5926-582E-4017-9FDF-E8998DAA0950")]
+        [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+        public interface IImageList
+        {
+            int Add(IntPtr hbmImage, IntPtr hbmMask, out int pi);
+            int ReplaceIcon(int i, IntPtr hicon, out int pi);
+            int SetOverlayImage(int iImage, int iOverlay);
+            int Replace(int i, IntPtr hbmImage, IntPtr hbmMask);
+            int AddMasked(IntPtr hbmImage, uint crMask, out int pi);
+            int Draw(ref IMAGELISTDRAWPARAMS pimldp);
+            int Remove(int i);
+            int GetIcon(int i, int flags, out IntPtr picon);
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct IMAGELISTDRAWPARAMS
+        {
+            public int cbSize;
+            public IntPtr himl;
+            public int i;
+            public IntPtr hdcDst;
+            public int x;
+            public int y;
+            public int cx;
+            public int cy;
+            public int xBitmap;
+            public int yBitmap;
+            public uint rgbBk;
+            public uint rgbFg;
+            public uint fStyle;
+            public uint dwRop;
+            public uint fState;
+            public uint Frame;
+            public uint crEffect;
+        }
+
+        public enum IconSize
+        {
+            Small,
+            Large,
+            ExtraLarge,
+            Jumbo
+        }
+
+        public static Icon GetIconFromExtension(string extension, IconSize iconSize = IconSize.ExtraLarge)
+        {
+            if (string.IsNullOrWhiteSpace(extension)) return null;
+            if (!extension.StartsWith(".")) extension = "." + extension;
+
+            // SHGetFileInfo is STILL the correct API for small icons
+            if (iconSize == IconSize.Small)
+            {
+                SHFILEINFO sfi;
+                SHGetFileInfo(extension, FILE_ATTRIBUTE_NORMAL, out sfi, (uint)Marshal.SizeOf(typeof(SHFILEINFO)), SHGFI_ICON | SHGFI_USEFILEATTRIBUTES | SHGFI_SMALLICON);
+
+                if (sfi.hIcon == IntPtr.Zero) return null;
+
+                Icon small = (Icon)Icon.FromHandle(sfi.hIcon).Clone();
+                DestroyIcon(sfi.hIcon);
+                return small;
+            }
+
+            // Shell image list is REQUIRED for real large icons
+            SHFILEINFO info;
+            SHGetFileInfo(extension, FILE_ATTRIBUTE_NORMAL, out info, (uint)Marshal.SizeOf(typeof(SHFILEINFO)), SHGFI_SYSICONINDEX | SHGFI_USEFILEATTRIBUTES);
+
+            int size = iconSize switch
+            {
+                IconSize.Large => SHIL_LARGE,
+                IconSize.ExtraLarge => SHIL_EXTRALARGE,
+                IconSize.Jumbo => SHIL_JUMBO,
+                _ => SHIL_EXTRALARGE,
+            };
+
+            Guid iid = typeof(IImageList).GUID;
+            SHGetImageList(size, ref iid, out IImageList list);
+
+            list.GetIcon(info.iIcon, 0, out IntPtr hIcon);
+
+            Icon large = (Icon)Icon.FromHandle(hIcon).Clone();
+            DestroyIcon(hIcon);
+            return large;
         }
     }
 }

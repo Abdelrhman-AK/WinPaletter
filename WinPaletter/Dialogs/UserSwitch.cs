@@ -12,6 +12,9 @@ namespace WinPaletter
 {
     public partial class UserSwitch : Form
     {
+        private bool shown = false;
+        private Dictionary<string, string> _UsersList = [];
+
         public UserSwitch()
         {
             InitializeComponent();
@@ -24,23 +27,19 @@ namespace WinPaletter
             shown = true;
         }
 
-        private bool shown = false;
-        private Dictionary<string, string> _UsersList = [];
-
         private void UserSwitch_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (User.SID == null) User.SID = User.AdminSID_GrantedUAC;
-
+            User.SID ??= User.AdminSID_GrantedUAC;
             Forms.GlassWindow.Close();
         }
 
         private async void UserSwitch_Load(object sender, EventArgs e)
         {
-            await UpdateGitHubLoginData();
-
             shown = false;
-            this.LoadLanguage();
+
             ApplyStyle(this);
+            this.LoadLanguage();
+
             checkBox1.Checked = false;
             CheckForIllegalCrossThreadCalls = false;
 
@@ -48,6 +47,8 @@ namespace WinPaletter
 
             Forms.GlassWindow.ShowWithGlassFocusedOnParent(Forms.MainForm);
             BringToFront();
+
+            await UpdateGitHubLoginData();
         }
 
         private async void GitHub_OnSignedOut(User.GitHubUserChangeEventArgs e)
@@ -248,7 +249,7 @@ namespace WinPaletter
             }
             else
             {
-                Forms.GitHubLogin.ShowDialog();
+                Forms.GitHub_Login.ShowDialog();
             }
         }
     }

@@ -22,7 +22,7 @@ namespace WinPaletter
                 Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"A new directory has been created: {SysPaths.appData}");
             }
 
-            // Write uninstaller icon to application data folder if it doesn't exist or changed
+            // Write uninstaller icon to application data folder if it does not exist or changed
             WriteIfChangedOrNotExists($"{SysPaths.appData}\\uninstall.ico", Resources.Icon_Uninstall.ToBytes());
 
             WriteReg(RegPath, "DisplayName", "WinPaletter", RegistryValueKind.String);

@@ -711,7 +711,7 @@ namespace WinPaletter
             public long BytesReceived { get; } = bytesDownloaded;
 
             /// <summary>
-            /// Total bytes to receive. It could be zero if the server doesn't return the content length.
+            /// Total bytes to receive. It could be zero if the server does not return the content length.
             /// </summary>
             public long TotalBytesToReceive { get; } = totalBytes;
 

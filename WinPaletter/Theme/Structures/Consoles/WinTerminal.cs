@@ -660,7 +660,7 @@ namespace WinPaletter.Theme.Structures
                     // Remove unsupported characters
                     hexColor = Regex.Replace(hexColor, "[，、]", ",");
 
-                    // Replace spaces with commas if exist as ColorTranslator.FromHtml doesn't support spaces
+                    // Replace spaces with commas if exist as ColorTranslator.FromHtml does not support spaces
                     if (hexColor.Contains(" ") && !hexColor.Contains(",")) hexColor = hexColor.Replace(" ", ", ");
 
                     // Check if the color is HEX or RGB/ARGB format

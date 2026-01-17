@@ -14,20 +14,21 @@ using WinPaletter.GitHub;
 
 namespace WinPaletter
 {
-    public partial class GitHubMgrForm : Form
+    public partial class GitHub_Mgr : Form
     {
         sealed class PendingBranch
         {
             public string BaseBranch { get; set; } = "main";
         }
 
-        public GitHubMgrForm()
+        public GitHub_Mgr()
         {
             InitializeComponent();
         }
 
         Octokit.Repository repo;
         Branch upstreamBranch;
+        public ActionQueue actionQueue = new();
 
         private async void GitHubManager_Load(object sender, EventArgs e)
         {
@@ -43,6 +44,8 @@ namespace WinPaletter
             label8.Text = forked ? Program.Lang.Strings.GitHubStrings.ExplorerStatus_Forked : $"{Program.Lang.Strings.GitHubStrings.ExplorerStatus_NotForked} {Program.Lang.Strings.GitHubStrings.ExplorerStatus_SyncAndForkToManage}";
             groupBox6.Enabled = forked;
             tablessControl2.SelectedIndex = 0;
+            groupBox4.UseSharpStyle = true;
+            groupBox1.UseSharpStyle = true;
 
             if (forked)
             {
@@ -876,15 +879,7 @@ Generated automatically by WinPaletter.";
 
         private void btn_new_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new())
-            {
-                dlg.Filter = "*.*|*.*";
-                dlg.Multiselect = true;
-                if (dlg.ShowDialog() == DialogResult.OK)
-                {
-                    FileSystem.Upload(dlg.FileName);
-                }
-            }
+            Forms.GitHub_ThemeUpload.ShowDialog();
         }
     }
 }

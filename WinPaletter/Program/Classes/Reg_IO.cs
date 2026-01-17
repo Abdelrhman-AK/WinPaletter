@@ -673,7 +673,7 @@ namespace WinPaletter
             // If the value is null, set it to string.Empty to avoid errors.
             if (RegType == RegistryValueKind.String & Value is null) Value = string.Empty;
 
-            // Create the key if it doesn't exist.
+            // Create the key if it does not exist.
             try
             {
                 using (RegistryKey subKey = R.OpenSubKey(Key, RegistryKeyPermissionCheck.ReadWriteSubTree))
@@ -1744,7 +1744,7 @@ namespace WinPaletter
             }
             else
             {
-                Program.Log?.Write(LogEventLevel.Error, $"The file doesn't exist: {File}, so the ownership can't be taken.");
+                Program.Log?.Write(LogEventLevel.Error, $"The file does not exist: {File}, so the ownership can't be taken.");
             }
         }
 

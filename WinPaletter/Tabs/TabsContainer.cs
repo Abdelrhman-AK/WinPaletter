@@ -1338,7 +1338,7 @@ namespace WinPaletter.Tabs
                             {
                                 Color lineColor = Program.Style.DarkMode ? Color.White : Color.Black;
 
-                                // Draw a line around the tab to fix appearance issue that doesn't fit Windows style
+                                // Draw a line around the tab to fix appearance issue that does not fit Windows style
                                 using (Pen Px = new(Color.FromArgb(OS.W8x ? 50 : 150, lineColor)))
                                 {
                                     G.ExcludeClip(new Rectangle(rect.X, rect.Y + rect.Height - 1, rect.Width + 1, 1));

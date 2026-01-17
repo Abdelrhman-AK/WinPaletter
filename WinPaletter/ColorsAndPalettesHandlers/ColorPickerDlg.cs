@@ -301,7 +301,7 @@ namespace WinPaletter
                                 foreach (string prop in entry.Value)
                                 {
                                     try { entry.Key.SetProperty(prop ?? "BackColor", CCP.Color); }
-                                    catch { } // Ignore setting BackColor in a control that doesn't have BackColor property
+                                    catch { } // Ignore setting BackColor in a control that does not have BackColor property
                                 }
                             }
 
@@ -315,7 +315,7 @@ namespace WinPaletter
                                 foreach (string prop in entry.Value)
                                 {
                                     try { entry.Key.SetProperty(prop ?? "BackColor", c); }
-                                    catch { } // Ignore setting BackColor in a control that doesn't have BackColor property
+                                    catch { } // Ignore setting BackColor in a control that does not have BackColor property
                                 }
                             }
 

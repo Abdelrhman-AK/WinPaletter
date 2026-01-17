@@ -843,7 +843,7 @@ namespace WinPaletter
 
         private void button15_Click(object sender, EventArgs e)
         {
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.GitHubMgrForm);
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.GitHub_Mgr);
         }
 
         private void pin_button_Click(object sender, EventArgs e)

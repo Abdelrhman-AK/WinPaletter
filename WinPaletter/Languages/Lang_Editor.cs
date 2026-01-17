@@ -630,7 +630,7 @@ namespace WinPaletter
                     }
                     else
                     {
-                        // Create nested object if it doesn't exist
+                        // Create nested object if it does not exist
                         if (currentToken[component] == null || currentToken[component] is not JObject)
                         {
                             currentToken[component] = new JObject();

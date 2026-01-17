@@ -682,7 +682,7 @@ namespace WinPaletter
 
                 string fileName = theme.FileName;
 
-                // Download the theme file if it doesn't exist or if MD5 mismatch occurs
+                // Download the theme file if it does not exist or if MD5 mismatch occurs
                 DownloadThemeFile(theme);
 
                 // Create StoreItem if the theme is valid and of correct format
@@ -822,7 +822,7 @@ namespace WinPaletter
                 // If the theme file exists, check its MD5 hash
                 if ((Program.CalculateMD5(theme.FullPath) ?? string.Empty) != theme.MD5_ThemeFile)
                 {
-                    File.Delete(theme.FullPath); // Delete the old file if MD5 doesn't match
+                    File.Delete(theme.FullPath); // Delete the old file if MD5 does not match
                     Program.Log?.Write(Serilog.Events.LogEventLevel.Information, string.Format(Program.Lang.Strings.Store.UpdateTheme, theme.FileName, theme.URL_ThemeFile));
                     Download(theme);
                 }
@@ -1104,7 +1104,7 @@ namespace WinPaletter
 
                     themeSize_lbl.Text = new FileInfo(selectedItem.FileName).Length.ToStringFileSize();
 
-                    // Get if there is a pack file and its size to be calculated in a separate thread to make loading faster and doesn't freeze the UI
+                    // Get if there is a pack file and its size to be calculated in a separate thread to make loading faster and does not freeze the UI
                     if (!string.IsNullOrWhiteSpace(selectedItem.MD5_PackFile) && selectedItem.MD5_PackFile != "0")
                     {
                         Task.Run(() =>

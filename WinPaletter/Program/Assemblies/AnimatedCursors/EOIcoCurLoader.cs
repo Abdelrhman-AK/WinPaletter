@@ -144,7 +144,7 @@ public class EOIcoCurLoader
         if (!icoCurStream.CanRead)
         {
             throw new ArgumentException(
-                "Cannot initialize EOIcoCurLoader with a stream that doesn't support reading");
+                "Cannot initialize EOIcoCurLoader with a stream that does not support reading");
         }
 
         // Create a binary reader for the stream

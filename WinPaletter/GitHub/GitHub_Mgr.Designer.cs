@@ -1,6 +1,6 @@
 ﻿namespace WinPaletter
 {
-    partial class GitHubMgrForm
+    partial class GitHub_Mgr
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GitHubMgrForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GitHub_Mgr));
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.tablessControl1 = new WinPaletter.UI.WP.TablessControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -84,6 +84,10 @@
             this.label8 = new System.Windows.Forms.Label();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.treeView1 = new WinPaletter.UI.WP.TreeView();
+            this.separatorV1 = new WinPaletter.UI.WP.SeparatorV();
+            this.listView1 = new WinPaletter.UI.WP.ListView();
             this.groupBox4 = new WinPaletter.UI.WP.GroupBox();
             this.btn_download = new WinPaletter.UI.WP.Button();
             this.label14 = new System.Windows.Forms.Label();
@@ -103,11 +107,6 @@
             this.button1 = new WinPaletter.UI.WP.Button();
             this.status_lbl = new System.Windows.Forms.Label();
             this.button13 = new WinPaletter.UI.WP.Button();
-            this.groupBox2 = new WinPaletter.UI.WP.GroupBox();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.treeView1 = new WinPaletter.UI.WP.TreeView();
-            this.separatorV1 = new WinPaletter.UI.WP.SeparatorV();
-            this.listView1 = new WinPaletter.UI.WP.ListView();
             this.titlebarExtender1 = new WinPaletter.Tabs.TitlebarExtender();
             this.explorer_controls = new System.Windows.Forms.Panel();
             this.textBox1 = new WinPaletter.UI.WP.TextBox();
@@ -136,13 +135,12 @@
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.tabPage4.SuspendLayout();
-            this.groupBox4.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.titlebarExtender1.SuspendLayout();
             this.explorer_controls.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -909,20 +907,79 @@
             // tabPage4
             // 
             this.tabPage4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.tabPage4.Controls.Add(this.splitContainer1);
             this.tabPage4.Controls.Add(this.groupBox4);
             this.tabPage4.Controls.Add(this.groupBox1);
-            this.tabPage4.Controls.Add(this.groupBox2);
             this.tabPage4.Location = new System.Drawing.Point(4, 24);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage4.Size = new System.Drawing.Size(994, 601);
             this.tabPage4.TabIndex = 1;
             this.tabPage4.Text = "1";
             // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer1.Location = new System.Drawing.Point(-1, 44);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.treeView1);
+            this.splitContainer1.Panel1.Controls.Add(this.separatorV1);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.listView1);
+            this.splitContainer1.Size = new System.Drawing.Size(995, 522);
+            this.splitContainer1.SplitterDistance = 178;
+            this.splitContainer1.TabIndex = 1;
+            // 
+            // treeView1
+            // 
+            this.treeView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeView1.FullRowSelect = true;
+            this.treeView1.ItemHeight = 24;
+            this.treeView1.Location = new System.Drawing.Point(0, 0);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.ShowLines = false;
+            this.treeView1.ShowRootLines = false;
+            this.treeView1.Size = new System.Drawing.Size(177, 522);
+            this.treeView1.TabIndex = 0;
+            // 
+            // separatorV1
+            // 
+            this.separatorV1.AlternativeLook = false;
+            this.separatorV1.BackColor = System.Drawing.Color.Transparent;
+            this.separatorV1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.separatorV1.Location = new System.Drawing.Point(177, 0);
+            this.separatorV1.Name = "separatorV1";
+            this.separatorV1.Size = new System.Drawing.Size(1, 522);
+            this.separatorV1.TabIndex = 1;
+            this.separatorV1.TabStop = false;
+            this.separatorV1.Text = "separatorV1";
+            // 
+            // listView1
+            // 
+            this.listView1.AllowColumnReorder = true;
+            this.listView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listView1.FullRowSelect = true;
+            this.listView1.HideSelection = false;
+            this.listView1.LabelEdit = true;
+            this.listView1.Location = new System.Drawing.Point(0, 0);
+            this.listView1.Name = "listView1";
+            this.listView1.RowHeight = 24;
+            this.listView1.Size = new System.Drawing.Size(813, 522);
+            this.listView1.TabIndex = 0;
+            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listView1.View = System.Windows.Forms.View.Details;
+            // 
             // groupBox4
             // 
-            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox4.BackColor = System.Drawing.Color.Transparent;
             this.groupBox4.Controls.Add(this.btn_download);
             this.groupBox4.Controls.Add(this.label14);
@@ -938,11 +995,12 @@
             this.groupBox4.Controls.Add(this.label9);
             this.groupBox4.Controls.Add(this.toggle1);
             this.groupBox4.Controls.Add(this.button7);
-            this.groupBox4.Location = new System.Drawing.Point(6, 6);
+            this.groupBox4.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox4.Location = new System.Drawing.Point(0, 0);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(980, 38);
+            this.groupBox4.Size = new System.Drawing.Size(994, 38);
             this.groupBox4.TabIndex = 1;
-            this.groupBox4.UseDecorationPattern = false;
+            this.groupBox4.UseDecorationPattern = true;
             this.groupBox4.UseSharpStyle = false;
             // 
             // btn_download
@@ -955,7 +1013,7 @@
             this.btn_download.Image = null;
             this.btn_download.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Down;
             this.btn_download.ImageGlyphEnabled = true;
-            this.btn_download.Location = new System.Drawing.Point(44, 6);
+            this.btn_download.Location = new System.Drawing.Point(46, 6);
             this.btn_download.Name = "btn_download";
             this.btn_download.Size = new System.Drawing.Size(31, 26);
             this.btn_download.TabIndex = 24;
@@ -968,7 +1026,7 @@
             this.label14.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label14.BackColor = System.Drawing.Color.Transparent;
             this.label14.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(592, 9);
+            this.label14.Location = new System.Drawing.Point(606, 9);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(174, 20);
             this.label14.TabIndex = 23;
@@ -980,7 +1038,7 @@
             this.toggle2.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.toggle2.Checked = true;
             this.toggle2.DarkLight_Toggler = false;
-            this.toggle2.Location = new System.Drawing.Point(772, 9);
+            this.toggle2.Location = new System.Drawing.Point(786, 9);
             this.toggle2.Name = "toggle2";
             this.toggle2.Size = new System.Drawing.Size(40, 20);
             this.toggle2.TabIndex = 22;
@@ -991,7 +1049,7 @@
             this.separatorV4.AlternativeLook = false;
             this.separatorV4.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.separatorV4.BackColor = System.Drawing.Color.Transparent;
-            this.separatorV4.Location = new System.Drawing.Point(266, 6);
+            this.separatorV4.Location = new System.Drawing.Point(268, 6);
             this.separatorV4.Name = "separatorV4";
             this.separatorV4.Size = new System.Drawing.Size(1, 26);
             this.separatorV4.TabIndex = 21;
@@ -1008,7 +1066,7 @@
             this.btn_rename.Image = null;
             this.btn_rename.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Rename;
             this.btn_rename.ImageGlyphEnabled = true;
-            this.btn_rename.Location = new System.Drawing.Point(192, 6);
+            this.btn_rename.Location = new System.Drawing.Point(194, 6);
             this.btn_rename.Name = "btn_rename";
             this.btn_rename.Size = new System.Drawing.Size(31, 26);
             this.btn_rename.TabIndex = 4;
@@ -1026,7 +1084,7 @@
             this.btn_delete.Image = null;
             this.btn_delete.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Delete;
             this.btn_delete.ImageGlyphEnabled = true;
-            this.btn_delete.Location = new System.Drawing.Point(229, 6);
+            this.btn_delete.Location = new System.Drawing.Point(231, 6);
             this.btn_delete.Name = "btn_delete";
             this.btn_delete.Size = new System.Drawing.Size(31, 26);
             this.btn_delete.TabIndex = 1;
@@ -1044,7 +1102,7 @@
             this.btn_paste.Image = null;
             this.btn_paste.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Paste_16;
             this.btn_paste.ImageGlyphEnabled = true;
-            this.btn_paste.Location = new System.Drawing.Point(155, 6);
+            this.btn_paste.Location = new System.Drawing.Point(157, 6);
             this.btn_paste.Name = "btn_paste";
             this.btn_paste.Size = new System.Drawing.Size(31, 26);
             this.btn_paste.TabIndex = 0;
@@ -1062,7 +1120,7 @@
             this.btn_copy.Image = null;
             this.btn_copy.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Copy;
             this.btn_copy.ImageGlyphEnabled = true;
-            this.btn_copy.Location = new System.Drawing.Point(118, 6);
+            this.btn_copy.Location = new System.Drawing.Point(120, 6);
             this.btn_copy.Name = "btn_copy";
             this.btn_copy.Size = new System.Drawing.Size(31, 26);
             this.btn_copy.TabIndex = 2;
@@ -1080,7 +1138,7 @@
             this.btn_cut.Image = null;
             this.btn_cut.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Cut;
             this.btn_cut.ImageGlyphEnabled = true;
-            this.btn_cut.Location = new System.Drawing.Point(81, 6);
+            this.btn_cut.Location = new System.Drawing.Point(83, 6);
             this.btn_cut.Name = "btn_cut";
             this.btn_cut.Size = new System.Drawing.Size(31, 26);
             this.btn_cut.TabIndex = 20;
@@ -1097,7 +1155,7 @@
             this.btn_new.Image = null;
             this.btn_new.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Add;
             this.btn_new.ImageGlyphEnabled = true;
-            this.btn_new.Location = new System.Drawing.Point(7, 6);
+            this.btn_new.Location = new System.Drawing.Point(9, 6);
             this.btn_new.Name = "btn_new";
             this.btn_new.Size = new System.Drawing.Size(31, 26);
             this.btn_new.TabIndex = 19;
@@ -1110,7 +1168,7 @@
             this.separatorV3.AlternativeLook = false;
             this.separatorV3.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.separatorV3.BackColor = System.Drawing.Color.Transparent;
-            this.separatorV3.Location = new System.Drawing.Point(591, 6);
+            this.separatorV3.Location = new System.Drawing.Point(605, 6);
             this.separatorV3.Name = "separatorV3";
             this.separatorV3.Size = new System.Drawing.Size(1, 26);
             this.separatorV3.TabIndex = 18;
@@ -1122,7 +1180,7 @@
             this.label9.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.label9.BackColor = System.Drawing.Color.Transparent;
             this.label9.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(818, 9);
+            this.label9.Location = new System.Drawing.Point(832, 9);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(111, 20);
             this.label9.TabIndex = 17;
@@ -1134,7 +1192,7 @@
             this.toggle1.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.toggle1.Checked = false;
             this.toggle1.DarkLight_Toggler = false;
-            this.toggle1.Location = new System.Drawing.Point(935, 9);
+            this.toggle1.Location = new System.Drawing.Point(949, 9);
             this.toggle1.Name = "toggle1";
             this.toggle1.Size = new System.Drawing.Size(40, 20);
             this.toggle1.TabIndex = 15;
@@ -1150,7 +1208,7 @@
             this.button7.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button7.ImageGlyph = null;
             this.button7.ImageGlyphEnabled = true;
-            this.button7.Location = new System.Drawing.Point(273, 6);
+            this.button7.Location = new System.Drawing.Point(275, 6);
             this.button7.Name = "button7";
             this.button7.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.button7.Size = new System.Drawing.Size(78, 26);
@@ -1162,15 +1220,14 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.BackColor = System.Drawing.Color.Transparent;
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.status_lbl);
             this.groupBox1.Controls.Add(this.button13);
-            this.groupBox1.Location = new System.Drawing.Point(6, 563);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.groupBox1.Location = new System.Drawing.Point(0, 569);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(980, 32);
+            this.groupBox1.Size = new System.Drawing.Size(994, 32);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.UseDecorationPattern = false;
             this.groupBox1.UseSharpStyle = false;
@@ -1184,7 +1241,7 @@
             this.button1.Image = null;
             this.button1.ImageGlyph = null;
             this.button1.ImageGlyphEnabled = true;
-            this.button1.Location = new System.Drawing.Point(753, 3);
+            this.button1.Location = new System.Drawing.Point(767, 3);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(111, 26);
             this.button1.TabIndex = 15;
@@ -1199,7 +1256,7 @@
             this.status_lbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.status_lbl.Location = new System.Drawing.Point(7, 9);
             this.status_lbl.Name = "status_lbl";
-            this.status_lbl.Size = new System.Drawing.Size(740, 15);
+            this.status_lbl.Size = new System.Drawing.Size(754, 15);
             this.status_lbl.TabIndex = 13;
             this.status_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -1213,88 +1270,13 @@
             this.button13.Image = null;
             this.button13.ImageGlyph = null;
             this.button13.ImageGlyphEnabled = true;
-            this.button13.Location = new System.Drawing.Point(866, 3);
+            this.button13.Location = new System.Drawing.Point(880, 3);
             this.button13.Name = "button13";
             this.button13.Size = new System.Drawing.Size(111, 26);
             this.button13.TabIndex = 14;
             this.button13.Text = "Submit changes";
             this.button13.UseVisualStyleBackColor = true;
             this.button13.Click += new System.EventHandler(this.button13_Click);
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox2.Controls.Add(this.splitContainer1);
-            this.groupBox2.Location = new System.Drawing.Point(6, 50);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(3);
-            this.groupBox2.Size = new System.Drawing.Size(980, 507);
-            this.groupBox2.TabIndex = 3;
-            this.groupBox2.UseDecorationPattern = false;
-            this.groupBox2.UseSharpStyle = false;
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitContainer1.Location = new System.Drawing.Point(3, 3);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.treeView1);
-            this.splitContainer1.Panel1.Controls.Add(this.separatorV1);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.listView1);
-            this.splitContainer1.Size = new System.Drawing.Size(974, 501);
-            this.splitContainer1.SplitterDistance = 178;
-            this.splitContainer1.TabIndex = 1;
-            // 
-            // treeView1
-            // 
-            this.treeView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView1.FullRowSelect = true;
-            this.treeView1.ItemHeight = 24;
-            this.treeView1.Location = new System.Drawing.Point(0, 0);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.ShowLines = false;
-            this.treeView1.ShowRootLines = false;
-            this.treeView1.Size = new System.Drawing.Size(177, 501);
-            this.treeView1.TabIndex = 0;
-            // 
-            // separatorV1
-            // 
-            this.separatorV1.AlternativeLook = false;
-            this.separatorV1.BackColor = System.Drawing.Color.Transparent;
-            this.separatorV1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.separatorV1.Location = new System.Drawing.Point(177, 0);
-            this.separatorV1.Name = "separatorV1";
-            this.separatorV1.Size = new System.Drawing.Size(1, 501);
-            this.separatorV1.TabIndex = 1;
-            this.separatorV1.TabStop = false;
-            this.separatorV1.Text = "separatorV1";
-            // 
-            // listView1
-            // 
-            this.listView1.AllowColumnReorder = true;
-            this.listView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView1.FullRowSelect = true;
-            this.listView1.HideSelection = false;
-            this.listView1.LabelEdit = true;
-            this.listView1.Location = new System.Drawing.Point(0, 0);
-            this.listView1.Name = "listView1";
-            this.listView1.RowHeight = 24;
-            this.listView1.Size = new System.Drawing.Size(792, 501);
-            this.listView1.TabIndex = 0;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
             // 
             // titlebarExtender1
             // 
@@ -1490,7 +1472,7 @@
             this.label2.Text = "0";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // GitHubMgrForm
+            // GitHub_Mgr
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -1502,7 +1484,7 @@
             this.ForeColor = System.Drawing.Color.White;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.Name = "GitHubMgrForm";
+            this.Name = "GitHub_Mgr";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "GitHub Manager";
             this.Load += new System.EventHandler(this.GitHubManager_Load);
@@ -1524,13 +1506,12 @@
             this.groupBox3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.tabPage4.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
             this.titlebarExtender1.ResumeLayout(false);
             this.explorer_controls.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
@@ -1564,7 +1545,6 @@
         internal System.Windows.Forms.Label label5;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private UI.WP.TreeView treeView1;
-        private UI.WP.Breadcrumb breadcrumbControl1;
         private UI.WP.SeparatorV separatorV1;
         private UI.WP.ListView listView1;
         private UI.WP.Button button5;
@@ -1578,7 +1558,6 @@
         internal System.Windows.Forms.Label status_lbl;
         private UI.WP.TextBox textBox1;
         private UI.WP.Button button8;
-        private UI.WP.GroupBox groupBox2;
         private UI.WP.TablessControl tablessControl1;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabPage tabPage4;
@@ -1630,5 +1609,6 @@
         internal System.Windows.Forms.Label label14;
         private UI.WP.Toggle toggle2;
         private UI.WP.Button btn_download;
+        public UI.WP.Breadcrumb breadcrumbControl1;
     }
 }

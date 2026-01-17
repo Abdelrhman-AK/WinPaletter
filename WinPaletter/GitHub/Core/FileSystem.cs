@@ -453,32 +453,50 @@ namespace WinPaletter.GitHub
             else
             {
                 // 4. BINARY FILE → Git Data API
-                if (cts is not null && cts.IsCancellationRequested) return null;
+                if (cts?.IsCancellationRequested ?? false) return null;
 
-                var blob = new Octokit.NewBlob
+                int maxRetries = 5;
+                for (int attempt = 0; attempt < maxRetries; attempt++)
                 {
-                    Content = Convert.ToBase64String(fileBytes),
-                    Encoding = Octokit.EncodingType.Base64
-                };
+                    // 1. Create blob
+                    var blob = new Octokit.NewBlob
+                    {
+                        Content = Convert.ToBase64String(fileBytes),
+                        Encoding = Octokit.EncodingType.Base64
+                    };
+                    var blobRef = await client.Git.Blob.Create(_owner, GitHub.Repository.Name, blob).ConfigureAwait(false);
 
-                var blobRef = await client.Git.Blob.Create(_owner, GitHub.Repository.Name, blob).ConfigureAwait(false);
-                var branchRef = await client.Git.Reference.Get(_owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}").ConfigureAwait(false);
-                var latestCommit = await client.Git.Commit.Get(_owner, GitHub.Repository.Name, branchRef.Object.Sha).ConfigureAwait(false);
-                var baseTree = await client.Git.Tree.Get(_owner, GitHub.Repository.Name, latestCommit.Tree.Sha).ConfigureAwait(false);
+                    // 2. Get latest branch reference and commit
+                    var branchRef = await client.Git.Reference.Get(_owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}").ConfigureAwait(false);
+                    var latestCommit = await client.Git.Commit.Get(_owner, GitHub.Repository.Name, branchRef.Object.Sha).ConfigureAwait(false);
 
-                var newTree = new Octokit.NewTree { BaseTree = baseTree.Sha };
-                newTree.Tree.Add(new Octokit.NewTreeItem
-                {
-                    Path = githubPath,
-                    Mode = "100644",
-                    Type = Octokit.TreeType.Blob,
-                    Sha = blobRef.Sha
-                });
+                    // 3. Create new tree based on latest commit
+                    var baseTree = await client.Git.Tree.Get(_owner, GitHub.Repository.Name, latestCommit.Tree.Sha).ConfigureAwait(false);
+                    var newTree = new Octokit.NewTree { BaseTree = baseTree.Sha };
+                    newTree.Tree.Add(new Octokit.NewTreeItem
+                    {
+                        Path = githubPath,
+                        Mode = "100644",
+                        Type = Octokit.TreeType.Blob,
+                        Sha = blobRef.Sha
+                    });
+                    var createdTree = await client.Git.Tree.Create(_owner, GitHub.Repository.Name, newTree).ConfigureAwait(false);
 
-                var createdTree = await client.Git.Tree.Create(_owner, GitHub.Repository.Name, newTree).ConfigureAwait(false);
-                var newCommit = new Octokit.NewCommit(commitMessage, createdTree.Sha, latestCommit.Sha);
-                var commit = await client.Git.Commit.Create(_owner, GitHub.Repository.Name, newCommit).ConfigureAwait(false);
-                await client.Git.Reference.Update(_owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}", new Octokit.ReferenceUpdate(commit.Sha)).ConfigureAwait(false);
+                    // 4. Create new commit pointing to latest commit
+                    var newCommit = new Octokit.NewCommit(commitMessage, createdTree.Sha, latestCommit.Sha);
+                    var commit = await client.Git.Commit.Create(_owner, GitHub.Repository.Name, newCommit).ConfigureAwait(false);
+
+                    // 5. Try updating the branch
+                    try
+                    {
+                        await client.Git.Reference.Update(_owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}", new Octokit.ReferenceUpdate(commit.Sha)).ConfigureAwait(false);
+                    }
+                    catch (Octokit.ApiValidationException ex) when (ex.Message.Contains("fast forward"))
+                    {
+                        // The branch moved, retry
+                        if (attempt == maxRetries - 1) throw; // rethrow if max retries reached
+                    }
+                }
             }
 
             if (cts is not null && cts.IsCancellationRequested) return null;

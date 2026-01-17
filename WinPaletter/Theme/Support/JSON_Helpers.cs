@@ -28,7 +28,7 @@ namespace WinPaletter.Theme
         /// </summary>
         /// <param name="strInput"></param>
         /// <returns><see cref="bool"/> </returns>
-        private static bool IsValidJson(string strInput)
+        public static bool IsValidJson(string strInput)
         {
             if (string.IsNullOrWhiteSpace(strInput)) return false;
 

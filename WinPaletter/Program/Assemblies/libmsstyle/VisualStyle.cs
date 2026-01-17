@@ -361,7 +361,7 @@ namespace libmsstyle
             else
             {
                 // We can't update the string table if it's in the .mui file. But since 
-                // msstyleEditor doesn't allow editing the table, it not an immediate problem.
+                // msstyleEditor does not allow editing the table, it not an immediate problem.
             }
         }
 

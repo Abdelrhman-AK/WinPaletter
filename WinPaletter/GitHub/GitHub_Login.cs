@@ -8,11 +8,11 @@ using static WinPaletter.TypesExtensions.BitmapExtensions;
 
 namespace WinPaletter
 {
-    public partial class GitHubLogin : Form
+    public partial class GitHub_Login : Form
     {
         CancellationTokenSource cts;
 
-        public GitHubLogin()
+        public GitHub_Login()
         {
             InitializeComponent();
         }

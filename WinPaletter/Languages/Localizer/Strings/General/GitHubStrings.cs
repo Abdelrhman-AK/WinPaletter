@@ -31,7 +31,7 @@ public partial class Localizer
             public string Branch_Behind { get; set; } = "Behind";
             public string Committer { get; set; } = "Committer";
             public string LastCommitMsg { get; set; } = "Last commit message";
-
+            public string SelectUploadMethod { get; set; } = "Please select an upload method.";
             public string Explorer_FileNotFound { get; set; } = "{0} can't find '{1}'. Check the spelling and try again.";
             public string NewBranch_Error { get; set; } = "Couldn't create branch `{0}`. Try creating it manually in your browser.";
             public string NewBranch_AlreadyExists { get; set; } = "Your forked repository already has this branch. Try again with another branch name.";

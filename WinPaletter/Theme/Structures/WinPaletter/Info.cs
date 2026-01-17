@@ -46,49 +46,49 @@ namespace WinPaletter.Theme.Structures
 
         /// <summary>
         /// This theme is designed especially for Windows 12
-        /// <br>- This doesn't inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
+        /// <br>- This does not inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
         /// </summary>
         public bool DesignedFor_Win12 { get; set; } = true;
 
         /// <summary>
         /// This theme is designed especially for Windows 11
-        /// <br>- This doesn't inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
+        /// <br>- This does not inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
         /// </summary>
         public bool DesignedFor_Win11 { get; set; } = true;
 
         /// <summary>
         /// This theme is designed especially for Windows 10
-        /// <br>- This doesn't inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
+        /// <br>- This does not inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
         /// </summary>
         public bool DesignedFor_Win10 { get; set; } = true;
 
         /// <summary>
         /// This theme is designed especially for Windows 8.1
-        /// <br>- This doesn't inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
+        /// <br>- This does not inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
         /// </summary>
         public bool DesignedFor_Win81 { get; set; } = true;
 
         /// <summary>
         /// This theme is designed especially for Windows 8.1
-        /// <br>- This doesn't inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
+        /// <br>- This does not inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
         /// </summary>
         public bool DesignedFor_Win8 { get; set; } = true;
 
         /// <summary>
         /// This theme is designed especially for Windows 7
-        /// <br>- This doesn't inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
+        /// <br>- This does not inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
         /// </summary>
         public bool DesignedFor_Win7 { get; set; } = true;
 
         /// <summary>
         /// This theme is designed especially for Windows Vista
-        /// <br>- This doesn't inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
+        /// <br>- This does not inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
         /// </summary>
         public bool DesignedFor_WinVista { get; set; } = true;
 
         /// <summary>
         /// This theme is designed especially for Windows XP
-        /// <br>- This doesn't inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
+        /// <br>- This does not inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
         /// </summary>
         public bool DesignedFor_WinXP { get; set; } = true;
 

@@ -196,9 +196,6 @@ namespace WinPaletter.Theme
 
                                 string content = string.Join("\r\n", content_list);
 
-                                // Extract theme resources pack from the theme File
-                                if (!ignoreExtractionThemePack) ExtractThemeResourcesPack(File);
-
                                 if (IsValidJson(content))
                                 {
                                     // Replace %WinPaletterAppData% variable with a valid AppData folder path
@@ -217,6 +214,9 @@ namespace WinPaletter.Theme
 
                                     // Set the value of the current instance's field from theme File JSON data
                                     JsonConvert.PopulateObject(json.ToString(), this);
+
+                                    // Extract theme resources pack from the theme File
+                                    if (!ignoreExtractionThemePack && this.Info.ExportResThemePack) ExtractThemeResourcesPack(File);
                                 }
                                 else if (GetEdition(File) == Editions.Legacy)
                                 {

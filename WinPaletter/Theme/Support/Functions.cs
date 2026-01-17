@@ -326,7 +326,7 @@ namespace WinPaletter.Theme
         /// <summary>
         /// Decompress a WinPaletter theme File
         /// </summary>
-        private static IEnumerable<string> Decompress(string File)
+        public static IEnumerable<string> Decompress(string File)
         {
             IEnumerable<string> DecompressedData;
 
