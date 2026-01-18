@@ -1383,7 +1383,7 @@ namespace WinPaletter
 
                 Tabs.SelectedIndex = 5;
 
-                SystemSounds.Exclamation.Play();
+                CustomSystemSounds.Exclamation.Play();
 
                 Program.Animator.ShowSync(Tabs);
 

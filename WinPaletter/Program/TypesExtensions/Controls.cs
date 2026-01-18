@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -357,6 +358,51 @@ namespace WinPaletter.TypesExtensions
             parentForm?.ActiveControl = listView; // temporarily focus the ListView
 
             item?.Selected = true;
+        }
+
+        //public static string ToJson(this UI.WP.ListView listView) => ToJson(listView as ListView);
+
+        public static string ToJson(this ListView listView)
+        {
+            Dictionary<string, object> root = [];
+
+            foreach (ListViewItem item in listView.Items)
+            {
+                if (item.SubItems.Count < 2) continue;
+
+                string path = item.SubItems[0].Text;
+                string value = item.SubItems[1].Text;
+
+                if (string.IsNullOrEmpty(path)) continue;
+
+                string[] parts = path.Split('.');
+                Dictionary<string, object> current = root;
+
+                for (int i = 0; i < parts.Length; i++)
+                {
+                    string key = parts[i];
+
+                    if (i == parts.Length - 1)
+                    {
+                        current[key] = value;
+                    }
+                    else
+                    {
+                        if (!current.TryGetValue(key, out object next))
+                        {
+                            Dictionary<string, object> dict = new();
+                            current[key] = dict;
+                            current = dict;
+                        }
+                        else
+                        {
+                            current = (Dictionary<string, object>)next;
+                        }
+                    }
+                }
+            }
+
+            return JsonConvert.SerializeObject(root, Formatting.Indented);
         }
     }
 }

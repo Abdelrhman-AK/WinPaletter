@@ -28,7 +28,6 @@ namespace WinPaletter
 
         Octokit.Repository repo;
         Branch upstreamBranch;
-        public ActionQueue actionQueue = new();
 
         private async void GitHubManager_Load(object sender, EventArgs e)
         {
@@ -126,7 +125,7 @@ namespace WinPaletter
             GitHubClient client = Program.GitHub.Client;
 
             GitHubCommit commit = await client.Repository.Commit.Get(repo.Id, branch.Commit.Sha);
-            CompareResult compare = await client.Repository.Commit.Compare(GitHub.Repository.originalOwner, GitHub.Repository.Name, upstreamBranch.Commit.Sha, branch.Commit.Sha);
+            CompareResult compare = await client.Repository.Commit.Compare(GitHub.Repository.OriginalOwner, GitHub.Repository.Name, upstreamBranch.Commit.Sha, branch.Commit.Sha);
 
             ListViewItem item = new() { Text = branch.Name, Tag = branch };
 
@@ -252,8 +251,8 @@ namespace WinPaletter
                     avatar = User.GitHub_Avatar;
                 }
 
-                repo = await Program.GitHub.Client.Repository.Get(FileSystem._owner, GitHub.Repository.Name);
-                upstreamBranch = await Program.GitHub.Client.Repository.Branch.Get(GitHub.Repository.originalOwner, GitHub.Repository.Name, "main");
+                repo = await Program.GitHub.Client.Repository.Get(GitHub.Repository.Owner, GitHub.Repository.Name);
+                upstreamBranch = await Program.GitHub.Client.Repository.Branch.Get(GitHub.Repository.OriginalOwner, GitHub.Repository.Name, "main");
             }
 
             if (avatar is null)
@@ -529,12 +528,12 @@ Generated automatically by WinPaletter.";
 
         private async void btn_delete_Click(object sender, EventArgs e)
         {
-            await FileSystem.DeleteSelectedElementsAsync();
+            FileSystem.ActionQueue.Enqueue(FileSystem.DeleteSelectedElementsAsync);
         }
 
         private void btn_paste_Click(object sender, EventArgs e)
         {
-            FileSystem.Paste();
+            FileSystem.ActionQueue.Enqueue(FileSystem.Paste);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -762,7 +761,7 @@ Generated automatically by WinPaletter.";
 
                         if (newBranch != null)
                         {
-                            CompareResult compare = await Program.GitHub.Client.Repository.Commit.Compare(GitHub.Repository.originalOwner, GitHub.Repository.Name, upstreamBranch.Commit.Sha, branch.Commit.Sha);
+                            CompareResult compare = await Program.GitHub.Client.Repository.Commit.Compare(GitHub.Repository.OriginalOwner, GitHub.Repository.Name, upstreamBranch.Commit.Sha, branch.Commit.Sha);
                             bool updated = compare.BehindBy == 0;
 
                             branchesView.SelectedItems[0].Tag = newBranch;
@@ -880,6 +879,38 @@ Generated automatically by WinPaletter.";
         private void btn_new_Click(object sender, EventArgs e)
         {
             Forms.GitHub_ThemeUpload.ShowDialog();
+        }
+
+        public async Task UploadListAsync(List<string> list)
+        {
+            FileSystem.ActionQueue.Enqueue(async() => await UploadInternal(list));
+        }
+
+        private async Task UploadInternal(List<string> list)
+        {
+            breadcrumbControl1.Value = 0f;
+            breadcrumbControl1.StartMarquee();
+
+            float total = list.Count;
+            float count = 0f;
+
+            foreach (string file in list)
+            {
+                if (File.Exists(file))
+                {
+                    bool uploaded = await FileSystem.Upload(file);
+
+                    if (uploaded)
+                        await Task.Delay(500);
+                }
+
+                count++;
+                breadcrumbControl1.Value = (count / total) * 100f;
+                await Task.Yield();
+            }
+
+            breadcrumbControl1.FinishLoadingAnimation();
+            breadcrumbControl1.Value = 0f;
         }
     }
 }

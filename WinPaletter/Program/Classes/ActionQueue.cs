@@ -69,6 +69,7 @@ namespace WinPaletter
         private bool _isRunning = false;
         private bool _queuePaused = false;
         private readonly object _lock = new();
+        private readonly SemaphoreSlim _queueSemaphore = new(1, 1);
 
         // Events
         public event EventHandler<ActionProgressEventArgs>? OnActionProgress;
@@ -80,13 +81,9 @@ namespace WinPaletter
         public bool IsPaused { get { lock (_lock) return _queuePaused; } }
 
         // Enqueue sync
-        public void Enqueue(Action action, string description = "")
+        public void Enqueue(Func<Task> action, string description = "")
         {
-            Enqueue((ct, progress) =>
-            {
-                action();
-                return Task.CompletedTask;
-            }, description);
+            Enqueue(async (ct, progress) => await action(), description);
         }
 
         // Enqueue async with progress
@@ -104,54 +101,70 @@ namespace WinPaletter
 
         private async Task ProcessQueueAsync()
         {
-            while (true)
+            await _queueSemaphore.WaitAsync();
+            try
             {
-                QueuedAction? queuedAction;
-                int currentIndex;
-                int totalTasks;
-
-                lock (_lock)
+                while (true)
                 {
-                    if (_queue.Count == 0)
+                    QueuedAction queuedAction;
+                    int currentIndex;
+                    int totalTasks;
+
+                    lock (_lock)
                     {
-                        _isRunning = false;
-                        OnAllActionsCompleted?.Invoke(this, null!);
-                        return;
+                        if (_queue.Count == 0)
+                        {
+                            _isRunning = false;
+                            OnAllActionsCompleted?.Invoke(this, null!);
+                            return;
+                        }
+
+                        if (_queuePaused)
+                        {
+                            _isRunning = false;
+                            return;
+                        }
+
+                        _isRunning = true;
+                        queuedAction = _queue.Dequeue();
+                        currentIndex = _totalTasksEverAdded - _queue.Count;
+                        totalTasks = _totalTasksEverAdded;
                     }
 
-                    if (_queuePaused) return;
+                    OnActionProgress?.Invoke(this,
+                        new ActionProgressEventArgs(queuedAction, currentIndex, totalTasks, ActionProgressType.Started));
 
-                    _isRunning = true;
-                    queuedAction = _queue.Dequeue();
-                    currentIndex = _totalTasksEverAdded - _queue.Count;
-                    totalTasks = _totalTasksEverAdded;
-                }
-
-                OnActionProgress?.Invoke(this, new ActionProgressEventArgs(queuedAction, currentIndex, totalTasks, ActionProgressType.Started));
-
-                try
-                {
-                    queuedAction.PauseEvent.Wait(queuedAction.Cancellation.Token);
-
-                    // Provide progress callback to task
-                    Progress<int> progressReporter = new(p =>
+                    try
                     {
-                        OnActionProgress?.Invoke(this, new ActionProgressEventArgs(queuedAction, currentIndex, totalTasks, ActionProgressType.TaskProgress, p));
-                    });
+                        queuedAction.PauseEvent.Wait(queuedAction.Cancellation.Token);
 
-                    await queuedAction.Action(queuedAction.Cancellation.Token, progressReporter);
+                        Progress<int> progress = new(p =>
+                        {
+                            OnActionProgress?.Invoke(this,
+                                new ActionProgressEventArgs(queuedAction, currentIndex, totalTasks, ActionProgressType.TaskProgress, p));
+                        });
 
-                    if (!queuedAction.Cancellation.IsCancellationRequested)
-                        OnActionProgress?.Invoke(this, new ActionProgressEventArgs(queuedAction, currentIndex, totalTasks, ActionProgressType.Completed));
+                        await queuedAction.Action(queuedAction.Cancellation.Token, progress);
+
+                        if (!queuedAction.Cancellation.IsCancellationRequested)
+                            OnActionProgress?.Invoke(this,
+                                new ActionProgressEventArgs(queuedAction, currentIndex, totalTasks, ActionProgressType.Completed));
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        OnActionProgress?.Invoke(this,
+                            new ActionProgressEventArgs(queuedAction, currentIndex, totalTasks, ActionProgressType.Cancelled));
+                    }
+                    catch
+                    {
+                        OnActionProgress?.Invoke(this,
+                            new ActionProgressEventArgs(queuedAction, currentIndex, totalTasks, ActionProgressType.Exception));
+                    }
                 }
-                catch (OperationCanceledException)
-                {
-                    OnActionProgress?.Invoke(this, new ActionProgressEventArgs(queuedAction, currentIndex, totalTasks, ActionProgressType.Cancelled));
-                }
-                catch (Exception ex)
-                {
-                    OnActionProgress?.Invoke(this, new ActionProgressEventArgs(queuedAction, currentIndex, totalTasks, ActionProgressType.Exception));
-                }
+            }
+            finally
+            {
+                _queueSemaphore.Release();
             }
         }
 

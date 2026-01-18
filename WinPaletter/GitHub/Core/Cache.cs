@@ -62,7 +62,7 @@ namespace WinPaletter.GitHub
 
             private static async Task<bool> RepositoryTreeChangedAsync()
             {
-                var reference = await Program.GitHub.Client.Git.Reference.Get(_owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}");
+                var reference = await Program.GitHub.Client.Git.Reference.Get(Repository.Owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}");
                 string currentSha = reference.Object.Sha;
 
                 if (_lastRepoTreeSha == currentSha) return false;
@@ -439,7 +439,7 @@ namespace WinPaletter.GitHub
 
                 IReadOnlyList<RepositoryContent> contents =
                     await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(
-                        _owner,
+                        Repository.Owner,
                         GitHub.Repository.Name,
                         path,
                         GitHub.Repository.Branch.Name);

@@ -19,7 +19,7 @@ namespace WinPaletter.Dialogs
             Icon = FormsExtensions.Icon<MainForm>();
 
             TextBox1.Font = Fonts.ConsoleMedium;
-            SystemSounds.Exclamation.Play();
+            CustomSystemSounds.Exclamation.Play();
         }
 
         private void button2_Click(object sender, EventArgs e)

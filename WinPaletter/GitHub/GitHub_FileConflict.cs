@@ -20,7 +20,7 @@ namespace WinPaletter
         {
             ApplyStyle(this);
             this.LoadLanguage();
-            SystemSounds.Exclamation.Play();
+            CustomSystemSounds.Exclamation.Play();
         }
 
         public void ShowInfo(FileConflictInfo info, Operation operation)

@@ -745,10 +745,10 @@ namespace WinPaletter.UI.WP
                 progressWidth = rect.Width * (_animatedValue - progressMinimum) / (progressMaximum - progressMinimum);
                 RectangleF progRect = new(0, 0, progressWidth, Height - 1);
                 using (SolidBrush br = new(Color.FromArgb(_alpha, Program.Style.Schemes.Tertiary.Colors.Accent)))
-                //using (Pen p = new(Color.FromArgb(_alpha, Program.Style.Schemes.Tertiary.Colors.ForeColor_Accent)))
+                using (Pen p = new(Color.FromArgb(_alpha, Program.Style.Schemes.Tertiary.Colors.ForeColor_Accent)))
                 {
                     G.FillRoundedRect(br, progRect);
-                    //G.DrawRoundedRect(p, progRect);
+                    G.DrawRoundedRect(p, progRect);
                 }
             }
 

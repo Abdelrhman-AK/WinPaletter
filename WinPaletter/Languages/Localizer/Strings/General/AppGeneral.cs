@@ -62,11 +62,14 @@
                 public string MBSizeUnit { get; set; } = "MB";
                 public string KBSizeUnit { get; set; } = "KB";
                 public string ByteSizeUnit { get; set; } = "B";
+                public string BytesSize { get; set; } = "bytes";
                 public string SecondUnit { get; set; } = "/s";
                 public string Version { get; set; } = "Version";
                 public string Stable { get; set; } = "Stable";
                 public string Beta { get; set; } = "Beta";
                 public string Channel { get; set; } = "Channel";
+                public string Unknown { get; set; } = "Unknown";
+                public string Properties_Entry { get; set; } = "{0} properties";
                 public string AndBelow { get; set; } = "and below";
                 public string Disabled { get; set; } = "Disabled";
                 public string Default { get; set; } = "Default";

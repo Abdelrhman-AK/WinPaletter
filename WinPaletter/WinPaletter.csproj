@@ -432,6 +432,12 @@
       <DependentUpon>ColorEffectControl.cs</DependentUpon>
     </Compile>
     <Compile Include="GitHub\Core\Branch.cs" />
+    <Compile Include="GitHub\GitHub_EntryProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GitHub\GitHub_EntryProperties.Designer.cs">
+      <DependentUpon>GitHub_EntryProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="GitHub\GitHub_LinkedFilesConfirmation.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -520,6 +526,7 @@
     <Compile Include="Program\Classes\Animator.cs" />
     <Compile Include="ColorsAndPalettesHandlers\ColorEffect.cs" />
     <Compile Include="Program\Classes\ClassicTheme.cs" />
+    <Compile Include="Program\Classes\CustomSystemSounds.cs" />
     <Compile Include="Program\Classes\SearchManager.cs" />
     <Compile Include="Program\Classes\SystemRestoreHelper.cs" />
     <Compile Include="Program\Logger.cs" />
@@ -1430,6 +1437,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ColorsAndPalettesHandlers\ColorEffectControl.resx">
       <DependentUpon>ColorEffectControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GitHub\GitHub_EntryProperties.resx">
+      <DependentUpon>GitHub_EntryProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GitHub\GitHub_LinkedFilesConfirmation.resx">
       <DependentUpon>GitHub_LinkedFilesConfirmation.cs</DependentUpon>

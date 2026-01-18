@@ -166,6 +166,12 @@ namespace WinPaletter
         private static GitHub_FilesCompare _GitHub_FilesCompare;
 
         /// <summary>
+        /// Gets the instance of the form <see cref="GitHub_EntryProperties"/> to show entries properties.
+        /// </summary>
+        public static GitHub_EntryProperties GitHub_EntryProperties => Get(ref _GitHub_EntryProperties);
+        private static GitHub_EntryProperties _GitHub_EntryProperties;
+
+        /// <summary>
         /// Gets the instance of the form <see cref="GitHub_LinkedFilesConfirmation"/> for linked files confirmation.
         /// </summary>
         public static GitHub_LinkedFilesConfirmation GitHub_LinkedFilesConfirmation => Get(ref _GitHub_LinkedFilesConfirmation);

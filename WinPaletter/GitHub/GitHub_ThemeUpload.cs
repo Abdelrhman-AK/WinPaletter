@@ -1,15 +1,9 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Ookii.Dialogs.WinForms;
+﻿using Ookii.Dialogs.WinForms;
 using Serilog.Events;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -178,8 +172,10 @@ namespace WinPaletter
             if (!string.IsNullOrEmpty(selectedPath)) textBox3.Text = selectedPath;
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private async void button2_Click(object sender, EventArgs e)
         {
+            List<string> files = [];
+
             if (toggle_uploadOne.Checked)
             {
                 string themeFile = textBox1.Text;
@@ -200,24 +196,11 @@ namespace WinPaletter
                     return;
                 }
 
-                Forms.GitHub_Mgr.actionQueue.Enqueue(() =>
-                {
-                    Forms.GitHub_Mgr.breadcrumbControl1.StartMarquee();
-
-                    GitHub.FileSystem.Upload(themeFile);
-                    if (!string.IsNullOrEmpty(themeResPack))
-                    {
-                        GitHub.FileSystem.Upload(themeResPack);
-                    }
-
-                    Forms.GitHub_Mgr.breadcrumbControl1.StopMarquee();
-                });
-
-                Close();
+                files.Add(themeFile);
+                if (!string.IsNullOrEmpty(themeResPack)) files.Add(themeResPack);
             }
             else if (toggle_uploadMultiple.Checked)
             {
-                List<(string themeFile, string resPack)> themes = [];
                 string directory = textBox3.Text;
 
                 if (string.IsNullOrEmpty(directory) || !System.IO.Directory.Exists(directory))
@@ -244,33 +227,16 @@ namespace WinPaletter
                             themeResPack = string.Empty;
                         }
 
-                        themes.Add((file, themeResPack));
+                        files.Add(file);
+                        if (!string.IsNullOrEmpty(themeResPack)) files.Add(themeResPack);
                     }
                 }
 
-                if (themes.Count == 0)
+                if (files.Count == 0)
                 {
                     MsgBox(Program.Lang.Strings.Messages.NoValidThemesFound, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-
-                Forms.GitHub_Mgr.actionQueue.Enqueue(() =>
-                {
-                    foreach ((string themeFile, string resPack) in themes)
-                    {
-                        Forms.GitHub_Mgr.breadcrumbControl1.StartMarquee();
-
-                        GitHub.FileSystem.Upload(themeFile);
-                        if (System.IO.File.Exists(resPack))
-                        {
-                            GitHub.FileSystem.Upload(resPack);
-                        }
-
-                        Forms.GitHub_Mgr.breadcrumbControl1.StopMarquee();
-                    }
-                });
-
-                Close();
             }
             else if (toggle_wpTheme.Checked || toggle_uploadCurrent.Checked)
             {
@@ -340,35 +306,19 @@ namespace WinPaletter
                         }
                     }
                 }
-              
-                Forms.GitHub_Mgr.actionQueue.Enqueue(() =>
-                {
-                    Forms.GitHub_Mgr.breadcrumbControl1.StartMarquee();
 
-                    GitHub.FileSystem.Upload(tempThemePath);
-                    if (!string.IsNullOrEmpty(tempResPackPath))
-                    {
-                        GitHub.FileSystem.Upload(tempResPackPath);
-                    }
-
-                    try
-                    {
-                        System.IO.File.Delete(tempThemePath);
-                        if (!string.IsNullOrEmpty(tempResPackPath) && System.IO.File.Exists(tempResPackPath))
-                        {
-                            System.IO.File.Delete(tempResPackPath);
-                        }
-                    }
-                    catch { }
-
-                    Forms.GitHub_Mgr.breadcrumbControl1.StopMarquee();
-                });
-
-                Close();
+                files.Add(tempThemePath);
+                if (!string.IsNullOrEmpty(tempResPackPath)) files.Add(tempResPackPath);
             }
             else
             {
                 MsgBox(Program.Lang.Strings.GitHubStrings.SelectUploadMethod, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+
+            if (files.Count > 0)
+            {
+                Close();
+                await Forms.GitHub_Mgr.UploadListAsync(files);
             }
         }
 

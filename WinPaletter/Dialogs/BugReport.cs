@@ -74,7 +74,7 @@ namespace WinPaletter
             foreach (Label lbl in AnimatedBox1.Controls.OfType<Label>())
                 lbl.ForeColor = Color.White;
 
-            SystemSounds.Exclamation.Play();
+            CustomSystemSounds.Exclamation.Play();
 
             Height = CollapsedHeight;
 

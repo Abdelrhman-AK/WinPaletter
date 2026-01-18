@@ -26,7 +26,7 @@ namespace WinPaletter.GitHub
             /// <returns>A list of branch objects.</returns>
             public static async Task<List<Octokit.Branch>> GetBranchesAsync(bool excludeMain = false)
             {
-                IReadOnlyList<Octokit.Branch> branches = await Program.GitHub.Client.Repository.Branch.GetAll(_owner, Repository.Name);
+                IReadOnlyList<Octokit.Branch> branches = await Program.GitHub.Client.Repository.Branch.GetAll(Owner, Repository.Name);
                 return [.. branches.Where(b => !excludeMain || !string.Equals(b.Name, "main", StringComparison.OrdinalIgnoreCase))];
             }
 
@@ -41,14 +41,14 @@ namespace WinPaletter.GitHub
                 try
                 {
                     // Get the reference for the base branch
-                    var baseRef = await Program.GitHub.Client.Git.Reference.Get(_owner, Name, $"heads/{baseBranchName}");
+                    var baseRef = await Program.GitHub.Client.Git.Reference.Get(Owner, Name, $"heads/{baseBranchName}");
 
                     // Create the new branch reference
                     var newRef = new NewReference($"refs/heads/{newBranchName}", baseRef.Object.Sha);
-                    await Program.GitHub.Client.Git.Reference.Create(_owner, Name, newRef);
+                    await Program.GitHub.Client.Git.Reference.Create(Owner, Name, newRef);
 
                     // Fetch and return the newly created branch
-                    Octokit.Branch createdBranch = await Program.GitHub.Client.Repository.Branch.Get(_owner, Name, newBranchName);
+                    Octokit.Branch createdBranch = await Program.GitHub.Client.Repository.Branch.Get(Owner, Name, newBranchName);
                     return createdBranch;
                 }
                 catch
@@ -66,7 +66,7 @@ namespace WinPaletter.GitHub
             {
                 try
                 {
-                    await Program.GitHub.Client.Git.Reference.Delete(_owner, Name, $"heads/{branchName}");
+                    await Program.GitHub.Client.Git.Reference.Delete(Owner, Name, $"heads/{branchName}");
                     return true;
                 }
                 catch
@@ -84,7 +84,7 @@ namespace WinPaletter.GitHub
             {
                 try
                 {
-                    return await Program.GitHub.Client.Repository.Branch.Get(_owner, Name, branchName);
+                    return await Program.GitHub.Client.Repository.Branch.Get(Owner, Name, branchName);
                 }
                 catch
                 {
@@ -105,10 +105,10 @@ namespace WinPaletter.GitHub
                 {
                     if (await GetBranch(newBranchName) is not null) return null; // new branch already exists
 
-                    var oldRef = await Program.GitHub.Client.Git.Reference.Get(_owner, Name, $"heads/{oldBranchName}");
+                    var oldRef = await Program.GitHub.Client.Git.Reference.Get(Owner, Name, $"heads/{oldBranchName}");
                     var newRef = new NewReference($"refs/heads/{newBranchName}", oldRef.Object.Sha);
-                    await Program.GitHub.Client.Git.Reference.Create(_owner, Name, newRef);
-                    await Program.GitHub.Client.Git.Reference.Delete(_owner, Name, $"heads/{oldBranchName}");
+                    await Program.GitHub.Client.Git.Reference.Create(Owner, Name, newRef);
+                    await Program.GitHub.Client.Git.Reference.Delete(Owner, Name, $"heads/{oldBranchName}");
                     return await GetBranch(newBranchName);
                 }
                 catch
@@ -173,14 +173,14 @@ namespace WinPaletter.GitHub
                     {
                         BranchProtectionSettingsUpdate protectionSettings = new(requiredStatusChecks: null, enforceAdmins: true, requiredPullRequestReviews: null, restrictions: null);
 
-                        await client.Repository.Branch.UpdateBranchProtection(_owner, Name, branchName, protectionSettings);
+                        await client.Repository.Branch.UpdateBranchProtection(Owner, Name, branchName, protectionSettings);
                     }
                     else
                     {
-                        await client.Repository.Branch.DeleteBranchProtection(_owner, Name, branchName);
+                        await client.Repository.Branch.DeleteBranchProtection(Owner, Name, branchName);
                     }
 
-                    Octokit.Branch updatedBranch = await client.Repository.Branch.Get(_owner, Name, branchName);
+                    Octokit.Branch updatedBranch = await client.Repository.Branch.Get(Owner, Name, branchName);
                     return updatedBranch;
                 }
                 catch (Exception ex)
@@ -200,10 +200,10 @@ namespace WinPaletter.GitHub
                 try
                 {
                     // Use provided branch or fetch by name
-                    Octokit.Branch forkBranch = branch ?? await _client.Repository.Branch.Get(_owner, Name, branch.Name).ConfigureAwait(false);
+                    Octokit.Branch forkBranch = branch ?? await _client.Repository.Branch.Get(Owner, Name, branch.Name).ConfigureAwait(false);
                     if (forkBranch?.Commit == null)
                     {
-                        Program.Log?.Write(LogEventLevel.Warning, $"Source branch '{branch.Name}' not found in {_owner}/{Name}.");
+                        Program.Log?.Write(LogEventLevel.Warning, $"Source branch '{branch.Name}' not found in {Owner}/{Name}.");
                         return false;
                     }
 
@@ -211,16 +211,16 @@ namespace WinPaletter.GitHub
                     Octokit.Branch upstreamBranch = null;
                     try
                     {
-                        upstreamBranch = await _client.Repository.Branch.Get(originalOwner, Name, originalBranch).ConfigureAwait(false);
+                        upstreamBranch = await _client.Repository.Branch.Get(OriginalOwner, Name, originalBranch).ConfigureAwait(false);
                     }
                     catch (Octokit.NotFoundException)
                     {
-                        Program.Log?.Write(LogEventLevel.Information, $"Target branch '{originalBranch}' not found in {originalOwner}/{Name}. Treating source branch as updated.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Target branch '{originalBranch}' not found in {OriginalOwner}/{Name}. Treating source branch as updated.");
                         return true; // Treat as updated if target branch does not exist
                     }
 
                     // Compare (base = upstream, head = fork)
-                    CompareResult compare = await _client.Repository.Commit.Compare(originalOwner, Name, upstreamBranch.Commit.Sha, forkBranch.Commit.Sha);
+                    CompareResult compare = await _client.Repository.Commit.Compare(OriginalOwner, Name, upstreamBranch.Commit.Sha, forkBranch.Commit.Sha);
 
                     bool updated = compare.BehindBy == 0;
 
@@ -229,7 +229,7 @@ namespace WinPaletter.GitHub
                 }
                 catch (Exception ex)
                 {
-                    Program.Log?.Write(LogEventLevel.Error, $"Error checking update state for {_owner}/{Name}", ex);
+                    Program.Log?.Write(LogEventLevel.Error, $"Error checking update state for {Owner}/{Name}", ex);
                     return false;
                 }
             }
@@ -241,10 +241,10 @@ namespace WinPaletter.GitHub
                 try
                 {
                     // Get fork/source branch
-                    Octokit.Branch forkBranch = await _client.Repository.Branch.Get(_owner, Name, branch).ConfigureAwait(false);
+                    Octokit.Branch forkBranch = await _client.Repository.Branch.Get(Owner, Name, branch).ConfigureAwait(false);
                     if (forkBranch?.Commit == null)
                     {
-                        Program.Log?.Write(LogEventLevel.Warning, $"Source branch '{branch}' not found in {_owner}/{Name}.");
+                        Program.Log?.Write(LogEventLevel.Warning, $"Source branch '{branch}' not found in {Owner}/{Name}.");
                         return false;
                     }
 
@@ -252,16 +252,16 @@ namespace WinPaletter.GitHub
                     Octokit.Branch upstreamBranch = null;
                     try
                     {
-                        upstreamBranch = await _client.Repository.Branch.Get(originalOwner, Name, originalBranch).ConfigureAwait(false);
+                        upstreamBranch = await _client.Repository.Branch.Get(OriginalOwner, Name, originalBranch).ConfigureAwait(false);
                     }
                     catch (Octokit.NotFoundException)
                     {
-                        Program.Log?.Write(LogEventLevel.Information, $"Target branch '{originalBranch}' not found in {originalOwner}/{Name}. Treating source branch as updated.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Target branch '{originalBranch}' not found in {OriginalOwner}/{Name}. Treating source branch as updated.");
                         return true; // Treat as updated if target branch does not exist
                     }
 
                     // Correct Compare order: base = upstream, head = fork
-                    CompareResult compare = await _client.Repository.Commit.Compare(originalOwner, Name, upstreamBranch.Commit.Sha, forkBranch.Commit.Sha);
+                    CompareResult compare = await _client.Repository.Commit.Compare(OriginalOwner, Name, upstreamBranch.Commit.Sha, forkBranch.Commit.Sha);
 
                     // If BehindBy == 0, source branch is up-to-date (may be equal or ahead)
                     bool updated = compare.BehindBy == 0;
@@ -271,7 +271,7 @@ namespace WinPaletter.GitHub
                 }
                 catch (Exception ex)
                 {
-                    Program.Log?.Write(LogEventLevel.Error, $"Error checking update state for {_owner}/{Name}", ex);
+                    Program.Log?.Write(LogEventLevel.Error, $"Error checking update state for {Owner}/{Name}", ex);
                     return false;
                 }
             }
@@ -292,12 +292,12 @@ namespace WinPaletter.GitHub
 
                     if (string.IsNullOrWhiteSpace(upstreamBranch))
                     {
-                        Octokit.Repository upstreamRepo = await client.Repository.Get(originalOwner, Name);
+                        Octokit.Repository upstreamRepo = await client.Repository.Get(OriginalOwner, Name);
                         upstreamBranch = upstreamRepo.DefaultBranch;
                     }
 
                     Reference upstreamRef = await client.Git.Reference.Get(
-                        originalOwner,
+                        OriginalOwner,
                         Name,
                         $"heads/{upstreamBranch}");
 
@@ -305,14 +305,14 @@ namespace WinPaletter.GitHub
                     try
                     {
                         forkRef = await client.Git.Reference.Get(
-                            FileSystem._owner,
+                            Repository.Owner,
                             Name,
                             $"heads/{forkBranch}");
                     }
                     catch (Octokit.NotFoundException)
                     {
                         forkRef = await client.Git.Reference.Create(
-                            FileSystem._owner,
+                            Repository.Owner,
                             Name,
                             new NewReference($"refs/heads/{forkBranch}", upstreamRef.Object.Sha));
                     }
@@ -328,7 +328,7 @@ namespace WinPaletter.GitHub
                     {
                         try
                         {
-                            Uri endpoint = new($"repos/{FileSystem._owner}/{Name}/merge-upstream", UriKind.Relative);
+                            Uri endpoint = new($"repos/{Repository.Owner}/{Name}/merge-upstream", UriKind.Relative);
                             await client.Connection.Put<object>(endpoint, new { branch = forkBranch }, "application/json");
                             Program.Log?.Write(LogEventLevel.Information, $"merge-upstream succeeded.");
                             return true;
@@ -346,13 +346,13 @@ namespace WinPaletter.GitHub
 
                     // Hard reset fork branch to upstream
                     await client.Git.Reference.Update(
-                        FileSystem._owner,
+                        Repository.Owner,
                         Name,
                         $"heads/{forkBranch}",
                         new ReferenceUpdate(upstreamRef.Object.Sha, true));
 
                     Program.Log?.Write(LogEventLevel.Information,
-                        $"Force-synced {forkBranch} to {originalOwner}/{upstreamBranch}.");
+                        $"Force-synced {forkBranch} to {OriginalOwner}/{upstreamBranch}.");
 
                     return true;
                 }

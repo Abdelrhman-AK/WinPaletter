@@ -23,7 +23,7 @@ namespace WinPaletter
             ApplyStyle(this);
             TextBox1.Font = Fonts.ConsoleLarge;
 
-            SystemSounds.Exclamation.Play();
+            CustomSystemSounds.Exclamation.Play();
         }
 
         private void Button1_Click(object sender, EventArgs e)

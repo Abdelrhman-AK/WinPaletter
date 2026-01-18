@@ -24,7 +24,7 @@ namespace WinPaletter
             Color c2 = c.CB(Program.Style.DarkMode ? -0.75f : 0.75f);
             Panel1.BackColor = c1;
             BackColor = c2;
-            SystemSounds.Exclamation.Play();
+            CustomSystemSounds.Exclamation.Play();
             RadioImage1.Checked = Forms.WindowsTerminal.SaveState == WinTerminal.Version.Stable;
             RadioImage2.Checked = Forms.WindowsTerminal.SaveState == WinTerminal.Version.Preview;
         }

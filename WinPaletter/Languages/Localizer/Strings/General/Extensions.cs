@@ -7,7 +7,7 @@
             public partial class Extensions_Cls
             {
                 public string AllFiles { get; set; } = "All files";
-                public string WinPaletterTheme { get; set; } = "WinPaletter theme file";
+                public string WinPaletterThemeFile { get; set; } = "WinPaletter theme file";
                 public string WinPaletterThemeFiles { get; set; } = "WinPaletter theme files";
                 public string WinPaletterSettings { get; set; } = "WinPaletter settings files";
                 public string WinPaletterResourcesPack { get; set; } = "WinPaletter theme resources pack";

@@ -27,6 +27,7 @@ namespace WinPaletter.GitHub
         private static CancellationTokenSource cts = new();
         private static SoundPlayer SP = new();
         private static bool AltPlayingMethod = false;
+        public static ActionQueue ActionQueue { get; private set; } = new();
 
         #region Properties
 
@@ -84,7 +85,7 @@ namespace WinPaletter.GitHub
         public static Func<RepositoryContent, string> FileTypeProvider { get; set; } = entry =>
         {
             if (entry.Type == Octokit.ContentType.Dir) return Program.Lang.Strings.GitHubStrings.Explorer_Type_Folder;
-            if (entry.Name.EndsWith(".wpth", StringComparison.OrdinalIgnoreCase)) return Program.Lang.Strings.Extensions.WinPaletterThemeFiles;
+            if (entry.Name.EndsWith(".wpth", StringComparison.OrdinalIgnoreCase)) return Program.Lang.Strings.Extensions.WinPaletterThemeFile;
             if (entry.Name.EndsWith(".wptp", StringComparison.OrdinalIgnoreCase)) return Program.Lang.Strings.Extensions.WinPaletterResourcesPack;
             if (entry.Name.EndsWith(".gitkeep", StringComparison.OrdinalIgnoreCase)) return ".gitkeep file";
             return NativeMethods.Shell32.GetExtensionDescription(GetExtension(entry.Name));
@@ -147,7 +148,7 @@ namespace WinPaletter.GitHub
         /// <summary>
         /// Gets the root path of the repository.
         /// </summary>
-        public static string _root = $"Themes/{_owner}";
+        public static string _root = $"Themes/{Repository.Owner}";
 
         /// <summary>
         /// To remember the last entered folder for navigation purposes.
@@ -558,7 +559,6 @@ namespace WinPaletter.GitHub
                         item.SubItems.Add(size.ToStringFileSize());
                         item.SubItems.Add(Cache.ShaToMd5(entry.Content.Sha).ToUpper());
                         item.SubItems.Add(entry.Content.HtmlUrl);
-                        item.SubItems.Add(entry.Content.Content);
 
                         if (entry.Type == EntryType.Dir) item.ImageKey = "folder";
                         else if (entry.Name.EndsWith(".wpth", StringComparison.OrdinalIgnoreCase)) item.ImageKey = "wpth";
@@ -1043,7 +1043,7 @@ namespace WinPaletter.GitHub
 
             using (Icon ico = Properties.Resources.fileextension.FromSize(20))
             {
-                menu_newTheme = new ToolStripMenuItem(Program.Lang.Strings.Extensions.WinPaletterTheme, ico.ToBitmap());
+                menu_newTheme = new ToolStripMenuItem(Program.Lang.Strings.Extensions.WinPaletterThemeFile, ico.ToBitmap());
             }
 
             menu_newItem = new ToolStripMenuItem(Program.Lang.Strings.General.New)
@@ -1383,12 +1383,12 @@ namespace WinPaletter.GitHub
             else if (e.KeyCode == Keys.Delete)
             {
                 // Delete selected file or directory
-                await DeleteSelectedElementsAsync();
+                ActionQueue.Enqueue(DeleteSelectedElementsAsync);
             }
             else if (e.KeyCode == Keys.F5)
             {
                 // Refresh current directory
-                await GitHub.FileSystem.RefreshAsync();
+                await RefreshAsync();
             }
             else if (e.Control && e.KeyCode == Keys.C)
             {
@@ -1403,7 +1403,7 @@ namespace WinPaletter.GitHub
             else if (e.Control && e.KeyCode == Keys.V)
             {
                 // Paste item(s)
-                Paste();
+                ActionQueue.Enqueue(Paste);
             }
             else if (e.Control && e.KeyCode == Keys.Shift && e.KeyCode == Keys.N)
             {
@@ -1457,10 +1457,7 @@ namespace WinPaletter.GitHub
 
         private static void Menu_NewFolder_Click(object sender, EventArgs e) => Init_NewDirectory();
 
-        private static void Menu_paste_Click(object sender, EventArgs e)
-        {
-            Paste();
-        }
+        private static void Menu_paste_Click(object sender, EventArgs e) => ActionQueue.Enqueue(Paste);
 
         private static void Menu_Open_Click(object sender, EventArgs e) => FileSystem.List_DoubleClick(_boundList, new());
 
@@ -1486,13 +1483,16 @@ namespace WinPaletter.GitHub
 
         private static void Menu_Cut_Click(object sender, EventArgs e) => Init_Cut();
 
-        private static async void Menu_Delete_Click(object sender, EventArgs e) => await DeleteSelectedElementsAsync();
+        private static async void Menu_Delete_Click(object sender, EventArgs e) => ActionQueue.Enqueue(DeleteSelectedElementsAsync);
 
         private static void Menu_Rename_Click(object sender, EventArgs e) => _boundList.SelectedItems[0]?.BeginEdit();
 
-        private static void Menu_ItemProperties_Click(object sender, EventArgs e)
+        private static async void Menu_ItemProperties_Click(object sender, EventArgs e)
         {
-            // TODO: Show properties
+            if (_boundList.SelectedItems.Count > 0)
+            {
+                Forms.GitHub_EntryProperties.Load_Entry(_boundList.SelectedItems[0]);
+            }
         }
 
         private async static void Menu_Download_Click(object sender, EventArgs e)
@@ -1601,11 +1601,7 @@ namespace WinPaletter.GitHub
 
             UpdateTreeNode(CurrentPath, true);
 
-            if (willPlayAudio)
-            {
-                StopAudio();
-                PlayAudio(Program.TM.Sounds.Snd_Explorer_Navigating);
-            }
+            if (willPlayAudio) CustomSystemSounds.Navigation.Play();
         }
 
         /// <summary>
@@ -1765,7 +1761,7 @@ namespace WinPaletter.GitHub
 
             try
             {
-                item.Tag = (await GitHub.FileSystem.MoveDirectoryAsync(oldPath, newPath, cts)).Content;
+                item.Tag = (await GitHub.FileSystem.MoveDirectoryAsync(oldPath, newPath, $"Rename directory `{oldPath}` into `{itemText}` by {Repository.Owner}", cts)).Content;
 
                 if (initPath.Equals(FileSystem.CurrentPath, StringComparison.OrdinalIgnoreCase))
                 {
@@ -1797,7 +1793,7 @@ namespace WinPaletter.GitHub
 
             try
             {
-                item.Tag = (await GitHub.FileSystem.MoveFileAsync(oldPath, newPath, cts)).Content;
+                item.Tag = (await GitHub.FileSystem.MoveFileAsync(oldPath, newPath, $"Rename file `{oldPath}` into `{itemText}` by {Repository.Owner}", cts)).Content;
 
                 if (parentDirPath.Equals(FileSystem.CurrentPath, StringComparison.OrdinalIgnoreCase))
                 {
@@ -1819,7 +1815,7 @@ namespace WinPaletter.GitHub
             }
         }
 
-        public static async void Paste()
+        public static async Task Paste()
         {
             if ((copiedItems?.Count ?? 0) > 0 || (cutItems?.Count ?? 0) > 0)
             {
@@ -1863,7 +1859,7 @@ namespace WinPaletter.GitHub
                         }
                         else
                         {
-                            await GitHub.FileSystem.MoveFilesAsync(filePaths, destDir, cts, progress =>
+                            await GitHub.FileSystem.MoveFilesAsync(filePaths, destDir, null, cts, progress =>
                             {
                                 if (_boundbreadcrumbControl.IsMarquee) _boundbreadcrumbControl.StopMarquee();
                                 _boundbreadcrumbControl.Value = progress;
@@ -1888,7 +1884,7 @@ namespace WinPaletter.GitHub
                         }
                         else
                         {
-                            await GitHub.FileSystem.MoveDirectoriesAsync(dirPaths, destDir, cts, progress =>
+                            await GitHub.FileSystem.MoveDirectoriesAsync(dirPaths, destDir, null, cts, progress =>
                             {
                                 if (_boundbreadcrumbControl.IsMarquee) _boundbreadcrumbControl.StopMarquee();
                                 _boundbreadcrumbControl.Value = progress;
@@ -1959,11 +1955,10 @@ namespace WinPaletter.GitHub
             }
         }
 
-        public static async void Upload(string filePath)
+        public static async Task<bool> Upload(string filePath)
         {
             if (File.Exists(filePath))
             {
-                _boundbreadcrumbControl.Value = 0;
                 _boundbreadcrumbControl.StartMarquee();
 
                 string initPath = GitHub.FileSystem.CurrentPath;
@@ -1986,6 +1981,12 @@ namespace WinPaletter.GitHub
                 }
 
                 _boundbreadcrumbControl.FinishLoadingAnimation();
+
+                return uploadedEntry is not null;
+            }
+            else
+            {
+                return false;
             }
         }
 
@@ -2073,7 +2074,7 @@ namespace WinPaletter.GitHub
                 {
                     foreach (RepositoryContent rc in allDirs)
                     {
-                        if (Forms.GitHub_FileAction.ConfirmFolderDelete(rc.Name, FileSystem.Cache.GetSize(rc.Path)) == DialogResult.Yes)  dirPaths.Add(rc.Path);
+                        if (Forms.GitHub_FileAction.ConfirmFolderDelete(rc.Name, FileSystem.Cache.GetSize(rc.Path)) == DialogResult.Yes) dirPaths.Add(rc.Path);
                     }
                 }
 
@@ -2502,7 +2503,6 @@ namespace WinPaletter.GitHub
                         item.SubItems.Add(size.ToStringFileSize());
                         item.SubItems.Add(Cache.ShaToMd5(entry.Sha).ToUpper());
                         item.SubItems.Add(entry.HtmlUrl);
-                        item.SubItems.Add(entry.Content);
 
                         if (entry.Type == ContentType.Dir) item.ImageKey = "folder";
                         else if (entry.Name.EndsWith(".wpth", StringComparison.OrdinalIgnoreCase)) item.ImageKey = "wpth";

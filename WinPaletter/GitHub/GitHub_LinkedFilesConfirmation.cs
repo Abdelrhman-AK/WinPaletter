@@ -28,7 +28,7 @@ namespace WinPaletter
             label4.Font = Fonts.ConsoleMedium;
             label6.Font = Fonts.ConsoleMedium;
 
-            SystemSounds.Exclamation.Play();
+            CustomSystemSounds.Exclamation.Play();
         }
 
         public enum Operation

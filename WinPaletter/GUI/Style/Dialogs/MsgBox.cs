@@ -20,6 +20,12 @@ namespace WinPaletter.UI.Style
         private static TaskDialog _TD;
 
         /// <summary>
+        /// Represents the system-defined icon used for help or question dialogs.<br></br>
+        /// Get question icon from shell32.dll, not from the system icons as question icon is old and inconsistent with Windows 10 and higher (but consistent with Windows 8.1 and lower).
+        /// </summary>
+        private static Icon questionIcon = NativeMethods.Helpers.GetSystemIcon(Shell32.SHSTOCKICONID.HELP, Shell32.SHGSI.ICON);
+
+        /// <summary>
         /// A class instance that provides modern task dialog.
         /// </summary>
 
@@ -62,34 +68,34 @@ namespace WinPaletter.UI.Style
             }
         }
 
-        /// <summary>
-        /// Convert URLs to clickable links format
-        /// </summary>
-        /// <param name="String"></param>
-        /// <returns></returns>
-        public static string ConvertToLink(string String)
+        private static string ConvertToLink(string String)
         {
-            // If the string is null, return it as it is
             if (String == null) return String;
 
-            List<string> c = [];
+            List<string> c = new List<string>();
 
-            // Split the string by spaces
+            string urlPattern = @"^(https?:\/\/)?(www\.)?[a-zA-Z0-9\-]+(\.[a-zA-Z]{2,})+(:\d+)?(\/[^\s]*)?$";
+            string localPathPattern = @"^([a-zA-Z]:\\|\\\\)[^\s]+$";
+
             foreach (string x in String.Split(' '))
             {
-                // Check if the string is a valid URL, if so, convert it to a clickable link
-                if (Uri.IsWellFormedUriString(x, UriKind.Absolute))
+                string trimmed = x.Trim();
+
+                if (System.Text.RegularExpressions.Regex.IsMatch(trimmed, urlPattern))
                 {
-                    c.Add($"<a href=\"{x}\">{x}</a>");
+                    string url = trimmed.StartsWith("http", StringComparison.OrdinalIgnoreCase) ? trimmed : "http://" + trimmed;
+                    c.Add($"<a href=\"{url}\">{trimmed}</a>");
+                }
+                else if (System.Text.RegularExpressions.Regex.IsMatch(trimmed, localPathPattern))
+                {
+                    c.Add($"<a href=\"file:///{trimmed.Replace('\\', '/')}\" target=\"_blank\">{trimmed}</a>");
                 }
                 else
                 {
-                    // If the string is not a valid URL, add it as it is
-                    c.Add(x);
+                    c.Add(trimmed);
                 }
             }
 
-            // Return the formatted string
             return string.Join(" ", c);
         }
 
@@ -134,10 +140,8 @@ namespace WinPaletter.UI.Style
                     };
 
                     // Get the icon of the footer
-                    if (FooterCustomIcon is null)
-                        FooterCustomIcon = System.Drawing.Icon.ExtractAssociatedIcon(Assembly.GetExecutingAssembly().Location);
-                    else
-                        TD.CustomFooterIcon = FooterCustomIcon;
+                    if (FooterCustomIcon is null) FooterCustomIcon = FormsExtensions.Icon<MainForm>();
+                    else TD.CustomFooterIcon = FooterCustomIcon;
 
                     // Create the buttons of the dialog
                     TaskDialogButton okButton = new(ButtonType.Custom) { Text = Program.Lang.Strings.General.OK, ElevationRequired = RequireElevation };
@@ -181,23 +185,27 @@ namespace WinPaletter.UI.Style
                     }
 
                     // Set information icon based on MessageBoxIcon
-                    if (Icon == MessageBoxIcon.Information) icon = TaskDialogIcon.Information;
-
+                    if (Icon == MessageBoxIcon.Information)
+                    {
+                        CustomSystemSounds.Asterisk.Play();
+                        icon = TaskDialogIcon.Information;
+                    }
                     else if (Icon == MessageBoxIcon.Question)
                     {
-                        try { SystemSounds.Exclamation.Play(); }
-                        catch { } // catch is used as an exception may be thrown if there is no sound driver installed
-
-                        // Set question icon from shell32.dll, not from the system icons as question icon is old and inconsistent with Windows 10 and higher (but consistent with Windows 8.1 and lower)
+                        CustomSystemSounds.Question.Play();
                         icon = TaskDialogIcon.Custom;
-
-                        TD.CustomMainIcon = NativeMethods.Helpers.GetSystemIcon(Shell32.SHSTOCKICONID.HELP, Shell32.SHGSI.ICON);
+                        TD.CustomMainIcon = questionIcon;
                     }
-
-                    else if (Icon == MessageBoxIcon.Error) icon = TaskDialogIcon.Error;
-
-                    else if (Icon == MessageBoxIcon.Exclamation) icon = TaskDialogIcon.Warning;
-
+                    else if (Icon == MessageBoxIcon.Error)
+                    {
+                        CustomSystemSounds.Hand.Play();
+                        icon = TaskDialogIcon.Error;
+                    }
+                    else if (Icon == MessageBoxIcon.Exclamation)
+                    {
+                        CustomSystemSounds.Exclamation.Play();
+                        icon = TaskDialogIcon.Warning;
+                    }
                     else icon = TaskDialogIcon.Custom;
 
                     // Set the icon of the dialog

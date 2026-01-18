@@ -24,12 +24,12 @@ namespace WinPaletter.GitHub
         /// <summary>
         /// Gets the authenticated user login name (repository owner).
         /// </summary>
-        private static string _owner => User.GitHub.Login;
+        public static string Owner => User.GitHub.Login;
 
         /// <summary>
         /// Original owner of WinPaletter Themes repository
         /// </summary>
-        public const string originalOwner = "Abdelrhman-AK";
+        public static string OriginalOwner { get; } = "Abdelrhman-AK";
 
         /// <summary>
         /// The default repository name for WinPaletter Store.
@@ -52,18 +52,18 @@ namespace WinPaletter.GitHub
 
             try
             {
-                Octokit.Repository repo = await _client.Repository.Get(_owner, repository).ConfigureAwait(false);
+                Octokit.Repository repo = await _client.Repository.Get(Owner, repository).ConfigureAwait(false);
                 Program.Log?.Write(LogEventLevel.Information, $"Repository found: {repo.FullName}");
                 return true;
             }
             catch (NotFoundException)
             {
-                Program.Log?.Write(LogEventLevel.Information, $"Repository not found: {_owner}/{repository}");
+                Program.Log?.Write(LogEventLevel.Information, $"Repository not found: {Owner}/{repository}");
                 return false;
             }
             catch (Exception ex)
             {
-                Program.Log?.Write(LogEventLevel.Error, $"Error checking repository {_owner}/{repository}", ex);
+                Program.Log?.Write(LogEventLevel.Error, $"Error checking repository {Owner}/{repository}", ex);
                 return false;
             }
         }
@@ -85,13 +85,13 @@ namespace WinPaletter.GitHub
 
             try
             {
-                Octokit.Repository forked = await _client.Repository.Forks.Create(originalOwner, repository, new()).ConfigureAwait(false);
+                Octokit.Repository forked = await _client.Repository.Forks.Create(OriginalOwner, repository, new()).ConfigureAwait(false);
                 Program.Log?.Write(LogEventLevel.Information, $"Forked repository: {forked.FullName}");
                 return forked;
             }
             catch (Exception ex)
             {
-                Program.Log?.Write(LogEventLevel.Error, $"Error forking repository {_owner}/{repository}", ex);
+                Program.Log?.Write(LogEventLevel.Error, $"Error forking repository {Owner}/{repository}", ex);
                 return null;
             }
         }
@@ -113,13 +113,13 @@ namespace WinPaletter.GitHub
 
             try
             {
-                NewPullRequest newPR = new(title, $"{_owner}:{Branch.Name}", "main") { Body = body };
-                PullRequest pr = await _client.PullRequest.Create(originalOwner, Name, newPR).ConfigureAwait(false);
+                NewPullRequest newPR = new(title, $"{Owner}:{Branch.Name}", "main") { Body = body };
+                PullRequest pr = await _client.PullRequest.Create(OriginalOwner, Name, newPR).ConfigureAwait(false);
                 Program.Log?.Write(LogEventLevel.Information, $"Pull request created: {pr.HtmlUrl}");
             }
             catch (Exception ex)
             {
-                Program.Log?.Write(LogEventLevel.Error, $"Error creating pull request to {originalOwner}/{Name}", ex);
+                Program.Log?.Write(LogEventLevel.Error, $"Error creating pull request to {OriginalOwner}/{Name}", ex);
             }
         }
 
@@ -157,14 +157,14 @@ namespace WinPaletter.GitHub
             {
                 // Get current branch reference
                 var branchRef = await _client.Git.Reference.Get(
-                    _owner,
+                    Owner,
                     Name,
                     $"heads/{Branch.Name}"
                 ).ConfigureAwait(false);
 
                 // Get latest commit
                 var commit = await _client.Git.Commit.Get(
-                    _owner,
+                    Owner,
                     Name,
                     branchRef.Object.Sha
                 ).ConfigureAwait(false);
@@ -187,7 +187,7 @@ namespace WinPaletter.GitHub
                     }
 
                     var blob = await _client.Git.Blob.Create(
-                        _owner,
+                        Owner,
                         Name,
                         new NewBlob
                         {
@@ -217,14 +217,14 @@ namespace WinPaletter.GitHub
                 }
 
                 var createdTree = await _client.Git.Tree.Create(
-                    _owner,
+                    Owner,
                     Name,
                     newTree
                 ).ConfigureAwait(false);
 
                 // Create commit
                 var newCommit = await _client.Git.Commit.Create(
-                    _owner,
+                    Owner,
                     Name,
                     new NewCommit(
                         message,
@@ -235,7 +235,7 @@ namespace WinPaletter.GitHub
 
                 // Update branch ref
                 await _client.Git.Reference.Update(
-                    _owner,
+                    Owner,
                     Name,
                     $"heads/{Branch.Name}",
                     new ReferenceUpdate(newCommit.Sha)
@@ -269,17 +269,17 @@ namespace WinPaletter.GitHub
             {
                 // Branch must exist on fork
                 await _client.Git.Reference.Get(
-                    _owner,
+                    Owner,
                     Name,
                     $"heads/{Branch.Name}"
                 ).ConfigureAwait(false);
 
                 // Must have commits
                 var compare = await _client.Repository.Commit.Compare(
-                    originalOwner,
+                    OriginalOwner,
                     Name,
                     "main",
-                    $"{_owner}:{Branch.Name}"
+                    $"{Owner}:{Branch.Name}"
                 ).ConfigureAwait(false);
 
                 if (compare.TotalCommits == 0)
@@ -290,12 +290,12 @@ namespace WinPaletter.GitHub
 
                 // No duplicate PR
                 var prs = await _client.PullRequest.GetAllForRepository(
-                    originalOwner,
+                    OriginalOwner,
                     Name,
                     new PullRequestRequest
                     {
                         State = ItemStateFilter.Open,
-                        Head = $"{_owner}:{Branch.Name}",
+                        Head = $"{Owner}:{Branch.Name}",
                         Base = "main"
                     }
                 ).ConfigureAwait(false);

@@ -42,7 +42,7 @@ namespace WinPaletter
             Button1.Enabled = true;
             Button2.Enabled = true;
 
-            SystemSounds.Beep.Play();
+            CustomSystemSounds.Beep.Play();
 
             textBox2.Select();
             textBox2.Focus();

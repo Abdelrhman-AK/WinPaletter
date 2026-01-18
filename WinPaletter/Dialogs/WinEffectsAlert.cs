@@ -20,7 +20,7 @@ namespace WinPaletter.Dialogs
             checkBox1.Checked = !Program.Settings.ThemeApplyingBehavior.Show_WinEffects_Alert;
             Forms.GlassWindow.Show();
 
-            SystemSounds.Exclamation.Play();
+            CustomSystemSounds.Exclamation.Play();
 
             BringToFront();
             Activate();

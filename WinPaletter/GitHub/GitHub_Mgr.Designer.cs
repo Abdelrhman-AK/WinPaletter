@@ -922,7 +922,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitContainer1.Location = new System.Drawing.Point(-1, 44);
+            this.splitContainer1.Location = new System.Drawing.Point(4, 44);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -933,7 +933,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.listView1);
-            this.splitContainer1.Size = new System.Drawing.Size(995, 522);
+            this.splitContainer1.Size = new System.Drawing.Size(990, 522);
             this.splitContainer1.SplitterDistance = 178;
             this.splitContainer1.TabIndex = 1;
             // 
@@ -973,7 +973,7 @@
             this.listView1.Location = new System.Drawing.Point(0, 0);
             this.listView1.Name = "listView1";
             this.listView1.RowHeight = 24;
-            this.listView1.Size = new System.Drawing.Size(813, 522);
+            this.listView1.Size = new System.Drawing.Size(808, 522);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -1013,7 +1013,7 @@
             this.btn_download.Image = null;
             this.btn_download.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Down;
             this.btn_download.ImageGlyphEnabled = true;
-            this.btn_download.Location = new System.Drawing.Point(46, 6);
+            this.btn_download.Location = new System.Drawing.Point(47, 6);
             this.btn_download.Name = "btn_download";
             this.btn_download.Size = new System.Drawing.Size(31, 26);
             this.btn_download.TabIndex = 24;
@@ -1049,7 +1049,7 @@
             this.separatorV4.AlternativeLook = false;
             this.separatorV4.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.separatorV4.BackColor = System.Drawing.Color.Transparent;
-            this.separatorV4.Location = new System.Drawing.Point(268, 6);
+            this.separatorV4.Location = new System.Drawing.Point(269, 6);
             this.separatorV4.Name = "separatorV4";
             this.separatorV4.Size = new System.Drawing.Size(1, 26);
             this.separatorV4.TabIndex = 21;
@@ -1066,7 +1066,7 @@
             this.btn_rename.Image = null;
             this.btn_rename.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Rename;
             this.btn_rename.ImageGlyphEnabled = true;
-            this.btn_rename.Location = new System.Drawing.Point(194, 6);
+            this.btn_rename.Location = new System.Drawing.Point(195, 6);
             this.btn_rename.Name = "btn_rename";
             this.btn_rename.Size = new System.Drawing.Size(31, 26);
             this.btn_rename.TabIndex = 4;
@@ -1084,7 +1084,7 @@
             this.btn_delete.Image = null;
             this.btn_delete.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Delete;
             this.btn_delete.ImageGlyphEnabled = true;
-            this.btn_delete.Location = new System.Drawing.Point(231, 6);
+            this.btn_delete.Location = new System.Drawing.Point(232, 6);
             this.btn_delete.Name = "btn_delete";
             this.btn_delete.Size = new System.Drawing.Size(31, 26);
             this.btn_delete.TabIndex = 1;
@@ -1102,7 +1102,7 @@
             this.btn_paste.Image = null;
             this.btn_paste.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Paste_16;
             this.btn_paste.ImageGlyphEnabled = true;
-            this.btn_paste.Location = new System.Drawing.Point(157, 6);
+            this.btn_paste.Location = new System.Drawing.Point(158, 6);
             this.btn_paste.Name = "btn_paste";
             this.btn_paste.Size = new System.Drawing.Size(31, 26);
             this.btn_paste.TabIndex = 0;
@@ -1120,7 +1120,7 @@
             this.btn_copy.Image = null;
             this.btn_copy.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Copy;
             this.btn_copy.ImageGlyphEnabled = true;
-            this.btn_copy.Location = new System.Drawing.Point(120, 6);
+            this.btn_copy.Location = new System.Drawing.Point(121, 6);
             this.btn_copy.Name = "btn_copy";
             this.btn_copy.Size = new System.Drawing.Size(31, 26);
             this.btn_copy.TabIndex = 2;
@@ -1138,7 +1138,7 @@
             this.btn_cut.Image = null;
             this.btn_cut.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Cut;
             this.btn_cut.ImageGlyphEnabled = true;
-            this.btn_cut.Location = new System.Drawing.Point(83, 6);
+            this.btn_cut.Location = new System.Drawing.Point(84, 6);
             this.btn_cut.Name = "btn_cut";
             this.btn_cut.Size = new System.Drawing.Size(31, 26);
             this.btn_cut.TabIndex = 20;
@@ -1155,7 +1155,7 @@
             this.btn_new.Image = null;
             this.btn_new.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Add;
             this.btn_new.ImageGlyphEnabled = true;
-            this.btn_new.Location = new System.Drawing.Point(9, 6);
+            this.btn_new.Location = new System.Drawing.Point(10, 6);
             this.btn_new.Name = "btn_new";
             this.btn_new.Size = new System.Drawing.Size(31, 26);
             this.btn_new.TabIndex = 19;
@@ -1208,7 +1208,7 @@
             this.button7.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button7.ImageGlyph = null;
             this.button7.ImageGlyphEnabled = true;
-            this.button7.Location = new System.Drawing.Point(275, 6);
+            this.button7.Location = new System.Drawing.Point(276, 6);
             this.button7.Name = "button7";
             this.button7.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.button7.Size = new System.Drawing.Size(78, 26);

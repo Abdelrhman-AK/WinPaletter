@@ -29,7 +29,7 @@ namespace WinPaletter
 
             Forms.GlassWindow.Show();
 
-            SystemSounds.Exclamation.Play();
+            CustomSystemSounds.Exclamation.Play();
 
             BringToFront();
         }
