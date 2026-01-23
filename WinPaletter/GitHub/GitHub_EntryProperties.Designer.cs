@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GitHub_EntryProperties));
             this.bottom_buttons = new WinPaletter.UI.WP.GroupBox();
             this.button3 = new WinPaletter.UI.WP.Button();
             this.button2 = new WinPaletter.UI.WP.Button();
@@ -36,6 +37,7 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabControl1 = new WinPaletter.UI.WP.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.progressBar1 = new WinPaletter.UI.WP.ProgressBar();
             this.textBox2 = new WinPaletter.UI.WP.TextBox();
             this.label14 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
@@ -72,6 +74,22 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabControl2 = new WinPaletter.UI.WP.TabControl();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.label29 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.separatorH6 = new WinPaletter.UI.WP.SeparatorH();
+            this.label28 = new System.Windows.Forms.Label();
+            this.separatorH7 = new WinPaletter.UI.WP.SeparatorH();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.button6 = new WinPaletter.UI.WP.Button();
+            this.button7 = new WinPaletter.UI.WP.Button();
+            this.listView2 = new WinPaletter.UI.WP.ListView();
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.bottom_buttons.SuspendLayout();
             this.tablessControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -81,6 +99,9 @@
             this.tabPage4.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabControl2.SuspendLayout();
+            this.tabPage5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.tabPage6.SuspendLayout();
             this.SuspendLayout();
             // 
             // bottom_buttons
@@ -196,6 +217,7 @@
             // tabPage3
             // 
             this.tabPage3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.tabPage3.Controls.Add(this.progressBar1);
             this.tabPage3.Controls.Add(this.textBox2);
             this.tabPage3.Controls.Add(this.label14);
             this.tabPage3.Controls.Add(this.label11);
@@ -230,20 +252,34 @@
             this.tabPage3.TabIndex = 0;
             this.tabPage3.Text = "General";
             // 
+            // progressBar1
+            // 
+            this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBar1.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Circle;
+            this.progressBar1.BackColor = System.Drawing.Color.Transparent;
+            this.progressBar1.Location = new System.Drawing.Point(371, 234);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(31, 31);
+            this.progressBar1.State = WinPaletter.UI.WP.ProgressBar.ProgressBarState.Normal;
+            this.progressBar1.Style = WinPaletter.UI.WP.ProgressBar.ProgressBarStyle.Marquee;
+            this.progressBar1.TabIndex = 36;
+            this.progressBar1.TaskbarBroadcast = true;
+            this.progressBar1.Visible = false;
+            // 
             // textBox2
             // 
             this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox2.Location = new System.Drawing.Point(87, 321);
             this.textBox2.MaxLength = 32767;
-            this.textBox2.Multiline = false;
+            this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
             this.textBox2.ReadOnly = true;
-            this.textBox2.Scrollbars = System.Windows.Forms.ScrollBars.None;
+            this.textBox2.Scrollbars = System.Windows.Forms.ScrollBars.Vertical;
             this.textBox2.SelectedText = "";
             this.textBox2.SelectionLength = 0;
             this.textBox2.SelectionStart = 0;
-            this.textBox2.Size = new System.Drawing.Size(315, 24);
+            this.textBox2.Size = new System.Drawing.Size(315, 72);
             this.textBox2.TabIndex = 35;
             this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.textBox2.UseSystemPasswordChar = false;
@@ -352,11 +388,11 @@
             this.checkBox1.Checked = false;
             this.checkBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.checkBox1.ForeColor = System.Drawing.Color.White;
-            this.checkBox1.Location = new System.Drawing.Point(90, 362);
+            this.checkBox1.Location = new System.Drawing.Point(90, 408);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(87, 24);
             this.checkBox1.TabIndex = 23;
-            this.checkBox1.Text = "Read-only";
+            this.checkBox1.Text = "Hidden";
             // 
             // separatorH5
             // 
@@ -364,7 +400,7 @@
             this.separatorH5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.separatorH5.BackColor = System.Drawing.Color.Transparent;
-            this.separatorH5.Location = new System.Drawing.Point(6, 394);
+            this.separatorH5.Location = new System.Drawing.Point(6, 440);
             this.separatorH5.Name = "separatorH5";
             this.separatorH5.Size = new System.Drawing.Size(396, 1);
             this.separatorH5.TabIndex = 22;
@@ -374,7 +410,7 @@
             // label16
             // 
             this.label16.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(6, 362);
+            this.label16.Location = new System.Drawing.Point(6, 408);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(75, 24);
             this.label16.TabIndex = 18;
@@ -387,7 +423,7 @@
             this.separatorH4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.separatorH4.BackColor = System.Drawing.Color.Transparent;
-            this.separatorH4.Location = new System.Drawing.Point(6, 353);
+            this.separatorH4.Location = new System.Drawing.Point(6, 399);
             this.separatorH4.Name = "separatorH4";
             this.separatorH4.Size = new System.Drawing.Size(396, 1);
             this.separatorH4.TabIndex = 17;
@@ -620,6 +656,7 @@
             this.listView1.TabIndex = 248;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
+            this.listView1.DoubleClick += new System.EventHandler(this.listView1_DoubleClick);
             // 
             // columnHeader1
             // 
@@ -645,6 +682,7 @@
             // tabControl2
             // 
             this.tabControl2.Controls.Add(this.tabPage5);
+            this.tabControl2.Controls.Add(this.tabPage6);
             this.tabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl2.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
             this.tabControl2.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -659,12 +697,218 @@
             // tabPage5
             // 
             this.tabPage5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.tabPage5.Controls.Add(this.label29);
+            this.tabPage5.Controls.Add(this.label21);
+            this.tabPage5.Controls.Add(this.label22);
+            this.tabPage5.Controls.Add(this.label23);
+            this.tabPage5.Controls.Add(this.label24);
+            this.tabPage5.Controls.Add(this.label26);
+            this.tabPage5.Controls.Add(this.separatorH6);
+            this.tabPage5.Controls.Add(this.label28);
+            this.tabPage5.Controls.Add(this.separatorH7);
+            this.tabPage5.Controls.Add(this.pictureBox2);
             this.tabPage5.Location = new System.Drawing.Point(4, 32);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage5.Size = new System.Drawing.Size(412, 446);
             this.tabPage5.TabIndex = 0;
             this.tabPage5.Text = "General";
+            // 
+            // label29
+            // 
+            this.label29.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label29.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label29.Location = new System.Drawing.Point(60, 18);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(342, 24);
+            this.label29.TabIndex = 42;
+            this.label29.Text = "0";
+            this.label29.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label21
+            // 
+            this.label21.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label21.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label21.Location = new System.Drawing.Point(87, 138);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(315, 24);
+            this.label21.TabIndex = 39;
+            this.label21.Text = "0";
+            this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label22
+            // 
+            this.label22.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label22.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label22.Location = new System.Drawing.Point(87, 109);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(315, 24);
+            this.label22.TabIndex = 38;
+            this.label22.Text = "0";
+            this.label22.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label23
+            // 
+            this.label23.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label23.Location = new System.Drawing.Point(6, 138);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(75, 24);
+            this.label23.TabIndex = 37;
+            this.label23.Text = "Size:";
+            this.label23.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label24
+            // 
+            this.label24.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label24.Location = new System.Drawing.Point(6, 109);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(75, 24);
+            this.label24.TabIndex = 36;
+            this.label24.Text = "Location:";
+            this.label24.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label26
+            // 
+            this.label26.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label26.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label26.Location = new System.Drawing.Point(87, 67);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(315, 24);
+            this.label26.TabIndex = 34;
+            this.label26.Text = "Multiple types";
+            this.label26.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // separatorH6
+            // 
+            this.separatorH6.AlternativeLook = false;
+            this.separatorH6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.separatorH6.BackColor = System.Drawing.Color.Transparent;
+            this.separatorH6.Location = new System.Drawing.Point(6, 100);
+            this.separatorH6.Name = "separatorH6";
+            this.separatorH6.Size = new System.Drawing.Size(396, 1);
+            this.separatorH6.TabIndex = 33;
+            this.separatorH6.TabStop = false;
+            this.separatorH6.Text = "separatorH6";
+            // 
+            // label28
+            // 
+            this.label28.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label28.Location = new System.Drawing.Point(6, 67);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(75, 24);
+            this.label28.TabIndex = 31;
+            this.label28.Text = "Type:";
+            this.label28.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // separatorH7
+            // 
+            this.separatorH7.AlternativeLook = false;
+            this.separatorH7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.separatorH7.BackColor = System.Drawing.Color.Transparent;
+            this.separatorH7.Location = new System.Drawing.Point(6, 60);
+            this.separatorH7.Name = "separatorH7";
+            this.separatorH7.Size = new System.Drawing.Size(396, 1);
+            this.separatorH7.TabIndex = 30;
+            this.separatorH7.TabStop = false;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(6, 6);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(48, 48);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox2.TabIndex = 28;
+            this.pictureBox2.TabStop = false;
+            // 
+            // tabPage6
+            // 
+            this.tabPage6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.tabPage6.Controls.Add(this.button6);
+            this.tabPage6.Controls.Add(this.button7);
+            this.tabPage6.Controls.Add(this.listView2);
+            this.tabPage6.Location = new System.Drawing.Point(4, 32);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(412, 446);
+            this.tabPage6.TabIndex = 1;
+            this.tabPage6.Text = "Details";
+            // 
+            // button6
+            // 
+            this.button6.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.button6.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.button6.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button6.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button6.ForeColor = System.Drawing.Color.White;
+            this.button6.Image = null;
+            this.button6.ImageGlyph = null;
+            this.button6.ImageGlyphEnabled = false;
+            this.button6.Location = new System.Drawing.Point(7, 411);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(196, 31);
+            this.button6.TabIndex = 253;
+            this.button6.Text = "Copy as JSON";
+            this.button6.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.button6.UseVisualStyleBackColor = false;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
+            // button7
+            // 
+            this.button7.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.button7.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.button7.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button7.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button7.ForeColor = System.Drawing.Color.White;
+            this.button7.Image = null;
+            this.button7.ImageGlyph = null;
+            this.button7.ImageGlyphEnabled = false;
+            this.button7.Location = new System.Drawing.Point(209, 411);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(196, 31);
+            this.button7.TabIndex = 252;
+            this.button7.Text = "Save as JSON";
+            this.button7.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.button7.UseVisualStyleBackColor = false;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
+            // listView2
+            // 
+            this.listView2.AllowColumnReorder = true;
+            this.listView2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listView2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.listView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader3,
+            this.columnHeader4});
+            this.listView2.FullRowSelect = true;
+            this.listView2.HideSelection = false;
+            this.listView2.LabelEdit = true;
+            this.listView2.Location = new System.Drawing.Point(3, 5);
+            this.listView2.MultiSelect = false;
+            this.listView2.Name = "listView2";
+            this.listView2.RowHeight = 28;
+            this.listView2.Size = new System.Drawing.Size(406, 400);
+            this.listView2.TabIndex = 251;
+            this.listView2.UseCompatibleStateImageBehavior = false;
+            this.listView2.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Property";
+            this.columnHeader3.Width = 130;
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "Value";
+            this.columnHeader4.Width = 250;
             // 
             // GitHub_EntryProperties
             // 
@@ -693,6 +937,9 @@
             this.tabPage4.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabControl2.ResumeLayout(false);
+            this.tabPage5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            this.tabPage6.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -743,5 +990,22 @@
         private UI.WP.TextBox textBox2;
         internal UI.WP.Button button5;
         internal UI.WP.Button button4;
+        private UI.WP.ProgressBar progressBar1;
+        private System.Windows.Forms.Label label29;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label label26;
+        private UI.WP.SeparatorH separatorH6;
+        private System.Windows.Forms.Label label28;
+        private UI.WP.SeparatorH separatorH7;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.TabPage tabPage6;
+        internal UI.WP.Button button6;
+        internal UI.WP.Button button7;
+        private UI.WP.ListView listView2;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
     }
 }

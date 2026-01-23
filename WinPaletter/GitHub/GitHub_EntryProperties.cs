@@ -30,54 +30,144 @@ namespace WinPaletter
         {
             ApplyStyle(this);
             this.LoadLanguage();
+
+            textBox2.Font = Fonts.ConsoleMedium;
         }
 
-        public async void Load_Entry(ListViewItem listViewItem)
+        public void Load_Entries(List<ListViewItem> listViewItems)
+        {
+            if (listViewItems is null || listViewItems.Count == 0) return;
+            if (listViewItems.Count == 1)
+            {
+                Load_Entry(listViewItems[0]);
+                return;
+            }
+
+            progressBar1.Visible = false;
+            tablessControl1.SelectedIndex = 1;
+
+            Icon?.Dispose();
+            Icon = Assets.GitHubMgr.MultipleFiles;
+
+            listView2.Items.Clear();
+
+            int files = listViewItems.Count(i => i.Tag is RepositoryContent rc && rc.Type == ContentType.File);
+            int dirs = listViewItems.Count(i => i.Tag is RepositoryContent rc && rc.Type == ContentType.Dir);
+
+            label29.Text = $"{files} {Program.Lang.Strings.Extensions.Files}, {dirs} {Program.Lang.Strings.Extensions.Folders}";
+
+            long size = 0;
+            foreach (var item in listViewItems)
+            {
+                if (item.Tag is RepositoryContent rc)
+                {
+                    size += GitHub.FileSystem.Cache.GetSize(rc.Path);
+                    AddPropertiesRecursive(rc, listView2, rc.Name);
+                }
+            }
+
+            label21.Text = $"{size} {Program.Lang.Strings.General.BytesSize} ({size.ToStringFileSize()})";
+
+            if (listViewItems[0].Tag is RepositoryContent rc_default)
+            {
+                label22.Text = GitHub.FileSystem.GetParent(rc_default.Path);
+            }
+
+            Task.Run(async () =>
+            {
+                Invoke(() => progressBar1.Visible = true);
+
+                foreach (var item in listViewItems)
+                {
+                    if (item.Tag is RepositoryContent rcx)
+                    {
+                        IReadOnlyList<GitHubCommit> commits = await Program.GitHub.Client.Repository.Commit.GetAll(GitHub.Repository.Owner, GitHub.Repository.Name, new CommitRequest { Path = rcx.Path, Sha = GitHub.Repository.Branch.Name });
+                        GitHubCommit latestCommit = commits.First();
+
+                        Invoke(() =>
+                        {
+                            if (latestCommit is not null) AddPropertiesRecursive(latestCommit, listView2, rcx.Name);
+                        });
+                    }
+                }
+            });
+
+            ShowDialog();
+        }
+
+        public void Load_Entry(ListViewItem listViewItem)
         {
             if (listViewItem is null) return;
             if (listViewItem.Tag is not Octokit.RepositoryContent content) return;
             boundListViewItem = listViewItem;
 
+            tablessControl1.SelectedIndex = 0;
+
             this.rc = content;
             this.Text = string.Format(Program.Lang.Strings.General.Properties_Entry, content.Name);
-
-            IReadOnlyList<GitHubCommit> commits = await Program.GitHub.Client.Repository.Commit.GetAll(GitHub.Repository.Owner, GitHub.Repository.Name, new CommitRequest { Path = content.Path, Sha = GitHub.Repository.Branch.Name });
-            GitHubCommit latestCommit = commits.First();
 
             pictureBox1.Image?.Dispose();
             pictureBox1.Image = listViewItem.ListView.LargeImageList.Images[listViewItem.ImageKey.Replace("ghost_", "")];
 
             Icon?.Dispose();
-            Icon = NativeMethods.Shell32.GetIconFromExtension(GitHub.FileSystem.GetExtension(content.Name), NativeMethods.Shell32.IconSize.Small) ?? NativeMethods.Helpers.GetSystemIcon(Shell32.SHSTOCKICONID.FOLDER, Shell32.SHGSI.ICON);
+
+            if (content.Type == ContentType.File)
+            {
+                Icon = NativeMethods.Shell32.GetIconFromExtension(GitHub.FileSystem.GetExtension(content.Name), NativeMethods.Shell32.IconSize.Small);
+                label4.Text = GitHub.FileSystem.GetExtension(content.Name);
+                label3.Text = GitHub.FileSystem.FileTypeProvider.Invoke(content) ?? Program.Lang.Strings.General.Unknown;
+            }
+            else if (content.Type == ContentType.Dir)
+            {
+                Icon = Assets.GitHubMgr.folder_web_16.ToIcon();
+                label4.Text = Program.Lang.Strings.Extensions.Folder;
+                label3.Text = Program.Lang.Strings.Extensions.Folder;
+            }
 
             textBox1.Text = content.Name.Remove(0, content.Name.StartsWith(".") ? 1 : 0);
             label6.Text = content.Path;
             label15.Text = content.Sha;
             label18.Text = content.Encoding ?? Program.Lang.Strings.General.Unknown;
-            label5.Text = $"{content.Size} {Program.Lang.Strings.General.BytesSize} ({content.Size.ToStringFileSize()})";
-            label4.Text = GitHub.FileSystem.GetExtension(content.Name);
-            label3.Text = GitHub.FileSystem.FileTypeProvider.Invoke(content) ?? Program.Lang.Strings.General.Unknown;
-
-            if (latestCommit is not null)
-            {
-                label9.Text = latestCommit.Commit.Author.Name;
-                label11.Text = Forms.GitHub_Mgr.ToFriendlyString(latestCommit.Commit.Author.Date);
-                textBox2.Text = latestCommit.Commit.Message.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries)[0];
-            }
-            else
-            {
-                label9.Text = Program.Lang.Strings.General.Unknown;
-                label11.Text = Program.Lang.Strings.General.Unknown;
-                textBox2.Text = Program.Lang.Strings.General.Unknown;
-            }
+            label5.Text = $"{GitHub.FileSystem.Cache.GetSize(content.Path)} {Program.Lang.Strings.General.BytesSize} ({GitHub.FileSystem.Cache.GetSize(content.Path).ToStringFileSize()})";
 
             checkBox1.Checked = content.Name.StartsWith(".");
             previousReadOnlyState = checkBox1.Checked;
 
+            label9.Text = string.Empty;
+            label11.Text = string.Empty;
+            textBox2.Text = string.Empty;
+
             // Advanced details
             listView1.Items.Clear();
             AddPropertiesRecursive(content, listView1);
-            if (latestCommit is not null) AddPropertiesRecursive(latestCommit, listView1);
+
+            Task.Run(async () =>
+            {
+                Invoke(() => progressBar1.Visible = true);
+
+                IReadOnlyList<GitHubCommit> commits = await Program.GitHub.Client.Repository.Commit.GetAll(GitHub.Repository.Owner, GitHub.Repository.Name, new CommitRequest { Path = content.Path, Sha = GitHub.Repository.Branch.Name });
+                GitHubCommit latestCommit = commits.First();
+
+                Invoke(() => 
+                {
+                    if (latestCommit is not null)
+                    {
+                        label9.Text = latestCommit.Commit.Author.Name;
+                        label11.Text = Forms.GitHub_Mgr.ToFriendlyString(latestCommit.Commit.Author.Date);
+                        textBox2.Text = latestCommit.Commit.Message;
+                    }
+                    else
+                    {
+                        label9.Text = Program.Lang.Strings.General.Unknown;
+                        label11.Text = Program.Lang.Strings.General.Unknown;
+                        textBox2.Text = Program.Lang.Strings.General.Unknown;
+                    }
+
+                    progressBar1.Visible = false;
+
+                    if (latestCommit is not null) AddPropertiesRecursive(latestCommit, listView1);
+                });
+            });
 
             ShowDialog();
         }
@@ -182,6 +272,27 @@ namespace WinPaletter
         private void button5_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(listView1.ToJson());
+        }
+
+        private void listView1_DoubleClick(object sender, EventArgs e)
+        {
+            Clipboard.SetText(listView1.SelectedItems[0].SubItems[1].Text);
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Lang.Strings.Extensions.SaveJSON })
+            {
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    System.IO.File.WriteAllText(dlg.FileName, listView2.ToJson());
+                }
+            }
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(listView2.ToJson());
         }
     }
 }

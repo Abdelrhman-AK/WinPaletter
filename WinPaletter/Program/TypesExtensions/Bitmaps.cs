@@ -1541,5 +1541,27 @@ namespace WinPaletter.TypesExtensions
             }
             return bmp;
         }
+
+        /// <summary>
+        /// Converts a Bitmap to an Icon.
+        /// </summary>
+        /// <param name="bitmap"></param>
+        /// <returns></returns>
+        public static Icon ToIcon(this Bitmap bitmap)
+        {
+            if (bitmap is null) return null;
+
+            IntPtr hIcon = IntPtr.Zero;
+            try
+            {
+                hIcon = bitmap.GetHicon();
+                Icon icon = Icon.FromHandle(hIcon).Clone() as Icon; // clone to manage separately
+                return icon;
+            }
+            finally
+            {
+                if (hIcon != IntPtr.Zero) NativeMethods.User32.DestroyIcon(hIcon); // release unmanaged icon handle
+            }
+        }
     }
 }

@@ -11,22 +11,22 @@ namespace WinPaletter.GlobalVariables
         /// <summary>
         /// Monospaced font for console-like text
         /// </summary>
-        public static Font Console = new("Lucida Console", 7.5f);
+        public static Font Console { get; set; } = new("Lucida Console", 7.5f);
 
         /// <summary>
         /// Monospaced font for console-like text (medium)
         /// </summary>
-        public static Font ConsoleMedium = new("Lucida Console", 9f);
+        public static Font ConsoleMedium { get; set; } = new("Lucida Console", 9f);
 
         /// <summary>
         /// Monospaced font for console-like text (large)
         /// </summary>
-        public static Font ConsoleLarge = new("Lucida Console", 10f);
+        public static Font ConsoleLarge { get; set; } = new("Lucida Console", 10f);
 
         /// <summary>
         /// Main font for application titles
         /// </summary>
-        public static FontFamily Title = Exists("Segoe UI Variable Display") ? new("Segoe UI Variable Display") : Exists("Segoe UI") ? new("Segoe UI") : new("Trebuchet MS");
+        public static FontFamily Title { get; set; } = Exists("Segoe UI Variable Display") ? new("Segoe UI Variable Display") : Exists("Segoe UI") ? new("Segoe UI") : new("Trebuchet MS");
 
         /// <summary>
         /// Checks if a font is installed or not (by its name)

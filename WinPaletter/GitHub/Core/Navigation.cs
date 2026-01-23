@@ -1491,7 +1491,7 @@ namespace WinPaletter.GitHub
         {
             if (_boundList.SelectedItems.Count > 0)
             {
-                Forms.GitHub_EntryProperties.Load_Entry(_boundList.SelectedItems[0]);
+                Forms.GitHub_EntryProperties.Load_Entries([.. _boundList.SelectedItems.Cast<ListViewItem>()]);
             }
         }
 

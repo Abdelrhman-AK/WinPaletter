@@ -194,6 +194,11 @@ namespace WinPaletter
                     }
                 }
 
+                if (Path.GetFileName(destinationPath).StartsWith(".") && File.Exists(destinationPath))
+                {
+                    File.SetAttributes(destinationPath, File.GetAttributes(destinationPath) | FileAttributes.Hidden);
+                }
+
                 // Raise the DownloadCompleted event when the download is completed
                 OnDownloadCompleted(new(null, false, null));
             }
@@ -468,6 +473,11 @@ namespace WinPaletter
                 }
                 // Raise the DownloadCompleted event when the download is completed
                 IsBusy = false;
+
+                if (Path.GetFileName(destinationPath).StartsWith(".") && File.Exists(destinationPath))
+                {
+                    File.SetAttributes(destinationPath, File.GetAttributes(destinationPath) | FileAttributes.Hidden);
+                }
                 OnDownloadCompleted(new(null, false, new object()));
             }
             catch (OperationCanceledException)
