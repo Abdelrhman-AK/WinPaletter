@@ -90,6 +90,8 @@ namespace WinPaletter
                         });
                     }
                 }
+
+                Invoke(() => progressBar1.Visible = false);
             });
 
             ShowDialog();
@@ -163,9 +165,9 @@ namespace WinPaletter
                         textBox2.Text = Program.Lang.Strings.General.Unknown;
                     }
 
-                    progressBar1.Visible = false;
-
                     if (latestCommit is not null) AddPropertiesRecursive(latestCommit, listView1);
+
+                    progressBar1.Visible = false;
                 });
             });
 

@@ -1,14 +1,15 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Windows.Forms;
 using WinPaletter.Properties;
-using WinPaletter.UI.Controllers;
 
 namespace WinPaletter.UI.WP
 {
-    [Description("Themed TabControl for WinPaletter UI")]
+    [Description("Themed TabControl for WinPaletter UI with fade background")]
     public class TabControl : System.Windows.Forms.TabControl
     {
         public TabControl()
@@ -24,88 +25,147 @@ namespace WinPaletter.UI.WP
         }
 
         #region Variables
-        private static readonly TextureBrush Noise = new(Resources.Noise.Fade(0.6f));
+        private static readonly TextureBrush Noise = new(Resources.Noise.Fade(0.5f));
+
+        private readonly Dictionary<int, float> _tabAlpha = []; // stores 0..1 per tab
+        private int _lastSelectedIndex = -1;
+        private RectangleF _currentSideTape;
+        private RectangleF _previousSideTape;
+        private RectangleF _targetSideTape;
+        private Timer _animationTimer;
+        private int _animDuration = 200;
+        private DateTime _animStartTime;
+        private int _prevAnimatedIndex = -1; // previous tab being animated
+
         #endregion
 
-        #region Events/Overrides
-
-        protected override void OnDragEnter(DragEventArgs e)
+        #region Overrides
+        protected override void OnHandleCreated(EventArgs e)
         {
-            base.OnDragEnter(e);
-            // Set an initial effect so the cursor updates as soon as the drag enters.
-            e.Effect = e.Data.GetDataPresent(typeof(ColorItem)) ? DragDropEffects.Copy : DragDropEffects.None;
-        }
+            base.OnHandleCreated(e);
 
-        protected override void OnDragOver(DragEventArgs e)
-        {
-            base.OnDragOver(e);
-
-            if (!e.Data.GetDataPresent(typeof(ColorItem)))
+            // Initialize selected tab alpha
+            if (SelectedIndex >= 0)
             {
-                e.Effect = DragDropEffects.None;
-                return;
-            }
-
-            // Always set the allowed effect for a valid data type (so cursor updates).
-            e.Effect = DragDropEffects.Copy;
-
-            if (TabCount == 0) return;
-
-            // e.X/e.Y are screen coords — convert to client coords for GetTabRect.
-            var clientPoint = PointToClient(new Point(e.X, e.Y));
-
-            for (int i = 0; i < TabCount; i++)
-            {
-                if (i == SelectedIndex) continue;
-
-                var tabRect = GetTabRect(i); // bounding rectangle for that tab button.
-                if (tabRect.Contains(clientPoint))
-                {
-                    SelectedIndex = i;    // only change when different
-                                          // If you need immediate repaint of custom-drawn areas, call Invalidate() here.
-                    break;
-                }
+                _tabAlpha[SelectedIndex] = 1f;
+                _lastSelectedIndex = SelectedIndex;
+                _currentSideTape = GetSideTapeRect(SelectedIndex);
             }
         }
 
-        protected override void CreateHandle()
+        protected override void OnHandleDestroyed(EventArgs e)
         {
-            int X1 = ItemSize.Width;
-            int X2 = ItemSize.Height;
+            // Clean up timer
+            if (_animationTimer != null)
+            {
+                _animationTimer.Stop();
+                _animationTimer.Tick -= AnimationTick;
+                _animationTimer.Dispose();
+                _animationTimer = null;
+            }
+            base.OnHandleDestroyed(e);
+        }
 
-            if (Alignment == TabAlignment.Top | Alignment == TabAlignment.Bottom)
+        protected override void OnSelectedIndexChanged(EventArgs e)
+        {
+            if (SelectedIndex < 0) return;
+
+            // Stop animation if running
+            _animationTimer?.Stop();
+
+            // Prepare previous tab for fade-out
+            _prevAnimatedIndex = _lastSelectedIndex != SelectedIndex ? _lastSelectedIndex : -1;
+
+            // Reset alpha for new tab, keep old tab's current alpha
+            if (!_tabAlpha.ContainsKey(SelectedIndex))
+                _tabAlpha[SelectedIndex] = 0f;
+            if (_prevAnimatedIndex != -1 && !_tabAlpha.ContainsKey(_prevAnimatedIndex))
+                _tabAlpha[_prevAnimatedIndex] = 1f;
+
+            _previousSideTape = _currentSideTape.IsEmpty ? GetSideTapeRect(SelectedIndex) : _currentSideTape;
+            _targetSideTape = GetSideTapeRect(SelectedIndex);
+
+            _animStartTime = DateTime.Now;
+
+            // Start timer
+            if (_animationTimer == null)
             {
-                if (X1 >= X2)
-                {
-                    ItemSize = new(X1, X2);
-                }
-                else
-                {
-                    ItemSize = new(X2, X1);
-                }
+                _animationTimer = new Timer { Interval = 15 };
+                _animationTimer.Tick += AnimationTick;
             }
-            else if (X2 >= X1)
-            {
-                ItemSize = new(X1, X2);
-            }
+
+            _animationTimer.Start();
+            _lastSelectedIndex = SelectedIndex;
+
+            base.OnSelectedIndexChanged(e);
+        }
+
+        #endregion
+
+        #region Animation
+        private void AnimationTick(object sender, EventArgs e)
+        {
+            float elapsed = (float)(DateTime.Now - _animStartTime).TotalMilliseconds;
+            float progress = Math.Min(elapsed / _animDuration, 1f);
+            float eased = EaseOutCubic(progress);
+
+            // Animate side tape
+            RectangleF start = _previousSideTape;
+            RectangleF end = _targetSideTape;
+
+            float x = start.X + (end.X - start.X) * eased;
+            float y = start.Y + (end.Y - start.Y) * eased;
+            float w = start.Width + (end.Width - start.Width) * eased;
+            float h = start.Height + (end.Height - start.Height) * eased;
+
+            // Stretch effect with bounce at midpoint
+            /*
+                maxStretch	Behavior
+                0.3f	    Small stretch, barely noticeable
+                0.7         Moderate, clearly visible (current)
+                1.0f	    Very long, doubles the size at midpoint
+                1.5f	    Extreme, 150% longer at midpoint
+             */
+            float maxStretch = 1f;
+            float stretchEase = 1f - Math.Abs(0.5f - eased) * 2f;
+            float stretchFactor = maxStretch * stretchEase;
+
+            if (Alignment == TabAlignment.Left || Alignment == TabAlignment.Right)
+                h *= 1f + stretchFactor;
             else
+                w *= 1f + stretchFactor;
+
+            _currentSideTape = new RectangleF(x, y, w, h);
+
+            // Animate alpha only for current and previous tab
+            if (_prevAnimatedIndex != -1 && _prevAnimatedIndex != SelectedIndex)
+                _tabAlpha[_prevAnimatedIndex] = 1f - eased;
+
+            _tabAlpha[SelectedIndex] = eased;
+
+            Invalidate();
+
+            if (progress >= 1f)
             {
-                ItemSize = new(X2, X1);
+                // Finalize
+                _tabAlpha.Clear();
+                _tabAlpha[SelectedIndex] = 1f;
+                _currentSideTape = _targetSideTape;
+                _prevAnimatedIndex = -1;
+                _animationTimer.Stop();
             }
-
-            base.CreateHandle();
         }
 
-        protected override void Dispose(bool disposing)
+        private float EaseOutCubic(float t)
         {
-            base.Dispose(disposing);
+            t -= 1f;
+            return t * t * t + 1f;
         }
-
         #endregion
 
+        #region Painting
         protected override void OnPaintBackground(PaintEventArgs pevent)
         {
-            //Leave it empty to make control background transparent
             base.OnPaintBackground(pevent);
         }
 
@@ -115,137 +175,114 @@ namespace WinPaletter.UI.WP
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
 
-            //Makes background drawn properly, and transparent
             InvokePaintBackground(this, e);
 
             Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
-
             G.Clear(this.GetParentColor());
 
-            Color SelectedColor = scheme.Colors.Back_Checked;
-            Color SelectedColor2 = scheme.Colors.Back_Checked_Hover;
-            Color SideTabeColor = scheme.Colors.ForeColor_Accent;
-            bool RTL = (int)RightToLeft == 1;
-            Image img = null;
+            Color sideTapeColor = scheme.Colors.ForeColor_Accent;
+            Color bgColor = scheme.Colors.Back_Hover();
+            Color lnColor = scheme.Colors.Line_Hover();
+            bool RTL = RightToLeft == RightToLeft.Yes;
 
-            for (int i = 0; i <= TabPages.Count - 1; i++)
+            for (int i = 0; i < TabPages.Count; i++)
             {
-                Color TextColor = ForeColor;
+                RectangleF tabRect = GetTabRect(i);
+                Color textColor = ForeColor;
 
-                float SideTapeW = 3;
-                float SideTapeH = G.MeasureString(TabPages[i].Text, Font).Width;
-                RectangleF TabRect = GetTabRect(i);
-                RectangleF SideTape = new(TabRect.X + (TabRect.Width - SideTapeH) / 2, TabRect.Y, SideTapeH, SideTapeW);
-
-                if (Alignment == TabAlignment.Right | Alignment == TabAlignment.Left)
+                float alpha = _tabAlpha.ContainsKey(i) ? _tabAlpha[i] : 0f;
+                if (alpha > 0)
                 {
-                    SideTapeH = TabRect.Height * 0.45f;
-                    SideTape = new(!RTL ? TabRect.X + 4 : TabRect.X + TabRect.Width - 6, TabRect.Y + (TabRect.Height - SideTapeH) / 2f, SideTapeW, SideTapeH);
-                }
-                else if (Alignment == TabAlignment.Top)
-                {
-                    SideTape = new(TabRect.X + (TabRect.Width - SideTapeH) / 2, TabRect.Y + TabRect.Height - SideTapeW - 1, SideTapeH, SideTapeW);
+                    using (SolidBrush br = new(Color.FromArgb((int)(alpha * 255), bgColor)))
+                    using (Pen p = new(Color.FromArgb((int)(alpha * 255), lnColor)))
+                    {
+                        G.FillRoundedRect(br, tabRect);
+                        G.FillRoundedRect(Noise, tabRect);
+                        G.DrawRoundedRect(p, tabRect);
+                    }
                 }
 
-                if (ImageList is not null && i <= ImageList.Images.Count - 1)
+                // Animate side tape only for selected tab
+                if (i == SelectedIndex && _currentSideTape.Width > 0 && _currentSideTape.Height > 0)
                 {
-                    img = ImageList.Images[i];
+                    using (SolidBrush br = new(sideTapeColor))
+                    {
+                        G.FillRoundedRect(br, _currentSideTape, 2);
+                    }
                 }
 
-                if (i == SelectedIndex)
-                {
-                    using (LinearGradientBrush br = new(TabRect, SelectedColor, SelectedColor2, LinearGradientMode.ForwardDiagonal))
-                    {
-                        G.FillRoundedRect(br, TabRect);
-                    }
 
-                    G.FillRoundedRect(Noise, TabRect);
-
-                    using (SolidBrush br = new(SideTabeColor)) { G.FillRoundedRect(br, SideTape, 2); }
-
-                    using (Pen p = new(SelectedColor)) { G.DrawRoundedRectBeveled(p, TabRect); }
-
-                    TextColor = SelectedColor.IsDark() ? Color.White : Color.Black;
-                }
-
-                if (img != null)
-                {
-                    RectangleF imgRect;
-
-                    if (!RTL)
-                    {
-                        imgRect = new(TabRect.X + 10, TabRect.Y + (TabRect.Height - img.Height) / 2f + 1, img.Width, img.Height);
-                    }
-                    else
-                    {
-                        imgRect = new(TabRect.X + TabRect.Width - img.Width - 8, TabRect.Y + (TabRect.Height - img.Height) / 2f + 1, img.Width, img.Height);
-                    }
-
-                    if (Alignment == TabAlignment.Right | Alignment == TabAlignment.Left)
-                    {
-                        float xPoint = !RTL ? imgRect.X + imgRect.Width + 5 : TabRect.X;
-                        float Fixer = imgRect.Width + 15;
-
-                        RectangleF tr = new(xPoint, TabRect.Y, TabRect.Width - Fixer, TabRect.Height);
-
-                        using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat(RTL))
-                        {
-                            using (SolidBrush br = new(TextColor))
-                            {
-                                G.DrawString(TabPages[i].Text, Font, br, tr, sf);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat(RTL))
-                        {
-                            using (SolidBrush br = new(TextColor))
-                            {
-                                G.DrawString(TabPages[i].Text, Font, br, TabRect, sf);
-                            }
-                        }
-                    }
-
-                    if (RTL) img.RotateFlip(RotateFlipType.Rotate180FlipY);
-                    G.DrawImage(img, imgRect);
-                }
-
-                else
-                {
-                    if (Alignment == TabAlignment.Right | Alignment == TabAlignment.Left)
-                    {
-                        using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat(RTL))
-                        {
-                            using (SolidBrush br = new(TextColor))
-                            {
-                                float LTFixer0 = !RTL ? SideTape.Width + 7 : 0;
-                                float LTFixer1 = SideTape.Width + 7;
-
-                                float xPoint = TabRect.X + LTFixer0;
-
-                                RectangleF tr = new(xPoint, TabRect.Y + 1, TabRect.Width - LTFixer1, TabRect.Height);
-
-                                G.DrawString(TabPages[i].Text, Font, br, tr, sf);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat(RTL))
-                        {
-                            using (SolidBrush br = new(TextColor))
-                            {
-                                G.DrawString(TabPages[i].Text, Font, br, TabRect, sf);
-                            }
-                        }
-                    }
-                }
+                DrawTabTextAndIcon(G, i, tabRect, ref textColor, RTL);
             }
 
             base.OnPaint(e);
-
-
         }
+
+        private RectangleF GetSideTapeRect(int index)
+        {
+            RectangleF tabRect = GetTabRect(index);
+            float sideThickness = 3f;
+
+            if (Alignment == TabAlignment.Left || Alignment == TabAlignment.Right)
+            {
+                float sideLength = tabRect.Height * 0.45f;
+                float x = Alignment == TabAlignment.Left ? tabRect.X + 4 : tabRect.Right - 6;
+                float y = tabRect.Y + (tabRect.Height - sideLength) / 2f;
+                return new RectangleF(x, y, sideThickness, sideLength);
+            }
+            else
+            {
+                float sideLength = tabRect.Width * 0.45f;
+                float x = tabRect.X + (tabRect.Width - sideLength) / 2f;
+                float y = tabRect.Bottom - sideThickness - 1;
+                return new RectangleF(x, y, sideLength, sideThickness);
+            }
+        }
+
+        private void DrawTabTextAndIcon(Graphics g, int index, RectangleF tabRect, ref Color textColor, bool RTL)
+        {
+            Image img = (ImageList != null && index < ImageList.Images.Count) ? ImageList.Images[index] : null;
+
+            if (img != null)
+            {
+                RectangleF imgRect = !RTL
+                    ? new(tabRect.X + 10, tabRect.Y + (tabRect.Height - img.Height) / 2f + 1, img.Width, img.Height)
+                    : new(tabRect.Right - img.Width - 8, tabRect.Y + (tabRect.Height - img.Height) / 2f + 1, img.Width, img.Height);
+
+                RectangleF textRect;
+                if (Alignment == TabAlignment.Left || Alignment == TabAlignment.Right)
+                {
+                    float xPoint = !RTL ? imgRect.Right + 5 : tabRect.X;
+                    float fixer = imgRect.Width + 15;
+                    textRect = new RectangleF(xPoint, tabRect.Y, tabRect.Width - fixer, tabRect.Height);
+                    using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat(RTL))
+                    using (SolidBrush br = new(textColor))
+                        g.DrawString(TabPages[index].Text, Font, br, textRect, sf);
+                }
+                else
+                {
+                    textRect = tabRect;
+                    using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat(RTL))
+                    using (SolidBrush br = new(textColor))
+                        g.DrawString(TabPages[index].Text, Font, br, textRect, sf);
+                }
+
+                if (RTL) img.RotateFlip(RotateFlipType.Rotate180FlipY);
+                g.DrawImage(img, imgRect);
+            }
+            else
+            {
+                using (StringFormat sf = (Alignment == TabAlignment.Left || Alignment == TabAlignment.Right)
+                    ? ContentAlignment.MiddleLeft.ToStringFormat(RTL)
+                    : ContentAlignment.MiddleCenter.ToStringFormat(RTL))
+                using (SolidBrush br = new(textColor))
+                {
+                    float leftOffset = (Alignment == TabAlignment.Left || Alignment == TabAlignment.Right) ? 10 : 0;
+                    RectangleF textRect = new(tabRect.X + leftOffset, tabRect.Y, tabRect.Width - leftOffset, tabRect.Height);
+                    g.DrawString(TabPages[index].Text, Font, br, textRect, sf);
+                }
+            }
+        }
+        #endregion
     }
 }

@@ -170,29 +170,29 @@ namespace WinPaletter.GitHub
         ];
 
         // Global menu items
-        private static ToolStripMenuItem menu_view;
-        private static ToolStripSeparator separator_0;
-        private static ToolStripMenuItem menu_paste;
-        private static ToolStripSeparator separator_1;
-        private static ToolStripMenuItem menu_newItem;
-        private static ToolStripMenuItem menu_newTheme;
-        private static ToolStripMenuItem menu_newFolder;
-        private static ToolStripSeparator separator_2;
-        private static ToolStripMenuItem menu_properties;
+        private static ToolStripMenuItem menu_view = new() { DropDown = new UI.WP.ContextMenuStrip() { ShowImageMargin = true } };
+        private static ToolStripSeparator separator_0 = new();
+        private static ToolStripMenuItem menu_paste = new();
+        private static ToolStripSeparator separator_1 = new();
+        private static ToolStripMenuItem menu_newItem = new();
+        private static ToolStripMenuItem menu_newTheme = new();
+        private static ToolStripMenuItem menu_newFolder = new();
+        private static ToolStripSeparator separator_2 = new();
+        private static ToolStripMenuItem menu_properties = new();
 
         // Item menu
-        private static ToolStripMenuItem menu_Open;
-        private static ToolStripMenuItem menu_Download;
-        private static ToolStripSeparator separator_item_1;
-        private static ToolStripMenuItem menu_CopyPath;
-        private static ToolStripMenuItem menu_CopyURL;
-        private static ToolStripMenuItem menu_Copy;
-        private static ToolStripMenuItem menu_Cut;
-        private static ToolStripSeparator separator_item_2;
-        private static ToolStripMenuItem menu_Delete;
-        private static ToolStripMenuItem menu_Rename;
-        private static ToolStripSeparator separator_item_3;
-        private static ToolStripMenuItem menu_item_properties;
+        private static ToolStripMenuItem menu_Open = new();
+        private static ToolStripMenuItem menu_Download = new();
+        private static ToolStripSeparator separator_item_1 = new();
+        private static ToolStripMenuItem menu_CopyPath = new();
+        private static ToolStripMenuItem menu_CopyURL = new();
+        private static ToolStripMenuItem menu_Copy = new();
+        private static ToolStripMenuItem menu_Cut = new();
+        private static ToolStripSeparator separator_item_2 = new();
+        private static ToolStripMenuItem menu_Delete = new();
+        private static ToolStripMenuItem menu_Rename = new();
+        private static ToolStripSeparator separator_item_3 = new();
+        private static ToolStripMenuItem menu_item_properties = new();
 
         #endregion
 
@@ -1009,10 +1009,7 @@ namespace WinPaletter.GitHub
         private static void InitializeMenu_Global()
         {
             // Create view menu items dynamically
-            menu_view = new ToolStripMenuItem(Program.Lang.Strings.GitHubStrings.Explorer_View)
-            {
-                DropDown = new UI.WP.ContextMenuStrip() { ShowImageMargin = true }
-            };
+            menu_view.Text = Program.Lang.Strings.GitHubStrings.Explorer_View;
 
             foreach (var view in Views)
             {
@@ -1028,10 +1025,6 @@ namespace WinPaletter.GitHub
 
                 menu_view.DropDown.Items.Add(item);
             }
-
-            separator_0 = new ToolStripSeparator();
-            separator_1 = new ToolStripSeparator();
-            separator_2 = new ToolStripSeparator();
 
             menu_paste = new ToolStripMenuItem(Program.Lang.Strings.General.Paste) { Enabled = false };
             menu_paste.Click -= Menu_paste_Click;
