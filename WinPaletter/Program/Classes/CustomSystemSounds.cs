@@ -85,6 +85,7 @@ namespace System.Media
                         {
                             using FileStream fs = new(path, FileMode.Open, FileAccess.Read);
                             _player = new(fs);
+                            _player?.Play();
                             return;
                         }
                         catch

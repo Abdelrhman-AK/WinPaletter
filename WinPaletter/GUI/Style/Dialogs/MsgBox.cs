@@ -26,6 +26,23 @@ namespace WinPaletter.UI.Style
         private static Icon questionIcon = NativeMethods.Helpers.GetSystemIcon(Shell32.SHSTOCKICONID.HELP, Shell32.SHGSI.ICON);
 
         /// <summary>
+        /// Represents the system-defined icon used for information dialogs.<br></br>
+        /// Get question icon from shell32.dll, not from the system icons as question icon is old and inconsistent with Windows 10 and higher (but consistent with Windows 8.1 and lower).
+        /// </summary>
+        private static Icon informationIcon = NativeMethods.Helpers.GetSystemIcon(Shell32.SHSTOCKICONID.INFO, Shell32.SHGSI.ICON);
+
+        /// <summary>
+        /// Represents the system-defined icon used for errors dialogs.<br></br>
+        /// Get question icon from shell32.dll, not from the system icons as question icon is old and inconsistent with Windows 10 and higher (but consistent with Windows 8.1 and lower).
+        /// </summary>
+        private static Icon errorIcon = NativeMethods.Helpers.GetSystemIcon(Shell32.SHSTOCKICONID.Error, Shell32.SHGSI.ICON);
+
+        /// <summary>
+        /// Represents the system-defined icon used for exclamation dialogs.<br></br>
+        /// Get question icon from shell32.dll, not from the system icons as question icon is old and inconsistent with Windows 10 and higher (but consistent with Windows 8.1 and lower).
+        /// </summary>
+        private static Icon exclamationIcon = NativeMethods.Helpers.GetSystemIcon(Shell32.SHSTOCKICONID.WARNING, Shell32.SHGSI.ICON);
+        /// <summary>
         /// A class instance that provides modern task dialog.
         /// </summary>
 
@@ -136,7 +153,8 @@ namespace WinPaletter.UI.Style
                         CollapsedControlText = (ExpandedText ?? string.Empty).ToString(),
                         ExpandedControlText = (CollapsedText ?? string.Empty).ToString(),
                         ExpandedInformation = ConvertToLink((ExpandedDetails ?? string.Empty).ToString()),
-                        Footer = ConvertToLink((Footer ?? string.Empty).ToString())
+                        Footer = ConvertToLink((Footer ?? string.Empty).ToString()).ToLower(),
+                        MainIcon = TaskDialogIcon.Custom
                     };
 
                     // Get the icon of the footer
@@ -151,7 +169,6 @@ namespace WinPaletter.UI.Style
                     TaskDialogButton retryButton = new(ButtonType.Custom) { Text = Program.Lang.Strings.General.Retry, ElevationRequired = RequireElevation };
                     TaskDialogButton closeButton = new(ButtonType.Custom) { Text = Program.Lang.Strings.General.Close };
                     TaskDialogButton customButton = new(ButtonType.Custom);
-                    TaskDialogIcon icon;
 
                     // Set the buttons of the dialog based on the MessageBoxButtons
                     if (Buttons == MessageBoxButtons.YesNoCancel)
@@ -188,28 +205,23 @@ namespace WinPaletter.UI.Style
                     if (Icon == MessageBoxIcon.Information)
                     {
                         CustomSystemSounds.Asterisk.Play();
-                        icon = TaskDialogIcon.Information;
+                        TD.CustomMainIcon = informationIcon;
                     }
                     else if (Icon == MessageBoxIcon.Question)
                     {
                         CustomSystemSounds.Question.Play();
-                        icon = TaskDialogIcon.Custom;
                         TD.CustomMainIcon = questionIcon;
                     }
                     else if (Icon == MessageBoxIcon.Error)
                     {
                         CustomSystemSounds.Hand.Play();
-                        icon = TaskDialogIcon.Error;
+                        TD.CustomMainIcon = errorIcon;
                     }
                     else if (Icon == MessageBoxIcon.Exclamation)
                     {
                         CustomSystemSounds.Exclamation.Play();
-                        icon = TaskDialogIcon.Warning;
+                        TD.CustomMainIcon = exclamationIcon;
                     }
-                    else icon = TaskDialogIcon.Custom;
-
-                    // Set the icon of the dialog
-                    TD.MainIcon = icon;
 
                     Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"MsgBox query");
 

@@ -179,14 +179,10 @@ namespace WinPaletter.NativeMethods
                 Winmm.mciSendString("close myWAV", null, 0, IntPtr.Zero);
 
                 // Open the specified audio File
-                Winmm.mciSendString($"open \"{file}\" type mpegvideo alias myWAV", null, 0, IntPtr.Zero);
+                Winmm.mciSendString($"open \"{file}\" type waveaudio alias myWAV", null, 0, IntPtr.Zero);
 
                 // Play the audio File
                 Winmm.mciSendString("play myWAV", null, 0, IntPtr.Zero);
-
-                // Set the volume to maximum
-                int volume = 1000; // Sets it to use the entire range of volume control
-                Winmm.mciSendString($"setaudio myWAV volume to {volume}", null, 0, IntPtr.Zero);
             }
         }
 
@@ -195,11 +191,8 @@ namespace WinPaletter.NativeMethods
         /// </summary>
         public static void StopAudio()
         {
-            // Seek to the start of the audio File
-            Winmm.mciSendString("seek myWAV to start", null, 0, IntPtr.Zero);
-
-            // Stop playing the audio File
             Winmm.mciSendString("stop myWAV", null, 0, IntPtr.Zero);
+            Winmm.mciSendString("close myWAV", null, 0, IntPtr.Zero);
         }
         #endregion
     }
