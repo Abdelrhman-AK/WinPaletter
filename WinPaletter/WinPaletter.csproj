@@ -432,6 +432,12 @@
       <DependentUpon>ColorEffectControl.cs</DependentUpon>
     </Compile>
     <Compile Include="GitHub\Core\Branch.cs" />
+    <Compile Include="GitHub\GitHub_ConfirmPR.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GitHub\GitHub_ConfirmPR.Designer.cs">
+      <DependentUpon>GitHub_ConfirmPR.cs</DependentUpon>
+    </Compile>
     <Compile Include="GitHub\GitHub_EntryProperties.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1437,6 +1443,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ColorsAndPalettesHandlers\ColorEffectControl.resx">
       <DependentUpon>ColorEffectControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GitHub\GitHub_ConfirmPR.resx">
+      <DependentUpon>GitHub_ConfirmPR.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GitHub\GitHub_EntryProperties.resx">
       <DependentUpon>GitHub_EntryProperties.cs</DependentUpon>

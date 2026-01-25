@@ -131,8 +131,11 @@ namespace WinPaletter
             {
                 if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
                 {
-                    string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply", $"{Program.TM.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
-                    Program.TM.Save(Manager.Source.File, filename);
+                    using (Manager TMx = new(Manager.Source.Registry))
+                    {
+                        string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply", $"{TMx.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
+                        TMx.Save(Manager.Source.File, filename);
+                    }
                 }
 
                 if (OS.W12 || OS.W11 || OS.W10)

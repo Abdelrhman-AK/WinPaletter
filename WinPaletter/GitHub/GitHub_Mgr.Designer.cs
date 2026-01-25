@@ -116,9 +116,8 @@
             this.button5 = new WinPaletter.UI.WP.Button();
             this.button4 = new WinPaletter.UI.WP.Button();
             this.button6 = new WinPaletter.UI.WP.Button();
+            this.pin_button = new WinPaletter.UI.WP.Button();
             this.button3 = new WinPaletter.UI.WP.Button();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.tablessControl1.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -143,7 +142,6 @@
             this.groupBox1.SuspendLayout();
             this.titlebarExtender1.SuspendLayout();
             this.explorer_controls.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
             // imageList1
@@ -1241,7 +1239,7 @@
             this.button1.Image = null;
             this.button1.ImageGlyph = null;
             this.button1.ImageGlyphEnabled = true;
-            this.button1.Location = new System.Drawing.Point(767, 3);
+            this.button1.Location = new System.Drawing.Point(669, 3);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(111, 26);
             this.button1.TabIndex = 15;
@@ -1270,11 +1268,11 @@
             this.button13.Image = null;
             this.button13.ImageGlyph = null;
             this.button13.ImageGlyphEnabled = true;
-            this.button13.Location = new System.Drawing.Point(880, 3);
+            this.button13.Location = new System.Drawing.Point(786, 3);
             this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(111, 26);
+            this.button13.Size = new System.Drawing.Size(205, 26);
             this.button13.TabIndex = 14;
-            this.button13.Text = "Submit changes";
+            this.button13.Text = "Send themes publication request";
             this.button13.UseVisualStyleBackColor = true;
             this.button13.Click += new System.EventHandler(this.button13_Click);
             // 
@@ -1282,9 +1280,8 @@
             // 
             this.titlebarExtender1.BackColor = System.Drawing.Color.Black;
             this.titlebarExtender1.Controls.Add(this.explorer_controls);
+            this.titlebarExtender1.Controls.Add(this.pin_button);
             this.titlebarExtender1.Controls.Add(this.button3);
-            this.titlebarExtender1.Controls.Add(this.pictureBox2);
-            this.titlebarExtender1.Controls.Add(this.label2);
             this.titlebarExtender1.Dock = System.Windows.Forms.DockStyle.Top;
             this.titlebarExtender1.Flag = WinPaletter.Tabs.TitlebarExtender.Flags.Tabs_Extended;
             this.titlebarExtender1.Location = new System.Drawing.Point(0, 0);
@@ -1431,6 +1428,24 @@
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
+            // pin_button
+            // 
+            this.pin_button.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.pin_button.CustomColor = System.Drawing.Color.Empty;
+            this.pin_button.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.pin_button.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.pin_button.ForeColor = System.Drawing.Color.White;
+            this.pin_button.Image = ((System.Drawing.Image)(resources.GetObject("pin_button.Image")));
+            this.pin_button.ImageGlyph = null;
+            this.pin_button.ImageGlyphEnabled = false;
+            this.pin_button.Location = new System.Drawing.Point(920, 7);
+            this.pin_button.Name = "pin_button";
+            this.pin_button.Size = new System.Drawing.Size(38, 38);
+            this.pin_button.TabIndex = 211;
+            this.pin_button.UseVisualStyleBackColor = false;
+            this.pin_button.Visible = false;
+            this.pin_button.Click += new System.EventHandler(this.pin_button_Click);
+            // 
             // button3
             // 
             this.button3.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -1438,39 +1453,14 @@
             this.button3.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button3.Image = null;
-            this.button3.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_GitHub;
-            this.button3.ImageGlyphEnabled = true;
-            this.button3.Location = new System.Drawing.Point(869, 9);
+            this.button3.ImageGlyph = null;
+            this.button3.ImageGlyphEnabled = false;
+            this.button3.Location = new System.Drawing.Point(959, 7);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(125, 34);
+            this.button3.Size = new System.Drawing.Size(38, 38);
             this.button3.TabIndex = 0;
-            this.button3.Text = "0";
             this.button3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button3.UseVisualStyleBackColor = true;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox2.Location = new System.Drawing.Point(8, 7);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(38, 38);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox2.TabIndex = 1;
-            this.pictureBox2.TabStop = false;
-            // 
-            // label2
-            // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(52, 7);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(811, 38);
-            this.label2.TabIndex = 87;
-            this.label2.Text = "0";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // GitHub_Mgr
             // 
@@ -1488,6 +1478,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "GitHub Manager";
             this.Load += new System.EventHandler(this.GitHubManager_Load);
+            this.ParentChanged += new System.EventHandler(this.GitHub_Mgr_ParentChanged);
             this.tablessControl1.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
@@ -1514,7 +1505,6 @@
             this.groupBox1.ResumeLayout(false);
             this.titlebarExtender1.ResumeLayout(false);
             this.explorer_controls.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1539,8 +1529,6 @@
         internal System.Windows.Forms.Label created_lbl;
         private System.Windows.Forms.Label label6;
         private UI.WP.Button button3;
-        internal System.Windows.Forms.Label label2;
-        internal System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         internal System.Windows.Forms.Label label5;
         private System.Windows.Forms.SplitContainer splitContainer1;
@@ -1610,5 +1598,6 @@
         private UI.WP.Toggle toggle2;
         private UI.WP.Button btn_download;
         public UI.WP.Breadcrumb breadcrumbControl1;
+        internal UI.WP.Button pin_button;
     }
 }

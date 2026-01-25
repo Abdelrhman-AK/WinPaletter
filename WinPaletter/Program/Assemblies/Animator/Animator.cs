@@ -1,4 +1,4 @@
-﻿// Optimized for .NET Framework 2.0, improved memory usage and performance
+// Optimized for .NET Framework 2.0, improved memory usage and performance
 
 using System;
 using System.Collections.Generic;
@@ -161,6 +161,13 @@ namespace AnimatorNS
 
                         foreach (var item in queue)
                         {
+                            // Check if control is disposed - if so, mark as completed to clean up
+                            if (item.control == null || item.control.IsDisposed)
+                            {
+                                completed.Add(item);
+                                continue;
+                            }
+
                             if (item.IsActive) wasActive = true;
 
                             if (item.controller != null && item.controller.IsCompleted)
@@ -291,6 +298,15 @@ namespace AnimatorNS
             {
                 try
                 {
+                    // Check if control is disposed or invalid
+                    if (item.control == null || item.control.IsDisposed || !item.control.IsHandleCreated)
+                    {
+                        if (item.controller != null)
+                            item.controller.Dispose();
+                        OnCompleted(item);
+                        return;
+                    }
+
                     if (item.controller == null)
                     {
                         item.controller = CreateDoubleBitmap(item.control, item.mode, item.animation, item.clipRectangle);
@@ -521,15 +537,47 @@ namespace AnimatorNS
 
             foreach (var item in items)
             {
-                if (item.control != null)
-                    item.control.BeginInvoke(new MethodInvoker(() =>
+                // Dispose controller first to ensure overlays are removed
+                if (item.controller != null)
+                {
+                    try
                     {
-                        switch (item.mode)
+                        item.controller.Dispose();
+                    }
+                    catch { }
+                    item.controller = null;
+                }
+
+                if (item.control != null)
+                {
+                    try
+                    {
+                        if (item.control.InvokeRequired)
                         {
-                            case AnimateMode.Hide: item.control.Visible = false; break;
-                            case AnimateMode.Show: item.control.Visible = true; break;
+                            item.control.Invoke(new MethodInvoker(() =>
+                            {
+                                try
+                                {
+                                    switch (item.mode)
+                                    {
+                                        case AnimateMode.Hide: item.control.Visible = false; break;
+                                        case AnimateMode.Show: item.control.Visible = true; break;
+                                    }
+                                }
+                                catch { }
+                            }));
                         }
-                    }));
+                        else
+                        {
+                            switch (item.mode)
+                            {
+                                case AnimateMode.Hide: item.control.Visible = false; break;
+                                case AnimateMode.Show: item.control.Visible = true; break;
+                            }
+                        }
+                    }
+                    catch { }
+                }
                 OnAnimationCompleted(new AnimationCompletedEventArg { Animation = item.animation, Control = item.control, Mode = item.mode });
             }
 

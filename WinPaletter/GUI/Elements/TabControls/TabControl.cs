@@ -14,7 +14,7 @@ namespace WinPaletter.UI.WP
     {
         public TabControl()
         {
-            SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor, true);
+            SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor | ControlStyles.ResizeRedraw, true);
             DoubleBuffered = true;
             BackColor = Color.Transparent;
 
@@ -25,8 +25,10 @@ namespace WinPaletter.UI.WP
         }
 
         #region Variables
-        private static readonly TextureBrush Noise = new(Resources.Noise.Fade(0.5f));
+        private bool CanAnimate => !DesignMode && Program.Style.Animations && this is not null && Visible && Parent is not null && Parent.Visible && FindForm() is not null && FindForm().Visible;
 
+        private static readonly TextureBrush Noise = new(Resources.Noise.Fade(0.5f));
+        private bool _needsLayoutRefresh;
         private readonly Dictionary<int, float> _tabAlpha = []; // stores 0..1 per tab
         private int _lastSelectedIndex = -1;
         private RectangleF _currentSideTape;
@@ -66,35 +68,80 @@ namespace WinPaletter.UI.WP
             base.OnHandleDestroyed(e);
         }
 
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+
+            if (!IsHandleCreated || SelectedIndex < 0)
+                return;
+
+            _needsLayoutRefresh = true;
+
+            // Cancel animation safely
+            _animationTimer?.Stop();
+        }
+
+        protected override void OnLayout(LayoutEventArgs levent)
+        {
+            base.OnLayout(levent);
+
+            if (!_needsLayoutRefresh || SelectedIndex < 0)
+                return;
+
+            _needsLayoutRefresh = false;
+
+            _currentSideTape = GetSideTapeRect(SelectedIndex);
+            _previousSideTape = _currentSideTape;
+            _targetSideTape = _currentSideTape;
+
+            _tabAlpha.Clear();
+            _tabAlpha[SelectedIndex] = 1f;
+            _prevAnimatedIndex = -1;
+
+            Invalidate();
+        }
+
         protected override void OnSelectedIndexChanged(EventArgs e)
         {
             if (SelectedIndex < 0) return;
 
-            // Stop animation if running
+            // Stop any running animation
             _animationTimer?.Stop();
 
             // Prepare previous tab for fade-out
             _prevAnimatedIndex = _lastSelectedIndex != SelectedIndex ? _lastSelectedIndex : -1;
 
-            // Reset alpha for new tab, keep old tab's current alpha
-            if (!_tabAlpha.ContainsKey(SelectedIndex))
-                _tabAlpha[SelectedIndex] = 0f;
+            // Reset alpha for new tab
+            _tabAlpha[SelectedIndex] = 0f;
             if (_prevAnimatedIndex != -1 && !_tabAlpha.ContainsKey(_prevAnimatedIndex))
                 _tabAlpha[_prevAnimatedIndex] = 1f;
 
             _previousSideTape = _currentSideTape.IsEmpty ? GetSideTapeRect(SelectedIndex) : _currentSideTape;
             _targetSideTape = GetSideTapeRect(SelectedIndex);
 
-            _animStartTime = DateTime.Now;
-
-            // Start timer
-            if (_animationTimer == null)
+            if (!CanAnimate)
             {
-                _animationTimer = new Timer { Interval = 15 };
-                _animationTimer.Tick += AnimationTick;
+                // Instant update without animation
+                _tabAlpha.Clear();
+                _tabAlpha[SelectedIndex] = 1f;
+                _currentSideTape = _targetSideTape;
+                _prevAnimatedIndex = -1;
+                Invalidate();
+            }
+            else
+            {
+                // Animate normally
+                _animStartTime = DateTime.Now;
+
+                if (_animationTimer == null)
+                {
+                    _animationTimer = new Timer { Interval = 15 };
+                    _animationTimer.Tick += AnimationTick;
+                }
+
+                _animationTimer.Start();
             }
 
-            _animationTimer.Start();
             _lastSelectedIndex = SelectedIndex;
 
             base.OnSelectedIndexChanged(e);
@@ -220,21 +267,28 @@ namespace WinPaletter.UI.WP
 
         private RectangleF GetSideTapeRect(int index)
         {
-            RectangleF tabRect = GetTabRect(index);
+            if (index < 0 || index >= TabPages.Count)
+                return RectangleF.Empty;
+
+            Rectangle tabRect = GetTabRect(index);
+            if (tabRect.Width <= 0 || tabRect.Height <= 0)
+                return RectangleF.Empty;
+
+            RectangleF tabRectF = tabRect;
             float sideThickness = 3f;
 
             if (Alignment == TabAlignment.Left || Alignment == TabAlignment.Right)
             {
-                float sideLength = tabRect.Height * 0.45f;
-                float x = Alignment == TabAlignment.Left ? tabRect.X + 4 : tabRect.Right - 6;
-                float y = tabRect.Y + (tabRect.Height - sideLength) / 2f;
+                float sideLength = tabRectF.Height * 0.45f;
+                float x = Alignment == TabAlignment.Left ? tabRectF.X + 4 : tabRectF.Right - 6;
+                float y = tabRectF.Y + (tabRectF.Height - sideLength) / 2f;
                 return new RectangleF(x, y, sideThickness, sideLength);
             }
             else
             {
-                float sideLength = tabRect.Width * 0.45f;
-                float x = tabRect.X + (tabRect.Width - sideLength) / 2f;
-                float y = tabRect.Bottom - sideThickness - 1;
+                float sideLength = tabRectF.Width * 0.45f;
+                float x = tabRectF.X + (tabRectF.Width - sideLength) / 2f;
+                float y = tabRectF.Bottom - sideThickness - 1;
                 return new RectangleF(x, y, sideLength, sideThickness);
             }
         }

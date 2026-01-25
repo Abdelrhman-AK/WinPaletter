@@ -220,7 +220,6 @@ namespace WinPaletter
                 Invoke(() =>
                 {
                     label1.Text = User.GitHub.Login;
-                    label2.Text = User.GitHub.Login;
 
                     url_lbl.Text = User.GitHub.HtmlUrl;
                     bio_lbl.Text = User.GitHub.Bio;
@@ -263,10 +262,10 @@ namespace WinPaletter
             Invoke(() =>
             {
                 using (Bitmap avatar_resized = avatar.Resize(pictureBox1.Size))
-                using (Bitmap avatar_resized_2 = avatar.Resize(pictureBox2.Size))
+                using (Bitmap avatar_resized_2 = avatar.Resize(25, 25))
                 {
                     pictureBox1.Image = avatar_resized.ToCircular();
-                    pictureBox2.Image = avatar_resized_2.ToCircular();
+                    button3.Image = avatar_resized_2.ToCircular();
                 }
             });
         }
@@ -883,7 +882,7 @@ Generated automatically by WinPaletter.";
 
         public async Task UploadListAsync(List<string> list)
         {
-            FileSystem.ActionQueue.Enqueue(async() => await UploadInternal(list));
+            FileSystem.ActionQueue.Enqueue(async () => await UploadInternal(list));
         }
 
         private async Task UploadInternal(List<string> list)
@@ -911,6 +910,23 @@ Generated automatically by WinPaletter.";
 
             breadcrumbControl1.FinishLoadingAnimation();
             breadcrumbControl1.Value = 0f;
+        }
+
+        private void GitHub_Mgr_ParentChanged(object sender, EventArgs e)
+        {
+            if (Parent != null && Parent is TabPage)
+            {
+                pin_button.Visible = false;
+            }
+            else
+            {
+                pin_button.Visible = true;
+            }
+        }
+
+        private void pin_button_Click(object sender, EventArgs e)
+        {
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(this);
         }
     }
 }

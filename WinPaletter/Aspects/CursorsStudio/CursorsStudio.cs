@@ -115,19 +115,18 @@ namespace WinPaletter
 
             Cursor = Cursors.WaitCursor;
 
-            using (Manager TMx = new(Source.Registry))
+            if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
             {
-                if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
+                using (Manager TMx = new(Source.Registry))
                 {
                     string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply", $"{TMx.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
                     TMx.Save(Source.File, filename);
                 }
-
-                ApplyToTM(TMx);
-                ApplyToTM(Program.TM);
-                ApplyToTM(Program.TM_Original);
-                TMx.Cursors.Apply();
             }
+
+            ApplyToTM(Program.TM);
+            ApplyToTM(Program.TM_Original);
+            Program.TM.Cursors.Apply();
 
             Cursor = Cursors.Default;
         }

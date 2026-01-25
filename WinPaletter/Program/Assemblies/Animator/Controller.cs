@@ -13,8 +13,34 @@ namespace AnimatorNS
     /// </summary>
     public class Controller
     {
-        protected Bitmap BgBmp { get { return (DoubleBitmap as IFakeControl).BgBmp; } set { (DoubleBitmap as IFakeControl).BgBmp = value; } }
-        public Bitmap Frame { get { return (DoubleBitmap as IFakeControl).Frame; } set { (DoubleBitmap as IFakeControl).Frame = value; } }
+        protected Bitmap BgBmp 
+        { 
+            get 
+            { 
+                if (DoubleBitmap == null) return null;
+                return (DoubleBitmap as IFakeControl)?.BgBmp; 
+            } 
+            set 
+            { 
+                if (DoubleBitmap == null) return;
+                var fake = DoubleBitmap as IFakeControl;
+                if (fake != null) fake.BgBmp = value; 
+            } 
+        }
+        public Bitmap Frame 
+        { 
+            get 
+            { 
+                if (DoubleBitmap == null) return null;
+                return (DoubleBitmap as IFakeControl)?.Frame; 
+            } 
+            set 
+            { 
+                if (DoubleBitmap == null) return;
+                var fake = DoubleBitmap as IFakeControl;
+                if (fake != null) fake.Frame = value; 
+            } 
+        }
         protected Bitmap ctrlBmp;
         public float CurrentTime { get; private set; }
         protected float TimeStep { get; private set; }
@@ -59,16 +85,60 @@ namespace AnimatorNS
         {
             if (DoubleBitmap != null)
             {
+                Control db = DoubleBitmap;
+                DoubleBitmap = null; // Clear reference immediately to prevent re-entry
+                
                 try
                 {
-                    DoubleBitmap.BeginInvoke(new MethodInvoker(() =>
+                    // Check if we're on the UI thread
+                    if (db.InvokeRequired)
                     {
-                        if (DoubleBitmap.Visible) DoubleBitmap.Hide();
-                        DoubleBitmap.Parent = null;
-                        // Dispose the temporary double-buffer control/form on the UI thread
-                        // to release Win32 handles and detach event handlers promptly.
-                        DoubleBitmap.Dispose();
-                    }));
+                        // We're on a background thread - use Invoke to ensure synchronous removal
+                        try
+                        {
+                            db.Invoke(new MethodInvoker(() =>
+                            {
+                                try
+                                {
+                                    if (!db.IsDisposed && db.IsHandleCreated)
+                                    {
+                                        if (db.Visible) db.Hide();
+                                        db.Parent = null;
+                                    }
+                                    // Dispose the temporary double-buffer control/form on the UI thread
+                                    // to release Win32 handles and detach event handlers promptly.
+                                    if (!db.IsDisposed)
+                                        db.Dispose();
+                                }
+                                catch { }
+                            }));
+                        }
+                        catch
+                        {
+                            // If Invoke fails, try synchronous disposal as fallback
+                            try
+                            {
+                                if (!db.IsDisposed)
+                                    db.Dispose();
+                            }
+                            catch { }
+                        }
+                    }
+                    else
+                    {
+                        // We're on the UI thread - hide synchronously
+                        try
+                        {
+                            if (!db.IsDisposed && db.IsHandleCreated)
+                            {
+                                if (db.Visible) db.Hide();
+                                db.Parent = null;
+                            }
+                            if (!db.IsDisposed)
+                                db.Dispose();
+                        }
+                        catch { }
+                    }
                 }
                 catch { }
             }
@@ -160,6 +230,10 @@ namespace AnimatorNS
 
         protected virtual void OnFramePainting(object sender, PaintEventArgs e)
         {
+            // Check if DoubleBitmap is null (disposed) - if so, skip painting
+            if (DoubleBitmap == null || DoubleBitmap.IsDisposed)
+                return;
+
             var oldFrame = Frame;
             Frame = null;
 
@@ -231,15 +305,26 @@ namespace AnimatorNS
 
         private Bitmap GetScreenBackground(Control ctrl, bool includeForeground, bool clip)
         {
+            // Check if DoubleBitmap is null (disposed) - if so, return null
+            if (DoubleBitmap == null || DoubleBitmap.IsDisposed)
+                return null;
+
             var size = Screen.PrimaryScreen.Bounds.Size;
-            using (Graphics temp = DoubleBitmap.CreateGraphics())
+            try
             {
-                var bmp = new Bitmap(size.Width, size.Height, temp);
-                using (Graphics gr = Graphics.FromImage(bmp))
+                using (Graphics temp = DoubleBitmap.CreateGraphics())
                 {
-                    gr.CopyFromScreen(0, 0, 0, 0, size);
+                    var bmp = new Bitmap(size.Width, size.Height, temp);
+                    using (Graphics gr = Graphics.FromImage(bmp))
+                    {
+                        gr.CopyFromScreen(0, 0, 0, 0, size);
+                    }
+                    return bmp;
                 }
-                return bmp;
+            }
+            catch
+            {
+                return null;
             }
         }
 
@@ -256,6 +341,9 @@ namespace AnimatorNS
                 }
                 else
                 {
+                    // Check if DoubleBitmap is null (disposed) - if so, return null
+                    if (DoubleBitmap == null || DoubleBitmap.IsDisposed)
+                        return null;
                     bmp = new Bitmap(DoubleBitmap.Width, DoubleBitmap.Height);
                     ctrl.DrawToBitmap(bmp, new Rectangle(ctrl.Left - DoubleBitmap.Left, ctrl.Top - DoubleBitmap.Top, ctrl.Width, ctrl.Height));
                 }
@@ -288,6 +376,10 @@ namespace AnimatorNS
         protected virtual Bitmap OnNonLinearTransfromNeeded()
         {
             if (ctrlBmp == null)
+                return null;
+
+            // Check if DoubleBitmap is null (disposed) - if so, return null
+            if (DoubleBitmap == null || DoubleBitmap.IsDisposed)
                 return null;
 
             if (NonLinearTransfromNeeded == null && !animation.IsNonLinearTransformNeeded)
@@ -367,6 +459,9 @@ namespace AnimatorNS
         internal void BuildNextFrame()
         {
             if (mode == AnimateMode.BeginUpdate)
+                return;
+            // Check if DoubleBitmap is null (disposed) - if so, skip
+            if (DoubleBitmap == null || DoubleBitmap.IsDisposed)
                 return;
             DoubleBitmap.Invalidate();
         }

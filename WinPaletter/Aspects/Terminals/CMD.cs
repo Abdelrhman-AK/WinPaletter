@@ -74,6 +74,7 @@ namespace WinPaletter
             ApplyToTM(Program.TM, _Edition);
             Close();
         }
+
         private void ImportWin12Preset(object sender, EventArgs e)
         {
             using (Manager TMx = Default.FromOS(WindowStyle.W12)) { LoadFromTM(TMx, _Edition); }
@@ -124,45 +125,44 @@ namespace WinPaletter
 
             Cursor = Cursors.WaitCursor;
 
-            using (Manager TMx = new(Manager.Source.Registry))
+            if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
             {
-                if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
+                using (Manager TMx = new(Manager.Source.Registry))
                 {
                     string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply", $"{TMx.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
                     TMx.Save(Manager.Source.File, filename);
                 }
+            }
 
-                ApplyToTM(TMx, _Edition);
-                ApplyToTM(Program.TM, _Edition);
-                ApplyToTM(Program.TM_Original, _Edition);
+            ApplyToTM(Program.TM, _Edition);
+            ApplyToTM(Program.TM_Original, _Edition);
 
-                switch (_Edition)
-                {
-                    case Edition.CMD:
-                        {
-                            TMx.Apply_CommandPrompt();
-                            break;
-                        }
+            switch (_Edition)
+            {
+                case Edition.CMD:
+                    {
+                        Program.TM.Apply_CommandPrompt();
+                        break;
+                    }
 
-                    case Edition.PowerShellx86:
-                        {
-                            TMx.Apply_PowerShell86();
-                            break;
-                        }
+                case Edition.PowerShellx86:
+                    {
+                        Program.TM.Apply_PowerShell86();
+                        break;
+                    }
 
-                    case Edition.PowerShellx64:
-                        {
-                            TMx.Apply_PowerShell64();
-                            break;
-                        }
+                case Edition.PowerShellx64:
+                    {
+                        Program.TM.Apply_PowerShell64();
+                        break;
+                    }
 
-                    default:
-                        {
-                            TMx.Apply_CommandPrompt();
-                            break;
-                        }
+                default:
+                    {
+                        Program.TM.Apply_CommandPrompt();
+                        break;
+                    }
 
-                }
             }
 
             Cursor = Cursors.Default;

@@ -104,9 +104,9 @@ namespace WinPaletter
 
             ApplyToTM(LogonUI10x);
 
-            using (Manager TMx = new(Manager.Source.Registry))
+            if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
             {
-                if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
+                using (Manager TMx = new(Manager.Source.Registry))
                 {
                     string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply", $"{TMx.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
                     TMx.Save(Manager.Source.File, filename);

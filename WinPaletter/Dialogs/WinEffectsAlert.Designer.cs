@@ -133,6 +133,8 @@
             this.bottom_buttons.Name = "bottom_buttons";
             this.bottom_buttons.Size = new System.Drawing.Size(884, 140);
             this.bottom_buttons.TabIndex = 125;
+            this.bottom_buttons.UseDecorationPattern = false;
+            this.bottom_buttons.UseSharpStyle = false;
             // 
             // checkBox1
             // 
@@ -205,7 +207,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "WinEffectsAlert";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Windows Effects alert";
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WinEffectsAlert_FormClosing);

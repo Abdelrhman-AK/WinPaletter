@@ -91,19 +91,18 @@ namespace WinPaletter
             Program.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound = CheckBox35_SFC.Checked;
             Program.Settings.Save(Settings.Source.Registry);
 
-            using (Manager TMx = new(Manager.Source.Registry))
+            if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
             {
-                if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
+                using (Manager TMx = new(Manager.Source.Registry))
                 {
                     string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply", $"{TMx.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
                     TMx.Save(Manager.Source.File, filename);
                 }
-
-                ApplyToTM(TMx);
-                ApplyToTM(Program.TM);
-                ApplyToTM(Program.TM_Original);
-                TMx.Sounds.Apply();
             }
+
+            ApplyToTM(Program.TM);
+            ApplyToTM(Program.TM_Original);
+            Program.TM.Sounds.Apply();
 
             Cursor = Cursors.Default;
         }

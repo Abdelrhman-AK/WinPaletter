@@ -174,15 +174,16 @@ namespace WinPaletter.GitHub
         private static ToolStripSeparator separator_0 = new();
         private static ToolStripMenuItem menu_paste = new();
         private static ToolStripSeparator separator_1 = new();
-        private static ToolStripMenuItem menu_newItem = new();
+        private static ToolStripMenuItem menu_newItem = new() { DropDown = new UI.WP.ContextMenuStrip() { ShowImageMargin = true } };
+
         private static ToolStripMenuItem menu_newTheme = new();
-        private static ToolStripMenuItem menu_newFolder = new();
+        private static ToolStripMenuItem menu_newFolder = new() { Image = Assets.GitHubMgr.folder_web_48.Resize(16, 16) };
         private static ToolStripSeparator separator_2 = new();
         private static ToolStripMenuItem menu_properties = new();
 
         // Item menu
-        private static ToolStripMenuItem menu_Open = new();
-        private static ToolStripMenuItem menu_Download = new();
+        private static ToolStripMenuItem menu_Open = new() { Image = Assets.GitHubMgr.folder_web_16 };
+        private static ToolStripMenuItem menu_Download = new() { Image = Assets.GitHubMgr.ContextMenu_Download };
         private static ToolStripSeparator separator_item_1 = new();
         private static ToolStripMenuItem menu_CopyPath = new();
         private static ToolStripMenuItem menu_CopyURL = new();
@@ -1010,7 +1011,7 @@ namespace WinPaletter.GitHub
         {
             // Create view menu items dynamically
             menu_view.Text = Program.Lang.Strings.GitHubStrings.Explorer_View;
-
+            menu_view.DropDown.Items.Clear();
             foreach (var view in Views)
             {
                 ToolStripMenuItem item = new(view.label, view.icon)
@@ -1026,29 +1027,31 @@ namespace WinPaletter.GitHub
                 menu_view.DropDown.Items.Add(item);
             }
 
-            menu_paste = new ToolStripMenuItem(Program.Lang.Strings.General.Paste) { Enabled = false };
+            menu_paste.Text = Program.Lang.Strings.General.Paste;
+            menu_paste.Enabled = false;
+
             menu_paste.Click -= Menu_paste_Click;
             menu_paste.Click += Menu_paste_Click;
 
-            menu_newFolder = new ToolStripMenuItem(Program.Lang.Strings.Extensions.Folder, Assets.GitHubMgr.folder_web_48.Resize(16, 16));
+            menu_newFolder.Text = Program.Lang.Strings.Extensions.Folder;
             menu_newFolder.Click -= Menu_NewFolder_Click;
             menu_newFolder.Click += Menu_NewFolder_Click;
 
             using (Icon ico = Properties.Resources.fileextension.FromSize(20))
             {
-                menu_newTheme = new ToolStripMenuItem(Program.Lang.Strings.Extensions.WinPaletterThemeFile, ico.ToBitmap());
+                menu_newTheme.Text = Program.Lang.Strings.Extensions.WinPaletterThemeFile;
+                menu_newTheme.Image = ico.ToBitmap();
             }
 
-            menu_newItem = new ToolStripMenuItem(Program.Lang.Strings.General.New)
-            {
-                DropDown = new UI.WP.ContextMenuStrip() { ShowImageMargin = true }
-            };
+            menu_newItem.Text = Program.Lang.Strings.General.New;
+            menu_newItem.DropDown.Items.Clear();
             menu_newItem.DropDown.Items.AddRange([menu_newFolder, menu_newTheme]);
             menu_newTheme.Click -= Menu_newTheme_Click;
             menu_newTheme.Click += Menu_newTheme_Click;
 
-            menu_properties = new ToolStripMenuItem(Program.Lang.Strings.GitHubStrings.Explorer_Properties);
+            menu_properties.Text = Program.Lang.Strings.GitHubStrings.Explorer_Properties;
 
+            contextMenu_all.Items.Clear();
             contextMenu_all.Items.AddRange(
             [
                 menu_view,
@@ -1063,48 +1066,43 @@ namespace WinPaletter.GitHub
 
         private static void InitializeMenu_Item()
         {
-            menu_Open = new ToolStripMenuItem(Program.Lang.Strings.General.Open, Assets.GitHubMgr.folder_web_16);
+            menu_Open.Text = Program.Lang.Strings.General.Open;
             menu_Open.Click -= Menu_Open_Click;
             menu_Open.Click += Menu_Open_Click;
 
-            menu_Download = new ToolStripMenuItem(Program.Lang.Strings.General.Download, Assets.GitHubMgr.ContextMenu_Download);
+            menu_Download.Text = Program.Lang.Strings.General.Download;
             menu_Download.Click -= Menu_Download_Click;
             menu_Download.Click += Menu_Download_Click;
 
-            separator_item_1 = new ToolStripSeparator();
-
-            menu_CopyPath = new ToolStripMenuItem(Program.Lang.Strings.General.Copy_AsPath);
+            menu_CopyPath.Text = Program.Lang.Strings.General.Copy_AsPath;
             menu_CopyPath.Click -= Menu_CopyPath_Click;
             menu_CopyPath.Click += Menu_CopyPath_Click;
 
-            menu_CopyURL = new ToolStripMenuItem(Program.Lang.Strings.General.Copy_URL);
+            menu_CopyURL.Text = Program.Lang.Strings.General.Copy_URL;
             menu_CopyURL.Click -= Menu_CopyURL_Click;
             menu_CopyURL.Click += Menu_CopyURL_Click;
 
-            menu_Copy = new ToolStripMenuItem(Program.Lang.Strings.General.Copy);
+            menu_Copy.Text = Program.Lang.Strings.General.Copy;
             menu_Copy.Click -= Menu_Copy_Click;
             menu_Copy.Click += Menu_Copy_Click;
 
-            menu_Cut = new ToolStripMenuItem(Program.Lang.Strings.General.Cut);
+            menu_Cut.Text = Program.Lang.Strings.General.Cut;
             menu_Cut.Click -= Menu_Cut_Click;
             menu_Cut.Click += Menu_Cut_Click;
 
-            separator_item_2 = new ToolStripSeparator();
-
-            menu_Delete = new ToolStripMenuItem(Program.Lang.Strings.General.Delete);
+            menu_Delete.Text = Program.Lang.Strings.General.Delete;
             menu_Delete.Click -= Menu_Delete_Click;
             menu_Delete.Click += Menu_Delete_Click;
 
-            menu_Rename = new ToolStripMenuItem(Program.Lang.Strings.General.Rename);
+            menu_Rename.Text = Program.Lang.Strings.General.Rename;
             menu_Rename.Click -= Menu_Rename_Click;
             menu_Rename.Click += Menu_Rename_Click;
 
-            separator_item_3 = new ToolStripSeparator();
-
-            menu_item_properties = new ToolStripMenuItem(Program.Lang.Strings.GitHubStrings.Explorer_Properties);
+            menu_item_properties.Text = Program.Lang.Strings.GitHubStrings.Explorer_Properties;
             menu_item_properties.Click -= Menu_ItemProperties_Click;
             menu_item_properties.Click += Menu_ItemProperties_Click;
 
+            contextMenu_item.Items.Clear();
             contextMenu_item.Items.AddRange(
             [
                 menu_Open,

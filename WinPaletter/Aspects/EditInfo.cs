@@ -93,13 +93,13 @@ namespace WinPaletter
                     string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply", $"{TMx.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
                     TMx.Save(Manager.Source.File, filename);
                 }
-
-                ApplyToTM(Program.TM);
-                ApplyToTM(Program.TM_Original);
-                Forms.Home.LoadFromTM(Program.TM);
-
-                Program.TM.Info.Apply();
             }
+
+            ApplyToTM(Program.TM);
+            ApplyToTM(Program.TM_Original);
+            Forms.Home.LoadFromTM(Program.TM);
+
+            Program.TM.Info.Apply();
 
             Cursor = Cursors.Default;
         }

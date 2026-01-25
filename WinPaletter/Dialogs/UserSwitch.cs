@@ -45,7 +45,7 @@ namespace WinPaletter
 
             User.GitHubUserSwitch += GitHub_OnSignedOut;
 
-            Forms.GlassWindow.ShowWithGlassFocusedOnParent(Forms.MainForm);
+            Forms.GlassWindow.Show(Forms.MainForm);
             BringToFront();
 
             await UpdateGitHubLoginData();

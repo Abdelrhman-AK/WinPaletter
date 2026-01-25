@@ -18,13 +18,18 @@ namespace WinPaletter.Dialogs
             Icon = FormsExtensions.Icon<WinEffecter>();
 
             checkBox1.Checked = !Program.Settings.ThemeApplyingBehavior.Show_WinEffects_Alert;
-            Forms.GlassWindow.Show();
 
             CustomSystemSounds.Exclamation.Play();
 
             BringToFront();
             Activate();
             Focus();
+        }
+
+        public new DialogResult ShowDialog(IWin32Window owner)
+        {
+            Forms.GlassWindow.Show(owner as Form);
+            return base.ShowDialog(owner);
         }
 
         private void Button1_Click(object sender, EventArgs e)

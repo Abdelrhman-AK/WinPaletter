@@ -105,7 +105,7 @@ namespace WinPaletter
                 label16.Text = EffectsSummary();
             }
 
-            Forms.GlassWindow.ShowWithGlassFocusedOnParent(Forms.MainForm);
+            Forms.GlassWindow.Show(Forms.MainForm);
         }
 
         private void toggle1_CheckedChanged(object sender, EventArgs e)

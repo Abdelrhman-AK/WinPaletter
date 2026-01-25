@@ -34,7 +34,7 @@ namespace WinPaletter
         const int LWA_COLORKEY = 0x1;
         const int LWA_ALPHA = 0x2;
 
-        public void ShowWithGlassFocusedOnParent(Form parent)
+        public void Show(Form parent)
         {
             if (parent is null)
             {

@@ -55,6 +55,11 @@ namespace WinPaletter
             Close();
         }
 
+        private void ImportWin12Preset(object sender, EventArgs e)
+        {
+            using (Manager TMx = Default.FromOS(WindowStyle.W12)) { LoadFromTM(TMx); }
+        }
+
         private void ImportWin11Preset(object sender, EventArgs e)
         {
             using (Manager TMx = Default.FromOS(WindowStyle.W11)) { LoadFromTM(TMx); }
@@ -100,21 +105,20 @@ namespace WinPaletter
 
             Cursor = Cursors.WaitCursor;
 
-            using (Manager TMx = new(Manager.Source.Registry))
+            if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
             {
-                if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
+                using (Manager TMx = new(Manager.Source.Registry))
                 {
                     string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply", $"{TMx.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
                     TMx.Save(Manager.Source.File, filename);
                 }
-
-                ApplyToTM(TMx);
-                ApplyToTM(Program.TM);
-                ApplyToTM(Program.TM_Original);
-
-                TMx.WindowsEffects.Apply();
-                TMx.Win32.Broadcast_UPM_ToDefUsers();
             }
+
+            ApplyToTM(Program.TM);
+            ApplyToTM(Program.TM_Original);
+
+            Program.TM.WindowsEffects.Apply();
+            Program.TM.Win32.Broadcast_UPM_ToDefUsers();
 
             Cursor = Cursors.Default;
         }
@@ -138,6 +142,7 @@ namespace WinPaletter
                 OnImportFromDefault = LoadFromDefault,
                 OnImportFromWPTH = LoadFromWPTH,
                 OnImportFromCurrentApplied = LoadFromCurrent,
+                OnImportFromScheme_12 = ImportWin11Preset,
                 OnImportFromScheme_11 = ImportWin11Preset,
                 OnImportFromScheme_10 = ImportWin10Preset,
                 OnImportFromScheme_81 = ImportWin81Preset,
@@ -540,12 +545,9 @@ namespace WinPaletter
 
         private void WinEffecter_AspectEnabledChanged(object sender, EventArgs e)
         {
-            if ((sender as Toggle).Checked
-                && Program.Settings.ThemeApplyingBehavior.Show_WinEffects_Alert
-                && Forms.WinEffectsAlert.ShowDialog(this) != DialogResult.OK)
+            if (IsShown && AspectEnabled && Program.Settings.ThemeApplyingBehavior.Show_WinEffects_Alert && Forms.WinEffectsAlert.ShowDialog(Forms.MainForm) != DialogResult.OK)
             {
                 AspectEnabled = false;
-                (sender as Toggle).Checked = false;
             }
         }
     }
