@@ -36,11 +36,11 @@ namespace WinPaletter
         {
             if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !GetSubKeys("HKEY_CURRENT_USER\\Console").Contains(ComboBox1.SelectedItem.ToString())))
             {
-                MsgBox(Program.Lang.Strings.Aspects.Consoles.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(Program.Localization.Strings.Aspects.Consoles.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Localization.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -57,7 +57,7 @@ namespace WinPaletter
         {
             if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !GetSubKeys("HKEY_CURRENT_USER\\Console").Contains(ComboBox1.SelectedItem.ToString())))
             {
-                MsgBox(Program.Lang.Strings.Aspects.Consoles.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(Program.Localization.Strings.Aspects.Consoles.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -71,7 +71,7 @@ namespace WinPaletter
         {
             if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !GetSubKeys("HKEY_CURRENT_USER\\Console").Contains(ComboBox1.SelectedItem.ToString())))
             {
-                MsgBox(Program.Lang.Strings.Aspects.Consoles.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(Program.Localization.Strings.Aspects.Consoles.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -86,7 +86,7 @@ namespace WinPaletter
         {
             if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !GetSubKeys("HKEY_CURRENT_USER\\Console").Contains(ComboBox1.SelectedItem.ToString())))
             {
-                MsgBox(Program.Lang.Strings.Aspects.Consoles.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(Program.Localization.Strings.Aspects.Consoles.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -97,7 +97,7 @@ namespace WinPaletter
         {
             if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !GetSubKeys("HKEY_CURRENT_USER\\Console").Contains(ComboBox1.SelectedItem.ToString())))
             {
-                MsgBox(Program.Lang.Strings.Aspects.Consoles.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(Program.Localization.Strings.Aspects.Consoles.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -108,7 +108,7 @@ namespace WinPaletter
         {
             if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !GetSubKeys("HKEY_CURRENT_USER\\Console").Contains(ComboBox1.SelectedItem.ToString())))
             {
-                MsgBox(Program.Lang.Strings.Aspects.Consoles.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(Program.Localization.Strings.Aspects.Consoles.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -119,7 +119,7 @@ namespace WinPaletter
         {
             if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !GetSubKeys("HKEY_CURRENT_USER\\Console").Contains(ComboBox1.SelectedItem.ToString())))
             {
-                MsgBox(Program.Lang.Strings.Aspects.Consoles.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(Program.Localization.Strings.Aspects.Consoles.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -130,7 +130,7 @@ namespace WinPaletter
         {
             if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !GetSubKeys("HKEY_CURRENT_USER\\Console").Contains(ComboBox1.SelectedItem.ToString())))
             {
-                MsgBox(Program.Lang.Strings.Aspects.Consoles.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(Program.Localization.Strings.Aspects.Consoles.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -141,7 +141,7 @@ namespace WinPaletter
         {
             if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !GetSubKeys("HKEY_CURRENT_USER\\Console").Contains(ComboBox1.SelectedItem.ToString())))
             {
-                MsgBox(Program.Lang.Strings.Aspects.Consoles.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(Program.Localization.Strings.Aspects.Consoles.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -152,7 +152,7 @@ namespace WinPaletter
         {
             if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !GetSubKeys("HKEY_CURRENT_USER\\Console").Contains(ComboBox1.SelectedItem.ToString())))
             {
-                MsgBox(Program.Lang.Strings.Aspects.Consoles.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(Program.Localization.Strings.Aspects.Consoles.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -163,7 +163,7 @@ namespace WinPaletter
         {
             if (ComboBox1.SelectedItem == null || (ComboBox1.SelectedItem != null && !GetSubKeys("HKEY_CURRENT_USER\\Console").Contains(ComboBox1.SelectedItem.ToString())))
             {
-                MsgBox(Program.Lang.Strings.Aspects.Consoles.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(Program.Localization.Strings.Aspects.Consoles.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -172,7 +172,7 @@ namespace WinPaletter
 
         private void ExternalTerminal_Load(object sender, EventArgs e)
         {
-            this.LoadLanguage();
+            this.Localize();
             ApplyStyle(this);
             _Shown = false;
             FillTerminals(ComboBox1);
@@ -190,7 +190,7 @@ namespace WinPaletter
 
             IEnumerable<UI.WP.Button> buttons = flowLayoutPanel1.Controls.OfType<UI.WP.Button>();
             UI.WP.Button button_import = buttons.Where(b => b.Name.StartsWith("btn_import")).FirstOrDefault() ?? null;
-            button_import.Text = Program.Lang.Strings.Previewer.Import_wpth;
+            button_import.Text = Program.Localization.Strings.Previewer.Import_wpth;
 
             #region Menu _data
             button_import.Menu.Items.Clear();
@@ -207,17 +207,17 @@ namespace WinPaletter
             ToolStripMenuItem import_scheme_Vista = new();
             ToolStripMenuItem import_scheme_XP = new();
 
-            import_current.Text = Program.Lang.Strings.Previewer.Import_current;
-            import_defaultWindows.Text = Program.Lang.Strings.Previewer.Import_defaultWindows;
-            import_scheme.Text = Program.Lang.Strings.Previewer.Import_preset;
-            import_scheme_12.Text = Program.Lang.Strings.Windows.W12;
-            import_scheme_11.Text = Program.Lang.Strings.Windows.W11;
-            import_scheme_10.Text = Program.Lang.Strings.Windows.W10;
-            import_scheme_81.Text = Program.Lang.Strings.Windows.W81;
-            import_scheme_8.Text = Program.Lang.Strings.Windows.W8;
-            import_scheme_7.Text = Program.Lang.Strings.Windows.W7;
-            import_scheme_Vista.Text = Program.Lang.Strings.Windows.WVista;
-            import_scheme_XP.Text = Program.Lang.Strings.Windows.WXP;
+            import_current.Text = Program.Localization.Strings.Previewer.Import_current;
+            import_defaultWindows.Text = Program.Localization.Strings.Previewer.Import_defaultWindows;
+            import_scheme.Text = Program.Localization.Strings.Previewer.Import_preset;
+            import_scheme_12.Text = Program.Localization.Strings.Windows.W12;
+            import_scheme_11.Text = Program.Localization.Strings.Windows.W11;
+            import_scheme_10.Text = Program.Localization.Strings.Windows.W10;
+            import_scheme_81.Text = Program.Localization.Strings.Windows.W81;
+            import_scheme_8.Text = Program.Localization.Strings.Windows.W8;
+            import_scheme_7.Text = Program.Localization.Strings.Windows.W7;
+            import_scheme_Vista.Text = Program.Localization.Strings.Windows.WVista;
+            import_scheme_XP.Text = Program.Localization.Strings.Windows.WXP;
 
             import_current.Image = AspectsResources.CurrentApplied;
 
@@ -402,7 +402,7 @@ namespace WinPaletter
         {
             if (!GetSubKeys("HKEY_CURRENT_USER\\Console").Contains(RegKey))
             {
-                MsgBox(Program.Lang.Strings.Aspects.Consoles.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(Program.Localization.Strings.Aspects.Consoles.ExtTer_NotFound, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -619,7 +619,7 @@ namespace WinPaletter
 
                 if (!CMD_RasterToggle.Checked)
                 {
-                    WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontSize", (CMD_FontPxHeight.Value << 16) | (0 & 0xFFFF));
+                    WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontSize", ((int)CMD_FontPxHeight.Value << 16) | (0 & 0xFFFF));
                 }
                 else
                 {
@@ -719,7 +719,7 @@ namespace WinPaletter
 
                 WriteReg($@"HKEY_CURRENT_USER\Console\{RegKey}", "FontWeight", CMD_FontWeightBox.SelectedIndex * 100);
 
-                MsgBox(Program.Lang.Strings.Aspects.Consoles.ExtTer_Set, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MsgBox(Program.Localization.Strings.Aspects.Consoles.ExtTer_Set, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
@@ -827,7 +827,7 @@ namespace WinPaletter
         {
             GDI32.LogFont logFont = new();
             F_cmd.ToLogFont(logFont);
-            logFont.lfHeight = -CMD_FontPxHeight.Value;
+            logFont.lfHeight = -(int)CMD_FontPxHeight.Value;
             logFont.lfWidth = 0;
             logFont.lfWeight = CMD_FontWeightBox.SelectedIndex * 100;
             F_cmd = Font.FromLogFont(logFont);
@@ -1026,10 +1026,10 @@ namespace WinPaletter
             CMD_Preview.CMD_ColorTable13 = ColorTable13.BackColor;
             CMD_Preview.CMD_ColorTable14 = ColorTable14.BackColor;
             CMD_Preview.CMD_ColorTable15 = ColorTable15.BackColor;
-            CMD_Preview.CMD_PopupForeground = CMD_PopupForegroundBar.Value;
-            CMD_Preview.CMD_PopupBackground = CMD_PopupBackgroundBar.Value;
-            CMD_Preview.CMD_ScreenColorsForeground = CMD_AccentForegroundBar.Value;
-            CMD_Preview.CMD_ScreenColorsBackground = CMD_AccentBackgroundBar.Value;
+            CMD_Preview.CMD_PopupForeground = (int)CMD_PopupForegroundBar.Value;
+            CMD_Preview.CMD_PopupBackground = (int)CMD_PopupBackgroundBar.Value;
+            CMD_Preview.CMD_ScreenColorsForeground = (int)CMD_AccentForegroundBar.Value;
+            CMD_Preview.CMD_ScreenColorsBackground = (int)CMD_AccentBackgroundBar.Value;
 
             CMD_Preview.Raster = CMD_RasterToggle.Checked;
             switch (RasterList.SelectedItem)
@@ -1117,7 +1117,7 @@ namespace WinPaletter
             FontName.Text = F_cmd.Name;
             FontName.Font = new(F_cmd.Name, 9f, F_cmd.Style);
             CMD_Preview.Font = F_cmd;
-            CMD_Preview.Alpha = CMD_OpacityBar.Value;
+            CMD_Preview.Alpha = (int)CMD_OpacityBar.Value;
             CMD_Preview.Refresh();
         }
 
@@ -1672,7 +1672,7 @@ namespace WinPaletter
             else if (Console.PixelWidth == 10 && Console.PixelHeight == 18) RasterList.SelectedItem = "10x18";
             else RasterList.SelectedItem = "8x12"; // default fallback
 
-            Console.CursorSize = CMD_CursorSizeBar.Value;
+            Console.CursorSize = (int)CMD_CursorSizeBar.Value;
             if (CMD_CursorSizeBar.Value > 100)
                 CMD_CursorSizeBar.Value = 100;
             if (CMD_CursorSizeBar.Value < 20)
@@ -1726,8 +1726,8 @@ namespace WinPaletter
 
         private void Button25_Click(object sender, EventArgs e)
         {
-            Program.ToolTip.ToolTipText = Program.Lang.Strings.Aspects.Consoles.CMD_NotAllWeights;
-            Program.ToolTip.ToolTipTitle = Program.Lang.Strings.General.Tip;
+            Program.ToolTip.ToolTipText = Program.Localization.Strings.Aspects.Consoles.CMD_NotAllWeights;
+            Program.ToolTip.ToolTipTitle = Program.Localization.Strings.General.Tip;
             Program.ToolTip.Image = Notifications.Info;
 
             Point location = new(-Program.ToolTip.Size.Width - 2, (((Control)sender).Height - Program.ToolTip.Size.Height) / 2 - 1);
@@ -1797,7 +1797,7 @@ namespace WinPaletter
         {
             GDI32.LogFont logFont = new();
             F_cmd.ToLogFont(logFont);
-            logFont.lfHeight = -CMD_FontPxHeight.Value;
+            logFont.lfHeight = -(int)CMD_FontPxHeight.Value;
             logFont.lfWidth = 0; // Set to 0 for default width
             F_cmd = Font.FromLogFont(logFont);
             CMD_Preview.Font = F_cmd;
@@ -1830,7 +1830,7 @@ namespace WinPaletter
 
         private void CMD_OpacityBar_ValueChanged(object sender, EventArgs e)
         {
-            CMD_Preview.Alpha = (sender as TrackBarX).Value;
+            CMD_Preview.Alpha = (int)(sender as TrackBarX).Value;
         }
 
         private void ColorTable00_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)

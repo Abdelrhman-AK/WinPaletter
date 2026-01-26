@@ -143,7 +143,7 @@ namespace WinPaletter.UI.Style
                     TD = new()
                     {
                         EnableHyperlinks = true,
-                        RightToLeft = Program.Lang.Information.RightToLeft,
+                        RightToLeft = Program.Localization.Information.RightToLeft,
                         ButtonStyle = TaskDialogButtonStyle.Standard,
                         Content = ConvertToLink((SubMessage ?? string.Empty).ToString()),
                         FooterIcon = FooterIcon,
@@ -162,12 +162,12 @@ namespace WinPaletter.UI.Style
                     else TD.CustomFooterIcon = FooterCustomIcon;
 
                     // Create the buttons of the dialog
-                    TaskDialogButton okButton = new(ButtonType.Custom) { Text = Program.Lang.Strings.General.OK, ElevationRequired = RequireElevation };
-                    TaskDialogButton yesButton = new(ButtonType.Custom) { Text = Program.Lang.Strings.General.Yes, ElevationRequired = RequireElevation };
-                    TaskDialogButton noButton = new(ButtonType.Custom) { Text = Program.Lang.Strings.General.No };
-                    TaskDialogButton cancelButton = new(ButtonType.Custom) { Text = Program.Lang.Strings.General.Cancel };
-                    TaskDialogButton retryButton = new(ButtonType.Custom) { Text = Program.Lang.Strings.General.Retry, ElevationRequired = RequireElevation };
-                    TaskDialogButton closeButton = new(ButtonType.Custom) { Text = Program.Lang.Strings.General.Close };
+                    TaskDialogButton okButton = new(ButtonType.Custom) { Text = Program.Localization.Strings.General.OK, ElevationRequired = RequireElevation };
+                    TaskDialogButton yesButton = new(ButtonType.Custom) { Text = Program.Localization.Strings.General.Yes, ElevationRequired = RequireElevation };
+                    TaskDialogButton noButton = new(ButtonType.Custom) { Text = Program.Localization.Strings.General.No };
+                    TaskDialogButton cancelButton = new(ButtonType.Custom) { Text = Program.Localization.Strings.General.Cancel };
+                    TaskDialogButton retryButton = new(ButtonType.Custom) { Text = Program.Localization.Strings.General.Retry, ElevationRequired = RequireElevation };
+                    TaskDialogButton closeButton = new(ButtonType.Custom) { Text = Program.Localization.Strings.General.Close };
                     TaskDialogButton customButton = new(ButtonType.Custom);
 
                     // Set the buttons of the dialog based on the MessageBoxButtons

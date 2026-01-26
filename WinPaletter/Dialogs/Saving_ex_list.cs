@@ -16,7 +16,7 @@ namespace WinPaletter
 
         private void ThemeApply_list_Load(object sender, EventArgs e)
         {
-            this.LoadLanguage();
+            this.Localize();
             ApplyStyle(this);
             Icon = FormsExtensions.Icon<BugReport>();
 
@@ -30,7 +30,7 @@ namespace WinPaletter
                 temp.SelectedImageKey = "error";
             }
 
-            alertBox1.Text = ApplyMode ? Program.Lang.Strings.Messages.ApplyingMode_ErrorDialog : Program.Lang.Strings.Messages.LoadingMode_ErrorDialog;
+            alertBox1.Text = ApplyMode ? Program.Localization.Strings.Messages.ApplyingMode_ErrorDialog : Program.Localization.Strings.Messages.LoadingMode_ErrorDialog;
 
             ApplyMode = true;
         }

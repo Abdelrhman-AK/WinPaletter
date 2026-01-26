@@ -477,7 +477,7 @@ namespace WinPaletter.Theme.Structures
                                 if (File.Exists($@"{SysPaths.System32}\UIRibbon.dll"))
                                 {
                                     if (treeView is not null)
-                                        ThemeLog.AddNode(treeView, Program.Lang.Strings.ThemeManager.Advanced.EnableExplorerBar, "file_rename");
+                                        ThemeLog.AddNode(treeView, Program.Localization.Strings.ThemeManager.Advanced.EnableExplorerBar, "file_rename");
 
                                     TakeOwn_File($@"{SysPaths.System32}\UIRibbon.dll");
                                     Move_File($@"{SysPaths.System32}\UIRibbon.dll", $@"{SysPaths.System32}\UIRibbon.dll_bak");
@@ -491,7 +491,7 @@ namespace WinPaletter.Theme.Structures
                                 if (File.Exists($@"{SysPaths.System32}\UIRibbon.dll_bak"))
                                 {
                                     if (treeView is not null)
-                                        ThemeLog.AddNode(treeView, Program.Lang.Strings.ThemeManager.Advanced.RestoreExplorerBar, "file_rename");
+                                        ThemeLog.AddNode(treeView, Program.Localization.Strings.ThemeManager.Advanced.RestoreExplorerBar, "file_rename");
 
                                     TakeOwn_File($@"{SysPaths.System32}\UIRibbon.dll_bak");
                                     TakeOwn_File($@"{SysPaths.System32}\UIRibbon.dll");

@@ -25,7 +25,7 @@ namespace WinPaletter.UI.Controllers
         public event EventHandler ValueChanged;
         public new event EventHandler Scroll;
 
-        public int Value
+        public float Value
         {
             get => trackBar1.Value;
             set
@@ -36,7 +36,7 @@ namespace WinPaletter.UI.Controllers
             }
         }
 
-        public int Minimum
+        public float Minimum
         {
             get => trackBar1.Minimum;
             set
@@ -48,7 +48,7 @@ namespace WinPaletter.UI.Controllers
             }
         }
 
-        public int Maximum
+        public float Maximum
         {
             get => trackBar1.Maximum;
             set
@@ -173,7 +173,7 @@ namespace WinPaletter.UI.Controllers
 
         private void reset_MouseEnter(object sender, EventArgs e)
         {
-            Program.ToolTip.Show(sender as WP.Button, string.Empty, Program.Lang.Strings.Tips.ClickToReset, null, new Point(0, (sender as WP.Button).Height + 2));
+            Program.ToolTip.Show(sender as WP.Button, string.Empty, Program.Localization.Strings.Tips.ClickToReset, null, new Point(0, (sender as WP.Button).Height + 2));
         }
 
         private void reset_MouseLeave(object sender, EventArgs e)
@@ -183,7 +183,7 @@ namespace WinPaletter.UI.Controllers
 
         private void value_btn_MouseEnter(object sender, EventArgs e)
         {
-            Program.ToolTip.Show(sender as WP.Button, string.Empty, Program.Lang.Strings.Tips.ClickToEdit, null, new Point(0, (sender as WP.Button).Height + 2));
+            Program.ToolTip.Show(sender as WP.Button, string.Empty, Program.Localization.Strings.Tips.ClickToEdit, null, new Point(0, (sender as WP.Button).Height + 2));
         }
 
         private void value_btn_MouseLeave(object sender, EventArgs e)
@@ -193,7 +193,7 @@ namespace WinPaletter.UI.Controllers
 
         private void textBox1_MouseEnter(object sender, EventArgs e)
         {
-            Program.ToolTip.Show(sender as WP.TextBox, string.Empty, $"• {Program.Lang.Strings.Tips.PressEnterToUseValue}\r\n• {Program.Lang.Strings.Tips.PressEscToDismissEditing}", null, new Point(0, (sender as WP.TextBox).Height + 2));
+            Program.ToolTip.Show(sender as WP.TextBox, string.Empty, $"• {Program.Localization.Strings.Tips.PressEnterToUseValue}\r\n• {Program.Localization.Strings.Tips.PressEscToDismissEditing}", null, new Point(0, (sender as WP.TextBox).Height + 2));
         }
 
         private void textBox1_MouseLeave(object sender, EventArgs e)

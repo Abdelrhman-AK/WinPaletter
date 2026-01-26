@@ -38,6 +38,7 @@ namespace WinPaletter.UI.WP
         private int _animDuration = 200;
         private DateTime _animStartTime;
         private int _prevAnimatedIndex = -1; // previous tab being animated
+        private bool _firstTabAnimationPending = true;
 
         #endregion
 
@@ -85,20 +86,27 @@ namespace WinPaletter.UI.WP
         {
             base.OnLayout(levent);
 
-            if (!_needsLayoutRefresh || SelectedIndex < 0)
-                return;
+            if (SelectedIndex < 0) return;
 
-            _needsLayoutRefresh = false;
+            if (_firstTabAnimationPending)
+            {
+                RectangleF firstTabRect = GetSideTapeRect(SelectedIndex); // cached
+                _previousSideTape = new RectangleF(firstTabRect.X, firstTabRect.Y, 0, 0); // collapsed
+                _targetSideTape = firstTabRect;
 
-            _currentSideTape = GetSideTapeRect(SelectedIndex);
-            _previousSideTape = _currentSideTape;
-            _targetSideTape = _currentSideTape;
+                _tabAlpha.Clear();
+                _tabAlpha[SelectedIndex] = 0f;
 
-            _tabAlpha.Clear();
-            _tabAlpha[SelectedIndex] = 1f;
-            _prevAnimatedIndex = -1;
+                _animStartTime = DateTime.Now;
+                if (_animationTimer == null)
+                {
+                    _animationTimer = new Timer { Interval = 15 };
+                    _animationTimer.Tick += AnimationTick;
+                }
+                _animationTimer.Start();
 
-            Invalidate();
+                _firstTabAnimationPending = false; // only once
+            }
         }
 
         protected override void OnSelectedIndexChanged(EventArgs e)

@@ -636,7 +636,7 @@ namespace WinPaletter.UI.WP
             }
             else
             {
-                MsgBox(string.Format(Program.Lang.Strings.GitHubStrings.Explorer_FileNotFound, Application.ProductName, path), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(string.Format(Program.Localization.Strings.GitHubStrings.Explorer_FileNotFound, Application.ProductName, path), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

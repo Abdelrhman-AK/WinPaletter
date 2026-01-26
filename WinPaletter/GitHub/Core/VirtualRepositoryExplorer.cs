@@ -1,17 +1,10 @@
 ﻿using Octokit;
-using Serilog.Events;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace WinPaletter.GitHub
 {
@@ -127,7 +120,7 @@ namespace WinPaletter.GitHub
             try
             {
                 // Get the contents of the parent directory
-                string parent = Path.GetDirectoryName(path)?.Replace("\\", "/") ?? "";
+                string parent = Path.GetDirectoryName(path)?.Replace("\\", "/") ?? string.Empty;
                 string name = Path.GetFileName(path);
 
                 IReadOnlyList<RepositoryContent> parentContents =

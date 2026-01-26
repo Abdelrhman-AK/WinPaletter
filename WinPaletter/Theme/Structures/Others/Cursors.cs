@@ -190,7 +190,7 @@ namespace WinPaletter.Theme.Structures
             TreeView tv = ReportProgress_Detailed ? treeView : null;
 
             Stopwatch sw = new();
-            ThemeLog.AddNode(tv, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.Strings.ThemeManager.Actions.SavingCursorsColors}", "info");
+            ThemeLog.AddNode(tv, $"{DateTime.Now.ToLongTimeString()}: {Program.Localization.Strings.ThemeManager.Actions.SavingCursorsColors}", "info");
             sw.Reset();
             sw.Start();
             Cursor.Save_Cursors_To_Registry("Arrow", Cursor_Arrow, tv);
@@ -210,7 +210,7 @@ namespace WinPaletter.Theme.Structures
             Cursor.Save_Cursors_To_Registry("Person", Cursor_Person, tv);
             Cursor.Save_Cursors_To_Registry("IBeam", Cursor_IBeam, tv);
             Cursor.Save_Cursors_To_Registry("Cross", Cursor_Cross, tv);
-            ThemeLog.AddNode(tv, string.Format(Program.Lang.Strings.ThemeManager.Actions.Time, sw.ElapsedMilliseconds / 1000d), "time");
+            ThemeLog.AddNode(tv, string.Format(Program.Localization.Strings.ThemeManager.Actions.Time, sw.ElapsedMilliseconds / 1000d), "time");
             sw.Stop();
 
             if (Enabled)
@@ -308,7 +308,7 @@ namespace WinPaletter.Theme.Structures
 
             Program.Log?.Write(LogEventLevel.Information, $"Rendering cursor `{CurName}`.");
 
-            if (treeView is not null) ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.RenderingCursor, CurName), "pe_patch");
+            if (treeView is not null) ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.RenderingCursor, CurName), "pe_patch");
 
             if (!Directory.Exists(SysPaths.CursorsWP))
             {
@@ -480,7 +480,7 @@ namespace WinPaletter.Theme.Structures
                     FS.Close();
                 }
 
-                if (treeView is not null) ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.CursorRenderedInto, Path), "info");
+                if (treeView is not null) ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.CursorRenderedInto, Path), "info");
                 Program.Log?.Write(LogEventLevel.Information, $"Cursor `{CurName}` has been rendered and saved to `{Path}`.");
             }
 
@@ -569,7 +569,7 @@ namespace WinPaletter.Theme.Structures
                         fs.Close();
                     }
 
-                    if (treeView is not null) ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.CursorRenderedInto, OutputFile), "info");
+                    if (treeView is not null) ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.CursorRenderedInto, OutputFile), "info");
 
                     Program.Log?.Write(LogEventLevel.Information, $"Cursor `{CurName}` has been rendered and saved to `{OutputFile}`.");
                 }
@@ -874,7 +874,7 @@ namespace WinPaletter.Theme.Structures
 
             catch (Exception ex)
             {
-                if (MsgBox(Program.Lang.Strings.ThemeManager.Errors.RestoreCursors, MessageBoxButtons.OKCancel, MessageBoxIcon.Error, Program.Lang.Strings.ThemeManager.Errors.RestoreCursorsErrorPressOK, string.Empty, string.Empty, string.Empty, string.Empty, Program.Lang.Strings.ThemeManager.Tips.RestoreCursorsTip, TaskDialogIcon.Information) == DialogResult.OK)
+                if (MsgBox(Program.Localization.Strings.ThemeManager.Errors.RestoreCursors, MessageBoxButtons.OKCancel, MessageBoxIcon.Error, Program.Localization.Strings.ThemeManager.Errors.RestoreCursorsErrorPressOK, string.Empty, string.Empty, string.Empty, string.Empty, Program.Localization.Strings.ThemeManager.Tips.RestoreCursorsTip, TaskDialogIcon.Information) == DialogResult.OK)
                     Forms.BugReport.ThrowError(ex);
             }
 
@@ -950,7 +950,7 @@ namespace WinPaletter.Theme.Structures
 
             catch (Exception ex)
             {
-                if (MsgBox(Program.Lang.Strings.ThemeManager.Errors.RestoreCursors, MessageBoxButtons.OKCancel, MessageBoxIcon.Error, Program.Lang.Strings.ThemeManager.Errors.RestoreCursorsErrorPressOK, string.Empty, string.Empty, string.Empty, string.Empty, Program.Lang.Strings.ThemeManager.Tips.RestoreCursorsTip, TaskDialogIcon.Information) == DialogResult.OK)
+                if (MsgBox(Program.Localization.Strings.ThemeManager.Errors.RestoreCursors, MessageBoxButtons.OKCancel, MessageBoxIcon.Error, Program.Localization.Strings.ThemeManager.Errors.RestoreCursorsErrorPressOK, string.Empty, string.Empty, string.Empty, string.Empty, Program.Localization.Strings.ThemeManager.Tips.RestoreCursorsTip, TaskDialogIcon.Information) == DialogResult.OK)
                     Forms.BugReport.ThrowError(ex);
             }
         }

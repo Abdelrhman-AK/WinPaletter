@@ -199,7 +199,7 @@ namespace WinPaletter.Theme.Structures
                             {
                                 if (bmp.RawFormat != ImageFormat.Bmp)
                                 {
-                                    if (MsgBox(Program.Lang.Strings.ThemeManager.Tips.Wallpaper_NonBMP0, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.Strings.ThemeManager.Tips.Wallpaper_NonBMP1) == DialogResult.Yes)
+                                    if (MsgBox(Program.Localization.Strings.ThemeManager.Tips.Wallpaper_NonBMP0, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Localization.Strings.ThemeManager.Tips.Wallpaper_NonBMP1) == DialogResult.Yes)
                                     {
                                         bmp.Save(ImageFile, ImageFormat.Bmp);
                                     }
@@ -231,7 +231,7 @@ namespace WinPaletter.Theme.Structures
                         using (INI _ini = new(slideshow_ini))
                         {
                             if (treeView is not null)
-                                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.SettingSlideshow, slideshow_ini), "dll");
+                                ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.SettingSlideshow, slideshow_ini), "dll");
 
                             if (WallpaperType == WallpaperTypes.SlideShow && SlideShow_Folder_or_ImagesList && Directory.Exists(Wallpaper_Slideshow_ImagesRootPath))
                             {

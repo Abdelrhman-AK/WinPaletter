@@ -23,7 +23,7 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Localization.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -99,7 +99,7 @@ namespace WinPaletter
         {
             if (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Effects)
             {
-                MsgBox(Program.Lang.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.Strings.Aspects.Disabled_Apply_1);
+                MsgBox(Program.Localization.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Localization.Strings.Aspects.Disabled_Apply_1);
                 return;
             }
 
@@ -127,7 +127,7 @@ namespace WinPaletter
         {
             DesignerData data = new(this)
             {
-                AspectName = Program.Lang.Strings.Aspects.WinEffects,
+                AspectName = Program.Localization.Strings.Aspects.WinEffects,
                 Enabled = Program.TM.WindowsEffects.Enabled,
                 Import_theme = false,
                 Import_msstyles = false,
@@ -230,13 +230,13 @@ namespace WinPaletter
             Effects.IconsDesktopTranslSel = CheckBox10.Checked;
             Effects.ShowWinContentDrag = CheckBox11.Checked;
             Effects.KeyboardUnderline = CheckBox12.Checked;
-            Effects.NotificationDuration = Trackbar5.Value;
+            Effects.NotificationDuration = (int)Trackbar5.Value;
             Effects.FocusRectWidth = (uint)Trackbar2.Value;
             Effects.FocusRectHeight = (uint)Trackbar3.Value;
             Effects.Caret = (uint)Trackbar4.Value;
             Effects.AWT_Enabled = CheckBox13.Checked;
             Effects.AWT_BringActivatedWindowToTop = CheckBox14.Checked;
-            Effects.AWT_Delay = Trackbar6.Value;
+            Effects.AWT_Delay = (int)Trackbar6.Value;
             Effects.SnapCursorToDefButton = CheckBox15.Checked;
             Effects.Win11ClassicContextMenu = CheckBox16.Checked;
             Effects.BalloonNotifications = CheckBox17.Checked;
@@ -277,17 +277,17 @@ namespace WinPaletter
 
         private void trackBarX1_ValueChanged(object sender, EventArgs e)
         {
-            ButtonR1.FocusRectWidth = (sender as TrackBarX).Value;
+            ButtonR1.FocusRectWidth = (int)(sender as TrackBarX).Value;
         }
 
         private void trackBarX2_ValueChanged(object sender, EventArgs e)
         {
-            ButtonR1.FocusRectHeight = (sender as TrackBarX).Value;
+            ButtonR1.FocusRectHeight = (int)(sender as TrackBarX).Value;
         }
 
         private void trackBarX1_ValueChanged_1(object sender, EventArgs e)
         {
-            Panel2.Width = (sender as TrackBarX).Value;
+            Panel2.Width = (int)(sender as TrackBarX).Value;
         }
 
         private void button21_Click(object sender, EventArgs e)

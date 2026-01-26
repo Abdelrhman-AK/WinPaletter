@@ -76,7 +76,7 @@ namespace WinPaletter
         /// Gets if WinPaletter's current version is designed as beta or not
         /// <br>Don't forget to make it <b>true</b> when you design a beta one</br>
         /// </summary>
-        public static readonly bool IsBeta = false;
+        public static bool IsBeta { get; set; } = true;
 
         /// <summary>
         /// A boolean that represents if WinPaletter has started with a classic theme enabled (Loaded at application startup)
@@ -96,9 +96,11 @@ namespace WinPaletter
         public static string FirstVisualStyles = $"{SysPaths.Windows}\\Resources\\Themes\\aero\\aero.msstyles";
 
         /// <summary>
-        /// A class that represents WinPaletter's Language Strings_Cls (Loaded at application startup)
+        /// Gets or sets the global localizer used for retrieving localized strings throughout the application.
         /// </summary>
-        public static Localizer Lang = new();
+        /// <remarks>Assigning a custom localizer allows you to control how text is localized across the
+        /// application. Changes to this property affect all components that rely on localization.</remarks>
+        public static Localizer Localization { get; set; } = new();
 
         /// <summary>
         /// Current applied wallpaper

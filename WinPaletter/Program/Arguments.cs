@@ -165,8 +165,8 @@ namespace WinPaletter
 
                     if (o.ExportLang)
                     {
-                        Lang.Save($"language-en {DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second} {DateTime.Now.Day}-{DateTime.Now.Month}-{DateTime.Now.Year}.json");
-                        MsgBox(Lang.Strings.Languages.Exported, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Localization.Save($"language-en {DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second} {DateTime.Now.Day}-{DateTime.Now.Month}-{DateTime.Now.Year}.json");
+                        MsgBox(Localization.Strings.Languages.Exported, MessageBoxButtons.OK, MessageBoxIcon.Information);
                         shouldExit = true;
                         Log?.Write(LogEventLevel.Information, "Command line arguments export language requested.");
                     }

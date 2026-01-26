@@ -29,7 +29,7 @@ namespace WinPaletter
 
         private void Lang_Add_Snippet_Load(object sender, EventArgs e)
         {
-            this.LoadLanguage();
+            this.Localize();
             ApplyStyle(this);
 
             DialogResult = DialogResult.None;

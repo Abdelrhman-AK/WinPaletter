@@ -24,7 +24,7 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Localization.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -56,7 +56,7 @@ namespace WinPaletter
         {
             if (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors)
             {
-                MsgBox(Program.Lang.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.Strings.Aspects.Disabled_Apply_1);
+                MsgBox(Program.Localization.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Localization.Strings.Aspects.Disabled_Apply_1);
                 return;
             }
 
@@ -88,7 +88,7 @@ namespace WinPaletter
         {
             DesignerData data = new(this)
             {
-                AspectName = string.Format(Program.Lang.Strings.Aspects.WinTheme, OS.Name),
+                AspectName = string.Format(Program.Localization.Strings.Aspects.WinTheme, OS.Name),
                 Enabled = Program.TM.WindowsXP.Enabled,
                 GeneratePalette = false,
                 GenerateMSTheme = false,
@@ -185,7 +185,7 @@ namespace WinPaletter
                     }
                     catch
                     {
-                        MsgBox(Program.Lang.Strings.Messages.InvalidTheme, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MsgBox(Program.Localization.Strings.Messages.InvalidTheme, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -221,7 +221,7 @@ namespace WinPaletter
                     }
                     catch
                     {
-                        MsgBox(Program.Lang.Strings.Messages.InvalidTheme, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MsgBox(Program.Localization.Strings.Messages.InvalidTheme, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -229,7 +229,7 @@ namespace WinPaletter
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            using (SaveFileDialog dlg = new() { Filter = Program.Filters.PNG, Title = Program.Lang.Strings.Extensions.SavePNG })
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.PNG, Title = Program.Localization.Strings.Extensions.SavePNG })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -430,7 +430,7 @@ namespace WinPaletter
 
         private void VS_Browse_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.VisualStyles_And_Themes, Title = Program.Lang.Strings.Extensions.OpenVisualStyle })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.VisualStyles_And_Themes, Title = Program.Localization.Strings.Extensions.OpenVisualStyle })
             {
                 if (dlg.ShowDialog() == DialogResult.OK) VS_textbox.Text = dlg.FileName;
             }

@@ -27,7 +27,7 @@ namespace WinPaletter
         private void BugReport_Load(object sender, EventArgs e)
         {
             Icon = FormsExtensions.Icon<SettingsX>();
-            this.LoadLanguage();
+            this.Localize();
             ApplyStyle(this);
             CheckForIllegalCrossThreadCalls = false;
 
@@ -74,7 +74,7 @@ namespace WinPaletter
             Button1.Enabled = false;
             Button2.Enabled = false;
 
-            textBox1.SetText($"{textBox1.Text}• {string.Format(Program.Lang.Strings.Services.Stopping, _serviceName)}\r\n");
+            textBox1.SetText($"{textBox1.Text}• {string.Format(Program.Localization.Strings.Services.Stopping, _serviceName)}\r\n");
             Program.SendCommand($"net stop {_serviceName}");
 
             List<Process> Processes = Program.ProgramsRunning(_destinationPath);
@@ -82,7 +82,7 @@ namespace WinPaletter
 
             try
             {
-                textBox1.SetText($"{textBox1.Text}• {string.Format(Program.Lang.Strings.Services.Extracting, _serviceName)}\r\n");
+                textBox1.SetText($"{textBox1.Text}• {string.Format(Program.Localization.Strings.Services.Extracting, _serviceName)}\r\n");
                 if (!Directory.Exists(Directory.GetParent(_destinationPath).FullName)) { Directory.CreateDirectory(Directory.GetParent(_destinationPath).FullName); }
                 if (File.Exists(_destinationPath))
                     File.Delete(_destinationPath);
@@ -99,23 +99,23 @@ namespace WinPaletter
                 {
                     string installutil = installutils.ElementAt(0);
 
-                    textBox1.SetText($"{textBox1.Text}• {string.Format(Program.Lang.Strings.Services.Uninstalling, _serviceName)}\r\n");
+                    textBox1.SetText($"{textBox1.Text}• {string.Format(Program.Localization.Strings.Services.Uninstalling, _serviceName)}\r\n");
                     Program.SendCommand($"\"{installutil}\" /u \"{_destinationPath}\"");
 
-                    textBox1.SetText($"{textBox1.Text}• {string.Format(Program.Lang.Strings.Services.Installing, _serviceName)}\r\n");
+                    textBox1.SetText($"{textBox1.Text}• {string.Format(Program.Localization.Strings.Services.Installing, _serviceName)}\r\n");
                     Program.SendCommand($"\"{installutil}\" \"{_destinationPath}\"");
 
-                    textBox1.SetText($"{textBox1.Text}• {string.Format(Program.Lang.Strings.Services.Starting, _serviceName)}\r\n");
+                    textBox1.SetText($"{textBox1.Text}• {string.Format(Program.Localization.Strings.Services.Starting, _serviceName)}\r\n");
                     Program.SendCommand($"net start {_serviceName}");
 
-                    textBox1.SetText($"{textBox1.Text}• {string.Format(Program.Lang.Strings.Services.InstallCompleted, _serviceName)}\r\n");
+                    textBox1.SetText($"{textBox1.Text}• {string.Format(Program.Localization.Strings.Services.InstallCompleted, _serviceName)}\r\n");
 
                     Thread.Sleep(1000);
                 }
                 else
                 {
-                    textBox1.SetText($"{textBox1.Text}• {string.Format(Program.Lang.Strings.Services.MissingInstallutil, _serviceName)}\r\n");
-                    MsgBox(Program.Lang.Strings.Services.MissingInstallutil, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    textBox1.SetText($"{textBox1.Text}• {string.Format(Program.Localization.Strings.Services.MissingInstallutil, _serviceName)}\r\n");
+                    MsgBox(Program.Localization.Strings.Services.MissingInstallutil, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 
@@ -129,7 +129,7 @@ namespace WinPaletter
             Button1.Enabled = false;
             Button2.Enabled = false;
 
-            textBox1.SetText($"{textBox1.Text}• {string.Format(Program.Lang.Strings.Services.Stopping, _serviceName)}\r\n");
+            textBox1.SetText($"{textBox1.Text}• {string.Format(Program.Localization.Strings.Services.Stopping, _serviceName)}\r\n");
             Program.SendCommand($"net stop {_serviceName}");
 
             List<Process> Processes = Program.ProgramsRunning(_destinationPath);
@@ -143,17 +143,17 @@ namespace WinPaletter
                 {
                     string installutil = installutils.ElementAt(0);
 
-                    textBox1.SetText($"{textBox1.Text}• {string.Format(Program.Lang.Strings.Services.Uninstalling, _serviceName)}\r\n");
+                    textBox1.SetText($"{textBox1.Text}• {string.Format(Program.Localization.Strings.Services.Uninstalling, _serviceName)}\r\n");
                     Program.SendCommand($"\"{installutil}\" /u \"{_destinationPath}\"");
 
-                    textBox1.SetText($"{textBox1.Text}• {string.Format(Program.Lang.Strings.Services.UninstallCompleted, _serviceName)}\r\n");
+                    textBox1.SetText($"{textBox1.Text}• {string.Format(Program.Localization.Strings.Services.UninstallCompleted, _serviceName)}\r\n");
 
                     Thread.Sleep(1000);
                 }
                 else
                 {
-                    textBox1.SetText($"{textBox1.Text}• {string.Format(Program.Lang.Strings.Services.MissingInstallutil, _serviceName)}\r\n");
-                    MsgBox(Program.Lang.Strings.Services.MissingInstallutil, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    textBox1.SetText($"{textBox1.Text}• {string.Format(Program.Localization.Strings.Services.MissingInstallutil, _serviceName)}\r\n");
+                    MsgBox(Program.Localization.Strings.Services.MissingInstallutil, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 
@@ -190,11 +190,11 @@ namespace WinPaletter
             _destinationPath = destinationPath;
 
             if (runMethod == RunMethods.Install)
-                title.Text = string.Format(Program.Lang.Strings.Services.Title_Install, serviceName);
+                title.Text = string.Format(Program.Localization.Strings.Services.Title_Install, serviceName);
             else if (runMethod == RunMethods.Update)
-                title.Text = string.Format(Program.Lang.Strings.Services.Title_Update, serviceName);
+                title.Text = string.Format(Program.Localization.Strings.Services.Title_Update, serviceName);
             else if (runMethod == RunMethods.Uninstall)
-                title.Text = string.Format(Program.Lang.Strings.Services.Title_Uninstall, serviceName);
+                title.Text = string.Format(Program.Localization.Strings.Services.Title_Uninstall, serviceName);
 
             textBox2.Text = serviceDescription;
 

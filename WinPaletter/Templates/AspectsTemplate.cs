@@ -63,7 +63,7 @@ namespace WinPaletter
             IsShown = false;
             CheckForIllegalCrossThreadCalls = false;
 
-            this.LoadLanguage();
+            this.Localize();
             ApplyStyle(this);
         }
 
@@ -113,15 +113,15 @@ namespace WinPaletter
             //titlebarExtender1.Height = !_data.ShowSchemesList ? schemes.Top + 3 : titlebarExtender1.Height;
 
             #region Text _data
-            button_import.Text = Program.Lang.Strings.Previewer.Import_wpth;
-            button_palette_generate.Text = Program.Lang.Strings.Previewer.GeneratePalette;
-            button_saveas_MSTheme.Text = Program.Lang.Strings.Previewer.SaveAs_MSTheme;
-            button_CPL.Text = Program.Lang.Strings.Previewer.Open_in_CPL;
-            mode_advanced.Text = Program.Lang.Strings.Previewer.Mode_advanced;
-            mode_simple.Text = Program.Lang.Strings.Previewer.Mode_simple;
-            button_load.Text = Program.Lang.Strings.Previewer.Load_into_current_theme;
-            button_apply.Text = Program.Lang.Strings.Previewer.Apply;
-            button_cancel.Text = Program.Lang.Strings.General.Cancel;
+            button_import.Text = Program.Localization.Strings.Previewer.Import_wpth;
+            button_palette_generate.Text = Program.Localization.Strings.Previewer.GeneratePalette;
+            button_saveas_MSTheme.Text = Program.Localization.Strings.Previewer.SaveAs_MSTheme;
+            button_CPL.Text = Program.Localization.Strings.Previewer.Open_in_CPL;
+            mode_advanced.Text = Program.Localization.Strings.Previewer.Mode_advanced;
+            mode_simple.Text = Program.Localization.Strings.Previewer.Mode_simple;
+            button_load.Text = Program.Localization.Strings.Previewer.Load_into_current_theme;
+            button_apply.Text = Program.Localization.Strings.Previewer.Apply;
+            button_cancel.Text = Program.Localization.Strings.General.Cancel;
             #endregion
 
             #region Menu _data
@@ -145,22 +145,22 @@ namespace WinPaletter
             ToolStripMenuItem saveTheme_oneAspect = new();
             ToolStripMenuItem applyThemeWithRP = new();
 
-            import_current.Text = Program.Lang.Strings.Previewer.Import_current;
-            import_defaultWindows.Text = Program.Lang.Strings.Previewer.Import_defaultWindows;
-            import_theme.Text = Program.Lang.Strings.Previewer.Import_classictheme;
-            import_msstyles.Text = Program.Lang.Strings.Previewer.Import_msstyles;
-            import_scheme.Text = Program.Lang.Strings.Previewer.Import_preset;
-            import_scheme_11.Text = Program.Lang.Strings.Windows.W11;
-            import_scheme_10.Text = Program.Lang.Strings.Windows.W10;
-            import_scheme_81.Text = Program.Lang.Strings.Windows.W81;
-            import_scheme_8.Text = Program.Lang.Strings.Windows.W8;
-            import_scheme_7.Text = Program.Lang.Strings.Windows.W7;
-            import_scheme_Vista.Text = Program.Lang.Strings.Windows.WVista;
-            import_scheme_XP.Text = Program.Lang.Strings.Windows.WXP;
-            import_scheme_12.Text = Program.Lang.Strings.Windows.W12;
-            applyThemeWithRP.Text = Program.Lang.Strings.Previewer.Apply_RestorePoint;
+            import_current.Text = Program.Localization.Strings.Previewer.Import_current;
+            import_defaultWindows.Text = Program.Localization.Strings.Previewer.Import_defaultWindows;
+            import_theme.Text = Program.Localization.Strings.Previewer.Import_classictheme;
+            import_msstyles.Text = Program.Localization.Strings.Previewer.Import_msstyles;
+            import_scheme.Text = Program.Localization.Strings.Previewer.Import_preset;
+            import_scheme_11.Text = Program.Localization.Strings.Windows.W11;
+            import_scheme_10.Text = Program.Localization.Strings.Windows.W10;
+            import_scheme_81.Text = Program.Localization.Strings.Windows.W81;
+            import_scheme_8.Text = Program.Localization.Strings.Windows.W8;
+            import_scheme_7.Text = Program.Localization.Strings.Windows.W7;
+            import_scheme_Vista.Text = Program.Localization.Strings.Windows.WVista;
+            import_scheme_XP.Text = Program.Localization.Strings.Windows.WXP;
+            import_scheme_12.Text = Program.Localization.Strings.Windows.W12;
+            applyThemeWithRP.Text = Program.Localization.Strings.Previewer.Apply_RestorePoint;
 
-            import_JSON.Text = Program.Lang.Strings.Previewer.Import_JSON;
+            import_JSON.Text = Program.Localization.Strings.Previewer.Import_JSON;
 
             import_current.Image = AspectsResources.CurrentApplied;
 
@@ -227,7 +227,7 @@ namespace WinPaletter
             button_import.Menu.Items.Add(import_defaultWindows);
             button_apply.Menu.Items.Add(applyThemeWithRP);
 
-            saveTheme_oneAspect.Text = Program.Lang.Strings.Previewer.SaveAs_MSTheme_OneAspect;
+            saveTheme_oneAspect.Text = Program.Localization.Strings.Previewer.SaveAs_MSTheme_OneAspect;
             saveTheme_oneAspect.Image = button_saveas_MSTheme.Image;
             button_saveas_MSTheme.Menu.Items.Add(saveTheme_oneAspect);
 
@@ -489,8 +489,8 @@ namespace WinPaletter
 
             if (IsShown)
             {
-                Program.ToolTip.ToolTipText = ((UI.WP.Toggle)sender).Checked ? Program.Lang.Strings.Aspects.EnabledTip : Program.Lang.Strings.Aspects.DisabledTip;
-                Program.ToolTip.ToolTipTitle = ((UI.WP.Toggle)sender).Checked ? string.Format(Program.Lang.Strings.Aspects.Enabled, AspectName) : string.Format(Program.Lang.Strings.Aspects.Disabled, AspectName);
+                Program.ToolTip.ToolTipText = ((UI.WP.Toggle)sender).Checked ? Program.Localization.Strings.Aspects.EnabledTip : Program.Localization.Strings.Aspects.DisabledTip;
+                Program.ToolTip.ToolTipTitle = ((UI.WP.Toggle)sender).Checked ? string.Format(Program.Localization.Strings.Aspects.Enabled, AspectName) : string.Format(Program.Localization.Strings.Aspects.Disabled, AspectName);
                 Program.ToolTip.Image = checker_img.Image;
 
                 Point location = new(-Program.ToolTip.Size.Width + checker_img.Width, (checker_img.Height - Program.ToolTip.Size.Height) / 2 - 1);
@@ -565,7 +565,7 @@ namespace WinPaletter
                 {
                     Invoke((Action)(() => Cursor = Cursors.WaitCursor));
 
-                    SystemRestoreHelper.CreateRestorePoint(string.Format(Program.Lang.Strings.General.RestorePoint_Aspect, _data.AspectName));
+                    SystemRestoreHelper.CreateRestorePoint(string.Format(Program.Localization.Strings.General.RestorePoint_Aspect, _data.AspectName));
 
                     Invoke((Action)(() => Cursor = Cursors.Default));
 

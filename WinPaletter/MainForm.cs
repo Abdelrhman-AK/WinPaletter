@@ -61,12 +61,12 @@ namespace WinPaletter
         {
             if (Program.Settings.ThemeApplyingBehavior.ShowSaveConfirmation && Program.TM != Program.TM_Original)
             {
-                DialogResult result = MsgBox(Program.Lang.Strings.Messages.SaveDialog_Question, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                DialogResult result = MsgBox(Program.Localization.Strings.Messages.SaveDialog_Question, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 bool sucess;
 
                 if (result == DialogResult.Yes)
                 {
-                    using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = Forms.Home.File, Title = Program.Lang.Strings.Extensions.SaveWinPaletterTheme })
+                    using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = Forms.Home.File, Title = Program.Localization.Strings.Extensions.SaveWinPaletterTheme })
                     {
                         if (File.Exists(dlg.FileName) || dlg.ShowDialog() == DialogResult.OK)
                         {
@@ -105,12 +105,12 @@ namespace WinPaletter
             {
                 if (Forms.Home.Parent is TabPage && Forms.MainForm.tabsContainer1.TabsCount > 1)
                 {
-                    if (MsgBox(Program.Lang.Strings.Messages.OpenTabs_Close, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) e.Cancel = true;
+                    if (MsgBox(Program.Localization.Strings.Messages.OpenTabs_Close, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) e.Cancel = true;
                 }
 
                 if (!e.Cancel)
                 {
-                    using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = Forms.Home.File, Title = Program.Lang.Strings.Extensions.SaveWinPaletterTheme })
+                    using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = Forms.Home.File, Title = Program.Localization.Strings.Extensions.SaveWinPaletterTheme })
                     {
                         bool result = Forms.MainForm.ExitWithChangedFileResponse(); //dlg,
                                                                                     //() => Forms.ThemeLog.Apply_Theme(Program.TM, false, true),

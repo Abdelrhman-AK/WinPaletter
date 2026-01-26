@@ -28,7 +28,7 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Localization.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -56,7 +56,7 @@ namespace WinPaletter
 
         private void LoadFromTHEME(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Themes, Title = Program.Lang.Strings.Extensions.OpenTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Themes, Title = Program.Localization.Strings.Extensions.OpenTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -82,7 +82,7 @@ namespace WinPaletter
         {
             if (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Sounds)
             {
-                MsgBox(Program.Lang.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.Strings.Aspects.Disabled_Apply_1);
+                MsgBox(Program.Localization.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Localization.Strings.Aspects.Disabled_Apply_1);
                 return;
             }
 
@@ -262,7 +262,7 @@ namespace WinPaletter
 
         public void BrowseForWAV(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WAV, Title = Program.Lang.Strings.Extensions.OpenWAV })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WAV, Title = Program.Localization.Strings.Extensions.OpenWAV })
             {
                 UI.WP.TextBox temp = ((UI.WP.Button)sender).Parent.Controls.OfType<UI.WP.TextBox>().ElementAt(0);
                 if (File.Exists(temp?.Text))
@@ -300,7 +300,7 @@ namespace WinPaletter
         {
             DesignerData data = new(this)
             {
-                AspectName = Program.Lang.Strings.Aspects.Sounds,
+                AspectName = Program.Localization.Strings.Aspects.Sounds,
                 Enabled = Program.TM.Sounds.Enabled,
                 Import_theme = true,
                 Import_msstyles = false,
@@ -1123,7 +1123,7 @@ namespace WinPaletter
 
         private void button347_Click(object sender, EventArgs e)
         {
-            Forms.ServiceInstaller.Run("WinPaletter.SystemEventsSounds", Program.Lang.Strings.Services.Description_SysEventsSounds, SysPaths.SysEventsSounds, Resources.WinPaletter_SysEventsSounds, ServiceInstaller.RunMethods.Install);
+            Forms.ServiceInstaller.Run("WinPaletter.SystemEventsSounds", Program.Localization.Strings.Services.Description_SysEventsSounds, SysPaths.SysEventsSounds, Resources.WinPaletter_SysEventsSounds, ServiceInstaller.RunMethods.Install);
         }
     }
 }

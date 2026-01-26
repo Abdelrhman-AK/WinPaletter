@@ -247,7 +247,7 @@ namespace WinPaletter
             FinishedLoadingInitialTMs = false;
             _Shown = false;
 
-            this.LoadLanguage();
+            this.Localize();
             ApplyStyle(this, true);
             this.DropEffect(default, true, DWM.DWMStyles.Acrylic);
 
@@ -256,7 +256,7 @@ namespace WinPaletter
             this.DoubleBuffer();
 
             Apply_btn.Image = Forms.Home.apply_btn.Image;
-            labelAlt2.Text = string.Format(Program.Lang.Strings.Store.WontWork_Protocol, OS.WXP ? Program.Lang.Strings.Windows.WXP : Program.Lang.Strings.Windows.WVista);
+            labelAlt2.Text = string.Format(Program.Localization.Strings.Store.WontWork_Protocol, OS.WXP ? Program.Localization.Strings.Windows.WXP : Program.Localization.Strings.Windows.WVista);
             if (OS.WXP || OS.WVista) Tabs.SelectedIndex = 4;
 
             if (ProgressBar1.Style != UI.WP.ProgressBar.ProgressBarStyle.Marquee) ProgressBar1.Style = UI.WP.ProgressBar.ProgressBarStyle.Marquee;
@@ -287,8 +287,8 @@ namespace WinPaletter
 
             groupBox4.UpdatePattern(Program.TM.Info.Pattern);
 
-            System.Windows.Forms.ToolStripMenuItem edit_btn = new() { Text = Program.Lang.Strings.General.Edit, Image = Assets.Store.Menu_Edit };
-            System.Windows.Forms.ToolStripMenuItem save_as = new() { Text = Program.Lang.Strings.General.SaveAs, Image = Assets.Store.Menu_SaveAs };
+            System.Windows.Forms.ToolStripMenuItem edit_btn = new() { Text = Program.Localization.Strings.General.Edit, Image = Assets.Store.Menu_Edit };
+            System.Windows.Forms.ToolStripMenuItem save_as = new() { Text = Program.Localization.Strings.General.SaveAs, Image = Assets.Store.Menu_SaveAs };
 
             edit_btn.Click -= Edit_btn_Click;
             save_as.Click -= Save_as_Click;
@@ -326,55 +326,55 @@ namespace WinPaletter
             {
                 toggle_theme.Image = Assets.Themes_Banners.Theme_12.Resize(48, 48);
                 toggle_lockScreen.Image = Assets.Themes_Banners.LogonUI_12.Resize(48, 48);
-                toggle_lockScreen.Text = $"{Program.Lang.Strings.Aspects.LockScreen}\r\n-{Program.Lang.Strings.Aspects.LockScreen_Description}";
+                toggle_lockScreen.Text = $"{Program.Localization.Strings.Aspects.LockScreen}\r\n-{Program.Localization.Strings.Aspects.LockScreen_Description}";
             }
             else if (OS.W11)
             {
                 toggle_theme.Image = Assets.Themes_Banners.Theme_11.Resize(48, 48);
                 toggle_lockScreen.Image = Assets.Themes_Banners.LogonUI_11.Resize(48, 48);
-                toggle_lockScreen.Text = $"{Program.Lang.Strings.Aspects.LockScreen}\r\n-{Program.Lang.Strings.Aspects.LockScreen_Description}";
+                toggle_lockScreen.Text = $"{Program.Localization.Strings.Aspects.LockScreen}\r\n-{Program.Localization.Strings.Aspects.LockScreen_Description}";
             }
             else if (OS.W10)
             {
                 toggle_theme.Image = Assets.Themes_Banners.Theme_10.Resize(48, 48);
                 toggle_lockScreen.Image = Assets.Themes_Banners.LogonUI_10.Resize(48, 48);
-                toggle_lockScreen.Text = $"{Program.Lang.Strings.Aspects.LockScreen}\r\n-{Program.Lang.Strings.Aspects.LockScreen_Description}";
+                toggle_lockScreen.Text = $"{Program.Localization.Strings.Aspects.LockScreen}\r\n-{Program.Localization.Strings.Aspects.LockScreen_Description}";
             }
             else if (OS.W81)
             {
                 toggle_theme.Image = Assets.Themes_Banners.Theme_8_1.Resize(48, 48);
                 toggle_lockScreen.Image = Assets.Themes_Banners.LogonUI_8x.Resize(48, 48);
-                toggle_lockScreen.Text = $"{Program.Lang.Strings.Aspects.LockScreen}\r\n-{Program.Lang.Strings.Aspects.LockScreen_Description}";
+                toggle_lockScreen.Text = $"{Program.Localization.Strings.Aspects.LockScreen}\r\n-{Program.Localization.Strings.Aspects.LockScreen_Description}";
             }
             else if (OS.W8)
             {
                 toggle_theme.Image = Assets.Themes_Banners.Theme_8.Resize(48, 48);
                 toggle_lockScreen.Image = Assets.Themes_Banners.LogonUI_8x.Resize(48, 48);
-                toggle_lockScreen.Text = $"{Program.Lang.Strings.Aspects.LockScreen}\r\n-{Program.Lang.Strings.Aspects.LockScreen_Description}";
+                toggle_lockScreen.Text = $"{Program.Localization.Strings.Aspects.LockScreen}\r\n-{Program.Localization.Strings.Aspects.LockScreen_Description}";
             }
             else if (OS.W7)
             {
                 toggle_theme.Image = Assets.Themes_Banners.Theme_7.Resize(48, 48);
                 toggle_lockScreen.Image = Assets.Themes_Banners.LogonUI_7.Resize(48, 48);
-                toggle_lockScreen.Text = $"{Program.Lang.Strings.Aspects.LogonUI}\r\n-{Program.Lang.Strings.Aspects.LogonUI_Description}";
+                toggle_lockScreen.Text = $"{Program.Localization.Strings.Aspects.LogonUI}\r\n-{Program.Localization.Strings.Aspects.LogonUI_Description}";
             }
             else if (OS.WVista)
             {
                 toggle_theme.Image = Assets.Themes_Banners.Theme_Vista.Resize(48, 48);
                 toggle_lockScreen.Image = Assets.Themes_Banners.LogonUI_Vista.Resize(48, 48);
-                toggle_lockScreen.Text = $"{Program.Lang.Strings.Aspects.LogonUI}\r\n-{Program.Lang.Strings.Aspects.LogonUI_Description}";
+                toggle_lockScreen.Text = $"{Program.Localization.Strings.Aspects.LogonUI}\r\n-{Program.Localization.Strings.Aspects.LogonUI_Description}";
             }
             else if (OS.WXP)
             {
                 toggle_theme.Image = Assets.Themes_Banners.Theme_XP.Resize(48, 48);
                 toggle_lockScreen.Image = Assets.Themes_Banners.LogonUI_XP.Resize(48, 48);
-                toggle_lockScreen.Text = $"{Program.Lang.Strings.Aspects.LogonUI}\r\n-{Program.Lang.Strings.Aspects.LogonUI_Description}";
+                toggle_lockScreen.Text = $"{Program.Localization.Strings.Aspects.LogonUI}\r\n-{Program.Localization.Strings.Aspects.LogonUI_Description}";
             }
             else
             {
                 toggle_theme.Image = Assets.Themes_Banners.Theme_12.Resize(48, 48);
                 toggle_lockScreen.Image = Assets.Themes_Banners.LogonUI_12.Resize(48, 48);
-                toggle_lockScreen.Text = $"{Program.Lang.Strings.Aspects.LockScreen}\r\n-{Program.Lang.Strings.Aspects.LockScreen_Description}";
+                toggle_lockScreen.Text = $"{Program.Localization.Strings.Aspects.LockScreen}\r\n-{Program.Localization.Strings.Aspects.LockScreen_Description}";
             }
 
             toggle_altTab.Visible = Program.WindowStyle != WindowStyle.WXP && Program.WindowStyle != WindowStyle.WVista;
@@ -823,13 +823,13 @@ namespace WinPaletter
                 if ((Program.CalculateMD5(theme.FullPath) ?? string.Empty) != theme.MD5_ThemeFile)
                 {
                     File.Delete(theme.FullPath); // Delete the old file if MD5 does not match
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, string.Format(Program.Lang.Strings.Store.UpdateTheme, theme.FileName, theme.URL_ThemeFile));
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, string.Format(Program.Localization.Strings.Store.UpdateTheme, theme.FileName, theme.URL_ThemeFile));
                     Download(theme);
                 }
             }
             else
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, string.Format(Program.Lang.Strings.Store.DownloadTheme, theme.FileName, theme.URL_ThemeFile));
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, string.Format(Program.Localization.Strings.Store.DownloadTheme, theme.FileName, theme.URL_ThemeFile));
                 Download(theme);
             }
         }
@@ -1115,8 +1115,8 @@ namespace WinPaletter
                             long Pack_Size = DM.GetFileSizeFromUrl(selectedItem.URL_PackFile);
 
                             respacksize_lbl.SetText(Pack_Size > 0L ?
-                                string.Format(Program.Lang.Strings.Store.ResourcesPackSize, Pack_Size.ToStringFileSize()) :
-                                Program.Lang.Strings.Store.NoResourcesPack);
+                                string.Format(Program.Localization.Strings.Store.ResourcesPackSize, Pack_Size.ToStringFileSize()) :
+                                Program.Localization.Strings.Store.NoResourcesPack);
 
                             Invoke(() => progressBar_ResPack.Visible = false);
                             Invoke(() => respacksize_lbl.Visible = true);
@@ -1124,7 +1124,7 @@ namespace WinPaletter
                     }
                     else
                     {
-                        respacksize_lbl.Text = Program.Lang.Strings.Store.NoResourcesPack;
+                        respacksize_lbl.Text = Program.Localization.Strings.Store.NoResourcesPack;
                     }
 
                     string description = selectedItem.TM.Info.Description;
@@ -1186,7 +1186,7 @@ namespace WinPaletter
                     else
                     {
                         VersionAlert_lbl.Visible = true;
-                        VersionAlert_lbl.Text = string.Format(Program.Lang.Strings.Store.LowAppVersionAlert, selectedItem.TM.Info.AppVersion, Program.Version);
+                        VersionAlert_lbl.Text = string.Format(Program.Localization.Strings.Store.LowAppVersionAlert, selectedItem.TM.Info.AppVersion, Program.Version);
                     }
 
                     // Get the list of supported OS
@@ -1499,7 +1499,7 @@ namespace WinPaletter
                 BeginInvoke(new Action(() => search_results.Controls.Add(ctrl)));
             }
 
-            titlebar_lbl.Text = string.Format(Program.Lang.Strings.Store.SearchCount, foundCount);
+            titlebar_lbl.Text = string.Format(Program.Localization.Strings.Store.SearchCount, foundCount);
             Tabs.SelectTab(2);
         }
 
@@ -1752,7 +1752,7 @@ namespace WinPaletter
             {
                 if (string.IsNullOrWhiteSpace(selectedItem.TM.Info.AuthorSocialMediaLink)) return;
 
-                if (MsgBox(Program.Lang.Strings.Store.AuthorURLRedirect, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, selectedItem.TM.Info.AuthorSocialMediaLink) == DialogResult.Yes)
+                if (MsgBox(Program.Localization.Strings.Store.AuthorURLRedirect, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, selectedItem.TM.Info.AuthorSocialMediaLink) == DialogResult.Yes)
                 {
                     string url = selectedItem.TM.Info.AuthorSocialMediaLink;
                     if (!url.StartsWith("https://") || !url.StartsWith("http://")) url = $"https://{url}";

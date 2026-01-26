@@ -64,7 +64,7 @@ namespace WinPaletter
 
             if (this is not null)
             {
-                this.LoadLanguage();
+                this.Localize();
                 ApplyStyle(this);
                 CheckForIllegalCrossThreadCalls = false;
                 if (TreeView1 is not null) TreeView1.ImageList = ImageLists.ThemeLog;
@@ -75,7 +75,7 @@ namespace WinPaletter
         {
             if (Apply_Thread is not null && Apply_Thread.IsAlive)
             {
-                if (MsgBox(Program.Lang.Strings.ThemeManager.Actions.CloseOnApplying0, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, Program.Lang.Strings.ThemeManager.Actions.CloseOnApplying1) == DialogResult.No)
+                if (MsgBox(Program.Localization.Strings.ThemeManager.Actions.CloseOnApplying0, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, Program.Localization.Strings.ThemeManager.Actions.CloseOnApplying1) == DialogResult.No)
                 {
                     e.Cancel = true;
                     return;
@@ -120,7 +120,7 @@ namespace WinPaletter
 
                 TreeView1?.Nodes?.Clear();
 
-                log_lbl?.SetText(string.Format(Program.Lang.Strings.ThemeManager.Actions.ApplyingTheme, TM.Info.ThemeName));
+                log_lbl?.SetText(string.Format(Program.Localization.Strings.ThemeManager.Actions.ApplyingTheme, TM.Info.ThemeName));
 
                 Cursor = Cursors.WaitCursor;
 
@@ -159,14 +159,14 @@ namespace WinPaletter
                     TM?.Save(Manager.Source.Registry, string.Empty, LogEnabled ? TreeView1 : null);
 
                     if (LogEnabled)
-                        AddNode(TreeView1, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.Strings.ThemeManager.Actions.Complete}", "info");
+                        AddNode(TreeView1, $"{DateTime.Now.ToLongTimeString()}: {Program.Localization.Strings.ThemeManager.Actions.Complete}", "info");
 
                     if (AdditionalStoreTips)
-                        AddNode(TreeView1, Program.Lang.Strings.Store.LogoffRecommended, "info");
+                        AddNode(TreeView1, Program.Localization.Strings.Store.LogoffRecommended, "info");
                 }
                 catch (Exception ex)
                 {
-                    AddNode(TreeView1, Program.Lang.Strings.ThemeManager.Errors.FatalError, "error");
+                    AddNode(TreeView1, Program.Localization.Strings.ThemeManager.Errors.FatalError, "error");
                     Exceptions.ThemeApply.Add(new Tuple<string, Exception>(ex.Message, ex));
                 }
 
@@ -196,7 +196,7 @@ namespace WinPaletter
 
                 if (Exceptions.ThemeApply.Count != 0)
                 {
-                    log_lbl.SetText(Program.Lang.Strings.ThemeManager.Errors.ErrorHappened);
+                    log_lbl.SetText(Program.Localization.Strings.ThemeManager.Errors.ErrorHappened);
 
                     if (!dontInvoke)
                     {
@@ -213,7 +213,7 @@ namespace WinPaletter
                 }
                 else if (dontInvoke || (Program.Settings.ThemeLog.CountDown && Program.Settings.ThemeLog.VerboseLevel != Settings.Structures.ThemeLog.VerboseLevels.Detailed))
                 {
-                    log_lbl?.SetText(string.Format(Program.Lang.Strings.ThemeManager.Actions.LogClosure, Program.Settings.ThemeLog.CountDown_Seconds));
+                    log_lbl?.SetText(string.Format(Program.Localization.Strings.ThemeManager.Actions.LogClosure, Program.Settings.ThemeLog.CountDown_Seconds));
                     elapsedSecs = 1;
 
                     if (!dontInvoke)
@@ -233,7 +233,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    log_lbl?.SetText(Program.Lang.Strings.ThemeManager.Actions.LogTimerFinished);
+                    log_lbl?.SetText(Program.Localization.Strings.ThemeManager.Actions.LogTimerFinished);
                 }
 
                 //New method of restarting Explorer
@@ -242,7 +242,7 @@ namespace WinPaletter
                     Program.SendCommand(SysPaths.Explorer, false, true);
                 }
 
-                else if (LogEnabled) { AddNode(TreeView1, Program.Lang.Strings.ThemeManager.Tips.NoDefResExplorer, "warning"); }
+                else if (LogEnabled) { AddNode(TreeView1, Program.Localization.Strings.ThemeManager.Tips.NoDefResExplorer, "warning"); }
             });
 
             Apply_Thread?.Start();
@@ -250,7 +250,7 @@ namespace WinPaletter
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            log_lbl.Text = string.Format(Program.Lang.Strings.ThemeManager.Actions.LogClosure, Program.Settings.ThemeLog.CountDown_Seconds - elapsedSecs);
+            log_lbl.Text = string.Format(Program.Localization.Strings.ThemeManager.Actions.LogClosure, Program.Settings.ThemeLog.CountDown_Seconds - elapsedSecs);
 
             if (elapsedSecs + 1 <= Program.Settings.ThemeLog.CountDown_Seconds)
             {
@@ -266,11 +266,11 @@ namespace WinPaletter
 
         private void Button22_Click(object sender, EventArgs e)
         {
-            log_lbl.Text = Program.Lang.Strings.ThemeManager.Actions.LogTimerFinished;
+            log_lbl.Text = Program.Localization.Strings.ThemeManager.Actions.LogTimerFinished;
             timer1.Enabled = false;
             timer1?.Stop();
 
-            using (SaveFileDialog dlg = new() { Filter = Program.Filters.Text, Title = Program.Lang.Strings.Extensions.SaveText })
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.Text, Title = Program.Localization.Strings.Extensions.SaveText })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -295,7 +295,7 @@ namespace WinPaletter
 
         private void Button14_Click(object sender, EventArgs e)
         {
-            log_lbl.Text = Program.Lang.Strings.ThemeManager.Actions.LogTimerFinished;
+            log_lbl.Text = Program.Localization.Strings.ThemeManager.Actions.LogTimerFinished;
             timer1.Enabled = false;
             timer1.Stop();
             Forms.Saving_ex_list.ex_List = Exceptions.ThemeApply;
@@ -304,7 +304,7 @@ namespace WinPaletter
 
         private void Button25_Click(object sender, EventArgs e)
         {
-            log_lbl.Text = Program.Lang.Strings.ThemeManager.Actions.LogTimerFinished;
+            log_lbl.Text = Program.Localization.Strings.ThemeManager.Actions.LogTimerFinished;
             timer1.Enabled = false;
             timer1.Stop();
             (sender as UI.WP.Button).Visible = false;

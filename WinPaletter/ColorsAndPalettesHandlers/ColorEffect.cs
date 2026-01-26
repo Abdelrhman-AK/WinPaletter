@@ -28,16 +28,16 @@ namespace WinPaletter
         [
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.Reverse,
-                Description = Program.Lang.Strings.ColorEffects.Reverse_Description,
+                Name = Program.Localization.Strings.ColorEffects.Reverse,
+                Description = Program.Localization.Strings.ColorEffects.Reverse_Description,
                 Image = Assets.ColorEffects.Reverse_48,
                 SmallImage = Assets.ColorEffects.Reverse_24,
                 Effect = (c, v, c_sec) => ColorsExtensions.Reverse(c)
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.Brightness,
-                Description = Program.Lang.Strings.ColorEffects.Brightness_Description,
+                Name = Program.Localization.Strings.ColorEffects.Brightness,
+                Description = Program.Localization.Strings.ColorEffects.Brightness_Description,
                 Image = Assets.ColorEffects.Brightness_48,
                 SmallImage = Assets.ColorEffects.Brightness_24,
                 HasScrollbar = true,
@@ -49,8 +49,8 @@ namespace WinPaletter
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.Darken,
-                Description = Program.Lang.Strings.ColorEffects.Darken_Description,
+                Name = Program.Localization.Strings.ColorEffects.Darken,
+                Description = Program.Localization.Strings.ColorEffects.Darken_Description,
                 Image = Assets.ColorEffects.Dark_48,
                 SmallImage = Assets.ColorEffects.Dark_24,
                 HasScrollbar = true,
@@ -62,8 +62,8 @@ namespace WinPaletter
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.Lighten,
-                Description = Program.Lang.Strings.ColorEffects.Lighten_Description,
+                Name = Program.Localization.Strings.ColorEffects.Lighten,
+                Description = Program.Localization.Strings.ColorEffects.Lighten_Description,
                 Image = Assets.ColorEffects.Light_48,
                 SmallImage = Assets.ColorEffects.Light_24,
                 HasScrollbar = true,
@@ -75,32 +75,32 @@ namespace WinPaletter
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.Invert,
-                Description = Program.Lang.Strings.ColorEffects.Invert_Description,
+                Name = Program.Localization.Strings.ColorEffects.Invert,
+                Description = Program.Localization.Strings.ColorEffects.Invert_Description,
                 Image = Assets.ColorEffects.Invert_48,
                 SmallImage = Assets.ColorEffects.Invert_24,
                 Effect = (c, v, c_sec) => ColorsExtensions.Invert(c)
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.Grayscale,
-                Description =Program.Lang.Strings.ColorEffects.Grayscale_Description,
+                Name = Program.Localization.Strings.ColorEffects.Grayscale,
+                Description =Program.Localization.Strings.ColorEffects.Grayscale_Description,
                 Image = Assets.ColorEffects.Grayscale_48,
                 SmallImage = Assets.ColorEffects.Grayscale_24,
                 Effect = (c, v, c_sec) => ColorsExtensions.Grayscale(c)
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.Sepia,
-                Description = Program.Lang.Strings.ColorEffects.Sepia_Description,
+                Name = Program.Localization.Strings.ColorEffects.Sepia,
+                Description = Program.Localization.Strings.ColorEffects.Sepia_Description,
                 Image = Assets.ColorEffects.Sepia_48,
                 SmallImage = Assets.ColorEffects.Sepia_24,
                 Effect = (c, v, c_sec) => ColorsExtensions.Sepia(c)
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.HueRotation,
-                Description = Program.Lang.Strings.ColorEffects.HueRotation_Description,
+                Name = Program.Localization.Strings.ColorEffects.HueRotation,
+                Description = Program.Localization.Strings.ColorEffects.HueRotation_Description,
                 Image = Assets.ColorEffects.Hue_48,
                 SmallImage = Assets.ColorEffects.Hue_24,
                 HasScrollbar = true,
@@ -112,8 +112,8 @@ namespace WinPaletter
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.Saturate,
-                Description = Program.Lang.Strings.ColorEffects.Saturate_Description,
+                Name = Program.Localization.Strings.ColorEffects.Saturate,
+                Description = Program.Localization.Strings.ColorEffects.Saturate_Description,
                 Image = Assets.ColorEffects.Saturation_48,
                 SmallImage = Assets.ColorEffects.Saturation_24,
                 HasScrollbar = true,
@@ -125,8 +125,8 @@ namespace WinPaletter
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.Cool,
-                Description = Program.Lang.Strings.ColorEffects.Cool_Description,
+                Name = Program.Localization.Strings.ColorEffects.Cool,
+                Description = Program.Localization.Strings.ColorEffects.Cool_Description,
                 Image = Assets.ColorEffects.Cold_48,
                 SmallImage = Assets.ColorEffects.Cold_24,
                 HasScrollbar = true,
@@ -138,8 +138,8 @@ namespace WinPaletter
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.Hot,
-                Description = Program.Lang.Strings.ColorEffects.Hot_Description,
+                Name = Program.Localization.Strings.ColorEffects.Hot,
+                Description = Program.Localization.Strings.ColorEffects.Hot_Description,
                 Image = Assets.ColorEffects.Hot_48,
                 SmallImage = Assets.ColorEffects.Hot_24,
                 HasScrollbar = true,
@@ -151,8 +151,8 @@ namespace WinPaletter
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.Sunset,
-                Description = Program.Lang.Strings.ColorEffects.Sunset_Description,
+                Name = Program.Localization.Strings.ColorEffects.Sunset,
+                Description = Program.Localization.Strings.ColorEffects.Sunset_Description,
                 Image = Assets.ColorEffects.Sunset_48,
                 SmallImage = Assets.ColorEffects.Sunset_24,
                 HasScrollbar = true,
@@ -164,8 +164,8 @@ namespace WinPaletter
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.Night,
-                Description = Program.Lang.Strings.ColorEffects.Night_Description,
+                Name = Program.Localization.Strings.ColorEffects.Night,
+                Description = Program.Localization.Strings.ColorEffects.Night_Description,
                 Image = Assets.ColorEffects.Night_48,
                 SmallImage = Assets.ColorEffects.Night_24,
                 HasScrollbar = true,
@@ -177,8 +177,8 @@ namespace WinPaletter
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.Filmic,
-                Description = Program.Lang.Strings.ColorEffects.Filmic_Description,
+                Name = Program.Localization.Strings.ColorEffects.Filmic,
+                Description = Program.Localization.Strings.ColorEffects.Filmic_Description,
                 Image = Assets.ColorEffects.Filmic_48,
                 SmallImage = Assets.ColorEffects.Filmic_24,
                 HasScrollbar = true,
@@ -190,8 +190,8 @@ namespace WinPaletter
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.Vintage,
-                Description = Program.Lang.Strings.ColorEffects.Vintage_Description,
+                Name = Program.Localization.Strings.ColorEffects.Vintage,
+                Description = Program.Localization.Strings.ColorEffects.Vintage_Description,
                 Image = Assets.ColorEffects.Vintage_48,
                 SmallImage = Assets.ColorEffects.Vintage_24,
                 HasScrollbar = true,
@@ -203,8 +203,8 @@ namespace WinPaletter
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.Noir,
-                Description = Program.Lang.Strings.ColorEffects.Noir_Description,
+                Name = Program.Localization.Strings.ColorEffects.Noir,
+                Description = Program.Localization.Strings.ColorEffects.Noir_Description,
                 Image = Assets.ColorEffects.Noir_48,
                 SmallImage = Assets.ColorEffects.Noir_24,
                 HasScrollbar = true,
@@ -216,8 +216,8 @@ namespace WinPaletter
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.Pastel,
-                Description = Program.Lang.Strings.ColorEffects.Pastel_Description,
+                Name = Program.Localization.Strings.ColorEffects.Pastel,
+                Description = Program.Localization.Strings.ColorEffects.Pastel_Description,
                 Image = Assets.ColorEffects.Pastel_48,
                 SmallImage = Assets.ColorEffects.Pastel_24,
                 HasScrollbar = true,
@@ -229,8 +229,8 @@ namespace WinPaletter
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.PopArt,
-                Description = Program.Lang.Strings.ColorEffects.PopArt_Description,
+                Name = Program.Localization.Strings.ColorEffects.PopArt,
+                Description = Program.Localization.Strings.ColorEffects.PopArt_Description,
                 Image = Assets.ColorEffects.PopArt_48,
                 SmallImage = Assets.ColorEffects.PopArt_24,
                 HasScrollbar = true,
@@ -242,8 +242,8 @@ namespace WinPaletter
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.Faded,
-                Description = Program.Lang.Strings.ColorEffects.Faded_Description,
+                Name = Program.Localization.Strings.ColorEffects.Faded,
+                Description = Program.Localization.Strings.ColorEffects.Faded_Description,
                 Image = Assets.ColorEffects.Faded_48,
                 SmallImage = Assets.ColorEffects.Faded_24,
                 HasScrollbar = true,
@@ -255,8 +255,8 @@ namespace WinPaletter
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.Matte,
-                Description = Program.Lang.Strings.ColorEffects.Matte_Description,
+                Name = Program.Localization.Strings.ColorEffects.Matte,
+                Description = Program.Localization.Strings.ColorEffects.Matte_Description,
                 Image = Assets.ColorEffects.Matte_48,
                 SmallImage = Assets.ColorEffects.Matte_24,
                 HasScrollbar = true,
@@ -268,8 +268,8 @@ namespace WinPaletter
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.Fog,
-                Description = Program.Lang.Strings.ColorEffects.Fog_Description,
+                Name = Program.Localization.Strings.ColorEffects.Fog,
+                Description = Program.Localization.Strings.ColorEffects.Fog_Description,
                 Image = Assets.ColorEffects.Fog_48,
                 SmallImage = Assets.ColorEffects.Fog_24,
                 HasScrollbar = true,
@@ -281,8 +281,8 @@ namespace WinPaletter
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.Underwater,
-                Description = Program.Lang.Strings.ColorEffects.Underwater_Description,
+                Name = Program.Localization.Strings.ColorEffects.Underwater,
+                Description = Program.Localization.Strings.ColorEffects.Underwater_Description,
                 Image = Assets.ColorEffects.Underwater_48,
                 SmallImage = Assets.ColorEffects.Underwater_24,
                 HasScrollbar = true,
@@ -294,8 +294,8 @@ namespace WinPaletter
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.ThermalVision,
-                Description = Program.Lang.Strings.ColorEffects.ThermalVision_Description,
+                Name = Program.Localization.Strings.ColorEffects.ThermalVision,
+                Description = Program.Localization.Strings.ColorEffects.ThermalVision_Description,
                 Image = Assets.ColorEffects.ThermalVision_48,
                 SmallImage = Assets.ColorEffects.ThermalVision_24,
                 HasScrollbar = true,
@@ -307,8 +307,8 @@ namespace WinPaletter
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.Infrared,
-                Description = Program.Lang.Strings.ColorEffects.Infrared_Description,
+                Name = Program.Localization.Strings.ColorEffects.Infrared,
+                Description = Program.Localization.Strings.ColorEffects.Infrared_Description,
                 Image = Assets.ColorEffects.IR_48,
                 SmallImage = Assets.ColorEffects.IR_24,
                 HasScrollbar = true,
@@ -320,8 +320,8 @@ namespace WinPaletter
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.XRay,
-                Description = Program.Lang.Strings.ColorEffects.XRay_Description,
+                Name = Program.Localization.Strings.ColorEffects.XRay,
+                Description = Program.Localization.Strings.ColorEffects.XRay_Description,
                 Image = Assets.ColorEffects.XRay_48,
                 SmallImage = Assets.ColorEffects.XRay_24,
                 HasScrollbar = true,
@@ -333,8 +333,8 @@ namespace WinPaletter
             },
             new()
             {
-                Name =Program.Lang.Strings.ColorEffects.GlowBoost,
-                Description = Program.Lang.Strings.ColorEffects.GlowBoost_Description,
+                Name =Program.Localization.Strings.ColorEffects.GlowBoost,
+                Description = Program.Localization.Strings.ColorEffects.GlowBoost_Description,
                 Image = Assets.ColorEffects.Glow_48,
                 SmallImage = Assets.ColorEffects.Glow_24,
                 HasScrollbar = true,
@@ -346,8 +346,8 @@ namespace WinPaletter
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.Blend,
-                Description = Program.Lang.Strings.ColorEffects.Blend_Description,
+                Name = Program.Localization.Strings.ColorEffects.Blend,
+                Description = Program.Localization.Strings.ColorEffects.Blend_Description,
                 Image = Assets.ColorEffects.Blend_48,
                 SmallImage = Assets.ColorEffects.Blend_24,
                 HasScrollbar = true,
@@ -360,8 +360,8 @@ namespace WinPaletter
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.ShadowTint,
-                Description = Program.Lang.Strings.ColorEffects.ShadowTint_Description,
+                Name = Program.Localization.Strings.ColorEffects.ShadowTint,
+                Description = Program.Localization.Strings.ColorEffects.ShadowTint_Description,
                 Image = Assets.ColorEffects.Shadow_48,
                 SmallImage = Assets.ColorEffects.Shadow_24,
                 HasScrollbar = true,
@@ -374,8 +374,8 @@ namespace WinPaletter
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.HighlightTint,
-                Description = Program.Lang.Strings.ColorEffects.HighlightTint_Description,
+                Name = Program.Localization.Strings.ColorEffects.HighlightTint,
+                Description = Program.Localization.Strings.ColorEffects.HighlightTint_Description,
                 Image = Assets.ColorEffects.Highlight_48,
                 SmallImage = Assets.ColorEffects.Highlight_24,
                 HasScrollbar = true,
@@ -388,8 +388,8 @@ namespace WinPaletter
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.Vibrance,
-                Description = Program.Lang.Strings.ColorEffects.Vibrance_Description,
+                Name = Program.Localization.Strings.ColorEffects.Vibrance,
+                Description = Program.Localization.Strings.ColorEffects.Vibrance_Description,
                 Image = Assets.ColorEffects.Vibrance_48,
                 SmallImage = Assets.ColorEffects.Vibrance_24,
                 HasScrollbar = true,
@@ -401,8 +401,8 @@ namespace WinPaletter
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.SoftLight,
-                Description = Program.Lang.Strings.ColorEffects.SoftLight_Description,
+                Name = Program.Localization.Strings.ColorEffects.SoftLight,
+                Description = Program.Localization.Strings.ColorEffects.SoftLight_Description,
                 Image = Assets.ColorEffects.SoftLight_48,
                 SmallImage = Assets.ColorEffects.SoftLight_24,
                 HasScrollbar = true,
@@ -414,8 +414,8 @@ namespace WinPaletter
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.HardLight,
-                Description = Program.Lang.Strings.ColorEffects.HardLight_Description,
+                Name = Program.Localization.Strings.ColorEffects.HardLight,
+                Description = Program.Localization.Strings.ColorEffects.HardLight_Description,
                 Image = Assets.ColorEffects.HardLight_48,
                 SmallImage = Assets.ColorEffects.HardLight_24,
                 HasScrollbar = true,
@@ -427,8 +427,8 @@ namespace WinPaletter
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.Posterize,
-                Description = Program.Lang.Strings.ColorEffects.Posterize_Description,
+                Name = Program.Localization.Strings.ColorEffects.Posterize,
+                Description = Program.Localization.Strings.ColorEffects.Posterize_Description,
                 Image = Assets.ColorEffects.Posterize_48,
                 SmallImage = Assets.ColorEffects.Posterize_24,
                 HasScrollbar = true,
@@ -440,8 +440,8 @@ namespace WinPaletter
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.Monochrome,
-                Description = Program.Lang.Strings.ColorEffects.Monochrome_Description,
+                Name = Program.Localization.Strings.ColorEffects.Monochrome,
+                Description = Program.Localization.Strings.ColorEffects.Monochrome_Description,
                 Image = Assets.ColorEffects.Monochrome_48,
                 SmallImage = Assets.ColorEffects.Monochrome_24,
                 HasScrollbar = true,
@@ -453,56 +453,56 @@ namespace WinPaletter
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.WebSafe,
-                Description = Program.Lang.Strings.ColorEffects.WebSafe_Description,
+                Name = Program.Localization.Strings.ColorEffects.WebSafe,
+                Description = Program.Localization.Strings.ColorEffects.WebSafe_Description,
                 Image = Assets.ColorEffects.IE_48,
                 SmallImage = Assets.ColorEffects.IE_24,
                 Effect = (c, v, c_sec) => ColorsExtensions.ToWebSafe(c)
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.Colors256,
-                Description = Program.Lang.Strings.ColorEffects.Colors256_Description,
+                Name = Program.Localization.Strings.ColorEffects.Colors256,
+                Description = Program.Localization.Strings.ColorEffects.Colors256_Description,
                 Image = Assets.ColorEffects.Win9x_48,
                 SmallImage = Assets.ColorEffects.Win9x_24,
                 Effect = (c, v, c_sec) => ColorsExtensions.To256Color(c)
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.FrutigerAero,
-                Description = Program.Lang.Strings.ColorEffects.FrutigerAero_Description,
+                Name = Program.Localization.Strings.ColorEffects.FrutigerAero,
+                Description = Program.Localization.Strings.ColorEffects.FrutigerAero_Description,
                 Image = Assets.ColorEffects.FrutigerAero_48,
                 SmallImage = Assets.ColorEffects.FrutigerAero_24,
                 Effect = (c, v, c_sec) => ColorsExtensions.ToFrutigerAero(c)
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.Metro,
-                Description = Program.Lang.Strings.ColorEffects.Metro_Description,
+                Name = Program.Localization.Strings.ColorEffects.Metro,
+                Description = Program.Localization.Strings.ColorEffects.Metro_Description,
                 Image = Assets.ColorEffects.Metro_48,
                 SmallImage = Assets.ColorEffects.Metro_24,
                 Effect = (c, v, c_sec) => ColorsExtensions.ToMetro(c)
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.MaterialDesign,
-                Description = Program.Lang.Strings.ColorEffects.MaterialDesign_Description,
+                Name = Program.Localization.Strings.ColorEffects.MaterialDesign,
+                Description = Program.Localization.Strings.ColorEffects.MaterialDesign_Description,
                 Image = Assets.ColorEffects.Android_48,
                 SmallImage = Assets.ColorEffects.Android_24,
                 Effect = (c, v, c_sec) => ColorsExtensions.ToMaterial(c)
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.MaterialDesignExpressive3,
-                Description = Program.Lang.Strings.ColorEffects.MaterialDesignExpressive3_Description,
+                Name = Program.Localization.Strings.ColorEffects.MaterialDesignExpressive3,
+                Description = Program.Localization.Strings.ColorEffects.MaterialDesignExpressive3_Description,
                 Image = Assets.ColorEffects.AndroidME3_48,
                 SmallImage = Assets.ColorEffects.AndroidME3_24,
                 Effect = (c, v, c_sec) => ColorsExtensions.ToMaterialExpressive3(c)
             },
             new()
             {
-                Name = Program.Lang.Strings.ColorEffects.MacOSSemantic,
-                Description = Program.Lang.Strings.ColorEffects.MacOSSemantic_Description,
+                Name = Program.Localization.Strings.ColorEffects.MacOSSemantic,
+                Description = Program.Localization.Strings.ColorEffects.MacOSSemantic_Description,
                 Image = Assets.ColorEffects.Mac_48,
                 SmallImage = Assets.ColorEffects.Mac_24,
                 Effect = (c, v, c_sec) => ColorsExtensions.ToMacSemantic(c)

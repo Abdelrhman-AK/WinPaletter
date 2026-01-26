@@ -26,7 +26,7 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Localization.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -62,7 +62,7 @@ namespace WinPaletter
         {
             if (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.AltTab)
             {
-                MsgBox(Program.Lang.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.Strings.Aspects.Disabled_Apply_1);
+                MsgBox(Program.Localization.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Localization.Strings.Aspects.Disabled_Apply_1);
                 return;
             }
 
@@ -88,7 +88,7 @@ namespace WinPaletter
         {
             DesignerData data = new(this)
             {
-                AspectName = Program.Lang.Strings.Aspects.AltTab,
+                AspectName = Program.Localization.Strings.Aspects.AltTab,
                 Enabled = Program.TM.AltTab.Enabled,
                 Import_theme = false,
                 Import_msstyles = false,
@@ -289,7 +289,7 @@ namespace WinPaletter
             TM.AltTab.Style = RadioImage1.Checked ? Theme.Structures.AltTab.Styles.Default : Theme.Structures.AltTab.Styles.ClassicNT;
             if (ExplorerPatcher.CanBeUsed & WinElement1.Style == WinElement.Styles.AltTab10)
                 TM.AltTab.Style = Theme.Structures.AltTab.Styles.EP_Win10;
-            TM.AltTab.Win10Opacity = Trackbar1.Value;
+            TM.AltTab.Win10Opacity = (int)Trackbar1.Value;
         }
 
         private void RadioImage2_CheckedChanged(object sender, EventArgs e)
@@ -306,7 +306,7 @@ namespace WinPaletter
 
         private void trackBarX1_ValueChanged(object sender, EventArgs e)
         {
-            if (WinElement1.Style == WinElement.Styles.AltTab10) { WinElement1.BackColorAlpha = Trackbar1.Value; }
+            if (WinElement1.Style == WinElement.Styles.AltTab10) { WinElement1.BackColorAlpha = (int)Trackbar1.Value; }
         }
     }
 }

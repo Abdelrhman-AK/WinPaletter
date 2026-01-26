@@ -13,7 +13,7 @@ namespace WinPaletter.Dialogs
 
         private void WinEffectsAlert_Load(object sender, EventArgs e)
         {
-            this.LoadLanguage();
+            this.Localize();
             ApplyStyle(this);
             Icon = FormsExtensions.Icon<WinEffecter>();
 

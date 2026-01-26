@@ -69,6 +69,16 @@
                 public string TerminalDeleteScheme { get; set; } = "Are you sure you want to delete scheme `{0}`?";
                 public string TerminalDeleteTheme { get; set; } = "Are you sure you want to delete theme `{0}`?";
                 public string CloseWizard { get; set; } = "Are you sure you want to close the wizard? All unsaved changes will be lost.";
+                public string ClearStoreCache { get; set; } = "Clearing the cache will cause WinPaletter Store to redownload the themes, but it will not redownload theme resource packs.";
+                public string ConfirmClearStoreCache { get; set; } = "Are you sure you want to clear WinPaletter Store cache?";
+                public string CouldntCreatePR { get; set; } = "Couldn't create a pull request automatically. Please try again or create a pull request manually in your browser.";
+                public string SyncingTip { get; set; } = "Syncing this branch with the main branch will discard all changes made in this branch. This can be used to update it or revert previous changes.";
+                public string ConfirmSync { get; set; } = "Are you sure you want to sync this branch with the main branch?";
+                public string SyncCompleted { get; set; } = "Branch has been synced with the main branch successfully.";
+                public string SyncFailed { get; set; } = "Failed to sync the branch with the main branch. Please try again.";
+                public string ChangeExt_Themes { get; set; } = "Changing the file type will break WinPaletter theme compatibility.\r\n\r\nThis file will no longer work as a valid WinPaletter theme.";
+                public string ChangeExt { get; set; } = "If you change a file name extension, the file might become unusable.";
+                public string ChangeExt_Confirm { get; set; } = "Are you sure you want to change it?";
             }
         }
     }

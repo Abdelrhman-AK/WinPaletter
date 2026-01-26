@@ -496,30 +496,30 @@ namespace WinPaletter.UI.Controllers
             if (m.Msg == WM_RBUTTONUP && !CancelShowingMenu)
             {
                 // Custom context menu implementation
-                copy_AsHex.Text = Program.Lang.Strings.General.Copy_HEX;
-                copy_AsRGB.Text = Program.Lang.Strings.General.Copy_RGB;
-                copy_AsHSL.Text = Program.Lang.Strings.General.Copy_HSL;
-                copy_AsDecimal.Text = Program.Lang.Strings.General.Copy_Decimal;
-                copy_AsRGBPercent.Text = Program.Lang.Strings.General.Copy_RGBPercent;
-                copy_AsARGB.Text = Program.Lang.Strings.General.Copy_ARGB;
-                copy_AsHSLA.Text = Program.Lang.Strings.General.Copy_HSLA;
-                copy_AsHSV.Text = Program.Lang.Strings.General.Copy_HSV;
-                copy_AsCMYK.Text = Program.Lang.Strings.General.Copy_CMYK;
-                copy_AsWin32.Text = Program.Lang.Strings.General.Copy_Win32;
-                copy_AsKnownName.Text = Program.Lang.Strings.General.Copy_KnownName;
-                copy_AsCSS.Text = Program.Lang.Strings.General.Copy_CSS;
+                copy_AsHex.Text = Program.Localization.Strings.General.Copy_HEX;
+                copy_AsRGB.Text = Program.Localization.Strings.General.Copy_RGB;
+                copy_AsHSL.Text = Program.Localization.Strings.General.Copy_HSL;
+                copy_AsDecimal.Text = Program.Localization.Strings.General.Copy_Decimal;
+                copy_AsRGBPercent.Text = Program.Localization.Strings.General.Copy_RGBPercent;
+                copy_AsARGB.Text = Program.Localization.Strings.General.Copy_ARGB;
+                copy_AsHSLA.Text = Program.Localization.Strings.General.Copy_HSLA;
+                copy_AsHSV.Text = Program.Localization.Strings.General.Copy_HSV;
+                copy_AsCMYK.Text = Program.Localization.Strings.General.Copy_CMYK;
+                copy_AsWin32.Text = Program.Localization.Strings.General.Copy_Win32;
+                copy_AsKnownName.Text = Program.Localization.Strings.General.Copy_KnownName;
+                copy_AsCSS.Text = Program.Localization.Strings.General.Copy_CSS;
 
-                copy.Text = Program.Lang.Strings.General.Copy;
-                cut.Text = Program.Lang.Strings.General.Cut;
-                paste.Text = Program.Lang.Strings.General.Paste;
-                blend.Text = Program.Lang.Strings.General.PasteByBlending;
-                delete.Text = Program.Lang.Strings.General.Delete;
-                reset.Text = Program.Lang.Strings.General.Default + " (" + OS.Name + ")";
-                darken.Text = Program.Lang.Strings.General.Darken;
-                lighten.Text = Program.Lang.Strings.General.Lighten;
-                invert.Text = Program.Lang.Strings.General.Invert;
-                previousColor.Text = Program.Lang.Strings.General.PreviousColor;
-                someEffects.Text = Program.Lang.Strings.ColorEffects.SomeEffects;
+                copy.Text = Program.Localization.Strings.General.Copy;
+                cut.Text = Program.Localization.Strings.General.Cut;
+                paste.Text = Program.Localization.Strings.General.Paste;
+                blend.Text = Program.Localization.Strings.General.PasteByBlending;
+                delete.Text = Program.Localization.Strings.General.Delete;
+                reset.Text = Program.Localization.Strings.General.Default + " (" + OS.Name + ")";
+                darken.Text = Program.Localization.Strings.General.Darken;
+                lighten.Text = Program.Localization.Strings.General.Lighten;
+                invert.Text = Program.Localization.Strings.General.Invert;
+                previousColor.Text = Program.Localization.Strings.General.PreviousColor;
+                someEffects.Text = Program.Localization.Strings.ColorEffects.SomeEffects;
 
                 blend.Enabled = ColorClipboard.CopiedColor != Color.Empty;
                 blend.Image = blend.Enabled
@@ -1046,14 +1046,14 @@ namespace WinPaletter.UI.Controllers
                     string S;
                     if (AfterDropEffect != AfterDropEffects.None)
                     {
-                        S = AfterDropEffect == AfterDropEffects.Invert ? Program.Lang.Strings.General.Invert :
-                            AfterDropEffect == AfterDropEffects.Darker ? Program.Lang.Strings.General.Darken :
-                            AfterDropEffect == AfterDropEffects.Lighter ? Program.Lang.Strings.General.Lighten :
-                            Program.Lang.Strings.General.Blend;
+                        S = AfterDropEffect == AfterDropEffects.Invert ? Program.Localization.Strings.General.Invert :
+                            AfterDropEffect == AfterDropEffects.Darker ? Program.Localization.Strings.General.Darken :
+                            AfterDropEffect == AfterDropEffects.Lighter ? Program.Localization.Strings.General.Lighten :
+                            Program.Localization.Strings.General.Blend;
                     }
                     else
                     {
-                        S = Enabled ? TargetColor.ToString(default, Program.Settings.NerdStats.ShowHexHash, true) : Program.Lang.Strings.General.Disabled;
+                        S = Enabled ? TargetColor.ToString(default, Program.Settings.NerdStats.ShowHexHash, true) : Program.Localization.Strings.General.Disabled;
                     }
 
                     Font F = Program.Settings.NerdStats.UseWindowsMonospacedFont ? genericMonospacedFont : Fonts.Console;

@@ -755,12 +755,12 @@ namespace WinPaletter.Theme.Structures
         {
             StringBuilder s = new();
             s.Clear();
-            s.AppendLine($"; {string.Format(Program.Lang.Strings.MSTheme.Copyrights, DateTime.Now.Year)}");
-            s.AppendLine($"; {string.Format(Program.Lang.Strings.MSTheme.ProgrammedBy, Application.CompanyName)}");
-            s.AppendLine($"; {string.Format(Program.Lang.Strings.MSTheme.CreatedFromAppVer, Program.TM.Info.AppVersion)}");
-            s.AppendLine($"; {string.Format(Program.Lang.Strings.MSTheme.CreatedBy, Program.TM.Info.Author)}");
-            s.AppendLine($"; {string.Format(Program.Lang.Strings.MSTheme.ThemeName, Program.TM.Info.ThemeName)}");
-            s.AppendLine($"; {string.Format(Program.Lang.Strings.MSTheme.ThemeVersion, Program.TM.Info.ThemeVersion)}");
+            s.AppendLine($"; {string.Format(Program.Localization.Strings.MSTheme.Copyrights, DateTime.Now.Year)}");
+            s.AppendLine($"; {string.Format(Program.Localization.Strings.MSTheme.ProgrammedBy, Application.CompanyName)}");
+            s.AppendLine($"; {string.Format(Program.Localization.Strings.MSTheme.CreatedFromAppVer, Program.TM.Info.AppVersion)}");
+            s.AppendLine($"; {string.Format(Program.Localization.Strings.MSTheme.CreatedBy, Program.TM.Info.Author)}");
+            s.AppendLine($"; {string.Format(Program.Localization.Strings.MSTheme.ThemeName, Program.TM.Info.ThemeName)}");
+            s.AppendLine($"; {string.Format(Program.Localization.Strings.MSTheme.ThemeVersion, Program.TM.Info.ThemeVersion)}");
             s.AppendLine();
 
             s.AppendLine($"[Control Panel\\Colors]");

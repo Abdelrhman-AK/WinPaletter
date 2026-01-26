@@ -77,8 +77,8 @@ namespace WinPaletter
         {
             int checkedCount = toggle1.Checked ? smoothPanel1.Controls.OfType<ColorEffectControl>().Count(c => c.ColorEffect.Checked) : 0;
 
-            return $"{Program.Lang.Strings.ColorEffects.TotalEffects}: " + smoothPanel1.Controls.OfType<ColorEffectControl>().Count().ToString() + ", " +
-                   $"{(checkedCount > 0 ? ($"{Program.Lang.Strings.ColorEffects.Applied}: {checkedCount}") : Program.Lang.Strings.ColorEffects.NoEffects)}.";
+            return $"{Program.Localization.Strings.ColorEffects.TotalEffects}: " + smoothPanel1.Controls.OfType<ColorEffectControl>().Count().ToString() + ", " +
+                   $"{(checkedCount > 0 ? ($"{Program.Localization.Strings.ColorEffects.Applied}: {checkedCount}") : Program.Localization.Strings.ColorEffects.NoEffects)}.";
         }
 
         public void Show(UI.WP.Button button)
@@ -161,7 +161,7 @@ namespace WinPaletter
         private void Button4_Click(object sender, EventArgs e)
         {
             // Open the file dialog to select an image.
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, Title = Program.Lang.Strings.Extensions.OpenImages })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, Title = Program.Localization.Strings.Extensions.OpenImages })
             {
                 if (dlg.ShowDialog() == DialogResult.OK) TextBox1.Text = dlg.FileName;
             }

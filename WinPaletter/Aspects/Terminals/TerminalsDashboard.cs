@@ -20,7 +20,7 @@ namespace WinPaletter
             Size = Forms.Home.card4.Size;
             Location = Forms.Home.card4.PointToScreen(Point.Empty);
 
-            this.LoadLanguage();
+            this.Localize();
             ApplyStyle(this);
             Icon = FormsExtensions.Icon<CMD>();
 
@@ -69,13 +69,13 @@ namespace WinPaletter
                 }
                 else
                 {
-                    MsgBox(Program.Lang.Strings.Aspects.Terminals.TerminalStable_notFound, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, $"{Program.Lang.Strings.Aspects.Terminals.PathSupposed}\"{TerDir}\"", Program.Lang.Strings.General.CollapseNote, Program.Lang.Strings.General.ExpandNote, Program.Lang.Strings.Aspects.Terminals.Bypass);
+                    MsgBox(Program.Localization.Strings.Aspects.Terminals.TerminalStable_notFound, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, $"{Program.Localization.Strings.Aspects.Terminals.PathSupposed}\"{TerDir}\"", Program.Localization.Strings.General.CollapseNote, Program.Localization.Strings.General.ExpandNote, Program.Localization.Strings.Aspects.Terminals.Bypass);
                 }
             }
 
             else
             {
-                MsgBox(Program.Lang.Strings.Aspects.Terminals.CantRun, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, string.Empty, Program.Lang.Strings.General.CollapseNote, Program.Lang.Strings.General.ExpandNote, Program.Lang.Strings.Aspects.Terminals.Bypass);
+                MsgBox(Program.Localization.Strings.Aspects.Terminals.CantRun, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, string.Empty, Program.Localization.Strings.General.CollapseNote, Program.Localization.Strings.General.ExpandNote, Program.Localization.Strings.Aspects.Terminals.Bypass);
             }
         }
 
@@ -112,13 +112,13 @@ namespace WinPaletter
                 }
                 else
                 {
-                    MsgBox(Program.Lang.Strings.Aspects.Terminals.TerminalPreview_notFound, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, $"{Program.Lang.Strings.Aspects.Terminals.PathSupposed}\"{TerPreDir}\"", Program.Lang.Strings.General.CollapseNote, Program.Lang.Strings.General.ExpandNote, Program.Lang.Strings.Aspects.Terminals.Bypass);
+                    MsgBox(Program.Localization.Strings.Aspects.Terminals.TerminalPreview_notFound, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, $"{Program.Localization.Strings.Aspects.Terminals.PathSupposed}\"{TerPreDir}\"", Program.Localization.Strings.General.CollapseNote, Program.Localization.Strings.General.ExpandNote, Program.Localization.Strings.Aspects.Terminals.Bypass);
                 }
             }
 
             else
             {
-                MsgBox(Program.Lang.Strings.Aspects.Terminals.CantRun, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, string.Empty, Program.Lang.Strings.General.CollapseNote, Program.Lang.Strings.General.ExpandNote, Program.Lang.Strings.Aspects.Terminals.Bypass);
+                MsgBox(Program.Localization.Strings.Aspects.Terminals.CantRun, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, string.Empty, Program.Localization.Strings.General.CollapseNote, Program.Localization.Strings.General.ExpandNote, Program.Localization.Strings.Aspects.Terminals.Bypass);
             }
         }
 
@@ -157,7 +157,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    MsgBox(Program.Lang.Strings.Aspects.Consoles.PowerShellx86_notFound, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, $"{Program.Lang.Strings.Aspects.Terminals.PathSupposed}\"{Dir}\"", Program.Lang.Strings.General.CollapseNote, Program.Lang.Strings.General.ExpandNote, Program.Lang.Strings.Aspects.Terminals.Bypass);
+                    MsgBox(Program.Localization.Strings.Aspects.Consoles.PowerShellx86_notFound, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, $"{Program.Localization.Strings.Aspects.Terminals.PathSupposed}\"{Dir}\"", Program.Localization.Strings.General.CollapseNote, Program.Localization.Strings.General.ExpandNote, Program.Localization.Strings.Aspects.Terminals.Bypass);
                 }
 
                 Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
@@ -186,7 +186,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    MsgBox(Program.Lang.Strings.Aspects.Consoles.PowerShellx64_notFound, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, $"{Program.Lang.Strings.Aspects.Terminals.PathSupposed}\"{Dir}\"", Program.Lang.Strings.General.CollapseNote, Program.Lang.Strings.General.ExpandNote, Program.Lang.Strings.Aspects.Terminals.Bypass);
+                    MsgBox(Program.Localization.Strings.Aspects.Consoles.PowerShellx64_notFound, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, $"{Program.Localization.Strings.Aspects.Terminals.PathSupposed}\"{Dir}\"", Program.Localization.Strings.General.CollapseNote, Program.Localization.Strings.General.ExpandNote, Program.Localization.Strings.Aspects.Terminals.Bypass);
                 }
 
                 Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);

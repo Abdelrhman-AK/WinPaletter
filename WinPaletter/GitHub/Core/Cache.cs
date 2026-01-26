@@ -3,12 +3,10 @@ using Serilog.Events;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using static WinPaletter.GitHub.FileSystem;
 
 namespace WinPaletter.GitHub
 {
@@ -466,7 +464,7 @@ namespace WinPaletter.GitHub
                 {
                     byte[] bytes = Encoding.UTF8.GetBytes(content);
                     byte[] hash = sha1.ComputeHash(bytes);
-                    return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
+                    return BitConverter.ToString(hash).Replace("-", string.Empty).ToLowerInvariant();
                 }
             }
 

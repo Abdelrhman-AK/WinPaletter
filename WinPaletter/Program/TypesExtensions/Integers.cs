@@ -65,35 +65,35 @@ namespace WinPaletter.TypesExtensions
             long GB = MB * 1024L;
             long TB = GB * 1024L;
             float size = length;
-            string suffix = Program.Lang.Strings.General.ByteSizeUnit;
+            string suffix = Program.Localization.Strings.General.ByteSizeUnit;
 
             if (length >= TB)
             {
                 size = (float)Math.Round(length / (float)TB, 2);
-                suffix = Program.Lang.Strings.General.TBSizeUnit;
+                suffix = Program.Localization.Strings.General.TBSizeUnit;
             }
 
             else if (length >= GB)
             {
                 size = (float)Math.Round(length / (float)GB, 2);
-                suffix = Program.Lang.Strings.General.GBSizeUnit;
+                suffix = Program.Localization.Strings.General.GBSizeUnit;
             }
 
             else if (length >= MB)
             {
                 size = (float)Math.Round(length / (float)MB, 2);
-                suffix = Program.Lang.Strings.General.MBSizeUnit;
+                suffix = Program.Localization.Strings.General.MBSizeUnit;
             }
 
             else if (length >= KB)
             {
                 size = (float)Math.Round(length / (float)KB, 2);
-                suffix = Program.Lang.Strings.General.KBSizeUnit;
+                suffix = Program.Localization.Strings.General.KBSizeUnit;
 
             }
 
             if (ShowSecondUnit)
-                suffix += Program.Lang.Strings.General.SecondUnit;
+                suffix += Program.Localization.Strings.General.SecondUnit;
 
             return $"{size} {suffix}";
         }

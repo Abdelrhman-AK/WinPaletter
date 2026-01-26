@@ -149,7 +149,7 @@ namespace WinPaletter.Theme.Structures
                 List<Bitmap> bmpList = [];
                 bmpList.Clear();
 
-                if (ReportProgress_Detailed) ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.GetInstanceLogonUIImg, Program.Lang.Strings.Aspects.LogonUI), "info");
+                if (ReportProgress_Detailed) ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.GetInstanceLogonUIImg, Program.Localization.Strings.Aspects.LogonUI), "info");
 
                 switch (Mode)
                 {
@@ -202,17 +202,17 @@ namespace WinPaletter.Theme.Structures
                 }
 
                 if (ReportProgress)
-                    ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Actions.RenderingImage_MayNotRespond, Program.Lang.Strings.Aspects.LogonUI), "info");
+                    ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Actions.RenderingImage_MayNotRespond, Program.Localization.Strings.Aspects.LogonUI), "info");
 
                 for (int x = 0, loopTo = bmpList.Count - 1; x <= loopTo; x++)
                 {
                     if (ReportProgress)
-                        ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Lang.Strings.ThemeManager.Actions.RenderingImages, Program.Lang.Strings.Aspects.LogonUI)} {bmpList[x].Width}x{bmpList[x].Height} ({x + 1}/{bmpList.Count})", "info");
+                        ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Localization.Strings.ThemeManager.Actions.RenderingImages, Program.Localization.Strings.Aspects.LogonUI)} {bmpList[x].Width}x{bmpList[x].Height} ({x + 1}/{bmpList.Count})", "info");
 
                     if (Grayscale)
                     {
                         if (ReportProgress_Detailed)
-                            ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.GrayscaleLogonUIImg, Program.Lang.Strings.Aspects.LogonUI), "apply");
+                            ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.GrayscaleLogonUIImg, Program.Localization.Strings.Aspects.LogonUI), "apply");
 
                         Program.Log?.Write(LogEventLevel.Information, $"Grayscaling LogonUI screen image number `{x}`.");
 
@@ -222,7 +222,7 @@ namespace WinPaletter.Theme.Structures
                     if (Blur)
                     {
                         if (ReportProgress_Detailed)
-                            ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.BlurringLogonUIImg, Program.Lang.Strings.Aspects.LogonUI), "apply");
+                            ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.BlurringLogonUIImg, Program.Localization.Strings.Aspects.LogonUI), "apply");
 
                         Program.Log?.Write(LogEventLevel.Information, $"Blurring LogonUI screen image number `{x}` with radius `{Blur_Intensity}`.");
 
@@ -235,7 +235,7 @@ namespace WinPaletter.Theme.Structures
                     if (Noise)
                     {
                         if (ReportProgress_Detailed)
-                            ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.NoiseLogonUIImg, Program.Lang.Strings.Aspects.LogonUI), "apply");
+                            ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.NoiseLogonUIImg, Program.Localization.Strings.Aspects.LogonUI), "apply");
 
                         Program.Log?.Write(LogEventLevel.Information, $"Generating noise effect for LogonUI screen image number `{x}` with intensity `{Noise_Intensity}`, and type `{Noise_Mode}`.");
 
@@ -260,7 +260,7 @@ namespace WinPaletter.Theme.Structures
                     }
 
                     if (ReportProgress_Detailed)
-                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.LogonUIImgSaved, Program.Lang.Strings.Aspects.LogonUI, $@"{DirX}\backgroundDefault.jpg"), "info");
+                        ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.LogonUIImgSaved, Program.Localization.Strings.Aspects.LogonUI, $@"{DirX}\backgroundDefault.jpg"), "info");
                 }
                 else
                 {
@@ -281,7 +281,7 @@ namespace WinPaletter.Theme.Structures
                         }
 
                         if (ReportProgress_Detailed)
-                            ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.LogonUIImgNUMSaved, $"{DirX}{$@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg"}", x + 1), "info");
+                            ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.LogonUIImgNUMSaved, $"{DirX}{$@"\background{bmpList[x].Width}x{bmpList[x].Height}.jpg"}", x + 1), "info");
                     }
                 }
 

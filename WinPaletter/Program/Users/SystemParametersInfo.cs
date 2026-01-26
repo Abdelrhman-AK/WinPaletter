@@ -196,18 +196,18 @@ namespace WinPaletter.NativeMethods
 
                     // Log the error message
                     if (treeView != null)
-                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.User32_SPI, "user32.dll", "SystemParameterInfo", uAction.ToString(), uParam.ToString(), lpvParam.ToString(), fuWinIni.ToString(), $"ERROR {Error}: {ex.Message}"), "dll");
+                        ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.User32_SPI, "user32.dll", "SystemParameterInfo", uAction.ToString(), uParam.ToString(), lpvParam.ToString(), fuWinIni.ToString(), $"ERROR {Error}: {ex.Message}"), "dll");
 
-                    Program.Log?.Write(LogEventLevel.Error, string.Format(Program.Lang.Strings.ThemeManager.Advanced.User32_SPI, "user32.dll", "SystemParameterInfo", uAction.ToString(), uParam.ToString(), lpvParam.ToString(), fuWinIni.ToString(), $"ERROR {Error}: {ex.Message}"));
+                    Program.Log?.Write(LogEventLevel.Error, string.Format(Program.Localization.Strings.ThemeManager.Advanced.User32_SPI, "user32.dll", "SystemParameterInfo", uAction.ToString(), uParam.ToString(), lpvParam.ToString(), fuWinIni.ToString(), $"ERROR {Error}: {ex.Message}"));
 
                     // Add the exception to the appropriate list
                     if (uAction.ToString().StartsWith("SPI_GET", StringComparison.OrdinalIgnoreCase))
                     {
-                        Exceptions.ThemeLoad.Add(new Tuple<string, Exception>(string.Format(Program.Lang.Strings.ThemeManager.Advanced.User32_SPI, "user32.dll", "SystemParameterInfo", uAction.ToString(), uParam.ToString(), lpvParam.ToString(), fuWinIni.ToString(), $"ERROR {Error}: {ex.Message}"), ex));
+                        Exceptions.ThemeLoad.Add(new Tuple<string, Exception>(string.Format(Program.Localization.Strings.ThemeManager.Advanced.User32_SPI, "user32.dll", "SystemParameterInfo", uAction.ToString(), uParam.ToString(), lpvParam.ToString(), fuWinIni.ToString(), $"ERROR {Error}: {ex.Message}"), ex));
                     }
                     else if (uAction.ToString().StartsWith("SPI_SET", StringComparison.OrdinalIgnoreCase))
                     {
-                        Exceptions.ThemeApply.Add(new Tuple<string, Exception>(string.Format(Program.Lang.Strings.ThemeManager.Advanced.User32_SPI, "user32.dll", "SystemParameterInfo", uAction.ToString(), uParam.ToString(), lpvParam.ToString(), fuWinIni.ToString(), $"ERROR {Error}: {ex.Message}"), ex));
+                        Exceptions.ThemeApply.Add(new Tuple<string, Exception>(string.Format(Program.Localization.Strings.ThemeManager.Advanced.User32_SPI, "user32.dll", "SystemParameterInfo", uAction.ToString(), uParam.ToString(), lpvParam.ToString(), fuWinIni.ToString(), $"ERROR {Error}: {ex.Message}"), ex));
                     }
 
                     // Return if the function call failed
@@ -217,9 +217,9 @@ namespace WinPaletter.NativeMethods
 
             // If the function call succeeded, log the result
             if (treeView != null)
-                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.User32_SPI, "user32.dll", "SystemParameterInfo", uAction.ToString(), uParam.ToString(), lpvParam.ToString(), fuWinIni.ToString(), result.ToString().ToLower()), "dll");
+                ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.User32_SPI, "user32.dll", "SystemParameterInfo", uAction.ToString(), uParam.ToString(), lpvParam.ToString(), fuWinIni.ToString(), result.ToString().ToLower()), "dll");
 
-            Program.Log?.Write(LogEventLevel.Information, string.Format(Program.Lang.Strings.ThemeManager.Advanced.User32_SPI, "user32.dll", "SystemParameterInfo", uAction.ToString(), uParam.ToString(), lpvParam.ToString(), fuWinIni.ToString(), result.ToString().ToLower()));
+            Program.Log?.Write(LogEventLevel.Information, string.Format(Program.Localization.Strings.ThemeManager.Advanced.User32_SPI, "user32.dll", "SystemParameterInfo", uAction.ToString(), uParam.ToString(), lpvParam.ToString(), fuWinIni.ToString(), result.ToString().ToLower()));
         }
 
         /// <summary>

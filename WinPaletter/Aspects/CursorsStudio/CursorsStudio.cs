@@ -33,7 +33,7 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Localization.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -109,7 +109,7 @@ namespace WinPaletter
         {
             if (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Cursors)
             {
-                MsgBox(Program.Lang.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.Strings.Aspects.Disabled_Apply_1);
+                MsgBox(Program.Localization.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Localization.Strings.Aspects.Disabled_Apply_1);
                 return;
             }
 
@@ -264,9 +264,9 @@ namespace WinPaletter
         {
             TM.Cursors.Enabled = AspectEnabled;
             TM.Cursors.Shadow = CheckBox9.Checked;
-            TM.Cursors.Trails = trackBarX9.Value;
+            TM.Cursors.Trails = (int)trackBarX9.Value;
             TM.Cursors.Sonar = CheckBox10.Checked;
-            TM.Cursors.Size = trackBarX10.Value;
+            TM.Cursors.Size = (int)trackBarX10.Value;
             TM.Cursors.Cursor_Arrow = Cursor_to_CursorTM(Arrow);
             TM.Cursors.Cursor_Help = Cursor_to_CursorTM(Help);
             TM.Cursors.Cursor_AppLoading = Cursor_to_CursorTM(AppLoading);
@@ -290,7 +290,7 @@ namespace WinPaletter
         {
             DesignerData data = new(this)
             {
-                AspectName = Program.Lang.Strings.Aspects.Cursors,
+                AspectName = Program.Localization.Strings.Aspects.Cursors,
                 Enabled = Program.TM.Cursors.Enabled,
                 Import_theme = false,
                 Import_msstyles = false,
@@ -540,7 +540,7 @@ namespace WinPaletter
             CursorControl.Prop_SecondaryNoise = CheckBox3.Checked;
             CursorControl.Prop_SecondaryNoiseOpacity = trackBarX2.Value / 100f;
             CursorControl.Prop_BorderThickness = (trackBarX12.Value / (float)trackBarX12.Maximum) * 3f;
-            CursorControl.Prop_LoadingCircleHot_AnimationSpeed = trackBarX11.Value;
+            CursorControl.Prop_LoadingCircleHot_AnimationSpeed = (int)trackBarX11.Value;
 
             CursorControl.Prop_LoadingCircleBack1 = CircleColor1.BackColor;
             CursorControl.Prop_LoadingCircleBack2 = CircleColor2.BackColor;
@@ -558,10 +558,10 @@ namespace WinPaletter
 
             CursorControl.Prop_Shadow_Enabled = toggle1.Checked;
             CursorControl.Prop_Shadow_Color = ColorItem1.BackColor;
-            CursorControl.Prop_Shadow_Blur = trackBarX5.Value;
+            CursorControl.Prop_Shadow_Blur = (int)trackBarX5.Value;
             CursorControl.Prop_Shadow_Opacity = trackBarX6.Value / 100f;
-            CursorControl.Prop_Shadow_OffsetX = trackBarX7.Value;
-            CursorControl.Prop_Shadow_OffsetY = trackBarX8.Value;
+            CursorControl.Prop_Shadow_OffsetX = (int)trackBarX7.Value;
+            CursorControl.Prop_Shadow_OffsetY = (int)trackBarX8.Value;
         }
 
         private void PrimaryColor1_Click(object sender, EventArgs e)
@@ -1436,7 +1436,7 @@ namespace WinPaletter
 
         private void button20_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Cursors, Title = Program.Lang.Strings.Extensions.OpenCursor })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Cursors, Title = Program.Localization.Strings.Extensions.OpenCursor })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -1561,7 +1561,7 @@ namespace WinPaletter
                 {
                     if (i is not null)
                     {
-                        i.Prop_Shadow_Blur = (sender as TrackBarX).Value;
+                        i.Prop_Shadow_Blur = (int)(sender as TrackBarX).Value;
                         i.Invalidate();
                     }
                 }
@@ -1570,7 +1570,7 @@ namespace WinPaletter
             {
                 if (_SelectedControl is not null)
                 {
-                    _SelectedControl.Prop_Shadow_Blur = (sender as TrackBarX).Value;
+                    _SelectedControl.Prop_Shadow_Blur = (int)(sender as TrackBarX).Value;
                     _SelectedControl.Invalidate();
                 }
             }
@@ -1611,7 +1611,7 @@ namespace WinPaletter
                 {
                     if (i is not null)
                     {
-                        i.Prop_Shadow_OffsetX = (sender as TrackBarX).Value;
+                        i.Prop_Shadow_OffsetX = (int)(sender as TrackBarX).Value;
                         i.Invalidate();
                     }
                 }
@@ -1620,7 +1620,7 @@ namespace WinPaletter
             {
                 if (_SelectedControl is not null)
                 {
-                    _SelectedControl.Prop_Shadow_OffsetX = (sender as TrackBarX).Value;
+                    _SelectedControl.Prop_Shadow_OffsetX = (int)(sender as TrackBarX).Value;
                     _SelectedControl.Invalidate();
                 }
             }
@@ -1636,7 +1636,7 @@ namespace WinPaletter
                 {
                     if (i is not null)
                     {
-                        i.Prop_Shadow_OffsetY = (sender as TrackBarX).Value;
+                        i.Prop_Shadow_OffsetY = (int)(sender as TrackBarX).Value;
                         i.Invalidate();
                     }
                 }
@@ -1645,7 +1645,7 @@ namespace WinPaletter
             {
                 if (_SelectedControl is not null)
                 {
-                    _SelectedControl.Prop_Shadow_OffsetY = (sender as TrackBarX).Value;
+                    _SelectedControl.Prop_Shadow_OffsetY = (int)(sender as TrackBarX).Value;
                     _SelectedControl.Invalidate();
                 }
             }
@@ -1785,7 +1785,7 @@ namespace WinPaletter
                 {
                     if (i is not null)
                     {
-                        i.Prop_LoadingCircleHot_AnimationSpeed = (sender as TrackBarX).Value;
+                        i.Prop_LoadingCircleHot_AnimationSpeed = (int)(sender as TrackBarX).Value;
 
                         AnimateList.Clear();
 
@@ -1799,7 +1799,7 @@ namespace WinPaletter
             {
                 if (_SelectedControl is not null)
                 {
-                    _SelectedControl.Prop_LoadingCircleHot_AnimationSpeed = (sender as TrackBarX).Value;
+                    _SelectedControl.Prop_LoadingCircleHot_AnimationSpeed = (int)(sender as TrackBarX).Value;
 
                     AnimateList.Clear();
 

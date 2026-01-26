@@ -44,12 +44,12 @@ namespace WinPaletter.NativeMethods
 
                     // Log the error and details
                     if (treeView != null)
-                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.User32_SSC, "user32.dll", "SetSystemCursor", $"\"{file}\"", id.ToString(), $"ERROR {Error}: {ex.Message}"), "dll");
+                        ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.User32_SSC, "user32.dll", "SetSystemCursor", $"\"{file}\"", id.ToString(), $"ERROR {Error}: {ex.Message}"), "dll");
 
-                    Program.Log?.Write(LogEventLevel.Error, string.Format(Program.Lang.Strings.ThemeManager.Advanced.User32_SSC, "user32.dll", "SetSystemCursor", $"\"{file}\"", id.ToString(), $"ERROR {Error}: {ex.Message}"));
+                    Program.Log?.Write(LogEventLevel.Error, string.Format(Program.Localization.Strings.ThemeManager.Advanced.User32_SSC, "user32.dll", "SetSystemCursor", $"\"{file}\"", id.ToString(), $"ERROR {Error}: {ex.Message}"));
 
                     // Add the exception to the list of exceptions
-                    Exceptions.ThemeApply.Add(new Tuple<string, Exception>(string.Format(Program.Lang.Strings.ThemeManager.Advanced.User32_SSC, "user32.dll", "SetSystemCursor", $"\"{file}\"", id.ToString(), $"ERROR {Error}: {ex.Message}"), ex));
+                    Exceptions.ThemeApply.Add(new Tuple<string, Exception>(string.Format(Program.Localization.Strings.ThemeManager.Advanced.User32_SSC, "user32.dll", "SetSystemCursor", $"\"{file}\"", id.ToString(), $"ERROR {Error}: {ex.Message}"), ex));
 
                     return;
                 }
@@ -57,9 +57,9 @@ namespace WinPaletter.NativeMethods
 
             // If the operation succeeded, log the details
             if (treeView != null)
-                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.User32_SSC, "user32.dll", "SetSystemCursor", $"\"{file}\"", id.ToString(), result.ToString().ToLower()), "dll");
+                ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.User32_SSC, "user32.dll", "SetSystemCursor", $"\"{file}\"", id.ToString(), result.ToString().ToLower()), "dll");
 
-            Program.Log?.Write(LogEventLevel.Information, string.Format(Program.Lang.Strings.ThemeManager.Advanced.User32_SSC, "user32.dll", "SetSystemCursor", $"\"{file}\"", id.ToString(), result.ToString().ToLower()));
+            Program.Log?.Write(LogEventLevel.Information, string.Format(Program.Localization.Strings.ThemeManager.Advanced.User32_SSC, "user32.dll", "SetSystemCursor", $"\"{file}\"", id.ToString(), result.ToString().ToLower()));
         }
 
         /// <summary>

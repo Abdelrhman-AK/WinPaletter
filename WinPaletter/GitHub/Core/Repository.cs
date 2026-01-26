@@ -3,9 +3,7 @@ using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace WinPaletter.GitHub
 {
@@ -107,20 +105,23 @@ namespace WinPaletter.GitHub
         /// <param name="body">PR description.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
         /// <exception cref="Octokit.ApiException">Thrown when GitHub API rejects the request.</exception>
-        public static async Task CreatePullRequestAsync(string title, string body)
+        public static async Task<PullRequest> CreatePullRequestAsync(string title, string body)
         {
-            if (!Program.IsNetworkAvailable) return;
+            if (!Program.IsNetworkAvailable) return null;
 
             try
             {
                 NewPullRequest newPR = new(title, $"{Owner}:{Branch.Name}", "main") { Body = body };
                 PullRequest pr = await _client.PullRequest.Create(OriginalOwner, Name, newPR).ConfigureAwait(false);
                 Program.Log?.Write(LogEventLevel.Information, $"Pull request created: {pr.HtmlUrl}");
+                return pr;
             }
             catch (Exception ex)
             {
                 Program.Log?.Write(LogEventLevel.Error, $"Error creating pull request to {OriginalOwner}/{Name}", ex);
             }
+
+            return null;
         }
 
         /// <summary>

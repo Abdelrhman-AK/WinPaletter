@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WinPaletter
@@ -21,7 +20,7 @@ namespace WinPaletter
         private void GitHub_ThemeUpload_Load(object sender, EventArgs e)
         {
             ApplyStyle(this);
-            this.LoadLanguage();
+            this.Localize();
         }
 
         private void toggle_uploadOne_CheckedChanged(object sender, EventArgs e)
@@ -85,7 +84,7 @@ namespace WinPaletter
 
         private void Button16_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = textBox1.Text, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = textBox1.Text, Title = Program.Localization.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -137,7 +136,7 @@ namespace WinPaletter
                 Program.Log?.Write(LogEventLevel.Error, $"The used wpth file has the old format (obsolete.)");
 
                 // Display a message box for old format themes
-                if (!silent) MsgBox(Program.Lang.Strings.Converter.Detect_Old_OnLoading0, MessageBoxButtons.OK, MessageBoxIcon.Error, Program.Lang.Strings.Converter.Detect_Old_OnLoadingTip);
+                if (!silent) MsgBox(Program.Localization.Strings.Converter.Detect_Old_OnLoading0, MessageBoxButtons.OK, MessageBoxIcon.Error, Program.Localization.Strings.Converter.Detect_Old_OnLoadingTip);
                 return false;
             }
             else
@@ -145,7 +144,7 @@ namespace WinPaletter
                 Program.Log?.Write(LogEventLevel.Error, $"The used wpth file is invalid.");
 
                 // Display a message box for invalid JSON
-                if (!silent) MsgBox(Program.Lang.Strings.Converter.Error_Phrasing, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (!silent) MsgBox(Program.Localization.Strings.Converter.Error_Phrasing, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
@@ -183,7 +182,7 @@ namespace WinPaletter
 
                 if (string.IsNullOrEmpty(themeFile) || !System.IO.File.Exists(themeFile))
                 {
-                    MsgBox(Program.Lang.Strings.Messages.ThemeFileNotExist, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MsgBox(Program.Localization.Strings.Messages.ThemeFileNotExist, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
                 else if (!IsValidTheme(themeFile))
@@ -192,7 +191,7 @@ namespace WinPaletter
                 }
                 else if (!string.IsNullOrEmpty(themeResPack) && !System.IO.File.Exists(themeResPack)) // Theme Resource Pack is optional
                 {
-                    MsgBox(Program.Lang.Strings.Messages.ThemeResPackNotExist, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MsgBox(Program.Localization.Strings.Messages.ThemeResPackNotExist, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -205,7 +204,7 @@ namespace WinPaletter
 
                 if (string.IsNullOrEmpty(directory) || !System.IO.Directory.Exists(directory))
                 {
-                    MsgBox(Program.Lang.Strings.Messages.ThemesDirectoryNotExist, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MsgBox(Program.Localization.Strings.Messages.ThemesDirectoryNotExist, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
@@ -234,7 +233,7 @@ namespace WinPaletter
 
                 if (files.Count == 0)
                 {
-                    MsgBox(Program.Lang.Strings.Messages.NoValidThemesFound, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MsgBox(Program.Localization.Strings.Messages.NoValidThemesFound, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
             }
@@ -312,7 +311,7 @@ namespace WinPaletter
             }
             else
             {
-                MsgBox(Program.Lang.Strings.GitHubStrings.SelectUploadMethod, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MsgBox(Program.Localization.Strings.GitHubStrings.SelectUploadMethod, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
             if (files.Count > 0)

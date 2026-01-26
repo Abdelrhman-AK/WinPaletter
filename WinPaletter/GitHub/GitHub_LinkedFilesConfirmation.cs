@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Media;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WinPaletter
@@ -21,7 +15,7 @@ namespace WinPaletter
         private void GitHub_LinkedFilesConfirmation_Load(object sender, EventArgs e)
         {
             ApplyStyle(this);
-            this.LoadLanguage();
+            this.Localize();
             CheckBox1.Checked = Program.Settings.UsersServices.GitHub_AutoOperateOnLinkedFiles;
 
             label3.Font = Fonts.ConsoleMedium;
@@ -58,19 +52,19 @@ namespace WinPaletter
             switch (operation)
             {
                 case Operation.Copy:
-                    label6.Text = Program.Lang.Strings.General.Copy;
+                    label6.Text = Program.Localization.Strings.General.Copy;
                     break;
                 case Operation.Cut:
-                    label6.Text = Program.Lang.Strings.General.Cut;
+                    label6.Text = Program.Localization.Strings.General.Cut;
                     break;
                 case Operation.Delete:
-                    label6.Text = Program.Lang.Strings.General.Delete;
+                    label6.Text = Program.Localization.Strings.General.Delete;
                     break;
                 case Operation.Rename:
-                    label6.Text = Program.Lang.Strings.General.Rename;
+                    label6.Text = Program.Localization.Strings.General.Rename;
                     break;
                 case Operation.Download:
-                    label6.Text = Program.Lang.Strings.General.Download;
+                    label6.Text = Program.Localization.Strings.General.Download;
                     break;
             }
 

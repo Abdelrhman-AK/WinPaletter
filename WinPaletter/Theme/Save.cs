@@ -80,16 +80,16 @@ namespace WinPaletter.Theme
                         {
                             if (ReportProgress && SystemRestoreHelper.Enabled)
                             {
-                                ThemeLog.AddNode(treeView, $"{Program.Lang.Strings.ThemeManager.Actions.RestorePoint0}", "info");
-                                ThemeLog.AddNode(treeView, $"{Program.Lang.Strings.ThemeManager.Actions.RestorePoint1}", "info");
-                                ThemeLog.AddNode(treeView, $"{Program.Lang.Strings.ThemeManager.Actions.RestorePoint2}", "time");
+                                ThemeLog.AddNode(treeView, $"{Program.Localization.Strings.ThemeManager.Actions.RestorePoint0}", "info");
+                                ThemeLog.AddNode(treeView, $"{Program.Localization.Strings.ThemeManager.Actions.RestorePoint1}", "info");
+                                ThemeLog.AddNode(treeView, $"{Program.Localization.Strings.ThemeManager.Actions.RestorePoint2}", "time");
                             }
 
-                            bool SR_reult = SystemRestoreHelper.CreateRestorePoint(string.Format(Program.Lang.Strings.General.RestorePoint_Theme, Info.ThemeName));
+                            bool SR_reult = SystemRestoreHelper.CreateRestorePoint(string.Format(Program.Localization.Strings.General.RestorePoint_Theme, Info.ThemeName));
 
                             if (ReportProgress && SR_reult)
                             {
-                                ThemeLog.AddNode(treeView, $"{string.Format(Program.Lang.Strings.ThemeManager.Actions.RestorePoint3, sw_all.ElapsedMilliseconds / 1000d)}", "time");
+                                ThemeLog.AddNode(treeView, $"{string.Format(Program.Localization.Strings.ThemeManager.Actions.RestorePoint3, sw_all.ElapsedMilliseconds / 1000d)}", "time");
                             }
                         }
 
@@ -97,34 +97,34 @@ namespace WinPaletter.Theme
                         {
                             string OS_str;
 
-                            if (OS.W12) { OS_str = Program.Lang.Strings.Windows.W12; }
+                            if (OS.W12) { OS_str = Program.Localization.Strings.Windows.W12; }
 
-                            else if (OS.W11) { OS_str = Program.Lang.Strings.Windows.W11; }
+                            else if (OS.W11) { OS_str = Program.Localization.Strings.Windows.W11; }
 
-                            else if (OS.W10) { OS_str = Program.Lang.Strings.Windows.W10; }
+                            else if (OS.W10) { OS_str = Program.Localization.Strings.Windows.W10; }
 
-                            else if (OS.W81) { OS_str = Program.Lang.Strings.Windows.W81; }
+                            else if (OS.W81) { OS_str = Program.Localization.Strings.Windows.W81; }
 
-                            else if (OS.W81) { OS_str = Program.Lang.Strings.Windows.W8; }
+                            else if (OS.W81) { OS_str = Program.Localization.Strings.Windows.W8; }
 
-                            else if (OS.W7) { OS_str = Program.Lang.Strings.Windows.W7; }
+                            else if (OS.W7) { OS_str = Program.Localization.Strings.Windows.W7; }
 
-                            else if (OS.WVista) { OS_str = Program.Lang.Strings.Windows.WVista; }
+                            else if (OS.WVista) { OS_str = Program.Localization.Strings.Windows.WVista; }
 
-                            else if (OS.WXP) { OS_str = Program.Lang.Strings.Windows.WXP; }
+                            else if (OS.WXP) { OS_str = Program.Localization.Strings.Windows.WXP; }
 
-                            else { OS_str = Program.Lang.Strings.Windows.Undefined; }
+                            else { OS_str = Program.Localization.Strings.Windows.Undefined; }
 
-                            ThemeLog.AddNode(treeView, $"{string.Format(Program.Lang.Strings.ThemeManager.Actions.ApplyOS, OS_str)}", "info");
+                            ThemeLog.AddNode(treeView, $"{string.Format(Program.Localization.Strings.ThemeManager.Actions.ApplyOS, OS_str)}", "info");
 
                             Program.Log?.Write(LogEventLevel.Information, $"WinPaletter will apply the theme as if you are using {OS_str}");
 
-                            ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.Strings.ThemeManager.Actions.Applying_Started}", "info");
+                            ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Localization.Strings.ThemeManager.Actions.Applying_Started}", "info");
 
                             if (!Program.Elevated)
                             {
-                                ThemeLog.AddNode(treeView, $"{Program.Lang.Strings.ThemeManager.Actions.Admin_Msg0}", "admin");
-                                ThemeLog.AddNode(treeView, $"{Program.Lang.Strings.ThemeManager.Actions.Admin_Msg1}", "admin");
+                                ThemeLog.AddNode(treeView, $"{Program.Localization.Strings.ThemeManager.Actions.Admin_Msg0}", "admin");
+                                ThemeLog.AddNode(treeView, $"{Program.Localization.Strings.ThemeManager.Actions.Admin_Msg1}", "admin");
                             }
                         }
 
@@ -142,14 +142,14 @@ namespace WinPaletter.Theme
                                 }
 
                             },
-                            treeView, Program.Lang.Strings.ThemeManager.Actions.ThemeReset, Program.Lang.Strings.ThemeManager.Errors.ThemeReset, Program.Lang.Strings.ThemeManager.Actions.Time, sw_all);
+                            treeView, Program.Localization.Strings.ThemeManager.Actions.ThemeReset, Program.Localization.Strings.ThemeManager.Errors.ThemeReset, Program.Localization.Strings.ThemeManager.Actions.Time, sw_all);
                         }
 
                         // Save toggles states (toggle states are saved before applying the theme to make WinPaletter apply enabled features and skip disabled features)
 
                         Program.Log?.Write(LogEventLevel.Information, "Saving toggles states before applying the theme.");
 
-                        ThemeLog.AddNode(treeView, $"{Program.Lang.Strings.ThemeManager.Actions.SavingToggles}", "info");
+                        ThemeLog.AddNode(treeView, $"{Program.Localization.Strings.ThemeManager.Actions.SavingToggles}", "info");
                         AppTheme.SaveToggleState(tv);
                         Wallpaper.SaveToggleState(tv);
                         Windows12.SaveToggleState("12", tv);
@@ -195,118 +195,118 @@ namespace WinPaletter.Theme
                         WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0);
 
                         // WinTheme info
-                        Execute(() => Info.Apply(tv), treeView, Program.Lang.Strings.ThemeManager.Actions.SavingInfo, Program.Lang.Strings.ThemeManager.Errors.SavingInfo, Program.Lang.Strings.ThemeManager.Actions.Time, sw_all);
+                        Execute(() => Info.Apply(tv), treeView, Program.Localization.Strings.ThemeManager.Actions.SavingInfo, Program.Localization.Strings.ThemeManager.Errors.SavingInfo, Program.Localization.Strings.ThemeManager.Actions.Time, sw_all);
 
                         // WinPaletter application theme
                         Execute(() => AppTheme.Apply(tv), treeView,
-                            string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature, Program.Lang.Strings.Aspects.AppTheme),
-                            string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, Program.Lang.Strings.Aspects.AppTheme),
-                            Program.Lang.Strings.ThemeManager.Actions.Time,
+                            string.Format(Program.Localization.Strings.ThemeManager.Actions.Applying_Feature, Program.Localization.Strings.Aspects.AppTheme),
+                            string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, Program.Localization.Strings.Aspects.AppTheme),
+                            Program.Localization.Strings.ThemeManager.Actions.Time,
                             sw_all,
                             !AppTheme.Enabled,
-                            string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, Program.Lang.Strings.Aspects.AppTheme));
+                            string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, Program.Localization.Strings.Aspects.AppTheme));
 
                         // Wallpaper
                         // Make Wallpaper before the following LogonUI items, to make a logonUI that depends on current wallpaper gets the correct File
                         Execute(() => Wallpaper.Apply(false, tv),
                             treeView,
-                            string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature, Program.Lang.Strings.Aspects.Wallpaper),
-                            string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, Program.Lang.Strings.Aspects.Wallpaper),
-                            Program.Lang.Strings.ThemeManager.Actions.Time,
+                            string.Format(Program.Localization.Strings.ThemeManager.Actions.Applying_Feature, Program.Localization.Strings.Aspects.Wallpaper),
+                            string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, Program.Localization.Strings.Aspects.Wallpaper),
+                            Program.Localization.Strings.ThemeManager.Actions.Time,
                             sw_all,
                             !Wallpaper.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Wallpaper),
-                            string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, Program.Lang.Strings.Aspects.Wallpaper));
+                            string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, Program.Localization.Strings.Aspects.Wallpaper));
 
                         // Apply Windows 12 execlusive features (Colors, lock screen and visual styles)
                         if (OS.W12)
                         {
                             Execute(() => Windows12.Apply("12", tv), treeView,
-                                string.Format(Program.Lang.Strings.ThemeManager.Actions.Theme, Program.Lang.Strings.Windows.W12),
-                                string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W12)),
-                                Program.Lang.Strings.ThemeManager.Actions.Time,
+                                string.Format(Program.Localization.Strings.ThemeManager.Actions.Theme, Program.Localization.Strings.Windows.W12),
+                                string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W12)),
+                                Program.Localization.Strings.ThemeManager.Actions.Time,
                                 sw_all,
                                 !Windows12.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
-                                string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W12)));
+                                string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W12)));
 
                             Execute(() => LogonUI12.Apply("12", tv), treeView,
-                                string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature_ForOS, Program.Lang.Strings.Windows.W12, Program.Lang.Strings.Aspects.LockScreen),
-                                string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, Program.Lang.Strings.Aspects.LockScreen),
-                                Program.Lang.Strings.ThemeManager.Actions.Time,
+                                string.Format(Program.Localization.Strings.ThemeManager.Actions.Applying_Feature_ForOS, Program.Localization.Strings.Windows.W12, Program.Localization.Strings.Aspects.LockScreen),
+                                string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, Program.Localization.Strings.Aspects.LockScreen),
+                                Program.Localization.Strings.ThemeManager.Actions.Time,
                                 sw_all,
                                 !LogonUI12.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.LogonUI),
-                                string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, Program.Lang.Strings.Aspects.LockScreen));
+                                string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, Program.Localization.Strings.Aspects.LockScreen));
                         }
 
                         // Apply Windows 11 execlusive features (Colors, lock screen and visual styles)
                         if (OS.W11)
                         {
                             Execute(() => Windows11.Apply("11", tv), treeView,
-                                string.Format(Program.Lang.Strings.ThemeManager.Actions.Theme, Program.Lang.Strings.Windows.W11),
-                                string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W11)),
-                                Program.Lang.Strings.ThemeManager.Actions.Time,
+                                string.Format(Program.Localization.Strings.ThemeManager.Actions.Theme, Program.Localization.Strings.Windows.W11),
+                                string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W11)),
+                                Program.Localization.Strings.ThemeManager.Actions.Time,
                                 sw_all,
                                 !Windows11.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
-                                string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W11)));
+                                string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W11)));
 
                             Execute(() => LogonUI11.Apply("11", tv), treeView,
-                                string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature_ForOS, Program.Lang.Strings.Windows.W11, Program.Lang.Strings.Aspects.LockScreen),
-                                string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, Program.Lang.Strings.Aspects.LockScreen),
-                                Program.Lang.Strings.ThemeManager.Actions.Time,
+                                string.Format(Program.Localization.Strings.ThemeManager.Actions.Applying_Feature_ForOS, Program.Localization.Strings.Windows.W11, Program.Localization.Strings.Aspects.LockScreen),
+                                string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, Program.Localization.Strings.Aspects.LockScreen),
+                                Program.Localization.Strings.ThemeManager.Actions.Time,
                                 sw_all,
                                 !LogonUI11.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.LogonUI),
-                                string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, Program.Lang.Strings.Aspects.LockScreen));
+                                string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, Program.Localization.Strings.Aspects.LockScreen));
                         }
 
                         // Apply Windows 10 execlusive features (Colors, lock screen and visual styles)
                         if (OS.W10)
                         {
                             Execute(() => Windows10.Apply("10", tv), treeView,
-                                string.Format(Program.Lang.Strings.ThemeManager.Actions.Theme, Program.Lang.Strings.Windows.W10),
-                                string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W10)),
-                                Program.Lang.Strings.ThemeManager.Actions.Time,
+                                string.Format(Program.Localization.Strings.ThemeManager.Actions.Theme, Program.Localization.Strings.Windows.W10),
+                                string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W10)),
+                                Program.Localization.Strings.ThemeManager.Actions.Time,
                                 sw_all,
                                 !Windows10.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
-                                string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W10)));
+                                string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W10)));
 
                             Execute(() => LogonUI10.Apply("10", tv), treeView,
-                                string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature_ForOS, Program.Lang.Strings.Windows.W10, Program.Lang.Strings.Aspects.LockScreen),
-                                string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, Program.Lang.Strings.Aspects.LockScreen),
-                                Program.Lang.Strings.ThemeManager.Actions.Time,
+                                string.Format(Program.Localization.Strings.ThemeManager.Actions.Applying_Feature_ForOS, Program.Localization.Strings.Windows.W10, Program.Localization.Strings.Aspects.LockScreen),
+                                string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, Program.Localization.Strings.Aspects.LockScreen),
+                                Program.Localization.Strings.ThemeManager.Actions.Time,
                                 sw_all,
                                 !LogonUI10.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.LogonUI),
-                                string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, Program.Lang.Strings.Aspects.LockScreen));
+                                string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, Program.Localization.Strings.Aspects.LockScreen));
                         }
 
                         // Apply Windows 8.1 execlusive features (Colors, lock screen and visual styles)
                         if (OS.W81)
                         {
                             Execute(() => Windows81.Apply(this, tv), treeView,
-                                string.Format(Program.Lang.Strings.ThemeManager.Actions.Theme, Program.Lang.Strings.Windows.W81),
-                                string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W81)),
-                                Program.Lang.Strings.ThemeManager.Actions.Time,
+                                string.Format(Program.Localization.Strings.ThemeManager.Actions.Theme, Program.Localization.Strings.Windows.W81),
+                                string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W81)),
+                                Program.Localization.Strings.ThemeManager.Actions.Time,
                                 sw_all,
                                 !Windows81.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
-                                string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W81)));
+                                string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W81)));
 
                             Execute(() => LogonUI81.Apply(treeView), treeView,
-                                string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature_ForOS, Program.Lang.Strings.Windows.W81, Program.Lang.Strings.Aspects.LockScreen),
-                                string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, Program.Lang.Strings.Aspects.LockScreen),
-                                Program.Lang.Strings.ThemeManager.Actions.Time,
+                                string.Format(Program.Localization.Strings.ThemeManager.Actions.Applying_Feature_ForOS, Program.Localization.Strings.Windows.W81, Program.Localization.Strings.Aspects.LockScreen),
+                                string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, Program.Localization.Strings.Aspects.LockScreen),
+                                Program.Localization.Strings.ThemeManager.Actions.Time,
                                 sw_all,
                                 !LogonUI81.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.LogonUI),
-                                string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, Program.Lang.Strings.Aspects.LockScreen));
+                                string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, Program.Localization.Strings.Aspects.LockScreen));
                         }
 
                         // Apply Windows 8 execlusive features (Colors, lock screen and visual styles)
                         if (OS.W8)
                         {
                             Execute(() => Windows8.Apply(this, tv), treeView,
-                                string.Format(Program.Lang.Strings.ThemeManager.Actions.Theme, Program.Lang.Strings.Windows.W8),
-                                string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W8)),
-                                Program.Lang.Strings.ThemeManager.Actions.Time,
+                                string.Format(Program.Localization.Strings.ThemeManager.Actions.Theme, Program.Localization.Strings.Windows.W8),
+                                string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W8)),
+                                Program.Localization.Strings.ThemeManager.Actions.Time,
                                 sw_all,
                                 !Windows8.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
-                                string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W8)));
+                                string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W8)));
 
                             //Execute(() => LogonUI8.Apply(treeView), treeView,
                             //    string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature_ForOS, Program.Lang.Strings.Windows.W8, Program.Lang.Strings.Aspects.LockScreen),
@@ -321,96 +321,96 @@ namespace WinPaletter.Theme
                         if (OS.W7)
                         {
                             Execute(() => Windows7.Apply(this, tv), treeView,
-                                string.Format(Program.Lang.Strings.ThemeManager.Actions.Theme, Program.Lang.Strings.Windows.W7),
-                                string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W7)),
-                                Program.Lang.Strings.ThemeManager.Actions.Time,
+                                string.Format(Program.Localization.Strings.ThemeManager.Actions.Theme, Program.Localization.Strings.Windows.W7),
+                                string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W7)),
+                                Program.Localization.Strings.ThemeManager.Actions.Time,
                                 sw_all,
                                 !Windows7.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
-                                string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W7)));
+                                string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W7)));
 
                             Execute(() => LogonUI7.Apply(treeView), treeView,
-                                string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature_ForOS, Program.Lang.Strings.Windows.W7, Program.Lang.Strings.Aspects.LogonUI),
-                                string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, Program.Lang.Strings.Aspects.LogonUI),
-                                Program.Lang.Strings.ThemeManager.Actions.Time,
+                                string.Format(Program.Localization.Strings.ThemeManager.Actions.Applying_Feature_ForOS, Program.Localization.Strings.Windows.W7, Program.Localization.Strings.Aspects.LogonUI),
+                                string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, Program.Localization.Strings.Aspects.LogonUI),
+                                Program.Localization.Strings.ThemeManager.Actions.Time,
                                 sw_all,
                                 !LogonUI7.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.LogonUI),
-                                string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, Program.Lang.Strings.Aspects.LogonUI));
+                                string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, Program.Localization.Strings.Aspects.LogonUI));
                         }
 
                         // Apply Windows Vista execlusive features (Colors, themes, and visual styles)
                         if (OS.WVista)
                         {
-                            Execute(() => { WindowsVista.Apply(tv); }, treeView, string.Format(Program.Lang.Strings.ThemeManager.Actions.Theme, Program.Lang.Strings.Windows.WVista), string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.WVista)),
-                            Program.Lang.Strings.ThemeManager.Actions.Time,
+                            Execute(() => { WindowsVista.Apply(tv); }, treeView, string.Format(Program.Localization.Strings.ThemeManager.Actions.Theme, Program.Localization.Strings.Windows.WVista), string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.WVista)),
+                            Program.Localization.Strings.ThemeManager.Actions.Time,
                             sw_all,
                             !WindowsVista.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
-                            string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.WVista)));
+                            string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.WVista)));
                         }
 
                         // Apply Windows XP execlusive features (Themes, LogonUI screen and visual styles)
                         if (OS.WXP)
                         {
                             Execute(() => WindowsXP.Apply(tv), treeView,
-                                string.Format(Program.Lang.Strings.ThemeManager.Actions.Theme, Program.Lang.Strings.Windows.WXP),
-                                string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.WXP)),
-                                Program.Lang.Strings.ThemeManager.Actions.Time,
+                                string.Format(Program.Localization.Strings.ThemeManager.Actions.Theme, Program.Localization.Strings.Windows.WXP),
+                                string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.WXP)),
+                                Program.Localization.Strings.ThemeManager.Actions.Time,
                                 sw_all,
                                 !WindowsXP.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
-                                string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.WXP)));
+                                string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.WXP)));
 
                             Execute(() => LogonUIXP.Apply(tv), treeView,
-                                string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature_ForOS, Program.Lang.Strings.Windows.WXP, Program.Lang.Strings.Aspects.LogonUI),
-                                string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, Program.Lang.Strings.Aspects.LogonUI),
-                                Program.Lang.Strings.ThemeManager.Actions.Time,
+                                string.Format(Program.Localization.Strings.ThemeManager.Actions.Applying_Feature_ForOS, Program.Localization.Strings.Windows.WXP, Program.Localization.Strings.Aspects.LogonUI),
+                                string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, Program.Localization.Strings.Aspects.LogonUI),
+                                Program.Localization.Strings.ThemeManager.Actions.Time,
                                 sw_all,
                                 !LogonUIXP.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.LogonUI),
-                                string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, Program.Lang.Strings.Aspects.LogonUI));
+                                string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, Program.Localization.Strings.Aspects.LogonUI));
                         }
 
                         // Accessibility
                         Execute(() => Accessibility.Apply(tv), treeView,
-                            string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature, Program.Lang.Strings.Aspects.Accessibility),
-                            string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, Program.Lang.Strings.Aspects.Accessibility),
-                            Program.Lang.Strings.ThemeManager.Actions.Time,
+                            string.Format(Program.Localization.Strings.ThemeManager.Actions.Applying_Feature, Program.Localization.Strings.Aspects.Accessibility),
+                            string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, Program.Localization.Strings.Aspects.Accessibility),
+                            Program.Localization.Strings.ThemeManager.Actions.Time,
                             sw_all,
                             !Accessibility.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Accessibility),
-                            string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, Program.Lang.Strings.Aspects.Accessibility));
+                            string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, Program.Localization.Strings.Aspects.Accessibility));
 
                         // Win32UI
                         Execute(() => Win32.Apply(tv), treeView,
-                            string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature, Program.Lang.Strings.Aspects.ClassicColors),
-                            string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, Program.Lang.Strings.Aspects.ClassicColors),
-                            Program.Lang.Strings.ThemeManager.Actions.Time,
+                            string.Format(Program.Localization.Strings.ThemeManager.Actions.Applying_Feature, Program.Localization.Strings.Aspects.ClassicColors),
+                            string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, Program.Localization.Strings.Aspects.ClassicColors),
+                            Program.Localization.Strings.ThemeManager.Actions.Time,
                             sw_all,
                             !Win32.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.ClassicColors),
-                            string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, Program.Lang.Strings.Aspects.ClassicColors));
+                            string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, Program.Localization.Strings.Aspects.ClassicColors));
 
                         // WindowsEffects
                         Execute(() => WindowsEffects.Apply(tv, silent), treeView,
-                            string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature, Program.Lang.Strings.Aspects.WinEffects),
-                            string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, Program.Lang.Strings.Aspects.WinEffects),
-                            Program.Lang.Strings.ThemeManager.Actions.Time,
+                            string.Format(Program.Localization.Strings.ThemeManager.Actions.Applying_Feature, Program.Localization.Strings.Aspects.WinEffects),
+                            string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, Program.Localization.Strings.Aspects.WinEffects),
+                            Program.Localization.Strings.ThemeManager.Actions.Time,
                             sw_all,
                             !WindowsEffects.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Effects),
-                            string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, Program.Lang.Strings.Aspects.WinEffects));
+                            string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, Program.Localization.Strings.Aspects.WinEffects));
 
                         // Metrics\Fonts
                         Execute(() => MetricsFonts.Apply(tv), treeView,
-                            string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature, Program.Lang.Strings.Aspects.MetricsFonts),
-                            string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, Program.Lang.Strings.Aspects.MetricsFonts),
-                            Program.Lang.Strings.ThemeManager.Actions.Time_MultipleAspects,
+                            string.Format(Program.Localization.Strings.ThemeManager.Actions.Applying_Feature, Program.Localization.Strings.Aspects.MetricsFonts),
+                            string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, Program.Localization.Strings.Aspects.MetricsFonts),
+                            Program.Localization.Strings.ThemeManager.Actions.Time_MultipleAspects,
                             sw_all,
                             !MetricsFonts.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.MetricsFonts),
-                            string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, Program.Lang.Strings.Aspects.MetricsFonts));
+                            string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, Program.Localization.Strings.Aspects.MetricsFonts));
 
                         // AltTab
                         Execute(() => AltTab.Apply(tv), treeView,
-                            string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature, Program.Lang.Strings.Aspects.AltTab),
-                            string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, Program.Lang.Strings.Aspects.AltTab),
-                            Program.Lang.Strings.ThemeManager.Actions.Time,
+                            string.Format(Program.Localization.Strings.ThemeManager.Actions.Applying_Feature, Program.Localization.Strings.Aspects.AltTab),
+                            string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, Program.Localization.Strings.Aspects.AltTab),
+                            Program.Localization.Strings.ThemeManager.Actions.Time,
                             sw_all,
                             !AltTab.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.AltTab),
-                            string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, Program.Lang.Strings.Aspects.AltTab));
+                            string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, Program.Localization.Strings.Aspects.AltTab));
 
                         // WallpaperTone
                         Execute(() =>
@@ -452,38 +452,38 @@ namespace WinPaletter.Theme
                             }
 
                         }, treeView,
-                        string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature, Program.Lang.Strings.Aspects.WallpaperTone),
-                        string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, Program.Lang.Strings.Aspects.WallpaperTone),
-                        Program.Lang.Strings.ThemeManager.Actions.Time,
+                        string.Format(Program.Localization.Strings.ThemeManager.Actions.Applying_Feature, Program.Localization.Strings.Aspects.WallpaperTone),
+                        string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, Program.Localization.Strings.Aspects.WallpaperTone),
+                        Program.Localization.Strings.ThemeManager.Actions.Time,
                         sw_all,
                         !Wallpaper.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Wallpaper),
-                        string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, Program.Lang.Strings.Aspects.WallpaperTone));
+                        string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, Program.Localization.Strings.Aspects.WallpaperTone));
 
                         #region Consoles
 
                         Execute(() => Apply_CommandPrompt(tv), treeView,
-                            string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature, Program.Lang.Strings.Aspects.CommandPrompt),
-                            string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, Program.Lang.Strings.Aspects.CommandPrompt),
-                            Program.Lang.Strings.ThemeManager.Actions.Time,
+                            string.Format(Program.Localization.Strings.ThemeManager.Actions.Applying_Feature, Program.Localization.Strings.Aspects.CommandPrompt),
+                            string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, Program.Localization.Strings.Aspects.CommandPrompt),
+                            Program.Localization.Strings.ThemeManager.Actions.Time,
                             sw_all,
                             !CommandPrompt.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Consoles),
-                            string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, Program.Lang.Strings.Aspects.CommandPrompt));
+                            string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, Program.Localization.Strings.Aspects.CommandPrompt));
 
                         Execute(() => Apply_PowerShell86(tv), treeView,
-                            string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature, Program.Lang.Strings.Aspects.PowerShellx86),
-                            string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, Program.Lang.Strings.Aspects.PowerShellx86),
-                            Program.Lang.Strings.ThemeManager.Actions.Time,
+                            string.Format(Program.Localization.Strings.ThemeManager.Actions.Applying_Feature, Program.Localization.Strings.Aspects.PowerShellx86),
+                            string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, Program.Localization.Strings.Aspects.PowerShellx86),
+                            Program.Localization.Strings.ThemeManager.Actions.Time,
                             sw_all,
                             !PowerShellx86.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Consoles),
-                            string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, Program.Lang.Strings.Aspects.PowerShellx86));
+                            string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, Program.Localization.Strings.Aspects.PowerShellx86));
 
                         Execute(() => Apply_PowerShell64(tv), treeView,
-                            string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature, Program.Lang.Strings.Aspects.PowerShellx64),
-                            string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, Program.Lang.Strings.Aspects.PowerShellx64),
-                            Program.Lang.Strings.ThemeManager.Actions.Time,
+                            string.Format(Program.Localization.Strings.ThemeManager.Actions.Applying_Feature, Program.Localization.Strings.Aspects.PowerShellx64),
+                            string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, Program.Localization.Strings.Aspects.PowerShellx64),
+                            Program.Localization.Strings.ThemeManager.Actions.Time,
                             sw_all,
                             !PowerShellx64.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Consoles),
-                            string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, Program.Lang.Strings.Aspects.PowerShellx64));
+                            string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, Program.Localization.Strings.Aspects.PowerShellx64));
                         #endregion
 
                         #region Windows Terminal
@@ -496,29 +496,29 @@ namespace WinPaletter.Theme
                             {
                                 if (Program.Settings.AspectsControl.Enabled && !!Program.Settings.AspectsControl.WinTerminals)
                                 {
-                                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.Strings.ThemeManager.Skip.Terminals}", "skip");
+                                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Localization.Strings.ThemeManager.Skip.Terminals}", "skip");
                                 }
 
                                 else if (Terminal.Enabled & TerminalPreview.Enabled)
                                 {
-                                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.Strings.ThemeManager.Check.Terminals}", "info");
+                                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Localization.Strings.ThemeManager.Check.Terminals}", "info");
                                 }
 
                                 else if (Terminal.Enabled)
                                 {
-                                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, Program.Lang.Strings.Aspects.TerminalStable)}", "skip");
-                                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Lang.Strings.ThemeManager.Check.Terminal, Program.Lang.Strings.Aspects.TerminalStable)}", "info");
+                                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, Program.Localization.Strings.Aspects.TerminalStable)}", "skip");
+                                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Localization.Strings.ThemeManager.Check.Terminal, Program.Localization.Strings.Aspects.TerminalStable)}", "info");
                                 }
 
                                 else if (TerminalPreview.Enabled)
                                 {
-                                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, Program.Lang.Strings.Aspects.TerminalPreview)}", "skip");
-                                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Lang.Strings.ThemeManager.Check.Terminal, Program.Lang.Strings.Aspects.TerminalPreview)}", "info");
+                                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, Program.Localization.Strings.Aspects.TerminalPreview)}", "skip");
+                                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Localization.Strings.ThemeManager.Check.Terminal, Program.Localization.Strings.Aspects.TerminalPreview)}", "info");
                                 }
 
                                 else
                                 {
-                                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.Strings.ThemeManager.Skip.Terminals}", "skip");
+                                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Localization.Strings.ThemeManager.Skip.Terminals}", "skip");
                                 }
 
                             }
@@ -559,10 +559,10 @@ namespace WinPaletter.Theme
                                 {
                                     try
                                     {
-                                        ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature, Program.Lang.Strings.Aspects.TerminalStable)}", "info");
+                                        ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Localization.Strings.ThemeManager.Actions.Applying_Feature, Program.Localization.Strings.Aspects.TerminalStable)}", "info");
                                         Terminal.Save(TerDir, WinTerminal.Mode.JSONFile);
                                         if (ReportProgress)
-                                            ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Actions.Time, sw.ElapsedMilliseconds / 1000d), "time");
+                                            ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Actions.Time, sw.ElapsedMilliseconds / 1000d), "time");
                                     }
                                     catch (Exception ex)
                                     {
@@ -571,8 +571,8 @@ namespace WinPaletter.Theme
                                         _ErrorHappened = true;
                                         if (ReportProgress)
                                         {
-                                            ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, Program.Lang.Strings.Aspects.TerminalStable)}", "error");
-                                            AddException(string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, Program.Lang.Strings.Aspects.TerminalStable), ex);
+                                            ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, Program.Localization.Strings.Aspects.TerminalStable)}", "error");
+                                            AddException(string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, Program.Localization.Strings.Aspects.TerminalStable), ex);
                                         }
                                         else
                                         {
@@ -585,7 +585,7 @@ namespace WinPaletter.Theme
                                 }
                                 else
                                 {
-                                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Lang.Strings.ThemeManager.Skip.Terminal_JSONNotFound, Program.Lang.Strings.Aspects.TerminalStable)}", "skip");
+                                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Localization.Strings.ThemeManager.Skip.Terminal_JSONNotFound, Program.Localization.Strings.Aspects.TerminalStable)}", "skip");
                                 }
                             }
 
@@ -596,10 +596,10 @@ namespace WinPaletter.Theme
 
                                     try
                                     {
-                                        ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature, Program.Lang.Strings.Aspects.TerminalPreview)}", "info");
+                                        ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Localization.Strings.ThemeManager.Actions.Applying_Feature, Program.Localization.Strings.Aspects.TerminalPreview)}", "info");
                                         TerminalPreview.Save(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview);
                                         if (ReportProgress)
-                                            ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Actions.Time, sw.ElapsedMilliseconds / 1000d), "time");
+                                            ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Actions.Time, sw.ElapsedMilliseconds / 1000d), "time");
                                     }
                                     catch (Exception ex)
                                     {
@@ -608,8 +608,8 @@ namespace WinPaletter.Theme
                                         _ErrorHappened = true;
                                         if (ReportProgress)
                                         {
-                                            ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, Program.Lang.Strings.Aspects.TerminalPreview)}", "error");
-                                            AddException(string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, Program.Lang.Strings.Aspects.TerminalPreview), ex);
+                                            ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, Program.Localization.Strings.Aspects.TerminalPreview)}", "error");
+                                            AddException(string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, Program.Localization.Strings.Aspects.TerminalPreview), ex);
                                         }
                                         else
                                         {
@@ -622,53 +622,53 @@ namespace WinPaletter.Theme
                                 }
                                 else
                                 {
-                                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Lang.Strings.ThemeManager.Skip.Terminal_JSONNotFound, Program.Lang.Strings.Aspects.TerminalPreview)}", "skip");
+                                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Localization.Strings.ThemeManager.Skip.Terminal_JSONNotFound, Program.Localization.Strings.Aspects.TerminalPreview)}", "skip");
                                 }
                             }
                         }
 
                         else
                         {
-                            ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Lang.Strings.ThemeManager.Skip.Terminals_NotSupported}", "skip");
+                            ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Localization.Strings.ThemeManager.Skip.Terminals_NotSupported}", "skip");
                         }
                         sw.Stop();
                         #endregion
 
                         // ScreenSaver
                         Execute(() => ScreenSaver.Apply(tv), treeView,
-                            string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature, Program.Lang.Strings.Aspects.ScreenSaver),
-                            string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, Program.Lang.Strings.Aspects.ScreenSaver),
-                            Program.Lang.Strings.ThemeManager.Actions.Time,
+                            string.Format(Program.Localization.Strings.ThemeManager.Actions.Applying_Feature, Program.Localization.Strings.Aspects.ScreenSaver),
+                            string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, Program.Localization.Strings.Aspects.ScreenSaver),
+                            Program.Localization.Strings.ThemeManager.Actions.Time,
                             sw_all,
                             !ScreenSaver.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.ScreenSaver),
-                            string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, Program.Lang.Strings.Aspects.ScreenSaver));
+                            string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, Program.Localization.Strings.Aspects.ScreenSaver));
 
                         // Sounds
                         Execute(() => Sounds.Apply(tv), treeView,
-                            string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature, Program.Lang.Strings.Aspects.Sounds),
-                            string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, Program.Lang.Strings.Aspects.Sounds),
-                            Program.Lang.Strings.ThemeManager.Actions.Time,
+                            string.Format(Program.Localization.Strings.ThemeManager.Actions.Applying_Feature, Program.Localization.Strings.Aspects.Sounds),
+                            string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, Program.Localization.Strings.Aspects.Sounds),
+                            Program.Localization.Strings.ThemeManager.Actions.Time,
                             sw_all,
                             !Sounds.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Sounds),
-                            string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, Program.Lang.Strings.Aspects.Sounds));
+                            string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, Program.Localization.Strings.Aspects.Sounds));
 
                         // Cursors
                         Execute(() => Cursors.Apply(tv), treeView,
                             string.Empty,
                             string.Empty,
-                            Program.Lang.Strings.ThemeManager.Actions.Time,
+                            Program.Localization.Strings.ThemeManager.Actions.Time,
                             sw_all,
                             !Cursors.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Cursors),
-                            string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, Program.Lang.Strings.Aspects.Cursors));
+                            string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, Program.Localization.Strings.Aspects.Cursors));
 
                         // Icons
                         Execute(() => Icons.Apply(tv), treeView,
-                            string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature, Program.Lang.Strings.Aspects.Icons),
-                            string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, Program.Lang.Strings.Aspects.Icons),
-                            Program.Lang.Strings.ThemeManager.Actions.Time,
+                            string.Format(Program.Localization.Strings.ThemeManager.Actions.Applying_Feature, Program.Localization.Strings.Aspects.Icons),
+                            string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, Program.Localization.Strings.Aspects.Icons),
+                            Program.Localization.Strings.ThemeManager.Actions.Time,
                             sw_all,
                             !Icons.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Icons),
-                            string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, Program.Lang.Strings.Aspects.Icons));
+                            string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, Program.Localization.Strings.Aspects.Icons));
 
                         // Update LogonUI wallpaper in HKEY_USERS\.DEFAULT
                         if (Program.Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
@@ -680,9 +680,9 @@ namespace WinPaletter.Theme
                                 WriteReg(tv, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "TileWallpaper", ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "TileWallpaper", "0"), RegistryValueKind.String);
                                 WriteReg(tv, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Pattern", ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Pattern", string.Empty), RegistryValueKind.String);
                             }, treeView,
-                            string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature_AllUsers, Program.Lang.Strings.Aspects.Wallpaper),
-                            string.Format(Program.Lang.Strings.ThemeManager.Errors.Error_AllUsers, Program.Lang.Strings.Aspects.Wallpaper),
-                            Program.Lang.Strings.ThemeManager.Actions.Time);
+                            string.Format(Program.Localization.Strings.ThemeManager.Actions.Applying_Feature_AllUsers, Program.Localization.Strings.Aspects.Wallpaper),
+                            string.Format(Program.Localization.Strings.ThemeManager.Errors.Error_AllUsers, Program.Localization.Strings.Aspects.Wallpaper),
+                            Program.Localization.Strings.ThemeManager.Actions.Time);
                         }
 
                         else if (Program.Settings.ThemeApplyingBehavior.Desktop_HKU_DEFAULT == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults)
@@ -694,9 +694,9 @@ namespace WinPaletter.Theme
                                 WriteReg(tv, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "TileWallpaper", "0", RegistryValueKind.String);
                                 WriteReg(tv, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "Pattern", string.Empty, RegistryValueKind.String);
                             }, treeView,
-                            string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature_AllUsers, Program.Lang.Strings.Aspects.Wallpaper),
-                            string.Format(Program.Lang.Strings.ThemeManager.Errors.Error_AllUsers, Program.Lang.Strings.Aspects.Wallpaper),
-                            Program.Lang.Strings.ThemeManager.Actions.Time);
+                            string.Format(Program.Localization.Strings.ThemeManager.Actions.Applying_Feature_AllUsers, Program.Localization.Strings.Aspects.Wallpaper),
+                            string.Format(Program.Localization.Strings.ThemeManager.Errors.Error_AllUsers, Program.Localization.Strings.Aspects.Wallpaper),
+                            Program.Localization.Strings.ThemeManager.Actions.Time);
                         }
 
                         Program.Log?.Write(LogEventLevel.Information, "Broadcasting system message to notify about the setting change (User32.UpdatePerUserSystemParameters(1, true)).");
@@ -723,11 +723,11 @@ namespace WinPaletter.Theme
                         {
                             if (!_ErrorHappened && Exceptions.ThemeApply.Count == 0)
                             {
-                                ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Lang.Strings.ThemeManager.Actions.Applied, sw_all.ElapsedMilliseconds / 1000d)}", "success");
+                                ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Localization.Strings.ThemeManager.Actions.Applied, sw_all.ElapsedMilliseconds / 1000d)}", "success");
                             }
                             else
                             {
-                                ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Lang.Strings.ThemeManager.Actions.AppliedWithErrors, sw_all.ElapsedMilliseconds / 1000d)}", "warning");
+                                ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Localization.Strings.ThemeManager.Actions.AppliedWithErrors, sw_all.ElapsedMilliseconds / 1000d)}", "warning");
                             }
                         }
 

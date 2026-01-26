@@ -35,9 +35,9 @@ namespace WinPaletter.UI.Retro
         Rectangle item1Text;
         Rectangle item2Text;
 
-        string NormalStr => Program.Lang.Strings.Previewer.Normal;
-        string DisabledStr => Program.Lang.Strings.Previewer.Disabled;
-        string SelectedStr => Program.Lang.Strings.Previewer.Selected;
+        string NormalStr => Program.Localization.Strings.Previewer.Normal;
+        string DisabledStr => Program.Localization.Strings.Previewer.Disabled;
+        string SelectedStr => Program.Localization.Strings.Previewer.Selected;
 
         private PointF[] btnShadowPoints0;
         private PointF[] btnShadowPoints1;

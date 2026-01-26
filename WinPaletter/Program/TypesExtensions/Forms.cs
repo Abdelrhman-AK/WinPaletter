@@ -44,12 +44,12 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         /// <param name="Form"></param>
         /// <param name="Localizer"></param>
-        public static void LoadLanguage(this Form Form, Localizer Localizer = null)
+        public static void Localize(this Form Form, Localizer Localizer = null)
         {
             if (Localizer is null)
             {
                 if (Program.Settings.Language.Enabled && File.Exists(Program.Settings.Language.File))
-                    Program.Lang.LoadFromStrings(Form);
+                    Program.Localization.LoadFromStrings(Form);
             }
             else
             {

@@ -26,7 +26,7 @@ namespace WinPaletter
 
         private void ScreenSavers_List_Load(object sender, EventArgs e)
         {
-            this.LoadLanguage();
+            this.Localize();
             ApplyStyle(this);
 
             // Set up columns for the ListView

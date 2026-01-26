@@ -15,7 +15,7 @@ namespace WinPaletter.Theme.Structures
         public string AppVersion { get; set; } = Program.Version;
 
         /// <summary>Name of current WinPaletter theme</summary>
-        public string ThemeName { get; set; } = Program.Lang.Strings.General.MyTheme;
+        public string ThemeName { get; set; } = Program.Localization.Strings.General.MyTheme;
 
         /// <summary>Description_SysEventsSounds of current WinPaletter theme. It can include tags that are useful for search in WinPaletter Store.</summary>
         public string Description { get; set; } = string.Empty;
@@ -104,7 +104,7 @@ namespace WinPaletter.Theme.Structures
         {
             Program.Log?.Write(LogEventLevel.Information, "Loading WinPaletter theme information from registry.");
 
-            ThemeName = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeName", Program.Lang.Strings.General.MyTheme);
+            ThemeName = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeName", Program.Localization.Strings.General.MyTheme);
             ThemeVersion = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "ThemeVersion", "1.0");
             Author = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "Author", User.Name);
             AuthorSocialMediaLink = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo", "AuthorSocialMediaLink", string.Empty);

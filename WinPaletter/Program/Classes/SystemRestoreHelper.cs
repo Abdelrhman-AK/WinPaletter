@@ -81,7 +81,7 @@ namespace WinPaletter
         {
             if (!Enabled)
             {
-                if (MsgBox(Program.Lang.Strings.Messages.SysRestore_Msg0, MessageBoxButtons.YesNo, MessageBoxIcon.Question, string.Format(Program.Lang.Strings.Messages.SysRestore_Msg1, Program.SystemPartition)) == DialogResult.Yes)
+                if (MsgBox(Program.Localization.Strings.Messages.SysRestore_Msg0, MessageBoxButtons.YesNo, MessageBoxIcon.Question, string.Format(Program.Localization.Strings.Messages.SysRestore_Msg1, Program.SystemPartition)) == DialogResult.Yes)
                 {
                     SetSystemRestoreStatus(Program.SystemPartition, true);
                 }

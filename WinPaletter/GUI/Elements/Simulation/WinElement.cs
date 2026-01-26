@@ -1899,7 +1899,7 @@ namespace WinPaletter.UI.Simulation
                         Rectangle TextRect = new(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, AppHeight * 2 / 5);
                         using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
                         {
-                            G.DrawString(Program.Lang.Strings.Previewer.AppPreview, Font, Brushes.White, TextRect, sf);
+                            G.DrawString(Program.Localization.Strings.Previewer.AppPreview, Font, Brushes.White, TextRect, sf);
                         }
                         break;
                     }
@@ -1964,7 +1964,7 @@ namespace WinPaletter.UI.Simulation
                         {
                             using (SolidBrush br = new(ForeColor))
                             {
-                                G.DrawString(Program.Lang.Strings.Previewer.AppPreview, Font, br, TextRect, sf);
+                                G.DrawString(Program.Localization.Strings.Previewer.AppPreview, Font, br, TextRect, sf);
                             }
                         }
                         break;
@@ -2341,7 +2341,7 @@ namespace WinPaletter.UI.Simulation
                         Rectangle TextRect = new(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, AppHeight * 2 / 5);
                         using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
                         {
-                            G.DrawGlowString(2, Program.Lang.Strings.Previewer.AppPreview, Font, Color.Black, Color.FromArgb(185, 225, 225, 225), RRect, TextRect, sf);
+                            G.DrawGlowString(2, Program.Localization.Strings.Previewer.AppPreview, Font, Color.Black, Color.FromArgb(185, 225, 225, 225), RRect, TextRect, sf);
                         }
                         break;
                     }
@@ -2443,7 +2443,7 @@ namespace WinPaletter.UI.Simulation
                         Rectangle TextRect = new(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, AppHeight * 2 / 5);
                         using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
                         {
-                            G.DrawGlowString(2, Program.Lang.Strings.Previewer.AppPreview, Font, Color.Black, Color.FromArgb(185, 225, 225, 225), RRect, TextRect, sf);
+                            G.DrawGlowString(2, Program.Localization.Strings.Previewer.AppPreview, Font, Color.Black, Color.FromArgb(185, 225, 225, 225), RRect, TextRect, sf);
                         }
                         break;
                     }
@@ -2541,7 +2541,7 @@ namespace WinPaletter.UI.Simulation
                         Rectangle TextRect = new(RRect.X + _padding, RRect.Y, RRect.Width - 2 * _padding, 30);
                         using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
                         {
-                            G.DrawString(Program.Lang.Strings.Previewer.AppPreview, Font, Brushes.Black, TextRect, sf);
+                            G.DrawString(Program.Localization.Strings.Previewer.AppPreview, Font, Brushes.Black, TextRect, sf);
                         }
                         break;
                     }
@@ -2668,8 +2668,8 @@ namespace WinPaletter.UI.Simulation
 
                         using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
                         {
-                            G.DrawString(Program.Lang.Strings.Previewer.AppPreview, Font, Brushes.White, appLabel1, sf);
-                            G.DrawString(Program.Lang.Strings.Previewer.InactiveApp, Font, Brushes.White, appLabel2, sf);
+                            G.DrawString(Program.Localization.Strings.Previewer.AppPreview, Font, Brushes.White, appLabel1, sf);
+                            G.DrawString(Program.Localization.Strings.Previewer.InactiveApp, Font, Brushes.White, appLabel2, sf);
                         }
                         break;
                     }
@@ -2719,8 +2719,8 @@ namespace WinPaletter.UI.Simulation
 
                         using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
                         {
-                            G.DrawString(Program.Lang.Strings.Previewer.AppPreview, Font, Brushes.White, appLabel1, sf);
-                            G.DrawString(Program.Lang.Strings.Previewer.InactiveApp, Font, Brushes.White, appLabel2, sf);
+                            G.DrawString(Program.Localization.Strings.Previewer.AppPreview, Font, Brushes.White, appLabel1, sf);
+                            G.DrawString(Program.Localization.Strings.Previewer.InactiveApp, Font, Brushes.White, appLabel2, sf);
                         }
                         break;
                     }
@@ -2749,8 +2749,8 @@ namespace WinPaletter.UI.Simulation
 
                         using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
                         {
-                            G.DrawString(Program.Lang.Strings.Previewer.AppPreview, Font, Brushes.White, appLabel1, sf);
-                            G.DrawString(Program.Lang.Strings.Previewer.InactiveApp, Font, Brushes.White, appLabel2, sf);
+                            G.DrawString(Program.Localization.Strings.Previewer.AppPreview, Font, Brushes.White, appLabel1, sf);
+                            G.DrawString(Program.Localization.Strings.Previewer.InactiveApp, Font, Brushes.White, appLabel2, sf);
                         }
                         break;
                     }

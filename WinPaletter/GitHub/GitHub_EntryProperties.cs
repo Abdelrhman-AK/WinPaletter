@@ -1,17 +1,11 @@
-﻿using Newtonsoft.Json;
-using Octokit;
-using Ressy.HighLevel.Versions;
+﻿using Octokit;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WinPaletter.NativeMethods;
-using static WinPaletter.Theme.Structures.WinTerminal;
 
 namespace WinPaletter
 {
@@ -29,7 +23,7 @@ namespace WinPaletter
         private void GitHub_EntryProperties_Load(object sender, EventArgs e)
         {
             ApplyStyle(this);
-            this.LoadLanguage();
+            this.Localize();
 
             textBox2.Font = Fonts.ConsoleMedium;
         }
@@ -54,7 +48,7 @@ namespace WinPaletter
             int files = listViewItems.Count(i => i.Tag is RepositoryContent rc && rc.Type == ContentType.File);
             int dirs = listViewItems.Count(i => i.Tag is RepositoryContent rc && rc.Type == ContentType.Dir);
 
-            label29.Text = $"{files} {Program.Lang.Strings.Extensions.Files}, {dirs} {Program.Lang.Strings.Extensions.Folders}";
+            label29.Text = $"{files} {Program.Localization.Strings.Extensions.Files}, {dirs} {Program.Localization.Strings.Extensions.Folders}";
 
             long size = 0;
             foreach (var item in listViewItems)
@@ -66,7 +60,7 @@ namespace WinPaletter
                 }
             }
 
-            label21.Text = $"{size} {Program.Lang.Strings.General.BytesSize} ({size.ToStringFileSize()})";
+            label21.Text = $"{size} {Program.Localization.Strings.General.BytesSize} ({size.ToStringFileSize()})";
 
             if (listViewItems[0].Tag is RepositoryContent rc_default)
             {
@@ -106,10 +100,10 @@ namespace WinPaletter
             tablessControl1.SelectedIndex = 0;
 
             this.rc = content;
-            this.Text = string.Format(Program.Lang.Strings.General.Properties_Entry, content.Name);
+            this.Text = string.Format(Program.Localization.Strings.General.Properties_Entry, content.Name);
 
             pictureBox1.Image?.Dispose();
-            pictureBox1.Image = listViewItem.ListView.LargeImageList.Images[listViewItem.ImageKey.Replace("ghost_", "")];
+            pictureBox1.Image = listViewItem.ListView.LargeImageList.Images[listViewItem.ImageKey.Replace("ghost_", string.Empty)];
 
             Icon?.Dispose();
 
@@ -117,20 +111,20 @@ namespace WinPaletter
             {
                 Icon = NativeMethods.Shell32.GetIconFromExtension(GitHub.FileSystem.GetExtension(content.Name), NativeMethods.Shell32.IconSize.Small);
                 label4.Text = GitHub.FileSystem.GetExtension(content.Name);
-                label3.Text = GitHub.FileSystem.FileTypeProvider.Invoke(content) ?? Program.Lang.Strings.General.Unknown;
+                label3.Text = GitHub.FileSystem.FileTypeProvider.Invoke(content) ?? Program.Localization.Strings.General.Unknown;
             }
             else if (content.Type == ContentType.Dir)
             {
                 Icon = Assets.GitHubMgr.folder_web_16.ToIcon();
-                label4.Text = Program.Lang.Strings.Extensions.Folder;
-                label3.Text = Program.Lang.Strings.Extensions.Folder;
+                label4.Text = Program.Localization.Strings.Extensions.Folder;
+                label3.Text = Program.Localization.Strings.Extensions.Folder;
             }
 
             textBox1.Text = content.Name.Remove(0, content.Name.StartsWith(".") ? 1 : 0);
             label6.Text = content.Path;
             label15.Text = content.Sha;
-            label18.Text = content.Encoding ?? Program.Lang.Strings.General.Unknown;
-            label5.Text = $"{GitHub.FileSystem.Cache.GetSize(content.Path)} {Program.Lang.Strings.General.BytesSize} ({GitHub.FileSystem.Cache.GetSize(content.Path).ToStringFileSize()})";
+            label18.Text = content.Encoding ?? Program.Localization.Strings.General.Unknown;
+            label5.Text = $"{GitHub.FileSystem.Cache.GetSize(content.Path)} {Program.Localization.Strings.General.BytesSize} ({GitHub.FileSystem.Cache.GetSize(content.Path).ToStringFileSize()})";
 
             checkBox1.Checked = content.Name.StartsWith(".");
             previousReadOnlyState = checkBox1.Checked;
@@ -150,7 +144,7 @@ namespace WinPaletter
                 IReadOnlyList<GitHubCommit> commits = await Program.GitHub.Client.Repository.Commit.GetAll(GitHub.Repository.Owner, GitHub.Repository.Name, new CommitRequest { Path = content.Path, Sha = GitHub.Repository.Branch.Name });
                 GitHubCommit latestCommit = commits.First();
 
-                Invoke(() => 
+                Invoke(() =>
                 {
                     if (latestCommit is not null)
                     {
@@ -160,9 +154,9 @@ namespace WinPaletter
                     }
                     else
                     {
-                        label9.Text = Program.Lang.Strings.General.Unknown;
-                        label11.Text = Program.Lang.Strings.General.Unknown;
-                        textBox2.Text = Program.Lang.Strings.General.Unknown;
+                        label9.Text = Program.Localization.Strings.General.Unknown;
+                        label11.Text = Program.Localization.Strings.General.Unknown;
+                        textBox2.Text = Program.Localization.Strings.General.Unknown;
                     }
 
                     if (latestCommit is not null) AddPropertiesRecursive(latestCommit, listView1);
@@ -229,7 +223,7 @@ namespace WinPaletter
             Cursor = Cursors.WaitCursor;
 
             string oldName = rc.Name;
-            string newName = (checkBox1.Checked ? "." : "") + textBox1.Text.Trim();
+            string newName = (checkBox1.Checked ? "." : string.Empty) + textBox1.Text.Trim();
 
             if (oldName != newName)
             {
@@ -246,7 +240,7 @@ namespace WinPaletter
                     boundListViewItem.Text = result.Name;
                     boundListViewItem.Tag = result.Content;
 
-                    string imageKey = boundListViewItem.ImageKey.Replace("ghost_", "");
+                    string imageKey = boundListViewItem.ImageKey.Replace("ghost_", string.Empty);
                     if (checkBox1.Checked) imageKey = "ghost_" + imageKey;
                     boundListViewItem.ImageKey = imageKey;
                 }
@@ -262,7 +256,7 @@ namespace WinPaletter
 
         private void button4_Click(object sender, EventArgs e)
         {
-            using (SaveFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Lang.Strings.Extensions.SaveJSON })
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Localization.Strings.Extensions.SaveJSON })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -283,7 +277,7 @@ namespace WinPaletter
 
         private void button7_Click(object sender, EventArgs e)
         {
-            using (SaveFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Lang.Strings.Extensions.SaveJSON })
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Localization.Strings.Extensions.SaveJSON })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {

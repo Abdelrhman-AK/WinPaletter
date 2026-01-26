@@ -17,7 +17,7 @@ namespace WinPaletter.Dialogs
 
         private void RescueTools_Load(object sender, EventArgs e)
         {
-            this.LoadLanguage();
+            this.Localize();
             ApplyStyle(this);
         }
 
@@ -39,7 +39,7 @@ namespace WinPaletter.Dialogs
 
         private void button6_Click(object sender, EventArgs e)
         {
-            if (MsgBox(OS.WXP || OS.WVista || OS.W7 ? Program.Lang.Strings.Messages.LogoffQuestion : Program.Lang.Strings.Messages.SignOutQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.Strings.Messages.LogoffAlert1) == DialogResult.Yes)
+            if (MsgBox(OS.WXP || OS.WVista || OS.W7 ? Program.Localization.Strings.Messages.LogoffQuestion : Program.Localization.Strings.Messages.SignOutQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Localization.Strings.Messages.LogoffAlert1) == DialogResult.Yes)
             {
                 Forms.MainForm.LoggingOff = false;
 
@@ -52,14 +52,14 @@ namespace WinPaletter.Dialogs
                 }
                 else
                 {
-                    MsgBox(string.Format(Program.Lang.Strings.Messages.LogoffNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MsgBox(string.Format(Program.Localization.Strings.Messages.LogoffNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            if (MsgBox(Program.Lang.Strings.Messages.RestartQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.Strings.Messages.LogoffAlert1) == DialogResult.Yes)
+            if (MsgBox(Program.Localization.Strings.Messages.RestartQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Localization.Strings.Messages.LogoffAlert1) == DialogResult.Yes)
             {
                 Forms.MainForm.LoggingOff = false;
 
@@ -72,14 +72,14 @@ namespace WinPaletter.Dialogs
                 }
                 else
                 {
-                    MsgBox(string.Format(Program.Lang.Strings.Messages.ShutdownNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MsgBox(string.Format(Program.Localization.Strings.Messages.ShutdownNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            if (MsgBox(Program.Lang.Strings.Messages.ShutdownQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.Strings.Messages.LogoffAlert1) == DialogResult.Yes)
+            if (MsgBox(Program.Localization.Strings.Messages.ShutdownQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Localization.Strings.Messages.LogoffAlert1) == DialogResult.Yes)
             {
                 Forms.MainForm.LoggingOff = false;
 
@@ -92,7 +92,7 @@ namespace WinPaletter.Dialogs
                 }
                 else
                 {
-                    MsgBox(string.Format(Program.Lang.Strings.Messages.ShutdownNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MsgBox(string.Format(Program.Localization.Strings.Messages.ShutdownNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
         }
@@ -137,7 +137,7 @@ namespace WinPaletter.Dialogs
                         process.Start();
                         process.WaitForExit();
 
-                        switch (MsgBox(Program.Lang.Strings.Messages.RescueTools_UseWinUpdate, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, Program.Lang.Strings.Messages.RescueTools_UseInstallWIM))
+                        switch (MsgBox(Program.Localization.Strings.Messages.RescueTools_UseWinUpdate, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, Program.Localization.Strings.Messages.RescueTools_UseInstallWIM))
                         {
                             case DialogResult.Yes:
                                 {
@@ -155,7 +155,7 @@ namespace WinPaletter.Dialogs
                                     //Cross thread issue
                                     Invoke(() =>
                                     {
-                                        using (OpenFileDialog o = new() { Filter = Program.Filters.WinImages, Title = Program.Lang.Strings.Extensions.OpenWinImage })
+                                        using (OpenFileDialog o = new() { Filter = Program.Filters.WinImages, Title = Program.Localization.Strings.Extensions.OpenWinImage })
                                         {
                                             result = o.ShowDialog();
                                             file = o.FileName;
@@ -249,7 +249,7 @@ namespace WinPaletter.Dialogs
 
         private void button16_Click(object sender, EventArgs e)
         {
-            if (MsgBox(Program.Lang.Strings.Messages.RestartRecoveryQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.Strings.Messages.LogoffAlert1) == DialogResult.Yes)
+            if (MsgBox(Program.Localization.Strings.Messages.RestartRecoveryQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Localization.Strings.Messages.LogoffAlert1) == DialogResult.Yes)
             {
                 Forms.MainForm.LoggingOff = false;
 
@@ -265,7 +265,7 @@ namespace WinPaletter.Dialogs
                     }
                     else
                     {
-                        MsgBox(string.Format(Program.Lang.Strings.Messages.ShutdownNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        MsgBox(string.Format(Program.Localization.Strings.Messages.ShutdownNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     }
                 }
                 else if (OS.W7)
@@ -281,17 +281,17 @@ namespace WinPaletter.Dialogs
                     {
                         if (!File.Exists($@"{SysPaths.System32}\shutdown.exe"))
                         {
-                            MsgBox(string.Format(Program.Lang.Strings.Messages.ShutdownNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            MsgBox(string.Format(Program.Localization.Strings.Messages.ShutdownNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         }
                         else
                         {
-                            MsgBox(string.Format(Program.Lang.Strings.Messages.BcdeditNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                            MsgBox(string.Format(Program.Localization.Strings.Messages.BcdeditNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         }
                     }
                 }
                 else if (OS.WVista || OS.WXP)
                 {
-                    MsgBox(string.Format(Program.Lang.Strings.Messages.RecoveryNotAvailable, OS.WVista ? Program.Lang.Strings.Windows.WVista : Program.Lang.Strings.Windows.WXP), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MsgBox(string.Format(Program.Localization.Strings.Messages.RecoveryNotAvailable, OS.WVista ? Program.Localization.Strings.Windows.WVista : Program.Localization.Strings.Windows.WXP), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
         }

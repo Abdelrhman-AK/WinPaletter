@@ -27,7 +27,7 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Localization.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -55,7 +55,7 @@ namespace WinPaletter
 
         private void LoadFromTHEME(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Themes, Title = Program.Lang.Strings.Extensions.OpenTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Themes, Title = Program.Localization.Strings.Extensions.OpenTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -117,7 +117,7 @@ namespace WinPaletter
         {
             if (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.ScreenSaver)
             {
-                MsgBox(Program.Lang.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.Strings.Aspects.Disabled_Apply_1);
+                MsgBox(Program.Localization.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Localization.Strings.Aspects.Disabled_Apply_1);
                 return;
             }
 
@@ -143,7 +143,7 @@ namespace WinPaletter
         {
             DesignerData data = new(this)
             {
-                AspectName = Program.Lang.Strings.Aspects.ScreenSaver,
+                AspectName = Program.Localization.Strings.Aspects.ScreenSaver,
                 Enabled = Program.TM.ScreenSaver.Enabled,
                 Import_theme = true,
                 Import_msstyles = false,
@@ -187,7 +187,7 @@ namespace WinPaletter
         {
             TM.ScreenSaver.Enabled = AspectEnabled;
             TM.ScreenSaver.File = TextBox1.Text;
-            TM.ScreenSaver.TimeOut = trackbarX1.Value;
+            TM.ScreenSaver.TimeOut = (int)trackbarX1.Value;
             TM.ScreenSaver.IsSecure = CheckBox1.Checked;
         }
 
@@ -223,7 +223,7 @@ namespace WinPaletter
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.ScreenSavers, Title = Program.Lang.Strings.Extensions.OpenScreenSaver })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.ScreenSavers, Title = Program.Localization.Strings.Extensions.OpenScreenSaver })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {

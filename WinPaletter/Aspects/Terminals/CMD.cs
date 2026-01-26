@@ -43,7 +43,7 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Localization.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -119,7 +119,7 @@ namespace WinPaletter
         {
             if (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Consoles)
             {
-                MsgBox(Program.Lang.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.Strings.Aspects.Disabled_Apply_1);
+                MsgBox(Program.Localization.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Localization.Strings.Aspects.Disabled_Apply_1);
                 return;
             }
 
@@ -200,27 +200,27 @@ namespace WinPaletter
             {
                 case Edition.CMD:
                     {
-                        Text = Program.Lang.Strings.Aspects.CommandPrompt;
+                        Text = Program.Localization.Strings.Aspects.CommandPrompt;
                         Icon = Resources.cmd;
-                        data.AspectName = Program.Lang.Strings.Aspects.CommandPrompt;
+                        data.AspectName = Program.Localization.Strings.Aspects.CommandPrompt;
                         data.Enabled = Program.TM.CommandPrompt.Enabled;
                         break;
                     }
 
                 case Edition.PowerShellx86:
                     {
-                        Text = Program.Lang.Strings.Aspects.PowerShellx86;
+                        Text = Program.Localization.Strings.Aspects.PowerShellx86;
                         Icon = Resources.ps;
-                        data.AspectName = Program.Lang.Strings.Aspects.PowerShellx86;
+                        data.AspectName = Program.Localization.Strings.Aspects.PowerShellx86;
                         data.Enabled = Program.TM.PowerShellx86.Enabled;
                         break;
                     }
 
                 case Edition.PowerShellx64:
                     {
-                        Text = Program.Lang.Strings.Aspects.PowerShellx64;
+                        Text = Program.Localization.Strings.Aspects.PowerShellx64;
                         Icon = Resources.ps;
-                        data.AspectName = Program.Lang.Strings.Aspects.PowerShellx64;
+                        data.AspectName = Program.Localization.Strings.Aspects.PowerShellx64;
                         data.Enabled = Program.TM.PowerShellx64.Enabled;
                         break;
                     }
@@ -230,13 +230,13 @@ namespace WinPaletter
 
             if (terminal is not null)
             {
-                foreach (Theme.Structures.WinTerminal.Types.Scheme scheme in terminal.Schemes.Where(x => !x.Name.Contains("Campbell"))) comboBox1.Items.Add($"{Program.Lang.Strings.Aspects.TerminalStable} > {scheme.Name}");
+                foreach (Theme.Structures.WinTerminal.Types.Scheme scheme in terminal.Schemes.Where(x => !x.Name.Contains("Campbell"))) comboBox1.Items.Add($"{Program.Localization.Strings.Aspects.TerminalStable} > {scheme.Name}");
                 comboBox1.SelectedIndex = -1;
             }
 
             if (terminalPreview is not null)
             {
-                foreach (Theme.Structures.WinTerminal.Types.Scheme scheme in terminalPreview.Schemes.Where(x => !x.Name.Contains("Campbell"))) comboBox1.Items.Add($"{Program.Lang.Strings.Aspects.TerminalPreview} > {scheme.Name}");
+                foreach (Theme.Structures.WinTerminal.Types.Scheme scheme in terminalPreview.Schemes.Where(x => !x.Name.Contains("Campbell"))) comboBox1.Items.Add($"{Program.Localization.Strings.Aspects.TerminalPreview} > {scheme.Name}");
                 comboBox1.SelectedIndex = -1;
             }
 
@@ -353,10 +353,10 @@ namespace WinPaletter
             CMD_Preview.CMD_ColorTable13 = ColorTable13.BackColor;
             CMD_Preview.CMD_ColorTable14 = ColorTable14.BackColor;
             CMD_Preview.CMD_ColorTable15 = ColorTable15.BackColor;
-            CMD_Preview.CMD_PopupForeground = CMD_PopupForegroundBar.Value;
-            CMD_Preview.CMD_PopupBackground = CMD_PopupBackgroundBar.Value;
-            CMD_Preview.CMD_ScreenColorsForeground = CMD_AccentForegroundBar.Value;
-            CMD_Preview.CMD_ScreenColorsBackground = CMD_AccentBackgroundBar.Value;
+            CMD_Preview.CMD_PopupForeground = (int)CMD_PopupForegroundBar.Value;
+            CMD_Preview.CMD_PopupBackground = (int)CMD_PopupBackgroundBar.Value;
+            CMD_Preview.CMD_ScreenColorsForeground = (int)CMD_AccentForegroundBar.Value;
+            CMD_Preview.CMD_ScreenColorsBackground = (int)CMD_AccentBackgroundBar.Value;
             CMD_Preview.Font = F_cmd;
 
             CMD_Preview.PowerShell = _Edition == Edition.PowerShellx64 | _Edition == Edition.PowerShellx86;
@@ -446,7 +446,7 @@ namespace WinPaletter
             FontName.Text = F_cmd.Name;
             FontName.Font = new(F_cmd.Name, 9f, F_cmd.Style);
 
-            CMD_Preview.Alpha = CMD_OpacityBar.Value;
+            CMD_Preview.Alpha = (int)CMD_OpacityBar.Value;
             CMD_Preview.Refresh();
         }
 
@@ -992,7 +992,7 @@ namespace WinPaletter
             else if (Console.PixelWidth == 10 && Console.PixelHeight == 18) RasterList.SelectedItem = "10x18";
             else RasterList.SelectedItem = "8x12"; // default fallback
 
-            Console.CursorSize = CMD_CursorSizeBar.Value;
+            Console.CursorSize = (int)CMD_CursorSizeBar.Value;
             if (CMD_CursorSizeBar.Value > 100)
                 CMD_CursorSizeBar.Value = 100;
             if (CMD_CursorSizeBar.Value < 20)
@@ -1031,10 +1031,10 @@ namespace WinPaletter
                 ColorTable13 = ColorTable13.BackColor,
                 ColorTable14 = ColorTable14.BackColor,
                 ColorTable15 = ColorTable15.BackColor,
-                PopupForeground = CMD_PopupForegroundBar.Value,
-                PopupBackground = CMD_PopupBackgroundBar.Value,
-                ScreenColorsForeground = CMD_AccentForegroundBar.Value,
-                ScreenColorsBackground = CMD_AccentBackgroundBar.Value,
+                PopupForeground = (int)CMD_PopupForegroundBar.Value,
+                PopupBackground = (int)CMD_PopupBackgroundBar.Value,
+                ScreenColorsForeground = (int)CMD_AccentForegroundBar.Value,
+                ScreenColorsBackground = (int)CMD_AccentBackgroundBar.Value,
                 FaceName = F_cmd.Name,
                 FontRaster = CMD_RasterToggle.Checked,
                 FontWeight = CMD_FontWeightBox.SelectedIndex * 100
@@ -1042,7 +1042,7 @@ namespace WinPaletter
 
             if (!CMD_RasterToggle.Checked)
             {
-                Console.PixelHeight = CMD_FontPxHeight.Value;
+                Console.PixelHeight = (int)CMD_FontPxHeight.Value;
             }
 
             else
@@ -1076,13 +1076,13 @@ namespace WinPaletter
             }
             else
             {
-                Console.CursorSize = CMD_CursorSizeBar.Value;
+                Console.CursorSize = (int)CMD_CursorSizeBar.Value;
             }
 
             Console.W10_1909_CursorColor = CMD_CursorColor.BackColor;
             Console.W10_1909_CursorType = CMD_CursorStyle.SelectedIndex;
             Console.W10_1909_ForceV2 = CMD_EnhancedTerminal.Checked;
-            Console.W10_1909_WindowAlpha = CMD_OpacityBar.Value;
+            Console.W10_1909_WindowAlpha = (int)CMD_OpacityBar.Value;
             Console.W10_1909_LineSelection = CMD_LineSelection.Checked;
             Console.W10_1909_TerminalScrolling = CMD_TerminalScrolling.Checked;
 
@@ -1206,8 +1206,8 @@ namespace WinPaletter
 
             if (_Edition == Edition.CMD)
             {
-                int initBg = CMD_AccentBackgroundBar.Value;
-                int initFg = CMD_AccentForegroundBar.Value;
+                int initBg = (int)CMD_AccentBackgroundBar.Value;
+                int initFg = (int)CMD_AccentForegroundBar.Value;
 
                 string _testCommand = $@"@echo off
                     title {this.Text}
@@ -1242,8 +1242,8 @@ namespace WinPaletter
                     cls
 
                     REM Prompt for background and foreground
-                    set /p bg=""{Program.Lang.Strings.Aspects.Consoles.Backgrounds}: ""
-                    set /p fg=""{Program.Lang.Strings.Aspects.Consoles.Foregrounds}: ""
+                    set /p bg=""{Program.Localization.Strings.Aspects.Consoles.Backgrounds}: ""
+                    set /p fg=""{Program.Localization.Strings.Aspects.Consoles.Foregrounds}: ""
 
                     REM Convert decimal 10-15 to hex A-F for background
                     if ""%bg%""==""10"" set bg=A
@@ -1273,7 +1273,7 @@ namespace WinPaletter
                     echo Main Background: %bg%
                     echo Main Foreground: %fg%
                     echo.
-                    echo {Program.Lang.Strings.Aspects.Consoles.Popup_Note}
+                    echo {Program.Localization.Strings.Aspects.Consoles.Popup_Note}
                     echo.
                     pause
                     goto colorloop";
@@ -1292,8 +1292,8 @@ namespace WinPaletter
             }
             else
             {
-                int initBg = CMD_AccentBackgroundBar.Value;
-                int initFg = CMD_AccentForegroundBar.Value;
+                int initBg = (int)CMD_AccentBackgroundBar.Value;
+                int initFg = (int)CMD_AccentForegroundBar.Value;
 
                 string[] colorNames = {
                     "Black", "DarkBlue", "DarkGreen", "DarkCyan",
@@ -1305,15 +1305,15 @@ namespace WinPaletter
                 string initBgName = colorNames[initBg];
                 string initFgName = colorNames[initFg];
 
-                string curBackground = Program.Lang.Strings.Aspects.Consoles.CurrentBackground;
-                string curForeground = Program.Lang.Strings.Aspects.Consoles.CurrentForeground;
-                string tableHeader = Program.Lang.Strings.Aspects.Consoles.ColorName;
-                string promptBackground = Program.Lang.Strings.Aspects.Consoles.Backgrounds_PS;
-                string promptForeground = Program.Lang.Strings.Aspects.Consoles.Foregrounds_PS;
-                string errorMessage = Program.Lang.Strings.Aspects.Consoles.InvalidColors;
-                string optionalRefresh = Program.Lang.Strings.Aspects.Consoles.OptTitleRefresh;
-                string thanksto = $"{Program.Lang.Strings.General.ThanksTo} neilpa/cmd-colors-solarized";
-                string popupNote = Program.Lang.Strings.Aspects.Consoles.Popup_Note;
+                string curBackground = Program.Localization.Strings.Aspects.Consoles.CurrentBackground;
+                string curForeground = Program.Localization.Strings.Aspects.Consoles.CurrentForeground;
+                string tableHeader = Program.Localization.Strings.Aspects.Consoles.ColorName;
+                string promptBackground = Program.Localization.Strings.Aspects.Consoles.Backgrounds_PS;
+                string promptForeground = Program.Localization.Strings.Aspects.Consoles.Foregrounds_PS;
+                string errorMessage = Program.Localization.Strings.Aspects.Consoles.InvalidColors;
+                string optionalRefresh = Program.Localization.Strings.Aspects.Consoles.OptTitleRefresh;
+                string thanksto = $"{Program.Localization.Strings.General.ThanksTo} neilpa/cmd-colors-solarized";
+                string popupNote = Program.Localization.Strings.Aspects.Consoles.Popup_Note;
 
                 string psScript = $@"
 $Host.UI.RawUI.BackgroundColor = [System.ConsoleColor]::{initBgName}
@@ -1409,7 +1409,7 @@ while ($true) {{
 
             GDI32.LogFont logFont = new();
             F_cmd.ToLogFont(logFont);
-            logFont.lfHeight = -CMD_FontPxHeight.Value;
+            logFont.lfHeight = -(int)CMD_FontPxHeight.Value;
             logFont.lfWidth = 0;
             logFont.lfWeight = CMD_FontWeightBox.SelectedIndex * 100;
             F_cmd = Font.FromLogFont(logFont);
@@ -1542,8 +1542,8 @@ while ($true) {{
 
         private void Button25_Click(object sender, EventArgs e)
         {
-            Program.ToolTip.ToolTipText = Program.Lang.Strings.Aspects.Consoles.CMD_NotAllWeights;
-            Program.ToolTip.ToolTipTitle = Program.Lang.Strings.General.Tip;
+            Program.ToolTip.ToolTipText = Program.Localization.Strings.Aspects.Consoles.CMD_NotAllWeights;
+            Program.ToolTip.ToolTipTitle = Program.Localization.Strings.General.Tip;
             Program.ToolTip.Image = Notifications.Info;
 
             Point location = new(-Program.ToolTip.Size.Width - 2, (((Control)sender).Height - Program.ToolTip.Size.Height) / 2 - 1);
@@ -1579,7 +1579,7 @@ while ($true) {{
             {
                 GDI32.LogFont logFont = new();
                 F_cmd.ToLogFont(logFont);
-                logFont.lfHeight = -CMD_FontPxHeight.Value;
+                logFont.lfHeight = -(int)CMD_FontPxHeight.Value;
                 logFont.lfWidth = 0; // Set to 0 for default width
                 F_cmd = Font.FromLogFont(logFont);
                 ApplyPreview();
@@ -1627,7 +1627,7 @@ while ($true) {{
         {
             if (IsShown)
             {
-                CMD_Preview.Alpha = (sender as TrackBarX).Value;
+                CMD_Preview.Alpha = (int)(sender as TrackBarX).Value;
             }
         }
 
@@ -1638,14 +1638,14 @@ while ($true) {{
                 Theme.Structures.WinTerminal.Types.Scheme scheme = null;
 
                 string selected = comboBox1.SelectedItem.ToString();
-                if (selected.StartsWith($"{Program.Lang.Strings.Aspects.TerminalStable} > "))
+                if (selected.StartsWith($"{Program.Localization.Strings.Aspects.TerminalStable} > "))
                 {
-                    selected = selected.Replace($"{Program.Lang.Strings.Aspects.TerminalStable} > ", string.Empty);
+                    selected = selected.Replace($"{Program.Localization.Strings.Aspects.TerminalStable} > ", string.Empty);
                     scheme = Program.TM.Terminal.Schemes.FirstOrDefault(x => x.Name == selected);
                 }
-                else if (selected.StartsWith($"{Program.Lang.Strings.Aspects.TerminalPreview} > "))
+                else if (selected.StartsWith($"{Program.Localization.Strings.Aspects.TerminalPreview} > "))
                 {
-                    selected = selected.Replace($"{Program.Lang.Strings.Aspects.TerminalPreview} > ", string.Empty);
+                    selected = selected.Replace($"{Program.Localization.Strings.Aspects.TerminalPreview} > ", string.Empty);
                     scheme = Program.TM.TerminalPreview.Schemes.FirstOrDefault(x => x.Name == selected);
                 }
 

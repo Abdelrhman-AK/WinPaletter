@@ -105,15 +105,15 @@ namespace WinPaletter.GlobalVariables
         {
             get
             {
-                if (W12) { return Program.Lang.Strings.Windows.W12; }
-                else if (W11) { return Program.Lang.Strings.Windows.W11; }
-                else if (W10) { return Program.Lang.Strings.Windows.W10; }
-                else if (W81) { return Program.Lang.Strings.Windows.W81; }
-                else if (W8) { return Program.Lang.Strings.Windows.W8; }
-                else if (W7) { return Program.Lang.Strings.Windows.W7; }
-                else if (WVista) { return Program.Lang.Strings.Windows.WVista; }
-                else if (WXP) { return Program.Lang.Strings.Windows.WXP; }
-                else { return Program.Lang.Strings.Windows.Undefined; }
+                if (W12) { return Program.Localization.Strings.Windows.W12; }
+                else if (W11) { return Program.Localization.Strings.Windows.W11; }
+                else if (W10) { return Program.Localization.Strings.Windows.W10; }
+                else if (W81) { return Program.Localization.Strings.Windows.W81; }
+                else if (W8) { return Program.Localization.Strings.Windows.W8; }
+                else if (W7) { return Program.Localization.Strings.Windows.W7; }
+                else if (WVista) { return Program.Localization.Strings.Windows.WVista; }
+                else if (WXP) { return Program.Localization.Strings.Windows.WXP; }
+                else { return Program.Localization.Strings.Windows.Undefined; }
             }
         }
 
@@ -130,15 +130,15 @@ namespace WinPaletter.GlobalVariables
         {
             return windowStyle switch
             {
-                PreviewHelpers.WindowStyle.W12 => Program.Lang.Strings.Windows.W12,
-                PreviewHelpers.WindowStyle.W11 => Program.Lang.Strings.Windows.W11,
-                PreviewHelpers.WindowStyle.W10 => Program.Lang.Strings.Windows.W10,
-                PreviewHelpers.WindowStyle.W81 => Program.Lang.Strings.Windows.W81,
-                PreviewHelpers.WindowStyle.W8 => Program.Lang.Strings.Windows.W8,
-                PreviewHelpers.WindowStyle.W7 => Program.Lang.Strings.Windows.W7,
-                PreviewHelpers.WindowStyle.WVista => Program.Lang.Strings.Windows.WVista,
-                PreviewHelpers.WindowStyle.WXP => Program.Lang.Strings.Windows.WXP,
-                _ => Program.Lang.Strings.Windows.Undefined,
+                PreviewHelpers.WindowStyle.W12 => Program.Localization.Strings.Windows.W12,
+                PreviewHelpers.WindowStyle.W11 => Program.Localization.Strings.Windows.W11,
+                PreviewHelpers.WindowStyle.W10 => Program.Localization.Strings.Windows.W10,
+                PreviewHelpers.WindowStyle.W81 => Program.Localization.Strings.Windows.W81,
+                PreviewHelpers.WindowStyle.W8 => Program.Localization.Strings.Windows.W8,
+                PreviewHelpers.WindowStyle.W7 => Program.Localization.Strings.Windows.W7,
+                PreviewHelpers.WindowStyle.WVista => Program.Localization.Strings.Windows.WVista,
+                PreviewHelpers.WindowStyle.WXP => Program.Localization.Strings.Windows.WXP,
+                _ => Program.Localization.Strings.Windows.Undefined,
             };
         }
 
@@ -169,7 +169,7 @@ namespace WinPaletter.GlobalVariables
         /// <summary>
         /// Gets the architecture of the operating system as a string.
         /// </summary>
-        public static string Architecture => Environment.Is64BitOperatingSystem ? Program.Lang.Strings.Windows.Arc_64Bit : Program.Lang.Strings.Windows.Arc_32Bit;
+        public static string Architecture => Environment.Is64BitOperatingSystem ? Program.Localization.Strings.Windows.Arc_64Bit : Program.Localization.Strings.Windows.Arc_32Bit;
 
         /// <summary>
         /// Gets a string representation of the system's architecture in English.

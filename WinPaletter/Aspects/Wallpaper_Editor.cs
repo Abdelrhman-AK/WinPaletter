@@ -60,7 +60,7 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Localization.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -98,7 +98,7 @@ namespace WinPaletter
         {
             if (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Wallpaper)
             {
-                MsgBox(Program.Lang.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.Strings.Aspects.Disabled_Apply_1);
+                MsgBox(Program.Localization.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Localization.Strings.Aspects.Disabled_Apply_1);
                 return;
             }
 
@@ -130,7 +130,7 @@ namespace WinPaletter
         {
             DesignerData data = new(this)
             {
-                AspectName = Program.Lang.Strings.Aspects.Wallpaper,
+                AspectName = Program.Localization.Strings.Aspects.Wallpaper,
                 Enabled = Program.TM.Wallpaper.Enabled,
                 Import_theme = false,
                 Import_msstyles = false,
@@ -160,49 +160,49 @@ namespace WinPaletter
             {
                 case WindowStyle.W12:
                     {
-                        AlertBox3.Text = string.Format(Program.Lang.Strings.Tips.WallpaperTone_Notice, Program.Lang.Strings.Windows.W12);
+                        AlertBox3.Text = string.Format(Program.Localization.Strings.Tips.WallpaperTone_Notice, Program.Localization.Strings.Windows.W12);
                         break;
                     }
 
                 case WindowStyle.W11:
                     {
-                        AlertBox3.Text = string.Format(Program.Lang.Strings.Tips.WallpaperTone_Notice, Program.Lang.Strings.Windows.W11);
+                        AlertBox3.Text = string.Format(Program.Localization.Strings.Tips.WallpaperTone_Notice, Program.Localization.Strings.Windows.W11);
                         break;
                     }
                 case WindowStyle.W10:
                     {
-                        AlertBox3.Text = string.Format(Program.Lang.Strings.Tips.WallpaperTone_Notice, Program.Lang.Strings.Windows.W10);
+                        AlertBox3.Text = string.Format(Program.Localization.Strings.Tips.WallpaperTone_Notice, Program.Localization.Strings.Windows.W10);
                         break;
                     }
                 case WindowStyle.W81:
                     {
-                        AlertBox3.Text = string.Format(Program.Lang.Strings.Tips.WallpaperTone_Notice, Program.Lang.Strings.Windows.W81);
+                        AlertBox3.Text = string.Format(Program.Localization.Strings.Tips.WallpaperTone_Notice, Program.Localization.Strings.Windows.W81);
                         break;
                     }
                 case WindowStyle.W8:
                     {
-                        AlertBox3.Text = string.Format(Program.Lang.Strings.Tips.WallpaperTone_Notice, Program.Lang.Strings.Windows.W8);
+                        AlertBox3.Text = string.Format(Program.Localization.Strings.Tips.WallpaperTone_Notice, Program.Localization.Strings.Windows.W8);
                         break;
                     }
                 case WindowStyle.W7:
                     {
-                        AlertBox3.Text = string.Format(Program.Lang.Strings.Tips.WallpaperTone_Notice, Program.Lang.Strings.Windows.W7);
+                        AlertBox3.Text = string.Format(Program.Localization.Strings.Tips.WallpaperTone_Notice, Program.Localization.Strings.Windows.W7);
                         break;
                     }
                 case WindowStyle.WVista:
                     {
-                        AlertBox3.Text = string.Format(Program.Lang.Strings.Tips.WallpaperTone_Notice, Program.Lang.Strings.Windows.WVista);
+                        AlertBox3.Text = string.Format(Program.Localization.Strings.Tips.WallpaperTone_Notice, Program.Localization.Strings.Windows.WVista);
                         break;
                     }
                 case WindowStyle.WXP:
                     {
-                        AlertBox3.Text = string.Format(Program.Lang.Strings.Tips.WallpaperTone_Notice, Program.Lang.Strings.Windows.WXP);
+                        AlertBox3.Text = string.Format(Program.Localization.Strings.Tips.WallpaperTone_Notice, Program.Localization.Strings.Windows.WXP);
                         break;
                     }
 
                 default:
                     {
-                        AlertBox3.Text = string.Format(Program.Lang.Strings.Tips.WallpaperTone_Notice, Program.Lang.Strings.Windows.Undefined);
+                        AlertBox3.Text = string.Format(Program.Localization.Strings.Tips.WallpaperTone_Notice, Program.Localization.Strings.Windows.Undefined);
                         break;
                     }
             }
@@ -377,7 +377,7 @@ namespace WinPaletter
             TM.Wallpaper.Wallpaper_Slideshow_Images = [];
             TM.Wallpaper.Wallpaper_Slideshow_Images = ListBox1.Items.OfType<string>().Where(s => !string.IsNullOrEmpty(s)).ToArray();
 
-            TM.Wallpaper.Wallpaper_Slideshow_Interval = trackBarX1.Value;
+            TM.Wallpaper.Wallpaper_Slideshow_Interval = (int)trackBarX1.Value;
             TM.Wallpaper.Wallpaper_Slideshow_Shuffle = CheckBox3.Checked;
 
             TM.Win32.Background = color_pick.BackColor;
@@ -450,7 +450,7 @@ namespace WinPaletter
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, FileName = TextBox1.Text, Title = Program.Lang.Strings.Extensions.OpenImages })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, FileName = TextBox1.Text, Title = Program.Localization.Strings.Extensions.OpenImages })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -496,7 +496,7 @@ namespace WinPaletter
 
         private void Button18_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, Multiselect = true, Title = Program.Lang.Strings.Extensions.OpenImagesFiles })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, Multiselect = true, Title = Program.Localization.Strings.Extensions.OpenImagesFiles })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -806,7 +806,7 @@ namespace WinPaletter
 
         private void Button20_Click(object sender, EventArgs e)
         {
-            using (SaveFileDialog dlg = new() { Filter = Program.Filters.PNG, Title = Program.Lang.Strings.Extensions.SavePNG })
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.PNG, Title = Program.Localization.Strings.Extensions.SavePNG })
             {
                 if (File.Exists(TextBox3.Text) && dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -935,7 +935,7 @@ namespace WinPaletter
 
         private void Button19_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, FileName = TextBox3.Text, Title = Program.Lang.Strings.Extensions.OpenImages })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, FileName = TextBox3.Text, Title = Program.Localization.Strings.Extensions.OpenImages })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {

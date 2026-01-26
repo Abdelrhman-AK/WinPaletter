@@ -338,27 +338,27 @@ namespace WinPaletter.Theme.Structures
                     // Let's assume that W12 is identical to Win11 until official release !
                     if (vs.Platform == Platform.Win11 && Program.WindowStyle != WindowStyle.W11 && Program.WindowStyle != WindowStyle.W12)
                     {
-                        return new(false, Program.Lang.Strings.Windows.W11);
+                        return new(false, Program.Localization.Strings.Windows.W11);
                     }
                     else if (vs.Platform == Platform.Win10 && Program.WindowStyle != WindowStyle.W10)
                     {
-                        return new(false, Program.Lang.Strings.Windows.W10);
+                        return new(false, Program.Localization.Strings.Windows.W10);
                     }
                     else if (vs.Platform == Platform.Win81 && Program.WindowStyle != WindowStyle.W81)
                     {
-                        return new(false, Program.Lang.Strings.Windows.W81);
+                        return new(false, Program.Localization.Strings.Windows.W81);
                     }
                     else if (vs.Platform == Platform.Win8 && Program.WindowStyle != WindowStyle.W8)
                     {
-                        return new(false, Program.Lang.Strings.Windows.W8);
+                        return new(false, Program.Localization.Strings.Windows.W8);
                     }
                     else if (vs.Platform == Platform.Win7 && Program.WindowStyle != WindowStyle.W7)
                     {
-                        return new(false, Program.Lang.Strings.Windows.W7);
+                        return new(false, Program.Localization.Strings.Windows.W7);
                     }
                     else if (vs.Platform == Platform.Vista && Program.WindowStyle != WindowStyle.WVista)
                     {
-                        return new(false, Program.Lang.Strings.Windows.WVista);
+                        return new(false, Program.Localization.Strings.Windows.WVista);
                     }
                     else
                     {
@@ -382,7 +382,7 @@ namespace WinPaletter.Theme.Structures
                         {
                             if (Program.WindowStyle != WindowStyle.WXP)
                             {
-                                return new(false, Program.Lang.Strings.Windows.WXP);
+                                return new(false, Program.Localization.Strings.Windows.WXP);
                             }
                             else
                             {

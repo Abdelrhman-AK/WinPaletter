@@ -1025,7 +1025,7 @@ namespace WinPaletter
             GroupBox8.Visible = false;
             TabControl1.Visible = false;
 
-            this.LoadLanguage();
+            this.Localize();
             ApplyStyle(this);
 
             ctrlName.Font = Fonts.ConsoleMedium;
@@ -1168,7 +1168,7 @@ namespace WinPaletter
         /// <param name="e"></param>
         private void Button8_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Lang.Strings.Extensions.OpenJSON })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Localization.Strings.Extensions.OpenJSON })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -1219,7 +1219,7 @@ namespace WinPaletter
         /// <param name="e"></param>
         private void Button4_Click(object sender, EventArgs e)
         {
-            using (SaveFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Lang.Strings.Extensions.SaveJSON })
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Localization.Strings.Extensions.SaveJSON })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -1245,7 +1245,7 @@ namespace WinPaletter
         /// <param name="e"></param>
         private void Button5_Click(object sender, EventArgs e)
         {
-            using (SaveFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Lang.Strings.Extensions.SaveJSON })
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Localization.Strings.Extensions.SaveJSON })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -1298,7 +1298,7 @@ namespace WinPaletter
                 File.WriteAllText(LangFile, JObj.ToString());
 
                 // Hide a message box that the language file is saved
-                MsgBox(Program.Lang.Strings.Languages.Saved, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MsgBox(Program.Localization.Strings.Languages.Saved, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 

@@ -45,9 +45,9 @@ namespace WinPaletter.UI.Retro
         private PointF[] btnLightPoints0;
         private PointF[] btnLightPoints1;
 
-        private string str_MenuItem => Program.Lang.Strings.Previewer.MenuItem;
-        private string str_Selection => Program.Lang.Strings.Previewer.Selection;
-        private string str_DisabledItem => Program.Lang.Strings.Previewer.DisabledItem;
+        private string str_MenuItem => Program.Localization.Strings.Previewer.MenuItem;
+        private string str_Selection => Program.Localization.Strings.Previewer.Selection;
+        private string str_DisabledItem => Program.Localization.Strings.Previewer.DisabledItem;
 
         SizeF item0Size;
         SizeF item1Size;

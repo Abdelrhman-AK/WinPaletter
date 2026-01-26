@@ -79,7 +79,7 @@ namespace WinPaletter
                 {
                     if (Program.IsNetworkAvailable)
                     {
-                        Label17.SetText(Program.Lang.Strings.General.Checking);
+                        Label17.SetText(Program.Localization.Strings.General.Checking);
 
                         string response = await DM.ReadStringAsync(Links.Updates);
 
@@ -111,14 +111,14 @@ namespace WinPaletter
                             ReleaseDate = DateTime.FromBinary(long.Parse(ls.ElementAtOrDefault(UpdateChannel)?.Split(' ')[3]));
 
                             // Hide the update information.
-                            Label7.Text = $"{UpdateSize} {Program.Lang.Strings.General.MBSizeUnit}";
+                            Label7.Text = $"{UpdateSize} {Program.Localization.Strings.General.MBSizeUnit}";
                             Label9.Text = ReleaseDate.ToLongDateString();
 
                             LinkLabel3.Visible = true;
 
                             Program.Animator.Show(Panel1, true);
-                            Button1.Text = Program.Lang.Strings.General.DoAction;
-                            AlertBox2.Text = $"{Program.Lang.Strings.Updates.NewUpdate}. {Program.Lang.Strings.General.Version} {ver}";
+                            Button1.Text = Program.Localization.Strings.General.DoAction;
+                            AlertBox2.Text = $"{Program.Localization.Strings.Updates.NewUpdate}. {Program.Localization.Strings.General.Version} {ver}";
                             AlertBox2.AlertStyle = AlertBox.Style.Indigo;
                         }
                         else
@@ -127,8 +127,8 @@ namespace WinPaletter
                             Label7.Text = string.Empty;
                             Label9.Text = string.Empty;
                             url = null;
-                            Button1.Text = Program.Lang.Strings.Updates.CheckForUpdates;
-                            AlertBox2.Text = string.Format(Program.Lang.Strings.Updates.NoUpdateAvailable);
+                            Button1.Text = Program.Localization.Strings.Updates.CheckForUpdates;
+                            AlertBox2.Text = string.Format(Program.Localization.Strings.Updates.NoUpdateAvailable);
                             AlertBox2.AlertStyle = AlertBox.Style.Success;
                         }
 
@@ -177,7 +177,7 @@ namespace WinPaletter
                 // Download the update executable.
                 if (RadioButton2.Checked)
                 {
-                    using (SaveFileDialog dlg = new() { Filter = Program.Filters.EXE, FileName = $"WinPaletter ({ver})", Title = Program.Lang.Strings.Extensions.SaveUpdateEXE })
+                    using (SaveFileDialog dlg = new() { Filter = Program.Filters.EXE, FileName = $"WinPaletter ({ver})", Title = Program.Localization.Strings.Extensions.SaveUpdateEXE })
                     {
                         if (dlg.ShowDialog() == DialogResult.OK)
                         {
@@ -205,13 +205,13 @@ namespace WinPaletter
 
         private void Updates_Load(object sender, EventArgs e)
         {
-            this.LoadLanguage();
+            this.Localize();
             ApplyStyle(this);
 
             LinkLabel3.Visible = false;
 
-            string format = Program.Lang.Information.RightToLeft ? "{1}: {0}" : "{0} {1}";
-            Label3.Text = string.Format(format, (Program.Settings.Updates.Channel == Settings.Structures.Updates.Channels.Stable) ? Program.Lang.Strings.General.Stable : Program.Lang.Strings.General.Beta, Program.Lang.Strings.General.Channel);
+            string format = Program.Localization.Information.RightToLeft ? "{1}: {0}" : "{0} {1}";
+            Label3.Text = string.Format(format, (Program.Settings.Updates.Channel == Settings.Structures.Updates.Channels.Stable) ? Program.Localization.Strings.General.Stable : Program.Localization.Strings.General.Beta, Program.Localization.Strings.General.Channel);
 
             CheckBox1.Checked = Program.Settings.Updates.AutoCheck;
 
@@ -227,7 +227,7 @@ namespace WinPaletter
 
             Button1.Enabled = true;
             Panel1.Enabled = true;
-            Button1.Text = Program.Lang.Strings.Updates.CheckForUpdates;
+            Button1.Text = Program.Localization.Strings.Updates.CheckForUpdates;
             Label2.Text = Program.Version;
             Label2.Font = Fonts.ConsoleMedium;
             Label7.Font = Fonts.ConsoleMedium;
@@ -261,14 +261,14 @@ namespace WinPaletter
                     UpdateSize = float.Parse(ls.ElementAtOrDefault(UpdateChannel)?.Split(' ')[2]);
                     ReleaseDate = DateTime.FromBinary(long.Parse(ls.ElementAtOrDefault(UpdateChannel)?.Split(' ')[3]));
 
-                    Label7.Text = $"{UpdateSize} {Program.Lang.Strings.General.MBSizeUnit}";
+                    Label7.Text = $"{UpdateSize} {Program.Localization.Strings.General.MBSizeUnit}";
                     Label9.Text = $"{ReleaseDate.ToLongDateString()} {ReleaseDate.ToLongTimeString()}";
 
                     LinkLabel3.Visible = true;
 
                     Program.Animator.Show(Panel1, true);
-                    Button1.Text = Program.Lang.Strings.General.DoAction;
-                    AlertBox2.Text = $"{Program.Lang.Strings.Updates.NewUpdate}. {Program.Lang.Strings.General.Version} {ver}";
+                    Button1.Text = Program.Localization.Strings.General.DoAction;
+                    AlertBox2.Text = $"{Program.Localization.Strings.Updates.NewUpdate}. {Program.Localization.Strings.General.Version} {ver}";
                     AlertBox2.AlertStyle = AlertBox.Style.Indigo;
 
                     Program.Animator.Show(AlertBox2, true);
@@ -279,8 +279,8 @@ namespace WinPaletter
                     Label7.Text = string.Empty;
                     Label9.Text = string.Empty;
                     url = null;
-                    Button1.Text = Program.Lang.Strings.Updates.CheckForUpdates;
-                    AlertBox2.Text = string.Format(Program.Lang.Strings.Updates.NoUpdateAvailable);
+                    Button1.Text = Program.Localization.Strings.Updates.CheckForUpdates;
+                    AlertBox2.Text = string.Format(Program.Localization.Strings.Updates.NoUpdateAvailable);
                     AlertBox2.AlertStyle = AlertBox.Style.Success;
                 }
             }
@@ -290,7 +290,7 @@ namespace WinPaletter
             {
                 AlertBox2.AlertStyle = AlertBox.Style.Warning;
                 AlertBox2.Visible = true;
-                AlertBox2.Text = string.Format(Program.Lang.Strings.Updates.NoTLS12, OS.WXP ? Program.Lang.Strings.Windows.WXP : Program.Lang.Strings.Windows.WVista);
+                AlertBox2.Text = string.Format(Program.Localization.Strings.Updates.NoTLS12, OS.WXP ? Program.Localization.Strings.Windows.WXP : Program.Localization.Strings.Windows.WVista);
             }
         }
 
@@ -335,7 +335,7 @@ namespace WinPaletter
             ProgressBar1.Visible = false;
             ProgressBar1.Value = 0;
             if (RadioButton2.Checked)
-                MsgBox(Program.Lang.Strings.Updates.Downloaded, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MsgBox(Program.Localization.Strings.Updates.Downloaded, MessageBoxButtons.OK, MessageBoxIcon.Information);
             if (RadioButton1.Checked & !Disturbed)
             {
                 Process.Start(OldName);

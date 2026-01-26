@@ -423,39 +423,45 @@ namespace WinPaletter
             this.PictureBox42 = new System.Windows.Forms.PictureBox();
             this.CheckBox11 = new WinPaletter.UI.WP.CheckBox();
             this.tabPage23 = new System.Windows.Forms.TabPage();
+            this.button29 = new WinPaletter.UI.WP.Button();
             this.groupBox1 = new WinPaletter.UI.WP.GroupBox();
+            this.storage_logs_prg = new WinPaletter.UI.WP.ProgressBar();
             this.button31 = new WinPaletter.UI.WP.Button();
-            this.label97 = new System.Windows.Forms.Label();
+            this.storage_logs_title = new System.Windows.Forms.Label();
             this.pictureBox70 = new System.Windows.Forms.PictureBox();
             this.button32 = new WinPaletter.UI.WP.Button();
-            this.label98 = new System.Windows.Forms.Label();
+            this.storage_logs_lbl = new System.Windows.Forms.Label();
             this.groupBox55 = new WinPaletter.UI.WP.GroupBox();
-            this.label6 = new System.Windows.Forms.Label();
+            this.storage_data_prg = new WinPaletter.UI.WP.ProgressBar();
+            this.storage_data_title = new System.Windows.Forms.Label();
             this.pictureBox9 = new System.Windows.Forms.PictureBox();
-            this.label7 = new System.Windows.Forms.Label();
+            this.storage_data_lbl = new System.Windows.Forms.Label();
             this.groupBox54 = new WinPaletter.UI.WP.GroupBox();
+            this.storage_errors_prg = new WinPaletter.UI.WP.ProgressBar();
             this.button26 = new WinPaletter.UI.WP.Button();
-            this.label3 = new System.Windows.Forms.Label();
+            this.storage_errors_title = new System.Windows.Forms.Label();
             this.pictureBox8 = new System.Windows.Forms.PictureBox();
             this.button25 = new WinPaletter.UI.WP.Button();
-            this.label5 = new System.Windows.Forms.Label();
+            this.storage_errors_lbl = new System.Windows.Forms.Label();
             this.groupBox53 = new WinPaletter.UI.WP.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.storage_backup_prg = new WinPaletter.UI.WP.ProgressBar();
+            this.storage_backup_title = new System.Windows.Forms.Label();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.button24 = new WinPaletter.UI.WP.Button();
-            this.label2 = new System.Windows.Forms.Label();
+            this.storage_backup_lbl = new System.Windows.Forms.Label();
             this.groupBox32 = new WinPaletter.UI.WP.GroupBox();
-            this.label37 = new System.Windows.Forms.Label();
+            this.storage_resPack_prg = new WinPaletter.UI.WP.ProgressBar();
+            this.storage_resPack_title = new System.Windows.Forms.Label();
             this.PictureBox57 = new System.Windows.Forms.PictureBox();
             this.Button20 = new WinPaletter.UI.WP.Button();
-            this.Label43 = new System.Windows.Forms.Label();
+            this.storage_resPack_lbl = new System.Windows.Forms.Label();
             this.banner14 = new WinPaletter.UI.WP.Banner();
             this.groupBox31 = new WinPaletter.UI.WP.GroupBox();
-            this.label76 = new System.Windows.Forms.Label();
-            this.PictureBox53 = new System.Windows.Forms.PictureBox();
+            this.storage_store_prg = new WinPaletter.UI.WP.ProgressBar();
+            this.storage_store_title = new System.Windows.Forms.Label();
             this.Button19 = new WinPaletter.UI.WP.Button();
-            this.Label38 = new System.Windows.Forms.Label();
-            this.AlertBox20 = new WinPaletter.UI.WP.AlertBox();
+            this.storage_store_lbl = new System.Windows.Forms.Label();
+            this.PictureBox53 = new System.Windows.Forms.PictureBox();
             this.tabPage22 = new System.Windows.Forms.TabPage();
             this.groupBox63 = new WinPaletter.UI.WP.GroupBox();
             this.label99 = new System.Windows.Forms.Label();
@@ -5860,6 +5866,7 @@ namespace WinPaletter
             // tabPage23
             // 
             this.tabPage23.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.tabPage23.Controls.Add(this.button29);
             this.tabPage23.Controls.Add(this.groupBox1);
             this.tabPage23.Controls.Add(this.groupBox55);
             this.tabPage23.Controls.Add(this.groupBox54);
@@ -5873,60 +5880,90 @@ namespace WinPaletter
             this.tabPage23.TabIndex = 15;
             this.tabPage23.Text = "Storage details";
             // 
+            // button29
+            // 
+            this.button29.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.button29.CustomColor = System.Drawing.Color.Empty;
+            this.button29.Flag = WinPaletter.UI.WP.Button.Flags.None;
+            this.button29.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button29.Image = null;
+            this.button29.ImageGlyph = null;
+            this.button29.ImageGlyphEnabled = false;
+            this.button29.Location = new System.Drawing.Point(5, 469);
+            this.button29.Name = "button29";
+            this.button29.Size = new System.Drawing.Size(813, 35);
+            this.button29.TabIndex = 76;
+            this.button29.Text = "Clear all caches";
+            this.button29.UseVisualStyleBackColor = true;
+            this.button29.Click += new System.EventHandler(this.button29_Click);
+            // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.groupBox1.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox1.Controls.Add(this.storage_logs_prg);
             this.groupBox1.Controls.Add(this.button31);
-            this.groupBox1.Controls.Add(this.label97);
+            this.groupBox1.Controls.Add(this.storage_logs_title);
             this.groupBox1.Controls.Add(this.pictureBox70);
             this.groupBox1.Controls.Add(this.button32);
-            this.groupBox1.Controls.Add(this.label98);
-            this.groupBox1.Location = new System.Drawing.Point(3, 437);
+            this.groupBox1.Controls.Add(this.storage_logs_lbl);
+            this.groupBox1.Location = new System.Drawing.Point(5, 303);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(817, 80);
+            this.groupBox1.Size = new System.Drawing.Size(267, 160);
             this.groupBox1.TabIndex = 75;
             this.groupBox1.UseDecorationPattern = false;
             this.groupBox1.UseSharpStyle = false;
             // 
+            // storage_logs_prg
+            // 
+            this.storage_logs_prg.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.storage_logs_prg.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Bar;
+            this.storage_logs_prg.BackColor = System.Drawing.Color.Transparent;
+            this.storage_logs_prg.Location = new System.Drawing.Point(11, 123);
+            this.storage_logs_prg.Name = "storage_logs_prg";
+            this.storage_logs_prg.Size = new System.Drawing.Size(245, 22);
+            this.storage_logs_prg.State = WinPaletter.UI.WP.ProgressBar.ProgressBarState.Normal;
+            this.storage_logs_prg.Style = WinPaletter.UI.WP.ProgressBar.ProgressBarStyle.Continuous;
+            this.storage_logs_prg.TabIndex = 60;
+            this.storage_logs_prg.TaskbarBroadcast = false;
+            // 
             // button31
             // 
             this.button31.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button31.CustomColor = System.Drawing.Color.Empty;
-            this.button31.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button31.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.button31.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.button31.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button31.ForeColor = System.Drawing.Color.White;
             this.button31.Image = null;
-            this.button31.ImageGlyph = null;
-            this.button31.ImageGlyphEnabled = false;
-            this.button31.Location = new System.Drawing.Point(624, 41);
+            this.button31.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button31.ImageGlyph")));
+            this.button31.ImageGlyphEnabled = true;
+            this.button31.Location = new System.Drawing.Point(193, 22);
             this.button31.Name = "button31";
-            this.button31.Size = new System.Drawing.Size(96, 28);
+            this.button31.Size = new System.Drawing.Size(28, 28);
             this.button31.TabIndex = 58;
-            this.button31.Text = "Show logs";
             this.button31.UseVisualStyleBackColor = false;
             this.button31.Click += new System.EventHandler(this.button31_Click);
             // 
-            // label97
+            // storage_logs_title
             // 
-            this.label97.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.storage_logs_title.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label97.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label97.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label97.Location = new System.Drawing.Point(41, 7);
-            this.label97.Name = "label97";
-            this.label97.Size = new System.Drawing.Size(765, 34);
-            this.label97.TabIndex = 18;
-            this.label97.Text = "WinPaletter logs";
-            this.label97.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.storage_logs_title.Cursor = System.Windows.Forms.Cursors.Default;
+            this.storage_logs_title.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.storage_logs_title.Location = new System.Drawing.Point(11, 93);
+            this.storage_logs_title.Name = "storage_logs_title";
+            this.storage_logs_title.Size = new System.Drawing.Size(248, 24);
+            this.storage_logs_title.TabIndex = 18;
+            this.storage_logs_title.Text = "WinPaletter logs";
+            this.storage_logs_title.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // pictureBox70
             // 
             this.pictureBox70.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox70.Image")));
             this.pictureBox70.Location = new System.Drawing.Point(11, 12);
             this.pictureBox70.Name = "pictureBox70";
-            this.pictureBox70.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox70.Size = new System.Drawing.Size(48, 48);
             this.pictureBox70.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBox70.TabIndex = 54;
             this.pictureBox70.TabStop = false;
@@ -5934,137 +5971,163 @@ namespace WinPaletter
             // button32
             // 
             this.button32.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button32.CustomColor = System.Drawing.Color.Empty;
-            this.button32.Flag = ((WinPaletter.UI.WP.Button.Flags)((WinPaletter.UI.WP.Button.Flags.TintedOnHover | WinPaletter.UI.WP.Button.Flags.ErrorOnHover)));
+            this.button32.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.button32.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.button32.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button32.ForeColor = System.Drawing.Color.White;
             this.button32.Image = null;
-            this.button32.ImageGlyph = null;
-            this.button32.ImageGlyphEnabled = false;
-            this.button32.Location = new System.Drawing.Point(726, 41);
+            this.button32.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button32.ImageGlyph")));
+            this.button32.ImageGlyphEnabled = true;
+            this.button32.Location = new System.Drawing.Point(227, 22);
             this.button32.Name = "button32";
-            this.button32.Size = new System.Drawing.Size(80, 28);
+            this.button32.Size = new System.Drawing.Size(28, 28);
             this.button32.TabIndex = 57;
-            this.button32.Text = "Clean";
             this.button32.UseVisualStyleBackColor = false;
             this.button32.Click += new System.EventHandler(this.button32_Click);
             // 
-            // label98
+            // storage_logs_lbl
             // 
-            this.label98.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.storage_logs_lbl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label98.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label98.Location = new System.Drawing.Point(43, 41);
-            this.label98.Name = "label98";
-            this.label98.Size = new System.Drawing.Size(591, 28);
-            this.label98.TabIndex = 56;
-            this.label98.Text = "0";
-            this.label98.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.storage_logs_lbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.storage_logs_lbl.Location = new System.Drawing.Point(11, 65);
+            this.storage_logs_lbl.Name = "storage_logs_lbl";
+            this.storage_logs_lbl.Size = new System.Drawing.Size(248, 28);
+            this.storage_logs_lbl.TabIndex = 56;
+            this.storage_logs_lbl.Text = "0";
+            this.storage_logs_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // groupBox55
             // 
-            this.groupBox55.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox55.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.groupBox55.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox55.Controls.Add(this.label6);
+            this.groupBox55.Controls.Add(this.storage_data_prg);
+            this.groupBox55.Controls.Add(this.storage_data_title);
             this.groupBox55.Controls.Add(this.pictureBox9);
-            this.groupBox55.Controls.Add(this.label7);
-            this.groupBox55.Location = new System.Drawing.Point(3, 57);
+            this.groupBox55.Controls.Add(this.storage_data_lbl);
+            this.groupBox55.Location = new System.Drawing.Point(5, 137);
             this.groupBox55.Name = "groupBox55";
-            this.groupBox55.Size = new System.Drawing.Size(817, 80);
+            this.groupBox55.Size = new System.Drawing.Size(267, 160);
             this.groupBox55.TabIndex = 74;
             this.groupBox55.UseDecorationPattern = false;
             this.groupBox55.UseSharpStyle = false;
             // 
-            // label6
+            // storage_data_prg
             // 
-            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.storage_data_prg.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label6.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(41, 7);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(765, 34);
-            this.label6.TabIndex = 18;
-            this.label6.Text = "Application data (core) for current user";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.storage_data_prg.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Bar;
+            this.storage_data_prg.BackColor = System.Drawing.Color.Transparent;
+            this.storage_data_prg.Location = new System.Drawing.Point(11, 123);
+            this.storage_data_prg.Name = "storage_data_prg";
+            this.storage_data_prg.Size = new System.Drawing.Size(245, 22);
+            this.storage_data_prg.State = WinPaletter.UI.WP.ProgressBar.ProgressBarState.Normal;
+            this.storage_data_prg.Style = WinPaletter.UI.WP.ProgressBar.ProgressBarStyle.Continuous;
+            this.storage_data_prg.TabIndex = 57;
+            this.storage_data_prg.TaskbarBroadcast = false;
+            // 
+            // storage_data_title
+            // 
+            this.storage_data_title.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.storage_data_title.Cursor = System.Windows.Forms.Cursors.Default;
+            this.storage_data_title.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.storage_data_title.Location = new System.Drawing.Point(11, 93);
+            this.storage_data_title.Name = "storage_data_title";
+            this.storage_data_title.Size = new System.Drawing.Size(248, 24);
+            this.storage_data_title.TabIndex = 18;
+            this.storage_data_title.Text = "Current user data";
+            this.storage_data_title.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // pictureBox9
             // 
             this.pictureBox9.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox9.Image")));
             this.pictureBox9.Location = new System.Drawing.Point(11, 12);
             this.pictureBox9.Name = "pictureBox9";
-            this.pictureBox9.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox9.Size = new System.Drawing.Size(48, 48);
             this.pictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBox9.TabIndex = 54;
             this.pictureBox9.TabStop = false;
             // 
-            // label7
+            // storage_data_lbl
             // 
-            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.storage_data_lbl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label7.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(43, 41);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(763, 28);
-            this.label7.TabIndex = 56;
-            this.label7.Text = "0";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.storage_data_lbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.storage_data_lbl.Location = new System.Drawing.Point(11, 65);
+            this.storage_data_lbl.Name = "storage_data_lbl";
+            this.storage_data_lbl.Size = new System.Drawing.Size(248, 28);
+            this.storage_data_lbl.TabIndex = 56;
+            this.storage_data_lbl.Text = "0";
+            this.storage_data_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // groupBox54
             // 
-            this.groupBox54.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox54.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.groupBox54.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox54.Controls.Add(this.storage_errors_prg);
             this.groupBox54.Controls.Add(this.button26);
-            this.groupBox54.Controls.Add(this.label3);
+            this.groupBox54.Controls.Add(this.storage_errors_title);
             this.groupBox54.Controls.Add(this.pictureBox8);
             this.groupBox54.Controls.Add(this.button25);
-            this.groupBox54.Controls.Add(this.label5);
-            this.groupBox54.Location = new System.Drawing.Point(3, 521);
+            this.groupBox54.Controls.Add(this.storage_errors_lbl);
+            this.groupBox54.Location = new System.Drawing.Point(278, 303);
             this.groupBox54.Name = "groupBox54";
-            this.groupBox54.Size = new System.Drawing.Size(817, 80);
+            this.groupBox54.Size = new System.Drawing.Size(267, 160);
             this.groupBox54.TabIndex = 73;
             this.groupBox54.UseDecorationPattern = false;
             this.groupBox54.UseSharpStyle = false;
             // 
+            // storage_errors_prg
+            // 
+            this.storage_errors_prg.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.storage_errors_prg.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Bar;
+            this.storage_errors_prg.BackColor = System.Drawing.Color.Transparent;
+            this.storage_errors_prg.Location = new System.Drawing.Point(11, 123);
+            this.storage_errors_prg.Name = "storage_errors_prg";
+            this.storage_errors_prg.Size = new System.Drawing.Size(245, 22);
+            this.storage_errors_prg.State = WinPaletter.UI.WP.ProgressBar.ProgressBarState.Normal;
+            this.storage_errors_prg.Style = WinPaletter.UI.WP.ProgressBar.ProgressBarStyle.Continuous;
+            this.storage_errors_prg.TabIndex = 61;
+            this.storage_errors_prg.TaskbarBroadcast = false;
+            // 
             // button26
             // 
             this.button26.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button26.CustomColor = System.Drawing.Color.Empty;
-            this.button26.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button26.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.button26.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.button26.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button26.ForeColor = System.Drawing.Color.White;
             this.button26.Image = null;
-            this.button26.ImageGlyph = null;
-            this.button26.ImageGlyphEnabled = false;
-            this.button26.Location = new System.Drawing.Point(640, 41);
+            this.button26.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button26.ImageGlyph")));
+            this.button26.ImageGlyphEnabled = true;
+            this.button26.Location = new System.Drawing.Point(193, 22);
             this.button26.Name = "button26";
-            this.button26.Size = new System.Drawing.Size(80, 28);
+            this.button26.Size = new System.Drawing.Size(28, 28);
             this.button26.TabIndex = 58;
-            this.button26.Text = "Open";
             this.button26.UseVisualStyleBackColor = false;
             this.button26.Click += new System.EventHandler(this.button26_Click);
             // 
-            // label3
+            // storage_errors_title
             // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.storage_errors_title.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(41, 7);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(765, 34);
-            this.label3.TabIndex = 18;
-            this.label3.Text = "Exception errors logs";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.storage_errors_title.Cursor = System.Windows.Forms.Cursors.Default;
+            this.storage_errors_title.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.storage_errors_title.Location = new System.Drawing.Point(11, 93);
+            this.storage_errors_title.Name = "storage_errors_title";
+            this.storage_errors_title.Size = new System.Drawing.Size(248, 24);
+            this.storage_errors_title.TabIndex = 18;
+            this.storage_errors_title.Text = "Exception errors logs";
+            this.storage_errors_title.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // pictureBox8
             // 
             this.pictureBox8.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox8.Image")));
             this.pictureBox8.Location = new System.Drawing.Point(11, 12);
             this.pictureBox8.Name = "pictureBox8";
-            this.pictureBox8.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox8.Size = new System.Drawing.Size(48, 48);
             this.pictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBox8.TabIndex = 54;
             this.pictureBox8.TabStop = false;
@@ -6072,68 +6135,81 @@ namespace WinPaletter
             // button25
             // 
             this.button25.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button25.CustomColor = System.Drawing.Color.Empty;
-            this.button25.Flag = ((WinPaletter.UI.WP.Button.Flags)((WinPaletter.UI.WP.Button.Flags.TintedOnHover | WinPaletter.UI.WP.Button.Flags.ErrorOnHover)));
+            this.button25.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.button25.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.button25.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button25.ForeColor = System.Drawing.Color.White;
             this.button25.Image = null;
-            this.button25.ImageGlyph = null;
-            this.button25.ImageGlyphEnabled = false;
-            this.button25.Location = new System.Drawing.Point(726, 41);
+            this.button25.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button25.ImageGlyph")));
+            this.button25.ImageGlyphEnabled = true;
+            this.button25.Location = new System.Drawing.Point(227, 22);
             this.button25.Name = "button25";
-            this.button25.Size = new System.Drawing.Size(80, 28);
+            this.button25.Size = new System.Drawing.Size(28, 28);
             this.button25.TabIndex = 57;
-            this.button25.Text = "Clean";
             this.button25.UseVisualStyleBackColor = false;
             this.button25.Click += new System.EventHandler(this.button25_Click);
             // 
-            // label5
+            // storage_errors_lbl
             // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.storage_errors_lbl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(43, 41);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(591, 28);
-            this.label5.TabIndex = 56;
-            this.label5.Text = "0";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.storage_errors_lbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.storage_errors_lbl.Location = new System.Drawing.Point(11, 65);
+            this.storage_errors_lbl.Name = "storage_errors_lbl";
+            this.storage_errors_lbl.Size = new System.Drawing.Size(248, 28);
+            this.storage_errors_lbl.TabIndex = 56;
+            this.storage_errors_lbl.Text = "0";
+            this.storage_errors_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // groupBox53
             // 
-            this.groupBox53.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox53.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.groupBox53.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox53.Controls.Add(this.label1);
+            this.groupBox53.Controls.Add(this.storage_backup_prg);
+            this.groupBox53.Controls.Add(this.storage_backup_title);
             this.groupBox53.Controls.Add(this.pictureBox4);
             this.groupBox53.Controls.Add(this.button24);
-            this.groupBox53.Controls.Add(this.label2);
-            this.groupBox53.Location = new System.Drawing.Point(3, 353);
+            this.groupBox53.Controls.Add(this.storage_backup_lbl);
+            this.groupBox53.Location = new System.Drawing.Point(551, 137);
             this.groupBox53.Name = "groupBox53";
-            this.groupBox53.Size = new System.Drawing.Size(817, 80);
+            this.groupBox53.Size = new System.Drawing.Size(267, 160);
             this.groupBox53.TabIndex = 72;
             this.groupBox53.UseDecorationPattern = false;
             this.groupBox53.UseSharpStyle = false;
             // 
-            // label1
+            // storage_backup_prg
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.storage_backup_prg.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(41, 7);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(765, 34);
-            this.label1.TabIndex = 18;
-            this.label1.Text = "Themes backups";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.storage_backup_prg.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Bar;
+            this.storage_backup_prg.BackColor = System.Drawing.Color.Transparent;
+            this.storage_backup_prg.Location = new System.Drawing.Point(11, 123);
+            this.storage_backup_prg.Name = "storage_backup_prg";
+            this.storage_backup_prg.Size = new System.Drawing.Size(245, 22);
+            this.storage_backup_prg.State = WinPaletter.UI.WP.ProgressBar.ProgressBarState.Normal;
+            this.storage_backup_prg.Style = WinPaletter.UI.WP.ProgressBar.ProgressBarStyle.Continuous;
+            this.storage_backup_prg.TabIndex = 59;
+            this.storage_backup_prg.TaskbarBroadcast = false;
+            // 
+            // storage_backup_title
+            // 
+            this.storage_backup_title.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.storage_backup_title.Cursor = System.Windows.Forms.Cursors.Default;
+            this.storage_backup_title.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.storage_backup_title.Location = new System.Drawing.Point(11, 93);
+            this.storage_backup_title.Name = "storage_backup_title";
+            this.storage_backup_title.Size = new System.Drawing.Size(248, 24);
+            this.storage_backup_title.TabIndex = 18;
+            this.storage_backup_title.Text = "Themes backups";
+            this.storage_backup_title.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // pictureBox4
             // 
             this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
             this.pictureBox4.Location = new System.Drawing.Point(11, 12);
             this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox4.Size = new System.Drawing.Size(48, 48);
             this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBox4.TabIndex = 54;
             this.pictureBox4.TabStop = false;
@@ -6141,68 +6217,81 @@ namespace WinPaletter
             // button24
             // 
             this.button24.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button24.CustomColor = System.Drawing.Color.Empty;
-            this.button24.Flag = ((WinPaletter.UI.WP.Button.Flags)((WinPaletter.UI.WP.Button.Flags.TintedOnHover | WinPaletter.UI.WP.Button.Flags.ErrorOnHover)));
+            this.button24.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.button24.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.button24.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button24.ForeColor = System.Drawing.Color.White;
             this.button24.Image = null;
-            this.button24.ImageGlyph = null;
-            this.button24.ImageGlyphEnabled = false;
-            this.button24.Location = new System.Drawing.Point(726, 41);
+            this.button24.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button24.ImageGlyph")));
+            this.button24.ImageGlyphEnabled = true;
+            this.button24.Location = new System.Drawing.Point(227, 22);
             this.button24.Name = "button24";
-            this.button24.Size = new System.Drawing.Size(80, 28);
+            this.button24.Size = new System.Drawing.Size(28, 28);
             this.button24.TabIndex = 57;
-            this.button24.Text = "Manage";
             this.button24.UseVisualStyleBackColor = false;
             this.button24.Click += new System.EventHandler(this.button24_Click);
             // 
-            // label2
+            // storage_backup_lbl
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.storage_backup_lbl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(43, 41);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(677, 28);
-            this.label2.TabIndex = 56;
-            this.label2.Text = "0";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.storage_backup_lbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.storage_backup_lbl.Location = new System.Drawing.Point(11, 65);
+            this.storage_backup_lbl.Name = "storage_backup_lbl";
+            this.storage_backup_lbl.Size = new System.Drawing.Size(248, 28);
+            this.storage_backup_lbl.TabIndex = 56;
+            this.storage_backup_lbl.Text = "0";
+            this.storage_backup_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // groupBox32
             // 
-            this.groupBox32.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox32.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.groupBox32.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox32.Controls.Add(this.label37);
+            this.groupBox32.Controls.Add(this.storage_resPack_prg);
+            this.groupBox32.Controls.Add(this.storage_resPack_title);
             this.groupBox32.Controls.Add(this.PictureBox57);
             this.groupBox32.Controls.Add(this.Button20);
-            this.groupBox32.Controls.Add(this.Label43);
-            this.groupBox32.Location = new System.Drawing.Point(3, 269);
+            this.groupBox32.Controls.Add(this.storage_resPack_lbl);
+            this.groupBox32.Location = new System.Drawing.Point(278, 137);
             this.groupBox32.Name = "groupBox32";
-            this.groupBox32.Size = new System.Drawing.Size(817, 80);
+            this.groupBox32.Size = new System.Drawing.Size(267, 160);
             this.groupBox32.TabIndex = 71;
             this.groupBox32.UseDecorationPattern = false;
             this.groupBox32.UseSharpStyle = false;
             // 
-            // label37
+            // storage_resPack_prg
             // 
-            this.label37.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.storage_resPack_prg.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label37.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label37.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label37.Location = new System.Drawing.Point(41, 7);
-            this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(765, 34);
-            this.label37.TabIndex = 18;
-            this.label37.Text = "Unpacked theme resources packs:";
-            this.label37.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.storage_resPack_prg.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Bar;
+            this.storage_resPack_prg.BackColor = System.Drawing.Color.Transparent;
+            this.storage_resPack_prg.Location = new System.Drawing.Point(11, 123);
+            this.storage_resPack_prg.Name = "storage_resPack_prg";
+            this.storage_resPack_prg.Size = new System.Drawing.Size(245, 22);
+            this.storage_resPack_prg.State = WinPaletter.UI.WP.ProgressBar.ProgressBarState.Normal;
+            this.storage_resPack_prg.Style = WinPaletter.UI.WP.ProgressBar.ProgressBarStyle.Continuous;
+            this.storage_resPack_prg.TabIndex = 58;
+            this.storage_resPack_prg.TaskbarBroadcast = false;
+            // 
+            // storage_resPack_title
+            // 
+            this.storage_resPack_title.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.storage_resPack_title.Cursor = System.Windows.Forms.Cursors.Default;
+            this.storage_resPack_title.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.storage_resPack_title.Location = new System.Drawing.Point(11, 93);
+            this.storage_resPack_title.Name = "storage_resPack_title";
+            this.storage_resPack_title.Size = new System.Drawing.Size(248, 24);
+            this.storage_resPack_title.TabIndex = 18;
+            this.storage_resPack_title.Text = "Unpacked theme resources packs";
+            this.storage_resPack_title.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // PictureBox57
             // 
             this.PictureBox57.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox57.Image")));
             this.PictureBox57.Location = new System.Drawing.Point(11, 12);
             this.PictureBox57.Name = "PictureBox57";
-            this.PictureBox57.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox57.Size = new System.Drawing.Size(48, 48);
             this.PictureBox57.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.PictureBox57.TabIndex = 54;
             this.PictureBox57.TabStop = false;
@@ -6210,32 +6299,31 @@ namespace WinPaletter
             // Button20
             // 
             this.Button20.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button20.CustomColor = System.Drawing.Color.Empty;
-            this.Button20.Flag = ((WinPaletter.UI.WP.Button.Flags)((WinPaletter.UI.WP.Button.Flags.TintedOnHover | WinPaletter.UI.WP.Button.Flags.ErrorOnHover)));
+            this.Button20.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.Button20.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.Button20.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button20.ForeColor = System.Drawing.Color.White;
             this.Button20.Image = null;
-            this.Button20.ImageGlyph = null;
-            this.Button20.ImageGlyphEnabled = false;
-            this.Button20.Location = new System.Drawing.Point(726, 41);
+            this.Button20.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button20.ImageGlyph")));
+            this.Button20.ImageGlyphEnabled = true;
+            this.Button20.Location = new System.Drawing.Point(227, 22);
             this.Button20.Name = "Button20";
-            this.Button20.Size = new System.Drawing.Size(80, 28);
+            this.Button20.Size = new System.Drawing.Size(28, 28);
             this.Button20.TabIndex = 57;
-            this.Button20.Text = "Clean";
             this.Button20.UseVisualStyleBackColor = false;
             this.Button20.Click += new System.EventHandler(this.Button20_Click);
             // 
-            // Label43
+            // storage_resPack_lbl
             // 
-            this.Label43.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.storage_resPack_lbl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Label43.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label43.Location = new System.Drawing.Point(43, 41);
-            this.Label43.Name = "Label43";
-            this.Label43.Size = new System.Drawing.Size(677, 28);
-            this.Label43.TabIndex = 56;
-            this.Label43.Text = "0";
-            this.Label43.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.storage_resPack_lbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.storage_resPack_lbl.Location = new System.Drawing.Point(11, 65);
+            this.storage_resPack_lbl.Name = "storage_resPack_lbl";
+            this.storage_resPack_lbl.Size = new System.Drawing.Size(248, 28);
+            this.storage_resPack_lbl.TabIndex = 56;
+            this.storage_resPack_lbl.Text = "0";
+            this.storage_resPack_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // banner14
             // 
@@ -6253,91 +6341,85 @@ namespace WinPaletter
             // 
             // groupBox31
             // 
-            this.groupBox31.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox31.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.groupBox31.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox31.Controls.Add(this.label76);
-            this.groupBox31.Controls.Add(this.PictureBox53);
+            this.groupBox31.Controls.Add(this.storage_store_prg);
+            this.groupBox31.Controls.Add(this.storage_store_title);
             this.groupBox31.Controls.Add(this.Button19);
-            this.groupBox31.Controls.Add(this.Label38);
-            this.groupBox31.Controls.Add(this.AlertBox20);
-            this.groupBox31.Location = new System.Drawing.Point(3, 141);
+            this.groupBox31.Controls.Add(this.storage_store_lbl);
+            this.groupBox31.Controls.Add(this.PictureBox53);
+            this.groupBox31.Location = new System.Drawing.Point(551, 303);
             this.groupBox31.Name = "groupBox31";
-            this.groupBox31.Size = new System.Drawing.Size(817, 125);
+            this.groupBox31.Size = new System.Drawing.Size(267, 160);
             this.groupBox31.TabIndex = 70;
             this.groupBox31.UseDecorationPattern = false;
             this.groupBox31.UseSharpStyle = false;
             // 
-            // label76
+            // storage_store_prg
             // 
-            this.label76.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.storage_store_prg.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label76.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label76.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label76.Location = new System.Drawing.Point(41, 7);
-            this.label76.Name = "label76";
-            this.label76.Size = new System.Drawing.Size(765, 34);
-            this.label76.TabIndex = 18;
-            this.label76.Text = "WinPaletter Store for themes cache:";
-            this.label76.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.storage_store_prg.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Bar;
+            this.storage_store_prg.BackColor = System.Drawing.Color.Transparent;
+            this.storage_store_prg.Location = new System.Drawing.Point(11, 123);
+            this.storage_store_prg.Name = "storage_store_prg";
+            this.storage_store_prg.Size = new System.Drawing.Size(245, 22);
+            this.storage_store_prg.State = WinPaletter.UI.WP.ProgressBar.ProgressBarState.Normal;
+            this.storage_store_prg.Style = WinPaletter.UI.WP.ProgressBar.ProgressBarStyle.Continuous;
+            this.storage_store_prg.TabIndex = 58;
+            this.storage_store_prg.TaskbarBroadcast = false;
+            // 
+            // storage_store_title
+            // 
+            this.storage_store_title.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.storage_store_title.Cursor = System.Windows.Forms.Cursors.Default;
+            this.storage_store_title.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.storage_store_title.Location = new System.Drawing.Point(11, 93);
+            this.storage_store_title.Name = "storage_store_title";
+            this.storage_store_title.Size = new System.Drawing.Size(248, 24);
+            this.storage_store_title.TabIndex = 18;
+            this.storage_store_title.Text = "WinPaletter Store for themes cache";
+            this.storage_store_title.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // Button19
+            // 
+            this.Button19.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.Button19.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.Button19.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
+            this.Button19.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.Button19.ForeColor = System.Drawing.Color.White;
+            this.Button19.Image = null;
+            this.Button19.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button19.ImageGlyph")));
+            this.Button19.ImageGlyphEnabled = true;
+            this.Button19.Location = new System.Drawing.Point(227, 22);
+            this.Button19.Name = "Button19";
+            this.Button19.Size = new System.Drawing.Size(28, 28);
+            this.Button19.TabIndex = 52;
+            this.Button19.UseVisualStyleBackColor = false;
+            this.Button19.Click += new System.EventHandler(this.Button19_Click);
+            // 
+            // storage_store_lbl
+            // 
+            this.storage_store_lbl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.storage_store_lbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.storage_store_lbl.Location = new System.Drawing.Point(11, 65);
+            this.storage_store_lbl.Name = "storage_store_lbl";
+            this.storage_store_lbl.Size = new System.Drawing.Size(248, 28);
+            this.storage_store_lbl.TabIndex = 51;
+            this.storage_store_lbl.Text = "0";
+            this.storage_store_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // PictureBox53
             // 
             this.PictureBox53.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox53.Image")));
             this.PictureBox53.Location = new System.Drawing.Point(11, 12);
             this.PictureBox53.Name = "PictureBox53";
-            this.PictureBox53.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox53.Size = new System.Drawing.Size(48, 48);
             this.PictureBox53.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.PictureBox53.TabIndex = 49;
             this.PictureBox53.TabStop = false;
-            // 
-            // Button19
-            // 
-            this.Button19.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button19.CustomColor = System.Drawing.Color.Empty;
-            this.Button19.Flag = ((WinPaletter.UI.WP.Button.Flags)((WinPaletter.UI.WP.Button.Flags.TintedOnHover | WinPaletter.UI.WP.Button.Flags.ErrorOnHover)));
-            this.Button19.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Button19.ForeColor = System.Drawing.Color.White;
-            this.Button19.Image = null;
-            this.Button19.ImageGlyph = null;
-            this.Button19.ImageGlyphEnabled = false;
-            this.Button19.Location = new System.Drawing.Point(726, 41);
-            this.Button19.Name = "Button19";
-            this.Button19.Size = new System.Drawing.Size(80, 28);
-            this.Button19.TabIndex = 52;
-            this.Button19.Text = "Clean";
-            this.Button19.UseVisualStyleBackColor = false;
-            this.Button19.Click += new System.EventHandler(this.Button19_Click);
-            // 
-            // Label38
-            // 
-            this.Label38.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.Label38.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label38.Location = new System.Drawing.Point(43, 41);
-            this.Label38.Name = "Label38";
-            this.Label38.Size = new System.Drawing.Size(677, 28);
-            this.Label38.TabIndex = 51;
-            this.Label38.Text = "0";
-            this.Label38.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // AlertBox20
-            // 
-            this.AlertBox20.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
-            this.AlertBox20.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.AlertBox20.BackColor = System.Drawing.Color.Transparent;
-            this.AlertBox20.CenterText = false;
-            this.AlertBox20.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.AlertBox20.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.AlertBox20.Image = null;
-            this.AlertBox20.Location = new System.Drawing.Point(11, 80);
-            this.AlertBox20.Name = "AlertBox20";
-            this.AlertBox20.Size = new System.Drawing.Size(795, 32);
-            this.AlertBox20.TabIndex = 53;
-            this.AlertBox20.TabStop = false;
-            this.AlertBox20.Text = "Cleaning the cache will prompt WinPaletter Store to redownload the themes (exclud" +
-    "ing theme resource packs)";
             // 
             // tabPage22
             // 
@@ -7496,11 +7578,10 @@ namespace WinPaletter
         internal TabPage TabPage16;
         internal UI.WP.CheckBox CheckBox29;
         internal UI.WP.Button Button19;
-        internal Label Label38;
+        internal Label storage_store_lbl;
         internal PictureBox PictureBox53;
         internal TabPage TabPage18;
         internal PictureBox PictureBox54;
-        internal UI.WP.AlertBox AlertBox20;
         internal UI.WP.Button Button20;
         internal PictureBox PictureBox57;
         internal PictureBox PictureBox41;
@@ -7616,10 +7697,10 @@ namespace WinPaletter
         private UI.WP.GroupBox groupBox29;
         internal Label label77;
         private UI.WP.GroupBox groupBox31;
-        internal Label label76;
+        internal Label storage_store_title;
         private UI.WP.GroupBox groupBox32;
-        internal Label label37;
-        internal Label Label43;
+        internal Label storage_resPack_title;
+        internal Label storage_resPack_lbl;
         private UI.WP.GroupBox groupBox34;
         internal Label label78;
         private UI.WP.GroupBox groupBox33;
@@ -7715,20 +7796,20 @@ namespace WinPaletter
         private TabPage tabPage23;
         private UI.WP.Banner banner14;
         private UI.WP.GroupBox groupBox53;
-        internal Label label1;
+        internal Label storage_backup_title;
         internal PictureBox pictureBox4;
         internal UI.WP.Button button24;
-        internal Label label2;
+        internal Label storage_backup_lbl;
         private UI.WP.GroupBox groupBox54;
-        internal Label label3;
+        internal Label storage_errors_title;
         internal PictureBox pictureBox8;
         internal UI.WP.Button button25;
-        internal Label label5;
+        internal Label storage_errors_lbl;
         internal UI.WP.Button button26;
         private UI.WP.GroupBox groupBox55;
-        internal Label label6;
+        internal Label storage_data_title;
         internal PictureBox pictureBox9;
-        internal Label label7;
+        internal Label storage_data_lbl;
         internal UI.WP.Button button27;
         private TabPage tabPage17;
         internal PictureBox pictureBox10;
@@ -7782,10 +7863,10 @@ namespace WinPaletter
         internal UI.WP.Button button30;
         private UI.WP.GroupBox groupBox1;
         internal UI.WP.Button button31;
-        internal Label label97;
+        internal Label storage_logs_title;
         internal PictureBox pictureBox70;
         internal UI.WP.Button button32;
-        internal Label label98;
+        internal Label storage_logs_lbl;
         private TabPage tabPage24;
         private UI.WP.GroupBox groupBox57;
         internal PictureBox pictureBox17;
@@ -7813,5 +7894,12 @@ namespace WinPaletter
         internal Label label99;
         private UI.WP.Toggle toggle43;
         internal PictureBox pictureBox72;
+        private UI.WP.ProgressBar storage_data_prg;
+        private UI.WP.ProgressBar storage_resPack_prg;
+        private UI.WP.ProgressBar storage_logs_prg;
+        private UI.WP.ProgressBar storage_backup_prg;
+        private UI.WP.ProgressBar storage_store_prg;
+        private UI.WP.ProgressBar storage_errors_prg;
+        private UI.WP.Button button29;
     }
 }

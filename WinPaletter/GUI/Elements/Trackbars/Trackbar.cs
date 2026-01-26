@@ -45,8 +45,8 @@ namespace WinPaletter.UI.WP
         #endregion
 
         #region Properties
-        private int _Minimum;
-        public int Minimum
+        private float _Minimum;
+        public float Minimum
         {
             get => _Minimum;
             set
@@ -61,8 +61,8 @@ namespace WinPaletter.UI.WP
             }
         }
 
-        private int _Maximum = 100;
-        public int Maximum
+        private float _Maximum = 100;
+        public float Maximum
         {
             get => _Maximum;
             set
@@ -77,8 +77,8 @@ namespace WinPaletter.UI.WP
             }
         }
 
-        private int _Value;
-        public int Value
+        private float _Value;
+        public float Value
         {
             get => _Value;
             set
@@ -145,7 +145,7 @@ namespace WinPaletter.UI.WP
                     return;
                 }
 
-                int newVal = (e.X < Circle.X) ? _Value - _LargeChange : _Value + _LargeChange;
+                float newVal = (e.X < Circle.X) ? _Value - _LargeChange : _Value + _LargeChange;
                 Value = Math.Min(Math.Max(newVal, _Minimum), _Maximum);
 
                 InvalidatePosition();

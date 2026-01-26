@@ -21,7 +21,7 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Localization.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -50,28 +50,27 @@ namespace WinPaletter
         private void LoadIntoCurrentTheme(object sender, EventArgs e)
         {
             {
-                ref Localizer lang = ref Program.Lang;
                 if (string.IsNullOrWhiteSpace(TextBox1.Text))
                 {
-                    MsgBox(lang.Strings.Messages.EmptyName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MsgBox(Program.Localization.Strings.Messages.EmptyName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
                 if (string.IsNullOrWhiteSpace(TextBox2.Text))
                 {
-                    MsgBox(lang.Strings.Messages.EmptyVer, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MsgBox(Program.Localization.Strings.Messages.EmptyVer, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
                 if (!TextBox2.Text.Replace(".", string.Empty).All(char.IsDigit))
                 {
-                    MsgBox(lang.Strings.Messages.WrongVerFormat, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MsgBox(Program.Localization.Strings.Messages.WrongVerFormat, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
                 if (string.IsNullOrWhiteSpace(TextBox4.Text))
                 {
-                    MsgBox(lang.Strings.Messages.EmptyAuthorName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MsgBox(Program.Localization.Strings.Messages.EmptyAuthorName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
             }
@@ -108,7 +107,7 @@ namespace WinPaletter
         {
             DesignerData data = new(this)
             {
-                AspectName = Program.Lang.Strings.Aspects.Info,
+                AspectName = Program.Localization.Strings.Aspects.Info,
                 Enabled = true,
                 Import_theme = false,
                 Import_msstyles = false,
@@ -183,7 +182,7 @@ namespace WinPaletter
 
             TM.Info.Color1 = color1.BackColor;
             TM.Info.Color2 = color2.BackColor;
-            TM.Info.Pattern = trackBarX1.Value;
+            TM.Info.Pattern = (int)trackBarX1.Value;
 
             TM.Info.DesignedFor_Win12 = checkBox8.Checked;
             TM.Info.DesignedFor_Win11 = CheckBox1.Checked;
@@ -354,7 +353,7 @@ namespace WinPaletter
 
         private void trackBarX1_ValueChanged(object sender, EventArgs e)
         {
-            StoreItem1.UpdatePattern(trackBarX1.Value);
+            StoreItem1.UpdatePattern((int)trackBarX1.Value);
         }
 
         private void color1_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)

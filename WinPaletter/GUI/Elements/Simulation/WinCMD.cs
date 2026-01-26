@@ -490,13 +490,13 @@ namespace WinPaletter.UI.Simulation
             }
             else
             {
-                S = $"{Program.Lang.Strings.Aspects.Consoles.CMDSimulator_Alert0}\r\n\r\n{S2}";
+                S = $"{Program.Localization.Strings.Aspects.Consoles.CMDSimulator_Alert0}\r\n\r\n{S2}";
             }
 
 
             if (Raster)
             {
-                S += $"\r\n\r\n{Program.Lang.Strings.Aspects.Consoles.CMDSimulator_Alert1}";
+                S += $"\r\n\r\n{Program.Localization.Strings.Aspects.Consoles.CMDSimulator_Alert1}";
             }
 
             if (!Raster)
@@ -519,7 +519,7 @@ namespace WinPaletter.UI.Simulation
                 {
                     using (SolidBrush br = new(Color.FromArgb(alpha, PCF)))
                     {
-                        G.DrawString(Program.Lang.Strings.Aspects.Consoles.CMDSimulator_ThisIsAPopUp, F, br, RectMiddleBorder, sf);
+                        G.DrawString(Program.Localization.Strings.Aspects.Consoles.CMDSimulator_ThisIsAPopUp, F, br, RectMiddleBorder, sf);
                     }
                 }
             }

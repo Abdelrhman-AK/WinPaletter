@@ -18,7 +18,7 @@ namespace WinPaletter
 
         private void TerminalInfo_Load(object sender, EventArgs e)
         {
-            this.LoadLanguage();
+            this.Localize();
             ApplyStyle(this);
             Icon = FormsExtensions.Icon<WindowsTerminal>();
         }
@@ -55,7 +55,7 @@ namespace WinPaletter
 
             if (Forms.WindowsTerminal.TerProfiles.Items.Contains(TerName.Text) & !((Forms.WindowsTerminal.TerProfiles.SelectedItem.ToString().ToLower() ?? string.Empty) == (TerName.Text.ToLower() ?? string.Empty)))
             {
-                MsgBox(Program.Lang.Strings.Aspects.Terminals.Name_AlreadySet, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(Program.Localization.Strings.Aspects.Terminals.Name_AlreadySet, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -111,7 +111,7 @@ namespace WinPaletter
 
         private void Button11_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.PNG, Title = Program.Lang.Strings.Extensions.OpenPNG })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.PNG, Title = Program.Localization.Strings.Extensions.OpenPNG })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {

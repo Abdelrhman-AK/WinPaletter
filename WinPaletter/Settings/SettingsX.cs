@@ -50,13 +50,12 @@ namespace WinPaletter
 
             Read(sets);
 
-            ref Localizer lang = ref Program.Lang;
-            Label11.Text = lang.Information.Name;
-            Label12.Text = lang.Information.TranslationVersion;
-            Label14.Text = $"{lang.Information.AppVer} {Program.Lang.Strings.General.AndBelow}";
-            Label19.Text = lang.Information.Lang;
-            Label16.Text = lang.Information.LangCode;
-            Label22.Text = !lang.Information.RightToLeft ? Program.Lang.Strings.Languages.LeftToRight : Program.Lang.Strings.Languages.RightToLeft;
+            Label11.Text = Program.Localization.Information.Name;
+            Label12.Text = Program.Localization.Information.TranslationVersion;
+            Label14.Text = $"{Program.Localization.Information.AppVer} {Program.Localization.Strings.General.AndBelow}";
+            Label19.Text = Program.Localization.Information.Lang;
+            Label16.Text = Program.Localization.Information.LangCode;
+            Label22.Text = !Program.Localization.Information.RightToLeft ? Program.Localization.Strings.Languages.LeftToRight : Program.Localization.Strings.Languages.RightToLeft;
 
             TextBox3.Text = Program.Settings.Language.File;
         }
@@ -175,12 +174,7 @@ namespace WinPaletter
             toggle12.Checked = Sets.ThemeApplyingBehavior.Show_WinEffects_Alert;
             toggle29.Checked = Sets.NerdStats.DragAndDrop;
 
-            Label38.Text = CalcStoreCache().ToStringFileSize();
-            Label43.Text = CalcThemesResCache().ToStringFileSize();
-            label2.Text = CalcBackupsCache().ToStringFileSize();
-            label5.Text = CalcExErrors().ToStringFileSize();
-            label7.Text = CalcAppCore().ToStringFileSize();
-            label98.Text = CalcLogs().ToStringFileSize();
+            UpdateStorageUI();
 
             RadioImage1.Checked = Sets.Store.Online_or_Offline;
             RadioImage2.Checked = !Sets.Store.Online_or_Offline;
@@ -382,13 +376,13 @@ namespace WinPaletter
             {
                 if (toggle2.Checked)
                 {
-                    Program.Lang = new();
-                    Program.Lang.Load(Program.Settings.Language.File);
-                    foreach (Form f in Application.OpenForms) f.LoadLanguage();
+                    Program.Localization = new();
+                    Program.Localization.Load(Program.Settings.Language.File);
+                    foreach (Form f in Application.OpenForms) f.Localize();
                 }
                 else
                 {
-                    MsgBox(Program.Lang.Strings.Languages.Restart, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MsgBox(Program.Localization.Strings.Languages.Restart, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
 
@@ -405,7 +399,7 @@ namespace WinPaletter
 
             Cursor = Cursors.Default;
 
-            MsgBox(Program.Lang.Strings.Messages.SettingsSaved, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MsgBox(Program.Localization.Strings.Messages.SettingsSaved, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         /// <summary>
@@ -462,7 +456,7 @@ namespace WinPaletter
                 Sets.ThemeLog.VerboseLevel = Settings.Structures.ThemeLog.VerboseLevels.Detailed;
 
             Sets.ThemeLog.CountDown = toggle19.Checked;
-            Sets.ThemeLog.CountDown_Seconds = trackBarX1.Value;
+            Sets.ThemeLog.CountDown_Seconds = (int)trackBarX1.Value;
             Sets.ThemeLog.ShowSkippedItemsOnDetailedVerbose = toggle18.Checked;
 
             Sets.AppLog.Enabled = toggle40.Checked;
@@ -590,7 +584,7 @@ namespace WinPaletter
 
             if (e.CloseReason == CloseReason.UserClosing && Changed && !skipCheckingEquality)
             {
-                switch (MsgBox(Program.Lang.Strings.Messages.SaveMsg, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
+                switch (MsgBox(Program.Localization.Strings.Messages.SaveMsg, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
                 {
                     case DialogResult.Cancel:
                         {
@@ -634,9 +628,9 @@ namespace WinPaletter
         private void SettingsX_Load(object sender, EventArgs e)
         {
             ComboBox2.Items.Clear();
-            ComboBox2.Items.Add(Program.Lang.Strings.General.Stable);
-            ComboBox2.Items.Add(Program.Lang.Strings.General.Beta);
-            this.LoadLanguage();
+            ComboBox2.Items.Add(Program.Localization.Strings.General.Stable);
+            ComboBox2.Items.Add(Program.Localization.Strings.General.Beta);
+            this.Localize();
             ApplyStyle(this);
             LoadSettings();
 
@@ -661,17 +655,21 @@ namespace WinPaletter
             if (OS.WXP)
             {
                 AlertBox17.Visible = true;
-                AlertBox17.Text = string.Format(Program.Lang.Strings.Updates.NoTLS12, Program.Lang.Strings.Windows.WXP);
+                AlertBox17.Text = string.Format(Program.Localization.Strings.Updates.NoTLS12, Program.Localization.Strings.Windows.WXP);
             }
 
             else if (OS.WVista)
             {
                 AlertBox17.Visible = true;
-                AlertBox17.Text = string.Format(Program.Lang.Strings.Updates.NoTLS12, Program.Lang.Strings.Windows.WVista);
+                AlertBox17.Text = string.Format(Program.Localization.Strings.Updates.NoTLS12, Program.Localization.Strings.Windows.WVista);
             }
 
-            Label38.Font = Fonts.ConsoleMedium;
-            Label43.Font = Fonts.ConsoleMedium;
+            storage_data_lbl.Font = Fonts.ConsoleLarge;
+            storage_backup_lbl.Font = Fonts.ConsoleLarge;
+            storage_logs_lbl.Font = Fonts.ConsoleLarge;
+            storage_errors_lbl.Font = Fonts.ConsoleLarge;
+            storage_store_lbl.Font = Fonts.ConsoleLarge;
+            storage_resPack_lbl.Font = Fonts.ConsoleLarge;
         }
 
         /// <summary>
@@ -765,7 +763,7 @@ namespace WinPaletter
             if (Directory.Exists(SysPaths.appData))
             {
                 s0 = (int)Directory.EnumerateFiles(SysPaths.appData, "*", SearchOption.AllDirectories).Sum(fileInfo => new FileInfo(fileInfo).Length);
-                s0 -= CalcExErrors() - CalcThemesResCache();
+                s0 -= CalcExErrors() - CalcThemesResCache() - CalcLogs();
                 if (Program.Settings.BackupTheme.BackupPath.StartsWith(SysPaths.appData, StringComparison.OrdinalIgnoreCase)) s0 -= CalcBackupsCache();
             }
             else
@@ -799,7 +797,7 @@ namespace WinPaletter
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterSettings, FileName = _File, Title = Program.Lang.Strings.Extensions.SaveWinPaletterSettings })
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterSettings, FileName = _File, Title = Program.Localization.Strings.Extensions.SaveWinPaletterSettings })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -811,7 +809,7 @@ namespace WinPaletter
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterSettings, FileName = _File, Title = Program.Lang.Strings.Extensions.OpenWinPaletterSettings })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterSettings, FileName = _File, Title = Program.Localization.Strings.Extensions.OpenWinPaletterSettings })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -828,7 +826,7 @@ namespace WinPaletter
         /// <param name="e"></param>
         private void Button5_Click(object sender, EventArgs e)
         {
-            if (MsgBox(Program.Lang.Strings.Messages.RemoveExtMsg, MessageBoxButtons.YesNo, MessageBoxIcon.Question, string.Empty, Program.Lang.Strings.General.CollapseNote, Program.Lang.Strings.General.ExpandNote, Program.Lang.Strings.Messages.RemoveExtMsgNote) == DialogResult.Yes)
+            if (MsgBox(Program.Localization.Strings.Messages.RemoveExtMsg, MessageBoxButtons.YesNo, MessageBoxIcon.Question, string.Empty, Program.Localization.Strings.General.CollapseNote, Program.Localization.Strings.General.ExpandNote, Program.Localization.Strings.Messages.RemoveExtMsgNote) == DialogResult.Yes)
             {
                 toggle6.Checked = false;
                 Program.DeleteFileAssociation(".wpth", "WinPaletter.ThemeFile");
@@ -849,7 +847,7 @@ namespace WinPaletter
         /// <param name="e"></param>
         private void Button7_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Lang.Strings.Extensions.OpenJSON })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Localization.Strings.Extensions.OpenJSON })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -862,10 +860,10 @@ namespace WinPaletter
                     {
                         Label11.Text = J["Information"]["name"] is not null ? J["Information"]["name"].ToString() : string.Empty;
                         Label12.Text = J["Information"]["translationversion"] is not null ? J["Information"]["translationversion"].ToString() : string.Empty;
-                        Label14.Text = $"{(J["Information"]["appver"] is not null ? J["Information"]["appver"] : Program.Version)} {Program.Lang.Strings.General.AndBelow}";
+                        Label14.Text = $"{(J["Information"]["appver"] is not null ? J["Information"]["appver"] : Program.Version)} {Program.Localization.Strings.General.AndBelow}";
                         Label19.Text = J["Information"]["lang"] is not null ? J["Information"]["lang"].ToString() : string.Empty;
                         Label16.Text = J["Information"]["langcode"] is not null ? J["Information"]["langcode"].ToString() : string.Empty;
-                        Label22.Text = J["Information"]["righttoleft"] is not null ? (!(bool)J["Information"]["righttoleft"] ? Program.Lang.Strings.Languages.LeftToRight : Program.Lang.Strings.Languages.RightToLeft) : Program.Lang.Strings.Languages.LeftToRight;
+                        Label22.Text = J["Information"]["righttoleft"] is not null ? (!(bool)J["Information"]["righttoleft"] ? Program.Localization.Strings.Languages.LeftToRight : Program.Localization.Strings.Languages.RightToLeft) : Program.Localization.Strings.Languages.LeftToRight;
                     }
                 }
             }
@@ -878,7 +876,7 @@ namespace WinPaletter
 
         private void Button16_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Lang.Strings.Extensions.OpenJSON })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Localization.Strings.Extensions.OpenJSON })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -892,7 +890,7 @@ namespace WinPaletter
 
         private void Button9_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Lang.Strings.Extensions.OpenJSON })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Localization.Strings.Extensions.OpenJSON })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -919,7 +917,7 @@ namespace WinPaletter
             string inputText = string.Empty;
             if (ListBox1.SelectedItem is not null)
                 inputText = ListBox1.SelectedItem.ToString();
-            string response = InputBox(Program.Lang.Strings.Messages.InputThemeRepos, inputText, Program.Lang.Strings.Messages.InputThemeRepos_Notice);
+            string response = InputBox(Program.Localization.Strings.Messages.InputThemeRepos, inputText, Program.Localization.Strings.Messages.InputThemeRepos_Notice);
             if (!ListBox1.Items.Contains(response))
                 ListBox1.Items.Add(response);
         }
@@ -940,7 +938,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    MsgBox(Program.Lang.Strings.Store.RemoveTip, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MsgBox(Program.Localization.Strings.Store.RemoveTip, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -989,21 +987,8 @@ namespace WinPaletter
         /// <param name="e"></param>
         private void Button19_Click(object sender, EventArgs e)
         {
-            try
-            {
-                if (Directory.Exists(SysPaths.StoreCache)) Directory.Delete(SysPaths.StoreCache, true);
-            }
-            catch (UnauthorizedAccessException ex0)
-            {
-                Forms.BugReport.ThrowError(ex0);
-            }
-            catch (Exception ex)
-            {
-                Forms.BugReport.ThrowError(ex);
-            }
-
-            Label38.Text = CalcStoreCache().ToStringFileSize();
-            label7.Text = CalcAppCore().ToStringFileSize();
+            Cache_Clean_Store();
+            UpdateStorageUI();
         }
 
         /// <summary>
@@ -1013,21 +998,8 @@ namespace WinPaletter
         /// <param name="e"></param>
         private void Button20_Click(object sender, EventArgs e)
         {
-            try
-            {
-                if (Directory.Exists(SysPaths.ThemeResPackCache)) Directory.Delete(SysPaths.ThemeResPackCache, true);
-            }
-            catch (UnauthorizedAccessException ex0)
-            {
-                Forms.BugReport.ThrowError(ex0);
-            }
-            catch (Exception ex)
-            {
-                Forms.BugReport.ThrowError(ex);
-            }
-
-            Label43.Text = CalcThemesResCache().ToStringFileSize();
-            label7.Text = CalcAppCore().ToStringFileSize();
+            Cache_Clean_ThemesResPack();
+            UpdateStorageUI();
         }
 
         /// <summary>
@@ -1037,7 +1009,7 @@ namespace WinPaletter
         /// <param name="e"></param>
         private void button13_Click(object sender, EventArgs e)
         {
-            Forms.ServiceInstaller.Run("WinPaletter.SystemEventsSounds", Program.Lang.Strings.Services.Description_SysEventsSounds, SysPaths.SysEventsSounds, Resources.WinPaletter_SysEventsSounds, ServiceInstaller.RunMethods.Install);
+            Forms.ServiceInstaller.Run("WinPaletter.SystemEventsSounds", Program.Localization.Strings.Services.Description_SysEventsSounds, SysPaths.SysEventsSounds, Resources.WinPaletter_SysEventsSounds, ServiceInstaller.RunMethods.Install);
         }
 
         /// <summary>
@@ -1047,7 +1019,7 @@ namespace WinPaletter
         /// <param name="e"></param>
         private void button21_Click(object sender, EventArgs e)
         {
-            Forms.ServiceInstaller.Run("WinPaletter.SystemEventsSounds", Program.Lang.Strings.Services.Description_SysEventsSounds, SysPaths.SysEventsSounds, null, ServiceInstaller.RunMethods.Uninstall);
+            Forms.ServiceInstaller.Run("WinPaletter.SystemEventsSounds", Program.Localization.Strings.Services.Description_SysEventsSounds, SysPaths.SysEventsSounds, null, ServiceInstaller.RunMethods.Uninstall);
         }
 
         private void button22_Click(object sender, EventArgs e)
@@ -1079,7 +1051,7 @@ namespace WinPaletter
             }
             else
             {
-                MsgBox(string.Format(Program.Lang.Strings.Messages.Bug_NoReport, $@"{SysPaths.appData}\Reports"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(string.Format(Program.Localization.Strings.Messages.Bug_NoReport, $@"{SysPaths.appData}\Reports"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -1090,21 +1062,8 @@ namespace WinPaletter
         /// <param name="e"></param>
         private void button25_Click(object sender, EventArgs e)
         {
-            try
-            {
-                if (Directory.Exists(SysPaths.Reports)) Directory.Delete(SysPaths.Reports, true);
-            }
-            catch (UnauthorizedAccessException ex0)
-            {
-                Forms.BugReport.ThrowError(ex0);
-            }
-            catch (Exception ex)
-            {
-                Forms.BugReport.ThrowError(ex);
-            }
-
-            label5.Text = CalcExErrors().ToStringFileSize();
-            label7.Text = CalcAppCore().ToStringFileSize();
+            Cache_Clean_ExErrors();
+            UpdateStorageUI();
         }
 
         private void button23_Click(object sender, EventArgs e)
@@ -1193,7 +1152,7 @@ namespace WinPaletter
             Program.Settings.General.SetupCompleted = false;
             Program.Settings.General.Save();
 
-            if (MsgBox(Program.Lang.Strings.Messages.RerunSetup_Msg0, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.Strings.Messages.ExitWinPaletter) == DialogResult.Yes)
+            if (MsgBox(Program.Localization.Strings.Messages.RerunSetup_Msg0, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Localization.Strings.Messages.ExitWinPaletter) == DialogResult.Yes)
             {
                 Program.ForceExit();
             }
@@ -1201,30 +1160,54 @@ namespace WinPaletter
 
         private void button32_Click(object sender, EventArgs e)
         {
-            if (Directory.Exists(SysPaths.LogsDir))
-            {
-                foreach (string file in Directory.GetFiles(SysPaths.LogsDir))
-                {
-                    try
-                    {
-                        if (file != Program.LogFile && File.Exists(file))
-                        {
-                            File.Delete(file);
-                        }
-                    }
-                    catch (UnauthorizedAccessException ex0)
-                    {
-                        Forms.BugReport.ThrowError(ex0);
-                    }
-                    catch (Exception ex)
-                    {
-                        Forms.BugReport.ThrowError(ex);
-                    }
-                }
-            }
+            Cache_Clean_Logs();
+            UpdateStorageUI();
+        }
 
-            label98.Text = CalcLogs().ToStringFileSize();
-            label7.Text = CalcAppCore().ToStringFileSize();
+        /// <summary>
+        /// Updates all storage labels and progress bars with relative percentages
+        /// </summary>
+        private void UpdateStorageUI()
+        {
+            // Collect all storage sizes
+            int store = CalcStoreCache();
+            int resPack = CalcThemesResCache();
+            int backups = CalcBackupsCache();
+            int errors = CalcExErrors();
+            int logs = CalcLogs();
+            int appCore = CalcAppCore();
+
+            // Dictionary to pair labels, progress bars, and values
+            var storageItems = new[]
+            {
+                new { Value = store, Label = storage_store_lbl, Progress = storage_store_prg },
+                new { Value = resPack, Label = storage_resPack_lbl, Progress = storage_resPack_prg },
+                new { Value = backups, Label = storage_backup_lbl, Progress = storage_backup_prg },
+                new { Value = errors, Label = storage_errors_lbl, Progress = storage_errors_prg },
+                new { Value = logs, Label = storage_logs_lbl, Progress = storage_logs_prg },
+                new { Value = appCore, Label = storage_data_lbl, Progress = storage_data_prg }
+            };
+
+            // Find the maximum size for relative percentage
+            int maxSize = storageItems.Max(x => x.Value);
+            if (maxSize == 0) maxSize = 1; // Avoid division by zero
+
+            // Update each label and progress bar with float precision
+            foreach (var item in storageItems)
+            {
+                item.Label.Text = item.Value.ToStringFileSize();
+
+                float percentage = ((float)item.Value / maxSize) * 100f;
+                item.Progress.Value = Math.Min(100, (int)percentage);
+
+                // Update progress bar state based on relative size
+                if (percentage < 33f)
+                    item.Progress.State = UI.WP.ProgressBar.ProgressBarState.Normal;
+                else if (percentage < 66f)
+                    item.Progress.State = UI.WP.ProgressBar.ProgressBarState.Pause;
+                else
+                    item.Progress.State = UI.WP.ProgressBar.ProgressBarState.Error;
+            }
         }
 
         private void button31_Click(object sender, EventArgs e)
@@ -1248,6 +1231,92 @@ namespace WinPaletter
             checkBox15.Enabled = (sender as Toggle).Checked;
             checkBox17.Enabled = (sender as Toggle).Checked;
             checkBox18.Enabled = (sender as Toggle).Checked;
+        }
+
+        private void button29_Click(object sender, EventArgs e)
+        {
+            Cache_Clean_ThemesResPack();
+            Cache_Clean_Logs();
+            Cache_Clean_ExErrors();
+            Cache_Clean_Store();
+            UpdateStorageUI();
+        }
+
+        void Cache_Clean_ThemesResPack()
+        {
+            try
+            {
+                if (Directory.Exists(SysPaths.ThemeResPackCache)) Directory.Delete(SysPaths.ThemeResPackCache, true);
+            }
+            catch (UnauthorizedAccessException ex0)
+            {
+                Forms.BugReport.ThrowError(ex0);
+            }
+            catch (Exception ex)
+            {
+                Forms.BugReport.ThrowError(ex);
+            }
+        }
+
+        void Cache_Clean_Logs()
+        {
+            if (Directory.Exists(SysPaths.LogsDir))
+            {
+                foreach (string file in Directory.GetFiles(SysPaths.LogsDir))
+                {
+                    try
+                    {
+                        if (file != Program.LogFile && File.Exists(file))
+                        {
+                            File.Delete(file);
+                        }
+                    }
+                    catch (UnauthorizedAccessException ex0)
+                    {
+                        Forms.BugReport.ThrowError(ex0);
+                    }
+                    catch (Exception ex)
+                    {
+                        Forms.BugReport.ThrowError(ex);
+                    }
+                }
+            }
+        }
+
+        void Cache_Clean_ExErrors()
+        {
+            try
+            {
+                if (Directory.Exists(SysPaths.Reports)) Directory.Delete(SysPaths.Reports, true);
+            }
+            catch (UnauthorizedAccessException ex0)
+            {
+                Forms.BugReport.ThrowError(ex0);
+            }
+            catch (Exception ex)
+            {
+                Forms.BugReport.ThrowError(ex);
+            }
+        }
+
+        void Cache_Clean_Store()
+        {
+            if (MsgBox(Program.Localization.Strings.Messages.ClearStoreCache, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Localization.Strings.Messages.ConfirmClearStoreCache) == DialogResult.Yes)
+            {
+                try
+                {
+                    if (Directory.Exists(SysPaths.StoreCache)) Directory.Delete(SysPaths.StoreCache, true);
+                }
+                catch (UnauthorizedAccessException ex0)
+                {
+                    Forms.BugReport.ThrowError(ex0);
+                }
+                catch (Exception ex)
+                {
+                    Forms.BugReport.ThrowError(ex);
+                }
+
+            }
         }
     }
 }

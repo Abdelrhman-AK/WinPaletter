@@ -82,17 +82,17 @@ namespace WinPaletter.Tabs
         {
             contextMenu.ItemHeight = 24;
 
-            ToolStripMenuItem closeButton = new(Program.Lang.Strings.General.Close) { Image = Assets.Tabs.ContextBox_Close };
-            ToolStripMenuItem closeAllButThis = new(Program.Lang.Strings.Tabs.Context_CloseOthers) { Image = Assets.Tabs.ContextBox_CloseAllButThis };
-            ToolStripMenuItem closeAllToTheRight = new(Program.Lang.Strings.Tabs.Context_CloseToTheRight) { Image = Assets.Tabs.ContextBox_CloseRight };
-            ToolStripMenuItem closeAllToTheLeft = new(Program.Lang.Strings.Tabs.Context_CloseToTheLeft) { Image = Assets.Tabs.ContextBox_CloseLeft };
-            ToolStripMenuItem closeAll = new(Program.Lang.Strings.Tabs.Context_CloseAll) { Image = Assets.Tabs.ContextBox_CloseAll };
+            ToolStripMenuItem closeButton = new(Program.Localization.Strings.General.Close) { Image = Assets.Tabs.ContextBox_Close };
+            ToolStripMenuItem closeAllButThis = new(Program.Localization.Strings.Tabs.Context_CloseOthers) { Image = Assets.Tabs.ContextBox_CloseAllButThis };
+            ToolStripMenuItem closeAllToTheRight = new(Program.Localization.Strings.Tabs.Context_CloseToTheRight) { Image = Assets.Tabs.ContextBox_CloseRight };
+            ToolStripMenuItem closeAllToTheLeft = new(Program.Localization.Strings.Tabs.Context_CloseToTheLeft) { Image = Assets.Tabs.ContextBox_CloseLeft };
+            ToolStripMenuItem closeAll = new(Program.Localization.Strings.Tabs.Context_CloseAll) { Image = Assets.Tabs.ContextBox_CloseAll };
             ToolStripSeparator toolStripSeparator0 = new();
-            ToolStripMenuItem detach = new(Program.Lang.Strings.Tabs.Context_Unpin) { Image = Assets.Tabs.ContextBox_Detach };
-            ToolStripMenuItem detachAll = new(Program.Lang.Strings.Tabs.Context_UnpinAll) { Image = Assets.Tabs.ContextBox_DetachAll };
-            ToolStripMenuItem detachAllButThis = new(Program.Lang.Strings.Tabs.Context_UnpinOthers) { Image = Assets.Tabs.ContextBox_DetachAllButThis };
+            ToolStripMenuItem detach = new(Program.Localization.Strings.Tabs.Context_Unpin) { Image = Assets.Tabs.ContextBox_Detach };
+            ToolStripMenuItem detachAll = new(Program.Localization.Strings.Tabs.Context_UnpinAll) { Image = Assets.Tabs.ContextBox_DetachAll };
+            ToolStripMenuItem detachAllButThis = new(Program.Localization.Strings.Tabs.Context_UnpinOthers) { Image = Assets.Tabs.ContextBox_DetachAllButThis };
             ToolStripSeparator toolStripSeparator1 = new();
-            ToolStripMenuItem helpButton = new(Program.Lang.Strings.General.Help) { Image = Assets.Tabs.ContextBox_Help };
+            ToolStripMenuItem helpButton = new(Program.Localization.Strings.General.Help) { Image = Assets.Tabs.ContextBox_Help };
 
             closeButton.Click += (s, e) => contextItemDropped.Form.Close();
             closeAllButThis.Click += (s, e) => CloseAllTabsButThis();
@@ -1259,14 +1259,14 @@ namespace WinPaletter.Tabs
             if (Program.IsBeta)
             {
                 Rectangle rect = new(0, 0, Width - 1, Height - 1);
-                SizeF betaSize = Program.Lang.Strings.General.Beta.ToUpper().Measure(Fonts.ConsoleMedium) + new SizeF(2, 2);
+                SizeF betaSize = Program.Localization.Strings.General.Beta.ToUpper().Measure(Fonts.ConsoleMedium) + new SizeF(2, 2);
                 Rectangle betaRect = new(Width - (int)betaSize.Width - 5, rect.Y + (int)((rect.Height - betaSize.Height) / 2), (int)betaSize.Width, (int)betaSize.Height);
                 G.FillRoundedRect(scheme_secondary.Brushes.Back_Checked, betaRect);
                 G.DrawRoundedRectBeveled(scheme_secondary.Pens.Line_Checked, betaRect);
                 using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
                 {
                     betaRect.Y++;
-                    G.DrawString(Program.Lang.Strings.General.Beta.ToUpper(), Fonts.ConsoleMedium, scheme_secondary.Brushes.ForeColor_Accent, betaRect, sf);
+                    G.DrawString(Program.Localization.Strings.General.Beta.ToUpper(), Fonts.ConsoleMedium, scheme_secondary.Brushes.ForeColor_Accent, betaRect, sf);
                 }
             }
 

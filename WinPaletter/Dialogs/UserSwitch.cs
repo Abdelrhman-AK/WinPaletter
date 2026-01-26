@@ -38,7 +38,7 @@ namespace WinPaletter
             shown = false;
 
             ApplyStyle(this);
-            this.LoadLanguage();
+            this.Localize();
 
             checkBox1.Checked = false;
             CheckForIllegalCrossThreadCalls = false;
@@ -63,8 +63,8 @@ namespace WinPaletter
 
             Forms.MainForm.Invoke(() =>
             {
-                label2.Text = User.GitHub_LoggedIn ? User.GitHub?.Login ?? Program.Lang.Strings.Users.GitHub_NotSigned : Program.Lang.Strings.Users.GitHub_NotSigned;
-                button3.Text = User.GitHub_LoggedIn ? Program.Lang.Strings.General.SignOut : Program.Lang.Strings.General.SignIn;
+                label2.Text = User.GitHub_LoggedIn ? User.GitHub?.Login ?? Program.Localization.Strings.Users.GitHub_NotSigned : Program.Localization.Strings.Users.GitHub_NotSigned;
+                button3.Text = User.GitHub_LoggedIn ? Program.Localization.Strings.General.SignOut : Program.Localization.Strings.General.SignIn;
 
                 button3.ImageGlyph?.Dispose();
                 button3.ImageGlyph = glyph;
@@ -117,15 +117,15 @@ namespace WinPaletter
 
                 if (user.Key.ToUpper() == "S-1-5-18") { Scheme += " (Default users settings)"; }
 
-                Scheme += "\r\n" + $"{Program.Lang.Strings.Users.Computer}: {user.Value.Split('\\').First()}";
+                Scheme += "\r\n" + $"{Program.Localization.Strings.Users.Computer}: {user.Value.Split('\\').First()}";
 
                 if (user.Key.ToUpper() is not "S-1-5-18" and not "S-1-5-19" and not "S-1-5-20")
                 {
-                    Scheme += "\r\n" + $"{(User.IsAdmin(user.Key) ? Program.Lang.Strings.Users.TypeAdministrator : Program.Lang.Strings.Users.TypeLocalUser)}";
+                    Scheme += "\r\n" + $"{(User.IsAdmin(user.Key) ? Program.Localization.Strings.Users.TypeAdministrator : Program.Localization.Strings.Users.TypeLocalUser)}";
                 }
                 else
                 {
-                    Scheme += "\r\n" + $"{Program.Lang.Strings.Users.TypeSystem}";
+                    Scheme += "\r\n" + $"{Program.Localization.Strings.Users.TypeSystem}";
                 }
 
                 RadioImage radio = new()
@@ -192,7 +192,7 @@ namespace WinPaletter
 
                     if (radio.Tag.ToString() == "S-1-5-18" || radio.Tag.ToString() == "S-1-5-19" || radio.Tag.ToString() == "S-1-5-20")
                     {
-                        DialogResult msgResult = MsgBox(Program.Lang.Strings.Users.SYSTEM_Alert0, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, Program.Lang.Strings.Users.SYSTEM_Alert1);
+                        DialogResult msgResult = MsgBox(Program.Localization.Strings.Users.SYSTEM_Alert0, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, Program.Localization.Strings.Users.SYSTEM_Alert1);
 
                         if (msgResult == DialogResult.Yes && User.SID_Credentials_Result(radio.Tag.ToString()))
                         {

@@ -62,7 +62,7 @@ namespace WinPaletter
 
         private void BugReport_Load(object sender, EventArgs e)
         {
-            this.LoadLanguage();
+            this.Localize();
             ApplyStyle(this);
             Color c = PictureBox1.Image.AverageColor().CB(Program.Style.DarkMode ? -0.35f : 0.35f);
             AnimatedBox1.BackColor = c;
@@ -176,13 +176,13 @@ namespace WinPaletter
             n?.Nodes.Add("OS").Nodes.Add($"{OS.Name_English}, {OS.Build}, {OS.Architecture_English}");
 
 #if DEBUG
-            n?.Nodes.Add("WinPaletter version").Nodes.Add($"{Program.Version}{(Program.IsBeta ? $", {Program.Lang.Strings.General.Beta}" : string.Empty)}, Build: Debug");
+            n?.Nodes.Add("WinPaletter version").Nodes.Add($"{Program.Version}{(Program.IsBeta ? $", {Program.Localization.Strings.General.Beta}" : string.Empty)}, Build: Debug");
 #else
             n?.Nodes.Add("WinPaletter version").Nodes.Add($"{Program.Version}{(Program.IsBeta ? $", {Program.Lang.Strings.General.Beta}" : string.Empty)}, Build: Release");
 #endif
 
-            n?.Nodes.Add("WinPaletter language").Nodes.Add(Program.Lang.Information.Lang);
-            n?.Nodes.Add("Debugger is attached?").Nodes.Add(Debugger.IsAttached ? Program.Lang.Strings.General.Yes : Program.Lang.Strings.General.No);
+            n?.Nodes.Add("WinPaletter language").Nodes.Add(Program.Localization.Information.Lang);
+            n?.Nodes.Add("Debugger is attached?").Nodes.Add(Debugger.IsAttached ? Program.Localization.Strings.General.Yes : Program.Localization.Strings.General.No);
 
             if (ex is not null)
             {
@@ -277,7 +277,7 @@ namespace WinPaletter
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            using (SaveFileDialog dlg = new() { Filter = Program.Filters.Text, Title = Program.Lang.Strings.Extensions.SaveText })
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.Text, Title = Program.Localization.Strings.Extensions.SaveText })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -297,13 +297,13 @@ namespace WinPaletter
             SB.AppendLine($"   OS = \"{OS.Name_English}, {OS.Build}, {OS.Architecture_English}\";");
 
 #if DEBUG
-            SB.AppendLine($"   WinPaletter.Version = \"{Program.Version}{(Program.IsBeta ? $", {Program.Lang.Strings.General.Beta}" : string.Empty)}, Build: Debug\";");
+            SB.AppendLine($"   WinPaletter.Version = \"{Program.Version}{(Program.IsBeta ? $", {Program.Localization.Strings.General.Beta}" : string.Empty)}, Build: Debug\";");
 #else
             SB.AppendLine($"   WinPaletter.Version = \"{Program.Version}{(Program.IsBeta ? $", {Program.Lang.Strings.General.Beta}" : string.Empty)}, Build: Release\";");
 #endif
 
 
-            SB.AppendLine($"   WinPaletter.Language = \"{Program.Lang.Information.Lang}\";");
+            SB.AppendLine($"   WinPaletter.Language = \"{Program.Localization.Information.Lang}\";");
             SB.AppendLine($"   WinPaletter.Debugging = {(Debugger.IsAttached ? "true" : "false")};");
             SB.AppendLine();
 
@@ -353,7 +353,7 @@ namespace WinPaletter
             }
             else
             {
-                MsgBox(string.Format(Program.Lang.Strings.Messages.Bug_NoReport, $@"{SysPaths.appData}\Reports"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(string.Format(Program.Localization.Strings.Messages.Bug_NoReport, $@"{SysPaths.appData}\Reports"), MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -407,7 +407,7 @@ namespace WinPaletter
 
         private void button9_Click(object sender, EventArgs e)
         {
-            using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = string.IsNullOrWhiteSpace(Forms.Home.File) ? Program.TM.Info.ThemeName + ".wpth" : Forms.Home.File, Title = Program.Lang.Strings.Extensions.SaveWinPaletterTheme })
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = string.IsNullOrWhiteSpace(Forms.Home.File) ? Program.TM.Info.ThemeName + ".wpth" : Forms.Home.File, Title = Program.Localization.Strings.Extensions.SaveWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {

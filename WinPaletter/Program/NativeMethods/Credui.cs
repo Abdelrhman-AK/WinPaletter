@@ -341,7 +341,7 @@ namespace WinPaletter.NativeMethods
                 else
                 {
                     canceled = true;
-                    throw new User.LogonFailureException($"ERROR_LOGON_FAILURE ({Marshal.GetLastWin32Error()}): {Program.Lang.Strings.Users.ERROR_LOGON_FAILURE}");
+                    throw new User.LogonFailureException($"ERROR_LOGON_FAILURE ({Marshal.GetLastWin32Error()}): {Program.Localization.Strings.Users.ERROR_LOGON_FAILURE}");
                 }
             }
             catch (Exception ex)

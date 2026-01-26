@@ -26,8 +26,8 @@ namespace WinPaletter
             string destDir = Path.GetDirectoryName(info.DestinationPath);
             string fileName = Path.GetFileName(info.SourcePath);
 
-            radioButton1.Text = $"{Program.Lang.Strings.GitHubStrings.Explorer_Compare_FilesFrom} {sourceDir}";
-            radioButton2.Text = $"{Program.Lang.Strings.GitHubStrings.Explorer_Compare_FilesAlreadyIn} {destDir}";
+            radioButton1.Text = $"{Program.Localization.Strings.GitHubStrings.Explorer_Compare_FilesFrom} {sourceDir}";
+            radioButton2.Text = $"{Program.Localization.Strings.GitHubStrings.Explorer_Compare_FilesAlreadyIn} {destDir}";
 
             listViewSource.Items.Clear();
             listViewDestination.Items.Clear();
@@ -61,7 +61,7 @@ namespace WinPaletter
         private void GitHub_FilesCompare_Load(object sender, EventArgs e)
         {
             ApplyStyle(this);
-            this.LoadLanguage();
+            this.Localize();
         }
 
         private void listViewSource_ItemChecked(object sender, ItemCheckedEventArgs e)
@@ -85,7 +85,7 @@ namespace WinPaletter
 
                 if (!srcChecked && !dstChecked)
                 {
-                    MsgBox(Program.Lang.Strings.GitHubStrings.Explorer_Compare_SelectFiles);
+                    MsgBox(Program.Localization.Strings.GitHubStrings.Explorer_Compare_SelectFiles);
                     return;
                 }
 

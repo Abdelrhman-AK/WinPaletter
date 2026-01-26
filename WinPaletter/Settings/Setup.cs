@@ -15,13 +15,13 @@ namespace WinPaletter
 
         private void Setup_Load(object sender, EventArgs e)
         {
-            this.LoadLanguage();
+            this.Localize();
             ApplyStyle(this);
             NativeMethods.Helpers.RemoveFormTitlebarTextAndIcon(Handle);
             Icon = FormsExtensions.Icon<MainForm>();
 
             labelAlt1.Text = Text;
-            next_btn.Text = Program.Lang.Strings.General.Next;
+            next_btn.Text = Program.Localization.Strings.General.Next;
 
             textBox1.Font = Fonts.ConsoleLarge;
             textBox1.Text = Resources.LICENSE;
@@ -101,8 +101,8 @@ namespace WinPaletter
                     ProgressDialog dlg = new()
                     {
                         Animation = AnimationResource.GetShellAnimation(ShellAnimation.FlyingPapers),
-                        Text = Program.Lang.Strings.General.RestorePoint_FirstTime_DialogTitle,
-                        Description = Program.Lang.Strings.General.RestorePoint_FirstTime_Desc,
+                        Text = Program.Localization.Strings.General.RestorePoint_FirstTime_DialogTitle,
+                        Description = Program.Localization.Strings.General.RestorePoint_FirstTime_Desc,
                         ProgressBarStyle = Ookii.Dialogs.WinForms.ProgressBarStyle.MarqueeProgressBar,
                         ShowCancelButton = false,
                         MinimizeBox = false,
@@ -111,14 +111,14 @@ namespace WinPaletter
                     dlg.DoWork += (s, args) =>
                     {
                         // Create a system restore point
-                        SystemRestoreHelper.CreateRestorePoint(Program.Lang.Strings.General.RestorePoint_FirstTime);
+                        SystemRestoreHelper.CreateRestorePoint(Program.Localization.Strings.General.RestorePoint_FirstTime);
                     };
 
                     dlg.ShowDialog();
                 }
                 else
                 {
-                    SystemRestoreHelper.CreateRestorePoint(Program.Lang.Strings.General.RestorePoint_FirstTime);
+                    SystemRestoreHelper.CreateRestorePoint(Program.Localization.Strings.General.RestorePoint_FirstTime);
                 }
 
                 tablessControl1.SelectedIndex += 1;
@@ -138,7 +138,7 @@ namespace WinPaletter
         private void Button1_Click(object sender, EventArgs e)
         {
             next_btn.Enabled = true;
-            next_btn.Text = tablessControl1.SelectedIndex >= tablessControl1.TabCount - 2 ? Program.Lang.Strings.General.Finish : Program.Lang.Strings.General.Next;
+            next_btn.Text = tablessControl1.SelectedIndex >= tablessControl1.TabCount - 2 ? Program.Localization.Strings.General.Finish : Program.Localization.Strings.General.Next;
 
             Program.Animator.HideSync(tablessControl1);
             tablessControl1.SelectedIndex = tablessControl1.SelectedIndex - 1 < 0 ? 0 : tablessControl1.SelectedIndex - 1;
@@ -165,18 +165,18 @@ namespace WinPaletter
 
         private void button13_Click(object sender, EventArgs e)
         {
-            Forms.ServiceInstaller.Run("WinPaletter.SystemEventsSounds", Program.Lang.Strings.Services.Description_SysEventsSounds, SysPaths.SysEventsSounds, Resources.WinPaletter_SysEventsSounds, ServiceInstaller.RunMethods.Install);
+            Forms.ServiceInstaller.Run("WinPaletter.SystemEventsSounds", Program.Localization.Strings.Services.Description_SysEventsSounds, SysPaths.SysEventsSounds, Resources.WinPaletter_SysEventsSounds, ServiceInstaller.RunMethods.Install);
         }
 
         private void button21_Click(object sender, EventArgs e)
         {
-            Forms.ServiceInstaller.Run("WinPaletter.SystemEventsSounds", Program.Lang.Strings.Services.Description_SysEventsSounds, SysPaths.SysEventsSounds, null, ServiceInstaller.RunMethods.Uninstall);
+            Forms.ServiceInstaller.Run("WinPaletter.SystemEventsSounds", Program.Localization.Strings.Services.Description_SysEventsSounds, SysPaths.SysEventsSounds, null, ServiceInstaller.RunMethods.Uninstall);
         }
 
         private void tablessControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             back_btn.Enabled = tablessControl1.SelectedIndex > 0;
-            next_btn.Text = tablessControl1.SelectedIndex >= tablessControl1.TabCount - 2 ? Program.Lang.Strings.General.Finish : Program.Lang.Strings.General.Next;
+            next_btn.Text = tablessControl1.SelectedIndex >= tablessControl1.TabCount - 2 ? Program.Localization.Strings.General.Finish : Program.Localization.Strings.General.Next;
 
             progressBar1.Value = tablessControl1.SelectedIndex * 100;
         }
@@ -192,7 +192,7 @@ namespace WinPaletter
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            if (MsgBox(Program.Lang.Strings.Messages.ExitWinPaletter, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MsgBox(Program.Localization.Strings.Messages.ExitWinPaletter, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 SaveSettings();
                 Program.Settings.General.SetupCompleted = false;

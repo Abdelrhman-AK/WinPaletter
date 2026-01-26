@@ -11,7 +11,7 @@ namespace WinPaletter
         }
         private void WindowsTerminalCopycat_Load(object sender, EventArgs e)
         {
-            this.LoadLanguage();
+            this.Localize();
             ApplyStyle(this);
             Icon = FormsExtensions.Icon<WindowsTerminal>();
 

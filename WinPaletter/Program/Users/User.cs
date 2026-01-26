@@ -470,82 +470,82 @@ namespace WinPaletter
                     if (error == 5)
                     {
                         // Access denied. User is not allowed to logon
-                        throw new UnauthorizedAccessException($"ERROR_LOGON_ACCESS_DENIED ({error}): {Program.Lang.Strings.Users.ERROR_LOGON_ACCESS_DENIED}");
+                        throw new UnauthorizedAccessException($"ERROR_LOGON_ACCESS_DENIED ({error}): {Program.Localization.Strings.Users.ERROR_LOGON_ACCESS_DENIED}");
                     }
                     if (error == 87)
                     {
                         // Invalid parameter. User is not allowed to logon
-                        throw new UnauthorizedAccessException($"ERROR_INVALID_PARAMETER ({error}): {Program.Lang.Strings.Users.ERROR_INVALID_PARAMETER}");
+                        throw new UnauthorizedAccessException($"ERROR_INVALID_PARAMETER ({error}): {Program.Localization.Strings.Users.ERROR_INVALID_PARAMETER}");
                     }
                     else if (error == 1008)
                     {
                         // No token. User is not allowed to logon
-                        throw new NoTokenException($"ERROR_NO_TOKEN ({error}): {Program.Lang.Strings.Users.ERROR_NO_TOKEN}");
+                        throw new NoTokenException($"ERROR_NO_TOKEN ({error}): {Program.Localization.Strings.Users.ERROR_NO_TOKEN}");
                     }
                     else if (error == 1326)
                     {
                         // Logon failure. User is not allowed to logon
-                        throw new LogonFailureException($"ERROR_LOGON_FAILURE ({error}): {Program.Lang.Strings.Users.ERROR_LOGON_FAILURE}");
+                        throw new LogonFailureException($"ERROR_LOGON_FAILURE ({error}): {Program.Localization.Strings.Users.ERROR_LOGON_FAILURE}");
                     }
                     else if (error == 1327)
                     {
                         // Account restriction. User is not allowed to logon
-                        throw new AccountRestrictionException($"ERROR_ACCOUNT_RESTRICTION ({error}): {Program.Lang.Strings.Users.ERROR_ACCOUNT_RESTRICTION}");
+                        throw new AccountRestrictionException($"ERROR_ACCOUNT_RESTRICTION ({error}): {Program.Localization.Strings.Users.ERROR_ACCOUNT_RESTRICTION}");
                     }
                     else if (error == 1328)
                     {
                         // Invalid logon hours. User is not allowed to logon
-                        throw new InvalidLogonHoursException($"ERROR_INVALID_LOGON_HOURS ({error}): {Program.Lang.Strings.Users.ERROR_INVALID_LOGON_HOURS}");
+                        throw new InvalidLogonHoursException($"ERROR_INVALID_LOGON_HOURS ({error}): {Program.Localization.Strings.Users.ERROR_INVALID_LOGON_HOURS}");
                     }
                     else if (error == 1330)
                     {
                         // Password expired. User is not allowed to logon
-                        throw new PasswordExpiredException($"ERROR_PASSWORD_EXPIRED ({error}): {Program.Lang.Strings.Users.ERROR_PASSWORD_EXPIRED}");
+                        throw new PasswordExpiredException($"ERROR_PASSWORD_EXPIRED ({error}): {Program.Localization.Strings.Users.ERROR_PASSWORD_EXPIRED}");
                     }
                     else if (error == 1331)
                     {
                         // Account disabled. User is not allowed to logon
-                        throw new AccountDisabledException($"ERROR_ACCOUNT_DISABLED ({error}): {Program.Lang.Strings.Users.ERROR_ACCOUNT_DISABLED}");
+                        throw new AccountDisabledException($"ERROR_ACCOUNT_DISABLED ({error}): {Program.Localization.Strings.Users.ERROR_ACCOUNT_DISABLED}");
                     }
                     else if (error == 1385)
                     {
                         // Logon type not granted. User is not allowed to logon
-                        throw new LogonTypeNotGrantedException($"ERROR_LOGON_TYPE_NOT_GRANTED ({error}): {Program.Lang.Strings.Users.ERROR_LOGON_TYPE_NOT_GRANTED}");
+                        throw new LogonTypeNotGrantedException($"ERROR_LOGON_TYPE_NOT_GRANTED ({error}): {Program.Localization.Strings.Users.ERROR_LOGON_TYPE_NOT_GRANTED}");
                     }
                     else if (error == 1909)
                     {
                         // Account locked out. User is not allowed to logon
-                        throw new AccountLockedOutException($"ERROR_ACCOUNT_LOCKED_OUT ({error}): {Program.Lang.Strings.Users.ERROR_ACCOUNT_LOCKED_OUT}");
+                        throw new AccountLockedOutException($"ERROR_ACCOUNT_LOCKED_OUT ({error}): {Program.Localization.Strings.Users.ERROR_ACCOUNT_LOCKED_OUT}");
                     }
                     else if (error == 1317)
                     {
                         // No such user. User is not allowed to logon
-                        throw new NoSuchUserException($"ERROR_NO_SUCH_USER ({error}): {Program.Lang.Strings.Users.ERROR_NO_SUCH_USER}");
+                        throw new NoSuchUserException($"ERROR_NO_SUCH_USER ({error}): {Program.Localization.Strings.Users.ERROR_NO_SUCH_USER}");
                     }
                     else if (error == 1311)
                     {
                         // No logon servers. User is not allowed to logon
-                        throw new NoLogonServersException($"ERROR_NO_LOGON_SERVERS ({error}): {Program.Lang.Strings.Users.ERROR_NO_LOGON_SERVERS}");
+                        throw new NoLogonServersException($"ERROR_NO_LOGON_SERVERS ({error}): {Program.Localization.Strings.Users.ERROR_NO_LOGON_SERVERS}");
                     }
                     else if (error == 1907)
                     {
                         // Password must change. User is not allowed to logon
-                        throw new PasswordMustChangeException($"ERROR_PASSWORD_MUST_CHANGE ({error}): {Program.Lang.Strings.Users.ERROR_PASSWORD_MUST_CHANGE}");
+                        throw new PasswordMustChangeException($"ERROR_PASSWORD_MUST_CHANGE ({error}): {Program.Localization.Strings.Users.ERROR_PASSWORD_MUST_CHANGE}");
                     }
                     else if (error == 0)
                     {
                         // Unknown error. User is not allowed to logon
-                        throw new LogonFailureException($"ERROR_LOGON_FAILURE ({error}): {Program.Lang.Strings.Users.ERROR_LOGON_FAILURE}");
+                        throw new LogonFailureException($"ERROR_LOGON_FAILURE ({error}): {Program.Localization.Strings.Users.ERROR_LOGON_FAILURE}");
                     }
                     else if (token == IntPtr.Zero)
                     {
                         // No token. User is not allowed to logon
-                        throw new Exception($"ERROR ({error}): {Program.Lang.Strings.Users.ERROR_UNKNOWN}");
+                        throw new Exception($"ERROR ({error}): {Program.Localization.Strings.Users.ERROR_UNKNOWN}");
                     }
                     else
                     {
                         // Unknown error. User is not allowed to logon
-                        throw new Exception($"ERROR ({error}): {Program.Lang.Strings.Users.ERROR_UNKNOWN}");
+                        throw new Exception($"ERROR ({error}): {Program.Localization.Strings.Users.ERROR_UNKNOWN}");
                     }
                 }
 
@@ -800,8 +800,8 @@ namespace WinPaletter
 
                 // Make it the last line in loop to make it gets credentials correctly
                 credsResult = Credui.Login(Forms.UserSwitch.Handle,
-                    !userEnteredWrongPassword ? string.Format(Program.Lang.Strings.Users.EnterPassword_Caption, userName) : Program.Lang.Strings.Users.IncorrectPassword,
-                    !userEnteredWrongPassword ? Program.Lang.Strings.Users.WindowsHello_NotSupported : string.Format(Program.Lang.Strings.Users.EnterPassword_Caption, userName) + "\r\n\r\n" + Program.Lang.Strings.Users.WindowsHello_NotSupported,
+                    !userEnteredWrongPassword ? string.Format(Program.Localization.Strings.Users.EnterPassword_Caption, userName) : Program.Localization.Strings.Users.IncorrectPassword,
+                    !userEnteredWrongPassword ? Program.Localization.Strings.Users.WindowsHello_NotSupported : string.Format(Program.Localization.Strings.Users.EnterPassword_Caption, userName) + "\r\n\r\n" + Program.Localization.Strings.Users.WindowsHello_NotSupported,
                     doamin, userName);
 
                 // The bool is repeated to avoid printing the alert twice

@@ -31,7 +31,7 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Localization.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -69,7 +69,7 @@ namespace WinPaletter
         {
             if (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.LogonUI)
             {
-                MsgBox(Program.Lang.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.Strings.Aspects.Disabled_Apply_1);
+                MsgBox(Program.Localization.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Localization.Strings.Aspects.Disabled_Apply_1);
                 return;
             }
 
@@ -95,7 +95,7 @@ namespace WinPaletter
         {
             DesignerData data = new(this)
             {
-                AspectName = Program.Lang.Strings.Aspects.LockScreen,
+                AspectName = Program.Localization.Strings.Aspects.LockScreen,
                 Enabled = Program.TM.LogonUI81.Enabled,
                 Import_theme = false,
                 Import_msstyles = false,
@@ -253,8 +253,8 @@ namespace WinPaletter
             TM.LogonUI81.Blur = CheckBox7.Checked;
             TM.LogonUI81.Noise = CheckBox6.Checked;
 
-            TM.LogonUI81.Blur_Intensity = trackBarX1.Value;
-            TM.LogonUI81.Noise_Intensity = trackBarX2.Value;
+            TM.LogonUI81.Blur_Intensity = (int)trackBarX1.Value;
+            TM.LogonUI81.Noise_Intensity = (int)trackBarX2.Value;
 
             if (ComboBox1.SelectedIndex == 0)
                 TM.LogonUI81.Noise_Mode = BitmapExtensions.NoiseMode.Acrylic;
@@ -406,7 +406,7 @@ namespace WinPaletter
 
         private void Button7_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, Title = Program.Lang.Strings.Extensions.OpenImages })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, Title = Program.Localization.Strings.Extensions.OpenImages })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {

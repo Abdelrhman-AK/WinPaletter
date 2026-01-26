@@ -151,7 +151,7 @@ namespace WinPaletter.Theme.Structures
 
                 Bitmap bmp;
 
-                if (ReportProgress_Detailed) ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.GetInstanceLogonUIImg, Program.Lang.Strings.Aspects.LockScreen), "info");
+                if (ReportProgress_Detailed) ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.GetInstanceLogonUIImg, Program.Localization.Strings.Aspects.LockScreen), "info");
 
                 switch (Mode)
                 {
@@ -232,15 +232,15 @@ namespace WinPaletter.Theme.Structures
                 }
 
                 if (ReportProgress)
-                    ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Actions.RenderingImage_MayNotRespond, Program.Lang.Strings.Aspects.LockScreen), "info");
+                    ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Actions.RenderingImage_MayNotRespond, Program.Localization.Strings.Aspects.LockScreen), "info");
 
                 if (ReportProgress)
-                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Lang.Strings.ThemeManager.Actions.RenderingImage, Program.Lang.Strings.Aspects.LogonUI)}", "info");
+                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Localization.Strings.ThemeManager.Actions.RenderingImage, Program.Localization.Strings.Aspects.LogonUI)}", "info");
 
                 if (Grayscale)
                 {
                     if (ReportProgress_Detailed)
-                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.GrayscaleLogonUIImg, Program.Lang.Strings.Aspects.LockScreen), "apply");
+                        ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.GrayscaleLogonUIImg, Program.Localization.Strings.Aspects.LockScreen), "apply");
 
                     Program.Log?.Write(LogEventLevel.Information, $"Grayscaling lock screen image.");
                     bmp = bmp.Grayscale();
@@ -249,7 +249,7 @@ namespace WinPaletter.Theme.Structures
                 if (Blur)
                 {
                     if (ReportProgress_Detailed)
-                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.BlurringLogonUIImg, Program.Lang.Strings.Aspects.LockScreen), "apply");
+                        ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.BlurringLogonUIImg, Program.Localization.Strings.Aspects.LockScreen), "apply");
 
                     Program.Log?.Write(LogEventLevel.Information, $"Blurring lock screen image with radius `{Blur_Intensity}`.");
 
@@ -259,7 +259,7 @@ namespace WinPaletter.Theme.Structures
                 if (Noise)
                 {
                     if (ReportProgress_Detailed)
-                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.NoiseLogonUIImg, Program.Lang.Strings.Aspects.LockScreen), "apply");
+                        ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.NoiseLogonUIImg, Program.Localization.Strings.Aspects.LockScreen), "apply");
 
                     Program.Log?.Write(LogEventLevel.Information, $"Generating noise effect for lock screen image with intensity `{Noise_Intensity}`, and type `{Noise_Mode}`.");
 
@@ -269,7 +269,7 @@ namespace WinPaletter.Theme.Structures
                 if (File.Exists(lockimg)) File.Delete(lockimg);
 
                 if (ReportProgress_Detailed)
-                    ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.LogonUIImgSaved, Program.Lang.Strings.Aspects.LockScreen, lockimg), "info");
+                    ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.LogonUIImgSaved, Program.Localization.Strings.Aspects.LockScreen, lockimg), "info");
 
                 Program.Log?.Write(LogEventLevel.Information, $"Generating lock screen image is done.");
 

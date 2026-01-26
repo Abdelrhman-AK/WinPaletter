@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WinPaletter.UI.WP;
@@ -486,7 +487,11 @@ namespace WinPaletter.TypesExtensions
 
             // Create a path for rounded rectangle
             using GraphicsPath path = useRoundedCorners ? rectangleF.Round((int)radius) : new GraphicsPath() { };
-            if (!useRoundedCorners) path.AddRectangle(rectangleF);
+            if (!useRoundedCorners)
+            {
+                path.AddRectangle(rectangleF);
+                radius = 0f;
+            }
 
             // Draw the main rounded rectangle
             G.DrawPath(pen, path);
@@ -728,40 +733,31 @@ namespace WinPaletter.TypesExtensions
                         break;
 
                     case TextureBrush tb:
-                        _ = tb.Image; // throws if disposed
-                        if (tb.Image == null) return false;
+                        _ = tb.Image;
+                        if (tb.Image == null || tb.Image.Width <= 0 || tb.Image.Height <= 0) return false;
                         break;
 
                     case HatchBrush hb:
-                        _ = hb.HatchStyle; // throws if disposed
+                        _ = hb.HatchStyle;
                         _ = hb.ForegroundColor;
                         _ = hb.BackgroundColor;
                         break;
 
                     case PathGradientBrush pgb:
-                        _ = pgb.CenterPoint; // throws if disposed
+                        _ = pgb.CenterPoint;
                         _ = pgb.SurroundColors;
                         if (pgb.SurroundColors == null || pgb.SurroundColors.Length == 0) return false;
                         break;
 
                     default:
-                        // Generic fallback — just accessing object should be safe
+                        // Allow unknown brushes (custom/derived), assume valid
                         _ = brush;
                         break;
                 }
             }
-            catch (ObjectDisposedException)
-            {
-                return false;
-            }
-            catch (ArgumentException)
-            {
-                return false;
-            }
-            catch (ExternalException)
-            {
-                return false;
-            }
+            catch (ObjectDisposedException) { return false; }
+            catch (ArgumentException) { return false; }
+            catch (ExternalException) { return false; }
 
             return true;
         }
@@ -784,39 +780,34 @@ namespace WinPaletter.TypesExtensions
 
             try
             {
-                // Access properties that will throw if disposed
-                _ = pen.Color;
                 _ = pen.Width;
                 _ = pen.Alignment;
 
-                // If pen was created from a brush, validate that brush too
-                if (pen.Brush != null && !pen.Brush.IsValid())
-                    return false;
+                // Only validate SolidBrush strictly; allow LinearGradientBrush, TextureBrush, etc.
+                if (pen.Brush != null)
+                {
+                    Type brushType = pen.Brush.GetType();
+                    if (brushType == typeof(SolidBrush))
+                    {
+                        // Use your existing Brush.IsValid() for SolidBrush
+                        if (!pen.Brush.IsValid()) return false;
+                    }
+                }
 
-                // Check dash pattern validity
+                // Validate custom dash pattern
                 if (pen.DashStyle == System.Drawing.Drawing2D.DashStyle.Custom)
                 {
                     float[] pattern = pen.DashPattern;
                     if (pattern == null || pattern.Length == 0) return false;
-
                     foreach (float value in pattern)
                     {
                         if (value <= 0 || float.IsNaN(value) || float.IsInfinity(value)) return false;
                     }
                 }
             }
-            catch (ObjectDisposedException)
-            {
-                return false;
-            }
-            catch (ArgumentException)
-            {
-                return false;
-            }
-            catch (ExternalException)
-            {
-                return false;
-            }
+            catch (ObjectDisposedException) { return false; }
+            catch (ArgumentException) { return false; }
+            catch (ExternalException) { return false; }
 
             return true;
         }

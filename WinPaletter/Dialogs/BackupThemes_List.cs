@@ -24,7 +24,7 @@ namespace WinPaletter
 
         private void BackupThemes_List_Load(object sender, EventArgs e)
         {
-            this.LoadLanguage();
+            this.Localize();
             ApplyStyle(this);
 
             CheckForIllegalCrossThreadCalls = false;
@@ -35,9 +35,9 @@ namespace WinPaletter
             // Set up columns for the ListView
             listView1.View = View.Details;
             listView1.Columns.Clear();
-            listView1.Columns.Add(Program.Lang.Strings.General.ThemeName, 150);
-            listView1.Columns.Add(Program.Lang.Strings.General.FilePath, 400);
-            listView1.Columns.Add(Program.Lang.Strings.General.CreationDateTime, 150);
+            listView1.Columns.Add(Program.Localization.Strings.General.ThemeName, 150);
+            listView1.Columns.Add(Program.Localization.Strings.General.FilePath, 400);
+            listView1.Columns.Add(Program.Localization.Strings.General.CreationDateTime, 150);
 
             label3.Font = Fonts.ConsoleMedium;
 
@@ -75,11 +75,11 @@ namespace WinPaletter
             string[] themes_onExErrors = [.. Directory.GetFiles($"{Program.Settings.BackupTheme.BackupPath}\\OnExceptionError", "*.wpth").OrderByDescending(file => new FileInfo(file).CreationTime)];
 
             // Create groups
-            ListViewGroup group1 = new(Program.Lang.Strings.Backup.Group_ThemeApply, HorizontalAlignment.Center);
-            ListViewGroup group2 = new(Program.Lang.Strings.Backup.Group_AspectApply, HorizontalAlignment.Center);
-            ListViewGroup group3 = new(Program.Lang.Strings.Backup.Group_AppOpen, HorizontalAlignment.Center);
-            ListViewGroup group4 = new(Program.Lang.Strings.Backup.Group_ThemeOpen, HorizontalAlignment.Center);
-            ListViewGroup group5 = new(Program.Lang.Strings.Backup.Group_ThemeExError, HorizontalAlignment.Center);
+            ListViewGroup group1 = new(Program.Localization.Strings.Backup.Group_ThemeApply, HorizontalAlignment.Center);
+            ListViewGroup group2 = new(Program.Localization.Strings.Backup.Group_AspectApply, HorizontalAlignment.Center);
+            ListViewGroup group3 = new(Program.Localization.Strings.Backup.Group_AppOpen, HorizontalAlignment.Center);
+            ListViewGroup group4 = new(Program.Localization.Strings.Backup.Group_ThemeOpen, HorizontalAlignment.Center);
+            ListViewGroup group5 = new(Program.Localization.Strings.Backup.Group_ThemeExError, HorizontalAlignment.Center);
 
             // Add groups to the ListView
             listView1.Groups.Add(group1);
@@ -90,7 +90,7 @@ namespace WinPaletter
 
             IEnumerable<string> backups = Directory.EnumerateFiles(Program.Settings.BackupTheme.BackupPath, "*", SearchOption.AllDirectories);
             label3.Text = backups.Sum(fileInfo => new FileInfo(fileInfo).Length).ToStringFileSize();
-            label4.Text = $"{backups.Count()} {Program.Lang.Strings.General.BackupsCount}";
+            label4.Text = $"{backups.Count()} {Program.Localization.Strings.General.BackupsCount}";
 
             Task.Run(() =>
             {
@@ -136,7 +136,7 @@ namespace WinPaletter
         {
             if (listView1.SelectedItems.Count > 0)
             {
-                if (MsgBox(Program.Lang.Strings.Backup.RestoreQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                if (MsgBox(Program.Localization.Strings.Backup.RestoreQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     Program.TM = new(Manager.Source.File, listView1.SelectedItems[0].SubItems[1].Text);
                     Program.TM_Original = Program.TM.Clone();
@@ -204,7 +204,7 @@ namespace WinPaletter
             {
                 if (File.Exists(listView1.SelectedItems[0].SubItems[1].Text))
                 {
-                    using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.SaveWinPaletterTheme })
+                    using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Localization.Strings.Extensions.SaveWinPaletterTheme })
                     {
                         if (dlg.ShowDialog() == DialogResult.OK)
                         {
@@ -219,7 +219,7 @@ namespace WinPaletter
         {
             if (listView1.SelectedItems.Count > 0)
             {
-                if (MsgBox(Program.Lang.Strings.Backup.DeleteQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                if (MsgBox(Program.Localization.Strings.Backup.DeleteQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     Program.Animator.HideSync(windowsDesktop1);
                     File.Delete(listView1.SelectedItems[0].SubItems[1].Text);
@@ -256,7 +256,7 @@ namespace WinPaletter
 
         private void Button20_Click(object sender, EventArgs e)
         {
-            if (MsgBox(Program.Lang.Strings.Backup.DeleteAllQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MsgBox(Program.Localization.Strings.Backup.DeleteAllQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 Program.Animator.HideSync(windowsDesktop1);
                 Directory.Delete($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeApply", true);
@@ -291,7 +291,7 @@ namespace WinPaletter
         {
             if (listView1.SelectedItems.Count > 0)
             {
-                if (MsgBox(Program.Lang.Strings.Backup.RestoreQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                if (MsgBox(Program.Localization.Strings.Backup.RestoreQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     Program.TM = new(Manager.Source.File, listView1.SelectedItems[0].SubItems[1].Text, false, true);
                     Program.TM_Original = Program.TM.Clone();

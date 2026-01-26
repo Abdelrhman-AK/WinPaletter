@@ -40,7 +40,7 @@ namespace WinPaletter
 
         private void WallStudio_Load(object sender, EventArgs e)
         {
-            this.LoadLanguage();
+            this.Localize();
             ApplyStyle(this);
 
             NativeMethods.Helpers.RemoveFormTitlebarTextAndIcon(Handle);
@@ -59,7 +59,7 @@ namespace WinPaletter
             pictureBox7.Image = LogonUIRes.Win7;
 
             labelAlt1.Text = Text;
-            next_btn.Text = Program.Lang.Strings.General.Next;
+            next_btn.Text = Program.Localization.Strings.General.Next;
             textBox1.Text = Program.TM.Wallpaper.ImageFile;
             label7.Text = DateTime.Now.ToString("h:mm");
             label5.Text = DateTime.Now.ToString("dddd, MMMM d");
@@ -132,7 +132,7 @@ namespace WinPaletter
                 if (radioImage3.Checked) Forms.ThemeLog.Apply_Theme(TM);
                 if (radioImage5.Checked)
                 {
-                    using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = $"WallStudioTheme_{Path.GetFileNameWithoutExtension(textBox1.Text)}.wpth", Title = Program.Lang.Strings.Extensions.SaveWinPaletterTheme })
+                    using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = $"WallStudioTheme_{Path.GetFileNameWithoutExtension(textBox1.Text)}.wpth", Title = Program.Localization.Strings.Extensions.SaveWinPaletterTheme })
                     {
                         if (dlg.ShowDialog() == DialogResult.OK)
                         {
@@ -286,7 +286,7 @@ namespace WinPaletter
         private void Button1_Click(object sender, EventArgs e)
         {
             next_btn.Enabled = true;
-            next_btn.Text = tablessControl1.SelectedIndex >= tablessControl1.TabCount - 2 ? Program.Lang.Strings.General.Finish : Program.Lang.Strings.General.Next;
+            next_btn.Text = tablessControl1.SelectedIndex >= tablessControl1.TabCount - 2 ? Program.Localization.Strings.General.Finish : Program.Localization.Strings.General.Next;
 
             Program.Animator.HideSync(tablessControl1);
             tablessControl1.SelectedIndex = tablessControl1.SelectedIndex - 1 < 0 ? 0 : tablessControl1.SelectedIndex - 1;
@@ -296,7 +296,7 @@ namespace WinPaletter
         private void tablessControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             back_btn.Enabled = tablessControl1.SelectedIndex > 0;
-            next_btn.Text = tablessControl1.SelectedIndex >= tablessControl1.TabCount - 1 ? Program.Lang.Strings.General.Finish : Program.Lang.Strings.General.Next;
+            next_btn.Text = tablessControl1.SelectedIndex >= tablessControl1.TabCount - 1 ? Program.Localization.Strings.General.Finish : Program.Localization.Strings.General.Next;
 
             progressBar1.Value = tablessControl1.SelectedIndex * 100;
         }
@@ -311,7 +311,7 @@ namespace WinPaletter
 
             if (!canCloseWithoutMsg)
             {
-                if (MsgBox(Program.Lang.Strings.Messages.CloseWizard, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) e.Cancel = true;
+                if (MsgBox(Program.Localization.Strings.Messages.CloseWizard, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) e.Cancel = true;
             }
 
             // Continue with the closing event if the user has not cancelled it.
@@ -337,7 +337,7 @@ namespace WinPaletter
 
         private void button10_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, FileName = textBox1.Text, Title = Program.Lang.Strings.Extensions.OpenImages })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, FileName = textBox1.Text, Title = Program.Localization.Strings.Extensions.OpenImages })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -365,7 +365,7 @@ namespace WinPaletter
 
         private void button5_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, FileName = textBox2.Text, Title = Program.Lang.Strings.Extensions.OpenImages })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, FileName = textBox2.Text, Title = Program.Localization.Strings.Extensions.OpenImages })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -463,7 +463,7 @@ namespace WinPaletter
         #region Helpers
 
         /// <summary>
-        /// Gets the list of enabled aspects but not the disabled ones in the <see cref="Theme.Manager"/> instance depending on the current OS and by using strings from <see cref="Program.Lang"/>.
+        /// Gets the list of enabled aspects but not the disabled ones in the <see cref="Theme.Manager"/> instance depending on the current OS and by using strings from <see cref="Program.Localization"/>.
         /// </summary>
         /// <param name="TM"></param>
         /// <returns></returns>
@@ -472,40 +472,40 @@ namespace WinPaletter
             List<string> aspects_list = [];
             aspects_list.Clear();
 
-            if ((OS.W12 || ignoreOS) && TM.Windows12.Enabled) aspects_list.Add(string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W12));
-            if ((OS.W11 || ignoreOS) && TM.Windows11.Enabled) aspects_list.Add(string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W11));
-            if ((OS.W10 || ignoreOS) && TM.Windows10.Enabled) aspects_list.Add(string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W10));
-            if ((OS.W81 || ignoreOS) && TM.Windows81.Enabled) aspects_list.Add(string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W81));
-            if ((OS.W8 || ignoreOS) && TM.Windows8.Enabled) aspects_list.Add(string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W8));
-            if ((OS.W7 || ignoreOS) && TM.Windows7.Enabled) aspects_list.Add(string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W7));
-            if ((OS.WVista || ignoreOS) && TM.WindowsVista.Enabled) aspects_list.Add(string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.WVista));
-            if ((OS.WXP || ignoreOS) && TM.WindowsXP.Enabled) aspects_list.Add(string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.WXP));
+            if ((OS.W12 || ignoreOS) && TM.Windows12.Enabled) aspects_list.Add(string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W12));
+            if ((OS.W11 || ignoreOS) && TM.Windows11.Enabled) aspects_list.Add(string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W11));
+            if ((OS.W10 || ignoreOS) && TM.Windows10.Enabled) aspects_list.Add(string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W10));
+            if ((OS.W81 || ignoreOS) && TM.Windows81.Enabled) aspects_list.Add(string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W81));
+            if ((OS.W8 || ignoreOS) && TM.Windows8.Enabled) aspects_list.Add(string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W8));
+            if ((OS.W7 || ignoreOS) && TM.Windows7.Enabled) aspects_list.Add(string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W7));
+            if ((OS.WVista || ignoreOS) && TM.WindowsVista.Enabled) aspects_list.Add(string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.WVista));
+            if ((OS.WXP || ignoreOS) && TM.WindowsXP.Enabled) aspects_list.Add(string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.WXP));
 
-            if (OS.W12 && TM.LogonUI12.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.LockScreen);
-            if (OS.W11 && TM.LogonUI11.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.LockScreen);
-            if (OS.W10 && TM.LogonUI10.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.LockScreen);
+            if (OS.W12 && TM.LogonUI12.Enabled) aspects_list.Add(Program.Localization.Strings.Aspects.LockScreen);
+            if (OS.W11 && TM.LogonUI11.Enabled) aspects_list.Add(Program.Localization.Strings.Aspects.LockScreen);
+            if (OS.W10 && TM.LogonUI10.Enabled) aspects_list.Add(Program.Localization.Strings.Aspects.LockScreen);
 
-            if (TM.LogonUI81.Enabled & (OS.W8x)) aspects_list.Add(Program.Lang.Strings.Aspects.LockScreen);
-            if (TM.LogonUI7.Enabled & (OS.W7)) aspects_list.Add(Program.Lang.Strings.Aspects.LogonUI);
-            if (TM.LogonUIXP.Enabled & OS.WXP) aspects_list.Add(Program.Lang.Strings.Aspects.LogonUI);
+            if (TM.LogonUI81.Enabled & (OS.W8x)) aspects_list.Add(Program.Localization.Strings.Aspects.LockScreen);
+            if (TM.LogonUI7.Enabled & (OS.W7)) aspects_list.Add(Program.Localization.Strings.Aspects.LogonUI);
+            if (TM.LogonUIXP.Enabled & OS.WXP) aspects_list.Add(Program.Localization.Strings.Aspects.LogonUI);
 
-            if (TM.Win32.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.ClassicColors);
+            if (TM.Win32.Enabled) aspects_list.Add(Program.Localization.Strings.Aspects.ClassicColors);
 
-            if (TM.Cursors.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.Cursors);
-            if (TM.Wallpaper.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.Wallpaper);
-            if (TM.Sounds.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.Sounds);
-            if (TM.ScreenSaver.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.ScreenSaver);
-            if (TM.MetricsFonts.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.MetricsFonts);
-            if (TM.CommandPrompt.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.CommandPrompt);
-            if (TM.PowerShellx86.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.PowerShellx86);
-            if (TM.PowerShellx64.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.PowerShellx64);
-            if (TM.Terminal.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.TerminalStable);
-            if (TM.TerminalPreview.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.TerminalPreview);
-            if (TM.WindowsEffects.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.WinEffects);
-            if (TM.AltTab.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.AltTab);
-            if (TM.Icons.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.Icons);
-            if (TM.Accessibility.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.Accessibility);
-            if (TM.AppTheme.Enabled) aspects_list.Add(Program.Lang.Strings.Aspects.AppTheme);
+            if (TM.Cursors.Enabled) aspects_list.Add(Program.Localization.Strings.Aspects.Cursors);
+            if (TM.Wallpaper.Enabled) aspects_list.Add(Program.Localization.Strings.Aspects.Wallpaper);
+            if (TM.Sounds.Enabled) aspects_list.Add(Program.Localization.Strings.Aspects.Sounds);
+            if (TM.ScreenSaver.Enabled) aspects_list.Add(Program.Localization.Strings.Aspects.ScreenSaver);
+            if (TM.MetricsFonts.Enabled) aspects_list.Add(Program.Localization.Strings.Aspects.MetricsFonts);
+            if (TM.CommandPrompt.Enabled) aspects_list.Add(Program.Localization.Strings.Aspects.CommandPrompt);
+            if (TM.PowerShellx86.Enabled) aspects_list.Add(Program.Localization.Strings.Aspects.PowerShellx86);
+            if (TM.PowerShellx64.Enabled) aspects_list.Add(Program.Localization.Strings.Aspects.PowerShellx64);
+            if (TM.Terminal.Enabled) aspects_list.Add(Program.Localization.Strings.Aspects.TerminalStable);
+            if (TM.TerminalPreview.Enabled) aspects_list.Add(Program.Localization.Strings.Aspects.TerminalPreview);
+            if (TM.WindowsEffects.Enabled) aspects_list.Add(Program.Localization.Strings.Aspects.WinEffects);
+            if (TM.AltTab.Enabled) aspects_list.Add(Program.Localization.Strings.Aspects.AltTab);
+            if (TM.Icons.Enabled) aspects_list.Add(Program.Localization.Strings.Aspects.Icons);
+            if (TM.Accessibility.Enabled) aspects_list.Add(Program.Localization.Strings.Aspects.Accessibility);
+            if (TM.AppTheme.Enabled) aspects_list.Add(Program.Localization.Strings.Aspects.AppTheme);
 
             return aspects_list;
         }
@@ -538,48 +538,48 @@ namespace WinPaletter
         {
             int checkedCount = toggle1.Checked ? smoothPanel1.Controls.OfType<ColorEffectControl>().Count(c => c.ColorEffect.Checked) : 0;
 
-            return $"{Program.Lang.Strings.ColorEffects.TotalEffects}: " + smoothPanel1.Controls.OfType<ColorEffectControl>().Count().ToString() + ", " +
-                   $"{(checkedCount > 0 ? ($"{Program.Lang.Strings.ColorEffects.Applied}: {checkedCount}") : Program.Lang.Strings.ColorEffects.NoEffects)}.";
+            return $"{Program.Localization.Strings.ColorEffects.TotalEffects}: " + smoothPanel1.Controls.OfType<ColorEffectControl>().Count().ToString() + ", " +
+                   $"{(checkedCount > 0 ? ($"{Program.Localization.Strings.ColorEffects.Applied}: {checkedCount}") : Program.Localization.Strings.ColorEffects.NoEffects)}.";
         }
 
         void AdjustTMToggles()
         {
             for (int i = 0, loopTo = CheckedListBox1.Items.Count - 1; i <= loopTo; i++)
             {
-                if (CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W12).ToLower())
+                if (CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W12).ToLower())
                     TM.Windows12.Enabled = CheckedListBox1.GetItemChecked(i);
 
-                if (CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W11).ToLower())
+                if (CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W11).ToLower())
                     TM.Windows11.Enabled = CheckedListBox1.GetItemChecked(i);
 
-                if (CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W10).ToLower())
+                if (CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W10).ToLower())
                     TM.Windows10.Enabled = CheckedListBox1.GetItemChecked(i);
 
-                if (CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W81).ToLower())
+                if (CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W81).ToLower())
                     TM.Windows81.Enabled = CheckedListBox1.GetItemChecked(i);
 
-                if (CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W8).ToLower())
+                if (CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W8).ToLower())
                     TM.Windows8.Enabled = CheckedListBox1.GetItemChecked(i);
 
-                if (CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.W7).ToLower())
+                if (CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W7).ToLower())
                     TM.Windows7.Enabled = CheckedListBox1.GetItemChecked(i);
 
-                if (CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.WVista).ToLower())
+                if (CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.WVista).ToLower())
                     TM.WindowsVista.Enabled = CheckedListBox1.GetItemChecked(i);
 
-                if (CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Lang.Strings.Aspects.WinTheme, Program.Lang.Strings.Windows.WXP).ToLower())
+                if (CheckedListBox1.Items[i].ToString().ToLower() == string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.WXP).ToLower())
                     TM.WindowsXP.Enabled = CheckedListBox1.GetItemChecked(i);
 
-                if (CheckedListBox1.Items[i].ToString() == Program.Lang.Strings.Aspects.ClassicColors)
+                if (CheckedListBox1.Items[i].ToString() == Program.Localization.Strings.Aspects.ClassicColors)
                     TM.Win32.Enabled = CheckedListBox1.GetItemChecked(i);
 
-                if (CheckedListBox1.Items[i].ToString() == Program.Lang.Strings.Aspects.Accessibility)
+                if (CheckedListBox1.Items[i].ToString() == Program.Localization.Strings.Aspects.Accessibility)
                     TM.Accessibility.Enabled = CheckedListBox1.GetItemChecked(i);
 
-                if (CheckedListBox1.Items[i].ToString() == Program.Lang.Strings.Aspects.AppTheme)
+                if (CheckedListBox1.Items[i].ToString() == Program.Localization.Strings.Aspects.AppTheme)
                     TM.AppTheme.Enabled = CheckedListBox1.GetItemChecked(i);
 
-                if (CheckedListBox1.Items[i].ToString() == Program.Lang.Strings.Aspects.LogonUI)
+                if (CheckedListBox1.Items[i].ToString() == Program.Localization.Strings.Aspects.LogonUI)
                 {
                     if (OS.W7)
                     {
@@ -591,7 +591,7 @@ namespace WinPaletter
                     }
                 }
 
-                if (CheckedListBox1.Items[i].ToString() == Program.Lang.Strings.Aspects.LockScreen)
+                if (CheckedListBox1.Items[i].ToString() == Program.Localization.Strings.Aspects.LockScreen)
                 {
                     if (OS.W8x)
                     {
@@ -611,28 +611,28 @@ namespace WinPaletter
                     }
                 }
 
-                if (CheckedListBox1.Items[i].ToString() == Program.Lang.Strings.Aspects.Cursors)
+                if (CheckedListBox1.Items[i].ToString() == Program.Localization.Strings.Aspects.Cursors)
                     TM.Cursors.Enabled = CheckedListBox1.GetItemChecked(i);
-                if (CheckedListBox1.Items[i].ToString() == Program.Lang.Strings.Aspects.CommandPrompt)
+                if (CheckedListBox1.Items[i].ToString() == Program.Localization.Strings.Aspects.CommandPrompt)
                     TM.CommandPrompt.Enabled = CheckedListBox1.GetItemChecked(i);
-                if (CheckedListBox1.Items[i].ToString() == Program.Lang.Strings.Aspects.PowerShellx86)
+                if (CheckedListBox1.Items[i].ToString() == Program.Localization.Strings.Aspects.PowerShellx86)
                     TM.PowerShellx86.Enabled = CheckedListBox1.GetItemChecked(i);
-                if (CheckedListBox1.Items[i].ToString() == Program.Lang.Strings.Aspects.PowerShellx64)
+                if (CheckedListBox1.Items[i].ToString() == Program.Localization.Strings.Aspects.PowerShellx64)
                     TM.PowerShellx64.Enabled = CheckedListBox1.GetItemChecked(i);
-                if (CheckedListBox1.Items[i].ToString() == Program.Lang.Strings.Aspects.TerminalStable)
+                if (CheckedListBox1.Items[i].ToString() == Program.Localization.Strings.Aspects.TerminalStable)
                     TM.Terminal.Enabled = CheckedListBox1.GetItemChecked(i);
-                if (CheckedListBox1.Items[i].ToString() == Program.Lang.Strings.Aspects.TerminalPreview)
+                if (CheckedListBox1.Items[i].ToString() == Program.Localization.Strings.Aspects.TerminalPreview)
                     TM.TerminalPreview.Enabled = CheckedListBox1.GetItemChecked(i);
-                if (CheckedListBox1.Items[i].ToString() == Program.Lang.Strings.Aspects.MetricsFonts)
+                if (CheckedListBox1.Items[i].ToString() == Program.Localization.Strings.Aspects.MetricsFonts)
                     TM.MetricsFonts.Enabled = CheckedListBox1.GetItemChecked(i);
-                if (CheckedListBox1.Items[i].ToString() == Program.Lang.Strings.Aspects.Wallpaper)
+                if (CheckedListBox1.Items[i].ToString() == Program.Localization.Strings.Aspects.Wallpaper)
                     TM.Wallpaper.Enabled = CheckedListBox1.GetItemChecked(i);
-                if (CheckedListBox1.Items[i].ToString() == Program.Lang.Strings.Aspects.WinEffects)
+                if (CheckedListBox1.Items[i].ToString() == Program.Localization.Strings.Aspects.WinEffects)
                     TM.WindowsEffects.Enabled = CheckedListBox1.GetItemChecked(i);
-                if (CheckedListBox1.Items[i].ToString() == Program.Lang.Strings.Aspects.AltTab)
+                if (CheckedListBox1.Items[i].ToString() == Program.Localization.Strings.Aspects.AltTab)
                     TM.AltTab.Enabled = CheckedListBox1.GetItemChecked(i);
 
-                if (CheckedListBox1.Items[i].ToString() == Program.Lang.Strings.Aspects.Icons)
+                if (CheckedListBox1.Items[i].ToString() == Program.Localization.Strings.Aspects.Icons)
                     TM.Icons.Enabled = CheckedListBox1.GetItemChecked(i);
             }
         }

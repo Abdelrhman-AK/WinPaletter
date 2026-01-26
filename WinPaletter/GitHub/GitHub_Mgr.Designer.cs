@@ -52,26 +52,16 @@
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.groupBox6 = new WinPaletter.UI.WP.GroupBox();
             this.tablessControl2 = new WinPaletter.UI.WP.TablessControl();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.button15 = new WinPaletter.UI.WP.Button();
-            this.label16 = new System.Windows.Forms.Label();
-            this.banner6 = new WinPaletter.UI.WP.Banner();
-            this.label15 = new System.Windows.Forms.Label();
-            this.banner5 = new WinPaletter.UI.WP.Banner();
-            this.label13 = new System.Windows.Forms.Label();
-            this.banner4 = new WinPaletter.UI.WP.Banner();
-            this.label11 = new System.Windows.Forms.Label();
-            this.banner3 = new WinPaletter.UI.WP.Banner();
-            this.label10 = new System.Windows.Forms.Label();
-            this.banner2 = new WinPaletter.UI.WP.Banner();
             this.banner1 = new WinPaletter.UI.WP.Banner();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.button16 = new WinPaletter.UI.WP.Button();
             this.groupBox7 = new WinPaletter.UI.WP.GroupBox();
             this.branchesView = new WinPaletter.UI.WP.ListView();
             this.groupBox5 = new WinPaletter.UI.WP.GroupBox();
+            this.button17 = new WinPaletter.UI.WP.Button();
             this.label12 = new System.Windows.Forms.Label();
             this.progressBar1 = new WinPaletter.UI.WP.ProgressBar();
             this.button14 = new WinPaletter.UI.WP.Button();
@@ -89,6 +79,7 @@
             this.separatorV1 = new WinPaletter.UI.WP.SeparatorV();
             this.listView1 = new WinPaletter.UI.WP.ListView();
             this.groupBox4 = new WinPaletter.UI.WP.GroupBox();
+            this.button19 = new WinPaletter.UI.WP.Button();
             this.btn_download = new WinPaletter.UI.WP.Button();
             this.label14 = new System.Windows.Forms.Label();
             this.toggle2 = new WinPaletter.UI.WP.Toggle();
@@ -118,6 +109,23 @@
             this.button6 = new WinPaletter.UI.WP.Button();
             this.pin_button = new WinPaletter.UI.WP.Button();
             this.button3 = new WinPaletter.UI.WP.Button();
+            this.groupBox2 = new WinPaletter.UI.WP.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.banner7 = new WinPaletter.UI.WP.Banner();
+            this.groupBox8 = new WinPaletter.UI.WP.GroupBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.banner2 = new WinPaletter.UI.WP.Banner();
+            this.groupBox9 = new WinPaletter.UI.WP.GroupBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.banner3 = new WinPaletter.UI.WP.Banner();
+            this.groupBox10 = new WinPaletter.UI.WP.GroupBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.banner4 = new WinPaletter.UI.WP.Banner();
+            this.button20 = new WinPaletter.UI.WP.Button();
             this.tablessControl1.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -125,7 +133,6 @@
             this.flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabPage2.SuspendLayout();
-            this.groupBox6.SuspendLayout();
             this.tablessControl2.SuspendLayout();
             this.tabPage5.SuspendLayout();
             this.tabPage6.SuspendLayout();
@@ -142,6 +149,10 @@
             this.groupBox1.SuspendLayout();
             this.titlebarExtender1.SuspendLayout();
             this.explorer_controls.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox8.SuspendLayout();
+            this.groupBox9.SuspendLayout();
+            this.groupBox10.SuspendLayout();
             this.SuspendLayout();
             // 
             // imageList1
@@ -425,61 +436,43 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.tabPage2.Controls.Add(this.groupBox6);
-            this.tabPage2.Controls.Add(this.groupBox3);
+            this.tabPage2.Controls.Add(this.tablessControl2);
             this.tabPage2.Location = new System.Drawing.Point(144, 4);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Size = new System.Drawing.Size(840, 587);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "My themes";
             // 
-            // groupBox6
-            // 
-            this.groupBox6.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox6.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox6.Controls.Add(this.tablessControl2);
-            this.groupBox6.Location = new System.Drawing.Point(3, 63);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(834, 521);
-            this.groupBox6.TabIndex = 3;
-            this.groupBox6.UseDecorationPattern = false;
-            this.groupBox6.UseSharpStyle = false;
-            // 
             // tablessControl2
             // 
-            this.tablessControl2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.tablessControl2.Controls.Add(this.tabPage5);
             this.tablessControl2.Controls.Add(this.tabPage6);
-            this.tablessControl2.Location = new System.Drawing.Point(4, 6);
+            this.tablessControl2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tablessControl2.Location = new System.Drawing.Point(0, 0);
             this.tablessControl2.Multiline = true;
             this.tablessControl2.Name = "tablessControl2";
             this.tablessControl2.SelectedIndex = 0;
-            this.tablessControl2.Size = new System.Drawing.Size(827, 511);
+            this.tablessControl2.Size = new System.Drawing.Size(840, 587);
             this.tablessControl2.TabIndex = 23;
             // 
             // tabPage5
             // 
             this.tabPage5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.tabPage5.Controls.Add(this.button15);
-            this.tabPage5.Controls.Add(this.label16);
-            this.tabPage5.Controls.Add(this.banner6);
-            this.tabPage5.Controls.Add(this.label15);
-            this.tabPage5.Controls.Add(this.banner5);
-            this.tabPage5.Controls.Add(this.label13);
+            this.tabPage5.Controls.Add(this.button20);
+            this.tabPage5.Controls.Add(this.groupBox10);
             this.tabPage5.Controls.Add(this.banner4);
-            this.tabPage5.Controls.Add(this.label11);
+            this.tabPage5.Controls.Add(this.groupBox9);
             this.tabPage5.Controls.Add(this.banner3);
-            this.tabPage5.Controls.Add(this.label10);
+            this.tabPage5.Controls.Add(this.groupBox8);
             this.tabPage5.Controls.Add(this.banner2);
+            this.tabPage5.Controls.Add(this.groupBox2);
+            this.tabPage5.Controls.Add(this.banner7);
+            this.tabPage5.Controls.Add(this.button15);
             this.tabPage5.Controls.Add(this.banner1);
             this.tabPage5.Location = new System.Drawing.Point(4, 24);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(819, 483);
+            this.tabPage5.Size = new System.Drawing.Size(832, 559);
             this.tabPage5.TabIndex = 0;
             this.tabPage5.Text = "0";
             // 
@@ -493,135 +486,13 @@
             this.button15.Image = null;
             this.button15.ImageGlyph = null;
             this.button15.ImageGlyphEnabled = false;
-            this.button15.Location = new System.Drawing.Point(6, 443);
+            this.button15.Location = new System.Drawing.Point(6, 519);
             this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(807, 34);
+            this.button15.Size = new System.Drawing.Size(820, 34);
             this.button15.TabIndex = 28;
             this.button15.Text = "OK. Switch to branches list";
             this.button15.UseVisualStyleBackColor = true;
             this.button15.Click += new System.EventHandler(this.button15_Click);
-            // 
-            // label16
-            // 
-            this.label16.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label16.BackColor = System.Drawing.Color.Transparent;
-            this.label16.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(6, 395);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(807, 52);
-            this.label16.TabIndex = 27;
-            this.label16.Text = resources.GetString("label16.Text");
-            // 
-            // banner6
-            // 
-            this.banner6.BackColor = System.Drawing.Color.Transparent;
-            this.banner6.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.banner6.Image = null;
-            this.banner6.Location = new System.Drawing.Point(6, 366);
-            this.banner6.Name = "banner6";
-            this.banner6.Size = new System.Drawing.Size(186, 26);
-            this.banner6.TabIndex = 26;
-            this.banner6.TabStop = false;
-            this.banner6.Text = "Protected Branches";
-            // 
-            // label15
-            // 
-            this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label15.BackColor = System.Drawing.Color.Transparent;
-            this.label15.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(6, 290);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(807, 69);
-            this.label15.TabIndex = 25;
-            this.label15.Text = resources.GetString("label15.Text");
-            // 
-            // banner5
-            // 
-            this.banner5.BackColor = System.Drawing.Color.Transparent;
-            this.banner5.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.banner5.Image = null;
-            this.banner5.Location = new System.Drawing.Point(6, 261);
-            this.banner5.Name = "banner5";
-            this.banner5.Size = new System.Drawing.Size(186, 26);
-            this.banner5.TabIndex = 24;
-            this.banner5.TabStop = false;
-            this.banner5.Text = "PR Review and Approval";
-            // 
-            // label13
-            // 
-            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label13.BackColor = System.Drawing.Color.Transparent;
-            this.label13.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(6, 234);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(807, 20);
-            this.label13.TabIndex = 23;
-            this.label13.Text = "- It is triggered by clicking the green \"Submit changes\" button in the bottom sta" +
-    "tus bar.";
-            // 
-            // banner4
-            // 
-            this.banner4.BackColor = System.Drawing.Color.Transparent;
-            this.banner4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.banner4.Image = null;
-            this.banner4.Location = new System.Drawing.Point(6, 205);
-            this.banner4.Name = "banner4";
-            this.banner4.Size = new System.Drawing.Size(186, 26);
-            this.banner4.TabIndex = 22;
-            this.banner4.TabStop = false;
-            this.banner4.Text = "Creating a Pull Request";
-            // 
-            // label11
-            // 
-            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label11.BackColor = System.Drawing.Color.Transparent;
-            this.label11.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(6, 178);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(807, 20);
-            this.label11.TabIndex = 21;
-            this.label11.Text = "- A branch can be opened by double-clicking it, which will launch an Explorer-sty" +
-    "le navigator for easier use.";
-            // 
-            // banner3
-            // 
-            this.banner3.BackColor = System.Drawing.Color.Transparent;
-            this.banner3.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.banner3.Image = null;
-            this.banner3.Location = new System.Drawing.Point(6, 149);
-            this.banner3.Name = "banner3";
-            this.banner3.Size = new System.Drawing.Size(406, 26);
-            this.banner3.TabIndex = 20;
-            this.banner3.TabStop = false;
-            this.banner3.Text = "Add or delete files, modify code, or update assets safely here";
-            // 
-            // label10
-            // 
-            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label10.BackColor = System.Drawing.Color.Transparent;
-            this.label10.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(6, 90);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(807, 52);
-            this.label10.TabIndex = 19;
-            this.label10.Text = resources.GetString("label10.Text");
-            // 
-            // banner2
-            // 
-            this.banner2.BackColor = System.Drawing.Color.Transparent;
-            this.banner2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.banner2.Image = null;
-            this.banner2.Location = new System.Drawing.Point(6, 56);
-            this.banner2.Name = "banner2";
-            this.banner2.Size = new System.Drawing.Size(324, 26);
-            this.banner2.TabIndex = 1;
-            this.banner2.TabStop = false;
-            this.banner2.Text = "Each theme upload session uses its own branch";
             // 
             // banner1
             // 
@@ -629,23 +500,24 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.banner1.BackColor = System.Drawing.Color.Transparent;
             this.banner1.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.banner1.Image = null;
+            this.banner1.Image = ((System.Drawing.Bitmap)(resources.GetObject("banner1.Image")));
             this.banner1.Location = new System.Drawing.Point(6, 6);
             this.banner1.Name = "banner1";
-            this.banner1.Size = new System.Drawing.Size(807, 40);
+            this.banner1.Size = new System.Drawing.Size(820, 54);
             this.banner1.TabIndex = 0;
             this.banner1.TabStop = false;
-            this.banner1.Text = "Theme Upload Guidelines & Branch Protection Workflow";
+            this.banner1.Text = "Themes & Branch Safety: A Simple Guide";
             // 
             // tabPage6
             // 
             this.tabPage6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.tabPage6.Controls.Add(this.button16);
+            this.tabPage6.Controls.Add(this.groupBox3);
             this.tabPage6.Controls.Add(this.groupBox7);
             this.tabPage6.Controls.Add(this.groupBox5);
             this.tabPage6.Location = new System.Drawing.Point(4, 24);
             this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Size = new System.Drawing.Size(819, 483);
+            this.tabPage6.Size = new System.Drawing.Size(832, 559);
             this.tabPage6.TabIndex = 1;
             this.tabPage6.Text = "1";
             // 
@@ -659,9 +531,9 @@
             this.button16.Image = null;
             this.button16.ImageGlyph = null;
             this.button16.ImageGlyphEnabled = false;
-            this.button16.Location = new System.Drawing.Point(6, 443);
+            this.button16.Location = new System.Drawing.Point(6, 519);
             this.button16.Name = "button16";
-            this.button16.Size = new System.Drawing.Size(807, 34);
+            this.button16.Size = new System.Drawing.Size(820, 34);
             this.button16.TabIndex = 29;
             this.button16.Text = "Switch to instructions";
             this.button16.UseVisualStyleBackColor = true;
@@ -674,10 +546,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox7.BackColor = System.Drawing.Color.Transparent;
             this.groupBox7.Controls.Add(this.branchesView);
-            this.groupBox7.Location = new System.Drawing.Point(3, 47);
+            this.groupBox7.Location = new System.Drawing.Point(3, 107);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox7.Size = new System.Drawing.Size(813, 390);
+            this.groupBox7.Size = new System.Drawing.Size(826, 406);
             this.groupBox7.TabIndex = 23;
             this.groupBox7.UseDecorationPattern = false;
             this.groupBox7.UseSharpStyle = false;
@@ -694,7 +566,7 @@
             this.branchesView.MultiSelect = false;
             this.branchesView.Name = "branchesView";
             this.branchesView.RowHeight = 28;
-            this.branchesView.Size = new System.Drawing.Size(809, 386);
+            this.branchesView.Size = new System.Drawing.Size(822, 402);
             this.branchesView.TabIndex = 21;
             this.branchesView.UseCompatibleStateImageBehavior = false;
             this.branchesView.View = System.Windows.Forms.View.Details;
@@ -707,6 +579,7 @@
             this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox5.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox5.Controls.Add(this.button17);
             this.groupBox5.Controls.Add(this.label12);
             this.groupBox5.Controls.Add(this.progressBar1);
             this.groupBox5.Controls.Add(this.button14);
@@ -714,21 +587,42 @@
             this.groupBox5.Controls.Add(this.button11);
             this.groupBox5.Controls.Add(this.button18);
             this.groupBox5.Controls.Add(this.button10);
-            this.groupBox5.Location = new System.Drawing.Point(3, 3);
+            this.groupBox5.Location = new System.Drawing.Point(3, 63);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(813, 38);
+            this.groupBox5.Size = new System.Drawing.Size(826, 38);
             this.groupBox5.TabIndex = 22;
             this.groupBox5.UseDecorationPattern = false;
             this.groupBox5.UseSharpStyle = false;
+            // 
+            // button17
+            // 
+            this.button17.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.button17.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.button17.Enabled = false;
+            this.button17.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button17.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button17.Image = null;
+            this.button17.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button17.ImageGlyph")));
+            this.button17.ImageGlyphEnabled = true;
+            this.button17.Location = new System.Drawing.Point(192, 6);
+            this.button17.Name = "button17";
+            this.button17.Size = new System.Drawing.Size(31, 26);
+            this.button17.TabIndex = 25;
+            this.button17.Tag = "Sync with main branch";
+            this.button17.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button17.UseVisualStyleBackColor = true;
+            this.button17.Click += new System.EventHandler(this.button17_Click_1);
+            this.button17.MouseEnter += new System.EventHandler(this.button14_MouseEnter);
+            this.button17.MouseLeave += new System.EventHandler(this.button14_MouseLeave);
             // 
             // label12
             // 
             this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.label12.BackColor = System.Drawing.Color.Transparent;
             this.label12.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(192, 8);
+            this.label12.Location = new System.Drawing.Point(229, 8);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(580, 22);
+            this.label12.Size = new System.Drawing.Size(556, 22);
             this.label12.TabIndex = 24;
             this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
@@ -737,7 +631,7 @@
             this.progressBar1.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.progressBar1.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Circle;
             this.progressBar1.BackColor = System.Drawing.Color.Transparent;
-            this.progressBar1.Location = new System.Drawing.Point(778, 3);
+            this.progressBar1.Location = new System.Drawing.Point(791, 3);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(32, 32);
             this.progressBar1.State = WinPaletter.UI.WP.ProgressBar.ProgressBarState.Normal;
@@ -858,7 +752,7 @@
             this.groupBox3.Controls.Add(this.pictureBox3);
             this.groupBox3.Location = new System.Drawing.Point(3, 3);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(834, 54);
+            this.groupBox3.Size = new System.Drawing.Size(826, 54);
             this.groupBox3.TabIndex = 0;
             this.groupBox3.UseDecorationPattern = false;
             this.groupBox3.UseSharpStyle = false;
@@ -872,7 +766,7 @@
             this.button9.Image = null;
             this.button9.ImageGlyph = null;
             this.button9.ImageGlyphEnabled = false;
-            this.button9.Location = new System.Drawing.Point(720, 10);
+            this.button9.Location = new System.Drawing.Point(712, 10);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(105, 34);
             this.button9.TabIndex = 19;
@@ -979,6 +873,7 @@
             // groupBox4
             // 
             this.groupBox4.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox4.Controls.Add(this.button19);
             this.groupBox4.Controls.Add(this.btn_download);
             this.groupBox4.Controls.Add(this.label14);
             this.groupBox4.Controls.Add(this.toggle2);
@@ -1000,6 +895,24 @@
             this.groupBox4.TabIndex = 1;
             this.groupBox4.UseDecorationPattern = true;
             this.groupBox4.UseSharpStyle = false;
+            // 
+            // button19
+            // 
+            this.button19.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.button19.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.button19.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button19.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button19.Image = null;
+            this.button19.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button19.ImageGlyph")));
+            this.button19.ImageGlyphEnabled = true;
+            this.button19.Location = new System.Drawing.Point(269, 6);
+            this.button19.Name = "button19";
+            this.button19.Size = new System.Drawing.Size(31, 26);
+            this.button19.TabIndex = 26;
+            this.button19.Tag = "";
+            this.button19.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button19.UseVisualStyleBackColor = true;
+            this.button19.Click += new System.EventHandler(this.button19_Click);
             // 
             // btn_download
             // 
@@ -1047,7 +960,7 @@
             this.separatorV4.AlternativeLook = false;
             this.separatorV4.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.separatorV4.BackColor = System.Drawing.Color.Transparent;
-            this.separatorV4.Location = new System.Drawing.Point(269, 6);
+            this.separatorV4.Location = new System.Drawing.Point(306, 6);
             this.separatorV4.Name = "separatorV4";
             this.separatorV4.Size = new System.Drawing.Size(1, 26);
             this.separatorV4.TabIndex = 21;
@@ -1206,7 +1119,7 @@
             this.button7.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.button7.ImageGlyph = null;
             this.button7.ImageGlyphEnabled = true;
-            this.button7.Location = new System.Drawing.Point(276, 6);
+            this.button7.Location = new System.Drawing.Point(313, 6);
             this.button7.Name = "button7";
             this.button7.Padding = new System.Windows.Forms.Padding(3, 0, 0, 0);
             this.button7.Size = new System.Drawing.Size(78, 26);
@@ -1462,6 +1375,230 @@
             this.button3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button3.UseVisualStyleBackColor = true;
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.label17);
+            this.groupBox2.Location = new System.Drawing.Point(47, 66);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(779, 90);
+            this.groupBox2.TabIndex = 154;
+            this.groupBox2.UseDecorationPattern = false;
+            this.groupBox2.UseSharpStyle = false;
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(6, 7);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(759, 22);
+            this.label2.TabIndex = 150;
+            this.label2.Text = "Each theme upload session uses its own branch";
+            // 
+            // label17
+            // 
+            this.label17.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label17.BackColor = System.Drawing.Color.Transparent;
+            this.label17.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.Location = new System.Drawing.Point(16, 34);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(680, 47);
+            this.label17.TabIndex = 151;
+            this.label17.Text = "- Before you begin, create a new branch specifically for your theme work.\r\n- Exam" +
+    "ple branch name: my-new-theme.\r\n- The \'main\' branch will not be listed here, as " +
+    "it is protected for syncing purposes.";
+            // 
+            // banner7
+            // 
+            this.banner7.BackColor = System.Drawing.Color.Transparent;
+            this.banner7.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.banner7.Image = null;
+            this.banner7.Location = new System.Drawing.Point(6, 66);
+            this.banner7.Name = "banner7";
+            this.banner7.Size = new System.Drawing.Size(35, 90);
+            this.banner7.TabIndex = 153;
+            this.banner7.TabStop = false;
+            this.banner7.Text = "1";
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox8.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox8.Controls.Add(this.label10);
+            this.groupBox8.Controls.Add(this.label18);
+            this.groupBox8.Location = new System.Drawing.Point(47, 162);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(779, 59);
+            this.groupBox8.TabIndex = 156;
+            this.groupBox8.UseDecorationPattern = false;
+            this.groupBox8.UseSharpStyle = false;
+            // 
+            // label10
+            // 
+            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label10.BackColor = System.Drawing.Color.Transparent;
+            this.label10.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(6, 7);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(759, 22);
+            this.label10.TabIndex = 150;
+            this.label10.Text = "Add, delete, modify, or update themes safely here";
+            // 
+            // label18
+            // 
+            this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label18.BackColor = System.Drawing.Color.Transparent;
+            this.label18.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label18.Location = new System.Drawing.Point(16, 34);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(680, 16);
+            this.label18.TabIndex = 151;
+            this.label18.Text = "- A branch can be opened by double-clicking it, which will launch an Explorer-sty" +
+    "le navigator for easier use.";
+            // 
+            // banner2
+            // 
+            this.banner2.BackColor = System.Drawing.Color.Transparent;
+            this.banner2.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.banner2.Image = null;
+            this.banner2.Location = new System.Drawing.Point(6, 162);
+            this.banner2.Name = "banner2";
+            this.banner2.Size = new System.Drawing.Size(35, 59);
+            this.banner2.TabIndex = 155;
+            this.banner2.TabStop = false;
+            this.banner2.Text = "2";
+            // 
+            // groupBox9
+            // 
+            this.groupBox9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox9.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox9.Controls.Add(this.label11);
+            this.groupBox9.Controls.Add(this.label19);
+            this.groupBox9.Location = new System.Drawing.Point(47, 227);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(779, 90);
+            this.groupBox9.TabIndex = 158;
+            this.groupBox9.UseDecorationPattern = false;
+            this.groupBox9.UseSharpStyle = false;
+            // 
+            // label11
+            // 
+            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label11.BackColor = System.Drawing.Color.Transparent;
+            this.label11.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(6, 7);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(759, 22);
+            this.label11.TabIndex = 150;
+            this.label11.Text = "Create themes publication request";
+            // 
+            // label19
+            // 
+            this.label19.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label19.BackColor = System.Drawing.Color.Transparent;
+            this.label19.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.Location = new System.Drawing.Point(16, 34);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(680, 47);
+            this.label19.TabIndex = 151;
+            this.label19.Text = resources.GetString("label19.Text");
+            // 
+            // banner3
+            // 
+            this.banner3.BackColor = System.Drawing.Color.Transparent;
+            this.banner3.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.banner3.Image = null;
+            this.banner3.Location = new System.Drawing.Point(6, 227);
+            this.banner3.Name = "banner3";
+            this.banner3.Size = new System.Drawing.Size(35, 90);
+            this.banner3.TabIndex = 157;
+            this.banner3.TabStop = false;
+            this.banner3.Text = "3";
+            // 
+            // groupBox10
+            // 
+            this.groupBox10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox10.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox10.Controls.Add(this.label13);
+            this.groupBox10.Controls.Add(this.label20);
+            this.groupBox10.Location = new System.Drawing.Point(47, 323);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(779, 76);
+            this.groupBox10.TabIndex = 160;
+            this.groupBox10.UseDecorationPattern = false;
+            this.groupBox10.UseSharpStyle = false;
+            // 
+            // label13
+            // 
+            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label13.BackColor = System.Drawing.Color.Transparent;
+            this.label13.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(6, 7);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(759, 22);
+            this.label13.TabIndex = 150;
+            this.label13.Text = "Protected Branches";
+            // 
+            // label20
+            // 
+            this.label20.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label20.BackColor = System.Drawing.Color.Transparent;
+            this.label20.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.Location = new System.Drawing.Point(16, 34);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(680, 33);
+            this.label20.TabIndex = 151;
+            this.label20.Text = resources.GetString("label20.Text");
+            // 
+            // banner4
+            // 
+            this.banner4.BackColor = System.Drawing.Color.Transparent;
+            this.banner4.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.banner4.Image = null;
+            this.banner4.Location = new System.Drawing.Point(6, 323);
+            this.banner4.Name = "banner4";
+            this.banner4.Size = new System.Drawing.Size(35, 76);
+            this.banner4.TabIndex = 159;
+            this.banner4.TabStop = false;
+            this.banner4.Text = "4";
+            // 
+            // button20
+            // 
+            this.button20.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button20.CustomColor = System.Drawing.Color.Empty;
+            this.button20.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button20.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button20.Image = null;
+            this.button20.ImageGlyph = null;
+            this.button20.ImageGlyphEnabled = false;
+            this.button20.Location = new System.Drawing.Point(6, 479);
+            this.button20.Name = "button20";
+            this.button20.Size = new System.Drawing.Size(820, 34);
+            this.button20.TabIndex = 161;
+            this.button20.Text = "Wiki: Advanced help";
+            this.button20.UseVisualStyleBackColor = true;
+            // 
             // GitHub_Mgr
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1488,7 +1625,6 @@
             this.flowLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabPage2.ResumeLayout(false);
-            this.groupBox6.ResumeLayout(false);
             this.tablessControl2.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
             this.tabPage6.ResumeLayout(false);
@@ -1505,6 +1641,10 @@
             this.groupBox1.ResumeLayout(false);
             this.titlebarExtender1.ResumeLayout(false);
             this.explorer_controls.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox9.ResumeLayout(false);
+            this.groupBox10.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1553,7 +1693,6 @@
         private UI.WP.Button button9;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.PictureBox pictureBox3;
-        private UI.WP.GroupBox groupBox6;
         private UI.WP.Button button10;
         private UI.WP.Button button13;
         private UI.WP.GroupBox groupBox4;
@@ -1579,17 +1718,7 @@
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.TabPage tabPage6;
         private UI.WP.GroupBox groupBox7;
-        private UI.WP.Banner banner2;
         private UI.WP.Banner banner1;
-        private UI.WP.Banner banner5;
-        internal System.Windows.Forms.Label label13;
-        private UI.WP.Banner banner4;
-        internal System.Windows.Forms.Label label11;
-        private UI.WP.Banner banner3;
-        internal System.Windows.Forms.Label label10;
-        internal System.Windows.Forms.Label label16;
-        private UI.WP.Banner banner6;
-        internal System.Windows.Forms.Label label15;
         private UI.WP.Button button15;
         private UI.WP.Button button16;
         private UI.WP.ProgressBar progressBar1;
@@ -1599,5 +1728,24 @@
         private UI.WP.Button btn_download;
         public UI.WP.Breadcrumb breadcrumbControl1;
         internal UI.WP.Button pin_button;
+        private UI.WP.Button button17;
+        private UI.WP.Button button19;
+        private UI.WP.GroupBox groupBox10;
+        internal System.Windows.Forms.Label label13;
+        internal System.Windows.Forms.Label label20;
+        private UI.WP.Banner banner4;
+        private UI.WP.GroupBox groupBox9;
+        internal System.Windows.Forms.Label label11;
+        internal System.Windows.Forms.Label label19;
+        private UI.WP.Banner banner3;
+        private UI.WP.GroupBox groupBox8;
+        internal System.Windows.Forms.Label label10;
+        internal System.Windows.Forms.Label label18;
+        private UI.WP.Banner banner2;
+        private UI.WP.GroupBox groupBox2;
+        internal System.Windows.Forms.Label label2;
+        internal System.Windows.Forms.Label label17;
+        private UI.WP.Banner banner7;
+        private UI.WP.Button button20;
     }
 }

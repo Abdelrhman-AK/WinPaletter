@@ -360,7 +360,7 @@ namespace WinPaletter
 
             if (img is not null)
             {
-                Label4.Text = Program.Lang.Strings.Tips.PaletteExtraction;
+                Label4.Text = Program.Localization.Strings.Tips.PaletteExtraction;
                 Program.Animator.HideSync(Button6, true);
                 Program.Animator.HideSync(ImgPaletteContainer, true);
                 ProgressBar1.Visible = true;
@@ -374,8 +374,8 @@ namespace WinPaletter
                     {
                         PaletteGeneratorSettings settings = new()
                         {
-                            ColorCount = trackBarX1.Value,
-                            ColorQuality = trackBarX2.Value,
+                            ColorCount = (int)trackBarX1.Value,
+                            ColorQuality = (int)trackBarX2.Value,
                             IgnoreWhiteColors = CheckBox1.Checked
                         };
 
@@ -430,7 +430,7 @@ namespace WinPaletter
 
         private void Button4_Click_1(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, Title = Program.Lang.Strings.Extensions.OpenImages })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, Title = Program.Localization.Strings.Extensions.OpenImages })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -441,7 +441,7 @@ namespace WinPaletter
 
         private void Button1_Click_1(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Palettes, Title = Program.Lang.Strings.Extensions.OpenPalette })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Palettes, Title = Program.Localization.Strings.Extensions.OpenPalette })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -452,7 +452,7 @@ namespace WinPaletter
 
         private void Button7_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.VisualStyles_And_Themes, Title = Program.Lang.Strings.Extensions.OpenVisualStyle })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.VisualStyles_And_Themes, Title = Program.Localization.Strings.Extensions.OpenVisualStyle })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -598,7 +598,7 @@ namespace WinPaletter
                     }
                     catch
                     {
-                        MsgBox(Program.Lang.Strings.Messages.InvalidTheme, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MsgBox(Program.Localization.Strings.Messages.InvalidTheme, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
 
@@ -653,7 +653,7 @@ namespace WinPaletter
                         }
                         catch
                         {
-                            MsgBox(Program.Lang.Strings.Messages.InvalidTheme, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MsgBox(Program.Localization.Strings.Messages.InvalidTheme, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                 }

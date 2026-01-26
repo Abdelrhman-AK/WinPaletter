@@ -32,7 +32,7 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Localization.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -46,7 +46,7 @@ namespace WinPaletter
 
         private void LoadFromTHEME(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Themes, Title = Program.Lang.Strings.Extensions.OpenTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Themes, Title = Program.Localization.Strings.Extensions.OpenTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -129,7 +129,7 @@ namespace WinPaletter
 
         private void LoadFromMSSTYLES(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.VisualStyles_And_Themes, Title = Program.Lang.Strings.Extensions.OpenVisualStyle })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.VisualStyles_And_Themes, Title = Program.Localization.Strings.Extensions.OpenVisualStyle })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -167,7 +167,7 @@ namespace WinPaletter
                         }
                         catch
                         {
-                            MsgBox(Program.Lang.Strings.Messages.InvalidTheme, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MsgBox(Program.Localization.Strings.Messages.InvalidTheme, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                 }
@@ -182,7 +182,7 @@ namespace WinPaletter
 
         private void SaveAsTHEME(object sender, EventArgs e)
         {
-            using (SaveFileDialog dlg = new() { Filter = Program.Filters.Themes, Title = Program.Lang.Strings.Extensions.SaveTheme })
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.Themes, Title = Program.Localization.Strings.Extensions.SaveTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -206,7 +206,7 @@ namespace WinPaletter
         {
             if (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.MetricsFonts)
             {
-                MsgBox(Program.Lang.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.Strings.Aspects.Disabled_Apply_1);
+                MsgBox(Program.Localization.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Localization.Strings.Aspects.Disabled_Apply_1);
                 return;
             }
 
@@ -244,7 +244,7 @@ namespace WinPaletter
         {
             DesignerData data = new(this)
             {
-                AspectName = Program.Lang.Strings.Aspects.MetricsFonts,
+                AspectName = Program.Localization.Strings.Aspects.MetricsFonts,
                 Enabled = Program.TM.MetricsFonts.Enabled,
                 Import_theme = true,
                 Import_msstyles = true,
@@ -380,21 +380,21 @@ namespace WinPaletter
             TM.MetricsFonts.SmCaptionFont = Label5.Font;
             TM.MetricsFonts.StatusFont = Label6.Font;
 
-            TM.MetricsFonts.CaptionHeight = trackBarX1.Value;
-            TM.MetricsFonts.CaptionWidth = trackBarX2.Value;
-            TM.MetricsFonts.BorderWidth = trackBarX3.Value;
-            TM.MetricsFonts.PaddedBorderWidth = trackBarX4.Value;
-            TM.MetricsFonts.SmCaptionHeight = trackBarX5.Value;
-            TM.MetricsFonts.SmCaptionWidth = trackBarX6.Value;
-            TM.MetricsFonts.IconVerticalSpacing = trackBarX7.Value;
-            TM.MetricsFonts.IconSpacing = trackBarX8.Value;
-            TM.MetricsFonts.DesktopIconSize = trackBarX9.Value;
-            TM.MetricsFonts.ShellIconSize = trackBarX10.Value;
-            TM.MetricsFonts.ShellSmallIconSize = trackBarX11.Value;
-            TM.MetricsFonts.MenuHeight = trackBarX12.Value;
-            TM.MetricsFonts.MenuWidth = trackBarX13.Value;
-            TM.MetricsFonts.ScrollHeight = trackBarX14.Value;
-            TM.MetricsFonts.ScrollWidth = trackBarX15.Value;
+            TM.MetricsFonts.CaptionHeight = (int)trackBarX1.Value;
+            TM.MetricsFonts.CaptionWidth = (int)trackBarX2.Value;
+            TM.MetricsFonts.BorderWidth = (int)trackBarX3.Value;
+            TM.MetricsFonts.PaddedBorderWidth = (int)trackBarX4.Value;
+            TM.MetricsFonts.SmCaptionHeight = (int)trackBarX5.Value;
+            TM.MetricsFonts.SmCaptionWidth = (int)trackBarX6.Value;
+            TM.MetricsFonts.IconVerticalSpacing = (int)trackBarX7.Value;
+            TM.MetricsFonts.IconSpacing = (int)trackBarX8.Value;
+            TM.MetricsFonts.DesktopIconSize = (int)trackBarX9.Value;
+            TM.MetricsFonts.ShellIconSize = (int)trackBarX10.Value;
+            TM.MetricsFonts.ShellSmallIconSize = (int)trackBarX11.Value;
+            TM.MetricsFonts.MenuHeight = (int)trackBarX12.Value;
+            TM.MetricsFonts.MenuWidth = (int)trackBarX13.Value;
+            TM.MetricsFonts.ScrollHeight = (int)trackBarX14.Value;
+            TM.MetricsFonts.ScrollWidth = (int)trackBarX15.Value;
 
             TM.MetricsFonts.Fonts_SingleBitPP = CheckBox1.Checked;
 
@@ -823,62 +823,62 @@ namespace WinPaletter
 
         private void trackBarX1_ValueChanged(object sender, EventArgs e)
         {
-            windowMetrics1.CaptionHeight = (sender as TrackBarX).Value;
+            windowMetrics1.CaptionHeight = (int)(sender as TrackBarX).Value;
         }
 
         private void trackBarX2_ValueChanged(object sender, EventArgs e)
         {
-            windowMetrics1.CaptionWidth = (sender as TrackBarX).Value;
+            windowMetrics1.CaptionWidth = (int)(sender as TrackBarX).Value;
         }
 
         private void trackBarX3_ValueChanged(object sender, EventArgs e)
         {
-            windowMetrics1.BorderWidth = (sender as TrackBarX).Value;
+            windowMetrics1.BorderWidth = (int)(sender as TrackBarX).Value;
         }
 
         private void trackBarX4_ValueChanged(object sender, EventArgs e)
         {
-            windowMetrics1.PaddedBorderWidth = (sender as TrackBarX).Value;
+            windowMetrics1.PaddedBorderWidth = (int)(sender as TrackBarX).Value;
         }
 
         private void trackBarX5_ValueChanged(object sender, EventArgs e)
         {
-            windowMetrics1.SmCaptionHeight = (sender as TrackBarX).Value;
+            windowMetrics1.SmCaptionHeight = (int)(sender as TrackBarX).Value;
         }
 
         private void trackBarX6_ValueChanged(object sender, EventArgs e)
         {
-            windowMetrics1.SmCaptionWidth = (sender as TrackBarX).Value;
+            windowMetrics1.SmCaptionWidth = (int)(sender as TrackBarX).Value;
         }
 
         private void trackBarX7_ValueChanged(object sender, EventArgs e)
         {
-            Desktop_icons.IconSpacing_Vertical = ((TrackBarX)sender).Value;
+            Desktop_icons.IconSpacing_Vertical = (int)((TrackBarX)sender).Value;
         }
 
         private void trackBarX8_ValueChanged(object sender, EventArgs e)
         {
-            Desktop_icons.IconSpacing_Horizontal = ((TrackBarX)sender).Value;
+            Desktop_icons.IconSpacing_Horizontal = (int)((TrackBarX)sender).Value;
         }
 
         private void trackBarX9_ValueChanged(object sender, EventArgs e)
         {
-            Desktop_icons.IconSize = ((TrackBarX)sender).Value;
+            Desktop_icons.IconSize = (int)((TrackBarX)sender).Value;
         }
 
         private void trackBarX12_ValueChanged(object sender, EventArgs e)
         {
-            windowMetrics1.MenuHeight = (sender as TrackBarX).Value;
+            windowMetrics1.MenuHeight = (int)(sender as TrackBarX).Value;
         }
 
         private void trackBarX14_ValueChanged(object sender, EventArgs e)
         {
-            windowMetrics1.ScrollHeight = (sender as TrackBarX).Value;
+            windowMetrics1.ScrollHeight = (int)(sender as TrackBarX).Value;
         }
 
         private void trackBarX15_ValueChanged(object sender, EventArgs e)
         {
-            windowMetrics1.ScrollWidth = (sender as TrackBarX).Value;
+            windowMetrics1.ScrollWidth = (int)(sender as TrackBarX).Value;
         }
 
         private void undo_Click(object sender, EventArgs e)

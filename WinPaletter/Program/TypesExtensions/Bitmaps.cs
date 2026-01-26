@@ -1249,7 +1249,7 @@ namespace WinPaletter.TypesExtensions
 
             return await Task.Run(async () =>
             {
-                settings.Status?.Report($"{Program.Lang.Strings.General.SamplingPixels}...");
+                settings.Status?.Report($"{Program.Localization.Strings.General.SamplingPixels}...");
 
                 using Bitmap clone = new(bmp.Width, bmp.Height, PixelFormat.Format32bppArgb);
                 using (Graphics g = Graphics.FromImage(clone)) g.DrawImage(bmp, new Rectangle(0, 0, clone.Width, clone.Height));
@@ -1305,7 +1305,7 @@ namespace WinPaletter.TypesExtensions
 
                 if (pixels.Count == 0) return new List<Color>();
 
-                settings.Status?.Report($"{Program.Lang.Strings.General.ClusteringColors}...");
+                settings.Status?.Report($"{Program.Localization.Strings.General.ClusteringColors}...");
                 List<Color> centroids = LockFreeKMeansAsync(pixels, settings.ColorCount, settings);
 
                 // Map all centroids toward accent color if provided
@@ -1329,7 +1329,7 @@ namespace WinPaletter.TypesExtensions
                 // Sort by dominance if requested
                 if (settings.SortByDominance && centroids.Count > 0)
                 {
-                    settings.Status?.Report($"{Program.Lang.Strings.General.SortingByDominance}...");
+                    settings.Status?.Report($"{Program.Localization.Strings.General.SortingByDominance}...");
                     Dictionary<Color, int> colorFrequency = pixels
                         .GroupBy(px => centroids.OrderBy(c => px.Distance(c)).First())
                         .ToDictionary(g => g.Key, g => g.Count());
@@ -1340,7 +1340,7 @@ namespace WinPaletter.TypesExtensions
                 // Include variations if requested
                 if (settings.IncludeVariations && centroids.Count > 0)
                 {
-                    settings.Status?.Report($"{Program.Lang.Strings.General.GeneratingColorsVariations}...");
+                    settings.Status?.Report($"{Program.Localization.Strings.General.GeneratingColorsVariations}...");
                     List<Color> strongColors = centroids
                         .OrderByDescending(c => c.GetSaturation() * (1f - Math.Abs(c.GetBrightness() - 0.5f)))
                         .Take(Math.Min(centroids.Count / 2 + 1, 10))
@@ -1369,7 +1369,7 @@ namespace WinPaletter.TypesExtensions
                 }
 
                 settings.Progress?.Report(1f);
-                settings.Status?.Report($"{Program.Lang.Strings.General.Done}");
+                settings.Status?.Report($"{Program.Localization.Strings.General.Done}");
                 return centroids;
 
             }, settings.CancellationToken);

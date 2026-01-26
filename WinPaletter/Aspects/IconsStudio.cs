@@ -24,7 +24,7 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Localization.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -60,7 +60,7 @@ namespace WinPaletter
         {
             if (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Icons)
             {
-                MsgBox(Program.Lang.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.Strings.Aspects.Disabled_Apply_1);
+                MsgBox(Program.Localization.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Localization.Strings.Aspects.Disabled_Apply_1);
                 return;
             }
 
@@ -86,7 +86,7 @@ namespace WinPaletter
         {
             DesignerData data = new(this)
             {
-                AspectName = Program.Lang.Strings.Aspects.Icons,
+                AspectName = Program.Localization.Strings.Aspects.Icons,
                 Enabled = Program.TM.Icons.Enabled,
                 Import_theme = false,
                 Import_msstyles = false,
@@ -217,7 +217,7 @@ namespace WinPaletter
 
                     // Create row
                     DataGridViewRow row = new();
-                    row.CreateCells(shell32Data, i, iconBmp, null, string.Empty, Program.Lang.Strings.General.Browse);
+                    row.CreateCells(shell32Data, i, iconBmp, null, string.Empty, Program.Localization.Strings.General.Browse);
                     rowsToAdd.Add(row);
                 }
 
@@ -278,7 +278,7 @@ namespace WinPaletter
                     }
 
                     DataGridViewRow row = new();
-                    row.CreateCells(cpData, name, clsid, iconBmp, null, string.Empty, Program.Lang.Strings.General.Browse);
+                    row.CreateCells(cpData, name, clsid, iconBmp, null, string.Empty, Program.Localization.Strings.General.Browse);
                     rowsToAdd.Add(row);
                 }
 
@@ -338,7 +338,7 @@ namespace WinPaletter
                     }
 
                     DataGridViewRow row = new();
-                    row.CreateCells(explorerData, name, clsid, iconBmp, null, string.Empty, Program.Lang.Strings.General.Browse);
+                    row.CreateCells(explorerData, name, clsid, iconBmp, null, string.Empty, Program.Localization.Strings.General.Browse);
                     rowsToAdd.Add(row);
                 }
 
@@ -825,9 +825,9 @@ namespace WinPaletter
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (MsgBox(Program.Lang.Strings.Messages.IconsImport_Shell32_1, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, Program.Lang.Strings.Messages.IconsImport_Shell32_2) == DialogResult.Yes)
+            if (MsgBox(Program.Localization.Strings.Messages.IconsImport_Shell32_1, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, Program.Localization.Strings.Messages.IconsImport_Shell32_2) == DialogResult.Yes)
             {
-                using (OpenFileDialog dlg = new() { Filter = Program.Filters.DLL, Title = Program.Lang.Strings.Extensions.OpenDLL })
+                using (OpenFileDialog dlg = new() { Filter = Program.Filters.DLL, Title = Program.Localization.Strings.Extensions.OpenDLL })
                 {
                     if (dlg.ShowDialog() == DialogResult.OK)
                     {

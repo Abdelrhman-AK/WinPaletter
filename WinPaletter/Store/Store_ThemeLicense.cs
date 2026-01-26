@@ -19,7 +19,7 @@ namespace WinPaletter
 
         private void Store_ThemeLicense_Load(object sender, EventArgs e)
         {
-            this.LoadLanguage();
+            this.Localize();
             ApplyStyle(this);
             TextBox1.Font = Fonts.ConsoleLarge;
 

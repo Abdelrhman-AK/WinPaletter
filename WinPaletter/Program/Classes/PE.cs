@@ -249,31 +249,31 @@ namespace WinPaletter
                     string TempFile = Path.GetTempFileName();
 
                     if (treeView is not null)
-                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.PE_GettingAccess, Path.GetFileName(SourceFile)), "admin");
+                        ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.PE_GettingAccess, Path.GetFileName(SourceFile)), "admin");
                     PreparePrivileges();                                     // To get authorized access to change PE File access/permissions
 
                     if (treeView is not null)
-                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.PE_CreateBackup, Path.GetFileName(SourceFile)), "pe_backup");
+                        ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.PE_CreateBackup, Path.GetFileName(SourceFile)), "pe_backup");
                     if (CreateBackup(SourceFile))                        // Makes a copy of EP File as a backup File
                     {
 
                         if (treeView is not null)
-                            ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.PE_GetBackupPermissions, Path.GetFileName(SourceFile)), "pe_backup");
+                            ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.PE_GetBackupPermissions, Path.GetFileName(SourceFile)), "pe_backup");
                         if (BackupPermissions(SourceFile, TempFile))     // Source File rights have been backed up successfully
                         {
 
                             if (treeView is not null)
-                                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.PE_GetAccessToChangeResources, Path.GetFileName(SourceFile)), "admin");
+                                ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.PE_GetAccessToChangeResources, Path.GetFileName(SourceFile)), "admin");
                             PreparePrivileges();                             // To get authorized access to change resources for PE File
 
                             if (treeView is not null)
-                                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.PE_PatchingPE, Path.GetFileName(SourceFile)), "pe_patch");
+                                ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.PE_PatchingPE, Path.GetFileName(SourceFile)), "pe_patch");
                             PortableExecutable PE_File = new(SourceFile);
                             PE_File.SetResource(new(Ressy.ResourceType.FromString(ResourceType), ResourceName.FromCode(ID), new Language(LangID)), NewRes);
                             Program.Log?.Write(LogEventLevel.Information, $"Resource '{ResourceType}' with ID '{ID}' has been replaced in PE file '{SourceFile}'.");
 
                             if (treeView is not null)
-                                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.PE_RestoringPermissions, Path.GetFileName(SourceFile)), "pe_restore");
+                                ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.PE_RestoringPermissions, Path.GetFileName(SourceFile)), "pe_restore");
                             RestorePermissions(SourceFile, TempFile);        // Restore source File rights
 
                         }

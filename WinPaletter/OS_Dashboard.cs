@@ -103,7 +103,7 @@ namespace WinPaletter
             else Program.WindowStyle = WindowStyle.W12;
 
             if (radioImage7.Checked)
-                MsgBox(Program.Lang.Strings.Messages.Win12_Preview_Msg0, MessageBoxButtons.OK, MessageBoxIcon.Information, Program.Lang.Strings.Messages.Win12_Preview_Msg1);
+                MsgBox(Program.Localization.Strings.Messages.Win12_Preview_Msg0, MessageBoxButtons.OK, MessageBoxIcon.Information, Program.Localization.Strings.Messages.Win12_Preview_Msg1);
 
             DialogResult = DialogResult.OK;
         }

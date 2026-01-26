@@ -20,7 +20,7 @@ namespace WinPaletter
         private void Store_Intro_New_Load(object sender, EventArgs e)
         {
             CheckBox1.Checked = Program.Settings.Store.ShowNewXPIntro;
-            this.LoadLanguage();
+            this.Localize();
             ApplyStyle(this);
             Icon = FormsExtensions.Icon<Store>();
         }
@@ -30,21 +30,21 @@ namespace WinPaletter
             if (TablessControl1.SelectedIndex + 1 <= TablessControl1.TabPages.Count - 1)
                 TablessControl1.SelectedIndex += 1;
 
-            if ((Button1.Text ?? string.Empty) == (Program.Lang.Strings.General.Finish ?? string.Empty))
+            if ((Button1.Text ?? string.Empty) == (Program.Localization.Strings.General.Finish ?? string.Empty))
             {
                 Close();
                 TablessControl1.SelectedIndex = 0;
-                Button1.Text = Program.Lang.Strings.General.Next;
+                Button1.Text = Program.Localization.Strings.General.Next;
             }
 
             if (TablessControl1.SelectedIndex == TablessControl1.TabPages.Count - 1)
             {
-                Button1.Text = Program.Lang.Strings.General.Finish;
+                Button1.Text = Program.Localization.Strings.General.Finish;
                 CheckBox1.Visible = true;
             }
             else
             {
-                Button1.Text = Program.Lang.Strings.General.Next;
+                Button1.Text = Program.Localization.Strings.General.Next;
                 CheckBox1.Visible = false;
             }
         }
@@ -53,7 +53,7 @@ namespace WinPaletter
         {
             if (TablessControl1.SelectedIndex - 1 >= 0)
                 TablessControl1.SelectedIndex -= 1;
-            Button1.Text = Program.Lang.Strings.General.Next;
+            Button1.Text = Program.Localization.Strings.General.Next;
             CheckBox1.Visible = false;
         }
 

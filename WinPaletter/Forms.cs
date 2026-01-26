@@ -178,6 +178,12 @@ namespace WinPaletter
         private static GitHub_LinkedFilesConfirmation _GitHub_LinkedFilesConfirmation;
 
         /// <summary>
+        /// Gets the instance of the form <see cref="GitHub_ConfirmPR"/> for PR confirmation.
+        /// </summary>
+        public static GitHub_ConfirmPR GitHub_ConfirmPR => Get(ref _GitHub_ConfirmPR);
+        private static GitHub_ConfirmPR _GitHub_ConfirmPR;
+
+        /// <summary>
         /// Gets the instance of the form <see cref="GitHub_Mgr"/> to manage GitHub repositories and files.
         /// </summary>
         public static GitHub_Mgr GitHub_Mgr => Get(ref _GitHub_Mgr);

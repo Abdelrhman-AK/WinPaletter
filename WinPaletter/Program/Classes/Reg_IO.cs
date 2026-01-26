@@ -374,14 +374,14 @@ namespace WinPaletter
                     valueLog = "null";
                 if (!skipped)
                 {
-                    details = string.Format(Program.Lang.Strings.ThemeManager.Advanced.RegAdd, Key, valueNameLog, valueLog, RegType.ToString());
+                    details = string.Format(Program.Localization.Strings.ThemeManager.Advanced.RegAdd, Key, valueNameLog, valueLog, RegType.ToString());
                     imageKey = "reg_add";
                 }
                 else
                 {
                     if (!Program.Settings.ThemeLog.ShowSkippedItemsOnDetailedVerbose)
                         return;
-                    details = string.Format(Program.Lang.Strings.ThemeManager.Advanced.RegSkipped, string.Format(Program.Lang.Strings.ThemeManager.Advanced.RegAdd, Key, valueNameLog, valueLog, RegType.ToString()));
+                    details = string.Format(Program.Localization.Strings.ThemeManager.Advanced.RegSkipped, string.Format(Program.Localization.Strings.ThemeManager.Advanced.RegAdd, Key, valueNameLog, valueLog, RegType.ToString()));
                     imageKey = "reg_skip";
                 }
                 ThemeLog.AddNode(treeView, details, imageKey);
@@ -410,7 +410,7 @@ namespace WinPaletter
                 if (string.IsNullOrWhiteSpace(v0))
                     v0 = "(default)";
 
-                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.RegDelete, $"{Key}: {v0}"), "reg_delete");
+                ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.RegDelete, $"{Key}: {v0}"), "reg_delete");
             }
         }
 
@@ -429,7 +429,7 @@ namespace WinPaletter
 
             if (Program.Settings.ThemeLog.VerboseLevel == Settings.Structures.ThemeLog.VerboseLevels.Detailed)
             {
-                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.RegDelete, Key), "reg_delete");
+                ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.RegDelete, Key), "reg_delete");
             }
         }
 
@@ -470,7 +470,7 @@ namespace WinPaletter
                 if (string.IsNullOrWhiteSpace(valueNameLog)) valueNameLog = "(default)";
                 if (string.IsNullOrWhiteSpace(valueLog)) valueLog = "null";
 
-                string details = $"{ex.Message} - CMD: {string.Format(Program.Lang.Strings.ThemeManager.Advanced.RegAdd, Key, valueNameLog, valueLog, RegType.ToString())}";
+                string details = $"{ex.Message} - CMD: {string.Format(Program.Localization.Strings.ThemeManager.Advanced.RegAdd, Key, valueNameLog, valueLog, RegType.ToString())}";
                 if (treeView is not null)
                     ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {details}", "error");
                 Exceptions.ThemeApply.Add(new Tuple<string, Exception>(details, ex));

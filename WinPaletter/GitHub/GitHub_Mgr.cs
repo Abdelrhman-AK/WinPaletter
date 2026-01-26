@@ -32,7 +32,7 @@ namespace WinPaletter
         private async void GitHubManager_Load(object sender, EventArgs e)
         {
             ApplyStyle(this);
-            this.LoadLanguage();
+            this.Localize();
 
             AddViewsToButton();
 
@@ -40,8 +40,8 @@ namespace WinPaletter
 
             bool forked = await GitHub.Repository.ExistsAsync(GitHub.Repository.Name);
 
-            label8.Text = forked ? Program.Lang.Strings.GitHubStrings.ExplorerStatus_Forked : $"{Program.Lang.Strings.GitHubStrings.ExplorerStatus_NotForked} {Program.Lang.Strings.GitHubStrings.ExplorerStatus_SyncAndForkToManage}";
-            groupBox6.Enabled = forked;
+            label8.Text = forked ? Program.Localization.Strings.GitHubStrings.ExplorerStatus_Forked : $"{Program.Localization.Strings.GitHubStrings.ExplorerStatus_NotForked} {Program.Localization.Strings.GitHubStrings.ExplorerStatus_SyncAndForkToManage}";
+            button9.Enabled = !forked;
             tablessControl2.SelectedIndex = 0;
             groupBox4.UseSharpStyle = true;
             groupBox1.UseSharpStyle = true;
@@ -70,12 +70,12 @@ namespace WinPaletter
             branchesView.BeginUpdate();
             branchesView.Columns.Clear();
             branchesView.SmallImageList = imageList1;
-            branchesView.Columns.Add(Program.Lang.Strings.GitHubStrings.Branch, 200);
-            branchesView.Columns.Add(Program.Lang.Strings.GitHubStrings.LastUpdated, 220);
-            branchesView.Columns.Add(Program.Lang.Strings.GitHubStrings.Branch_Ahead, 120, HorizontalAlignment.Right);
-            branchesView.Columns.Add(Program.Lang.Strings.GitHubStrings.Branch_Behind, 120);
-            branchesView.Columns.Add(Program.Lang.Strings.GitHubStrings.Committer, 140);
-            branchesView.Columns.Add(Program.Lang.Strings.GitHubStrings.LastCommitMsg, 380);
+            branchesView.Columns.Add(Program.Localization.Strings.GitHubStrings.Branch, 200);
+            branchesView.Columns.Add(Program.Localization.Strings.GitHubStrings.LastUpdated, 220);
+            branchesView.Columns.Add(Program.Localization.Strings.GitHubStrings.Branch_Ahead, 120, HorizontalAlignment.Right);
+            branchesView.Columns.Add(Program.Localization.Strings.GitHubStrings.Branch_Behind, 120);
+            branchesView.Columns.Add(Program.Localization.Strings.GitHubStrings.Committer, 140);
+            branchesView.Columns.Add(Program.Localization.Strings.GitHubStrings.LastCommitMsg, 380);
             branchesView.Columns.Add("SHA", 70);
             branchesView.EndUpdate();
 
@@ -232,8 +232,8 @@ namespace WinPaletter
                     followers_count_lbl.Text = User.GitHub.Followers.ToString();
                     following_count_lbl.Text = User.GitHub.Following.ToString();
 
-                    email_lbl.Text = User.GitHub.Email ?? Program.Lang.Strings.GitHubStrings.Overview_NoEmail;
-                    contry_lbl.Text = User.GitHub.Location ?? Program.Lang.Strings.GitHubStrings.Overview_NoLocation;
+                    email_lbl.Text = User.GitHub.Email ?? Program.Localization.Strings.GitHubStrings.Overview_NoEmail;
+                    contry_lbl.Text = User.GitHub.Location ?? Program.Localization.Strings.GitHubStrings.Overview_NoLocation;
 
                     created_lbl.Text = ToFriendlyString(User.GitHub.CreatedAt);
                     updated_lbl.Text = ToFriendlyString(User.GitHub.UpdatedAt);
@@ -341,19 +341,19 @@ namespace WinPaletter
             var span = now - dateTime;
 
             if (span.TotalSeconds < 60)
-                return $"{(int)span.TotalSeconds} {((int)span.TotalSeconds > 1 ? Program.Lang.Strings.GitHubStrings.Timing_Seconds : Program.Lang.Strings.GitHubStrings.Timing_Second)} {Program.Lang.Strings.GitHubStrings.Timing_Ago}";
+                return $"{(int)span.TotalSeconds} {((int)span.TotalSeconds > 1 ? Program.Localization.Strings.GitHubStrings.Timing_Seconds : Program.Localization.Strings.GitHubStrings.Timing_Second)} {Program.Localization.Strings.GitHubStrings.Timing_Ago}";
             if (span.TotalMinutes < 60)
-                return $"{(int)span.TotalMinutes} {((int)span.TotalMinutes > 1 ? Program.Lang.Strings.GitHubStrings.Timing_Minutes : Program.Lang.Strings.GitHubStrings.Timing_Minute)} {Program.Lang.Strings.GitHubStrings.Timing_Ago}";
+                return $"{(int)span.TotalMinutes} {((int)span.TotalMinutes > 1 ? Program.Localization.Strings.GitHubStrings.Timing_Minutes : Program.Localization.Strings.GitHubStrings.Timing_Minute)} {Program.Localization.Strings.GitHubStrings.Timing_Ago}";
             if (span.TotalHours < 24)
-                return $"{(int)span.TotalHours} {((int)span.TotalHours > 1 ? Program.Lang.Strings.GitHubStrings.Timing_Hours : Program.Lang.Strings.GitHubStrings.Timing_Hour)} {Program.Lang.Strings.GitHubStrings.Timing_Ago}";
+                return $"{(int)span.TotalHours} {((int)span.TotalHours > 1 ? Program.Localization.Strings.GitHubStrings.Timing_Hours : Program.Localization.Strings.GitHubStrings.Timing_Hour)} {Program.Localization.Strings.GitHubStrings.Timing_Ago}";
 
             var dayDiff = (now.Date - dateTime.Date).Days;
             if (dayDiff == 0)
-                return $"{Program.Lang.Strings.GitHubStrings.Timing_Today} {dateTime:hh:mm tt}";
+                return $"{Program.Localization.Strings.GitHubStrings.Timing_Today} {dateTime:hh:mm tt}";
             if (dayDiff == 1)
-                return $"{Program.Lang.Strings.GitHubStrings.Timing_Yesterday} {dateTime:hh:mm tt}";
+                return $"{Program.Localization.Strings.GitHubStrings.Timing_Yesterday} {dateTime:hh:mm tt}";
             if (dayDiff == -1)
-                return $"{Program.Lang.Strings.GitHubStrings.Timing_Tomorrow} {dateTime:hh:mm tt}";
+                return $"{Program.Localization.Strings.GitHubStrings.Timing_Tomorrow} {dateTime:hh:mm tt}";
 
             return dateTime.ToString("f");
         }
@@ -428,12 +428,12 @@ namespace WinPaletter
             bool forked = await GitHub.Repository.ExistsAsync(GitHub.Repository.Name);
             if (!forked) forked = await GitHub.Repository.ForkAsync(GitHub.Repository.Name) is not null;
 
-            label8.Text = forked ? Program.Lang.Strings.GitHubStrings.ExplorerStatus_Forked : $"{Program.Lang.Strings.GitHubStrings.ExplorerStatus_NotForked} {Program.Lang.Strings.GitHubStrings.ExplorerStatus_SyncAndForkToManage}";
+            label8.Text = forked ? Program.Localization.Strings.GitHubStrings.ExplorerStatus_Forked : $"{Program.Localization.Strings.GitHubStrings.ExplorerStatus_NotForked} {Program.Localization.Strings.GitHubStrings.ExplorerStatus_SyncAndForkToManage}";
             if (forked)
             {
                 await GetBranches();
             }
-            groupBox6.Enabled = forked;
+            button9.Enabled = !forked;
 
             groupBox3.Enabled = true;
 
@@ -452,11 +452,11 @@ namespace WinPaletter
 
             if (item.Tag is Branch branch && branch.Protected)
             {
-                MsgBox(string.Format(Program.Lang.Strings.GitHubStrings.Branch_CannotDoOperation_Protected, branch.Name), MessageBoxButtons.OK, MessageBoxIcon.Error, Program.Lang.Strings.GitHubStrings.Branch_CannotAccess_Protected_Tip);
+                MsgBox(string.Format(Program.Localization.Strings.GitHubStrings.Branch_CannotDoOperation_Protected, branch.Name), MessageBoxButtons.OK, MessageBoxIcon.Error, Program.Localization.Strings.GitHubStrings.Branch_CannotAccess_Protected_Tip);
                 return;
             }
 
-            if (MsgBox(string.Format(Program.Lang.Strings.GitHubStrings.Branch_Delete, branchName), MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (MsgBox(string.Format(Program.Localization.Strings.GitHubStrings.Branch_Delete, branchName), MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 Cursor = Cursors.WaitCursor;
                 progressBar1.Visible = true;
@@ -471,7 +471,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    MsgBox(string.Format(Program.Lang.Strings.GitHubStrings.Branch_Delete_Error, branchName), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MsgBox(string.Format(Program.Localization.Strings.GitHubStrings.Branch_Delete_Error, branchName), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 groupBox5.Enabled = true;
@@ -488,16 +488,63 @@ namespace WinPaletter
 
             bool canCreatePullRequest = await GitHub.Repository.CanCreatePullRequestAsync();
 
-            if (canCreatePullRequest)
+            if (canCreatePullRequest && Forms.GitHub_ConfirmPR.ShowDialog(GitHub.Repository.Branch.Name) == DialogResult.OK)
             {
-                string title = $"Update theme: {User.GitHub.Login} ({DateTime.Now:yyyy-MM-dd HH:mm})";
+                // Example: get list of changed theme files in the branch
+                List<string> changedFiles = [.. (await GitHub.Repository.Branch.GetChangedFilesAsync())];
+                List<string> changedThemes = [.. changedFiles.Where(f => f.EndsWith(".wpth"))];
+                List<string> changedPacks = [.. changedFiles.Where(f => f.EndsWith(".wptp"))];
+
+                // Check which themes are newly added
+                var themeTasks = changedThemes.Select(async f => await GitHub.Repository.Branch.IsNewFileAsync(f));
+                bool[] themeResults = await Task.WhenAll(themeTasks);
+                int addedThemes = themeResults.Count(r => r);
+                int modifiedThemes = themeResults.Length - addedThemes;
+
+                // Check which resource packs are newly added
+                var packTasks = changedPacks.Select(async f => await GitHub.Repository.Branch.IsNewFileAsync(f));
+                bool[] packResults = await Task.WhenAll(packTasks);
+                int addedPacks = packResults.Count(r => r);
+                int modifiedPacks = packResults.Length - addedPacks;
+
+                string title = $"[Themes Publication] {User.GitHub.Login} – {GitHub.Repository.Branch.Name} ({changedThemes.Count} theme file{(changedThemes.Count != 1 ? "s" : "")}, {changedPacks.Count} pack{(changedPacks.Count != 1 ? "s" : "")} changed)";
 
                 string body = $@"
-**Author:** {User.GitHub.Login}
-**WinPaletter Version:** {Program.Version}
-Generated automatically by WinPaletter.";
+### Pull Request Summary
+This PR automatically updates {changedThemes.Count} theme file{(changedThemes.Count != 1 ? "s" : "")} and {changedPacks.Count} resource pack{(changedPacks.Count != 1 ? "s" : "")}.
 
-                await GitHub.Repository.CreatePullRequestAsync(title, body);
+**Author:** {User.GitHub.Login}  
+**Branch:** {GitHub.Repository.Branch.Name}  
+**WinPaletter Version:** {Program.Version}  
+**WinPaletter Beta:** {Program.IsBeta}  
+**UTC Date:** {DateTime.UtcNow:yyyy-MM-dd HH:mm}  
+
+**Changes Breakdown (Themes):**  
+- Added: {addedThemes} file{(addedThemes != 1 ? "s" : "")}  
+- Modified: {modifiedThemes} file{(modifiedThemes != 1 ? "s" : "")}  
+
+**Changes Breakdown (Resource Packs):**  
+- Added: {addedPacks} pack{(addedPacks != 1 ? "s" : "")}  
+- Modified: {modifiedPacks} pack{(modifiedPacks != 1 ? "s" : "")}  
+
+**Theme Files:**  
+{string.Join("\n", changedThemes.Select(f => $"- {f}"))}
+
+**Resource Packs:**  
+{string.Join("\n", changedPacks.Select(f => $"- {f}"))}
+
+Generated automatically by WinPaletter. Please review the changes before merging.";
+
+                PullRequest pr = await GitHub.Repository.CreatePullRequestAsync(title, body);
+
+                if (pr is not null)
+                {
+                    Process.Start(pr.HtmlUrl);
+                }
+                else
+                {
+                    MsgBox(Program.Localization.Strings.Messages.CouldntCreatePR, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
 
             breadcrumbControl1.StopMarquee();
@@ -550,7 +597,7 @@ Generated automatically by WinPaletter.";
 
             if (item.Tag is Branch branch && branch.Protected)
             {
-                MsgBox(string.Format(Program.Lang.Strings.GitHubStrings.Branch_CannotAccess_Protected, branch.Name), MessageBoxButtons.OK, MessageBoxIcon.Error, Program.Lang.Strings.GitHubStrings.Branch_CannotAccess_Protected_Tip);
+                MsgBox(string.Format(Program.Localization.Strings.GitHubStrings.Branch_CannotAccess_Protected, branch.Name), MessageBoxButtons.OK, MessageBoxIcon.Error, Program.Localization.Strings.GitHubStrings.Branch_CannotAccess_Protected_Tip);
                 return;
             }
 
@@ -611,7 +658,7 @@ Generated automatically by WinPaletter.";
                 }
                 else if (!GitHub.Repository.Branch.IsValidBranchName(newName))
                 {
-                    MsgBox(Program.Lang.Strings.GitHubStrings.Branch_InvalidName, MessageBoxButtons.OK, MessageBoxIcon.Error, Program.Lang.Strings.GitHubStrings.Branch_NamingRules);
+                    MsgBox(Program.Localization.Strings.GitHubStrings.Branch_InvalidName, MessageBoxButtons.OK, MessageBoxIcon.Error, Program.Localization.Strings.GitHubStrings.Branch_NamingRules);
                     e.CancelEdit = true;
                     if (item.Tag is PendingBranch) item.Remove();
                     return;
@@ -622,7 +669,7 @@ Generated automatically by WinPaletter.";
 
                     if (await GitHub.Repository.Branch.GetBranch(newName) is not null)
                     {
-                        MsgBox(Program.Lang.Strings.GitHubStrings.NewBranch_AlreadyExists, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MsgBox(Program.Localization.Strings.GitHubStrings.NewBranch_AlreadyExists, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         e.CancelEdit = true;
                         item.Remove();
                         return;
@@ -636,7 +683,7 @@ Generated automatically by WinPaletter.";
                         bool syncOk = await GitHub.Repository.Branch.IsUpdatedAsync(pb.BaseBranch, "main") || await GitHub.Repository.Branch.SyncBranchAsync(pb.BaseBranch, "main");
                         if (!syncOk)
                         {
-                            MsgBox(Program.Lang.Strings.GitHubStrings.NewBranch_Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MsgBox(Program.Localization.Strings.GitHubStrings.NewBranch_Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                             item.Remove();
                             return;
                         }
@@ -644,7 +691,7 @@ Generated automatically by WinPaletter.";
                         Branch branch = await GitHub.Repository.Branch.CreateBranchAsync(newName, pb.BaseBranch);
                         if (branch == null)
                         {
-                            MsgBox(string.Format(Program.Lang.Strings.GitHubStrings.NewBranch_Error, newName), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MsgBox(string.Format(Program.Localization.Strings.GitHubStrings.NewBranch_Error, newName), MessageBoxButtons.OK, MessageBoxIcon.Error);
                             item.Remove();
                             return;
                         }
@@ -669,13 +716,13 @@ Generated automatically by WinPaletter.";
 
                     if (newName.Equals("main", StringComparison.OrdinalIgnoreCase))
                     {
-                        MsgBox(string.Format(Program.Lang.Strings.GitHubStrings.Branch_CannotDoOperation_Protected, "main"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MsgBox(string.Format(Program.Localization.Strings.GitHubStrings.Branch_CannotDoOperation_Protected, "main"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         e.CancelEdit = true;
                         return;
                     }
                     if (existingBranch.Protected)
                     {
-                        MsgBox(string.Format(Program.Lang.Strings.GitHubStrings.Branch_CannotDoOperation_Protected, existingBranch.Name), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MsgBox(string.Format(Program.Localization.Strings.GitHubStrings.Branch_CannotDoOperation_Protected, existingBranch.Name), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         e.CancelEdit = true;
                         return;
                     }
@@ -689,7 +736,7 @@ Generated automatically by WinPaletter.";
 
                         if (await GitHub.Repository.Branch.GetBranch(newName) is not null)
                         {
-                            MsgBox(Program.Lang.Strings.GitHubStrings.Branch_Rename_AlreadyExists, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MsgBox(Program.Localization.Strings.GitHubStrings.Branch_Rename_AlreadyExists, MessageBoxButtons.OK, MessageBoxIcon.Error);
                             e.CancelEdit = true;
                             return;
                         }
@@ -803,6 +850,7 @@ Generated automatically by WinPaletter.";
                 button10.Enabled = true;
                 button11.Enabled = true;
                 button12.Enabled = true;
+                button17.Enabled = true;
             }
             else
             {
@@ -810,6 +858,7 @@ Generated automatically by WinPaletter.";
                 button10.Enabled = false;
                 button11.Enabled = false;
                 button12.Enabled = false;
+                button17.Enabled = false;
             }
         }
 
@@ -927,6 +976,47 @@ Generated automatically by WinPaletter.";
         private void pin_button_Click(object sender, EventArgs e)
         {
             Forms.MainForm.tabsContainer1.AddFormIntoTab(this);
+        }
+
+        private async void button17_Click_1(object sender, EventArgs e)
+        {
+            if (MsgBox(Program.Localization.Strings.Messages.SyncingTip, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Localization.Strings.Messages.ConfirmSync) == DialogResult.Yes)
+            {
+                Cursor = Cursors.WaitCursor;
+
+                if (await GitHub.Repository.Branch.SyncBranchAsync(GitHub.Repository.Branch.Name, "main"))
+                {
+                    await GetBranches();
+                    MsgBox(Program.Localization.Strings.Messages.SyncCompleted, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MsgBox(Program.Localization.Strings.Messages.SyncFailed, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                Cursor = Cursors.Default;
+            }
+        }
+
+        private async void button19_Click(object sender, EventArgs e)
+        {
+            if (MsgBox(Program.Localization.Strings.Messages.SyncingTip, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Localization.Strings.Messages.ConfirmSync) == DialogResult.Yes)
+            {
+                Cursor = Cursors.WaitCursor;
+
+                if (await GitHub.Repository.Branch.SyncBranchAsync(GitHub.Repository.Branch.Name, "main"))
+                {
+                    await GetBranches();
+                    await GitHub.FileSystem.SetBranch(GitHub.Repository.Branch.Name, treeView1, listView1, breadcrumbControl1);
+                    MsgBox(Program.Localization.Strings.Messages.SyncCompleted, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MsgBox(Program.Localization.Strings.Messages.SyncFailed, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+                Cursor = Cursors.Default;
+            }
         }
     }
 }

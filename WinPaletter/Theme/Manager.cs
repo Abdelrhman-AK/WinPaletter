@@ -223,7 +223,7 @@ namespace WinPaletter.Theme
                                     Program.Log?.Write(LogEventLevel.Error, $"The used wpth file has the old format (obsolete.)");
 
                                     // Display a message box for old format themes
-                                    MsgBox(Program.Lang.Strings.Converter.Detect_Old_OnLoading0, MessageBoxButtons.OK, MessageBoxIcon.Error, Program.Lang.Strings.Converter.Detect_Old_OnLoadingTip);
+                                    MsgBox(Program.Localization.Strings.Converter.Detect_Old_OnLoading0, MessageBoxButtons.OK, MessageBoxIcon.Error, Program.Localization.Strings.Converter.Detect_Old_OnLoadingTip);
                                     return;
                                 }
                                 else
@@ -231,7 +231,7 @@ namespace WinPaletter.Theme
                                     Program.Log?.Write(LogEventLevel.Error, $"The used wpth file is invalid.");
 
                                     // Display a message box for invalid JSON
-                                    MsgBox(Program.Lang.Strings.Converter.Error_Phrasing, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    MsgBox(Program.Localization.Strings.Converter.Error_Phrasing, MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 }
 
                                 // Display exception information if any

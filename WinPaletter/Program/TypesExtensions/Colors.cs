@@ -20,7 +20,7 @@ namespace WinPaletter.TypesExtensions
         public static string ToString(this Color color, Formats format, bool hexHash = false, bool shortForm = false)
         {
             if (color.A == 0 && color.R == 0 && color.G == 0 && color.B == 0)
-                return Program.Lang.Strings.General.Empty;
+                return Program.Localization.Strings.General.Empty;
 
             // Handle "default" separately (not in enum)
             if (format == (Formats)(-1) || format == default) format = Program.Settings.NerdStats.Type;

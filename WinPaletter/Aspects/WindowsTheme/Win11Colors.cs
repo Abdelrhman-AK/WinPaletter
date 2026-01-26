@@ -28,7 +28,7 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Localization.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -60,7 +60,7 @@ namespace WinPaletter
         {
             if (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors)
             {
-                MsgBox(Program.Lang.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.Strings.Aspects.Disabled_Apply_1);
+                MsgBox(Program.Localization.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Localization.Strings.Aspects.Disabled_Apply_1);
                 return;
             }
 
@@ -90,7 +90,7 @@ namespace WinPaletter
         {
             DesignerData data = new(this)
             {
-                AspectName = string.Format(Program.Lang.Strings.Aspects.WinTheme, OS.Name),
+                AspectName = string.Format(Program.Localization.Strings.Aspects.WinTheme, OS.Name),
                 Enabled = Program.TM.Windows11.Enabled,
                 GeneratePalette = true,
                 GenerateMSTheme = false,
@@ -111,8 +111,8 @@ namespace WinPaletter
             LoadFromTM(Program.TM);
             ApplyDefaultTMValues();
 
-            ToolStripMenuItem item0 = new(string.Format(Program.Lang.Strings.General.CopycatFrom, Program.Lang.Strings.Windows.W10));
-            ToolStripMenuItem item1 = new(string.Format(Program.Lang.Strings.General.CopycatFrom, Program.Lang.Strings.Windows.W12));
+            ToolStripMenuItem item0 = new(string.Format(Program.Localization.Strings.General.CopycatFrom, Program.Localization.Strings.Windows.W10));
+            ToolStripMenuItem item1 = new(string.Format(Program.Localization.Strings.General.CopycatFrom, Program.Localization.Strings.Windows.W12));
             item0.Click += Item0_Click;
             item1.Click += Item1_Click;
             easy_generator.Menu.Items.Add(item0);
@@ -131,7 +131,7 @@ namespace WinPaletter
                     LoadFromTM(TMx0);
                 }
 
-                Program.ToolTip.Show(easy_generator, Program.Lang.Strings.General.Done, string.Empty, null, new Point(2, easy_generator.Height + 2));
+                Program.ToolTip.Show(easy_generator, Program.Localization.Strings.General.Done, string.Empty, null, new Point(2, easy_generator.Height + 2));
             }
         }
 
@@ -147,7 +147,7 @@ namespace WinPaletter
                     LoadFromTM(TMx0);
                 }
 
-                Program.ToolTip.Show(easy_generator, Program.Lang.Strings.General.Done, string.Empty, null, new Point(2, easy_generator.Height + 2));
+                Program.ToolTip.Show(easy_generator, Program.Localization.Strings.General.Done, string.Empty, null, new Point(2, easy_generator.Height + 2));
             }
         }
 
@@ -285,7 +285,7 @@ namespace WinPaletter
                     }
                     catch
                     {
-                        MsgBox(Program.Lang.Strings.Messages.InvalidTheme, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MsgBox(Program.Localization.Strings.Messages.InvalidTheme, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -321,7 +321,7 @@ namespace WinPaletter
                     }
                     catch
                     {
-                        MsgBox(Program.Lang.Strings.Messages.InvalidTheme, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MsgBox(Program.Localization.Strings.Messages.InvalidTheme, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -637,8 +637,8 @@ namespace WinPaletter
 
         private void Button8_Click(object sender, EventArgs e)
         {
-            Program.ToolTip.ToolTipText = Program.Lang.Strings.Tips.TitlebarColorNotice;
-            Program.ToolTip.ToolTipTitle = Program.Lang.Strings.General.Tip;
+            Program.ToolTip.ToolTipText = Program.Localization.Strings.Tips.TitlebarColorNotice;
+            Program.ToolTip.ToolTipTitle = Program.Localization.Strings.General.Tip;
             Program.ToolTip.Image = Notifications.Info;
 
             Point location = new(-Program.ToolTip.Size.Width - 2, (((Control)sender).Height - Program.ToolTip.Size.Height) / 2 - 1);
@@ -895,12 +895,12 @@ namespace WinPaletter
             windowsDesktop1.Color8 = C8.BackColor;
             windowsDesktop1.Color9 = C9.BackColor;
 
-            Program.ToolTip.Show((UI.WP.Button)sender, Program.Lang.Strings.General.Done, Program.Lang.Strings.Messages.ReadjustColor, null, new Point(2, ((UI.WP.Button)sender).Height + 2));
+            Program.ToolTip.Show((UI.WP.Button)sender, Program.Localization.Strings.General.Done, Program.Localization.Strings.Messages.ReadjustColor, null, new Point(2, ((UI.WP.Button)sender).Height + 2));
         }
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            using (SaveFileDialog dlg = new() { Filter = Program.Filters.PNG, Title = Program.Lang.Strings.Extensions.SavePNG })
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.PNG, Title = Program.Localization.Strings.Extensions.SavePNG })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -979,7 +979,7 @@ namespace WinPaletter
 
         private void VS_Browse_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { FileName = VS_textbox.Text, Filter = Program.Filters.VisualStyles_And_Themes, Title = Program.Lang.Strings.Extensions.OpenVisualStyle })
+            using (OpenFileDialog dlg = new() { FileName = VS_textbox.Text, Filter = Program.Filters.VisualStyles_And_Themes, Title = Program.Localization.Strings.Extensions.OpenVisualStyle })
             {
                 if (dlg.ShowDialog() == DialogResult.OK) VS_textbox.Text = VisualStyle.GetCorrectMSStyles(dlg.FileName);
             }

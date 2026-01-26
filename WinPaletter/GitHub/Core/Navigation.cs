@@ -11,7 +11,6 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.ListView;
 
 namespace WinPaletter.GitHub
 {
@@ -84,9 +83,9 @@ namespace WinPaletter.GitHub
         /// </summary>
         public static Func<RepositoryContent, string> FileTypeProvider { get; set; } = entry =>
         {
-            if (entry.Type == Octokit.ContentType.Dir) return Program.Lang.Strings.GitHubStrings.Explorer_Type_Folder;
-            if (entry.Name.EndsWith(".wpth", StringComparison.OrdinalIgnoreCase)) return Program.Lang.Strings.Extensions.WinPaletterThemeFile;
-            if (entry.Name.EndsWith(".wptp", StringComparison.OrdinalIgnoreCase)) return Program.Lang.Strings.Extensions.WinPaletterResourcesPack;
+            if (entry.Type == Octokit.ContentType.Dir) return Program.Localization.Strings.GitHubStrings.Explorer_Type_Folder;
+            if (entry.Name.EndsWith(".wpth", StringComparison.OrdinalIgnoreCase)) return Program.Localization.Strings.Extensions.WinPaletterThemeFile;
+            if (entry.Name.EndsWith(".wptp", StringComparison.OrdinalIgnoreCase)) return Program.Localization.Strings.Extensions.WinPaletterResourcesPack;
             if (entry.Name.EndsWith(".gitkeep", StringComparison.OrdinalIgnoreCase)) return ".gitkeep file";
             return NativeMethods.Shell32.GetExtensionDescription(GetExtension(entry.Name));
         };
@@ -162,11 +161,11 @@ namespace WinPaletter.GitHub
         // Views list
         public static readonly List<(string label, Bitmap icon, Bitmap glyph, View view)> Views =
         [
-            (Program.Lang.Strings.GitHubStrings.Explorer_View_LargeIcons, Assets.GitHubMgr.Icons_Large, Assets.GitHubMgr.Glyph_View_Large, View.LargeIcon),
-            (Program.Lang.Strings.GitHubStrings.Explorer_View_SmallIcons, Assets.GitHubMgr.Icons_Small, Assets.GitHubMgr.Glyph_View_Small, View.SmallIcon),
-            (Program.Lang.Strings.GitHubStrings.Explorer_View_List, Assets.GitHubMgr.Icons_List, Assets.GitHubMgr.Glyph_View_List, View.List),
-            (Program.Lang.Strings.GitHubStrings.Explorer_View_Details, Assets.GitHubMgr.Icons_Details, Assets.GitHubMgr.Glyph_View_Details, View.Details),
-            (Program.Lang.Strings.GitHubStrings.Explorer_View_Tiles, Assets.GitHubMgr.Icons_Tile, Assets.GitHubMgr.Glyph_View_Tile, View.Tile)
+            (Program.Localization.Strings.GitHubStrings.Explorer_View_LargeIcons, Assets.GitHubMgr.Icons_Large, Assets.GitHubMgr.Glyph_View_Large, View.LargeIcon),
+            (Program.Localization.Strings.GitHubStrings.Explorer_View_SmallIcons, Assets.GitHubMgr.Icons_Small, Assets.GitHubMgr.Glyph_View_Small, View.SmallIcon),
+            (Program.Localization.Strings.GitHubStrings.Explorer_View_List, Assets.GitHubMgr.Icons_List, Assets.GitHubMgr.Glyph_View_List, View.List),
+            (Program.Localization.Strings.GitHubStrings.Explorer_View_Details, Assets.GitHubMgr.Icons_Details, Assets.GitHubMgr.Glyph_View_Details, View.Details),
+            (Program.Localization.Strings.GitHubStrings.Explorer_View_Tiles, Assets.GitHubMgr.Icons_Tile, Assets.GitHubMgr.Glyph_View_Tile, View.Tile)
         ];
 
         // Global menu items
@@ -525,11 +524,11 @@ namespace WinPaletter.GitHub
                 {
                     Program.Log?.Write(LogEventLevel.Information, "PopulateListViewAsync initialized columns");
 
-                    _boundList.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Name, 230);
-                    _boundList.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Type, 200);
-                    _boundList.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Size, 80);
+                    _boundList.Columns.Add(Program.Localization.Strings.GitHubStrings.Explorer_DetailsHeader_Name, 230);
+                    _boundList.Columns.Add(Program.Localization.Strings.GitHubStrings.Explorer_DetailsHeader_Type, 200);
+                    _boundList.Columns.Add(Program.Localization.Strings.GitHubStrings.Explorer_DetailsHeader_Size, 80);
                     _boundList.Columns.Add("MD5", 120);
-                    _boundList.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_URL, 220);
+                    _boundList.Columns.Add(Program.Localization.Strings.GitHubStrings.Explorer_DetailsHeader_URL, 220);
                 }
 
                 if (!Cache.Contains(path))
@@ -553,7 +552,7 @@ namespace WinPaletter.GitHub
                     {
                         ListViewItem item = new(entry.Name) { Tag = entry.Content };
 
-                        item.SubItems.Add(FileTypeProvider?.Invoke(entry.Content) ?? Program.Lang.Strings.Extensions.File);
+                        item.SubItems.Add(FileTypeProvider?.Invoke(entry.Content) ?? Program.Localization.Strings.Extensions.File);
 
                         long size = entry.Type == EntryType.Dir && Cache.Contains(entry.Path) ? Cache.GetSize(entry.Path) : entry.Size;
 
@@ -880,7 +879,7 @@ namespace WinPaletter.GitHub
 
         public static void Init_NewDirectory()
         {
-            ListViewItem item = new(GetAvailableItemText(Program.Lang.Strings.Extensions.NewFolder))
+            ListViewItem item = new(GetAvailableItemText(Program.Localization.Strings.Extensions.NewFolder))
             {
                 ImageKey = "folder",
                 Tag = "NEWFOLDER_PENDING",
@@ -1010,7 +1009,7 @@ namespace WinPaletter.GitHub
         private static void InitializeMenu_Global()
         {
             // Create view menu items dynamically
-            menu_view.Text = Program.Lang.Strings.GitHubStrings.Explorer_View;
+            menu_view.Text = Program.Localization.Strings.GitHubStrings.Explorer_View;
             menu_view.DropDown.Items.Clear();
             foreach (var view in Views)
             {
@@ -1027,29 +1026,29 @@ namespace WinPaletter.GitHub
                 menu_view.DropDown.Items.Add(item);
             }
 
-            menu_paste.Text = Program.Lang.Strings.General.Paste;
+            menu_paste.Text = Program.Localization.Strings.General.Paste;
             menu_paste.Enabled = false;
 
             menu_paste.Click -= Menu_paste_Click;
             menu_paste.Click += Menu_paste_Click;
 
-            menu_newFolder.Text = Program.Lang.Strings.Extensions.Folder;
+            menu_newFolder.Text = Program.Localization.Strings.Extensions.Folder;
             menu_newFolder.Click -= Menu_NewFolder_Click;
             menu_newFolder.Click += Menu_NewFolder_Click;
 
             using (Icon ico = Properties.Resources.fileextension.FromSize(20))
             {
-                menu_newTheme.Text = Program.Lang.Strings.Extensions.WinPaletterThemeFile;
+                menu_newTheme.Text = Program.Localization.Strings.Extensions.WinPaletterThemeFile;
                 menu_newTheme.Image = ico.ToBitmap();
             }
 
-            menu_newItem.Text = Program.Lang.Strings.General.New;
+            menu_newItem.Text = Program.Localization.Strings.General.New;
             menu_newItem.DropDown.Items.Clear();
             menu_newItem.DropDown.Items.AddRange([menu_newFolder, menu_newTheme]);
             menu_newTheme.Click -= Menu_newTheme_Click;
             menu_newTheme.Click += Menu_newTheme_Click;
 
-            menu_properties.Text = Program.Lang.Strings.GitHubStrings.Explorer_Properties;
+            menu_properties.Text = Program.Localization.Strings.GitHubStrings.Explorer_Properties;
 
             contextMenu_all.Items.Clear();
             contextMenu_all.Items.AddRange(
@@ -1066,39 +1065,39 @@ namespace WinPaletter.GitHub
 
         private static void InitializeMenu_Item()
         {
-            menu_Open.Text = Program.Lang.Strings.General.Open;
+            menu_Open.Text = Program.Localization.Strings.General.Open;
             menu_Open.Click -= Menu_Open_Click;
             menu_Open.Click += Menu_Open_Click;
 
-            menu_Download.Text = Program.Lang.Strings.General.Download;
+            menu_Download.Text = Program.Localization.Strings.General.Download;
             menu_Download.Click -= Menu_Download_Click;
             menu_Download.Click += Menu_Download_Click;
 
-            menu_CopyPath.Text = Program.Lang.Strings.General.Copy_AsPath;
+            menu_CopyPath.Text = Program.Localization.Strings.General.Copy_AsPath;
             menu_CopyPath.Click -= Menu_CopyPath_Click;
             menu_CopyPath.Click += Menu_CopyPath_Click;
 
-            menu_CopyURL.Text = Program.Lang.Strings.General.Copy_URL;
+            menu_CopyURL.Text = Program.Localization.Strings.General.Copy_URL;
             menu_CopyURL.Click -= Menu_CopyURL_Click;
             menu_CopyURL.Click += Menu_CopyURL_Click;
 
-            menu_Copy.Text = Program.Lang.Strings.General.Copy;
+            menu_Copy.Text = Program.Localization.Strings.General.Copy;
             menu_Copy.Click -= Menu_Copy_Click;
             menu_Copy.Click += Menu_Copy_Click;
 
-            menu_Cut.Text = Program.Lang.Strings.General.Cut;
+            menu_Cut.Text = Program.Localization.Strings.General.Cut;
             menu_Cut.Click -= Menu_Cut_Click;
             menu_Cut.Click += Menu_Cut_Click;
 
-            menu_Delete.Text = Program.Lang.Strings.General.Delete;
+            menu_Delete.Text = Program.Localization.Strings.General.Delete;
             menu_Delete.Click -= Menu_Delete_Click;
             menu_Delete.Click += Menu_Delete_Click;
 
-            menu_Rename.Text = Program.Lang.Strings.General.Rename;
+            menu_Rename.Text = Program.Localization.Strings.General.Rename;
             menu_Rename.Click -= Menu_Rename_Click;
             menu_Rename.Click += Menu_Rename_Click;
 
-            menu_item_properties.Text = Program.Lang.Strings.GitHubStrings.Explorer_Properties;
+            menu_item_properties.Text = Program.Localization.Strings.GitHubStrings.Explorer_Properties;
             menu_item_properties.Click -= Menu_ItemProperties_Click;
             menu_item_properties.Click += Menu_ItemProperties_Click;
 
@@ -1222,6 +1221,8 @@ namespace WinPaletter.GitHub
 
         private static async void List_AfterLabelEdit(object sender, LabelEditEventArgs e)
         {
+            if (e.Item < 0) return;
+
             ListViewItem item = _boundList.Items[e.Item];
 
             string newName;
@@ -1243,87 +1244,96 @@ namespace WinPaletter.GitHub
                 e.CancelEdit = true;
                 return;
             }
-            else if (!GitHub.FileSystem.IsValidGitWindowsUrlSafeName(newName))
-            {
-                Program.ToolTip.Show(_boundTree, Program.Lang.Strings.GitHubStrings.Explorer_InvalidCharToolTip,
-                    $"{GitHub.FileSystem.InvalidCharsToolTip}\r\n{GitHub.FileSystem.InvalidNamesToolTip}",
-                    Properties.Resources.checker_disabled, item.Bounds.Location);
 
-                item?.Remove();
-                e.CancelEdit = true;
-                return;
-            }
-            else if (_boundList.Items.Cast<ListViewItem>().Any(i => i != item && string.Equals(i.Text, newName, StringComparison.OrdinalIgnoreCase)))
+            if (!GitHub.FileSystem.IsValidGitWindowsUrlSafeName(newName))
             {
-                Program.ToolTip.Show(_boundTree, Program.Lang.Strings.GitHubStrings.Explorer_EntryExists, string.Empty, Properties.Resources.checker_disabled, item.Bounds.Location);
-
-                item?.Remove();
+                Program.ToolTip.Show(_boundTree, Program.Localization.Strings.GitHubStrings.Explorer_InvalidCharToolTip, $"{GitHub.FileSystem.InvalidCharsToolTip}\r\n{GitHub.FileSystem.InvalidNamesToolTip}", Properties.Resources.checker_disabled, item.Bounds.Location);
+                item.Remove();
                 e.CancelEdit = true;
                 return;
             }
 
-            if (item.Tag is string str_tag && str_tag == "NEWFOLDER_PENDING")
+            if (_boundList.Items.Cast<ListViewItem>().Any(i => i != item && string.Equals(i.Text, newName, StringComparison.OrdinalIgnoreCase)))
+            {
+                Program.ToolTip.Show(_boundTree, Program.Localization.Strings.GitHubStrings.Explorer_EntryExists, string.Empty, Properties.Resources.checker_disabled, item.Bounds.Location);
+                item.Remove();
+                e.CancelEdit = true;
+                return;
+            }
+
+            if (item.Tag is string tag && tag == "NEWFOLDER_PENDING")
             {
                 item.Text = newName;
                 NewDirectory(item, e);
+                return;
             }
-            else
+
+            if (item.Tag is not RepositoryContent content)
             {
                 item.Text = newName;
+                return;
             }
 
-            if (item.Tag is RepositoryContent content)
+            if (content.Type == ContentType.Dir)
             {
-                if (content.Type == ContentType.Dir)
+                item.Text = newName;
+                RenameDirectory(item, e);
+                return;
+            }
+
+            if (content.Type != ContentType.File)
+            {
+                item.Text = newName;
+                return;
+            }
+
+            string oldText = content.Name;
+            string oldExt = Path.GetExtension(oldText);
+            string newExt = Path.GetExtension(newName);
+            string oldBaseName = Path.GetFileNameWithoutExtension(oldText);
+            string newBaseName = Path.GetFileNameWithoutExtension(newName);
+            string parentDirPath = FileSystem.CurrentPath;
+
+            bool extensionChanged = !string.Equals(oldExt, newExt, StringComparison.OrdinalIgnoreCase);
+
+            if (extensionChanged)
+            {
+                bool isWinPaletterThemeChange = oldExt.Equals(".wpth", StringComparison.OrdinalIgnoreCase) || oldExt.Equals(".wptp", StringComparison.OrdinalIgnoreCase);
+
+                string message = isWinPaletterThemeChange ? Program.Localization.Strings.Messages.ChangeExt_Themes : Program.Localization.Strings.Messages.ChangeExt;
+                if (MsgBox(message, MessageBoxButtons.YesNo, MessageBoxIcon.Warning, Program.Localization.Strings.Messages.ChangeExt_Confirm) == DialogResult.No)
                 {
-                    RenameDirectory(item, e);
+                    e.CancelEdit = true;
+                    item.Text = oldText;
+                    return;
                 }
-                else if (content.Type == ContentType.File)
+            }
+
+            // Determine linked extension
+            string linkedExt = oldExt.Equals(".wpth", StringComparison.OrdinalIgnoreCase) ? ".wptp" : oldExt.Equals(".wptp", StringComparison.OrdinalIgnoreCase) ? ".wpth" : null;
+
+            ListViewItem linkedItem = null;
+
+            if (linkedExt != null && FilesOperationsLinking && !extensionChanged)
+            {
+                linkedItem = _boundList.Items.Cast<ListViewItem>().FirstOrDefault(i =>
                 {
-                    string oldText = content.Name;
-                    string oldBaseName = Path.GetFileNameWithoutExtension(oldText);
-                    string newBaseName = Path.GetFileNameWithoutExtension(newName);
-                    string ext = Path.GetExtension(oldText);
-                    string parentDirPath = FileSystem.CurrentPath;
-
-                    // Determine linked extension
-                    string linkedExt = ext.Equals(".wpth", StringComparison.OrdinalIgnoreCase) ? ".wptp"
-                                     : ext.Equals(".wptp", StringComparison.OrdinalIgnoreCase) ? ".wpth"
-                                     : null;
-
-                    if (linkedExt != null)
+                    if (i.Tag is RepositoryContent rc)
                     {
-                        // Find linked item BEFORE any rename
-                        ListViewItem linkedItem = FilesOperationsLinking ? _boundList.Items.Cast<ListViewItem>()
-                            .FirstOrDefault(i =>
-                            {
-                                if (i.Tag is RepositoryContent rc)
-                                {
-                                    string rcBase = Path.GetFileNameWithoutExtension(rc.Name);
-                                    string rcExt = Path.GetExtension(rc.Name);
-                                    bool match = rcBase.Equals(oldBaseName, StringComparison.OrdinalIgnoreCase) && rcExt.Equals(linkedExt, StringComparison.OrdinalIgnoreCase);
-                                    if (match) return match;
-                                }
-                                return false;
-                            }) : null;
-
-                        item.Text = newName;
-                        await RenameFile(item, parentDirPath, e);
-
-                        if (linkedItem is not null && newName != oldText && (Program.Settings.UsersServices.GitHub_AutoOperateOnLinkedFiles || Forms.GitHub_LinkedFilesConfirmation.ShowDialog(oldBaseName, newBaseName, GitHub_LinkedFilesConfirmation.Operation.Rename) == DialogResult.Yes))
-                        {
-                            string linkedNewName = $"{newBaseName}{linkedExt}";
-                            linkedItem.Text = linkedNewName;
-                            await RenameFile(linkedItem, parentDirPath);
-                        }
+                        return Path.GetFileNameWithoutExtension(rc.Name).Equals(oldBaseName, StringComparison.OrdinalIgnoreCase) && Path.GetExtension(rc.Name).Equals(linkedExt, StringComparison.OrdinalIgnoreCase);
                     }
-                    else
-                    {
-                        // Just rename main item
-                        item.Text = newName;
-                        await RenameFile(item, parentDirPath, e);
-                    }
-                }
+                    return false;
+                });
+            }
+
+            item.Text = newName;
+            await RenameFile(item, parentDirPath, e);
+
+            if (linkedItem != null && newName != oldText && (Program.Settings.UsersServices.GitHub_AutoOperateOnLinkedFiles ||  Forms.GitHub_LinkedFilesConfirmation.ShowDialog(oldBaseName, newBaseName, GitHub_LinkedFilesConfirmation.Operation.Rename) == DialogResult.Yes))
+            {
+                string linkedNewName = $"{newBaseName}{linkedExt}";
+                linkedItem.Text = linkedNewName;
+                await RenameFile(linkedItem, parentDirPath);
             }
         }
 
@@ -2045,7 +2055,7 @@ namespace WinPaletter.GitHub
                         if (lvi != null && lvi.ImageKey != null && _boundList.LargeImageList.Images.ContainsKey(lvi.ImageKey))
                             icon = _boundList.LargeImageList.Images[lvi.ImageKey] as Bitmap;
 
-                        if (Forms.GitHub_FileAction.ConfirmFileDelete(rc.Name, GitHub.FileSystem.FileTypeProvider?.Invoke(rc) ?? Program.Lang.Strings.Extensions.File, rc.Size, icon) == DialogResult.Yes)
+                        if (Forms.GitHub_FileAction.ConfirmFileDelete(rc.Name, GitHub.FileSystem.FileTypeProvider?.Invoke(rc) ?? Program.Localization.Strings.Extensions.File, rc.Size, icon) == DialogResult.Yes)
                         {
                             filePaths.Add(rc.Path);
                         }
@@ -2248,7 +2258,7 @@ namespace WinPaletter.GitHub
 
                 if (_boundList?.Items.Count == 0)
                 {
-                    return $"0 {Program.Lang.Strings.GitHubStrings.Explorer_Item} |";
+                    return $"0 {Program.Localization.Strings.GitHubStrings.Explorer_Item} |";
                 }
 
                 int totalItems = _boundList.Items.Count;
@@ -2271,7 +2281,7 @@ namespace WinPaletter.GitHub
                 }
 
 
-                string itemsText = $"{totalItems} {(totalItems > 1 ? Program.Lang.Strings.GitHubStrings.Explorer_Items : Program.Lang.Strings.GitHubStrings.Explorer_Item)} |";
+                string itemsText = $"{totalItems} {(totalItems > 1 ? Program.Localization.Strings.GitHubStrings.Explorer_Items : Program.Localization.Strings.GitHubStrings.Explorer_Item)} |";
 
                 if (selectedItems == 0)
                 {
@@ -2279,7 +2289,7 @@ namespace WinPaletter.GitHub
                 }
                 else
                 {
-                    string selectedText = $"{selectedItems} {(selectedItems > 1 ? Program.Lang.Strings.GitHubStrings.Explorer_Items : Program.Lang.Strings.GitHubStrings.Explorer_Item)} {Program.Lang.Strings.GitHubStrings.Explorer_Selected}";
+                    string selectedText = $"{selectedItems} {(selectedItems > 1 ? Program.Localization.Strings.GitHubStrings.Explorer_Items : Program.Localization.Strings.GitHubStrings.Explorer_Item)} {Program.Localization.Strings.GitHubStrings.Explorer_Selected}";
                     return $"{itemsText} {selectedText} {selectedSize.ToStringFileSize()} |";
                 }
             }
@@ -2422,11 +2432,11 @@ namespace WinPaletter.GitHub
 
                 if (_boundList.Columns.Count == 0)
                 {
-                    _boundList.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Name, 230);
-                    _boundList.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Type, 200);
-                    _boundList.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_Size, 80);
+                    _boundList.Columns.Add(Program.Localization.Strings.GitHubStrings.Explorer_DetailsHeader_Name, 230);
+                    _boundList.Columns.Add(Program.Localization.Strings.GitHubStrings.Explorer_DetailsHeader_Type, 200);
+                    _boundList.Columns.Add(Program.Localization.Strings.GitHubStrings.Explorer_DetailsHeader_Size, 80);
                     _boundList.Columns.Add("MD5", 120);
-                    _boundList.Columns.Add(Program.Lang.Strings.GitHubStrings.Explorer_DetailsHeader_URL, 220);
+                    _boundList.Columns.Add(Program.Localization.Strings.GitHubStrings.Explorer_DetailsHeader_URL, 220);
                 }
 
                 bool hasWildcard = keyword.Contains("*") || keyword.Contains("?");
@@ -2487,7 +2497,7 @@ namespace WinPaletter.GitHub
                     {
                         ListViewItem item = new(entry.Name) { Tag = entry };
 
-                        item.SubItems.Add(FileTypeProvider?.Invoke(entry) ?? Program.Lang.Strings.Extensions.File);
+                        item.SubItems.Add(FileTypeProvider?.Invoke(entry) ?? Program.Localization.Strings.Extensions.File);
 
                         long size = entry.Type == ContentType.Dir && Cache.Contains(entry.Path) ? Cache.GetSize(entry.Path) : entry.Size;
 

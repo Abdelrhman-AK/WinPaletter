@@ -25,7 +25,7 @@ namespace WinPaletter
         }
         private void Uninstall_Load(object sender, EventArgs e)
         {
-            this.LoadLanguage();
+            this.Localize();
             ApplyStyle(this);
             Icon = Resources.Icon_Uninstall;
 
@@ -139,7 +139,7 @@ namespace WinPaletter
             }
 
             // Uninstall the system events sounds service
-            Forms.ServiceInstaller.Run("WinPaletter.SystemEventsSounds", Program.Lang.Strings.Services.Description_SysEventsSounds, SysPaths.SysEventsSounds, null, ServiceInstaller.RunMethods.Uninstall);
+            Forms.ServiceInstaller.Run("WinPaletter.SystemEventsSounds", Program.Localization.Strings.Services.Description_SysEventsSounds, SysPaths.SysEventsSounds, null, ServiceInstaller.RunMethods.Uninstall);
 
             // Delete the folders
             if (CheckBox2.Checked)
@@ -215,7 +215,7 @@ namespace WinPaletter
         /// <param name="e"></param>
         private void button10_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Localization.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -225,7 +225,7 @@ namespace WinPaletter
 
                         if (Program.Settings.ThemeApplyingBehavior.AutoRestartExplorer) Program.RestartExplorer();
 
-                        MsgBox(Program.Lang.Strings.General.Done, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MsgBox(Program.Localization.Strings.General.Done, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
             }
@@ -244,7 +244,7 @@ namespace WinPaletter
 
                 if (Program.Settings.ThemeApplyingBehavior.AutoRestartExplorer) Program.RestartExplorer();
 
-                MsgBox(Program.Lang.Strings.General.Done, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MsgBox(Program.Localization.Strings.General.Done, MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -311,7 +311,7 @@ namespace WinPaletter
                 _Def.MetricsFonts.Enabled = true;
                 _Def.MetricsFonts.Apply();
 
-                if (MsgBox(OS.WXP || OS.WVista || OS.W7 ? Program.Lang.Strings.Messages.LogoffQuestion : Program.Lang.Strings.Messages.SignOutQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.Strings.Messages.LogoffAlert1) == DialogResult.Yes)
+                if (MsgBox(OS.WXP || OS.WVista || OS.W7 ? Program.Localization.Strings.Messages.LogoffQuestion : Program.Localization.Strings.Messages.SignOutQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Localization.Strings.Messages.LogoffAlert1) == DialogResult.Yes)
                 {
                     Forms.MainForm.LoggingOff = false;
 
@@ -325,7 +325,7 @@ namespace WinPaletter
                     }
                     else
                     {
-                        MsgBox(string.Format(Program.Lang.Strings.Messages.LogoffNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        MsgBox(string.Format(Program.Localization.Strings.Messages.LogoffNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     }
                 }
             }
@@ -344,7 +344,7 @@ namespace WinPaletter
             Program.TM_FirstTime.MetricsFonts.Enabled = false;
             Program.TM_Original.MetricsFonts.Enabled = false;
 
-            MsgBox(Program.Lang.Strings.General.Done, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MsgBox(Program.Localization.Strings.General.Done, MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         /// <summary>

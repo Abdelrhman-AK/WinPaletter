@@ -19,7 +19,7 @@ namespace WinPaletter
 
         private void Login_Load(object sender, EventArgs e)
         {
-            this.LoadLanguage();
+            this.Localize();
             ApplyStyle(this);
             NativeMethods.Helpers.RemoveFormTitlebarTextAndIcon(Handle);
             Icon = FormsExtensions.Icon<MainForm>();
@@ -94,7 +94,7 @@ namespace WinPaletter
                 }
             }
 
-            label13.Text = $"{Program.Lang.Strings.General.Welcome}, {User.GitHub.Login}!";
+            label13.Text = $"{Program.Localization.Strings.General.Welcome}, {User.GitHub.Login}!";
 
             Program.Animator.HideSync(tablessControl1);
             tablessControl1.SelectedIndex = 3;

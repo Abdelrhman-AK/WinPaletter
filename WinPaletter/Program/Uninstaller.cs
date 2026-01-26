@@ -33,7 +33,7 @@ namespace WinPaletter
             WriteReg(RegPath, "URLInfoAbout", Links.RepositoryURL, RegistryValueKind.String);
             WriteReg(RegPath, "Contact", Links.RepositoryURL, RegistryValueKind.String);
             WriteReg(RegPath, "InstallDate", DateTime.Now.ToString("yyyyMMdd"), RegistryValueKind.String);
-            WriteReg(RegPath, "Comments", Lang.Strings.General.Uninstall_Comment, RegistryValueKind.String);
+            WriteReg(RegPath, "Comments", Localization.Strings.General.Uninstall_Comment, RegistryValueKind.String);
             WriteReg(RegPath, "UninstallString", $"{AppFile} -u", RegistryValueKind.String);
             WriteReg(RegPath, "QuietUninstallString", $"{AppFile} -q", RegistryValueKind.String);
             WriteReg(RegPath, "InstallLocation", new FileInfo(Application.ExecutablePath).DirectoryName, RegistryValueKind.String);
@@ -98,7 +98,7 @@ namespace WinPaletter
             }
 
             // Uninstall SysEventsSnds service silently
-            Forms.ServiceInstaller.Run("WinPaletter.SystemEventsSounds", Program.Lang.Strings.Services.Description_SysEventsSounds, SysPaths.SysEventsSounds, null, ServiceInstaller.RunMethods.Uninstall, true);
+            Forms.ServiceInstaller.Run("WinPaletter.SystemEventsSounds", Program.Localization.Strings.Services.Description_SysEventsSounds, SysPaths.SysEventsSounds, null, ServiceInstaller.RunMethods.Uninstall, true);
 
             // Delete the program data folder
             if (Directory.Exists(SysPaths.ProgramFilesData))

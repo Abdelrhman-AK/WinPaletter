@@ -54,7 +54,7 @@ namespace WinPaletter
 
         private void Home_Load(object sender, EventArgs e)
         {
-            this.LoadLanguage();
+            this.Localize();
             ApplyStyle(this);
 
             // Reset the logging off flag to false.
@@ -71,7 +71,7 @@ namespace WinPaletter
 
             oldMainFormMinSize = Forms.MainForm.MinimumSize;
 
-            Button28.Text = OS.WXP || OS.WVista || OS.W7 ? Program.Lang.Strings.General.Logoff : Program.Lang.Strings.General.SignOut;
+            Button28.Text = OS.WXP || OS.WVista || OS.W7 ? Program.Localization.Strings.General.Logoff : Program.Localization.Strings.General.SignOut;
 
             // Double buffer the flow layout panels to prevent flickering.
             flowLayoutPanel3.DoubleBuffer();
@@ -142,12 +142,12 @@ namespace WinPaletter
             {
                 if (Forms.Home.Parent is TabPage && Forms.MainForm.tabsContainer1.TabsCount > 1)
                 {
-                    if (MsgBox(Program.Lang.Strings.Messages.OpenTabs_Close, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) e.Cancel = true;
+                    if (MsgBox(Program.Localization.Strings.Messages.OpenTabs_Close, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) e.Cancel = true;
                 }
 
                 if (!e.Cancel)
                 {
-                    using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = Forms.Home.File, Title = Program.Lang.Strings.Extensions.SaveWinPaletterTheme })
+                    using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = Forms.Home.File, Title = Program.Localization.Strings.Extensions.SaveWinPaletterTheme })
                     {
                         bool result = Forms.MainForm.ExitWithChangedFileResponse(); //dlg,
                                                                                     //() => Forms.ThemeLog.Apply_Theme(Program.TM, false, true),
@@ -184,7 +184,7 @@ namespace WinPaletter
             {
                 Task.Run(() => 
                 {
-                    Transition.With(tip_label, nameof(tip_label.Text), $"{Program.Lang.Strings.General.Welcome}, {User.GitHub.Login}").CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                    Transition.With(tip_label, nameof(tip_label.Text), $"{Program.Localization.Strings.General.Welcome}, {User.GitHub.Login}").CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
 
                     System.Threading.Thread.Sleep(3500);
 
@@ -249,82 +249,82 @@ namespace WinPaletter
                 case WindowStyle.W12:
                     card1.Image = Themes_Banners.Theme_12;
                     card3.Image = Themes_Banners.LogonUI_12;
-                    card3.Text = Program.Lang.Strings.Aspects.LockScreen;
-                    card3.Tag = Program.Lang.Strings.Aspects.LockScreen_Description;
+                    card3.Text = Program.Localization.Strings.Aspects.LockScreen;
+                    card3.Tag = Program.Localization.Strings.Aspects.LockScreen_Description;
                     winEdition.Image = WinLogos.Win12;
-                    winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W12);
+                    winEdition.Tag = string.Format(Program.Localization.Strings.Tips.OS_PreviewingAs, Program.Localization.Strings.Windows.W12);
                     break;
 
                 case WindowStyle.W11:
                     card1.Image = Themes_Banners.Theme_11;
                     card3.Image = Themes_Banners.LogonUI_11;
-                    card3.Text = Program.Lang.Strings.Aspects.LockScreen;
-                    card3.Tag = Program.Lang.Strings.Aspects.LockScreen_Description;
+                    card3.Text = Program.Localization.Strings.Aspects.LockScreen;
+                    card3.Tag = Program.Localization.Strings.Aspects.LockScreen_Description;
                     winEdition.Image = WinLogos.Win11;
-                    winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W11);
+                    winEdition.Tag = string.Format(Program.Localization.Strings.Tips.OS_PreviewingAs, Program.Localization.Strings.Windows.W11);
                     break;
 
                 case WindowStyle.W10:
                     card1.Image = Themes_Banners.Theme_10;
                     card3.Image = Themes_Banners.LogonUI_10;
-                    card3.Text = Program.Lang.Strings.Aspects.LockScreen;
-                    card3.Tag = Program.Lang.Strings.Aspects.LockScreen_Description;
+                    card3.Text = Program.Localization.Strings.Aspects.LockScreen;
+                    card3.Tag = Program.Localization.Strings.Aspects.LockScreen_Description;
                     winEdition.Image = WinLogos.Win10;
-                    winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W10);
+                    winEdition.Tag = string.Format(Program.Localization.Strings.Tips.OS_PreviewingAs, Program.Localization.Strings.Windows.W10);
                     break;
 
                 case WindowStyle.W81:
                     card1.Image = Themes_Banners.Theme_8_1;
                     card3.Image = Themes_Banners.LogonUI_8x;
-                    card3.Text = Program.Lang.Strings.Aspects.LockScreen;
-                    card3.Tag = Program.Lang.Strings.Aspects.LockScreen_Description;
+                    card3.Text = Program.Localization.Strings.Aspects.LockScreen;
+                    card3.Tag = Program.Localization.Strings.Aspects.LockScreen_Description;
                     winEdition.Image = WinLogos.Win8_1;
-                    winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W81);
+                    winEdition.Tag = string.Format(Program.Localization.Strings.Tips.OS_PreviewingAs, Program.Localization.Strings.Windows.W81);
                     break;
 
                 case WindowStyle.W8:
                     card1.Image = Themes_Banners.Theme_8;
                     card3.Image = Themes_Banners.LogonUI_8x;
-                    card3.Text = Program.Lang.Strings.Aspects.LockScreen;
-                    card3.Tag = Program.Lang.Strings.Aspects.LockScreen_Description;
+                    card3.Text = Program.Localization.Strings.Aspects.LockScreen;
+                    card3.Tag = Program.Localization.Strings.Aspects.LockScreen_Description;
                     winEdition.Image = WinLogos.Win8;
-                    winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W8);
+                    winEdition.Tag = string.Format(Program.Localization.Strings.Tips.OS_PreviewingAs, Program.Localization.Strings.Windows.W8);
                     break;
 
                 case WindowStyle.W7:
                     card1.Image = Themes_Banners.Theme_7;
                     card3.Image = Themes_Banners.LogonUI_7;
-                    card3.Text = Program.Lang.Strings.Aspects.LogonUI;
-                    card3.Tag = Program.Lang.Strings.Aspects.LogonUI_Description;
+                    card3.Text = Program.Localization.Strings.Aspects.LogonUI;
+                    card3.Tag = Program.Localization.Strings.Aspects.LogonUI_Description;
                     winEdition.Image = WinLogos.Win7;
-                    winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W7);
+                    winEdition.Tag = string.Format(Program.Localization.Strings.Tips.OS_PreviewingAs, Program.Localization.Strings.Windows.W7);
                     break;
 
                 case WindowStyle.WVista:
                     card1.Image = Themes_Banners.Theme_Vista;
                     card3.Image = Themes_Banners.LogonUI_Vista;
-                    card3.Text = Program.Lang.Strings.Aspects.LogonUI;
-                    card3.Tag = Program.Lang.Strings.Aspects.LogonUI_Description;
+                    card3.Text = Program.Localization.Strings.Aspects.LogonUI;
+                    card3.Tag = Program.Localization.Strings.Aspects.LogonUI_Description;
                     winEdition.Image = WinLogos.WinVista;
-                    winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.WVista);
+                    winEdition.Tag = string.Format(Program.Localization.Strings.Tips.OS_PreviewingAs, Program.Localization.Strings.Windows.WVista);
                     break;
 
                 case WindowStyle.WXP:
                     card1.Image = Themes_Banners.Theme_XP;
                     card3.Image = Themes_Banners.LogonUI_XP;
-                    card3.Text = Program.Lang.Strings.Aspects.LogonUI;
-                    card3.Tag = Program.Lang.Strings.Aspects.LogonUI_Description;
+                    card3.Text = Program.Localization.Strings.Aspects.LogonUI;
+                    card3.Tag = Program.Localization.Strings.Aspects.LogonUI_Description;
                     winEdition.Image = WinLogos.WinXP;
-                    winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.WXP);
+                    winEdition.Tag = string.Format(Program.Localization.Strings.Tips.OS_PreviewingAs, Program.Localization.Strings.Windows.WXP);
                     break;
 
                 default:
                     card1.Image = Themes_Banners.Theme_12;
                     card3.Image = Themes_Banners.LogonUI_12;
-                    card3.Text = Program.Lang.Strings.Aspects.LockScreen;
-                    card3.Tag = Program.Lang.Strings.Aspects.LockScreen_Description;
+                    card3.Text = Program.Localization.Strings.Aspects.LockScreen;
+                    card3.Tag = Program.Localization.Strings.Aspects.LockScreen_Description;
                     winEdition.Image = WinLogos.Win12;
-                    winEdition.Tag = string.Format(Program.Lang.Strings.Tips.OS_PreviewingAs, Program.Lang.Strings.Windows.W12);
+                    winEdition.Tag = string.Format(Program.Localization.Strings.Tips.OS_PreviewingAs, Program.Localization.Strings.Windows.W12);
                     break;
             }
 
@@ -340,7 +340,7 @@ namespace WinPaletter
         public void LoadFromTM(Manager TM)
         {
             labelAlt1.Text = $"{TM.Info.ThemeName}";
-            labelAlt2.Text = $"{Program.Lang.Strings.General.By} {TM.Info.Author}";
+            labelAlt2.Text = $"{Program.Localization.Strings.General.By} {TM.Info.Author}";
             labelAlt3.Text = TM.Info.ThemeVersion;
             groupBox1.UpdatePattern(TM.Info.Pattern);
             Program.Style.Pattern = TM.Info.Pattern;
@@ -412,7 +412,7 @@ namespace WinPaletter
                         Button5.ImageGlyph = Resources.Glyph_Update_Dot;
 
                         // Hide the update notification.
-                        NotifyUpdates.ShowBalloonTip(10000, Application.ProductName, $"{Program.Lang.Strings.Updates.NewUpdate}. {Program.Lang.Strings.General.Version} {ver}", ToolTipIcon.Info);
+                        NotifyUpdates.ShowBalloonTip(10000, Application.ProductName, $"{Program.Localization.Strings.Updates.NewUpdate}. {Program.Localization.Strings.General.Version} {ver}", ToolTipIcon.Info);
                     }
                 });
             }
@@ -544,7 +544,7 @@ namespace WinPaletter
             }
             else if (Program.WindowStyle == WindowStyle.WVista)
             {
-                MsgBox(Program.Lang.Strings.Messages.VistaLogonNotSupported, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MsgBox(Program.Localization.Strings.Messages.VistaLogonNotSupported, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
             else
             {
@@ -642,9 +642,9 @@ namespace WinPaletter
             else
             {
                 if (Program.WindowStyle == WindowStyle.WXP)
-                    MsgBox(string.Format(Program.Lang.Strings.Messages.AltTab_Unsupported, Program.Lang.Strings.Windows.WXP), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MsgBox(string.Format(Program.Localization.Strings.Messages.AltTab_Unsupported, Program.Localization.Strings.Windows.WXP), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 if (Program.WindowStyle == WindowStyle.WVista)
-                    MsgBox(string.Format(Program.Lang.Strings.Messages.AltTab_Unsupported, Program.Lang.Strings.Windows.WVista), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MsgBox(string.Format(Program.Localization.Strings.Messages.AltTab_Unsupported, Program.Localization.Strings.Windows.WVista), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 
@@ -683,7 +683,7 @@ namespace WinPaletter
         {
             if (Forms.MainForm.ExitWithChangedFileResponse())
             {
-                using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = File, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
+                using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = File, Title = Program.Localization.Strings.Extensions.OpenWinPaletterTheme })
                 {
                     if (dlg.ShowDialog() == DialogResult.OK)
                     {
@@ -705,7 +705,7 @@ namespace WinPaletter
 
         private void Button9_Click(object sender, EventArgs e)
         {
-            using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = string.IsNullOrWhiteSpace(File) ? Program.TM.Info.ThemeName + ".wpth" : File, Title = Program.Lang.Strings.Extensions.SaveWinPaletterTheme })
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = string.IsNullOrWhiteSpace(File) ? Program.TM.Info.ThemeName + ".wpth" : File, Title = Program.Localization.Strings.Extensions.SaveWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -719,7 +719,7 @@ namespace WinPaletter
 
         private void Button7_Click(object sender, EventArgs e)
         {
-            using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = string.IsNullOrWhiteSpace(File) ? Program.TM.Info.ThemeName + ".wpth" : File, Title = Program.Lang.Strings.Extensions.SaveWinPaletterTheme })
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = string.IsNullOrWhiteSpace(File) ? Program.TM.Info.ThemeName + ".wpth" : File, Title = Program.Localization.Strings.Extensions.SaveWinPaletterTheme })
             {
                 if (!System.IO.File.Exists(dlg.FileName))
                 {
@@ -760,7 +760,7 @@ namespace WinPaletter
         {
             Forms.MainForm.LoggingOff = false;
 
-            if (MsgBox(OS.WXP || OS.WVista || OS.W7 ? Program.Lang.Strings.Messages.LogoffQuestion : Program.Lang.Strings.Messages.SignOutQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Lang.Strings.Messages.LogoffAlert1) == DialogResult.Yes)
+            if (MsgBox(OS.WXP || OS.WVista || OS.W7 ? Program.Localization.Strings.Messages.LogoffQuestion : Program.Localization.Strings.Messages.SignOutQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Localization.Strings.Messages.LogoffAlert1) == DialogResult.Yes)
             {
                 // Disable the file system redirection to access the system32 folder.
                 IntPtr intPtr = IntPtr.Zero;
@@ -773,7 +773,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    MsgBox(string.Format(Program.Lang.Strings.Messages.LogoffNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MsgBox(string.Format(Program.Localization.Strings.Messages.LogoffNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
             }
         }

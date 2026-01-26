@@ -119,7 +119,7 @@ namespace WinPaletter.NativeMethods
         /// <returns>Human-readable type description, e.g., "Text Document".</returns>
         public static string GetExtensionDescription(string extension)
         {
-            if (string.IsNullOrWhiteSpace(extension)) return Program.Lang.Strings.Extensions.File;
+            if (string.IsNullOrWhiteSpace(extension)) return Program.Localization.Strings.Extensions.File;
             if (!extension.StartsWith(".")) extension = $".{extension}";
 
             string description = null;
@@ -143,12 +143,12 @@ namespace WinPaletter.NativeMethods
                     {
                         string perceivedType = extKey.GetValue("PerceivedType") as string;
                         if (!string.IsNullOrEmpty(perceivedType))
-                            description = char.ToUpper(perceivedType[0]) + perceivedType.Substring(1) + " " + Program.Lang.Strings.Extensions.File;
+                            description = char.ToUpper(perceivedType[0]) + perceivedType.Substring(1) + " " + Program.Localization.Strings.Extensions.File;
                     }
                 }
             }
 
-            return !string.IsNullOrEmpty(description) ? description : $"{extension} {Program.Lang.Strings.Extensions.File}";
+            return !string.IsNullOrEmpty(description) ? description : $"{extension} {Program.Localization.Strings.Extensions.File}";
         }
 
         /// <summary>

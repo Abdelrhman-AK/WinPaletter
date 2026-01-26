@@ -120,7 +120,7 @@ namespace WinPaletter
         private void BorderlessForm_Load(object sender, EventArgs e)
         {
             _shown = false;
-            this.LoadLanguage();
+            this.Localize();
             ApplyStyle(this);
 
             // Animate the form when shown

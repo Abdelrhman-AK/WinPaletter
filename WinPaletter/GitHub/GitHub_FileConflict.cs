@@ -19,7 +19,7 @@ namespace WinPaletter
         private void GitHub_FileConflict_Load(object sender, EventArgs e)
         {
             ApplyStyle(this);
-            this.LoadLanguage();
+            this.Localize();
             CustomSystemSounds.Exclamation.Play();
         }
 
@@ -34,26 +34,26 @@ namespace WinPaletter
 
             // Label1: operation info
             if (count == 1)
-                label1.Text = $"{(operation == Operation.Copy ? Program.Lang.Strings.GitHubStrings.Explorer_Conflict_Copying : Program.Lang.Strings.GitHubStrings.Explorer_Conflict_Moving)} 1 {Program.Lang.Strings.GitHubStrings.Explorer_File} {Program.Lang.Strings.GitHubStrings.Explorer_Conflict_From} {sourceDir} {Program.Lang.Strings.GitHubStrings.Explorer_Conflict_To} {destDir}";
+                label1.Text = $"{(operation == Operation.Copy ? Program.Localization.Strings.GitHubStrings.Explorer_Conflict_Copying : Program.Localization.Strings.GitHubStrings.Explorer_Conflict_Moving)} 1 {Program.Localization.Strings.GitHubStrings.Explorer_File} {Program.Localization.Strings.GitHubStrings.Explorer_Conflict_From} {sourceDir} {Program.Localization.Strings.GitHubStrings.Explorer_Conflict_To} {destDir}";
             else
-                label1.Text = $"{(operation == Operation.Copy ? Program.Lang.Strings.GitHubStrings.Explorer_Conflict_Copying : Program.Lang.Strings.GitHubStrings.Explorer_Conflict_Moving)} {count} {Program.Lang.Strings.GitHubStrings.Explorer_Files} {Program.Lang.Strings.GitHubStrings.Explorer_Conflict_From} {sourceDir} {Program.Lang.Strings.GitHubStrings.Explorer_Conflict_To} {destDir}";
+                label1.Text = $"{(operation == Operation.Copy ? Program.Localization.Strings.GitHubStrings.Explorer_Conflict_Copying : Program.Localization.Strings.GitHubStrings.Explorer_Conflict_Moving)} {count} {Program.Localization.Strings.GitHubStrings.Explorer_Files} {Program.Localization.Strings.GitHubStrings.Explorer_Conflict_From} {sourceDir} {Program.Localization.Strings.GitHubStrings.Explorer_Conflict_To} {destDir}";
 
             // Label2: conflict description
-            if (count == 1) label2.Text = string.Format(Program.Lang.Strings.GitHubStrings.Explorer_Conflict_DestHasFile, fileName);
-            else label2.Text = string.Format(Program.Lang.Strings.GitHubStrings.Explorer_Conflict_DestHasFiles, count);
+            if (count == 1) label2.Text = string.Format(Program.Localization.Strings.GitHubStrings.Explorer_Conflict_DestHasFile, fileName);
+            else label2.Text = string.Format(Program.Localization.Strings.GitHubStrings.Explorer_Conflict_DestHasFiles, count);
 
             // Button texts
             if (count == 1)
             {
-                button1.Text = Program.Lang.Strings.GitHubStrings.Explorer_Conflict_Replace2Files;
-                button2.Text = Program.Lang.Strings.GitHubStrings.Explorer_Conflict_Skip2Files;
-                button3.Text = Program.Lang.Strings.GitHubStrings.Explorer_Conflict_Compare2Files;
+                button1.Text = Program.Localization.Strings.GitHubStrings.Explorer_Conflict_Replace2Files;
+                button2.Text = Program.Localization.Strings.GitHubStrings.Explorer_Conflict_Skip2Files;
+                button3.Text = Program.Localization.Strings.GitHubStrings.Explorer_Conflict_Compare2Files;
             }
             else
             {
-                button1.Text = Program.Lang.Strings.GitHubStrings.Explorer_Conflict_ReplaceFiles;
-                button2.Text = Program.Lang.Strings.GitHubStrings.Explorer_Conflict_SkipFiles;
-                button3.Text = Program.Lang.Strings.GitHubStrings.Explorer_Conflict_CompareFiles;
+                button1.Text = Program.Localization.Strings.GitHubStrings.Explorer_Conflict_ReplaceFiles;
+                button2.Text = Program.Localization.Strings.GitHubStrings.Explorer_Conflict_SkipFiles;
+                button3.Text = Program.Localization.Strings.GitHubStrings.Explorer_Conflict_CompareFiles;
             }
         }
 

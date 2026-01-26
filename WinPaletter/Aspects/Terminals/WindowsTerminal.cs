@@ -35,7 +35,7 @@ namespace WinPaletter
 
         private void LoadFromWPTH(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Lang.Strings.Extensions.OpenWinPaletterTheme })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Localization.Strings.Extensions.OpenWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -90,7 +90,7 @@ namespace WinPaletter
 
         private void ImportFromJSON(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Lang.Strings.Extensions.OpenJSON })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Localization.Strings.Extensions.OpenJSON })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -121,7 +121,7 @@ namespace WinPaletter
         {
             if (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinTerminals)
             {
-                MsgBox(Program.Lang.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Lang.Strings.Aspects.Disabled_Apply_1);
+                MsgBox(Program.Localization.Strings.Aspects.Disabled_Apply_0, MessageBoxButtons.OK, MessageBoxIcon.Warning, Program.Localization.Strings.Aspects.Disabled_Apply_1);
                 return;
             }
 
@@ -185,7 +185,7 @@ namespace WinPaletter
             }
             else
             {
-                MsgBox(Program.Lang.Strings.Aspects.Consoles.CMD_Enable, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(Program.Localization.Strings.Aspects.Consoles.CMD_Enable, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             Cursor = System.Windows.Forms.Cursors.Default;
@@ -195,7 +195,7 @@ namespace WinPaletter
         {
             DesignerData data = new(this)
             {
-                AspectName = Mode == WinTerminal.Version.Stable ? Program.Lang.Strings.Aspects.TerminalStable : Program.Lang.Strings.Aspects.TerminalPreview,
+                AspectName = Mode == WinTerminal.Version.Stable ? Program.Localization.Strings.Aspects.TerminalStable : Program.Localization.Strings.Aspects.TerminalPreview,
                 Enabled = Mode == WinTerminal.Version.Stable ? Program.TM.Terminal.Enabled : Program.TM.TerminalPreview.Enabled,
                 Import_theme = false,
                 Import_msstyles = false,
@@ -223,7 +223,7 @@ namespace WinPaletter
                     {
                         _Terminal = Program.TM.Terminal;
                         _TerminalDefault = Program.TM.Terminal;
-                        Text = Program.Lang.Strings.Aspects.TerminalStable;
+                        Text = Program.Localization.Strings.Aspects.TerminalStable;
                         AspectEnabled = Program.TM.Terminal.Enabled;
                         break;
                     }
@@ -233,7 +233,7 @@ namespace WinPaletter
                         _Terminal = Program.TM.TerminalPreview;
                         _TerminalDefault = Program.TM.TerminalPreview;
 
-                        Text = Program.Lang.Strings.Aspects.TerminalPreview;
+                        Text = Program.Localization.Strings.Aspects.TerminalPreview;
                         AspectEnabled = Program.TM.TerminalPreview.Enabled;
                         break;
                     }
@@ -363,7 +363,7 @@ namespace WinPaletter
         public void FillTerminalSchemes(WinTerminal Terminal, UI.WP.ComboBox Combobox)
         {
             Combobox.Items.Clear();
-            Combobox.Items.Add($"({Program.Lang.Strings.General.Default})");
+            Combobox.Items.Add($"({Program.Localization.Strings.General.Default})");
 
             if (Terminal.Schemes.Count > 0)
             {
@@ -376,10 +376,10 @@ namespace WinPaletter
         {
             Combobox.Items.Clear();
 
-            Combobox.Items.Add($"({Program.Lang.Strings.General.Default})");
-            Combobox.Items.Add($"{Program.Lang.Strings.General.Dark}");
-            Combobox.Items.Add($"{Program.Lang.Strings.General.Light}");
-            Combobox.Items.Add($"{Program.Lang.Strings.General.System}");
+            Combobox.Items.Add($"({Program.Localization.Strings.General.Default})");
+            Combobox.Items.Add($"{Program.Localization.Strings.General.Dark}");
+            Combobox.Items.Add($"{Program.Localization.Strings.General.Light}");
+            Combobox.Items.Add($"{Program.Localization.Strings.General.System}");
 
             if (Terminal.Themes.Count > 0)
             {
@@ -390,7 +390,7 @@ namespace WinPaletter
         public void FillTerminalProfiles(WinTerminal Terminal, UI.WP.ComboBox Combobox)
         {
             Combobox.Items.Clear();
-            Combobox.Items.Add($"{Program.Lang.Strings.General.Defaults}");
+            Combobox.Items.Add($"{Program.Localization.Strings.General.Defaults}");
 
             if (Terminal.Profiles.List.Count > 0)
             {
@@ -514,11 +514,11 @@ namespace WinPaletter
             }
             else if (TerProfiles.SelectedIndex == 0)
             {
-                Terminal1.TabTitle = Program.Lang.Strings.General.Default;
+                Terminal1.TabTitle = Program.Localization.Strings.General.Default;
             }
             else
             {
-                Terminal1.TabTitle = Program.Lang.Strings.General.Untitled;
+                Terminal1.TabTitle = Program.Localization.Strings.General.Untitled;
             }
 
             if (File.Exists(profile.Icon))
@@ -818,7 +818,7 @@ namespace WinPaletter
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            string s = InputBox(Program.Lang.Strings.Aspects.Terminals.TypeSchemeName, $"{Program.Lang.Strings.General.NewScheme} #{TerSchemes.Items.Count - 1}");
+            string s = InputBox(Program.Localization.Strings.Aspects.Terminals.TypeSchemeName, $"{Program.Localization.Strings.General.NewScheme} #{TerSchemes.Items.Count - 1}");
             if (string.IsNullOrWhiteSpace(s)) return;
             _Terminal.Schemes.Add(new WinTerminal.Types.Scheme() { Name = s });
             FillTerminalSchemes(_Terminal, TerSchemes);
@@ -1138,7 +1138,7 @@ namespace WinPaletter
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            string s = InputBox(Program.Lang.Strings.Aspects.Terminals.TypeSchemeName, $"{Program.Lang.Strings.General.NewTheme} #{TerThemes.Items.Count - 4}");
+            string s = InputBox(Program.Localization.Strings.Aspects.Terminals.TypeSchemeName, $"{Program.Localization.Strings.General.NewTheme} #{TerThemes.Items.Count - 4}");
             if (string.IsNullOrWhiteSpace(s)) return;
             _Terminal.Themes.Add(new() { Name = s });
             FillTerminalThemes(_Terminal, TerThemes);
@@ -1254,7 +1254,7 @@ namespace WinPaletter
         {
             if (TerThemes.SelectedIndex > 3)
             {
-                string s = InputBox(Program.Lang.Strings.Aspects.Terminals.TypeSchemeName, TerThemes.SelectedItem.ToString());
+                string s = InputBox(Program.Localization.Strings.Aspects.Terminals.TypeSchemeName, TerThemes.SelectedItem.ToString());
                 if ((s ?? string.Empty) != (TerThemes.SelectedItem.ToString() ?? string.Empty) & !string.IsNullOrEmpty(s) & !TerThemes.Items.Contains(s))
                 {
                     int i = TerThemes.SelectedIndex;
@@ -1268,7 +1268,7 @@ namespace WinPaletter
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            string s = InputBox(Program.Lang.Strings.Aspects.Terminals.TypeSchemeName, TerSchemes.SelectedItem.ToString());
+            string s = InputBox(Program.Localization.Strings.Aspects.Terminals.TypeSchemeName, TerSchemes.SelectedItem.ToString());
             if ((s ?? string.Empty) != (TerSchemes.SelectedItem.ToString() ?? string.Empty) & !string.IsNullOrEmpty(s) & !TerSchemes.Items.Contains(s))
             {
                 int i = TerSchemes.SelectedIndex;
@@ -1311,7 +1311,7 @@ namespace WinPaletter
 
         private void Button13_Click(object sender, EventArgs e)
         {
-            _Terminal.Profiles.List.Add(new() { Name = $"{Program.Lang.Strings.General.NewProfile} #{TerProfiles.Items.Count}", ColorScheme = _Terminal.Profiles.Defaults.ColorScheme });
+            _Terminal.Profiles.List.Add(new() { Name = $"{Program.Localization.Strings.General.NewProfile} #{TerProfiles.Items.Count}", ColorScheme = _Terminal.Profiles.Defaults.ColorScheme });
             FillTerminalProfiles(_Terminal, TerProfiles);
             TerProfiles.SelectedIndex = TerProfiles.Items.Count - 1;
         }
@@ -1394,7 +1394,7 @@ namespace WinPaletter
 
         private void Button16_Click(object sender, EventArgs e)
         {
-            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, Title = Program.Lang.Strings.Extensions.OpenImages })
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.Images, Title = Program.Localization.Strings.Extensions.OpenImages })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -1465,7 +1465,7 @@ namespace WinPaletter
         {
             if (OS.W12 || OS.W11 || OS.W10)
             {
-                using (SaveFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Lang.Strings.Extensions.SaveJSON })
+                using (SaveFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Localization.Strings.Extensions.SaveJSON })
                 {
                     if (dlg.ShowDialog() == DialogResult.OK)
                     {
@@ -1526,13 +1526,13 @@ namespace WinPaletter
         {
             if (TerProfiles.SelectedIndex == 0)
             {
-                MsgBox(Program.Lang.Strings.Aspects.Terminals.ProfileNotCloneable, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(Program.Localization.Strings.Aspects.Terminals.ProfileNotCloneable, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             WinTerminal.Types.Profile P = new()
             {
-                Name = $"{_Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].Name} {Program.Lang.Strings.General.Clone} #{TerProfiles.Items.Count}",
+                Name = $"{_Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].Name} {Program.Localization.Strings.General.Clone} #{TerProfiles.Items.Count}",
                 BackgroundImage = _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].BackgroundImage,
                 BackgroundImageOpacity = _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].BackgroundImageOpacity,
                 ColorScheme = _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].ColorScheme,
@@ -1556,13 +1556,13 @@ namespace WinPaletter
         {
             if (TerThemes.SelectedIndex < 4)
             {
-                MsgBox(Program.Lang.Strings.Aspects.Terminals.ThemeNotCloneable, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(Program.Localization.Strings.Aspects.Terminals.ThemeNotCloneable, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             WinTerminal.Types.Theme Th = new()
             {
-                Name = $"{_Terminal.Themes[TerThemes.SelectedIndex - 4].Name} {Program.Lang.Strings.General.Clone} #{TerThemes.Items.Count}",
+                Name = $"{_Terminal.Themes[TerThemes.SelectedIndex - 4].Name} {Program.Localization.Strings.General.Clone} #{TerThemes.Items.Count}",
             };
 
             Th.Window.ApplicationTheme = _Terminal.Themes[TerThemes.SelectedIndex - 4].Window.ApplicationTheme;
@@ -1643,11 +1643,11 @@ namespace WinPaletter
                         }
                         else if (TerProfiles.SelectedIndex == 0)
                         {
-                            Terminal1.TabTitle = Program.Lang.Strings.General.Default;
+                            Terminal1.TabTitle = Program.Localization.Strings.General.Default;
                         }
                         else
                         {
-                            Terminal1.TabTitle = Program.Lang.Strings.General.Untitled;
+                            Terminal1.TabTitle = Program.Localization.Strings.General.Untitled;
                         }
 
                         if (File.Exists(CCatFrom.Icon))
@@ -1759,7 +1759,7 @@ namespace WinPaletter
         {
             if (TerThemes.SelectedIndex < 4)
             {
-                MsgBox(Program.Lang.Strings.Aspects.Terminals.ThemeNotCloneable, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MsgBox(Program.Localization.Strings.Aspects.Terminals.ThemeNotCloneable, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -1833,12 +1833,12 @@ namespace WinPaletter
 
         private void TerCursorHeightBar_ValueChanged(object sender, EventArgs e)
         {
-            Terminal1.CursorHeight = (sender as TrackBarX).Value;
+            Terminal1.CursorHeight = (int)(sender as TrackBarX).Value;
 
             if (!IsShown) return;
 
             WinTerminal.Types.Profile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.Profiles.Defaults : _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1];
-            temp.CursorHeight = (sender as TrackBarX).Value;
+            temp.CursorHeight = (int)(sender as TrackBarX).Value;
         }
 
         private void trackBarX1_ValueChanged(object sender, EventArgs e)
@@ -1858,7 +1858,7 @@ namespace WinPaletter
             if (IsShown)
             {
                 WinTerminal.Types.Profile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.Profiles.Defaults : _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1];
-                temp.Opacity = TerOpacityBar.Value;
+                temp.Opacity = (int)TerOpacityBar.Value;
             }
         }
 
@@ -1874,7 +1874,7 @@ namespace WinPaletter
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (TerThemes.SelectedIndex > 3 && MsgBox(string.Format(Program.Lang.Strings.Messages.TerminalDeleteTheme, TerThemes.SelectedItem), MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (TerThemes.SelectedIndex > 3 && MsgBox(string.Format(Program.Localization.Strings.Messages.TerminalDeleteTheme, TerThemes.SelectedItem), MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 int i = TerThemes.SelectedIndex;
                 TerThemes.Items.RemoveAt(i);
@@ -1885,7 +1885,7 @@ namespace WinPaletter
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            if (TerSchemes.SelectedIndex > 0 && MsgBox(string.Format(Program.Lang.Strings.Messages.TerminalDeleteScheme, TerSchemes.SelectedItem), MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (TerSchemes.SelectedIndex > 0 && MsgBox(string.Format(Program.Localization.Strings.Messages.TerminalDeleteScheme, TerSchemes.SelectedItem), MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 int i = TerSchemes.SelectedIndex;
                 TerSchemes.Items.RemoveAt(i);

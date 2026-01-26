@@ -18,7 +18,7 @@ namespace WinPaletter
         private void Lang_ReplaceText_Load(object sender, EventArgs e)
         {
             Icon = FormsExtensions.Icon<Lang_Editor>();
-            this.LoadLanguage();
+            this.Localize();
             ApplyStyle(this);
 
         }

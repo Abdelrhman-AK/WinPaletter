@@ -46,7 +46,7 @@ namespace WinPaletter
                 case TaskType.Shutdown:
                     {
                         if (treeView is not null)
-                            ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.DeleteTask, @"WinPaletter\Shutdown"), "task_remove");
+                            ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.DeleteTask, @"WinPaletter\Shutdown"), "task_remove");
                         Program.SendCommand(@$"{SysPaths.SchTasks} /Delete /TN WinPaletter\Shutdown /F");
                         break;
                     }
@@ -54,7 +54,7 @@ namespace WinPaletter
                 case TaskType.Logoff:
                     {
                         if (treeView is not null)
-                            ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.DeleteTask, @"WinPaletter\Logoff"), "task_remove");
+                            ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.DeleteTask, @"WinPaletter\Logoff"), "task_remove");
                         Program.SendCommand(@$"{SysPaths.SchTasks} /Delete /TN WinPaletter\Logoff /F");
                         break;
                     }
@@ -62,7 +62,7 @@ namespace WinPaletter
                 case TaskType.Logon:
                     {
                         if (treeView is not null)
-                            ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.DeleteTask, @"WinPaletter\Logon"), "task_remove");
+                            ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.DeleteTask, @"WinPaletter\Logon"), "task_remove");
                         Program.SendCommand(@$"{SysPaths.SchTasks} /Delete /TN WinPaletter\Logon /F");
                         break;
                     }
@@ -70,7 +70,7 @@ namespace WinPaletter
                 case TaskType.Unlock:
                     {
                         if (treeView is not null)
-                            ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.DeleteTask, @"WinPaletter\Unlock"), "task_remove");
+                            ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.DeleteTask, @"WinPaletter\Unlock"), "task_remove");
                         Program.SendCommand(@$"{SysPaths.SchTasks} /Delete /TN WinPaletter\Unlock /F");
                         break;
                     }
@@ -78,7 +78,7 @@ namespace WinPaletter
                 case TaskType.ChargerConnected:
                     {
                         if (treeView is not null)
-                            ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.DeleteTask, @"WinPaletter\ChargerConnected"), "task_remove");
+                            ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.DeleteTask, @"WinPaletter\ChargerConnected"), "task_remove");
                         Program.SendCommand(@$"{SysPaths.SchTasks} /Delete /TN WinPaletter\ChargerConnected /F");
                         break;
                     }

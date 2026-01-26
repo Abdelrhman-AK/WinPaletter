@@ -41,7 +41,7 @@ namespace WinPaletter.Tabs
         {
             //ControlBox = false;
             NativeMethods.Helpers.RemoveFormTitlebarTextAndIcon(Handle);
-            this.LoadLanguage();
+            this.Localize();
             ApplyStyle(this);
 
             CheckForIllegalCrossThreadCalls = false;

@@ -78,12 +78,12 @@ namespace WinPaletter.NativeMethods
 
                     // Log the error message using the ThemeLog class
                     if (treeView != null)
-                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.UxTheme_SettingVS, "uxtheme.dll", pszFilename, pszColor, pszSize, dwReserved, $"ERROR {Error}: {ex.Message}"), "dll");
+                        ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.UxTheme_SettingVS, "uxtheme.dll", pszFilename, pszColor, pszSize, dwReserved, $"ERROR {Error}: {ex.Message}"), "dll");
 
-                    Program.Log?.Write(LogEventLevel.Error, string.Format(Program.Lang.Strings.ThemeManager.Advanced.UxTheme_SettingVS, "uxtheme.dll", pszFilename, pszColor, pszSize, dwReserved, $"ERROR {Error}: {ex.Message}"));
+                    Program.Log?.Write(LogEventLevel.Error, string.Format(Program.Localization.Strings.ThemeManager.Advanced.UxTheme_SettingVS, "uxtheme.dll", pszFilename, pszColor, pszSize, dwReserved, $"ERROR {Error}: {ex.Message}"));
 
                     // Add the error message to the Exceptions.ThemeApply list
-                    Exceptions.ThemeApply.Add(new Tuple<string, Exception>(string.Format(Program.Lang.Strings.ThemeManager.Advanced.UxTheme_SettingVS, "uxtheme.dll", pszFilename, pszColor, pszSize, dwReserved, $"ERROR {Error}: {ex.Message}"), ex));
+                    Exceptions.ThemeApply.Add(new Tuple<string, Exception>(string.Format(Program.Localization.Strings.ThemeManager.Advanced.UxTheme_SettingVS, "uxtheme.dll", pszFilename, pszColor, pszSize, dwReserved, $"ERROR {Error}: {ex.Message}"), ex));
 
                     // Exit the function
                     return;
@@ -92,9 +92,9 @@ namespace WinPaletter.NativeMethods
 
             // Log the result of the operation if it is successful using the ThemeLog class
             if (treeView != null)
-                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.UxTheme_SettingVS, "uxtheme.dll", pszFilename, pszColor, pszSize, dwReserved, result.ToString().ToLower()), "dll");
+                ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.UxTheme_SettingVS, "uxtheme.dll", pszFilename, pszColor, pszSize, dwReserved, result.ToString().ToLower()), "dll");
 
-            Program.Log?.Write(LogEventLevel.Information, string.Format(Program.Lang.Strings.ThemeManager.Advanced.UxTheme_SettingVS, "uxtheme.dll", pszFilename, pszColor, pszSize, dwReserved, result.ToString().ToLower()));
+            Program.Log?.Write(LogEventLevel.Information, string.Format(Program.Localization.Strings.ThemeManager.Advanced.UxTheme_SettingVS, "uxtheme.dll", pszFilename, pszColor, pszSize, dwReserved, result.ToString().ToLower()));
         }
 
         /// <summary>
@@ -119,10 +119,10 @@ namespace WinPaletter.NativeMethods
 
                     // Log the error message using the ThemeLog class
                     if (treeView != null)
-                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.UxTheme_EnableTheme, "uxtheme.dll", "EnableTheming", fEnable, $"ERROR {Error}: {ex.Message}"), "dll");
+                        ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.UxTheme_EnableTheme, "uxtheme.dll", "EnableTheming", fEnable, $"ERROR {Error}: {ex.Message}"), "dll");
 
                     // Add the error message to the Exceptions.ThemeApply list
-                    Exceptions.ThemeApply.Add(new Tuple<string, Exception>(string.Format(Program.Lang.Strings.ThemeManager.Advanced.UxTheme_EnableTheme, "uxtheme.dll", "EnableTheming", fEnable, $"ERROR {Error}: {ex.Message}"), ex));
+                    Exceptions.ThemeApply.Add(new Tuple<string, Exception>(string.Format(Program.Localization.Strings.ThemeManager.Advanced.UxTheme_EnableTheme, "uxtheme.dll", "EnableTheming", fEnable, $"ERROR {Error}: {ex.Message}"), ex));
 
                     // Exit the function
                     return;
@@ -131,7 +131,7 @@ namespace WinPaletter.NativeMethods
 
             // Log the result of the operation if it is successful using the ThemeLog class
             if (treeView != null)
-                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.UxTheme_EnableTheme, "uxtheme.dll", "EnableTheming", fEnable, result.ToString().ToLower()), "dll");
+                ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.UxTheme_EnableTheme, "uxtheme.dll", "EnableTheming", fEnable, result.ToString().ToLower()), "dll");
         }
 
         /// <summary>
@@ -158,10 +158,10 @@ namespace WinPaletter.NativeMethods
 
                     // Log the error message using the ThemeLog class
                     if (treeView != null)
-                        ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.UxTheme_EnableTheme, "uxtheme.dll", "GetCurrentThemeName", string.Empty, $"ERROR {Error}: {ex.Message}"), "dll");
+                        ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.UxTheme_EnableTheme, "uxtheme.dll", "GetCurrentThemeName", string.Empty, $"ERROR {Error}: {ex.Message}"), "dll");
 
                     // Add the error message to the Exceptions.ThemeApply list
-                    Exceptions.ThemeApply.Add(new Tuple<string, Exception>(string.Format(Program.Lang.Strings.ThemeManager.Advanced.UxTheme_EnableTheme, "uxtheme.dll", "GetCurrentThemeName", string.Empty, $"ERROR {Error}: {ex.Message}"), ex));
+                    Exceptions.ThemeApply.Add(new Tuple<string, Exception>(string.Format(Program.Localization.Strings.ThemeManager.Advanced.UxTheme_EnableTheme, "uxtheme.dll", "GetCurrentThemeName", string.Empty, $"ERROR {Error}: {ex.Message}"), ex));
 
                     // Exit the function
                     return;
@@ -170,7 +170,7 @@ namespace WinPaletter.NativeMethods
 
             // Log the result of the operation if it is successful using the ThemeLog class
             if (treeView != null)
-                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.UxTheme_EnableTheme, "uxtheme.dll", "GetCurrentThemeName", string.Empty, $"\"{themename}\", {colorname}, {sizename}"), "dll");
+                ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.UxTheme_EnableTheme, "uxtheme.dll", "GetCurrentThemeName", string.Empty, $"\"{themename}\", {colorname}, {sizename}"), "dll");
         }
 
         /// <summary>

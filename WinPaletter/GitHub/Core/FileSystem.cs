@@ -2,17 +2,14 @@
 using Serilog.Events;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static WinPaletter.GitHub.FileSystem;
 
 namespace WinPaletter.GitHub
 {
@@ -168,9 +165,9 @@ namespace WinPaletter.GitHub
             public static Func<FileFilterInfo, FileFilterAction> FilterFile;
         }
 
-        public static string InvalidCharsToolTip => $"{Program.Lang.Strings.GitHubStrings.Explorer_NotAllowedChars}: {string.Join(" ", InvalidFileNameChars.Select(c => c == "\0" ? "\\0" : $"'{c}'"))}";
+        public static string InvalidCharsToolTip => $"{Program.Localization.Strings.GitHubStrings.Explorer_NotAllowedChars}: {string.Join(" ", InvalidFileNameChars.Select(c => c == "\0" ? "\\0" : $"'{c}'"))}";
 
-        public static string InvalidNamesToolTip => $"{Program.Lang.Strings.GitHubStrings.Explorer_ReversedWords}: {string.Join(", ", InvalidFileNames)}";
+        public static string InvalidNamesToolTip => $"{Program.Localization.Strings.GitHubStrings.Explorer_ReversedWords}: {string.Join(", ", InvalidFileNames)}";
 
         public static async Task<bool> FileExistsAsync(string path, CancellationTokenSource cts = null)
         {

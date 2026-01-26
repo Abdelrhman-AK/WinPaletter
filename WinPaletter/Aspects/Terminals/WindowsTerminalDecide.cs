@@ -15,7 +15,7 @@ namespace WinPaletter
 
         private void WindowsTerminalDecide_Load(object sender, EventArgs e)
         {
-            this.LoadLanguage();
+            this.Localize();
             ApplyStyle(this);
             Icon = FormsExtensions.Icon<WindowsTerminal>();
 

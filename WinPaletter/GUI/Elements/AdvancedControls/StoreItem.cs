@@ -432,7 +432,7 @@ namespace WinPaletter.UI.Controllers
                         G.DrawImage(Assets.Store.DoneByUser, BadgeRect);
                     }
 
-                    G.DrawString($"{Program.Lang.Strings.General.By} {(DoneByWinPaletter ? Application.ProductName : TM.Info.Author)}", font, foreBrush, Author_Rect, sf);
+                    G.DrawString($"{Program.Localization.Strings.General.By} {(DoneByWinPaletter ? Application.ProductName : TM.Info.Author)}", font, foreBrush, Author_Rect, sf);
 
                     if (File.Exists(URL_ThemeFile))
                     {
@@ -442,7 +442,7 @@ namespace WinPaletter.UI.Controllers
 
                     if (hasUpdate)
                     {
-                        G.DrawString(Program.Lang.Strings.Updates.NewUpdate, Fonts.Console, verBrush, lowerRect, sf);
+                        G.DrawString(Program.Localization.Strings.Updates.NewUpdate, Fonts.Console, verBrush, lowerRect, sf);
                         G.DrawString(TM.Info.ThemeVersion, Fonts.Console, verBrush, lowerRect, sf_version);
                         G.DrawRoundedRectBeveled(scheme_tertiary.Pens.Line_Checked_Hover, rect_inner);
                     }

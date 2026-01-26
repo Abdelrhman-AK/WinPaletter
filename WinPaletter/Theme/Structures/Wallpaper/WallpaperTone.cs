@@ -116,7 +116,7 @@ namespace WinPaletter.Theme.Structures
             Program.Log?.Write(LogEventLevel.Information, $"Saving WinPaletter Wallpaper Tone into registry and by rendering a custom image.");
 
             if (treeView is not null)
-                ThemeLog.AddNode(treeView, string.Format(Program.Lang.Strings.ThemeManager.Advanced.SettingHSLImage, path), "pe_patch");
+                ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.SettingHSLImage, path), "pe_patch");
 
             Program.Log?.Write(LogEventLevel.Information, $"Rendering a custom image with HSL values: H={H}, S={S}, L={L}.");
 

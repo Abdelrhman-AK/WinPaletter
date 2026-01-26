@@ -304,7 +304,7 @@ namespace WinPaletter
                 try
                 {
                     Program.Log?.Write(LogEventLevel.Information, $"Loading language file: {Settings.Language.File}");
-                    Lang.Load(Settings.Language.File);
+                    Localization.Load(Settings.Language.File);
                 }
                 catch (Exception ex)
                 {
@@ -412,9 +412,9 @@ namespace WinPaletter
             // Use spans and caching for faster string ops
             var associations = new (string ext, string cls, string desc, string icon)[]
             {
-                (".wpth", "WinPaletter.ThemeFile", Lang.Strings.Extensions.WinPaletterThemeFiles, $"{SysPaths.appData}\\fileextension.ico"),
-                (".wpsf", "WinPaletter.SettingsFile", Lang.Strings.Extensions.WinPaletterSettings, $"{SysPaths.appData}\\settingsfile.ico"),
-                (".wptp", "WinPaletter.ThemeResourcesPack", Lang.Strings.Extensions.WinPaletterResourcesPack, $"{SysPaths.appData}\\themerespack.ico")
+                (".wpth", "WinPaletter.ThemeFile", Localization.Strings.Extensions.WinPaletterThemeFiles, $"{SysPaths.appData}\\fileextension.ico"),
+                (".wpsf", "WinPaletter.SettingsFile", Localization.Strings.Extensions.WinPaletterSettings, $"{SysPaths.appData}\\settingsfile.ico"),
+                (".wptp", "WinPaletter.ThemeResourcesPack", Localization.Strings.Extensions.WinPaletterResourcesPack, $"{SysPaths.appData}\\themerespack.ico")
             };
 
             bool anyChanged = false;
@@ -592,7 +592,7 @@ namespace WinPaletter
                 if (File.Exists(SysPaths.SysEventsSounds) && !Resources.WinPaletter_SysEventsSounds.Equals_Method2(File.ReadAllBytes(SysPaths.SysEventsSounds)))
                 {
                     Log?.Write(LogEventLevel.Information, $"SysEventsSounds service is not up to date, updating it.");
-                    Forms.ServiceInstaller.Run("WinPaletter.SystemEventsSounds", Program.Lang.Strings.Services.Description_SysEventsSounds, SysPaths.SysEventsSounds, Resources.WinPaletter_SysEventsSounds, ServiceInstaller.RunMethods.Update);
+                    Forms.ServiceInstaller.Run("WinPaletter.SystemEventsSounds", Program.Localization.Strings.Services.Description_SysEventsSounds, SysPaths.SysEventsSounds, Resources.WinPaletter_SysEventsSounds, ServiceInstaller.RunMethods.Update);
                     return;
                 }
             }

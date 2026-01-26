@@ -157,7 +157,7 @@ namespace WinPaletter.UI.WP
 
         private void reset_MouseEnter(object sender, EventArgs e)
         {
-            Program.ToolTip.Show(sender as Button, string.Empty, Program.Lang.Strings.Tips.ClickToReset, null, new Point(0, (sender as Button).Height + 2));
+            Program.ToolTip.Show(sender as Button, string.Empty, Program.Localization.Strings.Tips.ClickToReset, null, new Point(0, (sender as Button).Height + 2));
         }
 
         private void reset_MouseLeave(object sender, EventArgs e)
@@ -167,7 +167,7 @@ namespace WinPaletter.UI.WP
 
         private void value_btn_MouseEnter(object sender, EventArgs e)
         {
-            Program.ToolTip.Show(sender as Button, string.Empty, Program.Lang.Strings.Tips.ClickToEdit, null, new Point(0, (sender as Button).Height + 2));
+            Program.ToolTip.Show(sender as Button, string.Empty, Program.Localization.Strings.Tips.ClickToEdit, null, new Point(0, (sender as Button).Height + 2));
         }
 
         private void value_btn_MouseLeave(object sender, EventArgs e)
@@ -177,7 +177,7 @@ namespace WinPaletter.UI.WP
 
         private void textBox1_MouseEnter(object sender, EventArgs e)
         {
-            Program.ToolTip.Show(sender as TextBox, string.Empty, $"• {Program.Lang.Strings.Tips.PressEnterToUseValue}\r\n• {Program.Lang.Strings.Tips.PressEscToDismissEditing}", null, new Point(0, (sender as TextBox).Height + 2));
+            Program.ToolTip.Show(sender as TextBox, string.Empty, $"• {Program.Localization.Strings.Tips.PressEnterToUseValue}\r\n• {Program.Localization.Strings.Tips.PressEscToDismissEditing}", null, new Point(0, (sender as TextBox).Height + 2));
         }
 
         private void textBox1_MouseLeave(object sender, EventArgs e)

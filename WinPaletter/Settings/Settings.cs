@@ -1538,12 +1538,12 @@ namespace WinPaletter
                         }
                         else
                         {
-                            Forms.BugReport.ThrowError(new Exception(Program.Lang.Strings.Messages.SettingsFileNotJSON));
+                            Forms.BugReport.ThrowError(new Exception(Program.Localization.Strings.Messages.SettingsFileNotJSON));
                         }
                     }
                     else
                     {
-                        Forms.BugReport.ThrowError(new Exception(Program.Lang.Strings.Messages.SettingsFileNotExist));
+                        Forms.BugReport.ThrowError(new Exception(Program.Localization.Strings.Messages.SettingsFileNotExist));
                     }
 
                     break;

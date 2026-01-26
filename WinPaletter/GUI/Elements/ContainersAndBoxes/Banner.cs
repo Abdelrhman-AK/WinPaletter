@@ -74,10 +74,10 @@ namespace WinPaletter.UI.WP
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
 
-            Rectangle Rect = new(0, 0, Width - 1, Height - 1);
-            Rectangle Rect_Fix = new(-2, -2, Width + 4, Height + 4);
+            RectangleF Rect = new(0, 0, Width - 1, Height - 1);
+            RectangleF Rect_Fix = new(-2, -2, Width + 4, Height + 4);
 
-            Rectangle ImageRect = Rect;
+            RectangleF ImageRect = Rect;
 
             Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
             Color _color = Enabled && ImageColor != Color.Empty ? ImageColor : scheme.Colors.Back_Checked;
@@ -122,11 +122,11 @@ namespace WinPaletter.UI.WP
                 {
                     ImageRect = new(Rect.X + 10, Rect.Y + (Rect.Height - _image.Height) / 2, _image.Width, _image.Height);
                     G.DrawImage(Image, ImageRect);
-                    G.DrawString(Text, f, B, new Rectangle(ImageRect.Right + 10, 0, Width, Height), sf);
+                    G.DrawString(Text, f, B, new RectangleF(ImageRect.Right + 10, 0, Width, Height), sf);
                 }
                 else
                 {
-                    G.DrawString(Text, f, B, new Rectangle(Rect.X + 10, Rect.Y, Rect.Width - 20, Rect.Height), sf);
+                    G.DrawString(Text, f, B, new RectangleF(Rect.X + 10, Rect.Y, Rect.Width - 20, Rect.Height), sf);
                 }
             }
 

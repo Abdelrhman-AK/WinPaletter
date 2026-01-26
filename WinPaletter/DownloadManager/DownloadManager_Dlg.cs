@@ -328,7 +328,7 @@ namespace WinPaletter
         private void DownloadManager_Dlg_Load(object sender, EventArgs e)
         {
             ApplyStyle(this);
-            this.LoadLanguage();
+            this.Localize();
         }
     }
 }

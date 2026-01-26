@@ -3,7 +3,6 @@ using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -156,12 +155,12 @@ namespace WinPaletter.GitHub
             public static async Task<Octokit.Branch> SetBranchProtectionAsync(string branchName, bool protect)
             {
                 string message = protect
-                    ? string.Format(Program.Lang.Strings.GitHubStrings.BranchProtection_ProtectConfirm, branchName)
-                    : string.Format(Program.Lang.Strings.GitHubStrings.BranchProtection_UnprotectConfirm, branchName);
+                    ? string.Format(Program.Localization.Strings.GitHubStrings.BranchProtection_ProtectConfirm, branchName)
+                    : string.Format(Program.Localization.Strings.GitHubStrings.BranchProtection_UnprotectConfirm, branchName);
 
                 string details = protect
-                    ? Program.Lang.Strings.GitHubStrings.BranchProtection_ProtectDetails
-                    : Program.Lang.Strings.GitHubStrings.BranchProtection_UnprotectDetails;
+                    ? Program.Localization.Strings.GitHubStrings.BranchProtection_ProtectDetails
+                    : Program.Localization.Strings.GitHubStrings.BranchProtection_UnprotectDetails;
 
                 if (MsgBox(message, MessageBoxButtons.YesNo, MessageBoxIcon.Warning, details) != DialogResult.Yes) return null;
 
@@ -185,8 +184,8 @@ namespace WinPaletter.GitHub
                 }
                 catch (Exception ex)
                 {
-                    string errorMessage = protect ? string.Format(Program.Lang.Strings.GitHubStrings.BranchProtection_ProtectFailed, branchName, ex.Message)
-                                                  : string.Format(Program.Lang.Strings.GitHubStrings.BranchProtection_UnprotectFailed, branchName, ex.Message);
+                    string errorMessage = protect ? string.Format(Program.Localization.Strings.GitHubStrings.BranchProtection_ProtectFailed, branchName, ex.Message)
+                                                  : string.Format(Program.Localization.Strings.GitHubStrings.BranchProtection_UnprotectFailed, branchName, ex.Message);
 
                     MsgBox(errorMessage, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return null;
@@ -296,31 +295,21 @@ namespace WinPaletter.GitHub
                         upstreamBranch = upstreamRepo.DefaultBranch;
                     }
 
-                    Reference upstreamRef = await client.Git.Reference.Get(
-                        OriginalOwner,
-                        Name,
-                        $"heads/{upstreamBranch}");
+                    Reference upstreamRef = await client.Git.Reference.Get( OriginalOwner, Name, $"heads/{upstreamBranch}");
 
                     Reference forkRef;
                     try
                     {
-                        forkRef = await client.Git.Reference.Get(
-                            Repository.Owner,
-                            Name,
-                            $"heads/{forkBranch}");
+                        forkRef = await client.Git.Reference.Get(Repository.Owner, Name, $"heads/{forkBranch}");
                     }
                     catch (Octokit.NotFoundException)
                     {
-                        forkRef = await client.Git.Reference.Create(
-                            Repository.Owner,
-                            Name,
-                            new NewReference($"refs/heads/{forkBranch}", upstreamRef.Object.Sha));
+                        forkRef = await client.Git.Reference.Create(Repository.Owner, Name, new NewReference($"refs/heads/{forkBranch}", upstreamRef.Object.Sha));
                     }
 
                     if (forkRef.Object.Sha == upstreamRef.Object.Sha)
                     {
-                        Program.Log?.Write(LogEventLevel.Information,
-                            $"Branch '{forkBranch}' already up-to-date.");
+                        Program.Log?.Write(LogEventLevel.Information, $"Branch '{forkBranch}' already up-to-date.");
                         return true;
                     }
 
@@ -345,14 +334,9 @@ namespace WinPaletter.GitHub
                     }
 
                     // Hard reset fork branch to upstream
-                    await client.Git.Reference.Update(
-                        Repository.Owner,
-                        Name,
-                        $"heads/{forkBranch}",
-                        new ReferenceUpdate(upstreamRef.Object.Sha, true));
+                    await client.Git.Reference.Update( Repository.Owner, Name, $"heads/{forkBranch}", new ReferenceUpdate(upstreamRef.Object.Sha, true));
 
-                    Program.Log?.Write(LogEventLevel.Information,
-                        $"Force-synced {forkBranch} to {OriginalOwner}/{upstreamBranch}.");
+                    Program.Log?.Write(LogEventLevel.Information, $"Force-synced {forkBranch} to {OriginalOwner}/{upstreamBranch}.");
 
                     return true;
                 }
@@ -362,6 +346,36 @@ namespace WinPaletter.GitHub
                     Program.Log?.Write(LogEventLevel.Error, $"Error syncing branch.", ex);
                     return false;
                 }
+            }
+
+            /// <summary>
+            /// Get all changed files in the branch compared to base branch
+            /// </summary>
+            /// <param name="baseBranch"></param>
+            /// <returns></returns>
+            public static async Task<List<string>> GetChangedFilesAsync(string baseBranch = "main")
+            {
+                CompareResult comparison = await _client.Repository.Commit.Compare(Owner, Repository.Name, baseBranch, Name);
+                List<string> files = [.. comparison.Files.Select(f => f.Filename)];
+                return files;
+            }
+
+            /// <summary>
+            /// Check if a file is newly added in this branch
+            /// </summary>
+            /// <param name="branchName"></param>
+            /// <param name="filePath"></param>
+            /// <param name="baseBranch"></param>
+            /// <returns></returns>
+            public static async Task<bool> IsNewFileAsync(string filePath, string baseBranch = "main")
+            {
+                CompareResult comparison = await _client.Repository.Commit.Compare(Owner, Repository.Name, baseBranch, Name);
+                GitHubCommitFile file = comparison.Files.FirstOrDefault(f => f.Filename == filePath);
+                if (file != null)
+                {
+                    return file.Status.Equals("added", System.StringComparison.OrdinalIgnoreCase);
+                }
+                return false;
             }
         }
     }
