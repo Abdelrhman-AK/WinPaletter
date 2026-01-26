@@ -618,7 +618,7 @@ namespace WinPaletter.GitHub
             }
             catch (Exception ex)
             {
-                Forms.BugReport.ThrowError(ex);
+                Forms.BugReport.Throw(ex);
                 Program.Log?.Write(LogEventLevel.Error, $"PopulateListViewAsync failed for '{path}'", ex);
             }
             finally
@@ -1739,7 +1739,7 @@ namespace WinPaletter.GitHub
             }
             catch (Exception ex)
             {
-                Forms.BugReport.ThrowError(ex);
+                Forms.BugReport.Throw(ex);
                 e?.CancelEdit = true;
             }
             finally
@@ -1806,7 +1806,7 @@ namespace WinPaletter.GitHub
             }
             catch (Exception ex)
             {
-                Forms.BugReport.ThrowError(ex);
+                Forms.BugReport.Throw(ex);
                 e?.CancelEdit = true;
                 Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Error in renaming file {oldPath} to {itemText}", ex);
             }
@@ -2121,7 +2121,7 @@ namespace WinPaletter.GitHub
             }
             catch (Exception ex)
             {
-                Forms.BugReport.ThrowError(ex);
+                Forms.BugReport.Throw(ex);
             }
             finally
             {

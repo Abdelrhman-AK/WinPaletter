@@ -122,6 +122,8 @@
                 public string FrutigerAero { get; set; } = "Frutiger Aero";
                 public string FrutigerAero_Description { get; set; } = "Applies Frutiger Aero palette quantization";
 
+                public string Photo2016_Description { get; set; } = "Applies a vintage 2016-style photo filter";
+
                 public string Metro { get; set; } = "Metro";
                 public string Metro_Description { get; set; } = "Applies Metro UI palette quantization";
 

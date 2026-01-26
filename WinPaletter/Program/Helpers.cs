@@ -309,7 +309,7 @@ namespace WinPaletter
                 catch (Exception ex)
                 {
                     Program.Log?.Write(LogEventLevel.Error, $"Failed to load language file: {Settings.Language.File}. Using default language instead.", ex);
-                    Forms.BugReport.ThrowError(ex);
+                    Forms.BugReport.Throw(ex);
                 }
             }
         }
@@ -558,7 +558,7 @@ namespace WinPaletter
             }
             catch (Exception ex)
             {
-                Forms.BugReport.ThrowError(ex);
+                Forms.BugReport.Throw(ex);
             }
         }
 

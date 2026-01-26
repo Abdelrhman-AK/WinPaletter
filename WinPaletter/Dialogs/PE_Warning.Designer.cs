@@ -310,7 +310,7 @@ namespace WinPaletter
             this.Text = "PE resources editor";
             this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PE_Warning_FormClosing);
-            this.Load += new System.EventHandler(this.BugReport_Load);
+            this.Load += new System.EventHandler(this.PE_Warning_Load);
             this.AnimatedBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).EndInit();
             this.GroupBox3.ResumeLayout(false);

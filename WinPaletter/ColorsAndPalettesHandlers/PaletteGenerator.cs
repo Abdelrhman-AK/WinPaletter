@@ -278,24 +278,19 @@ namespace WinPaletter
         {
             if (source is null) return;
 
-            // Create a downscaled copy early
             Bitmap thumbnail = source.Resize(Program.PreviewSize);
 
-            // Start asynchronous background task
             _ = Task.Run(async () =>
             {
                 try
                 {
                     if (IsHandleCreated)
                     {
-                        // Update UI before heavy work
                         Invoke(() =>
                         {
                             Cursor = System.Windows.Forms.Cursors.AppStarting;
                             ImgPaletteContainer.Visible = false;
-
                             foreach (var item in ImgPaletteContainer.Controls.OfType<ColorItem>()) item.Dispose();
-
                             ImgPaletteContainer.Controls.Clear();
                         });
                     }
@@ -305,27 +300,22 @@ namespace WinPaletter
                         ColorCount = 300,
                         ColorQuality = 10,
                         IgnoreWhiteColors = false
-                        // All other settings will use their default values
                     };
 
-                    // Await the async palette extraction
                     List<Color> palette = await thumbnail.ToPalette(settings);
 
-                    // Use PLINQ to sort in parallel
                     List<Color> extractedColors = palette.AsParallel().OrderBy(c => c, new RGBColorComparer()).ToList();
 
-                    thumbnail?.Dispose();
+                    thumbnail.Dispose();
 
-                    // Store globally
                     Colors_List.Clear();
                     Colors_List.AddRange(extractedColors);
 
-                    // Build UI controls off the main thread, in parallel
                     ColorItem[] colorItems = new ColorItem[extractedColors.Count];
-                    Parallel.For(0, extractedColors.Count, i =>
+                    for (int i = 0; i < extractedColors.Count; i++)
                     {
                         Color c = extractedColors[i];
-                        colorItems[i] = new()
+                        colorItems[i] = new ColorItem()
                         {
                             Size = ColorItem.GetMiniColorItemSize(),
                             AllowDrop = false,
@@ -333,7 +323,7 @@ namespace WinPaletter
                             BackColor = Color.FromArgb(255, ApplyEffect(c)),
                             DefaultBackColor = Color.FromArgb(255, c)
                         };
-                    });
+                    }
 
                     if (IsHandleCreated)
                     {
@@ -438,11 +428,6 @@ namespace WinPaletter
                     });
                 }
             });
-        }
-
-        private void Button1_Click(object sender, EventArgs e)
-        {
-
         }
 
         /// <summary>

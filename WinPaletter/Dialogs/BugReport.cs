@@ -1,4 +1,5 @@
 ﻿using FluentTransitions;
+using Microsoft.Win32;
 using Serilog.Events;
 using System;
 using System.Collections;
@@ -6,9 +7,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Media;
+using System.Net;
+using System.Reflection;
+using System.Runtime;
+using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -29,6 +35,8 @@ namespace WinPaletter
 
         bool collapsed = true;
         int previousHeight = 540;
+        private bool isThrowing = false;
+        private Exception exception;
 
         private int CollapsedHeight
         {
@@ -42,7 +50,7 @@ namespace WinPaletter
 
         private void Center()
         {
-            Location = new(Location.X - 15, Location.Y - 15);
+            Location = new(Location.X - 35, Location.Y - 35);
 
             Task.Delay(10).ContinueWith(_ =>
             {
@@ -64,6 +72,7 @@ namespace WinPaletter
         {
             this.Localize();
             ApplyStyle(this);
+
             Color c = PictureBox1.Image.AverageColor().CB(Program.Style.DarkMode ? -0.35f : 0.35f);
             AnimatedBox1.BackColor = c;
 
@@ -71,8 +80,7 @@ namespace WinPaletter
 
             Forms.GlassWindow.Show();
 
-            foreach (Label lbl in AnimatedBox1.Controls.OfType<Label>())
-                lbl.ForeColor = Color.White;
+            foreach (Label lbl in AnimatedBox1.Controls.OfType<Label>()) lbl.ForeColor = Color.White;
 
             CustomSystemSounds.Exclamation.Play();
 
@@ -94,47 +102,122 @@ namespace WinPaletter
             if (ex is not null && ex.Data is not null && ex.Data.Keys is not null && ex.Data.Keys.Count > 0)
             {
                 TreeNodeCollection temp = treeView?.Nodes?.Add($"{str} data").Nodes;
-
-                foreach (DictionaryEntry x in ex.Data) temp?.Add($"{x.Key} = {x.Value}");
+                foreach (DictionaryEntry x in ex.Data)
+                {
+                    if (x.Value is Exception nestedEx)
+                    {
+                        temp?.Add($"{x.Key} = Exception:");
+                        AddException($"Data Exception ({x.Key})", nestedEx, treeView);
+                    }
+                    else
+                    {
+                        temp?.Add($"{x.Key} = {x.Value}");
+                    }
+                }
             }
         }
 
         public void AddException(string str, Exception ex, TreeView treeView, int win32Error = 0)
         {
-            if (ex is not null)
+            if (ex is null) return;
+
+            // Message
+            treeView?.Nodes?.Add($"{str} message").Nodes?.Add(ex?.Message ?? "No message included");
+
+            // Exception type
+            treeView?.Nodes?.Add("Exception type").Nodes?.Add(ex?.GetType().ToString());
+
+            // Win32 error
+            if (win32Error != 0)
+                treeView?.Nodes?.Add($"{str} Marshal.GetLastWin32Error").Nodes?.Add(win32Error.ToString());
+
+            // Stack trace
+            if (!string.IsNullOrWhiteSpace(ex?.StackTrace))
             {
-                treeView?.Nodes?.Add($"{str} message").Nodes?.Add(ex?.Message ?? "No message is included");
+                TreeNode stackNode = treeView?.Nodes?.Add($"{str} stack trace");
+                foreach (string line in ex.StackTrace.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries))
+                    stackNode?.Nodes?.Add(line.Trim());
+            }
 
-                treeView?.Nodes?.Add("Exception type").Nodes?.Add(ex?.GetType().ToString());
+            // Exception Data
+            AddData(str, ex, treeView);
 
-                if (win32Error != 0) { treeView?.Nodes?.Add($"{str} Marshal.GetLastWin32Error").Nodes?.Add(win32Error.ToString()); }
+            // Target site / method info
+            if (ex.TargetSite is not null)
+            {
+                TreeNode targetNode = treeView.Nodes?.Add($"{str} target method");
+                targetNode?.Nodes?.Add($@"Target Site: {ex.Source}.{ex.TargetSite.Name}()");
+                targetNode?.Nodes?.Add($"Member Type: {ex.TargetSite.MemberType}");
+                if (ex.TargetSite.DeclaringType is not null)
+                    targetNode?.Nodes?.Add($"Declaring Type: {ex.TargetSite.DeclaringType.FullName}");
 
-                if (!string.IsNullOrWhiteSpace(ex?.StackTrace))
+                var parameters = ex.TargetSite.GetParameters();
+                if (parameters.Length > 0)
                 {
-                    TreeNode n = treeView?.Nodes?.Add($"{str} stack trace");
-
-                    foreach (string x in ex?.StackTrace.Split('\r')) if (!string.IsNullOrWhiteSpace(x)) n?.Nodes?.Add(x.Trim());
+                    TreeNode paramsNode = targetNode?.Nodes?.Add("Parameters");
+                    foreach (var param in parameters)
+                        paramsNode?.Nodes?.Add($"{param.ParameterType.Name} {param.Name}");
                 }
+            }
 
-                AddData(str, ex, treeView);
+            // Assembly information
+            if (ex.TargetSite?.Module?.Assembly is not null)
+            {
+                treeView.Nodes?.Add($"{str} assembly").Nodes?.Add(ex.TargetSite.Module.Assembly.FullName);
+                if (!string.IsNullOrWhiteSpace(ex.TargetSite.Module.Assembly.Location))
+                    treeView.Nodes?.Add($"{str} assembly's file").Nodes?.Add(ex.TargetSite.Module.Assembly.Location);
+            }
 
-                if (ex?.TargetSite is not null)
-                {
-                    treeView?.Nodes?.Add($@"{str} target void\function").Nodes?.Add($"{ex?.Source}.{ex?.TargetSite?.Name}()");
-                }
+            // Source property
+            if (!string.IsNullOrWhiteSpace(ex.Source))
+                treeView.Nodes?.Add($"{str} source").Nodes?.Add(ex.Source);
 
-                if (ex?.TargetSite?.Module?.Assembly != null)
-                {
-                    if (!string.IsNullOrWhiteSpace(ex?.TargetSite?.Module?.Assembly?.FullName))
-                        treeView?.Nodes?.Add($"{str} assembly").Nodes?.Add(ex?.TargetSite?.Module?.Assembly?.FullName);
+            // HRESULT
+            treeView.Nodes?.Add($"{str} HRESULT").Nodes?.Add(ex.HResult.ToString());
 
-                    if (!string.IsNullOrWhiteSpace(ex?.TargetSite?.Module?.Assembly?.Location))
-                        treeView?.Nodes?.Add($"{str} assembly's file").Nodes?.Add(ex?.TargetSite?.Module?.Assembly?.Location);
-                }
+            // Help link
+            if (!string.IsNullOrWhiteSpace(ex.HelpLink))
+                treeView.Nodes?.Add($"{str} Microsoft help link").Nodes?.Add(ex.HelpLink);
 
-                treeView?.Nodes?.Add($"{str} HRESULT").Nodes?.Add(ex?.HResult.ToString());
+            // Timestamp
+            treeView.Nodes?.Add($"{str} timestamp").Nodes?.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
 
-                if (!string.IsNullOrWhiteSpace(ex?.HelpLink)) treeView?.Nodes?.Add($"{str} Microsoft help link").Nodes?.Add(ex?.HelpLink);
+            // Inner exception (recursive)
+            if (ex.InnerException is not null)
+            {
+                TreeNode innerNode = treeView.Nodes?.Add($"{str} inner exception");
+                AddException("Inner Exception", ex.InnerException, treeView);
+            }
+
+            // ReflectionTypeLoadException LoaderExceptions
+            if (ex is ReflectionTypeLoadException rtlEx && rtlEx.LoaderExceptions?.Length > 0)
+            {
+                TreeNode loaderNode = treeView.Nodes?.Add($"{str} loader exceptions");
+                foreach (var le in rtlEx.LoaderExceptions)
+                    loaderNode?.Nodes?.Add(le?.Message ?? "[No message]");
+            }
+
+            // AggregateException inner exceptions
+            if (ex is AggregateException aggEx && aggEx.InnerExceptions?.Count > 0)
+            {
+                TreeNode aggNode = treeView.Nodes?.Add($"{str} aggregate inner exceptions");
+                foreach (var ie in aggEx.InnerExceptions)
+                    AddException("Aggregate Inner", ie, treeView);
+            }
+
+            // Common derived exception properties
+            switch (ex)
+            {
+                case FileNotFoundException fnf:
+                    treeView.Nodes?.Add($"{str} file name").Nodes?.Add(fnf.FileName ?? "[Unknown]");
+                    treeView.Nodes?.Add($"{str} fusion log").Nodes?.Add(fnf.FusionLog ?? "[None]");
+                    break;
+                case Win32Exception w32:
+                    treeView.Nodes?.Add($"{str} native error code").Nodes?.Add(w32.NativeErrorCode.ToString());
+                    break;
+                case IOException ioEx when ioEx.HResult != 0:
+                    treeView.Nodes?.Add($"{str} HResult detail").Nodes?.Add(ioEx.HResult.ToString());
+                    break;
             }
         }
 
@@ -151,7 +234,39 @@ namespace WinPaletter
             return exceptions;
         }
 
-        public void ThrowError(Exception ex, bool noRecovery = false, int win32Error = -1)
+        [DebuggerHidden]
+        public void Throw(Exception ex, bool noRecovery = false, int win32Error = -1)
+        {
+            if (ex == null) return;
+            exception = ex;
+
+            if (InvokeRequired)
+            {
+                // Use BeginInvoke to avoid blocking background threads
+                Invoke(new Action(() => SafeThrowInner(ex, noRecovery, win32Error)));
+            }
+            else
+            {
+                SafeThrowInner(ex, noRecovery, win32Error);
+            }
+        }
+
+        private void SafeThrowInner(Exception ex, bool noRecovery, int win32Error)
+        {
+            if (isThrowing) return; // prevent reentry
+            isThrowing = true;
+
+            try
+            {
+                ThrowInner(ex, noRecovery, win32Error);
+            }
+            finally
+            {
+                isThrowing = false;
+            }
+        }
+
+        private void ThrowInner(Exception ex, bool noRecovery, int win32Error = -1)
         {
             // Try is used to avoid loop in case of error in the backup function
             try
@@ -178,7 +293,7 @@ namespace WinPaletter
 #if DEBUG
             n?.Nodes.Add("WinPaletter version").Nodes.Add($"{Program.Version}{(Program.IsBeta ? $", {Program.Localization.Strings.General.Beta}" : string.Empty)}, Build: Debug");
 #else
-            n?.Nodes.Add("WinPaletter version").Nodes.Add($"{Program.Version}{(Program.IsBeta ? $", {Program.Lang.Strings.General.Beta}" : string.Empty)}, Build: Release");
+            n?.Nodes.Add("WinPaletter version").Nodes.Add($"{Program.Version}{(Program.IsBeta ? $", {Program.Localization.Strings.General.Beta}" : string.Empty)}, Build: Release");
 #endif
 
             n?.Nodes.Add("WinPaletter language").Nodes.Add(Program.Localization.Information.Lang);
@@ -227,10 +342,115 @@ namespace WinPaletter
                 Win32Exception win32Exception = new(win32Error);
                 if (win32Exception != null) { AddException("Win32 exception", win32Exception, TreeView1, win32Error); }
             }
+            // Loaded Assemblies (limited to top 20 to avoid overwhelming)
+            TreeNode assembliesNode = TreeView1.Nodes?.Add($"Loaded assemblies");
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            {
+                try
+                {
+                    var assemblyNode = assembliesNode?.Nodes?.Add(assembly.GetName().Name);
+                    assemblyNode?.Nodes?.Add($"Version: {assembly.GetName().Version}");
+                    assemblyNode?.Nodes?.Add($"Location: {assembly.Location ?? "[Dynamic]"}");
+                    assemblyNode?.Nodes?.Add($"Is Dynamic: {assembly.IsDynamic}");
+                    assemblyNode?.Nodes?.Add($"Is Fully Trusted: {assembly.IsFullyTrusted}");
+
+                    // Get referenced assemblies (first 3)
+                    var referenced = assembly.GetReferencedAssemblies().Take(3);
+                    if (referenced.Any())
+                    {
+                        var refNode = assemblyNode?.Nodes?.Add("Referenced Assemblies (first 3)");
+                        foreach (var refAssembly in referenced)
+                        {
+                            refNode?.Nodes?.Add($"{refAssembly.Name} v{refAssembly.Version}");
+                        }
+                    }
+                }
+                catch
+                {
+                    // Ignore assemblies that can't be inspected
+                    assembliesNode?.Nodes?.Add($"[Unable to inspect: {assembly.FullName?.Split(',')[0] ?? "Unknown"}]");
+                }
+            }
+            assembliesNode?.Nodes?.Add($"Total Assemblies Loaded: {AppDomain.CurrentDomain.GetAssemblies().Length}");
+
+            // Process information
+            TreeNode processNode = TreeView1.Nodes?.Add($"Process info");
+            using (Process process = Process.GetCurrentProcess())
+            {
+                processNode?.Nodes?.Add($"Process ID: {process.Id}");
+                processNode?.Nodes?.Add($"Process Name: {process.ProcessName}");
+                processNode?.Nodes?.Add($"Memory Usage: {process.WorkingSet64 / 1024 / 1024} MB");
+                processNode?.Nodes?.Add($"Peak Memory: {process.PeakWorkingSet64 / 1024 / 1024} MB");
+                processNode?.Nodes?.Add($"Total Processor Time: {process.TotalProcessorTime}");
+                processNode?.Nodes?.Add($"User Processor Time: {process.UserProcessorTime}");
+                processNode?.Nodes?.Add($"Virtual Memory Size: {process.VirtualMemorySize64 / 1024 / 1024} MB");
+                processNode?.Nodes?.Add($"Private Memory Size: {process.PrivateMemorySize64 / 1024 / 1024} MB");
+                processNode?.Nodes?.Add($"Handle Count: {process.HandleCount}");
+                processNode?.Nodes?.Add($"Thread Count: {process.Threads.Count}");
+            }
+
+            // Thread information
+            TreeNode threadNode = TreeView1.Nodes?.Add($"Thread info");
+            threadNode?.Nodes?.Add($"Thread ID: {Thread.CurrentThread.ManagedThreadId}");
+            threadNode?.Nodes?.Add($"Thread Name: {Thread.CurrentThread.Name ?? "[Unnamed]"}");
+            threadNode?.Nodes?.Add($"Thread State: {Thread.CurrentThread.ThreadState}");
+            threadNode?.Nodes?.Add($"Is ThreadPool Thread: {Thread.CurrentThread.IsThreadPoolThread}");
+            threadNode?.Nodes?.Add($"Is Background Thread: {Thread.CurrentThread.IsBackground}");
+            threadNode?.Nodes?.Add($"Priority: {Thread.CurrentThread.Priority}");
+            threadNode?.Nodes?.Add($"Apartment State: {Thread.CurrentThread.GetApartmentState()}");
+
+            // Runtime/CLR information
+            TreeNode runtimeNode = TreeView1.Nodes?.Add($"Runtime info");
+            runtimeNode?.Nodes?.Add($"CLR Version: {Environment.Version}");
+            runtimeNode?.Nodes?.Add($"Runtime Directory: {RuntimeEnvironment.GetRuntimeDirectory()}");
+            runtimeNode?.Nodes?.Add($"Total Memory (GC): {GC.GetTotalMemory(false) / 1024 / 1024} MB");
+            runtimeNode?.Nodes?.Add($"GC Collection Count (Gen 0): {GC.CollectionCount(0)}");
+            runtimeNode?.Nodes?.Add($"GC Collection Count (Gen 1): {GC.CollectionCount(1)}");
+            runtimeNode?.Nodes?.Add($"GC Collection Count (Gen 2): {GC.CollectionCount(2)}");
+            runtimeNode?.Nodes?.Add($"Max Generation: {GC.MaxGeneration}");
+            runtimeNode?.Nodes?.Add($"GC Latency Mode: {GCSettings.LatencyMode}");
+            runtimeNode?.Nodes?.Add($"GC Server Mode: {GCSettings.IsServerGC}");
+
+            // Application Domain information
+            TreeNode appDomainNode = TreeView1.Nodes?.Add($"Application domain");
+            appDomainNode?.Nodes?.Add($"Name: {AppDomain.CurrentDomain.FriendlyName}");
+            appDomainNode?.Nodes?.Add($"Base Directory: {AppDomain.CurrentDomain.BaseDirectory}");
+
+            // Environment information
+            TreeNode envNode = TreeView1.Nodes?.Add($"Environment");
+            envNode?.Nodes?.Add($"OS Version: {Environment.OSVersion}");
+            envNode?.Nodes?.Add($"Processor Count: {Environment.ProcessorCount}");
+            envNode?.Nodes?.Add($"64-bit OS: {Environment.Is64BitOperatingSystem}");
+            envNode?.Nodes?.Add($"64-bit Process: {Environment.Is64BitProcess}");
+            envNode?.Nodes?.Add($"System Page Size: {Environment.SystemPageSize}");
+
+            // Culture and regional information
+            TreeNode cultureNode = TreeView1.Nodes?.Add($"Culture info");
+            cultureNode?.Nodes?.Add($"Current Culture: {Thread.CurrentThread.CurrentCulture.Name}");
+            cultureNode?.Nodes?.Add($"Current UI Culture: {Thread.CurrentThread.CurrentUICulture.Name}");
+            cultureNode?.Nodes?.Add($"Time Zone: {TimeZoneInfo.Local.StandardName}");
+
+            // Windows-specific information
+            try
+            {
+                TreeNode windowsNode = TreeView1.Nodes?.Add($"More Windows info");
+
+                // Windows version via WMI (if available)
+                if (Environment.OSVersion.Platform == PlatformID.Win32NT)
+                {
+                    windowsNode?.Nodes?.Add($"Product Name: {ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ProductName", "Unknown")}");
+                    windowsNode?.Nodes?.Add($"Current Build: {ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "CurrentBuild", "Unknown")}");
+                    windowsNode?.Nodes?.Add($"Current Build Number: {ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "CurrentBuildNumber", "Unknown")}");
+                    windowsNode?.Nodes?.Add($"Release ID: {ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ReleaseId", "Unknown")}");
+                    windowsNode?.Nodes?.Add($"Display Version: {ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "DisplayVersion", "Unknown")}");
+                }
+            }
+            catch { }
 
             TreeView1.ExpandAll();
 
             n?.Collapse();
+            assembliesNode?.Collapse();
 
             TreeView1.SelectedNode = TreeView1.Nodes[0];
 
@@ -242,7 +462,9 @@ namespace WinPaletter
 
             Program.Log?.Write(LogEventLevel.Error, $"{ex}:\r\n{GetDetails().Trim()}");
 
-            Program.Log?.Write(LogEventLevel.Information, $"Exception error full details text file is saved as {exLogPath}");
+            Program.Log?.Write(LogEventLevel.Information, $"Exception error full details text file is saved as '{exLogPath}'");
+
+            button10.Visible = Debugger.IsAttached;
 
             ShowDialog();
 
@@ -253,108 +475,78 @@ namespace WinPaletter
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.Abort;
-            Close();
-            Program.ForceExit();
+            Forms.MainForm.BeginInvoke(() =>
+            {
+                DialogResult = DialogResult.Abort;
+                Close();
+                Program.ForceExit();
+            });
         }
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.OK;
-            Close();
+            Forms.MainForm.BeginInvoke(() =>
+            {
+                DialogResult = DialogResult.OK;
+                Close();
+            });
         }
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            Forms.GlassWindow.Close();
-            Process.Start(Links.Issues);
+            Forms.MainForm.BeginInvoke(() =>
+            {
+                Forms.GlassWindow.Close();
+                Process.Start(Links.Issues);
+            });
         }
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(GetDetails());
+            Forms.MainForm.BeginInvoke(() =>
+            {
+                Clipboard.SetText(GetDetails());
+            });
         }
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            using (SaveFileDialog dlg = new() { Filter = Program.Filters.Text, Title = Program.Localization.Strings.Extensions.SaveText })
+            Forms.MainForm.BeginInvoke(() =>
             {
-                if (dlg.ShowDialog() == DialogResult.OK)
+                using (SaveFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Localization.Strings.Extensions.SaveJSON })
                 {
-                    File.WriteAllText(dlg.FileName, GetDetails());
+                    if (dlg.ShowDialog() == DialogResult.OK)
+                    {
+                        System.IO.File.WriteAllText(dlg.FileName, TreeView1.ToJSON());
+                    }
                 }
-            }
+            });
         }
 
         public string GetDetails()
         {
             StringBuilder SB = new();
             SB.Clear();
-            SB.AppendLine("```cs");
-            SB.AppendLine("//General information");
-            SB.AppendLine("//...........................................................");
-            SB.AppendLine($"   Report.Date = \"{$"{DateTime.Now.ToLongDateString()} {DateTime.Now.ToLongTimeString()}"}\";");
-            SB.AppendLine($"   OS = \"{OS.Name_English}, {OS.Build}, {OS.Architecture_English}\";");
-
-#if DEBUG
-            SB.AppendLine($"   WinPaletter.Version = \"{Program.Version}{(Program.IsBeta ? $", {Program.Localization.Strings.General.Beta}" : string.Empty)}, Build: Debug\";");
-#else
-            SB.AppendLine($"   WinPaletter.Version = \"{Program.Version}{(Program.IsBeta ? $", {Program.Lang.Strings.General.Beta}" : string.Empty)}, Build: Release\";");
-#endif
-
-
-            SB.AppendLine($"   WinPaletter.Language = \"{Program.Localization.Information.Lang}\";");
-            SB.AppendLine($"   WinPaletter.Debugging = {(Debugger.IsAttached ? "true" : "false")};");
-            SB.AppendLine();
-
-            SB.AppendLine("//Error details");
-            SB.AppendLine("//...........................................................");
-
-            foreach (TreeNode x in TreeView1.Nodes)
-            {
-                if (x == TreeView1.Nodes[0]) continue;
-
-                string prop = x.Text.Replace(" ", ".").Replace("'s", string.Empty).Replace(@"\", "_");
-
-                if (x.Nodes?.Count == 1)
-                {
-                    if (int.TryParse(x.Nodes[0].Text, out int Number))
-                    {
-                        SB.AppendLine($"   {prop} = {Number};");
-                    }
-                    else
-                    {
-                        SB.AppendLine($"   {prop} = \"{x.Nodes[0].Text.Replace("\\", "\\\\")}\";");
-                    }
-                }
-
-                else
-                {
-                    SB.AppendLine($"   {prop} =");
-                    SB.AppendLine("   " + "{");
-
-                    foreach (TreeNode y in x.Nodes) { SB.AppendLine($"      {y.Text.Replace("\\", "\\\\")}"); }
-
-                    SB.AppendLine("   " + "};");
-                }
-            }
-
+            SB.AppendLine("```JSON");
+            SB.AppendLine(TreeView1.ToJSON());
             SB.AppendLine("```");
-
             return SB.ToString();
         }
 
         private void Button6_Click(object sender, EventArgs e)
         {
-            if (Directory.Exists($@"{SysPaths.appData}\Reports"))
+            Forms.MainForm.BeginInvoke(() =>
             {
-                Forms.GlassWindow.Close();
-                Process.Start($@"{SysPaths.appData}\Reports");
-            }
-            else
-            {
-                MsgBox(string.Format(Program.Localization.Strings.Messages.Bug_NoReport, $@"{SysPaths.appData}\Reports"), MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+                if (Directory.Exists($@"{SysPaths.appData}\Reports"))
+                {
+                    Forms.GlassWindow.Close();
+                    Process.Start($@"{SysPaths.appData}\Reports");
+                }
+                else
+                {
+                    MsgBox(string.Format(Program.Localization.Strings.Messages.Bug_NoReport, $@"{SysPaths.appData}\Reports"), MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            });
         }
 
         private void TreeView1_DoubleClick(object sender, EventArgs e)
@@ -364,17 +556,27 @@ namespace WinPaletter
 
         private void button7_Click(object sender, EventArgs e)
         {
-            Forms.SOS.ShowDialog();
+            Forms.MainForm.BeginInvoke(() =>
+            {
+                Forms.SOS.ShowDialog();
+            });
         }
 
-        private void button8_Click(object sender, EventArgs e)
+        private async void button8_Click(object sender, EventArgs e)
         {
+            var btn = sender as UI.WP.Button;
+            if (btn == null) return;
+
             if (collapsed)
             {
                 collapsed = false;
                 GroupBox3.Visible = false;
-                (sender as UI.WP.Button).ImageGlyph = Resources.Glyph_Up;
+                btn.ImageGlyph = Resources.Glyph_Up;
 
+                // Disable manual resizing when expanded
+                FormBorderStyle = FormBorderStyle.Sizable;
+
+                // Animate Height and Top
                 Transition
                     .With(this, nameof(Height), previousHeight)
                     .With(this, nameof(Top), Top - (previousHeight - Height) / 2)
@@ -382,22 +584,23 @@ namespace WinPaletter
 
                 Program.Animator.HideSync(label2);
 
-                // Make async delay to make fading in groupbox is consistent with form animation
-                Task.Run(() =>
-                {
-                    Thread.Sleep(Program.AnimationDuration / 3);
-                    Invoke(() => Program.Animator.ShowSync(GroupBox3));
-                });
+                // Wait for 1/6 of animation before showing GroupBox3
+                await Task.Delay(Program.AnimationDuration / 6);
+                Program.Animator.Show(GroupBox3);
             }
             else
             {
                 collapsed = true;
                 previousHeight = Height;
-                (sender as UI.WP.Button).ImageGlyph = Resources.Glyph_Down;
+                btn.ImageGlyph = Resources.Glyph_Down;
+
+                // Disable manual resizing when info is collapsed
+                FormBorderStyle = FormBorderStyle.FixedSingle;
 
                 Program.Animator.Hide(GroupBox3);
                 Program.Animator.Show(label2);
 
+                // Animate back to collapsed height
                 Transition
                     .With(this, nameof(Height), CollapsedHeight)
                     .With(this, nameof(Top), Top + (Height - CollapsedHeight) / 2)
@@ -407,16 +610,25 @@ namespace WinPaletter
 
         private void button9_Click(object sender, EventArgs e)
         {
-            using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = string.IsNullOrWhiteSpace(Forms.Home.File) ? Program.TM.Info.ThemeName + ".wpth" : Forms.Home.File, Title = Program.Localization.Strings.Extensions.SaveWinPaletterTheme })
+            Forms.MainForm.BeginInvoke(() =>
             {
-                if (dlg.ShowDialog() == DialogResult.OK)
+                using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = string.IsNullOrWhiteSpace(Forms.Home.File) ? Program.TM.Info.ThemeName + ".wpth" : Forms.Home.File, Title = Program.Localization.Strings.Extensions.SaveWinPaletterTheme })
                 {
-                    Forms.Home.File = dlg.FileNames[0];
-                    Program.TM.Save(Manager.Source.File, Forms.Home.File);
-                    Forms.Home.Text = Path.GetFileName(Forms.Home.File);
-                    Forms.Home.LoadFromTM(Program.TM);
+                    if (dlg.ShowDialog() == DialogResult.OK)
+                    {
+                        Forms.Home.File = dlg.FileNames[0];
+                        Program.TM.Save(Manager.Source.File, Forms.Home.File);
+                        Forms.Home.Text = Path.GetFileName(Forms.Home.File);
+                        Forms.Home.LoadFromTM(Program.TM);
+                    }
                 }
-            }
+            });
+        }
+
+        [DebuggerHidden]
+        private void button10_Click(object sender, EventArgs e)
+        {
+            if (exception is not null && Debugger.IsAttached) ExceptionDispatchInfo.Capture(exception).Throw();
         }
     }
 }

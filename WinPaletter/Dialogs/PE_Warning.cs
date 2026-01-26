@@ -17,7 +17,7 @@ namespace WinPaletter
             InitializeComponent();
         }
 
-        private void BugReport_Load(object sender, EventArgs e)
+        private void PE_Warning_Load(object sender, EventArgs e)
         {
             this.Localize();
             ApplyStyle(this);

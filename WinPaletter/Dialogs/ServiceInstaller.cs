@@ -89,7 +89,7 @@ namespace WinPaletter
 
                 File.WriteAllBytes(_destinationPath, _PE);
             }
-            catch (IOException io_ex) { Forms.BugReport.ThrowError(io_ex); }
+            catch (IOException io_ex) { Forms.BugReport.Throw(io_ex); }
 
             if (File.Exists(_destinationPath))
             {
@@ -163,7 +163,7 @@ namespace WinPaletter
                 if (File.Exists(_destinationPath))
                     File.Delete(_destinationPath);
             }
-            catch (IOException io_ex) { Forms.BugReport.ThrowError(io_ex); }
+            catch (IOException io_ex) { Forms.BugReport.Throw(io_ex); }
 
             DialogResult = DialogResult.OK;
         }

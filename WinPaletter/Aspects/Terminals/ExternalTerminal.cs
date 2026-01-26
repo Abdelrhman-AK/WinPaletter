@@ -723,7 +723,7 @@ namespace WinPaletter
             }
             catch (Exception ex)
             {
-                Forms.BugReport.ThrowError(ex);
+                Forms.BugReport.Throw(ex);
             }
         }
 

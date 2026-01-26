@@ -1124,7 +1124,7 @@ namespace WinPaletter
                 Program.Log?.WriteRegRead(LogEventLevel.Error, $"Registry exception error", ex);
 
                 Exceptions.ThemeLoad.Add(new Tuple<string, Exception>($"{Key} : {ValueName}", ex));
-                if (RaiseExceptions) Forms.BugReport.ThrowError(ex);
+                if (RaiseExceptions) Forms.BugReport.Throw(ex);
                 try
                 {
                     R?.Flush();
@@ -1739,7 +1739,7 @@ namespace WinPaletter
                 {
                     Program.Log?.Write(LogEventLevel.Error, $"Couldn't set the access control using .NET Framework methods.");
 
-                    Forms.BugReport.ThrowError(ex);
+                    Forms.BugReport.Throw(ex);
                 }
             }
             else

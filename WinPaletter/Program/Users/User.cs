@@ -353,7 +353,7 @@ namespace WinPaletter
                     if (value == "S-1-5-18" || value == "S-1-5-19" || value == "S-1-5-20")
                     {
                         // Try to login into system profile without password
-                        try { UpdateToken(Domain, Name, null, false); } catch (Exception ex) { Forms.BugReport.ThrowError(ex); }
+                        try { UpdateToken(Domain, Name, null, false); } catch (Exception ex) { Forms.BugReport.Throw(ex); }
 
                         // Raise user change event after switching user
                         UserSwitch(new UserChangeEventArgs() { SID = value, Timing = UserChangeEventArgs.Timings.AfterChange });

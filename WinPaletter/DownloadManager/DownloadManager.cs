@@ -698,7 +698,7 @@ namespace WinPaletter
         protected virtual void OnDownloadErrorOccurred(string errorMessage, Exception ex)
         {
             DownloadErrorOccurred?.Invoke(this, errorMessage);
-            Forms.BugReport.ThrowError(ex);
+            Forms.BugReport.Throw(ex);
         }
 
         #endregion

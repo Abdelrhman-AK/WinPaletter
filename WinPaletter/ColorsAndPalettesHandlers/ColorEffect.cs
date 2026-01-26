@@ -477,6 +477,14 @@ namespace WinPaletter
             },
             new()
             {
+                Name = "2016",
+                Description = Program.Localization.Strings.ColorEffects.Photo2016_Description,
+                Image = Assets.ColorEffects._2016_48,
+                SmallImage = Assets.ColorEffects._2016_24,
+                Effect = (c, v, c_sec) => ColorsExtensions.Photo2016(c)
+            },
+            new()
+            {
                 Name = Program.Localization.Strings.ColorEffects.Metro,
                 Description = Program.Localization.Strings.ColorEffects.Metro_Description,
                 Image = Assets.ColorEffects.Metro_48,

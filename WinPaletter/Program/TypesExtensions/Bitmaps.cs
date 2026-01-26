@@ -486,8 +486,9 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Resizes a bitmap safely, automatically handling very large images by scaling in multiple steps.
-        /// Chooses optimal pixel format based on alpha usage to save memory.
+        /// Resizes a bitmap safely, avoiding per-pixel operations and handling very large images
+        /// by progressive scaling. Chooses optimal pixel format based on alpha usage to save memory.
+        /// Thread-safe for background processing.
         /// </summary>
         /// <param name="src">Source bitmap.</param>
         /// <param name="targetWidth">Target width.</param>
@@ -498,28 +499,25 @@ namespace WinPaletter.TypesExtensions
             if (src == null) return null;
             if (targetWidth <= 0 || targetHeight <= 0) throw new ArgumentOutOfRangeException("Width and height must be greater than 0.");
 
-            // Determine optimal pixel format
+            // Clone source for thread safety
+            using Bitmap localSrc = new Bitmap(src);
+
+            // Determine pixel format
             PixelFormat format = PixelFormat.Format32bppArgb;
             bool hasAlpha = false;
 
-            // Quick alpha check: sample few pixels
-            for (int x = 0; x < src.Width && !hasAlpha; x += src.Width / 10)
-                for (int y = 0; y < src.Height && !hasAlpha; y += src.Height / 10)
-                {
-                    Color c = src.GetPixel(x, y);
-                    if (c.A < 255) hasAlpha = true;
-                }
+            for (int x = 0; x < localSrc.Width && !hasAlpha; x += Math.Max(1, localSrc.Width / 10))
+                for (int y = 0; y < localSrc.Height && !hasAlpha; y += Math.Max(1, localSrc.Height / 10))
+                    if (localSrc.GetPixel(x, y).A < 255) hasAlpha = true;
 
-            if (!hasAlpha) format = PixelFormat.Format24bppRgb; // no alpha needed, saves 25% memory
+            if (!hasAlpha) format = PixelFormat.Format24bppRgb;
 
-            const int MAX_STEP_PIXELS = 2000; // maximum dimension per step
-
-            Bitmap current = src;
+            const int MAX_STEP_PIXELS = 2000;
+            Bitmap current = localSrc;
             Bitmap temp = null;
 
             try
             {
-                // Progressive scaling loop
                 while (current.Width > MAX_STEP_PIXELS || current.Height > MAX_STEP_PIXELS)
                 {
                     int stepWidth = current.Width > targetWidth ? Math.Max(targetWidth, current.Width / 2) : current.Width;
@@ -528,39 +526,34 @@ namespace WinPaletter.TypesExtensions
                     temp = new Bitmap(stepWidth, stepHeight, format);
                     temp.SetResolution(current.HorizontalResolution, current.VerticalResolution);
 
-                    using (Graphics G = Graphics.FromImage(temp))
-                    {
-                        G.CompositingMode = CompositingMode.SourceOver;
-                        G.CompositingQuality = CompositingQuality.HighQuality;
-                        G.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                        G.SmoothingMode = SmoothingMode.HighQuality;
-                        G.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                    using Graphics g = Graphics.FromImage(temp);
+                    g.CompositingMode = CompositingMode.SourceOver;
+                    g.CompositingQuality = CompositingQuality.HighQuality;
+                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                    g.SmoothingMode = SmoothingMode.HighQuality;
+                    g.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-                        G.DrawImage(current, new Rectangle(0, 0, stepWidth, stepHeight));
-                    }
+                    g.DrawImage(current, new Rectangle(0, 0, stepWidth, stepHeight));
 
-                    if (current != src) current.Dispose();
+                    if (current != localSrc) current.Dispose();
 
                     current = temp;
                     temp = null;
                 }
 
-                // Final resize to exact target dimensions
                 Bitmap final = new Bitmap(targetWidth, targetHeight, format);
                 final.SetResolution(current.HorizontalResolution, current.VerticalResolution);
 
-                using (Graphics G = Graphics.FromImage(final))
-                {
-                    G.CompositingMode = CompositingMode.SourceOver;
-                    G.CompositingQuality = CompositingQuality.HighQuality;
-                    G.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                    G.SmoothingMode = SmoothingMode.HighQuality;
-                    G.PixelOffsetMode = PixelOffsetMode.HighQuality;
+                using Graphics G = Graphics.FromImage(final);
+                G.CompositingMode = CompositingMode.SourceOver;
+                G.CompositingQuality = CompositingQuality.HighQuality;
+                G.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                G.SmoothingMode = SmoothingMode.HighQuality;
+                G.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-                    G.DrawImage(current, new Rectangle(0, 0, targetWidth, targetHeight));
-                }
+                G.DrawImage(current, new Rectangle(0, 0, targetWidth, targetHeight));
 
-                if (current != src) current.Dispose();
+                if (current != localSrc) current.Dispose();
 
                 return final;
             }

@@ -38,7 +38,7 @@ namespace WinPaletter
         private void Button2_Click(object sender, EventArgs e)
         {
             if (TreeView1.SelectedNode is not null)
-                Forms.BugReport.ThrowError(ex_List[TreeView1.SelectedNode.Index].Item2);
+                Forms.BugReport.Throw(ex_List[TreeView1.SelectedNode.Index].Item2);
         }
 
         private void Button1_Click(object sender, EventArgs e)

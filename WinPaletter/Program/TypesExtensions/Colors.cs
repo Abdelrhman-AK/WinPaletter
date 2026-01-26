@@ -1280,7 +1280,46 @@ namespace WinPaletter.TypesExtensions
             Color alt1 = FromAhsb(color.A, (hue + 90f) % 360f, sat, bri);
             Color alt2 = FromAhsb(color.A, (hue + 270f) % 360f, sat, bri);
 
-            return new[] { color, complement, alt1, alt2 };
+            return [color, complement, alt1, alt2];
+        }
+
+        /// <summary>
+        /// Applies a 2016-style photo filter effect (warm, slightly faded, high contrast).
+        /// Suitable for Instagram/Retrica style vintage look.
+        /// </summary>
+        public static Color Photo2016(this Color color)
+        {
+            // Step 1: Slight warm tone (increase red, slight decrease blue)
+            int r = Math.Min(255, (int)(color.R * 1.1f));
+            int g = Math.Min(255, (int)(color.G * 1.05f));
+            int b = Math.Min(255, (int)(color.B * 0.9f));
+
+            // Step 2: Slightly fade shadows (reduce contrast in dark areas)
+            float brightness = color.GetBrightness();
+            if (brightness < 0.3f)
+            {
+                r = (int)(r * 0.85f + 255 * 0.15f);
+                g = (int)(g * 0.85f + 255 * 0.15f);
+                b = (int)(b * 0.85f + 255 * 0.15f);
+            }
+
+            // Step 3: Boost mid-tone contrast
+            r = (int)(Math.Pow(r / 255.0, 0.9) * 255);
+            g = (int)(Math.Pow(g / 255.0, 0.9) * 255);
+            b = (int)(Math.Pow(b / 255.0, 0.9) * 255);
+
+            // Step 4: Slight desaturation
+            float gray = (r + g + b) / 3f;
+            r = (int)(r * 0.9 + gray * 0.1);
+            g = (int)(g * 0.9 + gray * 0.1);
+            b = (int)(b * 0.9 + gray * 0.1);
+
+            // Ensure values are clamped
+            r = Math.Max(0, Math.Min(255, r));
+            g = Math.Max(0, Math.Min(255, g));
+            b = Math.Max(0, Math.Min(255, b));
+
+            return Color.FromArgb(color.A, r, g, b);
         }
 
         /// <summary>

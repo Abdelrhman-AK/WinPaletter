@@ -247,7 +247,7 @@ namespace WinPaletter.Theme
                             catch (Exception ex)
                             {
                                 // Handle any unexpected exceptions
-                                Forms.BugReport.ThrowError(ex);
+                                Forms.BugReport.Throw(ex);
                             }
                         }
 
@@ -342,7 +342,7 @@ namespace WinPaletter.Theme
             catch (Exception ex)
             {
                 packIsValid = false;
-                Forms.BugReport.ThrowError(ex);
+                Forms.BugReport.Throw(ex);
             }
         }
 

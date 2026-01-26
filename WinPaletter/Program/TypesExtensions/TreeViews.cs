@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 
@@ -123,6 +124,92 @@ namespace WinPaletter.TypesExtensions
                     LoopThroughNodes(N, MainNode, Jx);
                 }
             }
+        }
+
+        public static string ToJSON(this TreeView treeView)
+        {
+            JObject root = [];
+            foreach (TreeNode node in treeView.Nodes)
+            {
+                var obj = ConvertNode(node);
+                if (obj != null)
+                {
+                    foreach (var prop in obj.Properties())
+                        root[prop.Name] = prop.Value;
+                }
+            }
+            return JsonConvert.SerializeObject(root, Formatting.Indented);
+        }
+
+        private static JObject ConvertNode(TreeNode node)
+        {
+            // Leaf node -> return null, handled by parent
+            if (node.Nodes.Count == 0) return null;
+
+            JObject obj = [];
+
+            if (node.Nodes.Count == 1 && node.Nodes[0].Nodes.Count == 0)
+            {
+                // Single leaf child -> key = parent, value = child text (split on colon)
+                string key = node.Text;
+                string value = node.Nodes[0].Text;
+
+                int colonIndex = value.IndexOf(':');
+                if (colonIndex > 0)
+                {
+                    value = value.Substring(colonIndex + 1).Trim();
+                }
+
+                obj[key] = string.IsNullOrEmpty(value) ? null : value;
+            }
+            else if (AllChildrenAreLeaves(node))
+            {
+                // Multiple leaf children -> parent object with key/value pairs
+                JObject leafObj = [];
+                foreach (TreeNode child in node.Nodes)
+                {
+                    string key = child.Text;
+                    string value = child.Text;
+
+                    int colonIndex = child.Text.IndexOf(':');
+                    if (colonIndex > 0)
+                    {
+                        key = child.Text.Substring(0, colonIndex).Trim();
+                        value = child.Text.Substring(colonIndex + 1).Trim();
+                    }
+
+                    leafObj[key] = string.IsNullOrEmpty(value) ? null : value;
+                }
+                obj[node.Text] = leafObj;
+            }
+            else
+            {
+                // Mixed or nested children
+                JObject nestedObj = [];
+                foreach (TreeNode child in node.Nodes)
+                {
+                    var childObj = ConvertNode(child);
+                    if (childObj != null)
+                    {
+                        foreach (var prop in childObj.Properties())
+                            nestedObj[prop.Name] = prop.Value;
+                    }
+                    else if (child.Nodes.Count == 0)
+                    {
+                        // Leaf with no colon -> just text value
+                        nestedObj[child.Text] = null;
+                    }
+                }
+                obj[node.Text] = nestedObj;
+            }
+
+            return obj;
+        }
+
+        private static bool AllChildrenAreLeaves(TreeNode node)
+        {
+            foreach (TreeNode child in node.Nodes) if (child.Nodes.Count > 0) return false;
+            return true;
         }
     }
 }

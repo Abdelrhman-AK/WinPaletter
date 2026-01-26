@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace WinPaletter
 {
@@ -16,7 +17,17 @@ namespace WinPaletter
         public static void ThreadExceptionHandler(object sender, ThreadExceptionEventArgs e)
         {
             if (!Debugger.IsAttached)
-                Forms.BugReport.ThrowError(e.Exception, true, Marshal.GetLastWin32Error());
+                Forms.BugReport.Throw(e.Exception, true, Marshal.GetLastWin32Error());
+            else
+                ExceptionDispatchInfo.Capture(e.Exception).Throw();
+        }
+
+        private static void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
+        {
+            e.SetObserved();
+
+            if (!Debugger.IsAttached)
+                Forms.BugReport.Throw(e.Exception, true, Marshal.GetLastWin32Error());
             else
                 ExceptionDispatchInfo.Capture(e.Exception).Throw();
         }
@@ -30,7 +41,7 @@ namespace WinPaletter
         {
 #if DEBUG
             if (!Debugger.IsAttached)
-                Forms.BugReport.ThrowError(e.ExceptionObject as Exception, true, Marshal.GetLastWin32Error());
+                Forms.BugReport.Throw(e.ExceptionObject as Exception, true, Marshal.GetLastWin32Error());
             else
                 ExceptionDispatchInfo.Capture(e.ExceptionObject as Exception).Throw();
 #else
@@ -41,5 +52,9 @@ namespace WinPaletter
 #endif
         }
 
+        private static void CurrentDomain_FirstChanceException(object sender, System.Runtime.ExceptionServices.FirstChanceExceptionEventArgs e)
+        {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Error, e.Exception.Message, e.Exception);
+        }
     }
 }

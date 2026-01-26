@@ -875,7 +875,7 @@ namespace WinPaletter.Theme.Structures
             catch (Exception ex)
             {
                 if (MsgBox(Program.Localization.Strings.ThemeManager.Errors.RestoreCursors, MessageBoxButtons.OKCancel, MessageBoxIcon.Error, Program.Localization.Strings.ThemeManager.Errors.RestoreCursorsErrorPressOK, string.Empty, string.Empty, string.Empty, string.Empty, Program.Localization.Strings.ThemeManager.Tips.RestoreCursorsTip, TaskDialogIcon.Information) == DialogResult.OK)
-                    Forms.BugReport.ThrowError(ex);
+                    Forms.BugReport.Throw(ex);
             }
 
         }
@@ -951,7 +951,7 @@ namespace WinPaletter.Theme.Structures
             catch (Exception ex)
             {
                 if (MsgBox(Program.Localization.Strings.ThemeManager.Errors.RestoreCursors, MessageBoxButtons.OKCancel, MessageBoxIcon.Error, Program.Localization.Strings.ThemeManager.Errors.RestoreCursorsErrorPressOK, string.Empty, string.Empty, string.Empty, string.Empty, Program.Localization.Strings.ThemeManager.Tips.RestoreCursorsTip, TaskDialogIcon.Information) == DialogResult.OK)
-                    Forms.BugReport.ThrowError(ex);
+                    Forms.BugReport.Throw(ex);
             }
         }
     }

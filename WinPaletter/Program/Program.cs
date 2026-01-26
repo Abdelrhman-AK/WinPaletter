@@ -31,6 +31,9 @@ namespace WinPaletter
             AppDomain.CurrentDomain.AssemblyResolve += DomainCheck;
             AppDomain.CurrentDomain.UnhandledException += Domain_UnhandledException;
             Application.ThreadException += ThreadExceptionHandler;
+            TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
+            AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
+
             Application.ApplicationExit += OnExit;
 
             // Change security protocol to TLS 1.2 if the OS is Windows 7, Vista or XP
@@ -67,6 +70,8 @@ namespace WinPaletter
             AppDomain.CurrentDomain.AssemblyResolve -= DomainCheck;
             AppDomain.CurrentDomain.UnhandledException -= Domain_UnhandledException;
             Application.ThreadException -= ThreadExceptionHandler;
+            TaskScheduler.UnobservedTaskException -= TaskScheduler_UnobservedTaskException;
+            AppDomain.CurrentDomain.FirstChanceException -= CurrentDomain_FirstChanceException;
             User.UserSwitch -= User.OnUserSwitch;
             SystemEvents.UserPreferenceChanged -= OldWinPreferenceChanged;
 

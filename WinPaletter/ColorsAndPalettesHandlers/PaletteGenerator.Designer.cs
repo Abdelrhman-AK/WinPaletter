@@ -37,6 +37,7 @@ namespace WinPaletter
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PaletteGenerator));
             this.groupBox4 = new WinPaletter.UI.WP.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.toggle1 = new WinPaletter.UI.WP.Toggle();
             this.panel14 = new System.Windows.Forms.Panel();
             this.smoothPanel1 = new WinPaletter.UI.WP.SmoothPanel();
@@ -72,7 +73,6 @@ namespace WinPaletter
             this.checkBox1 = new WinPaletter.UI.WP.CheckBox();
             this.Button2 = new WinPaletter.UI.WP.Button();
             this.Button3 = new WinPaletter.UI.WP.Button();
-            this.label3 = new System.Windows.Forms.Label();
             this.groupBox4.SuspendLayout();
             this.panel14.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -105,6 +105,21 @@ namespace WinPaletter
             this.groupBox4.Size = new System.Drawing.Size(486, 247);
             this.groupBox4.TabIndex = 177;
             this.groupBox4.Text = "groupBox4";
+            this.groupBox4.UseDecorationPattern = false;
+            this.groupBox4.UseSharpStyle = false;
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(11, 217);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(463, 24);
+            this.label3.TabIndex = 164;
+            this.label3.Text = "0";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // toggle1
             // 
@@ -180,6 +195,8 @@ namespace WinPaletter
             this.groupBox14.Name = "groupBox14";
             this.groupBox14.Size = new System.Drawing.Size(486, 164);
             this.groupBox14.TabIndex = 174;
+            this.groupBox14.UseDecorationPattern = false;
+            this.groupBox14.UseSharpStyle = false;
             // 
             // checkBox2
             // 
@@ -245,6 +262,8 @@ namespace WinPaletter
             this.groupBox19.Name = "groupBox19";
             this.groupBox19.Size = new System.Drawing.Size(462, 77);
             this.groupBox19.TabIndex = 176;
+            this.groupBox19.UseDecorationPattern = false;
+            this.groupBox19.UseSharpStyle = false;
             // 
             // label31
             // 
@@ -280,6 +299,8 @@ namespace WinPaletter
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(462, 77);
             this.groupBox3.TabIndex = 176;
+            this.groupBox3.UseDecorationPattern = false;
+            this.groupBox3.UseSharpStyle = false;
             // 
             // label4
             // 
@@ -347,6 +368,8 @@ namespace WinPaletter
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(462, 77);
             this.groupBox2.TabIndex = 175;
+            this.groupBox2.UseDecorationPattern = false;
+            this.groupBox2.UseSharpStyle = false;
             // 
             // button7
             // 
@@ -497,6 +520,8 @@ namespace WinPaletter
             this.GroupBox1.Name = "GroupBox1";
             this.GroupBox1.Size = new System.Drawing.Size(486, 133);
             this.GroupBox1.TabIndex = 164;
+            this.GroupBox1.UseDecorationPattern = false;
+            this.GroupBox1.UseSharpStyle = false;
             // 
             // PictureBox5
             // 
@@ -545,6 +570,8 @@ namespace WinPaletter
             this.bottom_buttons.Name = "bottom_buttons";
             this.bottom_buttons.Size = new System.Drawing.Size(510, 48);
             this.bottom_buttons.TabIndex = 172;
+            this.bottom_buttons.UseDecorationPattern = false;
+            this.bottom_buttons.UseSharpStyle = false;
             // 
             // checkBox1
             // 
@@ -596,19 +623,6 @@ namespace WinPaletter
             this.Button3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button3.UseVisualStyleBackColor = false;
             this.Button3.Click += new System.EventHandler(this.Button3_Click);
-            // 
-            // label3
-            // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(11, 217);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(463, 24);
-            this.label3.TabIndex = 164;
-            this.label3.Text = "0";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // PaletteGenerator
             // 

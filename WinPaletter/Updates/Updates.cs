@@ -141,7 +141,7 @@ namespace WinPaletter
                 }
                 catch (Exception ex) // An error occurred while checking for updates.
                 {
-                    Forms.BugReport.ThrowError(ex);
+                    Forms.BugReport.Throw(ex);
                 }
 
                 Program.Animator.Show(AlertBox2, true);

@@ -1337,7 +1337,7 @@ namespace WinPaletter.GitHub
                 }
                 catch (Exception ex)
                 {
-                    Forms.BugReport.ThrowError(ex);
+                    Forms.BugReport.Throw(ex);
                     Program.Log?.Write(LogEventLevel.Error, $"DeleteFileAsync failed for `{normalizedPath}`", ex);
                     processed++;
                     reportProgress?.Invoke(processed * 100 / total);
@@ -1431,7 +1431,7 @@ namespace WinPaletter.GitHub
             catch (Exception ex)
             {
                 await UpdateExplorerView(CurrentPath);
-                Forms.BugReport.ThrowError(ex);
+                Forms.BugReport.Throw(ex);
                 Program.Log?.Write(LogEventLevel.Error, $"DeleteDirectoriesAsync failed", ex);
             }
             finally

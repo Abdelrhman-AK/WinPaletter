@@ -63,7 +63,7 @@ namespace WinPaletter.Theme
                     }
                     else
                     {
-                        Forms.BugReport.ThrowError(ex);
+                        Forms.BugReport.Throw(ex);
                     }
                     sw.Start();
                     overallStopwatch.Start();

@@ -342,7 +342,7 @@ namespace WinPaletter.GitHub
                 }
                 catch (Exception ex)
                 {
-                    Forms.BugReport.ThrowError(ex);
+                    Forms.BugReport.Throw(ex);
                     Program.Log?.Write(LogEventLevel.Error, $"Error syncing branch.", ex);
                     return false;
                 }

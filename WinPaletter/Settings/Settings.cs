@@ -1533,17 +1533,17 @@ namespace WinPaletter
                             }
                             catch (Exception ex)
                             {
-                                Forms.BugReport.ThrowError(ex);
+                                Forms.BugReport.Throw(ex);
                             }
                         }
                         else
                         {
-                            Forms.BugReport.ThrowError(new Exception(Program.Localization.Strings.Messages.SettingsFileNotJSON));
+                            Forms.BugReport.Throw(new Exception(Program.Localization.Strings.Messages.SettingsFileNotJSON));
                         }
                     }
                     else
                     {
-                        Forms.BugReport.ThrowError(new Exception(Program.Localization.Strings.Messages.SettingsFileNotExist));
+                        Forms.BugReport.Throw(new Exception(Program.Localization.Strings.Messages.SettingsFileNotExist));
                     }
 
                     break;

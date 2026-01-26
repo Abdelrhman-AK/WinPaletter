@@ -1250,11 +1250,11 @@ namespace WinPaletter
             }
             catch (UnauthorizedAccessException ex0)
             {
-                Forms.BugReport.ThrowError(ex0);
+                Forms.BugReport.Throw(ex0);
             }
             catch (Exception ex)
             {
-                Forms.BugReport.ThrowError(ex);
+                Forms.BugReport.Throw(ex);
             }
         }
 
@@ -1273,11 +1273,11 @@ namespace WinPaletter
                     }
                     catch (UnauthorizedAccessException ex0)
                     {
-                        Forms.BugReport.ThrowError(ex0);
+                        Forms.BugReport.Throw(ex0);
                     }
                     catch (Exception ex)
                     {
-                        Forms.BugReport.ThrowError(ex);
+                        Forms.BugReport.Throw(ex);
                     }
                 }
             }
@@ -1291,11 +1291,11 @@ namespace WinPaletter
             }
             catch (UnauthorizedAccessException ex0)
             {
-                Forms.BugReport.ThrowError(ex0);
+                Forms.BugReport.Throw(ex0);
             }
             catch (Exception ex)
             {
-                Forms.BugReport.ThrowError(ex);
+                Forms.BugReport.Throw(ex);
             }
         }
 
@@ -1309,11 +1309,11 @@ namespace WinPaletter
                 }
                 catch (UnauthorizedAccessException ex0)
                 {
-                    Forms.BugReport.ThrowError(ex0);
+                    Forms.BugReport.Throw(ex0);
                 }
                 catch (Exception ex)
                 {
-                    Forms.BugReport.ThrowError(ex);
+                    Forms.BugReport.Throw(ex);
                 }
 
             }
