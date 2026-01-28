@@ -302,7 +302,7 @@ namespace WinPaletter.SysEventsSounds
 
         static void UpdatePaths()
         {
-            uint sessionId = WTSGetActiveConsoleSessionId(); // Get the session ID from your source
+            uint sessionId = WTSGetActiveConsoleSessionId(); // Get the session ID from source
             IntPtr userToken;
 
             if (WTSQueryUserToken(sessionId, out userToken))

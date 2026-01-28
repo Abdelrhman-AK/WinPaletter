@@ -630,14 +630,15 @@ namespace WinPaletter
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(510, 625);
+            this.Controls.Add(this.bottom_buttons);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox14);
-            this.Controls.Add(this.bottom_buttons);
             this.Controls.Add(this.GroupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "PaletteGenerator";
+            this.Opacity = 0D;
             this.Text = "Palette Generator";
             this.Load += new System.EventHandler(this.PaletteGenerateFromImage_Load);
             this.groupBox4.ResumeLayout(false);

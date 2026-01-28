@@ -11,6 +11,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinPaletter.Dialogs;
 using WinPaletter.Theme;
 using WinPaletter.UI.AdvancedControls;
 using WinPaletter.UI.Controllers;
@@ -29,12 +30,20 @@ namespace WinPaletter
         private bool enableAlpha;
         private Point newPoint = new();
         private Point xPoint = new();
-        Thread thread;
-        private List<Color> imageColors = [];
+        private bool _effectsInitialized;
+        private Color _effectsBaseColor;
+        CancellationTokenSource cts = new();
+        private static readonly FieldInfo[] Win32UI_ColorFields = [.. typeof(Theme.Structures.Win32UI).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public).Where(f => f.FieldType == typeof(Color))];
+        private static MagnifierDlg _magnifierForm;
 
         public ColorPickerDlg()
         {
             InitializeComponent();
+        }
+
+        private static bool CanInvoke(Control c)
+        {
+            return c != null && !c.IsDisposed && c.IsHandleCreated;
         }
 
         private void ColorPicker_MouseDown(object sender, MouseEventArgs e)
@@ -56,11 +65,12 @@ namespace WinPaletter
             ComboBox1.Items.Clear();
             ComboBox1.Items.AddRange([.. Schemes.ClassicColors.Split('\n').Select(f => f.Split('|')[0])]);
             ColorEditor1.Font = Fonts.ConsoleMedium;
+            cts??= new();
         }
 
         private void ColorPickerDlg_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (thread is not null && thread.IsAlive) thread.Abort();
+            cts?.Cancel();
         }
 
         public void GetColorsHistory(ColorItem ColorItem)
@@ -79,11 +89,13 @@ namespace WinPaletter
             // Skip the first color because it's default gray and the second color is the current color
             foreach (Color c in ColorItem.ColorsHistory.Skip(1))
             {
-                ColorItem MiniColorItem = new();
-                MiniColorItem.Size = ColorItem.GetMiniColorItemSize();
-                MiniColorItem.AllowDrop = false;
-                MiniColorItem.PauseColorsHistory = true;
-                MiniColorItem.BackColor = c;
+                ColorItem MiniColorItem = new()
+                {
+                    Size = ColorItem.GetMiniColorItemSize(),
+                    AllowDrop = false,
+                    PauseColorsHistory = true,
+                    BackColor = c
+                };
                 MiniColorItem.DefaultBackColor = MiniColorItem.BackColor;
 
                 FlowLayoutPanel1.Controls.Add(MiniColorItem);
@@ -109,12 +121,14 @@ namespace WinPaletter
             foreach (Color c in TM.Palette())
             {
 
-                ColorItem MiniColorItem = new();
-                MiniColorItem.Size = ColorItem.GetMiniColorItemSize();
-                MiniColorItem.AllowDrop = false;
-                MiniColorItem.PauseColorsHistory = true;
-                MiniColorItem.BackColor = c;
-                MiniColorItem.DefaultBackColor = MiniColorItem.BackColor;
+                ColorItem MiniColorItem = new()
+                {
+                    Size = ColorItem.GetMiniColorItemSize(),
+                    AllowDrop = false,
+                    PauseColorsHistory = true,
+                    BackColor = c,
+                    DefaultBackColor = c
+                };
 
                 PaletteContainer.Controls.Add(MiniColorItem);
                 MiniColorItem.Click += MiniColorItem_click;
@@ -125,50 +139,79 @@ namespace WinPaletter
 
         private void ScreenColorPicker1_MouseDown(object sender, MouseEventArgs e)
         {
-            Forms_List.Clear();
+            // 1. Hide all child controls of this form
             ChildControls_List.Clear();
-
-            CloseOnLostFocus = false;
-
             foreach (Control ctrl in Controls)
             {
-                if (ctrl is not ScreenColorPicker & ctrl.Visible)
+                if (ctrl is not ScreenColorPicker && ctrl.Visible)
                 {
                     ctrl.Visible = false;
                     ChildControls_List.Add(ctrl);
                 }
             }
 
-            for (int ix = Application.OpenForms.Count - 1; ix >= 0; ix -= 1)
+            // 2. Hide all open forms
+            Forms_List.Clear();
+            foreach (Form f in Application.OpenForms)
             {
-                if (Application.OpenForms[ix].Visible & Application.OpenForms[ix] != this) Forms_List.Add(Application.OpenForms[ix]);
+                if (f != this && f.Visible)
+                {
+                    Forms_List.Add(f);
+                    f.Visible = false;
+                }
             }
+            Opacity = 0d;
 
-            for (int ix = 0, loopTo = Forms_List.Count - 1; ix <= loopTo; ix++) Forms_List[ix].Visible = false;
-
-            AllowTransparency = true;
-            TransparencyKey = BackColor;
+            // 3. Show the magnifier following cursor
+            if (_magnifierForm == null || _magnifierForm.IsDisposed)
+            {
+                _magnifierForm = new()
+                {
+                    Size = new(96, 96)
+                };
+                _magnifierForm.Show();
+            }
         }
 
         private void ScreenColorPicker1_MouseUp(object sender, MouseEventArgs e)
         {
+            // Restore child controls
             foreach (Control ctrl in ChildControls_List) ctrl.Visible = true;
 
-            for (int ix = 0, loopTo = Forms_List.Count - 1; ix <= loopTo; ix++) Forms_List[ix].Visible = true;
+            // Restore other forms
+            foreach (Form f in Forms_List) f.Visible = true;
 
             Forms_List.Clear();
             ChildControls_List.Clear();
 
-            CloseOnLostFocus = true;
+            // Restore form transparency
+            Opacity = 1d;
 
-            AllowTransparency = false;
-            TransparencyKey = default;
+            // Close magnifier
+            if (_magnifierForm != null && !_magnifierForm.IsDisposed) _magnifierForm.Close();
         }
 
         /// <summary>
         /// Pick a color to set it to the BackColor property of a control
         /// </summary>
-        /// <param name="ControlsWithProperties"></param>
+        /// <param name="ctrl"></param>
+        /// <param name="propertyName"></param>
+        /// <param name="EnableAlpha"></param>
+        /// <returns></returns>
+        public Color Pick(Control ctrl, string propertyName, bool EnableAlpha = false)
+        {
+            Dictionary<Control, string[]> dict = new()
+            {
+                { ctrl, [propertyName] }
+            };
+
+            return Pick(dict, EnableAlpha);
+        }
+
+        /// <summary>
+        /// Pick a color to set it to the BackColor property of a control
+        /// </summary>
+        /// <param name="ctrl"></param>
         /// <param name="EnableAlpha"></param>
         /// <returns></returns>
         public Color Pick(Control ctrl, bool EnableAlpha = false)
@@ -191,136 +234,259 @@ namespace WinPaletter
         {
             if (ControlsWithProperties.Count == 0) return Color.Empty;
 
-            using (ColorPickerDlg dlg = new())
+            // Early extraction of key controls to avoid repeated lookups
+            ColorItem colorItem = null;
+            Control firstControl = null;
+
+            foreach (var key in ControlsWithProperties.Keys)
             {
-                ColorItem colorItem = ControlsWithProperties.Keys.OfType<ColorItem>().FirstOrDefault();
-                Control firstControl = ControlsWithProperties.Keys.FirstOrDefault();
-
-                string colorItemProperty = ControlsWithProperties[colorItem]?.FirstOrDefault() ?? "BackColor";
-                string firstControlProperty = ControlsWithProperties[firstControl]?.FirstOrDefault() ?? "BackColor";
-
-                Color c = colorItem != null ? colorItem.GetProperty<Color>(colorItemProperty) : firstControl.GetProperty<Color>(firstControlProperty);
-
-                if (!Program.Settings.NerdStats.Classic_Color_Picker)
+                if (colorItem == null && key is ColorItem ci)
                 {
-                    dlg.InitColor = c;
-                    dlg.enableAlpha = EnableAlpha;
-                    dlg.ColorControls_List = ControlsWithProperties;
-
-                    dlg.ColorEditorManager1.Color = c;
-                    dlg.ColorEditorManager1.ColorEditor.ShowAlphaChannel = enableAlpha;
-
-                    for (int i = 0; i < ColorEffect.RegisteredEffects.Count; i++)
-                    {
-                        ColorEffect effect = ColorEffect.RegisteredEffects[i].Clone();
-                        effect.Checked = true;
-                        effect.InputColor = c;
-                        ColorEffectMiniControl control = new() { ColorEffect = effect, Dock = DockStyle.Top };
-                        dlg.panel1.Controls.Add(control);
-                        control.SendColorClick += (s, e) =>
-                        {
-                            Color result = (e as ColorEffectMiniControl.ColorEventArgs).Color;
-                            dlg.ColorEditorManager1.Color = result;
-                        };
-                    }
-
-                    if (colorItem != null)
-                    {
-                        dlg.GetColorsHistory(colorItem);
-                        colorItem.PauseColorsHistory = true;
-                        colorItem.ColorPickerOpened = true;
-                        dlg.Location = colorItem.PointToScreen(Point.Empty) + (Size)new Point(-dlg.Width + colorItem.Width + 5, colorItem.Height - 1);
-                    }
-                    else
-                    {
-                        dlg.Location = firstControl.PointToScreen(Point.Empty) + (Size)new Point(-dlg.Width + firstControl.Width + 5, firstControl.Height - 1);
-                    }
-
-                    if (dlg.Location.Y + dlg.Height > Screen.PrimaryScreen.Bounds.Height) dlg.Location = new(dlg.Location.X, Screen.PrimaryScreen.Bounds.Height - dlg.Height);
-                    if (dlg.Location.X + dlg.Width > Screen.PrimaryScreen.Bounds.Width) dlg.Location = new(Screen.PrimaryScreen.Bounds.Width - dlg.Width, dlg.Location.Y);
-
-                    if (dlg.Location.Y < 0) dlg.Location = new(dlg.Location.X, 0);
-                    if (dlg.Location.X < 0) dlg.Location = new(0, dlg.Location.Y);
-
-                    DialogResult result = dlg.ShowDialog();
-
-                    c = result == DialogResult.OK ? dlg.ColorEditorManager1.Color : dlg.InitColor;
-
-                    /* 
-                     Change_Color_Preview uses FluentTransitions. If FluentTransitions starts and cancel is pressed, the color won't be reverted back to the original color
-                    ;so we need to revert it manually using FluentTransitions.
-                     */
-                    foreach (KeyValuePair<Control, string[]> entry in dlg.ColorControls_List)
-                    {
-                        foreach (string prop in entry.Value)
-                        {
-                            try
-                            {
-                                Transition
-                                    .With(entry.Key, prop ?? "BackColor", c)
-                                    .HookOnCompletion(() =>
-                                    {
-                                        if (colorItem != null)
-                                        {
-                                            colorItem.Refresh();
-                                            colorItem.PauseColorsHistory = false;
-                                            colorItem.ColorPickerOpened = false;
-                                            colorItem.UpdateColorsHistory();
-                                        }
-                                    })
-                                    .Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-                            }
-                            catch
-                            {
-                                entry.Key.SetProperty(prop ?? "BackColor", c);
-
-                                if (colorItem != null)
-                                {
-                                    colorItem.Refresh();
-                                    colorItem.PauseColorsHistory = false;
-                                    colorItem.ColorPickerOpened = false;
-                                    colorItem.UpdateColorsHistory();
-                                }
-                            }
-                        }
-                    }
-
-                    return dlg.enableAlpha ? c : Color.FromArgb(255, c);
+                    colorItem = ci;
+                    firstControl ??= key;
+                }
+                else if (firstControl == null)
+                {
+                    firstControl = key;
                 }
 
-                else
+                // If we found both, break early
+                if (colorItem != null && firstControl != null && colorItem != firstControl) break;
+            }
+
+            if (firstControl == null) return Color.Empty;
+
+            string colorItemProperty = colorItem != null
+                ? (ControlsWithProperties[colorItem]?.FirstOrDefault() ?? "BackColor")
+                : "BackColor";
+
+            string firstControlProperty = ControlsWithProperties[firstControl]?.FirstOrDefault() ?? "BackColor";
+
+            Color originalColor = colorItem != null
+                ? colorItem.GetProperty<Color>(colorItemProperty)
+                : firstControl.GetProperty<Color>(firstControlProperty);
+
+            if (Program.Settings.NerdStats.Classic_Color_Picker)
+            {
+                return UseClassicColorPicker(ControlsWithProperties, colorItem, originalColor);
+            }
+
+            return UseCustomColorPicker(ControlsWithProperties, colorItem, firstControl, originalColor, EnableAlpha);
+        }
+
+        private Color UseCustomColorPicker(Dictionary<Control, string[]> controlsWithProperties, ColorItem colorItem, Control firstControl, Color originalColor, bool enableAlpha)
+        {
+            using (ColorPickerDlg dlg = new())
+            {
+                dlg.InitColor = originalColor;
+                dlg.enableAlpha = enableAlpha;
+                dlg.ColorControls_List = controlsWithProperties;
+
+                dlg.ColorEditorManager1.Color = originalColor;
+                dlg.ColorEditorManager1.ColorEditor.ShowAlphaChannel = enableAlpha;
+
+                // Batch add color effects
+                dlg._effectsBaseColor = originalColor;
+
+                PositionDialog(dlg, colorItem, firstControl);
+
+                DialogResult result = dlg.ShowDialog();
+                Color selectedColor = result == DialogResult.OK ? dlg.ColorEditorManager1.Color : dlg.InitColor;
+
+                UpdateControlsWithTransition(controlsWithProperties, colorItem, selectedColor);
+
+                return enableAlpha ? selectedColor : Color.FromArgb(255, selectedColor);
+            }
+        }
+
+        private Color UseClassicColorPicker(Dictionary<Control, string[]> controlsWithProperties, ColorItem colorItem, Color originalColor)
+        {
+            int[] colors = colorItem != null ? [.. colorItem.ColorsHistory.Select(ColorTranslator.ToWin32)] : [];
+
+            using (ColorDialog CCP = new()
+            {
+                AllowFullOpen = true,
+                AnyColor = true,
+                Color = originalColor,
+                FullOpen = true,
+                SolidColorOnly = false,
+                CustomColors = colors
+            })
+            {
+                if (CCP.ShowDialog() == DialogResult.OK)
                 {
-                    int[] colors = [.. colorItem.ColorsHistory.Select(x => ColorTranslator.ToWin32(x))];
+                    UpdateControlsWithoutTransition(controlsWithProperties, CCP.Color);
+                    return CCP.Color;
+                }
 
-                    using (ColorDialog CCP = new() { AllowFullOpen = true, AnyColor = true, Color = c, FullOpen = true, SolidColorOnly = false, CustomColors = colors })
+                UpdateControlsWithoutTransition(controlsWithProperties, originalColor);
+                return originalColor;
+            }
+        }
+
+        private async Task AddColorEffects(ColorPickerDlg dlg, Color baseColor)
+        {
+            if (ColorEffect.RegisteredEffects.Count == 0 || dlg.IsDisposed)
+                return;
+
+            // Show loading indicator
+            var loadingLabel = new Label
+            {
+                Text = Program.Localization.Strings.ColorEffects.LoadingEffects,
+                Dock = DockStyle.Top,
+                TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
+                Height = 30
+            };
+
+            dlg.panel1.SuspendLayout();
+            dlg.panel1.Controls.Add(loadingLabel);
+            dlg.panel1.ResumeLayout();
+
+            // Generate effect controls in background
+            var controls = await Task.Run(() =>
+            {
+                var list = new List<ColorEffectMiniControl>();
+                foreach (var effect in ColorEffect.RegisteredEffects)
+                {
+                    var cloned = effect.Clone();
+                    cloned.Checked = true;
+                    cloned.InputColor = baseColor;
+
+                    list.Add(new ColorEffectMiniControl
                     {
-                        if (CCP.ShowDialog() == DialogResult.OK)
-                        {
-                            foreach (KeyValuePair<Control, string[]> entry in dlg.ColorControls_List)
-                            {
-                                foreach (string prop in entry.Value)
-                                {
-                                    try { entry.Key.SetProperty(prop ?? "BackColor", CCP.Color); }
-                                    catch { } // Ignore setting BackColor in a control that does not have BackColor property
-                                }
-                            }
+                        ColorEffect = cloned,
+                        Dock = DockStyle.Top
+                    });
+                }
+                return list;
+            });
 
-                            return CCP.Color;
+            // Ensure dialog is still alive and handle exists
+            if (dlg.IsDisposed || !dlg.IsHandleCreated)
+                return;
+
+            // Add controls on UI thread (we are already on UI thread after await)
+            dlg.panel1.SuspendLayout();
+            dlg.panel1.Controls.Remove(loadingLabel);
+
+            foreach (var control in controls)
+            {
+                control.SendColorClick += (s, e) =>
+                {
+                    if (e is ColorEffectMiniControl.ColorEventArgs args)
+                        dlg.ColorEditorManager1.Color = args.Color;
+                };
+                dlg.panel1.Controls.Add(control);
+            }
+
+            dlg.panel1.ResumeLayout();
+        }
+
+        private void PositionDialog(ColorPickerDlg dlg, ColorItem colorItem, Control firstControl)
+        {
+            Point location;
+
+            if (colorItem != null)
+            {
+                dlg.GetColorsHistory(colorItem);
+                colorItem.PauseColorsHistory = true;
+                colorItem.ColorPickerOpened = true;
+                location = colorItem.PointToScreen(Point.Empty) + new Size(-dlg.Width + colorItem.Width + 5, colorItem.Height - 1);
+            }
+            else
+            {
+                location = firstControl.PointToScreen(Point.Empty) + new Size(-dlg.Width + firstControl.Width + 5, firstControl.Height - 1);
+            }
+
+            // Ensure dialog is within screen bounds
+            Rectangle screenBounds = Screen.PrimaryScreen.Bounds;
+
+            // Adjust Y coordinate
+            if (location.Y + dlg.Height > screenBounds.Height) location.Y = screenBounds.Height - dlg.Height;
+            else if (location.Y < 0) location.Y = 0;
+
+            // Adjust X coordinate
+            if (location.X + dlg.Width > screenBounds.Width) location.X = screenBounds.Width - dlg.Width;
+            else if (location.X < 0) location.X = 0;
+
+            dlg.Location = location;
+        }
+
+        private void UpdateControlsWithTransition(Dictionary<Control, string[]> controlsWithProperties, ColorItem colorItem, Color targetColor)
+        {
+            List<Action> completionActions = [];
+
+            if (colorItem != null)
+            {
+                completionActions.Add(() =>
+                {
+                    colorItem.Refresh();
+                    colorItem.PauseColorsHistory = false;
+                    colorItem.ColorPickerOpened = false;
+                    colorItem.UpdateColorsHistory();
+                });
+            }
+
+            foreach (KeyValuePair<Control, string[]> entry in controlsWithProperties)
+            {
+                string[] properties = entry.Value ?? ["BackColor"];
+
+                foreach (string property in properties)
+                {
+                    string prop = string.IsNullOrEmpty(property) ? "BackColor" : property;
+
+                    try
+                    {
+                        if (entry.Key.GetProperty<Color>(prop) != targetColor)
+                        {
+                            Transition.With(entry.Key, prop, targetColor)
+                                      .HookOnCompletion(() =>
+                                      {
+                                          foreach (Action action in completionActions) action();
+                                      })
+                                      .Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                        }
+                    }
+                    catch
+                    {
+                        // Fallback without transition
+                        try
+                        {
+                            if (entry.Key.GetProperty<Color>(prop) != targetColor)
+                            {
+                                entry.Key.SetProperty(prop, targetColor);
+                            }
+                        }
+                        catch
+                        {
+                            // Ignore if property doesn't exist
                         }
 
-                        else
-                        {
-                            foreach (KeyValuePair<Control, string[]> entry in dlg.ColorControls_List)
-                            {
-                                foreach (string prop in entry.Value)
-                                {
-                                    try { entry.Key.SetProperty(prop ?? "BackColor", c); }
-                                    catch { } // Ignore setting BackColor in a control that does not have BackColor property
-                                }
-                            }
+                        // Execute completion actions immediately for fallback
+                        foreach (Action action in completionActions) action();
+                    }
+                }
+            }
+        }
 
-                            return c;
+        private void UpdateControlsWithoutTransition(Dictionary<Control, string[]> controlsWithProperties, Color color)
+        {
+            foreach (KeyValuePair<Control, string[]> entry in controlsWithProperties)
+            {
+                string[] properties = entry.Value ?? ["BackColor"];
+
+                foreach (string property in properties)
+                {
+                    try
+                    {
+                        if (entry.Key.GetProperty<Color>(property ?? "BackColor") != color)
+                        {
+                            entry.Key.SetProperty(property ?? "BackColor", color);
                         }
+                    }
+                    catch
+                    {
+                        // Ignore if property doesn't exist
                     }
                 }
             }
@@ -366,10 +532,10 @@ namespace WinPaletter
                 ProgressBar1.Visible = true;
                 Colors_List.Clear();
 
-                if (thread is not null && thread.IsAlive) thread.Abort();
-
-                thread = new(async () =>
+                Task.Run(async () =>
                 {
+                    if (cts?.IsCancellationRequested ?? false) return;
+
                     if (img is not null)
                     {
                         PaletteGeneratorSettings settings = new()
@@ -379,49 +545,65 @@ namespace WinPaletter
                             IgnoreWhiteColors = CheckBox1.Checked
                         };
 
+                        if (cts?.IsCancellationRequested ?? false) return;
                         Colors_List = await (img as Bitmap).ToPalette(settings);
                         img?.Dispose();
                     }
 
-                    Invoke(() =>
+                    if (CanInvoke(this))
                     {
-                        foreach (ColorItem ctrl in ImgPaletteContainer.Controls.OfType<ColorItem>())
+                        BeginInvoke(() =>
                         {
-                            ctrl.Click -= MiniColorItem_click;
-                            ctrl.Dispose();
-                        }
+                            if (cts?.IsCancellationRequested ?? false) return;
 
-                        ImgPaletteContainer.Controls.Clear();
-
-                        Colors_List = Colors_List.Distinct().ToList();
-                        Colors_List.Sort(new RGBColorComparer());
-
-                        foreach (Color C in Colors_List)
-                        {
-                            ColorItem MiniColorItem = new()
+                            foreach (ColorItem ctrl in ImgPaletteContainer.Controls.OfType<ColorItem>())
                             {
-                                Size = ColorItem.GetMiniColorItemSize(),
-                                AllowDrop = false,
-                                PauseColorsHistory = true,
-                                BackColor = Color.FromArgb(255, C)
-                            };
-                            MiniColorItem.DefaultBackColor = MiniColorItem.BackColor;
+                                ctrl.Click -= MiniColorItem_click;
+                                ctrl.Dispose();
+                            }
 
-                            ImgPaletteContainer.Controls.Add(MiniColorItem);
-                            MiniColorItem.Click += MiniColorItem_click;
-                        }
+                            if (cts?.IsCancellationRequested ?? false) return;
 
-                        ProgressBar1.Visible = false;
-                        Colors_List.Clear();
-                        Program.Animator.ShowSync(ImgPaletteContainer, true);
-                        Program.Animator.ShowSync(Button6, true);
-                    });
+                            ImgPaletteContainer.Controls.Clear();
+
+                            Colors_List = [.. Colors_List.Distinct()];
+                            Colors_List.Sort(new RGBColorComparer());
+
+                            if (cts?.IsCancellationRequested ?? false) return;
+
+                            ImgPaletteContainer.SuspendLayout();
+
+                            List<ColorItem> items = [.. Colors_List.Distinct().OrderBy(c => c, new RGBColorComparer())
+                                            .Select(c => new ColorItem
+                                            {
+                                                Size = ColorItem.GetMiniColorItemSize(),
+                                                AllowDrop = false,
+                                                PauseColorsHistory = true,
+                                                BackColor = Color.FromArgb(255, c),
+                                                DefaultBackColor = Color.FromArgb(255, c)
+                                            })];
+
+                            if (cts?.IsCancellationRequested ?? false) return;
+
+                            ImgPaletteContainer.Controls.AddRange([.. items]);
+
+                            if (cts?.IsCancellationRequested ?? false) return;
+
+                            foreach (var item in items) item.Click += MiniColorItem_click;
+
+                            ImgPaletteContainer.ResumeLayout();
+
+                            if (cts?.IsCancellationRequested ?? false) return;
+
+                            ProgressBar1.Visible = false;
+                            Colors_List.Clear();
+                            Program.Animator.ShowSync(ImgPaletteContainer, true);
+                            Program.Animator.ShowSync(Button6, true);
+                        });
+                    }
                 });
-
-                thread.Start();
             }
         }
-
 
         private void MiniColorItem_click(object sender, EventArgs e)
         {
@@ -609,7 +791,7 @@ namespace WinPaletter
                         using (VisualStyle visualStyle = new(TextBox2.Text))
                         {
                             Theme.Structures.Win32UI win32UI = visualStyle.ClassicColors();
-                            foreach (FieldInfo field in typeof(Theme.Structures.Win32UI).GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
+                            foreach (FieldInfo field in Win32UI_ColorFields)
                             {
                                 if (field.FieldType.Name.ToLower() == "color")
                                 {
@@ -658,6 +840,14 @@ namespace WinPaletter
                     }
                 }
             }
+        }
+
+        private async void ColorPickerDlg_Shown(object sender, EventArgs e)
+        {
+            if (_effectsInitialized) return;
+
+            _effectsInitialized = true;
+            await AddColorEffects(this, _effectsBaseColor);
         }
     }
 }

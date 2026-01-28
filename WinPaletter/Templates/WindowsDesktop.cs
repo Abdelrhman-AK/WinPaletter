@@ -223,8 +223,7 @@ namespace WinPaletter.Templates
                         if (ExplorerPatcher.CanBeUsed)
                         {
                             {
-                                ref ExplorerPatcher EP = ref Program.EP;
-                                if ((bool)!EP?.UseStart10)
+                                if ((bool)!Program.EP?.UseStart10)
                                 {
                                     start.Style = WinElement.Styles.Start11;
                                 }
@@ -233,7 +232,7 @@ namespace WinPaletter.Templates
                                     start.Style = WinElement.Styles.Start10;
                                 }
 
-                                if ((bool)!EP?.UseTaskbar10)
+                                if ((bool)!Program.EP?.UseTaskbar10)
                                 {
                                     taskbar.Style = WinElement.Styles.Taskbar11;
                                 }
@@ -1892,9 +1891,7 @@ namespace WinPaletter.Templates
 
                         if (ExplorerPatcher.CanBeUsed)
                         {
-                            ref ExplorerPatcher EP = ref Program.EP;
-
-                            if ((bool)!EP?.UseTaskbar10)
+                            if ((bool)!Program.EP?.UseTaskbar10)
                             {
                                 taskbar.Height = 42;
                                 taskbar.NoisePower = 0.3f;
@@ -1903,10 +1900,10 @@ namespace WinPaletter.Templates
                             {
                                 taskbar.Height = 35;
                                 taskbar.NoisePower = 0f;
-                                UseWin11ORB_WithWin10 = (bool)!EP?.TaskbarButton10;
+                                UseWin11ORB_WithWin10 = (bool)!Program.EP?.TaskbarButton10;
                             }
 
-                            if ((bool)!EP?.UseStart10)
+                            if ((bool)!Program.EP?.UseStart10)
                             {
                                 start.BlurPower = 6;
                                 start.NoisePower = 0.3f;
@@ -1918,7 +1915,7 @@ namespace WinPaletter.Templates
                                 start.BlurPower = 7;
                                 start.NoisePower = 0.3f;
 
-                                switch (EP?.StartStyle)
+                                switch (Program.EP?.StartStyle)
                                 {
                                     case ExplorerPatcher.StartStyles.NotRounded:
                                         {
@@ -2017,9 +2014,7 @@ namespace WinPaletter.Templates
 
                         if (ExplorerPatcher.CanBeUsed)
                         {
-                            ref ExplorerPatcher EP = ref Program.EP;
-
-                            if ((bool)!EP?.UseTaskbar10)
+                            if ((bool)!Program.EP?.UseTaskbar10)
                             {
                                 taskbar.Height = 42;
                                 taskbar.NoisePower = 0.3f;
@@ -2028,10 +2023,10 @@ namespace WinPaletter.Templates
                             {
                                 taskbar.Height = 35;
                                 taskbar.NoisePower = 0f;
-                                UseWin11ORB_WithWin10 = (bool)!EP?.TaskbarButton10;
+                                UseWin11ORB_WithWin10 = (bool)!Program.EP?.TaskbarButton10;
                             }
 
-                            if ((bool)!EP?.UseStart10)
+                            if ((bool)!Program.EP?.UseStart10)
                             {
                                 start.BlurPower = 6;
                                 start.NoisePower = 0.3f;
@@ -2043,7 +2038,7 @@ namespace WinPaletter.Templates
                                 start.BlurPower = 7;
                                 start.NoisePower = 0.3f;
 
-                                switch (EP?.StartStyle)
+                                switch (Program.EP?.StartStyle)
                                 {
                                     case ExplorerPatcher.StartStyles.NotRounded:
                                         {

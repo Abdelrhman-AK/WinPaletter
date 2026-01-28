@@ -1,78 +1,17 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using WinPaletter.NativeMethods;
 
 namespace WinPaletter.UI.Controllers
 {
     public class Magnifier : Control
     {
-        public Magnifier()
-        {
-            DoubleBuffered = true;
-        }
+        private Bitmap _cachedScreen;
+        private Timer _refreshTimer;
+        private Point _lastMousePos;
 
-        #region Helpers
-
-        float DPI = Program.GetWindowsScreenScalingFactor(false);
-
-        private Bitmap GetScreen()
-        {
-            if (!DesignMode)
-            {
-                Point mousePosition = new((int)(Cursor.Position.X * DPI), (int)(Cursor.Position.Y * DPI));
-                Rectangle sourceRectangle = new(mousePosition.X - Width / _zoom, mousePosition.Y - Height / _zoom, Width, Height);
-                Rectangle magnifiedRectangle = new(Width / (_zoom * 2), Height / (_zoom * 2), Width / _zoom, Height / _zoom);
-
-                using (Bitmap bmpScreenshot = new(Width, Height))
-                using (Graphics G = Graphics.FromImage(bmpScreenshot))
-                {
-                    G.InterpolationMode = InterpolationMode.HighQualityBicubic;
-
-                    G.CopyFromScreen(sourceRectangle.Location, Point.Empty, sourceRectangle.Size);
-
-                    return bmpScreenshot.Clone(magnifiedRectangle, PixelFormat.Format32bppRgb);
-                }
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        #endregion
-
-        #region Properties
-
-        public new bool Enabled
-        {
-            get => base.Enabled;
-            set
-            {
-                if (value != base.Enabled)
-                {
-                    base.Enabled = value;
-
-                    if (!DesignMode && value)
-                    {
-                        DPI = Program.GetWindowsScreenScalingFactor(false);
-                        mouseHookProc = MouseHookCallback;
-                        mouseHook = SetMouseHook(mouseHookProc);
-                    }
-                    else if (!DesignMode)
-                    {
-                        User32.UnhookWindowsHookEx(mouseHook);
-                    }
-
-                    Invalidate();
-                }
-            }
-        }
+        private readonly MouseHook _mouseHook;
 
         private int _zoom = 3;
         public int Zoom
@@ -88,66 +27,190 @@ namespace WinPaletter.UI.Controllers
             }
         }
 
-        #endregion
-
-        #region Mouse hock
-
-        private const int WH_MOUSE_LL = 14;
-        private const int WM_MOUSEMOVE = 0x0200;
-        private User32.LowLevelMouseProc mouseHookProc;
-        private IntPtr mouseHook;
-
-        private IntPtr SetMouseHook(User32.LowLevelMouseProc proc)
+        private bool _livePreview = true;
+        public bool LivePreview
         {
-            using (ProcessModule curModule = Process.GetCurrentProcess().MainModule)
+            get => _livePreview;
+            set
             {
-                return User32.SetWindowsHookEx(WH_MOUSE_LL, proc,
-                    Kernel32.GetModuleHandle(curModule.ModuleName), 0);
-            }
-        }
-
-        private IntPtr MouseHookCallback(int nCode, IntPtr wParam, IntPtr lParam)
-        {
-            if (nCode >= 0 && wParam == (IntPtr)WM_MOUSEMOVE)
-            {
-                // NativeMethods.User32.MSLLHOOKSTRUCT hookStruct = (NativeMethods.User32.MSLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(NativeMethods.User32.MSLLHOOKSTRUCT));
-                // Handle mouse movement here
-
-                Task.Run(() =>
+                if (_livePreview != value)
                 {
-                    Thread.Sleep(10);
-                    Invoke(() => Invalidate());
+                    _livePreview = value;
+                    UpdateRefreshMode();
                 }
-                );
+            }
+        }
+
+        float DPI = Program.GetWindowsScreenScalingFactor(false);
+
+        public Magnifier()
+        {
+            DoubleBuffered = true;
+
+            // Timer for live preview (~60 FPS)
+            _refreshTimer = new Timer { Interval = 16 };
+            _refreshTimer.Tick += (s, e) =>
+            {
+                if (Enabled && _livePreview)
+                    Invalidate();
+            };
+
+            // Initialize mouse hook
+            _mouseHook = new MouseHook(this);
+            _mouseHook.MouseMoved += (s, e) =>
+            {
+                if (Enabled && !_livePreview)
+                {
+                    if (_lastMousePos != e.Location)
+                    {
+                        _lastMousePos = e.Location;
+                        Invalidate();
+                    }
+                }
+            };
+        }
+
+        private void UpdateRefreshMode()
+        {
+            if (!DesignMode && Enabled)
+            {
+                if (_livePreview)
+                {
+                    // Stop hook, start timer
+                    _mouseHook.Enabled = false;
+                    _refreshTimer.Start();
+                }
+                else
+                {
+                    // Stop timer, start hook
+                    _refreshTimer.Stop();
+                    _mouseHook.Enabled = true;
+                }
+            }
+        }
+
+        private Bitmap GetScreen()
+        {
+            if (DesignMode) return null;
+
+            Point mousePos = _livePreview ? Cursor.Position : _lastMousePos;
+            mousePos = new Point((int)(mousePos.X * DPI), (int)(mousePos.Y * DPI));
+
+            // Only recapture if size changed
+            if (_cachedScreen == null || _cachedScreen.Width != Width / _zoom || _cachedScreen.Height != Height / _zoom)
+            {
+                _cachedScreen?.Dispose();
+                _cachedScreen = new Bitmap(Width / _zoom, Height / _zoom);
             }
 
-            return User32.CallNextHookEx(mouseHook, nCode, wParam, lParam);
+            using (Graphics g = Graphics.FromImage(_cachedScreen))
+            {
+                Rectangle sourceRect = new(
+                    mousePos.X - _cachedScreen.Width / 2,
+                    mousePos.Y - _cachedScreen.Height / 2,
+                    _cachedScreen.Width,
+                    _cachedScreen.Height
+                );
+
+                g.CopyFromScreen(sourceRect.Location, Point.Empty, sourceRect.Size);
+            }
+
+            return _cachedScreen;
         }
 
-        protected override void Dispose(bool disposing)
+        public new bool Enabled
         {
-            User32.UnhookWindowsHookEx(mouseHook);
-            base.Dispose(disposing);
+            get => base.Enabled;
+            set
+            {
+                if (value != base.Enabled)
+                {
+                    base.Enabled = value;
+
+                    if (!DesignMode)
+                    {
+                        if (value)
+                        {
+                            DPI = Program.GetWindowsScreenScalingFactor(false);
+                            UpdateRefreshMode();
+                        }
+                        else
+                        {
+                            _refreshTimer.Stop();
+                            _mouseHook.Enabled = false;
+                        }
+                    }
+
+                    Invalidate();
+                }
+            }
         }
 
-        #endregion
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            _cachedScreen?.Dispose();
+            _cachedScreen = null;
+        }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics G = e.Graphics;
             G.InterpolationMode = InterpolationMode.NearestNeighbor;
             G.CompositingQuality = CompositingQuality.HighQuality;
-            G.SmoothingMode = SmoothingMode.AntiAlias;
+            G.SmoothingMode = SmoothingMode.None;
+            G.PixelOffsetMode = PixelOffsetMode.Half;
 
             if (!DesignMode && Enabled)
             {
                 Bitmap screen = GetScreen();
-
                 if (screen != null)
                 {
-                    G.DrawImage(screen, 0, 0, Width - 1, Height + 1);
+                    // Draw magnified screen content
+                    G.DrawImage(screen, new Rectangle(0, 0, Width, Height));
 
-                    G.DrawRectangle(Pens.Red, new(1 + (Width - 4) / 2, 1 + (Height - 4) / 2, 4, 4));
+                    // Draw grid
+                    using (Pen gridPen = new(Color.FromArgb(80, Color.Black), 1))
+                    {
+                        int gridSpacing = Zoom; // Grid spacing matches zoom level
+
+                        // Vertical grid lines
+                        for (int x = 0; x < Width; x += gridSpacing)
+                        {
+                            G.DrawLine(gridPen, x, 0, x, Height);
+                        }
+
+                        // Horizontal grid lines
+                        for (int y = 0; y < Height; y += gridSpacing)
+                        {
+                            G.DrawLine(gridPen, 0, y, Width, y);
+                        }
+                    }
+
+                    // Draw center rectangle (highlighting the exact pixel under cursor)
+                    int centerX = Width / 2;
+                    int centerY = Height / 2;
+
+                    // Calculate rectangle dimensions to match one source pixel
+                    int rectSize = Zoom;
+                    int rectX = centerX - (rectSize / 2);
+                    int rectY = centerY - (rectSize / 2);
+
+                    // Draw the center rectangle with contrasting colors
+                    using (Pen centerPen = new(Color.Red, 2))
+                    using (Pen innerPen = new(Color.Yellow, 1))
+                    {
+                        // Outer rectangle
+                        G.DrawRectangle(centerPen, rectX, rectY, rectSize, rectSize);
+
+                        // Inner crosshair
+                        int halfRect = rectSize / 2;
+                        G.DrawLine(innerPen, centerX - halfRect, centerY, centerX + halfRect, centerY);
+                        G.DrawLine(innerPen, centerX, centerY - halfRect, centerX, centerY + halfRect);
+
+                        // Center dot
+                        G.FillRectangle(Brushes.White, centerX - 1, centerY - 1, 2, 2);
+                    }
                 }
                 else
                 {
@@ -155,16 +218,22 @@ namespace WinPaletter.UI.Controllers
                 }
             }
 
-            using (Pen P = new(Color.WhiteSmoke))
+            // Draw border
+            using (Pen borderPen = new(Enabled ? Color.WhiteSmoke : Color.Gray))
             {
-                P.DashStyle = DashStyle.Dash;
-
-                G.DrawRectangle(P, 0, 0, Width - 1, Height - 1);
+                borderPen.DashStyle = Enabled ? DashStyle.Solid : DashStyle.Dash;
+                G.DrawRectangle(borderPen, 1, 1, Width - 1, Height - 1);
             }
 
             base.OnPaint(e);
+        }
 
-
+        protected override void Dispose(bool disposing)
+        {
+            _refreshTimer?.Dispose();
+            _cachedScreen?.Dispose();
+            _mouseHook?.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

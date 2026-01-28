@@ -106,37 +106,50 @@ namespace WinPaletter
         /// <param name="close"></param>
         public new void Deactivate(bool close = true)
         {
-            if (_shown)
-            {
-                Transition
-                    .With(this, nameof(Opacity), 0.0)
-                    .HookOnCompletionInUiThread(this, () => { if (close) Close(); })
-                    .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick * 0.6f));
+            if (!_shown || IsDisposed) return;
+            if (!IsHandleCreated) return;
 
-                _shown = false;
+            _shown = false;
+
+            if (!Animate)
+            {
+                if (close) Close();
+                return;
             }
+
+            Transition
+                .With(this, nameof(Opacity), 0.0)
+                .HookOnCompletion(() =>
+                {
+                    if (!IsDisposed && close)
+                        Close();
+                })
+                .CriticalDamp(TimeSpan.FromMilliseconds(
+                    Program.AnimationDuration_Quick * 0.6f));
         }
+
 
         private void BorderlessForm_Load(object sender, EventArgs e)
         {
             _shown = false;
+            Opacity = 0;
             this.Localize();
             ApplyStyle(this);
-
-            // Animate the form when shown
-            if (!DesignMode && Animate)
-            {
-                Opacity = 0;
-                Transition
-                    .With(this, nameof(Opacity), 1.0)
-                    .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration * 0.6f));
-            }
         }
 
         private void BorderlessForm_Shown(object sender, EventArgs e)
         {
             _shown = true;
             Invalidate();
+
+            if (!DesignMode && Animate)
+            {
+                Opacity = 0;
+                Transition
+                    .With(this, nameof(Opacity), 1.0)
+                    .CriticalDamp(TimeSpan.FromMilliseconds(
+                        Program.AnimationDuration * 0.6f));
+            }
         }
 
         private void BorderlessForm_FormClosing(object sender, FormClosingEventArgs e)

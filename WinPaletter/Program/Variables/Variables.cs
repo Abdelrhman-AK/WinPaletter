@@ -22,7 +22,7 @@ namespace WinPaletter
         /// <summary>
         /// An instance of WinPaletter logger class (wrapper for Serilog)
         /// </summary>
-        public static Logger Log;
+        public static Logger Log { get; set; }
 
         /// <summary>
         /// GitHub Login Manager
@@ -35,37 +35,37 @@ namespace WinPaletter
         /// <remarks>The log file is stored in the directory specified by <see cref="SysPaths.LogsDir"/> and is named using
         /// the format "WinPaletter_Log_yyyyMMdd_HHmmss.json", where the timestamp reflects the moment the application
         /// initialized this field.</remarks>
-        public static readonly string LogFile = $"{SysPaths.LogsDir}\\WinPaletter_Log_{DateTime.Now:yyyyMMdd_HHmmss}.json";
+        public static string LogFile => $"{SysPaths.LogsDir}\\WinPaletter_Log_{DateTime.Now:yyyyMMdd_HHmmss}.json";
 
         /// <summary>
         /// Class represents colors for WinPaletter Controls (Styles)
         /// </summary>
-        public static Config Style = new(DefaultColors.PrimaryColor_Dark, DefaultColors.SecondaryColor_Dark, DefaultColors.TertiaryColor_Dark, DefaultColors.DisabledColor_Dark, DefaultColors.BackColor_Dark, DefaultColors.DisabledBackColor_Dark, true, true, true);
+        public static Config Style { get; set; } = new(DefaultColors.PrimaryColor_Dark, DefaultColors.SecondaryColor_Dark, DefaultColors.TertiaryColor_Dark, DefaultColors.DisabledColor_Dark, DefaultColors.BackColor_Dark, DefaultColors.DisabledBackColor_Dark, true, true, true);
 
         /// <summary>
         /// WinPaletter version, instead of using long statement 'System.Windows.Forms.Application.ProductVersion'
         /// </summary>
-        public static readonly string Version = Application.ProductVersion;
+        public static string Version => Application.ProductVersion;
 
         /// <summary>
         /// WinPaletter elements animation interval in ms.
         /// </summary>
-        public static readonly int AnimationDuration = 1000;
+        public static int AnimationDuration => 1000;
 
         /// <summary>
         /// WinPaletter elements quick animation interval in ms.
         /// </summary>
-        public static readonly int AnimationDuration_Quick = 200;
+        public static int AnimationDuration_Quick => 200;
 
         /// <summary>
         /// WinPaletter executable File path
         /// </summary>
-        public static readonly string AppFile = Assembly.GetExecutingAssembly().Location;
+        public static string AppFile => Assembly.GetExecutingAssembly().Location;
 
         /// <summary>
         /// WinPaletter executable File size in bytes
         /// </summary>
-        public static readonly long Length = new FileInfo(AppFile).Length;
+        public static long Length => new FileInfo(AppFile).Length;
 
         /// <summary>
         /// Get if Application is started as administrator or not
@@ -76,7 +76,7 @@ namespace WinPaletter
         /// Gets if WinPaletter's current version is designed as beta or not
         /// <br>Don't forget to make it <b>true</b> when you design a beta one</br>
         /// </summary>
-        public static bool IsBeta { get; set; } = true;
+        public static bool IsBeta => true;
 
         /// <summary>
         /// A boolean that represents if WinPaletter has started with a classic theme enabled (Loaded at application startup)
@@ -93,12 +93,12 @@ namespace WinPaletter
         /// <summary>
         /// First visual styles File to be used in WinPaletter (Loaded at application startup)
         /// </summary>
-        public static string FirstVisualStyles = $"{SysPaths.Windows}\\Resources\\Themes\\aero\\aero.msstyles";
+        public static string FirstVisualStyles { get; set; } = $"{SysPaths.Windows}\\Resources\\Themes\\aero\\aero.msstyles";
 
         /// <summary>
         /// Gets or sets the global localizer used for retrieving localized strings throughout the application.
         /// </summary>
-        /// <remarks>Assigning a custom localizer allows you to control how text is localized across the
+        /// <remarks>Assigning a custom localizer allows you control how text is localized across the
         /// application. Changes to this property affect all components that rely on localization.</remarks>
         public static Localizer Localization { get; set; } = new();
 
@@ -110,7 +110,7 @@ namespace WinPaletter
         /// <summary>
         /// Variable responsible for the preview type on forms
         /// </summary>
-        public static PreviewHelpers.WindowStyle WindowStyle = PreviewHelpers.WindowStyle.W11;
+        public static PreviewHelpers.WindowStyle WindowStyle { get; set; } = PreviewHelpers.WindowStyle.W11;
 
         /// <summary>
         /// Global variables to manage WinPaletter theme
@@ -134,18 +134,18 @@ namespace WinPaletter
         /// </summary>
         /// <remarks>This static field holds a reference to the original <see cref="Manager"/> instance. 
         /// It can be used to access the default or initial configuration of the manager.</remarks>
-        public static Manager TM_Original;
+        public static Manager TM_Original { get; set; }
 
         /// <summary>
         /// Represents the first-time instance of the <see cref="Manager"/> class.
         /// </summary>
         /// <remarks>This static field is used to manage and track the application's first-time theme.</remarks>
-        public static Manager TM_FirstTime;
+        public static Manager TM_FirstTime { get; set; }
 
         /// <summary>
         /// Process that kills (stops by force) Windows Explorer
         /// </summary>
-        public static readonly Process ExplorerKiller = new()
+        public static Process ExplorerKiller { get; } = new()
         {
             StartInfo = new()
             {
@@ -160,52 +160,52 @@ namespace WinPaletter
         /// <summary>
         /// A class that contains info about ExplorerPatcher settings
         /// </summary>
-        public static ExplorerPatcher EP = new();
+        public static ExplorerPatcher EP { get; set; } = new();
 
         /// <summary>
         /// Gets if WinPaletter is opened by a File or not
         /// </summary>
-        public static bool ExternalLink = false;
+        public static bool ExternalLink { get; set; } = false;
 
         /// <summary>
         /// Gets File that opened WinPaletter
         /// </summary>
-        public static string ExternalLink_File = string.Empty;
+        public static string ExternalLink_File { get; set; } = string.Empty;
 
         /// <summary>
         /// Class that has bitmaps to used visual styles files and renders them in WinPaletter preview
         /// </summary>
-        public static VisualStylesRes resVS;
+        public static VisualStylesRes resVS { get; }
 
         /// <summary>
         /// Settings to exit after exception error
         /// </summary>
-        public static bool ExitAfterException = false;
+        public static bool ExitAfterException { get; set; } = false;
 
         /// <summary>
         /// Hide What's new form after loading WinPaletter
         /// </summary>
-        public static bool ShowWhatsNew = false;
+        public static bool ShowWhatsNew { get; set; } = false;
 
         /// <summary>
         /// AnimatorNS control to be exposed globally to all forms and classes
         /// </summary>
-        public static Animator Animator = new();
+        public static Animator Animator { get; set; } = new();
 
         /// <summary>
         /// A global ToolTip to be used in all forms
         /// </summary>
-        public static UI.WP.ToolTip ToolTip = new();
+        public static UI.WP.ToolTip ToolTip { get; set; } = new();
 
         /// <summary>
         /// Delete WinPaletter reg on exit (used by uninstaller)
         /// </summary>
-        public static bool DeleteWinPaletteReg = false;
+        public static bool DeleteWinPaletteReg { get; set; } = false;
 
         /// <summary>
         /// A boolean that represents if WinPaletter uninstaller has finished or not
         /// </summary>
-        public static bool UninstallDone = false;
+        public static bool UninstallDone { get; set; } = false;
 
         /// <summary>
         /// The system partition letter
@@ -252,7 +252,7 @@ namespace WinPaletter
         /// <summary>
         /// Represents the size of the preview area.
         /// </summary>
-        public static Size PreviewSize = new(528, 297);
+        public static Size PreviewSize => new(528, 297);
 
         public static bool WindowsTransparency => windowsTransparency;
         private static bool windowsTransparency = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", 1) == 1;

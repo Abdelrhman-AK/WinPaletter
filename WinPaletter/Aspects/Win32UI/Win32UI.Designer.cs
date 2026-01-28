@@ -260,6 +260,7 @@ namespace WinPaletter
             // titlebarExtender1
             // 
             this.titlebarExtender1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
+            this.titlebarExtender1.ForeColor = System.Drawing.Color.White;
             this.titlebarExtender1.Size = new System.Drawing.Size(909, 52);
             // 
             // ImageList1
@@ -445,12 +446,12 @@ namespace WinPaletter
             this.trackBarX1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.trackBarX1.Location = new System.Drawing.Point(108, 278);
             this.trackBarX1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.trackBarX1.Maximum = 200;
-            this.trackBarX1.Minimum = 0;
+            this.trackBarX1.Maximum = 200F;
+            this.trackBarX1.Minimum = 0F;
             this.trackBarX1.Name = "trackBarX1";
             this.trackBarX1.Size = new System.Drawing.Size(240, 24);
             this.trackBarX1.TabIndex = 97;
-            this.trackBarX1.Value = 100;
+            this.trackBarX1.Value = 100F;
             this.trackBarX1.ValueChanged += new System.EventHandler(this.trackBarX1_ValueChanged);
             // 
             // radioButton2
@@ -511,6 +512,8 @@ namespace WinPaletter
             this.GroupBox3.Name = "GroupBox3";
             this.GroupBox3.Size = new System.Drawing.Size(100, 49);
             this.GroupBox3.TabIndex = 35;
+            this.GroupBox3.UseDecorationPattern = false;
+            this.GroupBox3.UseSharpStyle = false;
             // 
             // Label2
             // 
@@ -560,6 +563,8 @@ namespace WinPaletter
             this.GroupBox15.Name = "GroupBox15";
             this.GroupBox15.Size = new System.Drawing.Size(100, 49);
             this.GroupBox15.TabIndex = 37;
+            this.GroupBox15.UseDecorationPattern = false;
+            this.GroupBox15.UseSharpStyle = false;
             // 
             // Label8
             // 
@@ -597,6 +602,8 @@ namespace WinPaletter
             this.GroupBox49.Name = "GroupBox49";
             this.GroupBox49.Size = new System.Drawing.Size(100, 49);
             this.GroupBox49.TabIndex = 36;
+            this.GroupBox49.UseDecorationPattern = false;
+            this.GroupBox49.UseSharpStyle = false;
             // 
             // Label25
             // 
@@ -634,6 +641,8 @@ namespace WinPaletter
             this.GroupBox11.Name = "GroupBox11";
             this.GroupBox11.Size = new System.Drawing.Size(100, 49);
             this.GroupBox11.TabIndex = 39;
+            this.GroupBox11.UseDecorationPattern = false;
+            this.GroupBox11.UseSharpStyle = false;
             // 
             // Label6
             // 
@@ -671,6 +680,8 @@ namespace WinPaletter
             this.GroupBox1.Name = "GroupBox1";
             this.GroupBox1.Size = new System.Drawing.Size(100, 49);
             this.GroupBox1.TabIndex = 36;
+            this.GroupBox1.UseDecorationPattern = false;
+            this.GroupBox1.UseSharpStyle = false;
             // 
             // Label1
             // 
@@ -708,6 +719,8 @@ namespace WinPaletter
             this.GroupBox5.Name = "GroupBox5";
             this.GroupBox5.Size = new System.Drawing.Size(100, 49);
             this.GroupBox5.TabIndex = 34;
+            this.GroupBox5.UseDecorationPattern = false;
+            this.GroupBox5.UseSharpStyle = false;
             // 
             // Label3
             // 
@@ -745,6 +758,8 @@ namespace WinPaletter
             this.GroupBox13.Name = "GroupBox13";
             this.GroupBox13.Size = new System.Drawing.Size(100, 49);
             this.GroupBox13.TabIndex = 38;
+            this.GroupBox13.UseDecorationPattern = false;
+            this.GroupBox13.UseSharpStyle = false;
             // 
             // Label7
             // 
@@ -896,6 +911,8 @@ namespace WinPaletter
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(351, 67);
             this.groupBox4.TabIndex = 83;
+            this.groupBox4.UseDecorationPattern = false;
+            this.groupBox4.UseSharpStyle = false;
             // 
             // label32
             // 
@@ -939,6 +956,8 @@ namespace WinPaletter
             this.pnl10.Name = "pnl10";
             this.pnl10.Size = new System.Drawing.Size(351, 60);
             this.pnl10.TabIndex = 30;
+            this.pnl10.UseDecorationPattern = false;
+            this.pnl10.UseSharpStyle = false;
             // 
             // PictureBox11
             // 
@@ -1052,6 +1071,8 @@ namespace WinPaletter
             this.GroupBox53.Name = "GroupBox53";
             this.GroupBox53.Size = new System.Drawing.Size(351, 60);
             this.GroupBox53.TabIndex = 34;
+            this.GroupBox53.UseDecorationPattern = false;
+            this.GroupBox53.UseSharpStyle = false;
             // 
             // PictureBox10
             // 
@@ -1139,6 +1160,8 @@ namespace WinPaletter
             this.pnl9.Name = "pnl9";
             this.pnl9.Size = new System.Drawing.Size(351, 60);
             this.pnl9.TabIndex = 29;
+            this.pnl9.UseDecorationPattern = false;
+            this.pnl9.UseSharpStyle = false;
             // 
             // PictureBox12
             // 
@@ -1237,6 +1260,8 @@ namespace WinPaletter
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(351, 67);
             this.groupBox8.TabIndex = 85;
+            this.groupBox8.UseDecorationPattern = false;
+            this.groupBox8.UseSharpStyle = false;
             // 
             // label35
             // 
@@ -1281,6 +1306,8 @@ namespace WinPaletter
             this.GroupBox45.Name = "GroupBox45";
             this.GroupBox45.Size = new System.Drawing.Size(351, 90);
             this.GroupBox45.TabIndex = 54;
+            this.GroupBox45.UseDecorationPattern = false;
+            this.GroupBox45.UseSharpStyle = false;
             // 
             // PictureBox21
             // 
@@ -1406,6 +1433,8 @@ namespace WinPaletter
             this.GroupBox25.Name = "GroupBox25";
             this.GroupBox25.Size = new System.Drawing.Size(351, 120);
             this.GroupBox25.TabIndex = 48;
+            this.GroupBox25.UseDecorationPattern = false;
+            this.GroupBox25.UseSharpStyle = false;
             // 
             // PictureBox14
             // 
@@ -1575,6 +1604,8 @@ namespace WinPaletter
             this.GroupBox51.Name = "GroupBox51";
             this.GroupBox51.Size = new System.Drawing.Size(351, 90);
             this.GroupBox51.TabIndex = 35;
+            this.GroupBox51.UseDecorationPattern = false;
+            this.GroupBox51.UseSharpStyle = false;
             // 
             // PictureBox15
             // 
@@ -1694,6 +1725,8 @@ namespace WinPaletter
             this.GroupBox47.Name = "GroupBox47";
             this.GroupBox47.Size = new System.Drawing.Size(351, 60);
             this.GroupBox47.TabIndex = 53;
+            this.GroupBox47.UseDecorationPattern = false;
+            this.GroupBox47.UseSharpStyle = false;
             // 
             // PictureBox9
             // 
@@ -1779,6 +1812,8 @@ namespace WinPaletter
             this.pnl12.Name = "pnl12";
             this.pnl12.Size = new System.Drawing.Size(351, 60);
             this.pnl12.TabIndex = 32;
+            this.pnl12.UseDecorationPattern = false;
+            this.pnl12.UseSharpStyle = false;
             // 
             // PictureBox28
             // 
@@ -1878,6 +1913,8 @@ namespace WinPaletter
             this.GroupBox33.Name = "GroupBox33";
             this.GroupBox33.Size = new System.Drawing.Size(351, 90);
             this.GroupBox33.TabIndex = 52;
+            this.GroupBox33.UseDecorationPattern = false;
+            this.GroupBox33.UseSharpStyle = false;
             // 
             // btnaltface_pick
             // 
@@ -1993,6 +2030,8 @@ namespace WinPaletter
             this.preview.Padding = new System.Windows.Forms.Padding(3);
             this.preview.Size = new System.Drawing.Size(357, 462);
             this.preview.TabIndex = 65;
+            this.preview.UseDecorationPattern = false;
+            this.preview.UseSharpStyle = false;
             // 
             // splitContainer1
             // 
@@ -2075,6 +2114,8 @@ namespace WinPaletter
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(351, 122);
             this.groupBox7.TabIndex = 121;
+            this.groupBox7.UseDecorationPattern = false;
+            this.groupBox7.UseSharpStyle = false;
             // 
             // tips_box
             // 
@@ -2162,6 +2203,7 @@ namespace WinPaletter
             // 
             this.magnifier1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.magnifier1.Enabled = false;
+            this.magnifier1.LivePreview = false;
             this.magnifier1.Location = new System.Drawing.Point(0, 0);
             this.magnifier1.Name = "magnifier1";
             this.magnifier1.Size = new System.Drawing.Size(351, 82);
@@ -2181,6 +2223,8 @@ namespace WinPaletter
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(885, 37);
             this.groupBox2.TabIndex = 120;
+            this.groupBox2.UseDecorationPattern = false;
+            this.groupBox2.UseSharpStyle = false;
             // 
             // pictureBox3
             // 
@@ -2241,6 +2285,7 @@ namespace WinPaletter
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.CanGeneratePalette = true;
             this.ClientSize = new System.Drawing.Size(909, 626);
             this.Controls.Add(this.separatorH1);
             this.Controls.Add(this.groupBox2);

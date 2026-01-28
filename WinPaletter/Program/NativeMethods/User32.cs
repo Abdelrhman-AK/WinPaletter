@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text;
 using static WinPaletter.NativeMethods.GDI32;
@@ -621,6 +622,20 @@ namespace WinPaletter.NativeMethods
             /// </summary>
             public IntPtr lpszDefaultScheme;
         }
+
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct MSLLHOOKSTRUCT
+        {
+            public POINT pt;
+            public uint mouseData;
+            public uint flags;
+            public uint time;
+            public IntPtr dwExtraInfo;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct POINT { public int x; public int y; }
 
         /// <summary>
         /// Contains parameters that describe the non-client area metrics of a window, such as the caption height, border width, and the system font.

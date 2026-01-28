@@ -519,7 +519,7 @@ namespace WinPaletter.GitHub
                     _cancellationTokenSource = null;
                 }
 
-                // Simulate async operation (optional, e.g., if you later want server calls)
+                // Simulate async operation
                 await Task.Delay(100).ConfigureAwait(false);
 
                 // Delete local token

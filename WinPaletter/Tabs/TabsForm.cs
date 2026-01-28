@@ -18,7 +18,7 @@ namespace WinPaletter.Tabs
         //        if (m.WParam.ToInt32() == 1 /*TRUE*/)
         //        {
         //            // Get the current non-client area rectangle
-        //            DWMAPI.MARGINS rect = (DWMAPI.MARGINS)m.GetLParam(typeof(DWMAPI.MARGINS));
+        //            NativeMethods.DWMAPI.MARGINS rect = (NativeMethods.DWMAPI.MARGINS)m.GetLParam(typeof(NativeMethods.DWMAPI.MARGINS));
 
         //            // Adjust the rectangle to make room for the custom control in the title bar
         //            rect.topHeight -= titlebarExtender1.Height - 6;

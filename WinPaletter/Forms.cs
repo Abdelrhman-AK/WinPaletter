@@ -25,7 +25,8 @@ namespace WinPaletter
                 typeof(AspectsTemplate),
                 typeof(TabsForm),
                 typeof(BorderlessForm),
-                typeof(Store_Hover)
+                typeof(Store_Hover),
+                typeof(MagnifierDlg)
             };
 
         /// <summary>

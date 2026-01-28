@@ -95,7 +95,7 @@ namespace WinPaletter.TypesExtensions
                 using (Bitmap bmp = new(Math.Max(1, control.Width), Math.Max(1, control.Height)))
                 {
                     Rectangle rect = new(0, 0, bmp.Width, bmp.Height);
-                    lock (control) // preserved from your original code
+                    lock (control)
                     {
                         control.DrawToBitmap(bmp, rect);
                         return (Bitmap)bmp.Clone();
@@ -114,15 +114,14 @@ namespace WinPaletter.TypesExtensions
 
             Bitmap bmp = new(Math.Max(1, control.Width), Math.Max(1, control.Height));
 
-            // Preserve your original behavior: copy controls, reverse array
-            Control[] childControls = control.Controls.Cast<Control>().ToArray();
+            Control[] childControls = [.. control.Controls.Cast<Control>()];
             Array.Reverse(childControls);
 
             var visibleChildControls = new List<Control>(childControls.Length);
 
             lock (lockObject)
             {
-                // Temporarily hide visible children (in the reversed order you used)
+                // Temporarily hide visible children (in the reversed order used)
                 foreach (Control childControl in childControls)
                 {
                     if (childControl.Visible)
@@ -139,7 +138,7 @@ namespace WinPaletter.TypesExtensions
                 foreach (Control childControl in visibleChildControls)
                     childControl.Visible = true;
 
-                // Draw children manually (same iteration order as your original)
+                // Draw children manually
                 foreach (Control childControl in childControls)
                 {
                     if (!childControl.Visible) continue;

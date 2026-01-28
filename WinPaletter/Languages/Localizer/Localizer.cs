@@ -183,7 +183,7 @@ namespace WinPaletter
         private List<Tuple<string, string, string, string>> DeserializeFormsJSONIntoList(JObject JSON_Forms)
         {
             // Tuple of four values; sub_form name, control name, property, property value
-            // If there is no control and you want to change sub_form property, make control name: String.EmptyError
+            // If there is no control and you want to change sub_form property, make control name: String.Empty
             List<Tuple<string, string, string, string>> tree = [];
             tree.Clear();
 

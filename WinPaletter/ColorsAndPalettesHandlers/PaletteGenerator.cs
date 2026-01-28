@@ -44,33 +44,115 @@ namespace WinPaletter
             InitializeComponent();
         }
 
-        private void PaletteGenerateFromImage_Load(object sender, EventArgs e)
+        private async void PaletteGenerateFromImage_Load(object sender, EventArgs e)
         {
-            this.DoubleBuffer();
+            ApplyStyle(this);
+            this.Localize();
 
-            SuspendLayout();
+            this.DoubleBuffer();
 
             Height = checkBox1.Checked ? Height : GroupBox1.Top + bottom_buttons.Height;
             label3.Font = Fonts.ConsoleMedium;
+            label3.Text = Program.Localization.Strings.ColorEffects.LoadingEffects;
 
-            if (colorEffectControls == null)
+            // Start progressive loading
+            await LoadControlsProgressiveAsync();
+        }
+
+        private async Task LoadControlsProgressiveAsync()
+        {
+            // Check if we already have cached controls
+            if (colorEffectControls != null && colorEffectControls.Length > 0)
             {
-                colorEffectControls = new ColorEffectControl[ColorEffect.RegisteredEffects.Count];
-
-                for (int i = 0; i < ColorEffect.RegisteredEffects.Count; i++)
+                // Reuse existing cached controls
+                foreach (var control in colorEffectControls)
                 {
-                    ColorEffect effect = ColorEffect.RegisteredEffects[i].Clone();
-                    ColorEffectControl colorEffectControl = new() { ColorEffect = effect, Dock = DockStyle.Top };
-                    colorEffectControls[i] = colorEffectControl;
-                    colorEffectControl.ProcessColorEffect += ColorEffectControl_ProcessColorEffect;
+                    smoothPanel1.Controls.Add(control);
                 }
 
-                smoothPanel1.Controls.AddRange(colorEffectControls);
+                label3.Text = EffectsSummary();
+                return;
+            }
+
+            var effects = ColorEffect.RegisteredEffects;
+
+            // Create the array to cache the controls
+            colorEffectControls = new ColorEffectControl[effects.Count];
+
+            // Prepare effects data in background
+            var effectClones = await Task.Run(() =>
+            {
+                var clones = new ColorEffect[effects.Count];
+                for (int i = 0; i < effects.Count; i++)
+                {
+                    clones[i] = effects[i].Clone();
+                }
+                return clones;
+            });
+
+            // Create controls progressively on UI thread and cache them
+            for (int i = 0; i < effectClones.Length; i++)
+            {
+                await CreateAndCacheControlAsync(i, effectClones[i]);
             }
 
             label3.Text = EffectsSummary();
+        }
 
-            ResumeLayout();
+        private async Task CreateAndCacheControlAsync(int index, ColorEffect effect)
+        {
+            // Switch to UI thread
+            await Task.Run(() => { }).ContinueWith(_ =>
+            {
+                if (this.InvokeRequired)
+                {
+                    this.Invoke(new Action(() => CreateAndCacheControl(index, effect)));
+                }
+                else
+                {
+                    CreateAndCacheControl(index, effect);
+                }
+            }, TaskScheduler.FromCurrentSynchronizationContext());
+
+            // Small delay to keep UI responsive
+            await Task.Delay(10);
+        }
+
+        private void CreateAndCacheControl(int index, ColorEffect effect)
+        {
+            // Check if control already exists in cache at this index
+            if (colorEffectControls[index] != null)
+            {
+                // Control already exists, just add it to panel
+                smoothPanel1.Controls.Add(colorEffectControls[index]);
+
+                // Update progress periodically
+                if (index % 3 == 0)
+                {
+                    label3.Text = $"{Program.Localization.Strings.ColorEffects.LoadingEffects} {index + 1}/{ColorEffect.RegisteredEffects.Count}";
+                }
+                return;
+            }
+
+            // Create new control and cache it
+            ColorEffectControl colorEffectControl = new()
+            {
+                ColorEffect = effect,
+                Dock = DockStyle.Top
+            };
+            colorEffectControl.ProcessColorEffect += ColorEffectControl_ProcessColorEffect;
+
+            // Cache the control
+            colorEffectControls[index] = colorEffectControl;
+
+            // Add to panel
+            smoothPanel1.Controls.Add(colorEffectControl);
+
+            // Update progress periodically
+            if (index % 3 == 0)
+            {
+                label3.Text = $"{Program.Localization.Strings.ColorEffects.LoadingEffects} {index + 1}/{ColorEffect.RegisteredEffects.Count}";
+            }
         }
 
         private string EffectsSummary()
@@ -179,10 +261,10 @@ namespace WinPaletter
         /// </list>
         /// The method runs asynchronously and updates the UI on the main thread only when necessary.
         /// </remarks>
-        public void GetColors()
+        public async void GetColors()
         {
             // Run asynchronously to avoid blocking the UI
-            _ = Task.Run(() =>
+            await Task.Run(() =>
             {
                 try
                 {

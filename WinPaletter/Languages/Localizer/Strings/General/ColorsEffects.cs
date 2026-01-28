@@ -6,6 +6,7 @@
         {
             public partial class ColorEffects_Cls
             {
+                public string LoadingEffects { get; set; } = "Loading effects...";
                 public string TotalEffects { get; set; } = "Total effects";
                 public string Applied { get; set; } = "Applied";
                 public string NoEffects { get; set; } = "No effects are applied";

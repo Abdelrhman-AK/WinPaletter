@@ -279,7 +279,7 @@ namespace WinPaletter
             this.ProgressBar1.Step = 1;
             this.ProgressBar1.Style = WinPaletter.UI.WP.ProgressBar.ProgressBarStyle.Marquee;
             this.ProgressBar1.TabIndex = 9;
-            this.ProgressBar1.TaskbarBroadcast = true;
+            this.ProgressBar1.TaskbarBroadcast = false;
             this.ProgressBar1.Visible = false;
             // 
             // PictureBox5
@@ -639,12 +639,12 @@ namespace WinPaletter
             this.trackBarX2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.trackBarX2.Location = new System.Drawing.Point(36, 145);
             this.trackBarX2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.trackBarX2.Maximum = 100;
-            this.trackBarX2.Minimum = 0;
+            this.trackBarX2.Maximum = 100F;
+            this.trackBarX2.Minimum = 0F;
             this.trackBarX2.Name = "trackBarX2";
             this.trackBarX2.Size = new System.Drawing.Size(241, 24);
             this.trackBarX2.TabIndex = 138;
-            this.trackBarX2.Value = 10;
+            this.trackBarX2.Value = 10F;
             // 
             // trackBarX1
             // 
@@ -654,12 +654,12 @@ namespace WinPaletter
             this.trackBarX1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.trackBarX1.Location = new System.Drawing.Point(36, 87);
             this.trackBarX1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.trackBarX1.Maximum = 100;
-            this.trackBarX1.Minimum = 5;
+            this.trackBarX1.Maximum = 100F;
+            this.trackBarX1.Minimum = 5F;
             this.trackBarX1.Name = "trackBarX1";
             this.trackBarX1.Size = new System.Drawing.Size(241, 24);
             this.trackBarX1.TabIndex = 137;
-            this.trackBarX1.Value = 15;
+            this.trackBarX1.Value = 15F;
             // 
             // PictureBox2
             // 
@@ -975,6 +975,8 @@ namespace WinPaletter
             this.bottom_buttons.Name = "bottom_buttons";
             this.bottom_buttons.Size = new System.Drawing.Size(332, 48);
             this.bottom_buttons.TabIndex = 120;
+            this.bottom_buttons.UseDecorationPattern = false;
+            this.bottom_buttons.UseSharpStyle = false;
             // 
             // ColorPickerDlg
             // 
@@ -985,11 +987,13 @@ namespace WinPaletter
             this.Controls.Add(this.TabControl1);
             this.Controls.Add(this.bottom_buttons);
             this.Name = "ColorPickerDlg";
+            this.Opacity = 0D;
             this.Padding = new System.Windows.Forms.Padding(1);
             this.Text = "Color Picker";
             this.TopMost = true;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ColorPickerDlg_FormClosed);
             this.Load += new System.EventHandler(this.ColorPicker_Load);
+            this.Shown += new System.EventHandler(this.ColorPickerDlg_Shown);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ColorPicker_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ColorPicker_MouseMove);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox9)).EndInit();

@@ -248,7 +248,7 @@ namespace WinPaletter.GlobalVariables
             public static readonly string LanguageCreation_OldMethods = $"{WikiURL}/Language-creation-(old-methods)";
 
             /// <summary>
-            /// Link to WinPaletter language JSON File creation wiki (old methods) - 3. Update your language File.
+            /// Link to WinPaletter language JSON File creation wiki (old methods)
             /// </summary>
             public static readonly string LanguageCreation_OldMethods_UpdateLanguageFile = $"{LanguageCreation_OldMethods}#3-update-your-language-file-when-a-new-winpaletter-is-released";
         }

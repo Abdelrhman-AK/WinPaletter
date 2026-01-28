@@ -98,7 +98,6 @@ namespace WinPaletter
             }
             catch (IOException ex)
             {
-                // Log this exception if you have logging infrastructure
                 Debug.WriteLine($"IO Error loading assembly {assemblyName}: {ex.Message}");
                 return null;
             }

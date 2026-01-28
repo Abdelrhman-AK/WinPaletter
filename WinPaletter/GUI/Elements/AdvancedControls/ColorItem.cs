@@ -332,7 +332,7 @@ namespace WinPaletter.UI.Controllers
 
             UpdateDragState(e);      // re-check modifiers every mouse-move
 
-            // Quick repaint if you need visual feedback (no async delay required)
+            // Quick repaint for visual feedback
             Invalidate();
 
             base.OnDragOver(e);

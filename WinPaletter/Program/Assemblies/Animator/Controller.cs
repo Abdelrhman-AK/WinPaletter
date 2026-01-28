@@ -420,7 +420,7 @@ namespace AnimatorNS
                     TransfromHelper.DoTransparent(e, animation);
                     if (animation.BlurRadius > 0f)
                     {
-                        // For animation, you can animate the blur radius if desired
+                        // For animation, animate the blur radius
                         int blurR = (int)(animation.BlurRadius * (1f - CurrentTime));
                         if (blurR > 0)
                             TransfromHelper.DoBlur(e, blurR);

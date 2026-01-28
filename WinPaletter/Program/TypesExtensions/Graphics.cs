@@ -789,7 +789,7 @@ namespace WinPaletter.TypesExtensions
                     Type brushType = pen.Brush.GetType();
                     if (brushType == typeof(SolidBrush))
                     {
-                        // Use your existing Brush.IsValid() for SolidBrush
+                        // Use existing Brush.IsValid() for SolidBrush
                         if (!pen.Brush.IsValid()) return false;
                     }
                 }

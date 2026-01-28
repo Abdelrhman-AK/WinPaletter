@@ -28,7 +28,6 @@ namespace WinPaletter.UI.Style
         {
             DarkMode = Dark;
             RoundedCorners = Rounded;
-            Radius = 4;
             Animations = EnableAnimations;
 
             Schemes.Main = new(Accent, BackColor, Dark);
@@ -87,17 +86,17 @@ namespace WinPaletter.UI.Style
         /// Gets or sets the radius of the rounded corners if <see cref="RoundedCorners"/> is set to true
         /// </summary>
 
-        public readonly int Radius = 4;
+        public int Radius => 4;
 
         /// <summary>
         /// Gets or sets the current color schemes of the application
         /// </summary>
-        public Schemes_Collection Schemes = new();
+        public Schemes_Collection Schemes { get; set; } = new();
 
         /// <summary>
         /// Gets or sets the current animation state of the application; true for enabled, false for disabled
         /// </summary>
-        public bool Animations = false;
+        public bool Animations { get; set; } = false;
 
         private static Bitmap GetTexture(int val = 1, bool lightMode = false)
         {

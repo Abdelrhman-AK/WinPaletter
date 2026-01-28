@@ -413,6 +413,12 @@
     <Compile Include="Dialogs\ArgsHelp.Designer.cs">
       <DependentUpon>ArgsHelp.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\MagnifierDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\MagnifierDlg.Designer.cs">
+      <DependentUpon>MagnifierDlg.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\Welcome.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -533,6 +539,7 @@
     <Compile Include="ColorsAndPalettesHandlers\ColorEffect.cs" />
     <Compile Include="Program\Classes\ClassicTheme.cs" />
     <Compile Include="Program\Classes\CustomSystemSounds.cs" />
+    <Compile Include="Program\Classes\MouseHook.cs" />
     <Compile Include="Program\Classes\SearchManager.cs" />
     <Compile Include="Program\Classes\SystemRestoreHelper.cs" />
     <Compile Include="Program\Logger.cs" />
@@ -1434,6 +1441,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\ArgsHelp.resx">
       <DependentUpon>ArgsHelp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\MagnifierDlg.resx">
+      <DependentUpon>MagnifierDlg.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\Welcome.resx">
       <DependentUpon>Welcome.cs</DependentUpon>
