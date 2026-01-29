@@ -177,7 +177,7 @@ namespace WinPaletter
                         using (Manager TMx = new(Manager.Source.File, listView1.SelectedItems[0].SubItems[1].Text, true, true))
                         {
                             windowsDesktop1.LoadFromTM(TMx);
-                            windowsDesktop1.BackgroundImage = Program.FetchSuitableWallpaper(TMx, Program.WindowStyle);
+                            windowsDesktop1.BackgroundImage = Program.WallpaperMonitor.FetchSuitableWallpaper(TMx, Program.WindowStyle);
                         }
 
                         Program.Animator.ShowSync(windowsDesktop1);

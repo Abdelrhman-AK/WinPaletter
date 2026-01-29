@@ -1,5 +1,6 @@
 ﻿using Devcorp.Controls.VisualStyles;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
@@ -30,6 +31,30 @@ namespace WinPaletter.Templates
             DoubleBuffered = true;
 
             InitializeComponent();
+        }
+
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            Program.SystemWallpaperChanged += SystemWallpaperChanged;
+            base.OnHandleCreated(e);
+        }
+
+        protected override void OnHandleDestroyed(EventArgs e)
+        {
+            Program.SystemWallpaperChanged -= SystemWallpaperChanged;
+            base.OnHandleDestroyed(e);
+        }
+
+        private void SystemWallpaperChanged(object sender, Program.WallpaperMonitor.WallpaperSnapshot e)
+        {
+            if (!HookedTM.Wallpaper.Enabled)
+            {
+                Invoke(() =>
+                {
+                    BackgroundImage = e.Thumbnail;
+                    BackColor = e.BackgroundColor;
+                });
+            }
         }
 
         /// <summary>
@@ -2763,7 +2788,9 @@ namespace WinPaletter.Templates
         {
             if (!DesignMode)
             {
-                LoadFromTM(HookedTM);
+                //LoadFromTM(HookedTM);
+
+                BackgroundImage = HookedTM.Wallpaper.Enabled ? Program.WallpaperMonitor.FetchSuitableWallpaper(HookedTM, _windowStyle) : Program.ThumbnailWallpaper;
 
                 LoadMetricsFonts(HookedTM);
                 LoadClassicColors(HookedTM.Win32);
@@ -2799,6 +2826,15 @@ namespace WinPaletter.Templates
         private void lnk_preview_MouseClick(object sender, MouseEventArgs e)
         {
             EditorInvoker?.Invoke(sender, new EditorEventArgs(prop_linksColor));
+        }
+
+        private void WindowsDesktop_BackColorChanged(object sender, EventArgs e)
+        {
+            if (!DesignMode)
+            {
+                pnl_preview.BackColor = BackColor;
+                pnl_preview_classic.BackColor = BackColor;
+            }
         }
     }
 }

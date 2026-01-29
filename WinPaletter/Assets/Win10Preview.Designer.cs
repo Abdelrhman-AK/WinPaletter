@@ -61,7 +61,7 @@ namespace WinPaletter.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Thumbnail.
         /// </summary>
         internal static System.Drawing.Bitmap AC_10_Dark {
             get {
@@ -71,7 +71,7 @@ namespace WinPaletter.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Thumbnail.
         /// </summary>
         internal static System.Drawing.Bitmap AC_10_Light {
             get {
@@ -81,7 +81,7 @@ namespace WinPaletter.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Thumbnail.
         /// </summary>
         internal static System.Drawing.Bitmap Start10_Dark {
             get {
@@ -91,7 +91,7 @@ namespace WinPaletter.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Thumbnail.
         /// </summary>
         internal static System.Drawing.Bitmap Start10_Light {
             get {
@@ -101,7 +101,7 @@ namespace WinPaletter.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Thumbnail.
         /// </summary>
         internal static System.Drawing.Bitmap StartBtn_10Light {
             get {
@@ -111,7 +111,7 @@ namespace WinPaletter.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Thumbnail.
         /// </summary>
         internal static System.Drawing.Bitmap Win10x_Close_Dark {
             get {
@@ -121,7 +121,7 @@ namespace WinPaletter.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Thumbnail.
         /// </summary>
         internal static System.Drawing.Bitmap Win10x_Close_Light {
             get {

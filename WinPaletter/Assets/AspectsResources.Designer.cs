@@ -61,7 +61,7 @@ namespace WinPaletter.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Thumbnail.
         /// </summary>
         internal static System.Drawing.Bitmap CurrentApplied {
             get {
@@ -71,7 +71,7 @@ namespace WinPaletter.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Thumbnail.
         /// </summary>
         internal static System.Drawing.Bitmap JSON {
             get {
@@ -81,7 +81,7 @@ namespace WinPaletter.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Thumbnail.
         /// </summary>
         internal static System.Drawing.Bitmap msstyles {
             get {
@@ -91,7 +91,7 @@ namespace WinPaletter.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Thumbnail.
         /// </summary>
         internal static System.Drawing.Bitmap Restorepoint {
             get {
@@ -101,7 +101,7 @@ namespace WinPaletter.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Thumbnail.
         /// </summary>
         internal static System.Drawing.Bitmap Scheme {
             get {
@@ -111,7 +111,7 @@ namespace WinPaletter.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Thumbnail.
         /// </summary>
         internal static System.Drawing.Bitmap theme {
             get {

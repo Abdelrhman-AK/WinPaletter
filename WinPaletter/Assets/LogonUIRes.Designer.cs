@@ -61,7 +61,7 @@ namespace WinPaletter.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Thumbnail.
         /// </summary>
         internal static System.Drawing.Bitmap Win10 {
             get {
@@ -71,7 +71,7 @@ namespace WinPaletter.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Thumbnail.
         /// </summary>
         internal static System.Drawing.Bitmap Win11 {
             get {
@@ -81,7 +81,7 @@ namespace WinPaletter.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Thumbnail.
         /// </summary>
         internal static System.Drawing.Bitmap Win2000 {
             get {
@@ -91,7 +91,7 @@ namespace WinPaletter.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Thumbnail.
         /// </summary>
         internal static System.Drawing.Bitmap Win7 {
             get {
@@ -101,7 +101,7 @@ namespace WinPaletter.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Thumbnail.
         /// </summary>
         internal static System.Drawing.Bitmap Win81 {
             get {

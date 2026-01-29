@@ -61,7 +61,7 @@ namespace WinPaletter.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Thumbnail.
         /// </summary>
         internal static System.Drawing.Bitmap AC {
             get {
@@ -71,7 +71,7 @@ namespace WinPaletter.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Thumbnail.
         /// </summary>
         internal static System.Drawing.Bitmap ACHover_Links {
             get {
@@ -81,7 +81,7 @@ namespace WinPaletter.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Thumbnail.
         /// </summary>
         internal static System.Drawing.Bitmap Badge {
             get {
@@ -91,7 +91,7 @@ namespace WinPaletter.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Thumbnail.
         /// </summary>
         internal static System.Drawing.Bitmap Hamburger {
             get {
@@ -101,7 +101,7 @@ namespace WinPaletter.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Thumbnail.
         /// </summary>
         internal static System.Drawing.Bitmap Lines_Toggles_Buttons {
             get {
@@ -111,7 +111,7 @@ namespace WinPaletter.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Thumbnail.
         /// </summary>
         internal static System.Drawing.Bitmap Overflow {
             get {
@@ -121,7 +121,7 @@ namespace WinPaletter.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Thumbnail.
         /// </summary>
         internal static System.Drawing.Bitmap PressedButton {
             get {
@@ -131,7 +131,7 @@ namespace WinPaletter.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Thumbnail.
         /// </summary>
         internal static System.Drawing.Bitmap Settings_Icons {
             get {
@@ -141,7 +141,7 @@ namespace WinPaletter.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Thumbnail.
         /// </summary>
         internal static System.Drawing.Bitmap StartContextMenu {
             get {
@@ -151,7 +151,7 @@ namespace WinPaletter.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Thumbnail.
         /// </summary>
         internal static System.Drawing.Bitmap StartMenu {
             get {
@@ -161,7 +161,7 @@ namespace WinPaletter.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Thumbnail.
         /// </summary>
         internal static System.Drawing.Bitmap StartMenu_Taskbar_AC {
             get {
@@ -171,7 +171,7 @@ namespace WinPaletter.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Thumbnail.
         /// </summary>
         internal static System.Drawing.Bitmap Taskbar {
             get {
@@ -181,7 +181,7 @@ namespace WinPaletter.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Thumbnail.
         /// </summary>
         internal static System.Drawing.Bitmap TaskbarActiveIcon {
             get {
@@ -191,7 +191,7 @@ namespace WinPaletter.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Thumbnail.
         /// </summary>
         internal static System.Drawing.Bitmap TaskbarApp {
             get {
@@ -201,7 +201,7 @@ namespace WinPaletter.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Thumbnail.
         /// </summary>
         internal static System.Drawing.Bitmap Undefined {
             get {
@@ -211,7 +211,7 @@ namespace WinPaletter.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Thumbnail.
         /// </summary>
         internal static System.Drawing.Bitmap UWPDlg {
             get {
@@ -221,7 +221,7 @@ namespace WinPaletter.Assets {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Drawing.Thumbnail.
         /// </summary>
         internal static System.Drawing.Bitmap Win10Logo {
             get {

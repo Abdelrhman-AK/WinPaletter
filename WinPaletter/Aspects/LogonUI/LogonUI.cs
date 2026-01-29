@@ -235,9 +235,12 @@ namespace WinPaletter
 
          Bitmap CaptureLockScreen()
         {
+            Bitmap result;
+
             if (File.Exists(textBox1.Text))
             {
-                return BitmapMgr.Load(textBox1.Text).Resize(Program.PreviewSize);
+                Cursor = Cursors.WaitCursor;
+                result = BitmapMgr.Thumbnail(textBox1.Text, Program.PreviewSize);
             }
             else
             {
@@ -265,7 +268,8 @@ namespace WinPaletter
                     using (Bitmap b = BitmapMgr.Load(mostRecentFile))
                     using (Bitmap b0 = b.Resize((int)(b.Width * previewWidthFactor), (int)(b.Height * previewHeightFactor)))
                     {
-                        return b0.FillInSize(tabs_preview_1.Size);
+                        Cursor = Cursors.WaitCursor;
+                        result = b0.FillInSize(tabs_preview_1.Size);
                     }
                 }
                 else if (File.Exists(defaultLockScreen))
@@ -273,14 +277,19 @@ namespace WinPaletter
                     using (Bitmap b = BitmapMgr.Load(defaultLockScreen))
                     using (Bitmap b0 = b.Resize((int)(b.Width * previewWidthFactor), (int)(b.Height * previewHeightFactor)))
                     {
-                        return b0.FillInSize(tabs_preview_1.Size);
+                        Cursor = Cursors.WaitCursor;
+                        result = b0.FillInSize(tabs_preview_1.Size);
                     }
                 }
                 else
                 {
-                    return Program.Wallpaper;
+                    result = Program.ThumbnailWallpaper;
                 }
             }
+
+            Cursor = Cursors.Default;
+
+            return result;
         }
 
         private void button7_Click(object sender, EventArgs e)

@@ -521,11 +521,8 @@ namespace WinPaletter.UI.Simulation
 
         private void GetBack()
         {
-            if (Program.Wallpaper != null)
-            {
-                adaptedBack = Program.Wallpaper.Resize(Size);
-                adaptedBackBlurred = adaptedBack.Blur(13);
-            }
+            adaptedBack = Program.ThumbnailWallpaper?.Clone() as Bitmap;
+            adaptedBackBlurred = adaptedBack?.Blur(13);
         }
 
         private void NoiseBack()

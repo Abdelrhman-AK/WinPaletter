@@ -29,11 +29,11 @@ namespace WinPaletter
             AppDomain.CurrentDomain.AssemblyResolve += DomainCheck;
             AppDomain.CurrentDomain.UnhandledException += Domain_UnhandledException;
             Application.ThreadException += ThreadExceptionHandler;
-            TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
-            AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
+            //TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
+            //AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
 
             Application.ApplicationExit += OnExit;
-
+            
             // Change security protocol to TLS 1.2 if the OS is Windows 7, Vista or XP
             if (OS.W7 || OS.WVista || OS.WXP) ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
 
@@ -68,10 +68,10 @@ namespace WinPaletter
             AppDomain.CurrentDomain.AssemblyResolve -= DomainCheck;
             AppDomain.CurrentDomain.UnhandledException -= Domain_UnhandledException;
             Application.ThreadException -= ThreadExceptionHandler;
-            TaskScheduler.UnobservedTaskException -= TaskScheduler_UnobservedTaskException;
-            AppDomain.CurrentDomain.FirstChanceException -= CurrentDomain_FirstChanceException;
+            //TaskScheduler.UnobservedTaskException -= TaskScheduler_UnobservedTaskException;
+            //AppDomain.CurrentDomain.FirstChanceException -= CurrentDomain_FirstChanceException;
             User.UserSwitch -= User.OnUserSwitch;
-            SystemEvents.UserPreferenceChanged -= OldWinPreferenceChanged;
+            //SystemEvents.UserPreferenceChanged -= OldWinPreferenceChanged;
 
             Log?.Write(LogEventLevel.Information, "WinPaletter has exited successfully.");
         }
@@ -115,6 +115,9 @@ namespace WinPaletter
                 // Data of following methods depends on current selected user, so they were not executed alone in Main() void
                 ExtractLuna();
 
+                // Load theme manager before monitors
+                LoadThemeManager();
+
                 CheckIfSetupIsComplete();
                 AssociateFiles();
                 StartMonitors();
@@ -124,10 +127,7 @@ namespace WinPaletter
                 CheckWhatsNew();
 
                 ExecuteArgs();
-                LoadThemeManager();
                 UpdateSysEventsSounds();
-
-                Wallpaper = FetchSuitableWallpaper(TM, WindowStyle);
 
                 GitHub = new();
 

@@ -357,7 +357,7 @@ namespace WinPaletter.Tabs
         {
             Text = _form.Text;
             if (TabPage is not null) TabPage.Text = _form.Text;
-            tabsContainer?.OnFormTextChanged(_form, new(this));
+            if (_form is not null) tabsContainer?.OnFormTextChanged(_form, new(this));
             tabsContainer?.Invalidate(Rectangle);
         }
 
@@ -370,7 +370,7 @@ namespace WinPaletter.Tabs
         private void _form_FormClosing(object sender, FormClosingEventArgs e)
         {
             Shown = false;
-            tabsContainer.OnFormClosing(_form, new(this));
+            if (_form is not null) tabsContainer?.OnFormClosing(_form, new(this));
         }
 
         /// <summary>
@@ -381,7 +381,7 @@ namespace WinPaletter.Tabs
         private void _form_FormClosed(object sender, FormClosedEventArgs e)
         {
             Shown = false;
-            tabsContainer.OnFormClosed(_form, new(this));
+            if (_form is not null) tabsContainer?.OnFormClosed(_form, new(this));
         }
 
         private void _form_ParentChanged(object sender, EventArgs e)

@@ -210,7 +210,7 @@ namespace WinPaletter.Theme.Structures
 
                     case Sources.Wallpaper:
                         {
-                            using (Bitmap b = new(Program.GetWallpaperFromRegistry()))
+                            using (Bitmap b = new(Program.AppliedWallpaper))
                             {
                                 bmp = (Bitmap)b.Clone();
                             }

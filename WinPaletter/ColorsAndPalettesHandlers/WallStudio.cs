@@ -845,7 +845,7 @@ namespace WinPaletter
         public void Adjust_Preview(Manager TM)
         {
             windowsDesktop1.WindowStyle = Program.WindowStyle;
-            windowsDesktop1.BackgroundImage = Program.FetchSuitableWallpaper(TM, Program.WindowStyle);
+            windowsDesktop1.BackgroundImage = Program.WallpaperMonitor.FetchSuitableWallpaper(TM, Program.WindowStyle);
             windowsDesktop1.LoadFromTM(TM);
             windowsDesktop1.LoadClassicColors(TM.Win32);
             retroDesktopColors1.LoadColors(TM);
@@ -908,7 +908,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    return Program.Wallpaper;
+                    return Program.ThumbnailWallpaper;
                 }
             }
         }
@@ -951,10 +951,7 @@ namespace WinPaletter
             }
             else if (TM.LogonUI7.Mode == Theme.Structures.LogonUI7.Sources.Wallpaper)
             {
-                using (Bitmap b = new(Program.GetWallpaperFromRegistry()))
-                {
-                    bmpX = (Bitmap)b.Clone();
-                }
+                bmpX = Program.ThumbnailWallpaper.Clone() as Bitmap;
             }
             else if (TM.LogonUI7.Mode == Theme.Structures.LogonUI7.Sources.SolidColor)
             {

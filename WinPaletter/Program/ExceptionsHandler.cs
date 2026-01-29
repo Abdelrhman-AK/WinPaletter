@@ -22,15 +22,15 @@ namespace WinPaletter
                 ExceptionDispatchInfo.Capture(e.Exception).Throw();
         }
 
-        private static void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
-        {
-            e.SetObserved();
+        //private static void TaskScheduler_UnobservedTaskException(object sender, UnobservedTaskExceptionEventArgs e)
+        //{
+        //    e.SetObserved();
 
-            if (!Debugger.IsAttached)
-                Forms.BugReport.Throw(e.Exception, true, Marshal.GetLastWin32Error());
-            else
-                ExceptionDispatchInfo.Capture(e.Exception).Throw();
-        }
+        //    if (!Debugger.IsAttached)
+        //        Forms.BugReport.Throw(e.Exception, true, Marshal.GetLastWin32Error());
+        //    else
+        //        ExceptionDispatchInfo.Capture(e.Exception).Throw();
+        //}
 
         /// <summary>
         /// Handles the exception thrown by the application.
@@ -52,9 +52,9 @@ namespace WinPaletter
 #endif
         }
 
-        private static void CurrentDomain_FirstChanceException(object sender, System.Runtime.ExceptionServices.FirstChanceExceptionEventArgs e)
-        {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Error, e.Exception.Message, e.Exception);
-        }
+        //private static void CurrentDomain_FirstChanceException(object sender, System.Runtime.ExceptionServices.FirstChanceExceptionEventArgs e)
+        //{
+        //    Program.Log?.Write(Serilog.Events.LogEventLevel.Error, e.Exception.Message, e.Exception);
+        //}
     }
 }

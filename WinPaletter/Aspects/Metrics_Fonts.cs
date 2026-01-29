@@ -271,9 +271,6 @@ namespace WinPaletter
 
             AdvancedMode = Program.Settings.AspectsControl.MetricsFonts_Advanced;
 
-            windowMetrics1.BackgroundImage = Program.Wallpaper;
-            Desktop_icons.BackgroundImage = Program.Wallpaper;
-
             alertBox1.Visible = Program.WindowStyle == PreviewHelpers.WindowStyle.W11 || Program.WindowStyle == PreviewHelpers.WindowStyle.W12;
 
             comboBox1.Items.Clear();

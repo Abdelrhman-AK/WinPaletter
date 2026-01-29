@@ -344,7 +344,7 @@ namespace WinPaletter
             }
             else
             {
-                SystemEvents.UserPreferenceChanged += OldWinPreferenceChanged;
+                //SystemEvents.UserPreferenceChanged += OldWinPreferenceChanged;
             }
         }
 

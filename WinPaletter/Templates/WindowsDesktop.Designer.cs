@@ -522,6 +522,7 @@
             this.Name = "WindowsDesktop";
             this.Size = new System.Drawing.Size(528, 297);
             this.Load += new System.EventHandler(this.WindowsDesktop_Load);
+            this.BackColorChanged += new System.EventHandler(this.WindowsDesktop_BackColorChanged);
             this.Window1.ResumeLayout(false);
             this.Panel3.ResumeLayout(false);
             this.tabs_preview.ResumeLayout(false);

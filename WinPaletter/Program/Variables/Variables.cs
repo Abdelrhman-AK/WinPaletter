@@ -105,7 +105,15 @@ namespace WinPaletter
         /// <summary>
         /// Current applied wallpaper
         /// </summary>
-        public static Bitmap Wallpaper { get; set; }
+        public static Bitmap AppliedWallpaper
+        {
+            get => _appliedWallpaper;
+            private set
+            {
+                if (_appliedWallpaper != value) _appliedWallpaper = value;
+            }
+        }
+        private static Bitmap _appliedWallpaper;
 
         /// <summary>
         /// Variable responsible for the preview type on forms
@@ -123,7 +131,6 @@ namespace WinPaletter
                 if (tm != value)
                 {
                     tm = value;
-                    Wallpaper = FetchSuitableWallpaper(value, Program.WindowStyle);
                 }
             }
         }
@@ -258,5 +265,11 @@ namespace WinPaletter
         private static bool windowsTransparency = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", 1) == 1;
 
         public static event Action<bool> WindowsTransparencyChanged;
+        public static event EventHandler<WallpaperMonitor.WallpaperSnapshot> SystemWallpaperChanged;
+
+        /// <summary>
+        /// Get the Windows desktop wallpaper
+        /// </summary>
+        public static Bitmap ThumbnailWallpaper { get; set; }
     }
 }

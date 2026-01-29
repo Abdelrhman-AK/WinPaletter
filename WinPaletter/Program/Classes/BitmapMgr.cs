@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 
 namespace WinPaletter
 {
     /// <summary>
-    /// Optimized Bitmap Manager for loading bitmaps without file locks and with better performance
+    /// Optimized Thumbnail Manager for loading bitmaps without file locks and with better performance
     /// </summary>
     public static class BitmapMgr
     {
@@ -14,52 +15,57 @@ namespace WinPaletter
         /// Loads a bitmap from file without locking the file and with optimized performance
         /// </summary>
         /// <param name="filePath">FileSystem to the image file</param>
+        /// <returns>Loaded Thumbnail or null if failed</returns>
+        /// <summary>
+        /// Loads a bitmap from file without locking the file and optimized for huge files.
+        /// For extremely large images, creates a lightweight bitmap and avoids memory spikes.
+        /// </summary>
+        /// <param name="filePath">Path to the image file</param>
+        /// <param name="maxDimension">Optional max dimension to downscale extremely large images</param>
         /// <returns>Loaded Bitmap or null if failed</returns>
-        public static Bitmap Load(string filePath)
+        public static Bitmap Load(string filePath, int maxDimension = 4000)
         {
-            if (string.IsNullOrWhiteSpace(filePath) || !File.Exists(filePath))
-            {
-                Program.Log?.Debug($"File to be loaded as image is not found or path is invalid: {filePath}");
-                return null;
-            }
+            if (string.IsNullOrWhiteSpace(filePath) || !File.Exists(filePath)) return null;
 
             try
             {
-                // Read all bytes first to immediately release file lock
-                byte[] fileBytes;
-                using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read))
-                using (var memoryStream = new MemoryStream())
+                // Open the file stream with shared read access
+                using FileStream fs = new(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+                using Image img = Image.FromStream(fs, useEmbeddedColorManagement: false, validateImageData: false);
+
+                int width = img.Width;
+                int height = img.Height;
+
+                // Progressive downscale if image is huge
+                if (Math.Max(width, height) > maxDimension)
                 {
-                    fileStream.CopyTo(memoryStream);
-                    fileBytes = memoryStream.ToArray();
+                    float scale = (float)maxDimension / Math.Max(width, height);
+                    width = (int)(width * scale);
+                    height = (int)(height * scale);
                 }
 
-                // Create bitmap from memory
-                using (var memoryStream = new MemoryStream(fileBytes))
-                {
-                    // Use FromStream instead of Image.FromStream to avoid keeping stream open
-                    var bitmap = (Bitmap)Image.FromStream(memoryStream, false, false);
+                Bitmap bmp = new Bitmap(width, height, PixelFormat.Format32bppArgb);
+                bmp.SetResolution(img.HorizontalResolution, img.VerticalResolution);
 
-                    // Create a new bitmap to ensure we have full control and can optimize format
-                    var optimizedBitmap = new Bitmap(bitmap.Width, bitmap.Height, PixelFormat.Format32bppArgb);
+                using Graphics g = Graphics.FromImage(bmp);
+                g.CompositingMode = CompositingMode.SourceOver;
+                g.CompositingQuality = CompositingQuality.HighSpeed;
+                g.InterpolationMode = InterpolationMode.Low;
+                g.SmoothingMode = SmoothingMode.None;
+                g.PixelOffsetMode = PixelOffsetMode.None;
 
-                    using (var g = Graphics.FromImage(optimizedBitmap))
-                    {
-                        g.DrawImage(bitmap, 0, 0, bitmap.Width, bitmap.Height);
-                    }
+                g.DrawImage(img, new Rectangle(0, 0, width, height));
 
-                    bitmap?.Dispose();
-                    return optimizedBitmap;
-                }
+                return bmp;
             }
-            catch (OutOfMemoryException ex)
+            catch (OutOfMemoryException)
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Out of memory while loading image: {ex.Message}");
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Out of memory while loading image: {filePath}");
                 return null;
             }
-            catch (FileNotFoundException ex)
+            catch (FileNotFoundException)
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Image file is not found: {filePath}", ex);
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Image file not found: {filePath}");
                 return null;
             }
             catch (Exception ex)
@@ -68,5 +74,42 @@ namespace WinPaletter
                 return null;
             }
         }
+
+        /// <summary>
+        /// Generates a fast thumbnail from a file, minimizing memory usage even for huge images.
+        /// Uses low-quality downscaling to avoid freezing the UI or using excessive RAM.
+        /// Thread-safe for background processing.
+        /// </summary>
+        /// <param name="filePath">Path to the image file.</param>
+        /// <param name="targetWidth">Desired thumbnail width.</param>
+        /// <param name="targetHeight">Desired thumbnail height.</param>
+        /// <returns>Thumbnail bitmap, or null if file does not exist or is invalid.</returns>
+        public static Bitmap Thumbnail(string filePath, int targetWidth, int targetHeight)
+        {
+            if (string.IsNullOrWhiteSpace(filePath) || !File.Exists(filePath))
+                return null;
+
+            using FileStream fs = new(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+            using Image img = Image.FromStream(fs, useEmbeddedColorManagement: false, validateImageData: false);
+
+            // Use GetThumbnailImage: extremely low memory and fast, preserves aspect ratio
+            Image thumbImg = img.GetThumbnailImage(targetWidth, targetHeight, () => false, IntPtr.Zero);
+
+            // Return a fresh Bitmap (detached from the original stream) for safe use
+            Bitmap thumbnail = new(thumbImg);
+            thumbImg.Dispose();
+
+            return thumbnail;
+        }
+
+        /// <summary>
+        /// Generates a fast thumbnail from a file, minimizing memory usage even for huge images.
+        /// Uses low-quality downscaling to avoid freezing the UI or using excessive RAM.
+        /// Thread-safe for background processing.
+        /// </summary>
+        /// <param name="filePath">Path to the image file.</param>
+        /// <param name="size">Desired thumbnail size.</param>
+        /// <returns>Thumbnail bitmap, or null if file does not exist or is invalid.</returns>
+        public static Bitmap Thumbnail(string filePath, Size size) => Thumbnail(filePath, size.Width, size.Height);
     }
 }

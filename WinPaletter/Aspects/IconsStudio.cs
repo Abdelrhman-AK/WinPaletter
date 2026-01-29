@@ -109,7 +109,7 @@ namespace WinPaletter
             PopulateControlPanelIcons();
             PopulateExplorerIcons();
 
-            pnl_preview.BackgroundImage = Program.Wallpaper;
+            pnl_preview.BackgroundImage = Program.TM.Wallpaper.Enabled ? Program.WallpaperMonitor.FetchSuitableWallpaper(Program.TM, Program.WindowStyle) : Program.ThumbnailWallpaper;
 
             foreach (WinIcon winIcon in pnl_preview.GetAllControls().OfType<WinIcon>())
             {

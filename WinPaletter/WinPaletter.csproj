@@ -552,6 +552,7 @@
     <Compile Include="Program\TypesExtensions\Types.cs" />
     <Compile Include="DownloadManager\DownloadManager.cs" />
     <Compile Include="Program\Filters.cs" />
+    <Compile Include="Program\UserPreferences.cs" />
     <Compile Include="Program\Variables\Links.cs" />
     <Compile Include="Program\TypesExtensions\Forms.cs" />
     <Compile Include="GitHub\Core\Cache.cs" />
@@ -560,6 +561,7 @@
     <Compile Include="GitHub\Core\VirtualRepositoryExplorer.cs" />
     <Compile Include="GitHub\Core\FileSystem.cs" />
     <Compile Include="GitHub\Core\Repository.cs" />
+    <Compile Include="Program\WallpaperMonitor.cs" />
     <Compile Include="Settings\Setup.cs">
       <SubType>Form</SubType>
     </Compile>

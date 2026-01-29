@@ -70,7 +70,7 @@ namespace WinPaletter
         public void Adjust_Preview(Manager TM)
         {
             windowsDesktop1.WindowStyle = Program.WindowStyle;
-            windowsDesktop1.BackgroundImage = Program.FetchSuitableWallpaper(TM, Program.WindowStyle);
+            windowsDesktop1.BackgroundImage = Program.WallpaperMonitor.FetchSuitableWallpaper(TM, Program.WindowStyle);
             windowsDesktop1.LoadFromTM(TM);
             windowsDesktop1.LoadClassicColors(TM.Win32);
             retroDesktopColors1.LoadColors(TM);
@@ -1042,7 +1042,7 @@ namespace WinPaletter
                             Forms.Store_Hover.Show();
 
                             windowsDesktop.WindowStyle = Program.WindowStyle;
-                            windowsDesktop.BackgroundImage = Program.FetchSuitableWallpaper(TMx, Program.WindowStyle);
+                            windowsDesktop.BackgroundImage = Program.WallpaperMonitor.FetchSuitableWallpaper(TMx, Program.WindowStyle);
                             windowsDesktop.LoadFromTM(TMx);
                             windowsDesktop.LoadClassicColors(TMx.Win32);
 

@@ -177,7 +177,7 @@ namespace WinPaletter
             _Shown = false;
             FillTerminals(ComboBox1);
             RasterList.BringToFront();
-            CMD_Preview.BackgroundImage = Program.FetchSuitableWallpaper(Program.TM, Program.WindowStyle);
+            CMD_Preview.BackgroundImage = Program.WallpaperMonitor.FetchSuitableWallpaper(Program.TM, Program.WindowStyle);
 
             Icon = Resources.cmd;
 

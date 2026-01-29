@@ -480,7 +480,7 @@ namespace WinPaletter
         /// Get modified wallpaper (Wallpaper Tone)
         /// </summary>
         /// <param name="WT">Wallpaper tone structure inside WinPaletter theme manager</param>
-        /// <returns>Bitmap</returns>
+        /// <returns>Thumbnail</returns>
         public static Bitmap GetTintedWallpaper(WallpaperTone WT)
         {
             if (!File.Exists(WT.Image))

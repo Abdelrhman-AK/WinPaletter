@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -554,6 +555,70 @@ namespace WinPaletter.TypesExtensions
                 G.DrawImage(current, new Rectangle(0, 0, targetWidth, targetHeight));
 
                 if (current != localSrc) current.Dispose();
+
+                return final;
+            }
+            finally
+            {
+                temp?.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Generates a fast thumbnail from a large bitmap, minimizing CPU usage and memory.
+        /// Uses progressive downscaling and low-quality interpolation to reduce load.
+        /// Thread-safe for background processing.
+        /// </summary>
+        /// <param name="src">Source bitmap.</param>
+        /// <param name="targetWidth">Target width.</param>
+        /// <param name="targetHeight">Target height.</param>
+        /// <returns>Thumbnail bitmap, or null if src is null.</returns>
+        public static Bitmap Thumbnail(this Bitmap src, int targetWidth, int targetHeight)
+        {
+            if (src == null) return null;
+            if (targetWidth <= 0 || targetHeight <= 0) throw new ArgumentOutOfRangeException("Width and height must be greater than 0.");
+
+            Bitmap current = src;
+            Bitmap temp = null;
+
+            try
+            {
+                // Progressive downscale: reduce by half until near target size
+                while (current.Width / 2 > targetWidth || current.Height / 2 > targetHeight)
+                {
+                    int stepWidth = Math.Max(targetWidth, current.Width / 2);
+                    int stepHeight = Math.Max(targetHeight, current.Height / 2);
+
+                    temp = new Bitmap(stepWidth, stepHeight, PixelFormat.Format24bppRgb);
+                    temp.SetResolution(current.HorizontalResolution, current.VerticalResolution);
+
+                    using Graphics g = Graphics.FromImage(temp);
+                    g.InterpolationMode = InterpolationMode.Low;
+                    g.CompositingQuality = CompositingQuality.HighSpeed;
+                    g.SmoothingMode = SmoothingMode.None;
+                    g.PixelOffsetMode = PixelOffsetMode.None;
+
+                    g.DrawImage(current, new Rectangle(0, 0, stepWidth, stepHeight));
+
+                    if (current != src) current.Dispose();
+                    current = temp;
+                    temp = null;
+                }
+
+                // Final thumbnail resize to exact size
+                Bitmap final = new Bitmap(targetWidth, targetHeight, PixelFormat.Format24bppRgb);
+                final.SetResolution(current.HorizontalResolution, current.VerticalResolution);
+
+                using (Graphics g = Graphics.FromImage(final))
+                {
+                    g.InterpolationMode = InterpolationMode.Low;
+                    g.CompositingQuality = CompositingQuality.HighSpeed;
+                    g.SmoothingMode = SmoothingMode.None;
+                    g.PixelOffsetMode = PixelOffsetMode.None;
+                    g.DrawImage(current, new Rectangle(0, 0, targetWidth, targetHeight));
+                }
+
+                if (current != src) current.Dispose();
 
                 return final;
             }
@@ -1515,7 +1580,7 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Makes a ghost effect to a Bitmap, mimmics a Windows Explorer file icon being 'Cut'
+        /// Makes a ghost effect to a Thumbnail, mimmics a Windows Explorer file icon being 'Cut'
         /// </summary>
         /// <param name="bitmap"></param>
         /// <returns></returns>
@@ -1536,7 +1601,7 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Converts a Bitmap to an Icon.
+        /// Converts a Thumbnail to an Icon.
         /// </summary>
         /// <param name="bitmap"></param>
         /// <returns></returns>

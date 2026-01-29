@@ -103,9 +103,7 @@ namespace WinPaletter
                 OnImportFromCurrentApplied = LoadFromCurrent
             };
 
-            windowsDesktop1.BackgroundImage = Program.Wallpaper;
-
-            img20.Image = Program.Wallpaper.Resize(40, 40);
+            img20.Image = windowsDesktop1.BackgroundImage.Resize(40, 40);
 
             LoadData(data);
 
