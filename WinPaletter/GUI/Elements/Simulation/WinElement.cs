@@ -404,12 +404,12 @@ namespace WinPaletter.UI.Simulation
                     {
                         using (Bitmap bmpBlurred = back?.Blur(BlurPower))
                         {
-                            back_blurred = bmpBlurred.AdjustHSL(null, 0.6f);
+                            back_blurred = bmpBlurred?.AdjustHSL(null, 0.6f);
                         }
                     }
                     else
                     {
-                        back_blurred = back.Blur(BlurPower);
+                        back_blurred = back?.Blur(BlurPower);
                     }
                 }
                 else
@@ -419,11 +419,11 @@ namespace WinPaletter.UI.Simulation
             }
             else if ((Style == Styles.Taskbar10 || Style == Styles.Start10 || Style == Styles.ActionCenter10) && Transparency)
             {
-                back_blurred = back.Blur(BlurPower);
+                back_blurred = back?.Blur(BlurPower);
             }
             else if ((Style == Styles.Start7Aero || Style == Styles.Taskbar7Aero || Style == Styles.StartVistaAero || Style == Styles.TaskbarVistaAero || Style == Styles.AltTab7Aero) && back != null)
             {
-                back_blurred = back.Blur(3);
+                back_blurred = back?.Blur(3);
             }
         }
 
