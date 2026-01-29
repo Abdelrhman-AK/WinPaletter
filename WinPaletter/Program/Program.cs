@@ -1,11 +1,9 @@
 ﻿using Microsoft.Win32;
 using Serilog.Events;
 using System;
-using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Net;
-using System.Reflection;
 using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;
@@ -95,7 +93,7 @@ namespace WinPaletter
                 Log?.Write(LogEventLevel.Information, $"WinPaletter version: {Version}");
                 Log?.Write(LogEventLevel.Information, $"WinPaletter file size: {Length} bytes.");
                 Log?.Write(LogEventLevel.Information, $"WinPaletter file path: {AppFile}.");
-                Log?.Write(LogEventLevel.Information, $"Calculating MD5... {Program.CalculateMD5(AppFile)}");
+                Log?.Write(LogEventLevel.Information, $"WinPaletter MD5: {Program.CalculateMD5(AppFile)}");
                 Log?.Write(LogEventLevel.Information, $"WinPaletter log file path: {LogFile}");
                 Log?.Write(LogEventLevel.Information, $"WinPaletter has started with user: {User.Identity.Name}.");
 
@@ -109,7 +107,7 @@ namespace WinPaletter
                 // Important to load proper style and language before showing login dialog
                 Log?.Write(LogEventLevel.Information, $"Loading application style.");
 
-                Program.Style.RoundedCorners = GetRoundedCorners(true); // When not included, rounded corners may be applied in non-rounded-corners-OS
+                Style.RoundedCorners = GetRoundedCorners(true); // When not included, rounded corners may be applied in non-rounded-corners-OS
                 GetDarkMode();
                 ApplyStyle();
                 LoadLanguage();

@@ -17,9 +17,6 @@ namespace WinPaletter
 
         private void TerminalsDashboard_Load(object sender, EventArgs e)
         {
-            Size = Forms.Home.card4.Size;
-            Location = Forms.Home.card4.PointToScreen(Point.Empty);
-
             this.Localize();
             ApplyStyle(this);
             Icon = FormsExtensions.Icon<CMD>();
@@ -33,6 +30,13 @@ namespace WinPaletter
             else style = DWM.DWMStyles.Acrylic;
 
             this.DropEffect(Padding.Empty, true, style, true);
+        }
+
+        public DialogResult ShowDialog(Size size, Point location)
+        {
+            this.Size = size;
+            this.Location = location;
+            return base.ShowDialog();
         }
 
         private void Button6_Click(object sender, EventArgs e)

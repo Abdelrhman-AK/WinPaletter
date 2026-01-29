@@ -1,6 +1,7 @@
 ﻿using FluentTransitions;
 using System;
 using System.Drawing;
+using System.Security.Policy;
 using System.Windows.Forms;
 using static WinPaletter.PreviewHelpers;
 
@@ -18,6 +19,9 @@ namespace WinPaletter
         {
             InitializeComponent();
         }
+
+        Size targetSize;
+        Point targetLocation;
 
         private void OS_Dashboard_Load(object sender, EventArgs e)
         {
@@ -64,18 +68,8 @@ namespace WinPaletter
                     break;
             }
 
-            // Set the form size and location.
-            Size targetSize = Size;
-            Point targetLocation = Forms.Home.winEdition.PointToScreen(Point.Empty) - new Size(Width - Forms.Home.winEdition.Width, 0);
-
-            Size = new(Width, 1);
-            Location = Forms.Home.winEdition.PointToScreen(Point.Empty);
-            Left -= Width - Forms.Home.winEdition.Width;
-
             // Animate the form.
-            Transition
-                .With(this, nameof(Height), targetSize.Height)
-                .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration * 0.6));
+            Transition.With(this, nameof(Height), targetSize.Height).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration * 0.6));
 
             BackColor = Color.Black;
 
@@ -86,6 +80,18 @@ namespace WinPaletter
             else style = DWM.DWMStyles.Acrylic;
 
             this.DropEffect(Padding.Empty, true, style, true);
+        }
+
+        public DialogResult ShowDialog(Size parentButtonSize, Point parentButtonLocation)
+        {
+            targetSize = Size;
+            targetLocation = parentButtonLocation - new Size(Width - parentButtonSize.Width, 0);
+
+            Size = new(Width, 1);
+            Location = parentButtonLocation;
+            Left -= Width - parentButtonSize.Width;
+
+            return this.ShowDialog();
         }
 
         private void button7_Click(object sender, EventArgs e)

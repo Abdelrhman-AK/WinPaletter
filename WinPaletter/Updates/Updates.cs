@@ -438,11 +438,6 @@ namespace WinPaletter
             Program.Settings.Updates.Save();
         }
 
-        private async void button9_Click(object sender, EventArgs e)
-        {
-            await CheckForUpdatesAsync();
-        }
-
         private void button31_Click(object sender, EventArgs e)
         {
             Process.Start(Links.Releases);

@@ -569,7 +569,7 @@ namespace WinPaletter
         private void card4_Click(object sender, EventArgs e)
         {
             Forms.MainForm.BackgroundImage = (sender as Card).Image;
-            Forms.TerminalsDashboard.ShowDialog();
+            Forms.TerminalsDashboard.ShowDialog(card4.Size, card4.PointToScreen(Point.Empty));
         }
 
         private void card8_Click(object sender, EventArgs e)
@@ -802,7 +802,7 @@ namespace WinPaletter
 
         private void winEdition_Click(object sender, EventArgs e)
         {
-            if (Forms.OS_Dashboard.ShowDialog() == DialogResult.OK) LoadOSData();
+            if (Forms.OS_Dashboard.ShowDialog(winEdition.Size, winEdition.PointToScreen(Point.Empty)) == DialogResult.OK) LoadOSData();
         }
 
         private void panel1_BackColorChanged(object sender, EventArgs e)

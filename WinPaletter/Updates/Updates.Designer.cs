@@ -99,7 +99,6 @@ namespace WinPaletter
             this.button5 = new WinPaletter.UI.WP.Button();
             this.labelAlt2 = new WinPaletter.UI.WP.LabelAlt();
             this.pictureBox8 = new System.Windows.Forms.PictureBox();
-            this.button9 = new WinPaletter.UI.WP.Button();
             this.AnimatedBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
             this.bottom_buttons.SuspendLayout();
@@ -184,7 +183,6 @@ namespace WinPaletter
             // bottom_buttons
             // 
             this.bottom_buttons.BackColor = System.Drawing.Color.Transparent;
-            this.bottom_buttons.Controls.Add(this.button9);
             this.bottom_buttons.Controls.Add(this.button2);
             this.bottom_buttons.Controls.Add(this.Button1);
             this.bottom_buttons.Controls.Add(this.Button3);
@@ -992,24 +990,6 @@ namespace WinPaletter
             this.pictureBox8.TabIndex = 14;
             this.pictureBox8.TabStop = false;
             // 
-            // button9
-            // 
-            this.button9.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.button9.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
-            this.button9.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button9.ForeColor = System.Drawing.Color.White;
-            this.button9.Image = global::WinPaletter.Properties.Resources.Glyph_Explorer_Refresh;
-            this.button9.ImageGlyph = null;
-            this.button9.ImageGlyphEnabled = false;
-            this.button9.Location = new System.Drawing.Point(8, 7);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(158, 34);
-            this.button9.TabIndex = 60;
-            this.button9.Text = "Refresh release info";
-            this.button9.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button9.UseVisualStyleBackColor = false;
-            this.button9.Click += new System.EventHandler(this.button9_Click);
-            // 
             // Updates
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1126,7 +1106,6 @@ namespace WinPaletter
         private UI.WP.LabelAlt labelAlt4;
         private UI.WP.LabelAlt release_lbl;
         internal PictureBox pictureBox24;
-        internal UI.WP.Button button9;
         protected Label Label17;
     }
 }

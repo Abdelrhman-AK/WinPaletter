@@ -5,7 +5,9 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace WinPaletter
 {
@@ -72,34 +74,32 @@ namespace WinPaletter
 
         private void UpdateStatusLabel(LogEventLevel level, string message)
         {
-            if (Forms.MainForm == null || Forms.MainForm.IsDisposed) return;
-
-            // Update UI text (marshal to UI thread if needed)
-            if (Forms.MainForm.InvokeRequired)
+            MainForm mainForm = Application.OpenForms.OfType<MainForm>().FirstOrDefault();
+            if (mainForm is not null && !mainForm.IsDisposed)
             {
-                Forms.MainForm.Invoke(() =>
+                if (mainForm.InvokeRequired)
                 {
-                    Forms.MainForm.Status_lbl.Text = message;
+                    mainForm.Invoke(() =>
+                    {
+                        mainForm.Status_lbl.Text = message;
+                        UpdateStatusColor(level);
+                    });
+                }
+                else
+                {
+                    mainForm.Status_lbl.Text = message;
                     UpdateStatusColor(level);
-                });
-            }
-            else
-            {
-                Forms.MainForm.Status_lbl.Text = message;
-                UpdateStatusColor(level);
+                }
             }
 
-            // Ensure timer exists and reset its due time to ResetMs
             lock (_statusLock)
             {
                 if (_statusResetTimer == null)
                 {
-                    // callback runs on threadpool; will clear UI using Invoke
                     _statusResetTimer = new System.Threading.Timer(StatusResetTimer_Callback, null, ResetMs, Timeout.Infinite);
                 }
                 else
                 {
-                    // Reset the countdown: due time = ResetMs, period = Infinite (one-shot)
                     _statusResetTimer.Change(ResetMs, Timeout.Infinite);
                 }
             }
