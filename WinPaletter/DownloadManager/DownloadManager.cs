@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Authentication;
@@ -70,13 +71,7 @@ namespace WinPaletter
         /// <exception cref="HttpRequestException"></exception>
         public async Task<string> ReadStringAsync(string url)
         {
-            if (url.Contains("github.com"))
-            {
-                url = url.Replace("github.com", "raw.githubusercontent.com");
-                url = url.Replace("/tree/", "/");
-                url = url.Replace("/blob/", "/");
-                url = url.Replace("?raw=true", string.Empty);
-            }
+            url = EnsureGitHubRawUrl(url);
 
             string result;
 
@@ -105,13 +100,7 @@ namespace WinPaletter
         /// <exception cref="HttpRequestException"></exception>
         public async Task<byte[]> ReadAsync(string url)
         {
-            if (url.Contains("github.com"))
-            {
-                url = url.Replace("github.com", "raw.githubusercontent.com");
-                url = url.Replace("/tree/", "/");
-                url = url.Replace("/blob/", "/");
-                url = url.Replace("?raw=true", string.Empty);
-            }
+            url = EnsureGitHubRawUrl(url);
 
             byte[] result;
 
@@ -140,13 +129,7 @@ namespace WinPaletter
         /// <returns></returns>
         public async Task DownloadFileAsync(string url, string destinationPath)
         {
-            if (url.Contains("github.com"))
-            {
-                url = url.Replace("github.com", "raw.githubusercontent.com");
-                url = url.Replace("/tree/", "/");
-                url = url.Replace("/blob/", "/");
-                url = url.Replace("?raw=true", string.Empty);
-            }
+            url = EnsureGitHubRawUrl(url);
 
             // Set the IsBusy flag to true
             IsBusy = true;
@@ -238,13 +221,7 @@ namespace WinPaletter
         /// <returns></returns>
         public async Task DownloadFilePartAsync(string url, string destinationPath, long startByte, long endByte)
         {
-            if (url.Contains("github.com"))
-            {
-                url = url.Replace("github.com", "raw.githubusercontent.com");
-                url = url.Replace("/tree/", "/");
-                url = url.Replace("/blob/", "/");
-                url = url.Replace("?raw=true", string.Empty);
-            }
+            url = EnsureGitHubRawUrl(url);
 
             // Set the IsBusy flag to true
             IsBusy = true;
@@ -326,13 +303,7 @@ namespace WinPaletter
         /// </summary>
         public async Task<long> GetFileSizeFromUrlAsync(string url)
         {
-            if (url.Contains("github.com"))
-            {
-                url = url.Replace("github.com", "raw.githubusercontent.com");
-                url = url.Replace("/tree/", "/");
-                url = url.Replace("/blob/", "/");
-                url = url.Replace("?raw=true", string.Empty);
-            }
+            url = EnsureGitHubRawUrl(url);
 
             long result = 0;
 
@@ -387,13 +358,7 @@ namespace WinPaletter
         /// <exception cref="HttpRequestException"></exception>
         public string ReadString(string url)
         {
-            if (url.Contains("github.com"))
-            {
-                url = url.Replace("github.com", "raw.githubusercontent.com");
-                url = url.Replace("/tree/", "/");
-                url = url.Replace("/blob/", "/");
-                url = url.Replace("?raw=true", string.Empty);
-            }
+            url = EnsureGitHubRawUrl(url);
 
             string result;
 
@@ -421,13 +386,7 @@ namespace WinPaletter
         /// <param name="destinationPath"></param>
         public void DownloadFile(string url, string destinationPath)
         {
-            if (url.Contains("github.com"))
-            {
-                url = url.Replace("github.com", "raw.githubusercontent.com");
-                url = url.Replace("/tree/", "/");
-                url = url.Replace("/blob/", "/");
-                url = url.Replace("?raw=true", string.Empty);
-            }
+            url = EnsureGitHubRawUrl(url);
 
             // Set the IsBusy flag to true
             IsBusy = true;
@@ -514,13 +473,7 @@ namespace WinPaletter
         /// <param name="endByte"></param>
         public void DownloadFilePart(string url, string destinationPath, long startByte, long endByte)
         {
-            if (url.Contains("github.com"))
-            {
-                url = url.Replace("github.com", "raw.githubusercontent.com");
-                url = url.Replace("/tree/", "/");
-                url = url.Replace("/blob/", "/");
-                url = url.Replace("?raw=true", string.Empty);
-            }
+            url = EnsureGitHubRawUrl(url);
 
             // Set the IsBusy flag to true
             IsBusy = true;
@@ -606,13 +559,7 @@ namespace WinPaletter
         /// <returns></returns>
         public long GetFileSizeFromUrl(string url)
         {
-            if (url.Contains("github.com"))
-            {
-                url = url.Replace("github.com", "raw.githubusercontent.com");
-                url = url.Replace("/tree/", "/");
-                url = url.Replace("/blob/", "/");
-                url = url.Replace("?raw=true", string.Empty);
-            }
+            url = EnsureGitHubRawUrl(url);
 
             long result = 0;
 
@@ -699,6 +646,48 @@ namespace WinPaletter
         {
             DownloadErrorOccurred?.Invoke(this, errorMessage);
             Forms.BugReport.Throw(ex);
+        }
+
+        #endregion
+
+        #region Helpers
+
+        private static string EnsureGitHubRawUrl(string url)
+        {
+            if (string.IsNullOrWhiteSpace(url)) return url;
+
+            if (!Uri.TryCreate(url, UriKind.Absolute, out Uri uri)) return url;
+
+            // Only touch real GitHub hosts
+            if (!uri.Host.Equals("github.com", StringComparison.OrdinalIgnoreCase)) return url;
+
+            // Already raw
+            if (uri.Host.Equals("raw.githubusercontent.com", StringComparison.OrdinalIgnoreCase)) return url;
+
+            string path = uri.AbsolutePath.Trim('/');
+
+            // Never touch releases
+            if (path.StartsWith("releases/download/", StringComparison.OrdinalIgnoreCase) || path.Contains("/releases/download/", StringComparison.OrdinalIgnoreCase)) return url;
+
+            // Must be blob or tree
+            int blobIndex = path.IndexOf("/blob/", StringComparison.OrdinalIgnoreCase);
+            int treeIndex = path.IndexOf("/tree/", StringComparison.OrdinalIgnoreCase);
+
+            int markerIndex = blobIndex >= 0 ? blobIndex : treeIndex;
+            if (markerIndex < 0) return url;
+
+            string[] parts = path.Split('/');
+            if (parts.Length < 5) return url;
+
+            // user / repo / blob|tree / branch / file...
+            string user = parts[0];
+            string repo = parts[1];
+            string branch = parts[3];
+            string filePath = string.Join("/", parts.Skip(4));
+
+            if (string.IsNullOrEmpty(user) || string.IsNullOrEmpty(repo) || string.IsNullOrEmpty(branch) || string.IsNullOrEmpty(filePath)) return url;
+
+            return $"https://raw.githubusercontent.com/{user}/{repo}/{branch}/{filePath}";
         }
 
         #endregion

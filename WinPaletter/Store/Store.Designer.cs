@@ -131,15 +131,8 @@ namespace WinPaletter
             this.labelAlt1 = new WinPaletter.UI.WP.LabelAlt();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.button4 = new WinPaletter.UI.WP.Button();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
             this.button3 = new WinPaletter.UI.WP.Button();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
             this.button2 = new WinPaletter.UI.WP.Button();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
             this.separatorH1 = new WinPaletter.UI.WP.SeparatorH();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.button7 = new WinPaletter.UI.WP.Button();
@@ -185,6 +178,13 @@ namespace WinPaletter
             this.search_filter_btn = new WinPaletter.UI.WP.Button();
             this.ProgressBar1 = new WinPaletter.UI.WP.ProgressBar();
             this.back_btn = new WinPaletter.UI.WP.Button();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.Tabs.SuspendLayout();
             this.TabPage1.SuspendLayout();
             this.TabPage3.SuspendLayout();
@@ -2162,26 +2162,6 @@ namespace WinPaletter
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
-            // label4
-            // 
-            this.label4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(13, 122);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(916, 25);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "1. Check your Ethernet or Wi-Fi connection.";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label8
-            // 
-            this.label8.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(38, 246);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(891, 23);
-            this.label8.TabIndex = 7;
-            this.label8.Text = "- Check if GitHub is accessible, visit your ISP’s website (using another device i" +
-    "f needed), or contact their support.";
-            // 
             // button3
             // 
             this.button3.CustomColor = System.Drawing.Color.Empty;
@@ -2199,26 +2179,6 @@ namespace WinPaletter
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
-            // label11
-            // 
-            this.label11.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(13, 269);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(916, 24);
-            this.label11.TabIndex = 8;
-            this.label11.Text = "4. Check Network Settings";
-            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label9
-            // 
-            this.label9.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(13, 218);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(916, 24);
-            this.label9.TabIndex = 6;
-            this.label9.Text = "3. Check for service outages.";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // button2
             // 
             this.button2.CustomColor = System.Drawing.Color.Empty;
@@ -2235,37 +2195,6 @@ namespace WinPaletter
             this.button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // label10
-            // 
-            this.label10.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(38, 297);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(891, 23);
-            this.label10.TabIndex = 9;
-            this.label10.Text = "- Go to Settings → Network && Internet → Status, or click \'Troubleshoot network c" +
-    "onnection\'.";
-            // 
-            // label5
-            // 
-            this.label5.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(13, 147);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(916, 24);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "2. Restart your router, modem, or internet connection.";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label7
-            // 
-            this.label7.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(38, 175);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(891, 43);
-            this.label7.TabIndex = 5;
-            this.label7.Text = "- Power off the router or modem, wait about 10 seconds, then turn it back on.\r\n- " +
-    "For Wi-Fi, you can also try reconnecting to the network or switching to a differ" +
-    "ent network.";
             // 
             // separatorH1
             // 
@@ -2989,6 +2918,77 @@ namespace WinPaletter
             this.back_btn.UseVisualStyleBackColor = false;
             this.back_btn.Click += new System.EventHandler(this.Back_btn_Click);
             // 
+            // label11
+            // 
+            this.label11.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(13, 269);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(916, 24);
+            this.label11.TabIndex = 8;
+            this.label11.Text = "4. Check Network Settings";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label10
+            // 
+            this.label10.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(38, 297);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(891, 23);
+            this.label10.TabIndex = 9;
+            this.label10.Text = "- Go to Settings → Network && Internet → Status, or click \'Troubleshoot network c" +
+    "onnection\'.";
+            // 
+            // label8
+            // 
+            this.label8.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(38, 246);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(891, 23);
+            this.label8.TabIndex = 7;
+            this.label8.Text = "- Check if GitHub is accessible, visit your ISP’s website (using another device i" +
+    "f needed), or contact their support.";
+            // 
+            // label9
+            // 
+            this.label9.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(13, 218);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(916, 24);
+            this.label9.TabIndex = 6;
+            this.label9.Text = "3. Check for service outages.";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label7
+            // 
+            this.label7.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(38, 175);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(891, 43);
+            this.label7.TabIndex = 5;
+            this.label7.Text = "- Power off the router or modem, wait about 10 seconds, then turn it back on.\r\n- " +
+    "For Wi-Fi, you can also try reconnecting to the network or switching to a differ" +
+    "ent network.";
+            // 
+            // label5
+            // 
+            this.label5.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(13, 147);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(916, 24);
+            this.label5.TabIndex = 4;
+            this.label5.Text = "2. Restart your router, modem, or internet connection.";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label4
+            // 
+            this.label4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(13, 122);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(916, 25);
+            this.label4.TabIndex = 3;
+            this.label4.Text = "1. Check your Ethernet or Wi-Fi connection.";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // Store
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -3124,14 +3124,7 @@ namespace WinPaletter
         private UI.WP.NumericUpDown numericUpDown1;
         private TabPage tabPage2;
         private PictureBox pictureBox2;
-        private Label label8;
-        private Label label9;
-        private Label label7;
-        private Label label5;
-        private Label label4;
         private SeparatorH separatorH1;
-        private Label label10;
-        private Label label11;
         private UI.WP.Button button4;
         private UI.WP.Button button3;
         private UI.WP.Button button2;
@@ -3219,5 +3212,12 @@ namespace WinPaletter
         private CheckImage toggle_metrics;
         internal SeparatorV separatorV4;
         internal Label lbl_hint;
+        private Label label4;
+        private Label label8;
+        private Label label11;
+        private Label label9;
+        private Label label10;
+        private Label label5;
+        private Label label7;
     }
 }

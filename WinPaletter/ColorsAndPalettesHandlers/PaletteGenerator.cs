@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WinPaletter.Assets;
-using WinPaletter.Theme.Structures;
-using WinPaletter.TypesExtensions;
 using WinPaletter.UI.AdvancedControls;
 using WinPaletter.UI.Controllers;
 using WinPaletter.UI.WP;
@@ -32,7 +28,7 @@ namespace WinPaletter
         /// <remarks>Each item in the collection is a tuple containing a <see
         /// cref="UI.Controllers.ColorItem"/>  and its corresponding <see cref="System.Drawing.Color"/>. This collection
         /// is used to manage  and associate color-related data.</remarks>
-        private List<(ColorItem, Color)> colorItems = [];
+        private List<(ColorItem Item, Color DefaultColor)> colorItems = [];
         private Form form;
         ColorEffectControl[] colorEffectControls = null;
 
@@ -182,27 +178,63 @@ namespace WinPaletter
 
         void ApplyPreview(Form f)
         {
-            if (f == Forms.Win12Colors) Forms.Win12Colors.UpdatePreview();
-            else if (f == Forms.Win11Colors) Forms.Win11Colors.UpdatePreview();
-            else if (f == Forms.Win10Colors) Forms.Win10Colors.UpdatePreview();
-            else if (f == Forms.Win81Colors) Forms.Win81Colors.UpdatePreview();
-            else if (f == Forms.Win8Colors) Forms.Win8Colors.UpdatePreview();
-            else if (f == Forms.Win7Colors) Forms.Win7Colors.UpdatePreview();
-            else if (f == Forms.WinVistaColors) Forms.WinVistaColors.UpdatePreview();
-            else if (f == Forms.Win32UI) Forms.Win32UI.ApplyRetroPreview();
-            else if (f == Forms.CMD) Forms.CMD.ApplyPreview();
-            else if (f == Forms.WindowsTerminal) Forms.WindowsTerminal.ApplyPreview(Forms.WindowsTerminal._Terminal);
-            else if (f == Forms.LogonUI81) Forms.LogonUI81.ApplyPreview();
-            else if (f == Forms.LogonUI7) Forms.LogonUI7.ApplyPreview();
-            else if (f == Forms.LogonUIXP) Forms.LogonUIXP.UpdateWin2000Preview(Forms.LogonUIXP.color_pick.BackColor);
-            else if (f == Forms.CursorsStudio) Forms.CursorsStudio.ApplyColorsToPreview(true);
-            else if (f == Forms.Wallpaper_Editor) Forms.Wallpaper_Editor.pnl_preview.BackColor = Forms.Wallpaper_Editor.color_pick.BackColor;
-            else if (f == Forms.ApplicationThemer) Forms.ApplicationThemer.AdjustPreview();
-            else if (f == Forms.EditInfo)
+            if (f == null || f.IsDisposed || !Application.OpenForms.OfType<Form>().Any(form => form == f)) return;
+
+            switch (f)
             {
-                Forms.EditInfo.StoreItem1.TM.Info.Color1 = Forms.EditInfo.color1.BackColor;
-                Forms.EditInfo.StoreItem1.TM.Info.Color2 = Forms.EditInfo.color2.BackColor;
-                Forms.EditInfo.StoreItem1.Invalidate();
+                case Win12Colors _:
+                    Forms.Win12Colors.UpdatePreview();
+                    break;
+                case Win11Colors _:
+                    Forms.Win11Colors.UpdatePreview();
+                    break;
+                case Win10Colors _:
+                    Forms.Win10Colors.UpdatePreview();
+                    break;
+                case Win81Colors _:
+                    Forms.Win81Colors.UpdatePreview();
+                    break;
+                case Win8Colors _:
+                    Forms.Win8Colors.UpdatePreview();
+                    break;
+                case Win7Colors _:
+                    Forms.Win7Colors.UpdatePreview();
+                    break;
+                case WinVistaColors _:
+                    Forms.WinVistaColors.UpdatePreview();
+                    break;
+                case Win32UI _:
+                    Forms.Win32UI.ApplyRetroPreview();
+                    break;
+                case CMD _:
+                    Forms.CMD.ApplyPreview();
+                    break;
+                case WindowsTerminal _:
+                    Forms.WindowsTerminal.ApplyPreview(Forms.WindowsTerminal._Terminal);
+                    break;
+                case LogonUI81 _:
+                    Forms.LogonUI81.ApplyPreview();
+                    break;
+                case LogonUI7 _:
+                    Forms.LogonUI7.ApplyPreview();
+                    break;
+                case LogonUIXP _:
+                    Forms.LogonUIXP.UpdateWin2000Preview(Forms.LogonUIXP.color_pick.BackColor);
+                    break;
+                case CursorsStudio _:
+                    Forms.CursorsStudio.ApplyColorsToPreview(true);
+                    break;
+                case Wallpaper_Editor _:
+                    Forms.Wallpaper_Editor.pnl_preview.BackColor = Forms.Wallpaper_Editor.color_pick.BackColor;
+                    break;
+                case ApplicationThemer _:
+                    Forms.ApplicationThemer.AdjustPreview();
+                    break;
+                case EditInfo _:
+                    Forms.EditInfo.StoreItem1.TM.Info.Color1 = Forms.EditInfo.color1.BackColor;
+                    Forms.EditInfo.StoreItem1.TM.Info.Color2 = Forms.EditInfo.color2.BackColor;
+                    Forms.EditInfo.StoreItem1.Invalidate();
+                    break;
             }
         }
 
@@ -285,32 +317,46 @@ namespace WinPaletter
                     // Extract base colors from the predefined collection
                     Colors_List.Clear();
 
-                    foreach (var (ctrl, color) in colorItems) Colors_List.Add(color);
-
-                    // Sort efficiently (threaded if large)
-                    if (Colors_List.Count > 1000)
-                        Colors_List = Colors_List.AsParallel().OrderBy(c => c, new RGBColorComparer()).ToList();
-                    else
-                        Colors_List.Sort(new RGBColorComparer());
+                    Colors_List.AddRange(colorItems.Select(s => s.DefaultColor).OrderBy(c => c, new RGBColorComparer()));
 
                     // Build controls in parallel (off the UI thread)
                     int colorCount = Colors_List.Count;
                     ColorItem[] collection = new ColorItem[colorCount];
 
+                    var processedColors = new Color[colorCount];
+                    var originalColors = new Color[colorCount];
+
+                    // Phase 1: Process colors in parallel (thread-safe)
                     Parallel.For(0, colorCount, i =>
                     {
-                        Color original = Colors_List[i];
-                        Color processed = ApplyEffect(original);
-
-                        collection[i] = new()
-                        {
-                            Size = ColorItem.GetMiniColorItemSize(),
-                            AllowDrop = false,
-                            PauseColorsHistory = true,
-                            BackColor = processed,
-                            DefaultBackColor = original // keep original color
-                        };
+                        originalColors[i] = Colors_List[i];
+                        processedColors[i] = ApplyEffect(Colors_List[i]);
                     });
+
+                    // Phase 2: Create controls on UI thread
+                    if (this.InvokeRequired)
+                    {
+                        this.Invoke(new Action(() => createControls()));
+                    }
+                    else
+                    {
+                        createControls();
+                    }
+
+                    void createControls()
+                    {
+                        for (int i = 0; i < colorCount; i++)
+                        {
+                            collection[i] = new ColorItem()
+                            {
+                                Size = ColorItem.GetMiniColorItemSize(),
+                                AllowDrop = false,
+                                PauseColorsHistory = true,
+                                BackColor = processedColors[i],
+                                DefaultBackColor = originalColors[i]
+                            };
+                        }
+                    }
 
                     if (IsHandleCreated)
                     {
@@ -323,7 +369,7 @@ namespace WinPaletter
                             ImgPaletteContainer.ResumeLayout();
                             Cursor = System.Windows.Forms.Cursors.Default;
 
-                            Distribute(false);
+                            Distribute(Colors_List, false);
                         });
                     }
                 }
@@ -340,6 +386,8 @@ namespace WinPaletter
                     }
 
                     Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Error in GetColors: {ex}");
+
+                    Forms.BugReport.Throw(ex);
                 }
             });
         }
@@ -415,7 +463,7 @@ namespace WinPaletter
                             ImgPaletteContainer.Controls.AddRange(colorItems);
                             ImgPaletteContainer.Visible = true;
                             ImgPaletteContainer.ResumeLayout();
-                            Distribute();
+                            Distribute(Colors_List);
                             Cursor = System.Windows.Forms.Cursors.Default;
                         });
                     }
@@ -506,7 +554,7 @@ namespace WinPaletter
                         ImgPaletteContainer.Visible = true;
                         ImgPaletteContainer.ResumeLayout();
 
-                        Distribute();
+                        Distribute(Colors_List);
                     });
                 }
             });
@@ -520,21 +568,28 @@ namespace WinPaletter
         /// derived from the current state of the <see cref="ImgPaletteContainer"/> controls.</remarks>
         /// <param name="nearing">A boolean value indicating whether the distribution process should prioritize finding the nearest color. The
         /// default value is <see langword="true"/>.</param>
-        void Distribute(bool nearing = true)
+        void Distribute(List<Color> processedPalette = null, bool nearing = true)
         {
-            if (Colors_List != null && Colors_List.Count > 0)
-            {
-                List<Color> processedColors = [.. ImgPaletteContainer.Controls.OfType<ColorItem>().Select(ci => ci.BackColor)];
+            if (Colors_List == null || Colors_List.Count == 0) return;
 
-                if (processedColors.Count > 0)
-                {
-                    foreach ((ColorItem, Color) item in colorItems)
-                    {
-                        Color color = item.Item2;
-                        if (checkBox2.Checked && flowLayoutPanel1.Controls.OfType<ColorEffectControl>().Any(c => c.ColorEffect.Checked)) color = color.Grayscale();
-                        item.Item1.BackColor = Color.FromArgb(255, nearing ? color.GetNearestColorFromPalette(processedColors) : ApplyEffect(color));
-                    }
-                }
+            bool useGrayscale = checkBox2.Checked && flowLayoutPanel1.Controls.OfType<ColorEffectControl>().Any(c => c.ColorEffect.Checked);
+
+            processedPalette ??= [.. ImgPaletteContainer.Controls.OfType<ColorItem>().Select(ci => ci.BackColor)];
+
+            if (processedPalette.Count == 0) return;
+
+            // Process in parallel
+            Color[] finalColors = new Color[colorItems.Count];
+
+            Parallel.For(0, colorItems.Count, i =>
+            {
+                Color color = useGrayscale ? colorItems[i].DefaultColor.Grayscale() : colorItems[i].DefaultColor;
+                finalColors[i] = nearing ? color.GetNearestColorFromPalette(processedPalette) : ApplyEffect(color);
+            });
+
+            for (int i = 0; i < colorItems.Count; i++)
+            {
+                colorItems[i].Item.BackColor = Color.FromArgb(255, finalColors[i]);
             }
 
             ApplyPreview(form);
@@ -544,9 +599,9 @@ namespace WinPaletter
         {
             Cursor = System.Windows.Forms.Cursors.AppStarting;
 
-            foreach ((ColorItem, Color) colorItem in colorItems)
+            foreach ((ColorItem Item, Color DefaultColor) in colorItems)
             {
-                if (colorItem.Item1.BackColor != colorItem.Item2) colorItem.Item1.BackColor = colorItem.Item2;
+                if (Item.BackColor != DefaultColor) Item.BackColor = DefaultColor;
             }
 
             ApplyPreview(form);
@@ -637,7 +692,7 @@ namespace WinPaletter
         {
             label3.Text = EffectsSummary();
             ApplyEffects();
-            Distribute(!radioImage2.Checked);
+            Distribute(nearing: !radioImage2.Checked);
         }
 
         Color ApplyEffect(Color c)
@@ -670,7 +725,7 @@ namespace WinPaletter
             label3.Text = EffectsSummary();
 
             ApplyEffects();
-            Distribute(!radioImage2.Checked);
+            Distribute(nearing: !radioImage2.Checked);
         }
 
         private void effectsBars_ValueChanged(object sender, EventArgs e)
@@ -678,7 +733,7 @@ namespace WinPaletter
             if (toggle1.Checked)
             {
                 ApplyEffects();
-                Distribute(!radioImage2.Checked);
+                Distribute(nearing: !radioImage2.Checked);
             }
         }
 

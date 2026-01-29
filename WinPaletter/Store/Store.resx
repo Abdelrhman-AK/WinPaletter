@@ -984,11 +984,11 @@
   </data>
   <data name="back_btn.ImageGlyph" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAACsSURBVFhH7daxCQJBEAVQEzNzKxBBU0swFMTA0NaMzezBIhTNBANNtIQnIgfHnGDgraewDzba
-        Wf7AsDCtVpb9I/SxxCzeJYchzp6u8T6pEP6wijXJYIRbKXyNdqxLIofn8G+HD8JXu2CB+Ydnim7Mq8Ch
-        FF63bcyrwD6+qtEu5lW8GMERE4xrOO9H8IAeTqUmNujEuqRyE4XcROFXmmhuISk0upIVGl1Ks6xudyur
-        vZHBPkFHAAAAAElFTkSuQmCC
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAKxJREFUWEft
+        1rEJAkEQBVATM3MrEEFTSzAUxMDQ1ozN7MEiFM0EA020hCciB8ecYOCtp7APNtpZ/sCwMK1Wlv0j9LHE
+        LN4lhyHOnq7xPqkQ/rCKNclghFspfI12rEsih+fwb4cPwle7YIH5h2eKbsyrwKEUXrdtzKvAPr6q0S7m
+        VbwYwRETjGs470fwgB5OpSY26MS6pHIThdxE4VeaaG4hKTS6khUaXUqzrG53K6u9kcE+QUcAAAAASUVO
+        RK5CYII=
 </value>
   </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

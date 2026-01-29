@@ -541,26 +541,6 @@ namespace WinPaletter.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap IO_Dlg_Delete_File {
-            get {
-                object obj = ResourceManager.GetObject("IO_Dlg_Delete_File", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap IO_Dlg_Delete_Folder {
-            get {
-                object obj = ResourceManager.GetObject("IO_Dlg_Delete_Folder", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
         internal static byte[] JetBrainsMono {

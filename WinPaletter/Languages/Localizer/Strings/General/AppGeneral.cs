@@ -87,7 +87,6 @@
                 public string Browse { get; set; } = "Browse ...";
                 public string Checking { get; set; } = "Checking ...";
                 public string Calculating { get; set; } = "Calculating ...";
-                public string DoAction { get; set; } = "Do action";
                 public string ReadOnly { get; set; } = "Read only";
                 public string Dark { get; set; } = "Dark";
                 public string Light { get; set; } = "Light";

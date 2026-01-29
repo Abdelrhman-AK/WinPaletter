@@ -19,6 +19,7 @@ using WinPaletter.TypesExtensions;
 using WinPaletter.UI.WP;
 using static WinPaletter.PreviewHelpers;
 using static WinPaletter.Theme.Manager;
+using static WinPaletter.Updates;
 
 namespace WinPaletter
 {
@@ -348,76 +349,75 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Check for updates automatically when the form is loaded.
+        /// Automatically check for updates when the form is loaded.
+        /// Downloads and parses update info once, always passes it to the Updates form.
+        /// Shows notification only if a newer version is available.
         /// </summary>
         public async void AutoUpdatesCheck()
         {
-            // Do not check for updates on Windows XP and Vista as the update server does not support these versions (Unsupported TLS version).
             if (OS.WXP || OS.WVista) return;
 
-            // Reset the update channel variables.
-            StableInt = 0;
-            BetaInt = 0;
-            UpdateChannel = 0;
-            ChannelFixer = Program.Settings.Updates.Channel == Settings.Structures.Updates.Channels.Stable ? 0 : 1;
+            UpdatesInfo latestUpdate = null;
+            bool hasNewerVersion = false;
 
             if (Program.IsNetworkAvailable)
             {
                 try
                 {
-                    using (DownloadManager DM = new())
+                    using DownloadManager DM = new();
+                    string response = await DM.ReadStringAsync(Links.Updates);
+                    string[] lines = response.Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+
+                    Settings.Structures.Updates.Channels targetChannel = Program.Settings.Updates.Channel;
+
+                    // Find the first valid update for the target channel
+                    foreach (string line in lines)
                     {
-                        RaiseUpdate = false;
-                        ver = string.Empty;
+                        if (!UpdatesInfo.TryParse(line, out UpdatesInfo info)) continue;
+                        if (info.Channel != targetChannel) continue;
 
-                        string result = await DM.ReadStringAsync(Links.Updates);
-                        Updates_ls = [.. result.Split(['\r', '\n'])];
-
-                        foreach (string updateInfo in Updates_ls.Where(update => !string.IsNullOrEmpty(update) && !update.StartsWith("#")))
-                        {
-                            // Split the update info into parts. An update info is a line that has spaces.
-                            string[] updateParts = updateInfo.Split(' ');
-
-                            if (updateParts.Length >= 2)
-                            {
-                                // Check if the update is for the stable or beta channel.
-                                if ((updateParts[0] ?? "stable").ToLower() == "stable") StableInt = Updates_ls.IndexOf(updateInfo);
-                                if ((updateParts[0] ?? "stable").ToLower() == "beta") BetaInt = Updates_ls.IndexOf(updateInfo);
-                            }
-                        }
-
-                        // Determine the update channel to use.
-                        UpdateChannel = (ChannelFixer == 0) ? StableInt : BetaInt;
-
-                        // Get the version of the update.
-                        ver = Updates_ls.ElementAtOrDefault(UpdateChannel)?.Split(' ')[1];
-
-                        // Check if the update is newer than the current version.
-                        RaiseUpdate = !string.IsNullOrEmpty(ver) && ver.CompareTo(Program.Version) == 1;
+                        latestUpdate = info;
+                        hasNewerVersion = info.Version > new Version(Program.Version);
+                        break; // first match per channel wins
                     }
                 }
-                catch { } // Ignore any exception here (silent startup, only notify if there is already an update)
+                catch
+                {
+                    // silent: auto-check must never block or crash UI
+                }
             }
 
+            // Always pass info to the Updates form, but notify only if newer
             try
             {
                 Invoke(() =>
                 {
-                    if (RaiseUpdate)
+                    if (latestUpdate is not null)
                     {
-                        // Pass the updates list to the updates form to save time.
-                        Forms.Updates.ls = Updates_ls;
-                        NotifyUpdates.Visible = true;
+                        Forms.Updates.PreloadUpdateInfo(latestUpdate);
+                    }
 
-                        // Change the update button image to the update notification image that has an indicator dot.
+                    if (hasNewerVersion)
+                    {
+                        Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Updates);
+
+                        RaiseUpdate = true;
+                        NotifyUpdates.Visible = true;
                         Button5.ImageGlyph = Resources.Glyph_Update_Dot;
 
-                        // Hide the update notification.
-                        NotifyUpdates.ShowBalloonTip(10000, Application.ProductName, $"{Program.Localization.Strings.Updates.NewUpdate}. {Program.Localization.Strings.General.Version} {ver}", ToolTipIcon.Info);
+                        NotifyUpdates.ShowBalloonTip(
+                            10000,
+                            Application.ProductName,
+                            $"{Program.Localization.Strings.Updates.NewUpdate} ({Program.Localization.Strings.General.Version} {latestUpdate.Version})",
+                            ToolTipIcon.Info
+                        );
                     }
                 });
             }
-            catch { } // An exception may be thrown if the form is closed before the Invoke is executed
+            catch
+            {
+                // Form may be closing — safely ignore
+            }
         }
 
         private void userButton_Click(object sender, EventArgs e)

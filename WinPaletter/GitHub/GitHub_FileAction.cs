@@ -22,7 +22,7 @@ namespace WinPaletter
         {
             this.Text = Program.Localization.Strings.GitHubStrings.Explorer_Confirmation_Title_DeleteFile;
             label1.Text = Program.Localization.Strings.GitHubStrings.Explorer_Confirmation_DeleteFile;
-            pictureBox1.Image = Properties.Resources.IO_Dlg_Delete_File;
+            pictureBox1.Image = Assets.GitHubMgr.IO_Dlg_Delete_File;
 
             pictureBox2.Image = icon;
             label2.Text = name;
@@ -36,7 +36,7 @@ namespace WinPaletter
         {
             this.Text = Program.Localization.Strings.GitHubStrings.Explorer_Confirmation_Title_DeleteFiles;
             label1.Text = Program.Localization.Strings.GitHubStrings.Explorer_Confirmation_DeleteFiles;
-            pictureBox1.Image = Properties.Resources.IO_Dlg_Delete_File;
+            pictureBox1.Image = Assets.GitHubMgr.IO_Dlg_Delete_File;
 
             pictureBox2.Image = Properties.Resources.file_48;
             label2.Text = $"{Program.Localization.Strings.Extensions.Files}: {count}";
@@ -50,7 +50,7 @@ namespace WinPaletter
         {
             this.Text = Program.Localization.Strings.GitHubStrings.Explorer_Confirmation_Title_DeleteFolder;
             label1.Text = Program.Localization.Strings.GitHubStrings.Explorer_Confirmation_DeleteFolder;
-            pictureBox1.Image = Properties.Resources.IO_Dlg_Delete_Folder;
+            pictureBox1.Image = Assets.GitHubMgr.IO_Dlg_Delete_Folder;
 
             pictureBox2.Image = Assets.GitHubMgr.folder_web_48;
             label2.Text = name;
@@ -64,7 +64,7 @@ namespace WinPaletter
         {
             this.Text = Program.Localization.Strings.GitHubStrings.Explorer_Confirmation_Title_DeleteFolders;
             label1.Text = Program.Localization.Strings.GitHubStrings.Explorer_Confirmation_DeleteFolders;
-            pictureBox1.Image = Properties.Resources.IO_Dlg_Delete_Folder;
+            pictureBox1.Image = Assets.GitHubMgr.IO_Dlg_Delete_Folder;
 
             pictureBox2.Image = Assets.GitHubMgr.folder_web_48;
             label2.Text = $"{Program.Localization.Strings.Extensions.Folders}: {count}";

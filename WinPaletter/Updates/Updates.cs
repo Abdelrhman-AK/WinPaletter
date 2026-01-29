@@ -1,12 +1,12 @@
-﻿using Microsoft.VisualBasic;
+﻿using FluentTransitions;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinPaletter.Theme.Structures;
 using WinPaletter.UI.WP;
 
 namespace WinPaletter
@@ -15,38 +15,63 @@ namespace WinPaletter
     {
         private readonly DownloadManager DM = new();
 
-        /// <summary>
-        /// The URL of the update executable.
-        /// </summary>
-        public string url = null;
+        private static UpdatesInfo CurrentUpdateStatic;
+        private UpdatesInfo CurrentUpdate => CurrentUpdateStatic;
 
-        /// <summary>
-        /// The version of the update.
-        /// </summary>
-        public string ver;
+        private bool _Shown;
+        private bool Disturbed;
 
-        private int StableInt, BetaInt, UpdateChannel;
-        private string OldName;
+        public sealed class UpdatesInfo
+        {
+            public Settings.Structures.Updates.Channels Channel { get; private set; } = Settings.Structures.Updates.Channels.Stable;
+            public Version Version { get; private set; }
+            public float Size { get; private set; }
+            public DateTime ReleaseDate { get; private set; }
+            public string Url { get; private set; }
 
-        /// <summary>
-        /// The size of the update executable.
-        /// </summary>
-        public float UpdateSize;
+            public UpdatesInfo(string rawData)
+            {
+                if (!TryParse(rawData, out UpdatesInfo info)) throw new FormatException("Invalid update line format");
 
-        /// <summary>
-        /// The release date of the update.
-        /// </summary>
-        public DateTime ReleaseDate;
-        private bool _Shown = false;
+                Channel = info.Channel;
+                Version = info.Version;
+                Size = info.Size;
+                ReleaseDate = info.ReleaseDate;
+                Url = info.Url;
+            }
 
-        /// <summary>
-        /// The list of updates.
-        /// </summary>
-        public List<string> ls = [];
+            public static bool TryParse(string rawData, out UpdatesInfo info)
+            {
+                info = null;
+                if (string.IsNullOrWhiteSpace(rawData) || rawData.StartsWith("#")) return false;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Updates"/> class.
-        /// </summary>
+                string[] parts = rawData.Split([' '], StringSplitOptions.RemoveEmptyEntries);
+                if (parts.Length < 5) return false;
+
+                if (!Enum.TryParse<Settings.Structures.Updates.Channels>(parts[0], true, out var channel))
+                    channel = Settings.Structures.Updates.Channels.Stable;
+
+                if (!Version.TryParse(parts[1], out Version version)) return false;
+                if (!float.TryParse(parts[2], out float size)) return false;
+                if (!long.TryParse(parts[3], out long binDate)) return false;
+                string url = parts[4];
+                if (string.IsNullOrWhiteSpace(url)) return false;
+
+                info = new UpdatesInfo
+                {
+                    Channel = channel,
+                    Version = version,
+                    Size = size,
+                    ReleaseDate = DateTime.FromBinary(binDate),
+                    Url = url
+                };
+
+                return true;
+            }
+
+            public UpdatesInfo() { }
+        }
+
         public Updates()
         {
             InitializeComponent();
@@ -54,273 +79,249 @@ namespace WinPaletter
             DM.DownloadFileCompleted += UC_DownloadFileCompleted;
         }
 
-        private async void Button1_Click(object sender, EventArgs e)
+        public void PreloadUpdateInfo(UpdatesInfo info)
         {
-            // Reset updates flag in MainForm
-            Forms.Home.NotifyUpdates.Visible = false;
+            if (info is null) return;
 
-            // That means that MainForm didn't check for updates, so we need to check here
-            if (url is null)
-            {
-                Cursor = Cursors.AppStarting;
+            // Store globally
+            CurrentUpdateStatic = info;
 
-                Program.Animator.HideSync(AlertBox2, true);
-                Program.Animator.HideSync(Button1, true);
-                Program.Animator.HideSync(Button3, true);
-                Program.Animator.HideSync(Panel1, true);
-                ProgressBar1.Visible = false;
-                ProgressBar1.Value = 0;
-
-                StableInt = 0;
-                BetaInt = 0;
-                UpdateChannel = 0;
-
-                try
-                {
-                    if (Program.IsNetworkAvailable)
-                    {
-                        Label17.SetText(Program.Localization.Strings.General.Checking);
-
-                        string response = await DM.ReadStringAsync(Links.Updates);
-
-                        // Split the response into lines
-                        ls = [.. response.Split('\n')];
-
-                        foreach (string updateInfo in ls.Where(update => !string.IsNullOrEmpty(update) && !update.StartsWith("#")))
-                        {
-                            string[] updateParts = updateInfo.Split(' ');
-
-                            if (updateParts.Length >= 5)
-                            {
-                                if (updateParts[0] == "Stable") StableInt = ls.IndexOf(updateInfo);
-                                if (updateParts[0] == "Beta") BetaInt = ls.IndexOf(updateInfo);
-                            }
-                        }
-
-                        // Get the update channel.
-                        UpdateChannel = Program.Settings.Updates.Channel == Settings.Structures.Updates.Channels.Stable ? StableInt : BetaInt;
-
-                        // Get the version of the update (it is the second element in the line) and compare it with the current version.
-                        ver = ls.ElementAtOrDefault(UpdateChannel)?.Split(' ')[1];
-
-                        if (new Version(ver) > new Version(Program.Version))
-                        {
-                            // Get the URL of the update executable, the size of the update executable and the release date of the update.
-                            url = ls.ElementAtOrDefault(UpdateChannel)?.Split(' ')[4];
-                            UpdateSize = float.Parse(ls.ElementAtOrDefault(UpdateChannel)?.Split(' ')[2]);
-                            ReleaseDate = DateTime.FromBinary(long.Parse(ls.ElementAtOrDefault(UpdateChannel)?.Split(' ')[3]));
-
-                            // Hide the update information.
-                            Label7.Text = $"{UpdateSize} {Program.Localization.Strings.General.MBSizeUnit}";
-                            Label9.Text = ReleaseDate.ToLongDateString();
-
-                            LinkLabel3.Visible = true;
-
-                            Program.Animator.Show(Panel1, true);
-                            Button1.Text = Program.Localization.Strings.General.DoAction;
-                            AlertBox2.Text = $"{Program.Localization.Strings.Updates.NewUpdate}. {Program.Localization.Strings.General.Version} {ver}";
-                            AlertBox2.AlertStyle = AlertBox.Style.Indigo;
-                        }
-                        else
-                        {
-                            // No update available.
-                            Label7.Text = string.Empty;
-                            Label9.Text = string.Empty;
-                            url = null;
-                            Button1.Text = Program.Localization.Strings.Updates.CheckForUpdates;
-                            AlertBox2.Text = string.Format(Program.Localization.Strings.Updates.NoUpdateAvailable);
-                            AlertBox2.AlertStyle = AlertBox.Style.Success;
-                        }
-
-                        Label17.SetText(Text);
-                    }
-                    else
-                    {
-                        //HandleNoNetwork();
-                    }
-                }
-                catch (Exception ex) // An error occurred while checking for updates.
-                {
-                    Forms.BugReport.Throw(ex);
-                }
-
-                Program.Animator.Show(AlertBox2, true);
-                Program.Animator.Show(Button1, true);
-                Program.Animator.ShowSync(Button3, true);
-
-                Cursor = Cursors.Default;
-            }
-            else
-            {
-                // There is an update available that is already checked in MainForm, so we need to download it.
-                ProgressBar1.Visible = false;
-                ProgressBar1.Value = 0;
-
-                if (RadioButton1.Checked)
-                {
-                    Button1.Enabled = false;
-                    Panel1.Enabled = false;
-                    ProgressBar1.Visible = true;
-                    OldName = Assembly.GetExecutingAssembly().Location;
-
-                    try
-                    {
-                        if (File.Exists("oldWinpaletter.trash")) FileSystem.Kill("oldWinpaletter.trash");
-                        if (File.Exists("oldWinpaletter_2.trash")) FileSystem.Kill("oldWinpaletter_2.trash");
-                    }
-                    catch { } // Couldn't delete old executable files (may be in use)
-
-                    File.Move(OldName, "oldWinpaletter.trash");
-                    await DM.DownloadFileAsync(url, OldName);
-                }
-
-                // Download the update executable.
-                if (RadioButton2.Checked)
-                {
-                    using (SaveFileDialog dlg = new() { Filter = Program.Filters.EXE, FileName = $"WinPaletter ({ver})", Title = Program.Localization.Strings.Extensions.SaveUpdateEXE })
-                    {
-                        if (dlg.ShowDialog() == DialogResult.OK)
-                        {
-                            Panel1.Enabled = false;
-                            Button1.Enabled = false;
-                            ProgressBar1.Visible = true;
-                            await DM.DownloadFileAsync(url, dlg.FileName);
-                        }
-                        else
-                        {
-                            ProgressBar1.Visible = false;
-                        }
-                    }
-                }
-
-                // Open the download page, if the user wants to download the update manually.
-                if (RadioButton3.Checked)
-                {
-                    Process.Start(Links.Releases);
-                }
-
-            }
-
+            ApplyUpdateInfoUI(info);
         }
 
-        private void Updates_Load(object sender, EventArgs e)
+        private async void Button1_Click(object sender, EventArgs e)
         {
-            this.Localize();
-            ApplyStyle(this);
+            Forms.Home.NotifyUpdates.Visible = false;
 
-            LinkLabel3.Visible = false;
-
-            string format = Program.Localization.Information.RightToLeft ? "{1}: {0}" : "{0} {1}";
-            Label3.Text = string.Format(format, (Program.Settings.Updates.Channel == Settings.Structures.Updates.Channels.Stable) ? Program.Localization.Strings.General.Stable : Program.Localization.Strings.General.Beta, Program.Localization.Strings.General.Channel);
-
-            CheckBox1.Checked = Program.Settings.Updates.AutoCheck;
-
-            _Shown = false;
-
-            AlertBox2.AlertStyle = AlertBox.Style.Warning;
-            AlertBox2.Visible = false;
-
-            Panel1.Visible = false;
-            Label7.Text = string.Empty;
-            Label9.Text = string.Empty;
-            url = null;
-
-            Button1.Enabled = true;
-            Panel1.Enabled = true;
-            Button1.Text = Program.Localization.Strings.Updates.CheckForUpdates;
-            Label2.Text = Program.Version;
-            Label2.Font = Fonts.ConsoleMedium;
-            Label7.Font = Fonts.ConsoleMedium;
-            Label9.Font = Fonts.ConsoleMedium;
-
-            // Process data from MainForm if it is available
-            if (ls.Count > 0)
+            if (!Program.IsNetworkAvailable)
             {
-                StableInt = 0;
-                BetaInt = 0;
-                UpdateChannel = 0;
+                Program.Animator.HideSync(tablessControl1);
+                tablessControl1.SelectedIndex = 1;
+                Program.Animator.ShowSync(tablessControl1);
+                return;
+            }
+            else if (CurrentUpdate is null || CurrentUpdate.Version <= new Version(Program.Version))
+            {
+                await CheckForUpdatesAsync();
+                return;
+            }
 
-                foreach (string updateInfo in ls.Where(update => !string.IsNullOrEmpty(update) && !update.StartsWith("#")))
+            await PerformUpdateActionAsync(false);
+        }
+
+        private async void button2_Click(object sender, EventArgs e)
+        {
+            Forms.Home.NotifyUpdates.Visible = false;
+
+            if (CurrentUpdate is null)
+            {
+                await CheckForUpdatesAsync();
+                return;
+            }
+
+            await PerformUpdateActionAsync(true);
+        }
+
+        private async Task CheckForUpdatesAsync()
+        {
+            SetBusyState(true);
+            ResetUpdateUI();
+
+            try
+            {
+                if (!Program.IsNetworkAvailable)
                 {
-                    string[] updateParts = updateInfo.Split(' ');
-
-                    if (updateParts.Length >= 5)
-                    {
-                        if (updateParts[0] == "Stable") StableInt = ls.IndexOf(updateInfo);
-                        if (updateParts[0] == "Beta") BetaInt = ls.IndexOf(updateInfo);
-                    }
+                    Program.Animator.HideSync(tablessControl1);
+                    tablessControl1.SelectedIndex = 1;
+                    Program.Animator.ShowSync(tablessControl1);
+                    return;
                 }
 
-                UpdateChannel = Program.Settings.Updates.Channel == Settings.Structures.Updates.Channels.Stable ? StableInt : BetaInt;
+                ProgressBar1.Value = 0;
+                Program.Animator.ShowSync(ProgressBar1);
+                ProgressBar1.Style = UI.WP.ProgressBar.ProgressBarStyle.Marquee;
 
-                // Get the version of the update (it is the second element in the line) and compare it with the current version.
-                ver = ls.ElementAtOrDefault(UpdateChannel)?.Split(' ')[1];
-                if (new Version(ver) > new Version(Program.Version))
+                UpdatesInfo info = await FetchLatestUpdateAsync();
+
+                if (info is not null/* && info.Version > Program.Version*/)
                 {
-                    url = ls.ElementAtOrDefault(UpdateChannel)?.Split(' ')[4];
-                    UpdateSize = float.Parse(ls.ElementAtOrDefault(UpdateChannel)?.Split(' ')[2]);
-                    ReleaseDate = DateTime.FromBinary(long.Parse(ls.ElementAtOrDefault(UpdateChannel)?.Split(' ')[3]));
-
-                    Label7.Text = $"{UpdateSize} {Program.Localization.Strings.General.MBSizeUnit}";
-                    Label9.Text = $"{ReleaseDate.ToLongDateString()} {ReleaseDate.ToLongTimeString()}";
-
-                    LinkLabel3.Visible = true;
-
-                    Program.Animator.Show(Panel1, true);
-                    Button1.Text = Program.Localization.Strings.General.DoAction;
-                    AlertBox2.Text = $"{Program.Localization.Strings.Updates.NewUpdate}. {Program.Localization.Strings.General.Version} {ver}";
-                    AlertBox2.AlertStyle = AlertBox.Style.Indigo;
-
-                    Program.Animator.Show(AlertBox2, true);
-                    Program.Animator.ShowSync(Button1, true);
+                    ApplyUpdateInfoUI(info);
                 }
                 else
                 {
-                    Label7.Text = string.Empty;
-                    Label9.Text = string.Empty;
-                    url = null;
-                    Button1.Text = Program.Localization.Strings.Updates.CheckForUpdates;
-                    AlertBox2.Text = string.Format(Program.Localization.Strings.Updates.NoUpdateAvailable);
-                    AlertBox2.AlertStyle = AlertBox.Style.Success;
+                    ResetUpdateUI();
                 }
             }
-
-            // Hide a warning if the user is using Windows XP or Windows Vista as they don't support TLS 1.2.
-            if (OS.WXP || OS.WVista)
+            catch (Exception ex)
             {
-                AlertBox2.AlertStyle = AlertBox.Style.Warning;
-                AlertBox2.Visible = true;
-                AlertBox2.Text = string.Format(Program.Localization.Strings.Updates.NoTLS12, OS.WXP ? Program.Localization.Strings.Windows.WXP : Program.Localization.Strings.Windows.WVista);
+                Forms.BugReport.Throw(ex);
+            }
+            finally
+            {
+                ProgressBar1.Value = 0;
+                Program.Animator.HideSync(ProgressBar1);
+                ProgressBar1.Style = UI.WP.ProgressBar.ProgressBarStyle.Continuous;
+
+                Label17.SetText(Text);
+                SetBusyState(false);
             }
         }
 
-        private void Label3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private async Task PerformUpdateActionAsync(bool saveAs)
         {
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.SettingsX);
-        }
+            Program.Animator.HideSync(ProgressBar1);
 
-        private void Updates_Shown(object sender, EventArgs e)
-        {
-            _Shown = true;
-        }
-
-        private void CheckBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            if (_Shown)
+            if (saveAs)
             {
-                Program.Settings.Updates.AutoCheck = CheckBox1.Checked;
-                Program.Settings.Updates.Save();
+                using SaveFileDialog dlg = new()
+                {
+                    Filter = Program.Filters.EXE,
+                    FileName = $"WinPaletter ({CurrentUpdate.Version})",
+                    Title = Program.Localization.Strings.Extensions.SaveUpdateEXE
+                };
+
+                if (dlg.ShowDialog() != DialogResult.OK) return;
+
+                SetBusyState(true);
+                ProgressBar1.Value = 0;
+                Program.Animator.ShowSync(ProgressBar1);
+                await DM.DownloadFileAsync(CurrentUpdate.Url, dlg.FileName);
+                return;
+            }
+            else
+            {
+                SetBusyState(true);
+                ProgressBar1.Value = 0;
+                Program.Animator.ShowSync(ProgressBar1);
+
+                string currentExe = Assembly.GetExecutingAssembly().Location;
+                string dir = Path.GetDirectoryName(currentExe);
+                string tempExe = Path.Combine(dir, "WinPaletter.new.exe");
+
+                try
+                {
+                    if (File.Exists(tempExe)) File.Delete(tempExe);
+
+                    await DM.DownloadFileAsync(CurrentUpdate.Url, tempExe);
+
+                    if (!File.Exists(tempExe) || new FileInfo(tempExe).Length == 0 || Disturbed)
+                    {
+                        MsgBox(Program.Localization.Strings.Updates.CouldNotDownload, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    SafeSwapExecutable(tempExe);
+
+                    // Causes different app versions not to load, so delete it
+                    if (System.IO.File.Exists("WinPaletter.exe.config")) System.IO.File.Delete("WinPaletter.exe.config");
+
+                    if (MsgBox(Program.Localization.Strings.Updates.Downloaded, MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                    {
+                        Process.Start(currentExe);
+                        Program.ForceExit();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Forms.BugReport.Throw(ex);
+                    RestoreOldExecutable();
+                }
             }
         }
 
-        private void LinkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private async Task<UpdatesInfo> FetchLatestUpdateAsync()
         {
-            Process.Start(Links.Changelog);
+            string response = await DM.ReadStringAsync(Links.Updates);
+            string[] lines = response.Split(["\r\n", "\n"], StringSplitOptions.RemoveEmptyEntries);
+
+            foreach (string line in lines)
+            {
+                if (!UpdatesInfo.TryParse(line, out UpdatesInfo info)) continue;
+                if (info.Channel != Program.Settings.Updates.Channel) continue;
+                return info;
+            }
+
+            return null;
         }
 
-        private void Button3_Click(object sender, EventArgs e)
+        private void ApplyUpdateInfoUI(UpdatesInfo info)
         {
-            Close();
+            // Keep static copy
+            CurrentUpdateStatic = info;
+
+            Transition.With(release_lbl, nameof(release_lbl.Text), info.Version.ToString())
+                      .With(channel_lbl, nameof(channel_lbl.Text), info.Channel == Settings.Structures.Updates.Channels.Stable ? Program.Localization.Strings.General.Stable : Program.Localization.Strings.General.Beta)
+                      .With(releasedate_lbl, nameof(releasedate_lbl.Text), info.ReleaseDate.ToLongDateString())
+                      .With(size_lbl, nameof(size_lbl.Text), $"{info.Size} {Program.Localization.Strings.General.MBSizeUnit}")
+                      .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+
+            button2.Enabled = info.Version > new Version(Program.Version);
+            groupBox55.UseDecorationPattern = info.Version > new Version(Program.Version);
+            pictureBox24.Visible = info.Version > new Version(Program.Version);
+
+            Button1.Text = info.Version > new Version(Program.Version) ? Program.Localization.Strings.Updates.Update : Program.Localization.Strings.Updates.CheckForUpdates;
+        }
+
+        private void ResetUpdateUI()
+        {
+            Transition.With(release_lbl, nameof(release_lbl.Text), "0.0.0.0")
+                      .With(channel_lbl, nameof(channel_lbl.Text), "-")
+                      .With(releasedate_lbl, nameof(releasedate_lbl.Text), DateTime.MinValue.ToLongDateString())
+                      .With(size_lbl, nameof(size_lbl.Text), 0.ToStringFileSize())
+                      .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+
+            groupBox55.UseDecorationPattern = false;
+            button2.Enabled = false;
+            pictureBox24.Visible = false;
+
+            Button1.Text = Program.Localization.Strings.Updates.CheckForUpdates;
+        }
+
+        private void SetBusyState(bool busy)
+        {
+            Cursor = busy ? System.Windows.Forms.Cursors.AppStarting : System.Windows.Forms.Cursors.Default;
+            Button1.Enabled = !busy;
+            button2.Enabled = !busy;
+            if (!busy)
+            {
+                ProgressBar1.Value = 0;
+                Program.Animator.HideSync(ProgressBar1);
+            }
+        }
+
+        private void SafeSwapExecutable(string newExe)
+        {
+            string currentExe = Assembly.GetExecutingAssembly().Location;
+            string dir = Path.GetDirectoryName(currentExe);
+            string backupExe = Path.Combine(dir, Program.GetUniqueFileName(dir, "oldWinPaletter.trash"));
+
+            if (File.Exists(backupExe)) File.Delete(backupExe);
+
+            File.Move(currentExe, backupExe);
+
+            try
+            {
+                File.Move(newExe, currentExe);
+            }
+            catch
+            {
+                if (File.Exists(backupExe))
+                    File.Move(backupExe, currentExe);
+                throw;
+            }
+        }
+
+        private void RestoreOldExecutable()
+        {
+            try
+            {
+                string exe = Assembly.GetExecutingAssembly().Location;
+                string bak = Path.Combine(Path.GetDirectoryName(exe), "oldWinPaletter.trash");
+
+                if (!File.Exists(exe) && File.Exists(bak))
+                    File.Move(bak, exe);
+            }
+            catch { }
         }
 
         private void UC_DownloadProgressChanged(object sender, DownloadManager.DownloadProgressEventArgs e)
@@ -330,63 +331,121 @@ namespace WinPaletter
 
         private void UC_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
-            Button1.Enabled = true;
-            Panel1.Enabled = true;
-            ProgressBar1.Visible = false;
+            if (Disturbed) return;
             ProgressBar1.Value = 0;
-            if (RadioButton2.Checked)
-                MsgBox(Program.Localization.Strings.Updates.Downloaded, MessageBoxButtons.OK, MessageBoxIcon.Information);
-            if (RadioButton1.Checked & !Disturbed)
+            SetBusyState(false);
+            Program.Animator.HideSync(ProgressBar1);
+        }
+
+        private void Updates_Load(object sender, EventArgs e)
+        {
+            this.Localize();
+            ApplyStyle(this);
+
+            toggle1.Checked = Program.Settings.Updates.AutoCheck;
+
+            release_lbl.Font = Fonts.ConsoleLarge;
+            channel_lbl.Font = Fonts.ConsoleLarge;
+            releasedate_lbl.Font = Fonts.ConsoleLarge;
+            size_lbl.Font = Fonts.ConsoleLarge;
+
+            groupBox6.UseDecorationPattern = true;
+
+            labelAlt2.Text = string.Format(Program.Localization.Strings.Updates.NoTLS12, OS.WXP ? Program.Localization.Strings.Windows.WXP : Program.Localization.Strings.Windows.WVista);
+
+            // Restore previous fetched update if available
+            if (CurrentUpdateStatic != null)
+                ApplyUpdateInfoUI(CurrentUpdateStatic);
+            else
+                ResetUpdateUI();
+
+            if (!Program.IsNetworkAvailable)
             {
-                Process.Start(OldName);
-                Program.ForceExit();
+                tablessControl1.SelectedIndex = 1;
+            }
+            else if (OS.WXP || OS.WVista)
+            {
+                tablessControl1.SelectedIndex = 2;
             }
         }
 
-        private void Updates_FormClosing(object sender, FormClosingEventArgs e)
+        private void Updates_Shown(object sender, EventArgs e) => _Shown = true;
+
+        private void Updates_FormClosing(object sender, FormClosingEventArgs e) => DisturbActions();
+
+        private void Updates_FormClosed(object sender, FormClosedEventArgs e) => DisturbActions();
+
+        private void DisturbActions()
         {
-            DisturbActions();
-            ls.Clear();
+            if (!DM.IsBusy) return;
+            Disturbed = true;
+            DM.StopDownload(true);
+            RestoreOldExecutable();
         }
 
-        private void Updates_FormClosed(object sender, FormClosedEventArgs e)
+        private void button5_Click(object sender, EventArgs e)
         {
-            DisturbActions();
-            ls.Clear();
+            Program.Animator.HideSync(tablessControl1);
+            tablessControl1.SelectedIndex = 0;
+            Program.Animator.ShowSync(tablessControl1);
         }
 
-        private bool Disturbed = false;
-
-        /// <summary>
-        /// Stop the download if the user closes the form.
-        /// </summary>
-        public void DisturbActions()
+        private void button4_Click(object sender, EventArgs e)
         {
-            if (DM.IsBusy)
+            DisturbActions();
+            Close();
+        }
+
+        private void Button3_Click(object sender, EventArgs e)
+        {
+            DisturbActions();
+            Close();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            if (OS.WXP)
             {
-                Disturbed = true;
-                DM.StopDownload(true);
-
-                // Restore the old executable file if the user cancels the download.
-                if (RadioButton1.Checked)
-                {
-                    try
-                    {
-                        if (File.Exists("oldWinpaletter_2.trash")) FileSystem.Kill("oldWinpaletter_2.trash");
-                    }
-                    catch { } // Couldn't delete old executable files (may be in use)
-
-                    File.Move(OldName, "oldWinpaletter_2.trash");
-                    File.Move("oldWinpaletter.trash", OldName.Split('\\').Last());
-
-                    try
-                    {
-                        if (File.Exists("oldWinpaletter_2.trash")) FileSystem.Kill("oldWinpaletter_2.trash");
-                        if (File.Exists("oldWinpaletter.trash")) FileSystem.Kill("oldWinpaletter.trash");
-                    }
-                    catch { } // Couldn't delete old executable files (may be in use)
-                }
+                Program.SendCommand($"{SysPaths.Windows}\\Network Diagnostic\\xpnetdiag.exe", false);
             }
+            else if (OS.WVista || OS.W7 || OS.W8x || OS.W10)
+            {
+                Process.Start($"{SysPaths.System32}\\msdt.exe", $"-path {SysPaths.Windows}\\diagnostics\\system\\networking -ep NetworkDiagnosticsPNI");
+            }
+            else
+            {
+                Program.SendCommand($"{SysPaths.Explorer} \"ms-contact-support:///?ActivationType=NetworkDiagnostics\"", false);
+            }
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            Program.Animator.HideSync(tablessControl1);
+            tablessControl1.SelectedIndex = 0;
+            Program.Animator.ShowSync(tablessControl1);
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            DisturbActions();
+            Close();
+        }
+
+        private void toggle1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!_Shown) return;
+            Program.Settings.Updates.AutoCheck = toggle1.Checked;
+            Program.Settings.Updates.Save();
+        }
+
+        private async void button9_Click(object sender, EventArgs e)
+        {
+            await CheckForUpdatesAsync();
+        }
+
+        private void button31_Click(object sender, EventArgs e)
+        {
+            Process.Start(Links.Releases);
         }
     }
 }

@@ -5832,12 +5832,6 @@
         Hh6Tgz/4g/8PCsuPEn3FtOwAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="IO_Dlg_Delete_File" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\IO_Dlg_Delete_File.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="IO_Dlg_Delete_Folder" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\IO_Dlg_Delete_Folder.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="JetBrainsMono" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\JetBrainsMono.zip;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
