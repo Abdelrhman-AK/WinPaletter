@@ -521,7 +521,7 @@ namespace WinPaletter.UI.Simulation
 
         private void GetBack()
         {
-            adaptedBack = Program.AppliedWallpaper?.Clone() as Bitmap;
+            adaptedBack = Program.WallpaperMonitor.FetchSuitableWallpaper(Program.TM, Program.WindowStyle)?.Clone() as Bitmap;
             adaptedBackBlurred = adaptedBack?.Blur(13);
         }
 

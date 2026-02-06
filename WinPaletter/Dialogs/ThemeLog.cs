@@ -1,6 +1,7 @@
 ﻿using Serilog.Events;
 using System;
 using System.IO;
+using System.Media;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -243,6 +244,8 @@ namespace WinPaletter
                 }
 
                 else if (LogEnabled) { AddNode(TreeView1, Program.Localization.Strings.ThemeManager.Tips.NoDefResExplorer, "warning"); }
+
+                CustomSystemSounds.ThemeChange.Play();
             });
 
             Apply_Thread?.Start();

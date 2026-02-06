@@ -31,7 +31,7 @@ namespace WinPaletter
         public string Read(string Section, string Key, string DefaultValue = "")
         {
             if (!System.IO.File.Exists(path)) { return DefaultValue; }
-            StringBuilder SB = new StringBuilder(65535);
+            StringBuilder SB = new(65535);
             GetPrivateProfileString(Section, Key, DefaultValue, SB, SB.Capacity, path);
             return SB.ToString();
         }

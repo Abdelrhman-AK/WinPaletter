@@ -14,6 +14,30 @@ namespace WinPaletter.Templates
     /// </summary>
     public partial class DesktopIcons : UserControl
     {
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            Program.SystemWallpaperChanged += SystemWallpaperChanged;
+            base.OnHandleCreated(e);
+        }
+
+        protected override void OnHandleDestroyed(EventArgs e)
+        {
+            Program.SystemWallpaperChanged -= SystemWallpaperChanged;
+            base.OnHandleDestroyed(e);
+        }
+
+        private void SystemWallpaperChanged(object sender, Program.WallpaperMonitor.WallpaperSnapshot e)
+        {
+            if (!Program.TM.Wallpaper.Enabled)
+            {
+                Invoke(() =>
+                {
+                    BackgroundImage = Program.WallpaperMonitor.FetchSuitableWallpaper(Program.TM, Program.WindowStyle);
+                    BackColor = e.BackgroundColor;
+                });
+            }
+        }
+
         /// <summary>
         /// Desktop icons font
         /// </summary>
@@ -159,7 +183,7 @@ namespace WinPaletter.Templates
                 FakeIcon3.EnableEditingSpacingH = true;
                 FakeIcon2.EnableEditingSpacingV = true;
 
-                FakeIcon1.Icon = FormsExtensions.Icon<MainForm>();                    // Properties.Resources.fileextension 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.RECYCLER, Shell32.SHGSI.ICON)
+                FakeIcon1.Icon = FormsExtensions.Icon<MainForm>();         // Properties.Resources.fileextension 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.RECYCLER, Shell32.SHGSI.ICON)
                 FakeIcon2.Icon = Resources.fileextension;                  // Properties.Resources.settingsfile 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.FOLDER, Shell32.SHGSI.ICON)
                 FakeIcon3.Icon = Resources.ThemesResIcon;                  // Properties.Resources.icons8_command_line 'Shell32.GetSystemIcon(Shell32.SHSTOCKICONID.APPLICATION, Shell32.SHGSI.ICON)
 
@@ -175,6 +199,9 @@ namespace WinPaletter.Templates
         /// <param name="TM"></param>
         public void LoadMetrics(Manager TM)
         {
+            BackgroundImage = Program.WallpaperMonitor.FetchSuitableWallpaper(TM, Program.WindowStyle);
+            BackColor = TM.Win32.Background;
+
             Font = TM.MetricsFonts.IconFont;
 
             if (TM.WindowsEffects.IconsShadow)

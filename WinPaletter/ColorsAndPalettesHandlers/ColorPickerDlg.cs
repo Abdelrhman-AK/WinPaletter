@@ -520,7 +520,7 @@ namespace WinPaletter
 
         private void Button6_Click(object sender, EventArgs e)
         {
-            img = RadioButton1.Checked ? Program.AppliedWallpaper : BitmapMgr.Load(TextBox1.Text);
+            img = RadioButton1.Checked ? Program.WallpaperMonitor.FetchSuitableWallpaper(Program.TM, Program.WindowStyle) : BitmapMgr.Load(TextBox1.Text);
 
             if (CheckBox2.Checked) img = img.Resize(300, 300);
 

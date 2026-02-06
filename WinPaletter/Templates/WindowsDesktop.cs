@@ -2550,6 +2550,7 @@ namespace WinPaletter.Templates
             _hookedTM = TM;
 
             BackgroundImage = Program.WallpaperMonitor.FetchSuitableWallpaper(HookedTM, _windowStyle);
+            BackColor = HookedTM.Win32.Background;
 
             if (WindowStyle == WindowStyle.W12)
             {

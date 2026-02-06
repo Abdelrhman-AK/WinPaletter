@@ -14,6 +14,33 @@ namespace WinPaletter
 {
     public partial class AltTabEditor
     {
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            Program.SystemWallpaperChanged += SystemWallpaperChanged;
+            base.OnHandleCreated(e);
+        }
+
+        protected override void OnHandleDestroyed(EventArgs e)
+        {
+            Program.SystemWallpaperChanged -= SystemWallpaperChanged;
+            base.OnHandleDestroyed(e);
+        }
+
+        private void SystemWallpaperChanged(object sender, Program.WallpaperMonitor.WallpaperSnapshot e)
+        {
+            if (!Program.TM.Wallpaper.Enabled)
+            {
+                Invoke(() =>
+                {
+                    pnl_preview1.BackgroundImage = Program.WallpaperMonitor.FetchSuitableWallpaper(Program.TM, Program.WindowStyle);
+                    Classic_Preview1.BackgroundImage = pnl_preview1.BackgroundImage.Clone() as Bitmap;
+
+                    pnl_preview1.BackColor = e.BackgroundColor;
+                    Classic_Preview1.BackColor = e.BackgroundColor;
+                });
+            }
+        }
+
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
         {
             Process.Start(Links.Wiki.AltTab);
@@ -135,6 +162,12 @@ namespace WinPaletter
                         break;
                     }
 
+                case WindowStyle.W8:
+                    {
+                        RadioImage1.Image = WinLogos.Win8;
+                        break;
+                    }
+
                 case WindowStyle.W7:
                     {
                         RadioImage1.Image = WinLogos.Win7;
@@ -164,6 +197,9 @@ namespace WinPaletter
 
             pnl_preview1.BackgroundImage = Program.WallpaperMonitor.FetchSuitableWallpaper(Program.TM, Program.WindowStyle);
             Classic_Preview1.BackgroundImage = pnl_preview1.BackgroundImage.Clone() as Bitmap;
+
+            pnl_preview1.BackColor = Program.TM.Win32.Background;
+            Classic_Preview1.BackColor = Program.TM.Win32.Background;
 
             SetClassicPanelRaisedRColors(Program.TM, PanelRRaised1);
             SetClassicPanelColors(Program.TM, PanelR1);

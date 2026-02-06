@@ -22,6 +22,30 @@ namespace WinPaletter
             InitializeComponent();
         }
 
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            Program.SystemWallpaperChanged += SystemWallpaperChanged;
+            base.OnHandleCreated(e);
+        }
+
+        protected override void OnHandleDestroyed(EventArgs e)
+        {
+            Program.SystemWallpaperChanged -= SystemWallpaperChanged;
+            base.OnHandleDestroyed(e);
+        }
+
+        private void SystemWallpaperChanged(object sender, Program.WallpaperMonitor.WallpaperSnapshot e)
+        {
+            if (!Program.TM.Wallpaper.Enabled)
+            {
+                Invoke(() =>
+                {
+                    pnl_preview.BackgroundImage = Program.WallpaperMonitor.FetchSuitableWallpaper(Program.TM, Program.WindowStyle);
+                    pnl_preview.BackColor = e.BackgroundColor;
+                });
+            }
+        }
+
         private void LoadFromWPTH(object sender, EventArgs e)
         {
             using (OpenFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, Title = Program.Localization.Strings.Extensions.OpenWinPaletterTheme })
@@ -109,7 +133,8 @@ namespace WinPaletter
             PopulateControlPanelIcons();
             PopulateExplorerIcons();
 
-            //pnl_preview.BackgroundImage = Program.TM.Wallpaper.Enabled ? Program.WallpaperMonitor.FetchSuitableWallpaper(Program.TM, Program.WindowStyle) : Program.ThumbnailWallpaper;
+            pnl_preview.BackgroundImage = Program.WallpaperMonitor.FetchSuitableWallpaper(Program.TM, Program.WindowStyle);
+            pnl_preview.BackColor = Program.TM.Win32.Background;
 
             foreach (WinIcon winIcon in pnl_preview.GetAllControls().OfType<WinIcon>())
             {

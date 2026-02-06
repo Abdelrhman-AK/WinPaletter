@@ -53,6 +53,10 @@ namespace System.Media
         /// </summary>
         public static Sound Close { get; } = new(103, () => Program.TM.Sounds.Snd_Win_Close);
 
+        /// <summary>
+        /// Gets the theme change sound, or a custom path defined in <c>Program.TM.Sounds.Snd_Win_ChangeTheme</c>.
+        /// </summary>
+        public static Sound ThemeChange { get; } = new(105, () => Program.TM.Sounds.Snd_Win_ChangeTheme);
 
         private CustomSystemSounds() { }
 

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows.Forms;
 using WinPaletter.Assets;
 using WinPaletter.Theme;
+using static AnimatorNS.Flags;
 using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter
@@ -283,7 +284,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    result = Program.AppliedWallpaper;
+                    result = Program.WallpaperMonitor.FetchSuitableWallpaper(Program.TM, Program.WindowStyle);
                 }
             }
 

@@ -447,7 +447,7 @@ namespace WinPaletter.UI.Simulation
             // Styles support transparency (Mica/AeroGlass)
             if (Preview == Preview_Enum.W11 || Preview == Preview_Enum.W11Lite || Preview == Preview_Enum.W7Aero)
             {
-                Bitmap Wallpaper = ((Parent?.BackgroundImage) ?? Program.AppliedWallpaper) as Bitmap;
+                Bitmap Wallpaper = ((Parent?.BackgroundImage) ?? Program.WallpaperMonitor.FetchSuitableWallpaper(Program.TM, Program.WindowStyle)) as Bitmap;
 
                 if (Wallpaper is not null)
                 {

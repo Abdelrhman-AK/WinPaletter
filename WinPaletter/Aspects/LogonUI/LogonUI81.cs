@@ -283,7 +283,7 @@ namespace WinPaletter
 
             else if (RadioButton2.Checked)
             {
-                bmpX = Program.AppliedWallpaper.Clone() as Bitmap;
+                bmpX = Program.WallpaperMonitor.FetchSuitableWallpaper(Program.TM, Program.WindowStyle);
             }
 
             else if (RadioButton3.Checked)

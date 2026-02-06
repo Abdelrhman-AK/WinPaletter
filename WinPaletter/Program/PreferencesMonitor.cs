@@ -109,26 +109,9 @@ namespace WinPaletter
             try
             {
                 ManagementEventWatcher watcher;
-                if (OS.WXP)
-                {
-                    // XP fallback: use __InstanceModificationEvent on StdRegProv
-                    string query = $@"
-                SELECT * FROM __InstanceModificationEvent 
-                WITHIN 1 
-                WHERE TargetInstance ISA 'StdRegProv' 
-                AND TargetInstance.sSubKeyName='{keyPath.Replace(@"\", @"\\")}' 
-                AND TargetInstance.sValueName='{valueName}'";
-
-                    watcher = new ManagementEventWatcher(new ManagementScope(@"\\.\root\default"), new WqlEventQuery(query));
-                }
-                else
-                {
-                    // Vista+ proper registry event
-                    string escapedKey = $@"{sid}\{keyPath}".Replace(@"\", @"\\");
-                    string query = $"SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{escapedKey}' AND ValueName='{valueName}'";
-                    watcher = new ManagementEventWatcher(new WqlEventQuery(query));
-                }
-
+                string escapedKey = $@"{sid}\{keyPath}".Replace(@"\", @"\\");
+                string query = $"SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{escapedKey}' AND ValueName='{valueName}'";
+                watcher = new ManagementEventWatcher(new WqlEventQuery(query));
                 watcher.EventArrived += handler;
                 watcher.Start();
 

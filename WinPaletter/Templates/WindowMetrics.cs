@@ -34,6 +34,30 @@ namespace WinPaletter.Templates
         /// </summary>
         public event EditorInvokerEventHandler EditorInvoker;
 
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            Program.SystemWallpaperChanged += SystemWallpaperChanged;
+            base.OnHandleCreated(e);
+        }
+
+        protected override void OnHandleDestroyed(EventArgs e)
+        {
+            Program.SystemWallpaperChanged -= SystemWallpaperChanged;
+            base.OnHandleDestroyed(e);
+        }
+
+        private void SystemWallpaperChanged(object sender, Program.WallpaperMonitor.WallpaperSnapshot e)
+        {
+            if (!HookedTM.Wallpaper.Enabled)
+            {
+                Invoke(() =>
+                {
+                    BackgroundImage = Program.WallpaperMonitor.FetchSuitableWallpaper(HookedTM, _windowStyle);
+                    BackColor = e.BackgroundColor;
+                });
+            }
+        }
+
         /// <summary>
         /// Create a new instance of the window metrics template
         /// </summary>
@@ -1516,7 +1540,20 @@ namespace WinPaletter.Templates
 
             _hookedTM = TM;
 
-            if (WindowStyle == WindowStyle.W11)
+            BackgroundImage = Program.WallpaperMonitor.FetchSuitableWallpaper(HookedTM, _windowStyle);
+            BackColor = HookedTM.Win32.Background;
+
+            if (WindowStyle == WindowStyle.W12)
+            {
+                DarkMode_App = !HookedTM.Windows12.AppMode_Light;
+                DarkMode_Win = !HookedTM.Windows12.WinMode_Light;
+                TitlebarColor_Active = HookedTM.Windows12.Titlebar_Active;
+                TitlebarColor_Inactive = HookedTM.Windows12.Titlebar_Inactive;
+                TitlebarColor_Enabled = HookedTM.Windows12.ApplyAccentOnTitlebars;
+                VisualStyles = HookedTM.Windows12.VisualStyles.VisualStylesType;
+            }
+
+            else if (WindowStyle == WindowStyle.W11)
             {
                 DarkMode_App = !HookedTM.Windows11.AppMode_Light;
                 DarkMode_Win = !HookedTM.Windows11.WinMode_Light;

@@ -908,7 +908,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    return Program.AppliedWallpaper;
+                    return Program.WallpaperMonitor.FetchSuitableWallpaper(Program.TM, Program.WindowStyle);
                 }
             }
         }
@@ -951,7 +951,7 @@ namespace WinPaletter
             }
             else if (TM.LogonUI7.Mode == Theme.Structures.LogonUI7.Sources.Wallpaper)
             {
-                bmpX = Program.AppliedWallpaper.Clone() as Bitmap;
+                bmpX = Program.WallpaperMonitor.FetchSuitableWallpaper(Program.TM, Program.WindowStyle);
             }
             else if (TM.LogonUI7.Mode == Theme.Structures.LogonUI7.Sources.SolidColor)
             {

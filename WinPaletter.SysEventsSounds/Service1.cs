@@ -337,12 +337,12 @@ namespace WinPaletter.SysEventsSounds
             logWatcher2.Enabled = true;
 
             EventLogQuery logQuery3 = new EventLogQuery("System", PathType.LogName, "*[System[(EventID = 6006)]]");
-            EventLogWatcher logWatcher3 = new EventLogWatcher(logQuery2);
+            EventLogWatcher logWatcher3 = new EventLogWatcher(logQuery3);
             logWatcher3.EventRecordWritten += new EventHandler<EventRecordWrittenEventArgs>(ReceiveEvent_ShutdownOrReboot);
             logWatcher3.Enabled = true;
 
             EventLogQuery logQuery4 = new EventLogQuery("System", PathType.LogName, "*[System[(EventID = 6008)]]");
-            EventLogWatcher logWatcher4 = new EventLogWatcher(logQuery2);
+            EventLogWatcher logWatcher4 = new EventLogWatcher(logQuery4);
             logWatcher4.EventRecordWritten += new EventHandler<EventRecordWrittenEventArgs>(ReceiveEvent_ShutdownOrReboot);
             logWatcher4.Enabled = true;
 
