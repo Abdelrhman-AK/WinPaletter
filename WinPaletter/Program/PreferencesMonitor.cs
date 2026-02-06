@@ -1,4 +1,6 @@
-﻿using Serilog.Events;
+﻿using Microsoft.Win32;
+using Microsoft.Xaml.Behaviors.Core;
+using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -61,45 +63,34 @@ namespace WinPaletter
         /// </summary>
         public static void Monitor()
         {
-            // Skip initialization if already monitoring
-            if (Watchers.Count > 0) return;
+            // Stop monitoring if already active to prevent duplicates
+            if (Watchers.Count > 0) StopWatchers();
 
             string sid = User.Identity.User.Value;
 
-            // Impersonate only once
-            using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+            //Predefine key paths
+            const string Personalize = @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize";
+            const string DWM = @"SOFTWARE\Microsoft\Windows\DWM";
+            const string Transparency = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize";
+
+            WallpaperMonitor.Start();
+
+            // Register modern Windows-specific events only if supported
+            if (OS.W10 || OS.W11 || OS.W12)
             {
-                try
-                {
-                    //Predefine key paths
-                    const string Personalize = @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize";
-                    const string DWM = @"SOFTWARE\Microsoft\Windows\DWM";
-                    const string Transparency = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize";
-
-                    WallpaperMonitor.Start();
-
-                    // Register modern Windows-specific events only if supported
-                    if (OS.W10 || OS.W11)
-                    {
-                        RegisterRegistryChangeEvent(sid, Personalize, "AppsUseLightTheme", DarkMode_Changed_EventHandler);
-                        RegisterRegistryChangeEvent(sid, Transparency, "EnableTransparency", Transparency_Changed_EventHandler);
-                    }
-
-                    if (!OS.WXP)
-                    {
-                        // Register DWM/Transparency events (titlebar, effects, etc.)
-                        RegisterRegistryChangeEvent(sid, Personalize, "EnableTransparency", PreferencesRelatedToTitlebarExtenderChanged);
-                        RegisterRegistryChangeEvent(sid, DWM, "ColorPrevalence", PreferencesRelatedToTitlebarExtenderChanged);
-                    }
-
-                    // Automatically clean up on exit
-                    Application.ApplicationExit += (_, _) => StopWatchers();
-                }
-                finally
-                {
-                    wic.Undo();
-                }
+                RegisterRegistryChangeEvent(sid, Personalize, "AppsUseLightTheme", DarkMode_Changed_EventHandler);
+                RegisterRegistryChangeEvent(sid, Transparency, "EnableTransparency", Transparency_Changed_EventHandler);
             }
+
+            if (!OS.WXP)
+            {
+                // Register DWM/Transparency events (titlebar, effects, etc.)
+                RegisterRegistryChangeEvent(sid, Personalize, "EnableTransparency", PreferencesRelatedToTitlebarExtenderChanged);
+                RegisterRegistryChangeEvent(sid, DWM, "ColorPrevalence", PreferencesRelatedToTitlebarExtenderChanged);
+            }
+
+            // Automatically clean up on exit
+            Application.ApplicationExit += (_, _) => StopWatchers();
         }
 
         /// <summary>
@@ -117,17 +108,37 @@ namespace WinPaletter
 
             try
             {
-                // WMI expects double backslashes inside the query string only
-                string escapedKey = $@"{sid}\{keyPath}".Replace(@"\", @"\\");
-                string query = $"SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{escapedKey}' AND ValueName='{valueName}'";
+                ManagementEventWatcher watcher;
+                if (OS.WXP)
+                {
+                    // XP fallback: use __InstanceModificationEvent on StdRegProv
+                    string query = $@"
+                SELECT * FROM __InstanceModificationEvent 
+                WITHIN 1 
+                WHERE TargetInstance ISA 'StdRegProv' 
+                AND TargetInstance.sSubKeyName='{keyPath.Replace(@"\", @"\\")}' 
+                AND TargetInstance.sValueName='{valueName}'";
 
-                ManagementEventWatcher watcher = new(new WqlEventQuery(query));
+                    watcher = new ManagementEventWatcher(new ManagementScope(@"\\.\root\default"), new WqlEventQuery(query));
+                }
+                else
+                {
+                    // Vista+ proper registry event
+                    string escapedKey = $@"{sid}\{keyPath}".Replace(@"\", @"\\");
+                    string query = $"SELECT * FROM RegistryValueChangeEvent WHERE Hive='HKEY_USERS' AND KeyPath='{escapedKey}' AND ValueName='{valueName}'";
+                    watcher = new ManagementEventWatcher(new WqlEventQuery(query));
+                }
+
                 watcher.EventArrived += handler;
                 watcher.Start();
 
                 Watchers.Add(new Tuple<ManagementEventWatcher, EventArrivedEventHandler>(watcher, handler));
 
                 Program.Log?.Debug($"Registered watcher: {fullKey}\\{valueName}");
+            }
+            catch (ManagementException mex) when (mex.Message.Contains("Invalid class"))
+            {
+                Program.Log?.Debug($"Cannot register watcher: WMI class invalid on this system ({fullKey}\\{valueName})");
             }
             catch (Exception ex)
             {

@@ -283,7 +283,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    result = Program.ThumbnailWallpaper;
+                    result = Program.AppliedWallpaper;
                 }
             }
 

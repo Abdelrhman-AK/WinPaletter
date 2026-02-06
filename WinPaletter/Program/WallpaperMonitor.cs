@@ -16,7 +16,8 @@ namespace WinPaletter
         internal static partial class WallpaperMonitor
         {
             private static FileSystemWatcher wallpaperWatcher;
-            private static System.Threading.Timer debounceTimer;
+            private static DateTime lastFireTime = DateTime.MinValue;
+            private static readonly TimeSpan debounceInterval = TimeSpan.FromMilliseconds(120);
             private static readonly object sync = new();
 
             private static ManagementEventWatcher wmiDesktopWatcher;
@@ -31,12 +32,10 @@ namespace WinPaletter
                 // System / registry state
                 public string Path;
                 public Color BackgroundColor;
-                public int WallpaperStyle;
-                public int TileWallpaper;
+                public Theme.Structures.Wallpaper.WallpaperStyles WallpaperStyle;
 
                 // Cached preview info
                 public Bitmap Thumbnail;
-                public int Hash;
                 public PreviewHelpers.WindowStyle WindowStyle;
 
                 public override bool Equals(object obj)
@@ -44,22 +43,21 @@ namespace WinPaletter
                     return obj is WallpaperSnapshot other &&
                            Path == other.Path &&
                            BackgroundColor.ToArgb() == other.BackgroundColor.ToArgb() &&
-                           WallpaperStyle == other.WallpaperStyle &&
-                           TileWallpaper == other.TileWallpaper;
+                           WallpaperStyle == other.WallpaperStyle;
                 }
 
                 public override int GetHashCode()
                 {
-                    return HashCode.Combine(Path, BackgroundColor.ToArgb(), WallpaperStyle, TileWallpaper);
+                    return HashCode.Combine(Path, BackgroundColor.ToArgb(), WallpaperStyle, WindowStyle, Thumbnail);
                 }
             }
 
             private static WallpaperSnapshot lastState;
 
             /// <summary>
-            /// Gets or sets the cached wallpaper data for the current TM wallpaper session.
+            /// Gets or sets the cached wallpaper data for the current theme manager wallpaper session.
             /// </summary>
-            private static WallpaperSnapshot CachedTMWallpaper = new();
+            private static WallpaperSnapshot CachedWallpaper = new();
 
             public static void Start()
             {
@@ -90,9 +88,6 @@ namespace WinPaletter
                 wmiWallpaperXPVista?.Stop();
                 wmiWallpaperXPVista?.Dispose();
                 wmiWallpaperXPVista = null;
-
-                debounceTimer?.Dispose();
-                debounceTimer = null;
 
                 SystemEvents.UserPreferenceChanged -= OnUserPreferenceChanged;
             }
@@ -154,32 +149,35 @@ namespace WinPaletter
                 return watcher;
             }
 
-            private static void OnUserPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)
+            [STAThread]
+            public static void OnUserPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)
             {
-                if (e.Category == UserPreferenceCategory.Desktop || e.Category == UserPreferenceCategory.Color) DebounceFire();
+                if (e.Category == UserPreferenceCategory.General || e.Category == UserPreferenceCategory.Desktop || e.Category == UserPreferenceCategory.Color) DebounceFire();
             }
 
+            [STAThread]
             private static void DebounceFire()
             {
-                lock (sync)
+                var now = DateTime.Now;
+                if ((now - lastFireTime) > debounceInterval)
                 {
-                    debounceTimer ??= new System.Threading.Timer(_ => FireWallpaperChanged(), null, System.Threading.Timeout.Infinite, System.Threading.Timeout.Infinite);
-                    debounceTimer.Change(120, System.Threading.Timeout.Infinite);
+                    lastFireTime = now;
+                    FireWallpaperChanged();
                 }
             }
 
+            [STAThread]
             private static void FireWallpaperChanged()
             {
                 WallpaperSnapshot current = ReadState();
 
                 // Only fire if the state actually changed
-                if (lastState != null && lastState.Path == current.Path && lastState.BackgroundColor.ToArgb() == current.BackgroundColor.ToArgb() && lastState.WallpaperStyle == current.WallpaperStyle && lastState.TileWallpaper == current.TileWallpaper)
+                if (lastState != null && lastState.Path == current.Path && lastState.BackgroundColor.ToArgb() == current.BackgroundColor.ToArgb() && lastState.WallpaperStyle == current.WallpaperStyle)
                     return;
 
                 lastState = current;
 
                 AppliedWallpaper = BitmapMgr.Load(current.Path);
-                ThumbnailWallpaper = current.Thumbnail;
 
                 Program.SystemWallpaperChanged?.Invoke(null, current);
             }
@@ -189,18 +187,28 @@ namespace WinPaletter
                 string path = ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", string.Empty) ?? string.Empty;
                 string bgStr = ReadReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "Background", "255 255 255") ?? "255 255 255";
 
-                int.TryParse(ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "WallpaperStyle", "0"), out int wallpaperStyle);
+                int.TryParse(ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "WallpaperStyle", "0"), out int wallpaperStyleInt);
                 int.TryParse(ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "TileWallpaper", "0"), out int tileWallpaper);
+
+                Theme.Structures.Wallpaper.WallpaperStyles wallpaperStyle;
+                if (tileWallpaper == 1)
+                    wallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Tile;
+                else
+                {
+                    if (wallpaperStyleInt == 0) wallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Centered;
+                    else if (wallpaperStyleInt == 2) wallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Stretched;
+                    else if (wallpaperStyleInt == 6) wallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Fit;
+                    else if (wallpaperStyleInt == 10) wallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Fill;
+                    else wallpaperStyle = Theme.Structures.Wallpaper.WallpaperStyles.Fill;
+                }
 
                 WallpaperSnapshot snapshot = new()
                 {
                     Path = path,
                     BackgroundColor = bgStr.ToColorFromWin32(),
                     WallpaperStyle = wallpaperStyle,
-                    TileWallpaper = tileWallpaper,
                     Thumbnail = null,
-                    Hash = 0,
-                    WindowStyle = (PreviewHelpers.WindowStyle)(-1)
+                    WindowStyle = Program.WindowStyle
                 };
 
                 // Load thumbnail if requested
@@ -222,64 +230,106 @@ namespace WinPaletter
             /// <param name="TM"></param>
             /// <param name="previewConfig"></param>
             /// <returns></returns>
-            public static Bitmap FetchSuitableWallpaper(Manager themeMgr, PreviewHelpers.WindowStyle previewConfig)
+            public static Bitmap FetchSuitableWallpaper(Manager themeMgr = null, PreviewHelpers.WindowStyle previewConfig = (PreviewHelpers.WindowStyle)(-1), Wallpaper.WallpaperStyles wallpaperStyle = (Wallpaper.WallpaperStyles)(-1))
             {
-                int hash = themeMgr.GetHashCode();
+                themeMgr ??= TM;
+                bool useThemeMgr = themeMgr.Wallpaper.Enabled;
+                if (previewConfig == (PreviewHelpers.WindowStyle)(-1)) previewConfig = WindowStyle;
+
+                if (wallpaperStyle == (Wallpaper.WallpaperStyles)(-1)) wallpaperStyle = useThemeMgr ? themeMgr.Wallpaper.WallpaperStyle : lastState.WallpaperStyle;
 
                 // Return cache if it matches
-                if (CachedTMWallpaper.Thumbnail != null && CachedTMWallpaper.Hash == hash && CachedTMWallpaper.WindowStyle == previewConfig)
+                if (CachedWallpaper.Thumbnail != null)
                 {
-                    Log?.Write(LogEventLevel.Information, $"Fetched cached wallpaper for {previewConfig}");
-                    return CachedTMWallpaper.Thumbnail;
+                    bool matches = useThemeMgr
+                        ? CachedWallpaper.Path == themeMgr.Wallpaper.ImageFile && CachedWallpaper.WindowStyle == previewConfig && CachedWallpaper.WallpaperStyle == wallpaperStyle
+                        : CachedWallpaper.Path == lastState.Path && CachedWallpaper.WindowStyle == previewConfig && CachedWallpaper.WallpaperStyle == wallpaperStyle;
+
+                    if (matches)
+                    {
+                        Log?.Write(LogEventLevel.Information, $"Fetched cached wallpaper for {previewConfig} (useThemeMgr={useThemeMgr})");
+                        return CachedWallpaper.Thumbnail;
+                    }
                 }
 
-                Log?.Write(LogEventLevel.Information, $"Fetching suitable wallpaper for {previewConfig}");
+                Log?.Write(LogEventLevel.Information, $"Fetching suitable wallpaper for {previewConfig} (useThemeMgr={useThemeMgr})");
 
                 Bitmap wallpaper;
 
-                // Try tinted wallpaper first
-                wallpaper = GetTintedWallpaper(themeMgr, previewConfig);
-                if (wallpaper != null)
+                if (useThemeMgr)
                 {
-                    CachedTMWallpaper.Thumbnail?.Dispose();
-                    CachedTMWallpaper = new() { Hash = hash, Thumbnail = wallpaper, BackgroundColor = themeMgr.Win32.Background, WindowStyle = previewConfig };
-                    return wallpaper;
+                    // Try tinted wallpaper first
+                    wallpaper = GetTintedWallpaper(themeMgr, previewConfig);
+                    if (wallpaper is null)
+                    {
+                        switch (themeMgr.Wallpaper.WallpaperType)
+                        {
+                            case Theme.Structures.Wallpaper.WallpaperTypes.SlideShow:
+                                wallpaper = FetchSlideShowWallpaper(themeMgr);
+                                break;
+
+                            case Theme.Structures.Wallpaper.WallpaperTypes.SolidColor:
+                                wallpaper = null;
+                                break;
+
+                            default:
+                                wallpaper = BitmapMgr.Load(themeMgr.Wallpaper.ImageFile);
+                                break;
+                        }
+                    }
+
+                    // Cache source path from theme manager
+                    CachedWallpaper.Path = themeMgr.Wallpaper.ImageFile;
+                    CachedWallpaper.BackgroundColor = themeMgr.Win32.Background;
                 }
-
-                // Determine wallpaper type
-                switch (themeMgr.Wallpaper.WallpaperType)
+                else
                 {
-                    case Theme.Structures.Wallpaper.WallpaperTypes.Picture:
-                        wallpaper = BitmapMgr.Load(themeMgr.Wallpaper.ImageFile);
-                        break;
+                    // Fallback to system-applied wallpaper
+                    if (wallpaperStyle != Wallpaper.WallpaperStyles.Tile)
+                    {
+                        wallpaper = BitmapMgr.Thumbnail(lastState.Path, PreviewSize.Width * 2, PreviewSize.Height * 2);
+                    }
+                    else
+                    {
+                        using (Bitmap bmp = BitmapMgr.Load(lastState.Path))
+                        {
+                            if (bmp is not null)
+                            {
+                                float screenWidth = Screen.PrimaryScreen.Bounds.Width;
+                                float screenHeight = Screen.PrimaryScreen.Bounds.Height;
 
-                    case Theme.Structures.Wallpaper.WallpaperTypes.SlideShow:
-                        wallpaper = FetchSlideShowWallpaper(themeMgr);
-                        break;
+                                float targetWidth = PreviewSize.Width * 2;
+                                float targetHeight = PreviewSize.Height * 2;
 
-                    case Theme.Structures.Wallpaper.WallpaperTypes.SolidColor:
-                        wallpaper = null;
-                        break;
+                                float resizedWidth = (targetWidth / screenWidth) * bmp.Width;
+                                float resizedHeight = (targetHeight / screenHeight) * bmp.Height;
 
-                    default:
-                        wallpaper = ThumbnailWallpaper;
-                        break;
+                                wallpaper = bmp.GetThumbnailImage((int)resizedWidth, (int)resizedHeight, () => false, IntPtr.Zero) as Bitmap;
+                            }
+                            else wallpaper = null;
+                        }
+                    }
+
+                    // Cache source path from system
+                    CachedWallpaper.Path = lastState.Path;
+                    CachedWallpaper.BackgroundColor = lastState.BackgroundColor;
                 }
 
                 // Apply style if wallpaper is available
                 if (wallpaper != null)
                 {
-                    using (PictureBox picbox = new() { Size = PreviewSize, BackColor = themeMgr.Win32.Background })
+                    using (PictureBox picbox = new() { Size = PreviewSize, BackColor = CachedWallpaper.BackgroundColor })
                     {
-                        wallpaper = ApplyStyleToWallpaper(wallpaper, picbox.Size, themeMgr.Wallpaper.WallpaperStyle);
+                        wallpaper = ApplyStyleToWallpaper(wallpaper, picbox.Size, wallpaperStyle);
                     }
                 }
 
-                // Cache
-                CachedTMWallpaper.Thumbnail?.Dispose();
-                CachedTMWallpaper = new() { Hash = hash, Thumbnail = wallpaper, BackgroundColor = themeMgr.Win32.Background, WindowStyle = previewConfig };
+                // Finalize cache
+                CachedWallpaper.Thumbnail = wallpaper;
+                CachedWallpaper.WallpaperStyle = wallpaperStyle;
+                CachedWallpaper.WindowStyle = previewConfig;
 
-                return CachedTMWallpaper.Thumbnail;
+                return CachedWallpaper.Thumbnail;
             }
 
             private static Bitmap GetTintedWallpaper(Manager TM, PreviewHelpers.WindowStyle previewConfig)
@@ -329,7 +379,7 @@ namespace WinPaletter
                     return BitmapMgr.Load(imageFiles[0]);
                 }
 
-                return ThumbnailWallpaper;
+                return AppliedWallpaper;
             }
 
             /// <summary>
@@ -357,7 +407,7 @@ namespace WinPaletter
                 Program.Log?.Write(LogEventLevel.Information, $"Rescaling wallpaper preview to {wallpaper.Width}x{wallpaper.Height} and adjusting its style");
 
                 // Apply the wallpaper style
-                return wallpaperStyle switch
+                Bitmap result = wallpaperStyle switch
                 {
                     Theme.Structures.Wallpaper.WallpaperStyles.Fill => wallpaper.FillInSize(targetSize),
                     Theme.Structures.Wallpaper.WallpaperStyles.Fit => wallpaper,
@@ -366,6 +416,8 @@ namespace WinPaletter
                     Theme.Structures.Wallpaper.WallpaperStyles.Tile => wallpaper.Tile(targetSize),
                     _ => wallpaper
                 };
+
+                return result;
             }
         }
     }

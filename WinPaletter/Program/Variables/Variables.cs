@@ -266,10 +266,5 @@ namespace WinPaletter
 
         public static event Action<bool> WindowsTransparencyChanged;
         public static event EventHandler<WallpaperMonitor.WallpaperSnapshot> SystemWallpaperChanged;
-
-        /// <summary>
-        /// Get the Windows desktop wallpaper
-        /// </summary>
-        public static Bitmap ThumbnailWallpaper { get; set; }
     }
 }

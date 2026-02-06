@@ -2,6 +2,7 @@
 using Serilog.Events;
 using System;
 using System.Diagnostics;
+using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -224,7 +225,7 @@ namespace WinPaletter.GitHub
 
             try
             {
-                Octokit.User user = await Client.User.Current().ConfigureAwait(false);
+                Octokit.User user = await Client.User.Current();
                 Program.Log?.Write(LogEventLevel.Information, $"Logged in as {user.Login}.");
                 return true;
             }

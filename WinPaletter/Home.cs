@@ -28,11 +28,6 @@ namespace WinPaletter
     /// </summary>
     public partial class Home : Form
     {
-        private bool RaiseUpdate = false;
-        private string ver = string.Empty;
-        private int StableInt, BetaInt, UpdateChannel;
-        private int ChannelFixer;
-        private List<string> Updates_ls = [];
         private bool isLoggedIn = false;    
 
         /// <summary>
@@ -151,12 +146,7 @@ namespace WinPaletter
                 {
                     using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = Forms.Home.File, Title = Program.Localization.Strings.Extensions.SaveWinPaletterTheme })
                     {
-                        bool result = Forms.MainForm.ExitWithChangedFileResponse(); //dlg,
-                                                                                    //() => Forms.ThemeLog.Apply_Theme(Program.TM, false, true),
-                                                                                    //() => Forms.ThemeLog.Apply_Theme(Program.TM_FirstTime, false, true),
-                                                                                    //() => { using (Manager TMx = Default.Get()) { Forms.ThemeLog.Apply_Theme(TMx, false, true); } }
-                                                                                    //);
-
+                        bool result = Forms.MainForm.ExitWithChangedFileResponse(); 
                         e.Cancel = !result;
                     }
                 }
@@ -401,7 +391,6 @@ namespace WinPaletter
                     {
                         Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Updates);
 
-                        RaiseUpdate = true;
                         NotifyUpdates.Visible = true;
                         Button5.ImageGlyph = Resources.Glyph_Update_Dot;
 

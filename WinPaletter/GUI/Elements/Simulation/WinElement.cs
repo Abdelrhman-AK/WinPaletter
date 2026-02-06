@@ -384,7 +384,7 @@ namespace WinPaletter.UI.Simulation
 
         public void GetBack()
         {
-            Bitmap Wallpaper = Parent?.BackgroundImage as Bitmap ?? Program.ThumbnailWallpaper;
+            Bitmap Wallpaper = Parent?.BackgroundImage as Bitmap ?? Program.AppliedWallpaper;
 
             if (Wallpaper != null && Bounds.Width > 0 && Bounds.Height > 0)
             {

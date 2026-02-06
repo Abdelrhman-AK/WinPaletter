@@ -33,14 +33,14 @@ namespace WinPaletter
             //AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
 
             Application.ApplicationExit += OnExit;
-            
-            // Change security protocol to TLS 1.2 if the OS is Windows 7, Vista or XP
-            if (OS.W7 || OS.WVista || OS.WXP) ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls;
+
+            // Configure the security protocol to use TLS 1.2 or higher. This is important for some features that require internet access, such as checking for updates and downloading themes.
+            ConfigureSecurityProtocol();
 
             // Delete the update residuals
             DeleteUpdateResiduals();
 
-            // Get the memory fonts (Jetbrain Mono), initialize the image lists and the application
+            // Get the memory fonts (Jetbrain Mono)
             GetMemoryFonts();
 
             // Initialize the image lists to be used for logs and other purposes
@@ -128,17 +128,15 @@ namespace WinPaletter
 
                 ExecuteArgs();
                 UpdateSysEventsSounds();
-
-                GitHub = new();
-
-                Task.Run(async () =>
-                {
-                    bool isLoggedIn = await GitHub.IsLoggedInAsync().ConfigureAwait(false);
-                    User.UpdateGitHubLoginStatus(isLoggedIn);
-                });
-
-                wic.Undo();
             }
+
+            GitHub = new();
+
+            Task.Run(async () =>
+            {
+                bool isLoggedIn = await GitHub.IsLoggedInAsync();
+                User.UpdateGitHubLoginStatus(isLoggedIn);
+            });
         }
 
         /// <summary>

@@ -51,10 +51,18 @@ namespace WinPaletter.Templates
             {
                 Invoke(() =>
                 {
-                    BackgroundImage = e.Thumbnail;
+                    BackgroundImage = Program.WallpaperMonitor.FetchSuitableWallpaper(HookedTM, _windowStyle);
                     BackColor = e.BackgroundColor;
                 });
             }
+        }
+
+        protected override void OnBackgroundImageLayoutChanged(EventArgs e)
+        {
+            pnl_preview.BackgroundImageLayout = BackgroundImageLayout;
+            pnl_preview_classic.BackgroundImageLayout = BackgroundImageLayout;
+
+            base.OnBackgroundImageLayoutChanged(e);
         }
 
         /// <summary>
@@ -2541,6 +2549,8 @@ namespace WinPaletter.Templates
 
             _hookedTM = TM;
 
+            BackgroundImage = Program.WallpaperMonitor.FetchSuitableWallpaper(HookedTM, _windowStyle);
+
             if (WindowStyle == WindowStyle.W12)
             {
                 Transparency = HookedTM.Windows12.Transparency;
@@ -2788,9 +2798,7 @@ namespace WinPaletter.Templates
         {
             if (!DesignMode)
             {
-                //LoadFromTM(HookedTM);
-
-                BackgroundImage = HookedTM.Wallpaper.Enabled ? Program.WallpaperMonitor.FetchSuitableWallpaper(HookedTM, _windowStyle) : Program.ThumbnailWallpaper;
+                LoadFromTM(HookedTM);
 
                 LoadMetricsFonts(HookedTM);
                 LoadClassicColors(HookedTM.Win32);

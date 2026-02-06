@@ -241,6 +241,24 @@ namespace WinPaletter
         }
 
         /// <summary>
+        /// Configure the security protocol to support TLS 1.1 and TLS 1.2 for better compatibility with modern web services, while maintaining fallback options for older protocols. This method attempts to enable TLS 1.1 and TLS 1.2 by adding their corresponding values to the SecurityProtocolType enumeration. It also includes fallbacks for TLS 1.0 and SSL 3.0 to ensure compatibility with older systems, while prioritizing the use of more secure protocols when available.
+        /// </summary>
+        private static void ConfigureSecurityProtocol()
+        {
+            ServicePointManager.Expect100Continue = false;
+
+            SecurityProtocolType protocols = 0;
+
+            try { protocols |= (SecurityProtocolType)768; } catch { }   // TLS 1.1
+            try { protocols |= (SecurityProtocolType)3072; } catch { }  // TLS 1.2
+            try { protocols |= SecurityProtocolType.Tls; } catch { }    // TLS 1.0
+            try { protocols |= SecurityProtocolType.Ssl3; } catch { }   // SSL 3.0 (legacy fallback)
+
+            if (protocols != 0)
+                ServicePointManager.SecurityProtocol = protocols;
+        }
+
+        /// <summary>
         /// Delete the old WinPaletter executable files
         /// </summary>
         private static void DeleteUpdateResiduals()
@@ -344,7 +362,9 @@ namespace WinPaletter
             }
             else
             {
-                //SystemEvents.UserPreferenceChanged += OldWinPreferenceChanged;
+                // Force SystemEvents window creation to avoid Windows XP crashes when subscribing to UserPreferenceChanged event
+                var dummy = typeof(SystemEvents);
+                SystemEvents.UserPreferenceChanged += WallpaperMonitor.OnUserPreferenceChanged;
             }
         }
 
@@ -599,7 +619,7 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Check if the new version of application is running for the first time, and show the What'archiveStream New pop-up if it is
+        /// Check if the new version of application is running for the first time, and show the What's New pop-up if it is
         /// </summary>
         public static void CheckWhatsNew()
         {
