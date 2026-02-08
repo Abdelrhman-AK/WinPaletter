@@ -751,8 +751,12 @@ namespace WinPaletter.Theme.Structures
         /// Retrun Win32UI structure into a string in format of Microsoft theme File (*.theme)
         /// </summary>
         /// <param name="metricsFonts">MetricsFonts structure to be included in the string</param>
-        public string ToString(MetricsFonts metricsFonts = null)
+        /// <param name="icons">Icons structure to be included in the string</param>
+        public string ToString(MetricsFonts metricsFonts = null, Icons icons = null)
         {
+            metricsFonts??= Program.TM.MetricsFonts;
+            icons ??= Program.TM.Icons;
+
             StringBuilder s = new();
             s.Clear();
             s.AppendLine($"; {string.Format(Program.Localization.Strings.MSTheme.Copyrights, DateTime.Now.Year)}");
@@ -761,6 +765,15 @@ namespace WinPaletter.Theme.Structures
             s.AppendLine($"; {string.Format(Program.Localization.Strings.MSTheme.CreatedBy, Program.TM.Info.Author)}");
             s.AppendLine($"; {string.Format(Program.Localization.Strings.MSTheme.ThemeName, Program.TM.Info.ThemeName)}");
             s.AppendLine($"; {string.Format(Program.Localization.Strings.MSTheme.ThemeVersion, Program.TM.Info.ThemeVersion)}");
+            s.AppendLine();
+
+            // XP requires this section first
+            s.AppendLine("[Theme]");
+            s.AppendLine($"DisplayName={Program.TM.Info.ThemeName}");
+            s.AppendLine(";Recycle Bin");
+            s.AppendLine($"[CLSID\\{Icons.DesktopCLSIDs.Where(x => x.Item2 == "Recycle Bin").FirstOrDefault().Item1}\\DefaultIcon]");
+            s.AppendLine($"full={SysPaths.Normalize(icons.RecycleBinFull)}");
+            s.AppendLine($"empty={SysPaths.Normalize(icons.RecycleBinEmpty)}");
             s.AppendLine();
 
             s.AppendLine($"[Control Panel\\Colors]");
@@ -798,55 +811,52 @@ namespace WinPaletter.Theme.Structures
             s.AppendLine($"Desktop={Desktop.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)}");
             s.AppendLine();
 
-            if (metricsFonts is not null)
-            {
-                NONCLIENTMETRICS ncm = new();
-                ncm.cbSize = (uint)Marshal.SizeOf(ncm);
-                ncm.iCaptionWidth = metricsFonts.CaptionWidth;
-                ncm.iCaptionHeight = metricsFonts.CaptionHeight;
-                ncm.iSMCaptionWidth = metricsFonts.SmCaptionWidth;
-                ncm.iSMCaptionHeight = metricsFonts.SmCaptionHeight;
-                ncm.iBorderWidth = metricsFonts.BorderWidth;
-                ncm.iPaddedBorderWidth = metricsFonts.PaddedBorderWidth;
-                ncm.iMenuWidth = metricsFonts.MenuWidth;
-                ncm.iMenuHeight = metricsFonts.MenuHeight;
-                ncm.iScrollWidth = metricsFonts.ScrollWidth;
-                ncm.iScrollHeight = metricsFonts.ScrollHeight;
+            NONCLIENTMETRICS ncm = new();
+            ncm.cbSize = (uint)Marshal.SizeOf(ncm);
+            ncm.iCaptionWidth = metricsFonts.CaptionWidth;
+            ncm.iCaptionHeight = metricsFonts.CaptionHeight;
+            ncm.iSMCaptionWidth = metricsFonts.SmCaptionWidth;
+            ncm.iSMCaptionHeight = metricsFonts.SmCaptionHeight;
+            ncm.iBorderWidth = metricsFonts.BorderWidth;
+            ncm.iPaddedBorderWidth = metricsFonts.PaddedBorderWidth;
+            ncm.iMenuWidth = metricsFonts.MenuWidth;
+            ncm.iMenuHeight = metricsFonts.MenuHeight;
+            ncm.iScrollWidth = metricsFonts.ScrollWidth;
+            ncm.iScrollHeight = metricsFonts.ScrollHeight;
 
-                GDI32.LogFont lfCaptionFont = new();
-                metricsFonts.CaptionFont.ToLogFont(lfCaptionFont);
-                ncm.lfCaptionFont = lfCaptionFont;
+            GDI32.LogFont lfCaptionFont = new();
+            metricsFonts.CaptionFont.ToLogFont(lfCaptionFont);
+            ncm.lfCaptionFont = lfCaptionFont;
 
-                GDI32.LogFont lfMenuFont = new();
-                metricsFonts.MenuFont.ToLogFont(lfMenuFont);
-                ncm.lfMenuFont = lfMenuFont;
+            GDI32.LogFont lfMenuFont = new();
+            metricsFonts.MenuFont.ToLogFont(lfMenuFont);
+            ncm.lfMenuFont = lfMenuFont;
 
-                GDI32.LogFont lfMessageFont = new();
-                metricsFonts.MessageFont.ToLogFont(lfMessageFont);
-                ncm.lfMessageFont = lfMessageFont;
+            GDI32.LogFont lfMessageFont = new();
+            metricsFonts.MessageFont.ToLogFont(lfMessageFont);
+            ncm.lfMessageFont = lfMessageFont;
 
-                GDI32.LogFont lfSMCaptionFont = new();
-                metricsFonts.SmCaptionFont.ToLogFont(lfSMCaptionFont);
-                ncm.lfSMCaptionFont = lfSMCaptionFont;
+            GDI32.LogFont lfSMCaptionFont = new();
+            metricsFonts.SmCaptionFont.ToLogFont(lfSMCaptionFont);
+            ncm.lfSMCaptionFont = lfSMCaptionFont;
 
-                GDI32.LogFont lfStatusFont = new();
-                metricsFonts.StatusFont.ToLogFont(lfStatusFont);
-                ncm.lfStatusFont = lfStatusFont;
+            GDI32.LogFont lfStatusFont = new();
+            metricsFonts.StatusFont.ToLogFont(lfStatusFont);
+            ncm.lfStatusFont = lfStatusFont;
 
-                ICONMETRICS icm = new();
-                icm.cbSize = (uint)Marshal.SizeOf(icm);
-                icm.iHorzSpacing = metricsFonts.IconSpacing;
-                icm.iVertSpacing = metricsFonts.IconVerticalSpacing;
+            ICONMETRICS icm = new();
+            icm.cbSize = (uint)Marshal.SizeOf(icm);
+            icm.iHorzSpacing = metricsFonts.IconSpacing;
+            icm.iVertSpacing = metricsFonts.IconVerticalSpacing;
 
-                GDI32.LogFont lfIconFont = new();
-                metricsFonts.IconFont.ToLogFont(lfIconFont);
-                icm.lfFont = lfIconFont;
+            GDI32.LogFont lfIconFont = new();
+            metricsFonts.IconFont.ToLogFont(lfIconFont);
+            icm.lfFont = lfIconFont;
 
-                s.AppendLine(string.Format("[Metrics]"));
-                s.AppendLine(string.Format($"IconMetrics={string.Join(" ", icm.ToByteArray())}"));
-                s.AppendLine(string.Format($"NonClientMetrics={string.Join(" ", ncm.ToByteArray())}"));
-                s.AppendLine();
-            }
+            s.AppendLine(string.Format("[Metrics]"));
+            s.AppendLine(string.Format($"IconMetrics={string.Join(" ", icm.ToByteArray())}"));
+            s.AppendLine(string.Format($"NonClientMetrics={string.Join(" ", ncm.ToByteArray())}"));
+            s.AppendLine();
 
             s.AppendLine(string.Format("[MasterThemeSelector]"));
             s.AppendLine(string.Format("MTSM=DABJDKT"));

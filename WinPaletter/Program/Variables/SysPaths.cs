@@ -222,5 +222,18 @@ namespace WinPaletter.GlobalVariables
         /// </summary>
         public static string TerminalPreviewJSON => $"{LocalAppData}\\Packages\\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\\LocalState\\settings.json";
         #endregion
+
+        #region Helpers
+
+        public static string Normalize(string path)
+        {
+            if (string.IsNullOrWhiteSpace(path)) return path;
+            string systemRoot = Environment.GetFolderPath(Environment.SpecialFolder.Windows);
+            if (path.StartsWith(systemRoot, StringComparison.OrdinalIgnoreCase))
+                return "%SystemRoot%" + path.Substring(systemRoot.Length);
+            return path;
+        }
+
+        #endregion
     }
 }

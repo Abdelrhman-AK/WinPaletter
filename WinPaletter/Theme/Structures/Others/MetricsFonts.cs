@@ -5,6 +5,8 @@ using Serilog.Events;
 using System;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -466,7 +468,8 @@ namespace WinPaletter.Theme.Structures
         /// Retrun MetricsFonts structure into a string in format of Microsoft theme File (*.theme)
         /// </summary>
         /// <param name="win32UI">Win32UI structure to be included in the string</param>
-        public string ToString(Win32UI win32UI = null)
+        /// <param name="icons">Icons structure to be included in the string</param>
+        public string ToString(Win32UI win32UI = null, Icons icons = null)
         {
             StringBuilder s = new();
             s.Clear();
@@ -477,6 +480,15 @@ namespace WinPaletter.Theme.Structures
             s.AppendLine($"; {string.Format(Program.Localization.Strings.MSTheme.ThemeName, Program.TM.Info.ThemeName)}");
             s.AppendLine($"; {string.Format(Program.Localization.Strings.MSTheme.ThemeVersion, Program.TM.Info.ThemeVersion)}");
             s.AppendLine(string.Empty);
+
+            // XP requires this section first
+            s.AppendLine("[Theme]");
+            s.AppendLine($"DisplayName={Program.TM.Info.ThemeName}");
+            s.AppendLine(";Recycle Bin");
+            s.AppendLine($"[CLSID\\{Icons.DesktopCLSIDs.Where(x => x.Item2 == "Recycle Bin").FirstOrDefault().Item1}\\DefaultIcon]");
+            s.AppendLine($"full={SysPaths.Normalize(icons.RecycleBinFull)}");
+            s.AppendLine($"empty={SysPaths.Normalize(icons.RecycleBinEmpty)}");
+            s.AppendLine();
 
             if (win32UI is not null)
             {
