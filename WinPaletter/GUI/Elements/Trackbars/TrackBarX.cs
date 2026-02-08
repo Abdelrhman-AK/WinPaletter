@@ -31,7 +31,7 @@ namespace WinPaletter.UI.Controllers
             set
             {
                 trackBar1.Value = value;
-                value_btn.Text = Math.Max(Math.Min(value, Maximum), Minimum).ToString();
+                value_btn.Text = Math.Round(Math.Max(Math.Min(value, Maximum), Minimum), 2).ToString();
                 ValueChanged?.Invoke(this, new EventArgs());
             }
         }

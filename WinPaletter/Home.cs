@@ -47,6 +47,7 @@ namespace WinPaletter
         {
             InitializeComponent();
             Icon = FormsExtensions.Icon<MainForm>();
+            User.GitHubAvatarUpdated += UpdateUserButtonAvatar;
         }
 
         private void Home_Load(object sender, EventArgs e)
@@ -164,6 +165,45 @@ namespace WinPaletter
             }
         }
 
+        private void UpdateUserButtonAvatar()
+        {
+            if (InvokeRequired)
+            {
+                BeginInvoke((Action)UpdateUserButtonAvatar);
+                return;
+            }
+
+            Bitmap avatar = User.GitHub_Avatar ?? User.ProfilePicture;
+
+            if (avatar == null)
+            {
+                userButton.Image = null;
+                return;
+            }
+
+            using (Bitmap resizedAvatar = avatar.Resize(32, 32))
+            using (Bitmap resizedUser = User.ProfilePicture?.Resize(16, 16))
+            using (Bitmap circularAvatar = resizedAvatar.ToCircular(Program.Style.Schemes.Main.Colors.ForeColor_Accent))
+            using (Bitmap circularUser = resizedUser?.ToCircular())
+            {
+                Bitmap finalImage;
+
+                if (circularUser != null)
+                {
+                    PointF overlayPoint = new(circularAvatar.Width - circularUser.Width, circularAvatar.Height - circularUser.Height);
+                    finalImage = circularAvatar.Overlay(circularUser, overlayPoint);
+                }
+                else
+                {
+                    finalImage = (Bitmap)circularAvatar.Clone();
+                }
+
+                Image old = userButton.Image;
+                userButton.Image = finalImage;
+                old?.Dispose();
+            }
+        }
+
         /// <summary>
         /// Load the user data to the user button.
         /// </summary>
@@ -182,40 +222,7 @@ namespace WinPaletter
 
                 userButton.Tag = User.GitHub.Login + " > " + User.Name;
 
-                // Start download only if avatar is null
-                if (User.GitHub_Avatar is null)
-                {
-                    using (Bitmap resized = User.ProfilePicture?.Resize(32, 32))
-                    {
-                        userButton.Image = resized?.ToCircular();
-                    }
-
-                    // Run download in background, don't await
-                    _ = Task.Run(async () =>
-                    {
-                        await User.DownloadAvatarAsync().ConfigureAwait(false);
-
-                        using (Bitmap resized_avatar = User.GitHub_Avatar?.Resize(32, 32))
-                        using (Bitmap resized_user = User.ProfilePicture?.Resize(16, 16))
-                        using (Bitmap circular_avatar = resized_avatar.ToCircular(Program.Style.Schemes.Main.Colors.ForeColor_Accent))
-                        using (Bitmap circular_user = resized_user.ToCircular())
-                        {
-                            PointF rect_overlay = new(circular_avatar.Width - circular_user.Width, circular_avatar.Height - circular_user.Height);
-                            userButton.Image = circular_avatar.Overlay(circular_user, rect_overlay);
-                        }
-                    });
-                }
-                else
-                {
-                    using (Bitmap resized_avatar = User.GitHub_Avatar?.Resize(32, 32))
-                    using (Bitmap resized_user = User.ProfilePicture?.Resize(16, 16))
-                    using (Bitmap circular_avatar = resized_avatar.ToCircular(Program.Style.Schemes.Main.Colors.ForeColor_Accent))
-                    using (Bitmap circular_user = resized_user.ToCircular())
-                    {
-                        PointF rect_overlay = new(circular_avatar.Width - circular_user.Width, circular_avatar.Height - circular_user.Height);
-                        userButton.Image = circular_avatar.Overlay(circular_user, rect_overlay);
-                    }
-                }
+                UpdateUserButtonAvatar();
             }
             else
             {

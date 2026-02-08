@@ -24,14 +24,53 @@ namespace WinPaletter
         public GitHub_Mgr()
         {
             InitializeComponent();
+            User.GitHubAvatarUpdated += User_GitHubAvatarUpdated;
+            User.GitHubUserSwitch += User_GitHubUserSwitch;
         }
+
 
         Octokit.Repository repo;
         Branch upstreamBranch;
 
         private async void GitHubManager_Load(object sender, EventArgs e)
         {
+            groupBox6.UseDecorationPattern = true;
+
+            LoadInternal(false);
+        }
+
+        private void LoadInternal(bool animate = true)
+        {
+            if (!animate) tablessControl1.Visible = true;
+
+            if (animate) Program.Animator.HideSync(tablessControl1);
+
+            if (!Program.IsNetworkAvailable)
+            {
+                tablessControl1.SelectedIndex = 3;
+                if (animate) Program.Animator.ShowSync(tablessControl1);
+            }
+            else if (!User.GitHub_LoggedIn)
+            {
+                tablessControl1.SelectedIndex = 2;
+                if (animate) Program.Animator.ShowSync(tablessControl1);
+            }
+            else
+            {
+                tablessControl1.SelectedIndex = 0;
+                if (animate) Program.Animator.ShowSync(tablessControl1);
+                Init();
+            }
+        }
+
+        private async void Init()
+        {
             AddViewsToButton();
+            FileSystem.Navigated += FileSystem_Navigated;
+            FileSystem.CanPasteChanged += FileSystem_CanPasteChanged;
+            FileSystem.StatusLabelChanged += FileSystem_StatusLabelChanged;
+            FileSystem.CanDoIOChanged += FileSystem_CanDoIOChanged;
+            toggle1.Checked = GitHub.FileSystem.ShowHiddenFiles;
 
             await UpdateGitHubLoginData();
 
@@ -47,13 +86,6 @@ namespace WinPaletter
             {
                 await GetBranches();
             }
-
-            FileSystem.Navigated += FileSystem_Navigated;
-            FileSystem.CanPasteChanged += FileSystem_CanPasteChanged;
-            FileSystem.StatusLabelChanged += FileSystem_StatusLabelChanged;
-            FileSystem.CanDoIOChanged += FileSystem_CanDoIOChanged;
-
-            toggle1.Checked = GitHub.FileSystem.ShowHiddenFiles;
 
             // After populating the tree for the first time
             UpdateExplorerLayout();
@@ -208,14 +240,32 @@ namespace WinPaletter
             button7.ImageGlyph = data.glyph;
         }
 
-        public async Task UpdateGitHubLoginData()
+        private void User_GitHubAvatarUpdated()
         {
             Bitmap avatar = null;
 
+            // Wait for avatar to exist
+            avatar = User.GitHub_Avatar;
+
+            if (avatar is null)
+            {
+                avatar = Properties.Resources.GitHub_SignInForFeatures.Clone() as Bitmap;
+            }
+
+            using (Bitmap avatar_resized = avatar.Resize(pictureBox1.Size))
+            {
+                pictureBox1.Image = avatar_resized.ToCircular();
+            }
+        }
+
+        public async Task UpdateGitHubLoginData()
+        {
             if (User.GitHub_LoggedIn)
             {
                 Invoke(() =>
                 {
+                    User_GitHubAvatarUpdated();
+
                     label1.Text = User.GitHub.Login;
 
                     url_lbl.Text = User.GitHub.HtmlUrl;
@@ -236,35 +286,9 @@ namespace WinPaletter
                     updated_lbl.Text = ToFriendlyString(User.GitHub.UpdatedAt);
                 });
 
-                // Wait for avatar to exist
-                if (User.GitHub_Avatar is null)
-                {
-                    await User.DownloadAvatarAsync();
-                }
-
-                if (User.GitHub_Avatar != null)
-                {
-                    avatar = User.GitHub_Avatar;
-                }
-
                 repo = await Program.GitHub.Client.Repository.Get(GitHub.Repository.Owner, GitHub.Repository.Name);
                 upstreamBranch = await Program.GitHub.Client.Repository.Branch.Get(GitHub.Repository.OriginalOwner, GitHub.Repository.Name, "main");
             }
-
-            if (avatar is null)
-            {
-                avatar = Properties.Resources.GitHub_SignInForFeatures.Clone() as Bitmap;
-            }
-
-            Invoke(() =>
-            {
-                using (Bitmap avatar_resized = avatar.Resize(pictureBox1.Size))
-                using (Bitmap avatar_resized_2 = avatar.Resize(25, 25))
-                {
-                    pictureBox1.Image = avatar_resized.ToCircular();
-                    button3.Image = avatar_resized_2.ToCircular();
-                }
-            });
         }
 
         void AddViewsToButton()
@@ -1024,6 +1048,26 @@ Generated automatically by WinPaletter. Please review the changes before merging
         private void btn_new_MouseLeave(object sender, EventArgs e)
         {
             Transition.With(label15, nameof(label15.Text), string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+        }
+
+        private void noNetworkPanel1_RetryClicked(object sender, EventArgs e)
+        {
+            LoadInternal();
+        }
+
+        private void User_GitHubUserSwitch(User.GitHubUserChangeEventArgs e)
+        {
+            LoadInternal();
+        }
+
+        private void noNetworkPanel1_CloseClicked(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void button21_Click(object sender, EventArgs e)
+        {
+            Forms.GitHub_Login.ShowDialog();
         }
     }
 }

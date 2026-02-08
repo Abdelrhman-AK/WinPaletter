@@ -307,7 +307,7 @@ namespace WinPaletter
 
         private void button2_Click(object sender, EventArgs e)
         {
-            string result = Forms.ScreenSavers_List.GetScreenSaver();
+            string result = Forms.ScreenSavers_List.GetScreenSaver(button2.Size, button2.PointToScreen(System.Drawing.Point.Empty));
 
             if (!string.IsNullOrEmpty(result)) TextBox1.Text = result;
         }

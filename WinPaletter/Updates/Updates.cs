@@ -407,19 +407,6 @@ namespace WinPaletter
             }
         }
 
-        private void button6_Click(object sender, EventArgs e)
-        {
-            Program.Animator.HideSync(tablessControl1);
-            tablessControl1.SelectedIndex = 0;
-            Program.Animator.ShowSync(tablessControl1);
-        }
-
-        private void button8_Click(object sender, EventArgs e)
-        {
-            DisturbActions();
-            Close();
-        }
-
         private void toggle1_CheckedChanged(object sender, EventArgs e)
         {
             if (!_Shown) return;
@@ -430,6 +417,19 @@ namespace WinPaletter
         private void button31_Click(object sender, EventArgs e)
         {
             Process.Start(Links.Releases);
+        }
+
+        private void noNetworkPanel1_RetryClicked(object sender, EventArgs e)
+        {
+            Program.Animator.HideSync(tablessControl1);
+            tablessControl1.SelectedIndex = 0;
+            Program.Animator.ShowSync(tablessControl1);
+        }
+
+        private void noNetworkPanel1_CloseClicked(object sender, EventArgs e)
+        {
+            DisturbActions();
+            Close();
         }
     }
 }

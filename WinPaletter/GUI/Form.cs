@@ -1,7 +1,8 @@
-﻿using AnimatorNS;
-using FluentTransitions;
+﻿using FluentTransitions;
 using System;
 using System.ComponentModel;
+using System.Drawing;
+using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
@@ -20,22 +21,32 @@ namespace WinPaletter.UI.WP
         private const uint MF_ENABLED = 0x00000000;
         private const uint MF_GRAYED = 0x00000001;
         private const uint SC_CLOSE = 0xF060;
+        private const uint WM_NCACTIVATE = 0x86U;
         private const int WM_MOUSEACTIVATE = 0x0021;
         private const int MA_NOACTIVATE = 0x0003;
         private const int WM_NCHITTEST = 0x0084;
         private const int HTCLIENT = 1;
+        private const int HTCAPTION = 2;
         private static readonly IntPtr HWND_BOTTOM = new(1);
         private static readonly IntPtr HWND_NOTOPMOST = new(-2);
+        private Panel _backdropPaddingPanel;
+        private static bool layeredSet = false;
+
+        public new bool DesignMode => base.DesignMode || LicenseManager.UsageMode == LicenseUsageMode.Designtime;
 
         public Form()
         {
+            this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
+            this.UpdateStyles();
+
             InitializeComponent();
         }
 
         protected override void OnLoad(EventArgs e)
         {
-            _shown = false;
+            if (DesignMode) { base.OnLoad(e); return; }
 
+            _shown = false;
             ApplyStyle(this);
             this.Localize();
             this.DoubleBuffer();
@@ -44,41 +55,317 @@ namespace WinPaletter.UI.WP
 
             CheckForIllegalCrossThreadCalls = false;
 
+            if (FormBorderStyle == FormBorderStyle.None && _borders && DWMAPI.IsCompositionEnabled()) Opacity = 0;
+
+            if (_backdrop)
+            {
+                DWM.DropEffect(Handle, Margins: _backdropMargin, Style: _backdropStyle);
+                UpdateBackdropPaddingPanel();
+            }
+
+            ApplyDWMBorder();
+
             base.OnLoad(e);
         }
 
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
+            if (DesignMode) return;
+
+            if (FormBorderStyle == FormBorderStyle.None && _borders && DWMAPI.IsCompositionEnabled())
+            {
+                Transition.With(this, nameof(Opacity), 1.0d).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+            }
 
             _shown = true;
         }
 
+
+        protected override void OnClick(EventArgs e)
+        {
+            base.OnClick(e);
+
+            if (CloseOnClick) Close();
+        }
+
+        /// <summary>
+        /// Deactivates the form using an animation.
+        /// </summary>
+        /// <param name="close"></param>
+        public new void Deactivate(bool close = true)
+        {
+            if (_shown)
+            {
+                Transition
+                    .With(this, nameof(Opacity), 0d)
+                    .HookOnCompletionInUiThread(this, () => { if (close) base.Close(); })
+                    .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+
+                _shown = false;
+            }
+        }
+
+        public new void Close()
+        {
+            if (!DesignMode && FormBorderStyle == FormBorderStyle.None && _borders && DWMAPI.IsCompositionEnabled())
+            {
+                Deactivate(true);
+            }
+            else
+            {
+                base.Close();
+            }
+        }
+
+        protected override void OnFormClosed(FormClosedEventArgs e)
+        {
+            base.OnFormClosed(e);
+            _shown = false;
+        }
+
         protected override void WndProc(ref Message m)
         {
+            if (DesignMode || !IsHandleCreated)
+            {
+                base.WndProc(ref m);
+                return;
+            }
+
             switch (m.Msg)
             {
+                // DWM/Aero borders and shadow
+                case DWMAPI.WM_NCPAINT:
+                    ApplyDWMBorder();
+                    break;
+
+                // Prevent focus steal
                 case WM_MOUSEACTIVATE:
                     if (_preventFocusSteal)
                     {
-                        // Prevent the window from being activated when clicked
                         m.Result = (IntPtr)MA_NOACTIVATE;
                         return;
                     }
                     break;
 
                 case WM_NCHITTEST:
-                    if (_preventFocusSteal)
+                    // MoveWhenBorderless takes priority
+                    if (_moveWhenBorderless && FormBorderStyle == FormBorderStyle.None)
                     {
-                        // Make the entire window respond to mouse events but without activating it
+                        base.WndProc(ref m);
+                        if ((int)m.Result == HTCLIENT)
+                        {
+                            m.Result = (IntPtr)HTCAPTION;
+                            return;
+                        }
+                    }
+                    // If not moving, prevent focus steal if enabled
+                    else if (_preventFocusSteal)
+                    {
                         m.Result = (IntPtr)HTCLIENT;
                         return;
+                    }
+                    break;
+
+                // Close on lost focus
+                case (int)WM_NCACTIVATE:
+                    if (CloseOnLostFocus && m.WParam == IntPtr.Zero)
+                    {
+                        if (Visible && !RectangleToScreen(DisplayRectangle).Contains(Cursor.Position))
+                            Deactivate();
                     }
                     break;
             }
 
             base.WndProc(ref m);
         }
+
+        protected override CreateParams CreateParams
+        {
+            get
+            {
+                CreateParams cp = base.CreateParams;
+                if (DesignMode) return cp;
+
+                if (!_borders && !DWMAPI.IsCompositionEnabled())
+                {
+                    cp.ClassStyle |= DWMAPI.CS_DROPSHADOW;
+                    cp.ExStyle |= 33554432; // WS_EX_LAYERED
+                }
+                return cp;
+            }
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+
+            // Only update backdrop panel at runtime
+            if (!DesignMode && _backdrop && _backdropPaddingPanel != null) UpdateBackdropPaddingPanel();
+        }
+
+        // Backdrop property
+        private bool _backdrop = false;
+        [Browsable(true)]
+        [Category("Advanced Native")]
+        [DefaultValue(false)]
+        [Description("Enables or disables the DWM backdrop effect on the form.")]
+        public bool Backdrop
+        {
+            get => _backdrop;
+            set
+            {
+                if (_backdrop == value) return;
+                _backdrop = value;
+
+                // Only apply at runtime when handle is created
+                if (!DesignMode && IsHandleCreated)
+                {
+                    if (_backdrop)
+                    {
+                        DWM.DropEffect(Handle, Margins: _backdropMargin, Style: _backdropStyle);
+                        UpdateBackdropPaddingPanel();
+                    }
+                    else
+                    {
+                        DWM.ResetEffect(Handle);
+                        if (_backdropPaddingPanel != null) _backdropPaddingPanel.Visible = false;
+                    }
+                }
+                // In designer mode, just invalidate to show property change
+                else if (DesignMode)
+                {
+                    this.Invalidate(); // Force repaint to show property has changed
+                }
+            }
+        }
+
+        // BackdropStyle property
+        private DWM.DWMStyles _backdropStyle = DWM.DWMStyles.None;
+        [Browsable(true)]
+        [Category("Advanced Native")]
+        [DefaultValue(DWM.DWMStyles.None)]
+        [Description("Specifies the style of the DWM backdrop effect.")]
+        public DWM.DWMStyles BackdropStyle
+        {
+            get => _backdropStyle;
+            set
+            {
+                if (_backdropStyle == value) return;
+                _backdropStyle = value;
+
+                if (!DesignMode && _backdrop && IsHandleCreated)
+                    DWM.DropEffect(Handle, Margins: _backdropMargin, Style: _backdropStyle);
+                // In designer, just invalidate
+                else if (DesignMode)
+                    this.Invalidate();
+            }
+        }
+
+        // BackdropMargin property
+        private Padding _backdropMargin = default;
+        [Browsable(true)]
+        [Category("Advanced Native")]
+        [Description("Specifies the margin of the DWM backdrop effect on the form.")]
+        public Padding BackdropMargin
+        {
+            get => _backdropMargin;
+            set
+            {
+                if (_backdropMargin == value) return;
+                _backdropMargin = value;
+
+                if (!DesignMode && _backdrop && IsHandleCreated)
+                    UpdateBackdropPaddingPanel();
+                // In designer, just invalidate
+                else if (DesignMode)
+                    this.Invalidate();
+            }
+        }
+
+        // BackdropColor property
+        private Color _backdropColor = Color.Black;
+        [Browsable(true)]
+        [Category("Advanced Native")]
+        [Description("Specifies the color drawn behind the DWM backdrop effect. Default is Black.")]
+        [DefaultValue(typeof(Color), "Black")]
+        public Color BackdropColor
+        {
+            get => _backdropColor;
+            set
+            {
+                if (_backdropColor == value) return;
+                _backdropColor = value;
+
+                if (!DesignMode && _backdropPaddingPanel != null)
+                    _backdropPaddingPanel.BackColor = _backdropColor;
+                // In designer, just invalidate
+                else if (DesignMode)
+                    this.Invalidate();
+            }
+        }
+
+        private bool _moveWhenBorderless = false;
+        [Browsable(true)]
+        [Category("Behavior")]
+        [DefaultValue(false)]
+        [Description("Allows the form to be moved by dragging the mouse when FormBorderStyle is None.")]
+        public bool MoveWhenBorderless
+        {
+            get => _moveWhenBorderless;
+            set => _moveWhenBorderless = value;
+        }
+
+        private bool _borders = true;
+
+        /// <summary>
+        /// Indicates whether the form should have DWM borders (shadow/glass) even with FormBorderStyle.None.
+        /// Setting this updates the form immediately.
+        /// </summary>
+        [Browsable(true)]
+        [Category("Appearance")]
+        [Description("Indicates whether the form should have DWM borders (shadow/glass) when using FormBorderStyle.None.")]
+        public bool Borders
+        {
+            get => _borders;
+            set
+            {
+                if (_borders != value)
+                {
+                    _borders = value;
+                    if (!DesignMode && IsHandleCreated)
+                    {
+                        User32.SetWindowPos(Handle, IntPtr.Zero, 0, 0, 0, 0, User32.SWP_NOMOVE | User32.SWP_NOSIZE | User32.SWP_NOZORDER | User32.SWP_FRAMECHANGED);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Override FormBorderStyle to keep the Borders property in sync.
+        /// </summary>
+        public new FormBorderStyle FormBorderStyle
+        {
+            get => base.FormBorderStyle;
+            set
+            {
+                if (base.FormBorderStyle != value)
+                {
+                    base.FormBorderStyle = value;
+
+                    // Keep Borders in sync: if the style is None, Borders can still be true
+                    _borders = value == FormBorderStyle.None ? _borders : true;
+
+                    if (!DesignMode)
+                        this.Refresh();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Whether the form should close when it loses focus.
+        /// </summary>
+        public bool CloseOnLostFocus { get; set; } = false;
 
         private bool _shown = false;
         /// <summary>
@@ -149,7 +436,7 @@ namespace WinPaletter.UI.WP
                     _showIconAndCaptionText = value;
 
                     // if set before form is shown, it will make form behind most, unfocused. So we need to update it only if form is already shown.
-                    if (_shown)
+                    if (!DesignMode && IsHandleCreated && _shown)
                     {
                         NativeMethods.Helpers.SetFormTitlebarTextAndIcon(Handle, !_showIconAndCaptionText);
                         SetBasicTheme(Handle, !_useBasicTheme);
@@ -158,6 +445,11 @@ namespace WinPaletter.UI.WP
                 }
             }
         }
+
+        /// <summary>
+        /// Whether the form should close when clicked.
+        /// </summary>
+        public bool CloseOnClick { get; set; } = false;
 
         private bool _useBasicTheme;
         [Browsable(true)]
@@ -286,12 +578,69 @@ namespace WinPaletter.UI.WP
             Marshal.FreeHGlobal(ptr);
         }
 
+        private void ApplyDWMBorder()
+        {
+            if (_borders && FormBorderStyle == FormBorderStyle.None && DWMAPI.IsCompositionEnabled())
+            {
+                int val = 2;
+                DWMAPI.DwmSetWindowAttribute(Handle, Program.Style.RoundedCorners ? 2 : 1, ref val, 4);
+
+                DWMAPI.MARGINS margins = new()
+                {
+                    topHeight = 1,
+                    bottomHeight = 1,
+                    leftWidth = 1,
+                    rightWidth = 1,
+                };
+                DWMAPI.DwmExtendFrameIntoClientArea(Handle, ref margins);
+            }
+        }
+
         private static void SetOpacityLayered(IntPtr handle, double alpha)
         {
-            long style = User32.GetWindowLong(handle, GWL_EXSTYLE);
-            style |= WS_EX_LAYERED;
-            User32.SetWindowLong(handle, GWL_EXSTYLE, style);
-            User32.SetLayeredWindowAttributes(handle, 0, (byte)(alpha * 255d), 0x2); // LWA_ALPHA
+            if (!layeredSet)
+            {
+                long style = User32.GetWindowLong(handle, GWL_EXSTYLE);
+                style |= WS_EX_LAYERED;
+                User32.SetWindowLong(handle, GWL_EXSTYLE, style);
+                layeredSet = true;
+            }
+
+            byte bAlpha = (byte)(Math.Max(0, Math.Min(1, alpha)) * 255d);
+            User32.SetLayeredWindowAttributes(handle, 0, bAlpha, 0x2); // LWA_ALPHA
+        }
+
+        private void UpdateBackdropPaddingPanel()
+        {
+            if (DesignMode)
+            {
+                // In designer mode, we shouldn't create or modify actual controls
+                // Just return without doing anything
+                return;
+            }
+
+            if (_backdropPaddingPanel == null)
+            {
+                _backdropPaddingPanel = new Panel
+                {
+                    Parent = this,
+                    Enabled = false,
+                    TabStop = false,
+                    BackColor = _backdropColor
+                };
+                _backdropPaddingPanel.SendToBack();
+            }
+
+            Padding m = _backdropMargin == default ? new Padding(0) : _backdropMargin;
+            _backdropPaddingPanel.Bounds = new Rectangle(
+                m.Left,
+                m.Top,
+                Math.Max(0, Width - m.Left - m.Right),
+                Math.Max(0, Height - m.Top - m.Bottom)
+            );
+
+            _backdropPaddingPanel.BackColor = _backdropColor;
+            _backdropPaddingPanel.Visible = _backdrop;
         }
     }
 }

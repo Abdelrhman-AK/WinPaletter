@@ -57,6 +57,8 @@ namespace WinPaletter
             Program.GitHub?.OnDeviceFlowInitiated += LoginManager_OnDeviceFlowInitiated;
             Program.GitHub?.OnAuthorizationSuccess += LoginManager_OnAuthorizationSuccess;
             Program.GitHub?.OnAuthorizationFailure += LoginManager_OnAuthorizationFailure;
+
+            Forms.GlassWindow.Show(Forms.MainForm);
         }
 
         private void LoginManager_OnAuthorizationFailure(string obj)

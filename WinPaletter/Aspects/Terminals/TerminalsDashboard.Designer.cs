@@ -6,7 +6,7 @@ using System.Windows.Forms;
 namespace WinPaletter
 {
     [Microsoft.VisualBasic.CompilerServices.DesignerGenerated()]
-    public partial class TerminalsDashboard : BorderlessForm
+    public partial class TerminalsDashboard : UI.WP.Form
     {
 
         // Form overrides dispose to clean up the component list.
@@ -58,9 +58,10 @@ namespace WinPaletter
             this.Button5.Image = ((System.Drawing.Image)(resources.GetObject("Button5.Image")));
             this.Button5.ImageGlyph = null;
             this.Button5.ImageGlyphEnabled = false;
-            this.Button5.Location = new System.Drawing.Point(153, 36);
+            this.Button5.Location = new System.Drawing.Point(178, 42);
+            this.Button5.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button5.Name = "Button5";
-            this.Button5.Size = new System.Drawing.Size(27, 68);
+            this.Button5.Size = new System.Drawing.Size(31, 78);
             this.Button5.TabIndex = 95;
             this.Button5.Tag = "Windows Terminal Preview";
             this.Button5.UseVisualStyleBackColor = false;
@@ -78,9 +79,10 @@ namespace WinPaletter
             this.Button6.Image = ((System.Drawing.Image)(resources.GetObject("Button6.Image")));
             this.Button6.ImageGlyph = null;
             this.Button6.ImageGlyphEnabled = false;
-            this.Button6.Location = new System.Drawing.Point(121, 36);
+            this.Button6.Location = new System.Drawing.Point(141, 42);
+            this.Button6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button6.Name = "Button6";
-            this.Button6.Size = new System.Drawing.Size(27, 68);
+            this.Button6.Size = new System.Drawing.Size(31, 78);
             this.Button6.TabIndex = 94;
             this.Button6.Tag = "Windows Terminal Stable";
             this.Button6.UseVisualStyleBackColor = false;
@@ -98,9 +100,10 @@ namespace WinPaletter
             this.Button3.Image = ((System.Drawing.Image)(resources.GetObject("Button3.Image")));
             this.Button3.ImageGlyph = null;
             this.Button3.ImageGlyphEnabled = false;
-            this.Button3.Location = new System.Drawing.Point(88, 36);
+            this.Button3.Location = new System.Drawing.Point(103, 42);
+            this.Button3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button3.Name = "Button3";
-            this.Button3.Size = new System.Drawing.Size(27, 68);
+            this.Button3.Size = new System.Drawing.Size(31, 78);
             this.Button3.TabIndex = 91;
             this.Button3.Tag = "PowerShell x64";
             this.Button3.UseVisualStyleBackColor = false;
@@ -118,9 +121,10 @@ namespace WinPaletter
             this.Button4.Image = ((System.Drawing.Image)(resources.GetObject("Button4.Image")));
             this.Button4.ImageGlyph = null;
             this.Button4.ImageGlyphEnabled = false;
-            this.Button4.Location = new System.Drawing.Point(56, 36);
+            this.Button4.Location = new System.Drawing.Point(65, 42);
+            this.Button4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button4.Name = "Button4";
-            this.Button4.Size = new System.Drawing.Size(27, 68);
+            this.Button4.Size = new System.Drawing.Size(31, 78);
             this.Button4.TabIndex = 90;
             this.Button4.Tag = "PowerShell x86";
             this.Button4.UseVisualStyleBackColor = false;
@@ -138,9 +142,10 @@ namespace WinPaletter
             this.Button2.Image = ((System.Drawing.Image)(resources.GetObject("Button2.Image")));
             this.Button2.ImageGlyph = null;
             this.Button2.ImageGlyphEnabled = false;
-            this.Button2.Location = new System.Drawing.Point(186, 36);
+            this.Button2.Location = new System.Drawing.Point(217, 42);
+            this.Button2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button2.Name = "Button2";
-            this.Button2.Size = new System.Drawing.Size(27, 68);
+            this.Button2.Size = new System.Drawing.Size(31, 78);
             this.Button2.TabIndex = 87;
             this.Button2.Tag = "External Terminal";
             this.Button2.UseVisualStyleBackColor = false;
@@ -158,9 +163,10 @@ namespace WinPaletter
             this.Button1.Image = ((System.Drawing.Image)(resources.GetObject("Button1.Image")));
             this.Button1.ImageGlyph = null;
             this.Button1.ImageGlyphEnabled = false;
-            this.Button1.Location = new System.Drawing.Point(23, 36);
+            this.Button1.Location = new System.Drawing.Point(27, 42);
+            this.Button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button1.Name = "Button1";
-            this.Button1.Size = new System.Drawing.Size(27, 68);
+            this.Button1.Size = new System.Drawing.Size(31, 78);
             this.Button1.TabIndex = 86;
             this.Button1.Tag = "Command Prompt";
             this.Button1.UseVisualStyleBackColor = false;
@@ -178,9 +184,10 @@ namespace WinPaletter
             this.button7.Image = null;
             this.button7.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button7.ImageGlyph")));
             this.button7.ImageGlyphEnabled = true;
-            this.button7.Location = new System.Drawing.Point(212, 8);
+            this.button7.Location = new System.Drawing.Point(247, 9);
+            this.button7.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(17, 17);
+            this.button7.Size = new System.Drawing.Size(20, 20);
             this.button7.TabIndex = 103;
             this.button7.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button7.UseVisualStyleBackColor = false;
@@ -199,8 +206,9 @@ namespace WinPaletter
             this.panel1.Controls.Add(this.labelAlt1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(237, 113);
+            this.panel1.Size = new System.Drawing.Size(276, 130);
             this.panel1.TabIndex = 106;
             this.panel1.Visible = false;
             // 
@@ -209,26 +217,30 @@ namespace WinPaletter
             this.labelAlt1.BackColor = System.Drawing.Color.Transparent;
             this.labelAlt1.DrawOnGlass = true;
             this.labelAlt1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelAlt1.Location = new System.Drawing.Point(10, 9);
+            this.labelAlt1.Location = new System.Drawing.Point(12, 10);
+            this.labelAlt1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelAlt1.Name = "labelAlt1";
-            this.labelAlt1.Size = new System.Drawing.Size(196, 16);
+            this.labelAlt1.Size = new System.Drawing.Size(229, 18);
             this.labelAlt1.TabIndex = 105;
             this.labelAlt1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // TerminalsDashboard
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(237, 113);
+            this.ClientSize = new System.Drawing.Size(276, 130);
+            this.CloseOnLostFocus = true;
             this.ControlBox = false;
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "TerminalsDashboard";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Load += new System.EventHandler(this.TerminalsDashboard_Load);
             this.Shown += new System.EventHandler(this.TerminalsDashboard_Shown);
             this.panel1.ResumeLayout(false);

@@ -1787,16 +1787,6 @@ namespace WinPaletter
 
         }
 
-        private void button6_Click(object sender, EventArgs e)
-        {
-            Tabs.SelectedIndex = 0;
-        }
-
-        private void button7_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
-
         private void labelAlt4_Click(object sender, EventArgs e)
         {
             if (selectedItem.DoneByWinPaletter)
@@ -1818,26 +1808,7 @@ namespace WinPaletter
 
         async void UpdateLoginData()
         {
-            Bitmap avatar_bmp = null;
-
-            if (User.GitHub_LoggedIn)
-            {
-                // Wait for avatar to exist
-                if (User.GitHub_Avatar is null)
-                {
-                    await User.DownloadAvatarAsync();
-                }
-
-                if (User.GitHub_Avatar != null)
-                {
-                    avatar_bmp = User.GitHub_Avatar;
-                }
-            }
-
-            if (avatar_bmp is null)
-            {
-                avatar_bmp = User.ProfilePicture;
-            }
+            Bitmap avatar_bmp = User.GitHub_Avatar ?? User.ProfilePicture;
 
             using (Bitmap bmp = avatar_bmp.Resize(24, 24))
             {
@@ -1961,6 +1932,21 @@ namespace WinPaletter
         private void button7_Click_1(object sender, EventArgs e)
         {
             licenseCheckCS.TrySetResult(DialogResult.OK);
+        }
+
+        private void noNetworkPanel1_CloseClicked(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void noNetworkPanel1_RetryClicked(object sender, EventArgs e)
+        {
+            Tabs.SelectedIndex = 0;
+        }
+
+        private void avatar_btn_Click(object sender, EventArgs e)
+        {
+            Forms.GitHub_Dashboard.Show(avatar_btn.Size, avatar_btn.PointToScreen(Point.Empty));
         }
     }
 }

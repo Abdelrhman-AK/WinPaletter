@@ -7,7 +7,7 @@ using WinPaletter.UI.WP;
 namespace WinPaletter
 {
     [Microsoft.VisualBasic.CompilerServices.DesignerGenerated()]
-    public partial class ColorPickerDlg : BorderlessForm
+    public partial class ColorPickerDlg : UI.WP.Form
     {
 
         // Form overrides dispose to clean up the component list.
@@ -986,9 +986,12 @@ namespace WinPaletter
             this.ClientSize = new System.Drawing.Size(334, 328);
             this.Controls.Add(this.TabControl1);
             this.Controls.Add(this.bottom_buttons);
+            this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "ColorPickerDlg";
             this.Opacity = 0D;
             this.Padding = new System.Windows.Forms.Padding(1);
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Color Picker";
             this.TopMost = true;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ColorPickerDlg_FormClosed);

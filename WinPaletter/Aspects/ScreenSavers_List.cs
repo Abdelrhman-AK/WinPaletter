@@ -12,9 +12,9 @@ namespace WinPaletter
             InitializeComponent();
         }
 
-        public string GetScreenSaver()
+        public string GetScreenSaver(Size parentButtonSize, Point parentButtonLocation)
         {
-            if (ShowDialog() == DialogResult.OK)
+            if (ShowDialog(parentButtonSize, parentButtonLocation) == DialogResult.OK)
             {
                 return listView1.SelectedItems[0].SubItems[1].Text;
             }
@@ -29,10 +29,17 @@ namespace WinPaletter
             // Set up columns for the ListView
             listView1.View = View.Details;
             listView1.Columns.Clear();
-            listView1.Columns.Add("Name");
-            listView1.Columns.Add("File Path");
+            listView1.Columns.Add(Program.Localization.Strings.General.Name);
+            listView1.Columns.Add(Program.Localization.Strings.General.FilePath);
 
             PopulateScreenSaverList();
+        }
+
+        public DialogResult ShowDialog(Size parentButtonSize, Point parentButtonLocation)
+        {
+            Location = parentButtonLocation + new Size(parentButtonSize.Width - Width, parentButtonSize.Height);
+
+            return this.ShowDialog();
         }
 
         private void PopulateScreenSaverList()
@@ -52,17 +59,18 @@ namespace WinPaletter
                 string filePath = Path.Combine(SysPaths.System32, screensaver);
 
                 // Get the icon for the screensaver
-                Icon icon = Icon.ExtractAssociatedIcon(filePath);
+                using (Icon icon = Icon.ExtractAssociatedIcon(filePath))
+                {
+                    // Add the screensaver details to the ListView
+                    ListViewItem item = new(name);
+                    item.SubItems.Add(filePath);
+                    item.ImageKey = name;
 
-                // Add the screensaver details to the ListView
-                ListViewItem item = new(name);
-                item.SubItems.Add(filePath);
-                item.ImageKey = name;
+                    // Add the icon to the ImageList
+                    imageList1.Images.Add(name, icon.ToBitmap());
 
-                // Add the icon to the ImageList
-                imageList1.Images.Add(name, icon.ToBitmap());
-
-                listView1.Items.Add(item);
+                    listView1.Items.Add(item);
+                }
 
                 listView1.Items[listView1.Items.Count - 1].ImageIndex = imageList1.Images.Count - 1;
             }

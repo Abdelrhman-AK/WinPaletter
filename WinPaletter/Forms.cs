@@ -24,7 +24,6 @@ namespace WinPaletter
                 typeof(GlassWindow),
                 typeof(AspectsTemplate),
                 typeof(TabsForm),
-                typeof(BorderlessForm),
                 typeof(Store_Hover),
                 typeof(MagnifierDlg)
             };
@@ -183,6 +182,12 @@ namespace WinPaletter
         /// </summary>
         public static GitHub_ConfirmPR GitHub_ConfirmPR => Get(ref _GitHub_ConfirmPR);
         private static GitHub_ConfirmPR _GitHub_ConfirmPR;
+
+        /// <summary>
+        /// Gets the instance of the form <see cref="GitHub_Dashboard"/> for GitHub users dashboard.
+        /// </summary>
+        public static GitHub_Dashboard GitHub_Dashboard => Get(ref _GitHub_Dashboard);
+        private static GitHub_Dashboard _GitHub_Dashboard;
 
         /// <summary>
         /// Gets the instance of the form <see cref="GitHub_Mgr"/> to manage GitHub repositories and files.
@@ -486,7 +491,7 @@ namespace WinPaletter
 
         #region Engine
 
-        private static readonly Dictionary<Type, System.Windows.Forms.Form> formBeingCreated = new();
+        private static readonly Dictionary<Type, Form> formBeingCreated = [];
         private static readonly object formBeingCreatedLock = new();
 
         private static T Get<T>(ref T field) where T : Form, new()
@@ -509,9 +514,7 @@ namespace WinPaletter
                 if (instance != null && !instance.IsDisposed)
                     return instance;
 
-                if (formBeingCreated.TryGetValue(formType, out System.Windows.Forms.Form existing) &&
-                    existing is T existingTyped &&
-                    !existingTyped.IsDisposed)
+                if (formBeingCreated.TryGetValue(formType, out Form existing) && existing is T existingTyped && !existingTyped.IsDisposed)
                 {
                     instance = existingTyped;
                     return existingTyped;
@@ -528,9 +531,7 @@ namespace WinPaletter
                 {
                     formBeingCreated.Remove(formType);
 
-                    throw new InvalidOperationException(
-                        $"Error creating form {formType.Name}: {ex.InnerException.Message}",
-                        ex.InnerException);
+                    throw new InvalidOperationException($"Error creating form {formType.Name}: {ex.InnerException.Message}", ex.InnerException);
                 }
                 catch
                 {

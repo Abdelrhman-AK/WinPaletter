@@ -173,7 +173,7 @@
             this.PictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.PictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox1.Image")));
-            this.PictureBox1.Location = new System.Drawing.Point(6, 15);
+            this.PictureBox1.Location = new System.Drawing.Point(12, 15);
             this.PictureBox1.Name = "PictureBox1";
             this.PictureBox1.Size = new System.Drawing.Size(35, 35);
             this.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -187,9 +187,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Label7.BackColor = System.Drawing.Color.Transparent;
             this.Label7.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label7.Location = new System.Drawing.Point(47, 8);
+            this.Label7.Location = new System.Drawing.Point(58, 8);
             this.Label7.Name = "Label7";
-            this.Label7.Size = new System.Drawing.Size(712, 48);
+            this.Label7.Size = new System.Drawing.Size(699, 48);
             this.Label7.TabIndex = 85;
             this.Label7.Text = "You are about to publish your new themes by sending a pull request (PR) to \'Abdel" +
     "rhman-AK\'";
@@ -415,10 +415,7 @@
             this.Controls.Add(this.banner2);
             this.Controls.Add(this.AnimatedBox1);
             this.Controls.Add(this.bottom_buttons);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "GitHub_ConfirmPR";
@@ -426,6 +423,7 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Confirm Pull Request";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.GitHub_ConfirmPR_FormClosed);
             this.bottom_buttons.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
             this.AnimatedBox1.ResumeLayout(false);

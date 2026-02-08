@@ -8,7 +8,7 @@ namespace WinPaletter
     /// <summary>
     /// Search filter form for the store.
     /// </summary>
-    public partial class Store_SearchFilter : BorderlessForm
+    public partial class Store_SearchFilter
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Store_SearchFilter"/> class.

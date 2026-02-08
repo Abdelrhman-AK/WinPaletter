@@ -6,7 +6,7 @@ using System.Windows.Forms;
 namespace WinPaletter
 {
     [Microsoft.VisualBasic.CompilerServices.DesignerGenerated()]
-    public partial class Store_SearchFilter : BorderlessForm
+    public partial class Store_SearchFilter : UI.WP.Form
     {
 
         // Form overrides dispose to clean up the component list.
@@ -164,18 +164,21 @@ namespace WinPaletter
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(371, 184);
+            this.CloseOnLostFocus = true;
             this.Controls.Add(this.CheckBox3);
             this.Controls.Add(this.CheckBox2);
             this.Controls.Add(this.CheckBox1);
             this.Controls.Add(this.Label6);
             this.Controls.Add(this.PictureBox16);
             this.Controls.Add(this.bottom_buttons);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Store_SearchFilter";
             this.Opacity = 0D;
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Search filter";
             this.Load += new System.EventHandler(this.Store_SearchFilter_Load);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox16)).EndInit();

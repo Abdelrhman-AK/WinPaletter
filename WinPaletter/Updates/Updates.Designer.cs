@@ -72,26 +72,7 @@ namespace WinPaletter
             this.tablessControl1 = new WinPaletter.UI.WP.TablessControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.banner4 = new WinPaletter.UI.WP.Banner();
-            this.groupBox11 = new WinPaletter.UI.WP.GroupBox();
-            this.button8 = new WinPaletter.UI.WP.Button();
-            this.button7 = new WinPaletter.UI.WP.Button();
-            this.button6 = new WinPaletter.UI.WP.Button();
-            this.groupBox7 = new WinPaletter.UI.WP.GroupBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.banner3 = new WinPaletter.UI.WP.Banner();
-            this.groupBox8 = new WinPaletter.UI.WP.GroupBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.banner2 = new WinPaletter.UI.WP.Banner();
-            this.groupBox9 = new WinPaletter.UI.WP.GroupBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.banner1 = new WinPaletter.UI.WP.Banner();
-            this.groupBox10 = new WinPaletter.UI.WP.GroupBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.banner7 = new WinPaletter.UI.WP.Banner();
+            this.noNetworkPanel1 = new WinPaletter.Templates.NoNetworkPanel();
             this.AnimatedBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
             this.bottom_buttons.SuspendLayout();
@@ -111,11 +92,6 @@ namespace WinPaletter
             this.tablessControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            this.groupBox11.SuspendLayout();
-            this.groupBox7.SuspendLayout();
-            this.groupBox8.SuspendLayout();
-            this.groupBox9.SuspendLayout();
-            this.groupBox10.SuspendLayout();
             this.SuspendLayout();
             // 
             // AnimatedBox1
@@ -585,298 +561,28 @@ namespace WinPaletter
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.tabPage2.Controls.Add(this.banner4);
-            this.tabPage2.Controls.Add(this.groupBox11);
-            this.tabPage2.Controls.Add(this.groupBox7);
-            this.tabPage2.Controls.Add(this.banner3);
-            this.tabPage2.Controls.Add(this.groupBox8);
-            this.tabPage2.Controls.Add(this.banner2);
-            this.tabPage2.Controls.Add(this.groupBox9);
-            this.tabPage2.Controls.Add(this.banner1);
-            this.tabPage2.Controls.Add(this.groupBox10);
-            this.tabPage2.Controls.Add(this.banner7);
+            this.tabPage2.Controls.Add(this.noNetworkPanel1);
             this.tabPage2.Location = new System.Drawing.Point(4, 24);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Size = new System.Drawing.Size(866, 485);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "1";
             // 
-            // banner4
+            // noNetworkPanel1
             // 
-            this.banner4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.banner4.BackColor = System.Drawing.Color.Transparent;
-            this.banner4.Font = new System.Drawing.Font("Segoe UI", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.banner4.Image = ((System.Drawing.Bitmap)(resources.GetObject("banner4.Image")));
-            this.banner4.Location = new System.Drawing.Point(3, 3);
-            this.banner4.Name = "banner4";
-            this.banner4.Size = new System.Drawing.Size(860, 68);
-            this.banner4.TabIndex = 214;
-            this.banner4.TabStop = false;
-            this.banner4.Text = "WinPaletter was unable to connect to network and failed to fetch latest release d" +
+            this.noNetworkPanel1.BackColor = System.Drawing.Color.Transparent;
+            this.noNetworkPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.noNetworkPanel1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.noNetworkPanel1.ForeColor = System.Drawing.Color.White;
+            this.noNetworkPanel1.Location = new System.Drawing.Point(0, 0);
+            this.noNetworkPanel1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.noNetworkPanel1.Name = "noNetworkPanel1";
+            this.noNetworkPanel1.Size = new System.Drawing.Size(866, 485);
+            this.noNetworkPanel1.TabIndex = 0;
+            this.noNetworkPanel1.Text = "WinPaletter was unable to connect to network and failed to fetch latest release d" +
     "ata.";
-            // 
-            // groupBox11
-            // 
-            this.groupBox11.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox11.Controls.Add(this.button8);
-            this.groupBox11.Controls.Add(this.button7);
-            this.groupBox11.Controls.Add(this.button6);
-            this.groupBox11.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox11.Location = new System.Drawing.Point(0, 437);
-            this.groupBox11.Name = "groupBox11";
-            this.groupBox11.Size = new System.Drawing.Size(866, 48);
-            this.groupBox11.TabIndex = 213;
-            this.groupBox11.UseDecorationPattern = false;
-            this.groupBox11.UseSharpStyle = false;
-            // 
-            // button8
-            // 
-            this.button8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button8.CustomColor = System.Drawing.Color.Empty;
-            this.button8.Flag = WinPaletter.UI.WP.Button.Flags.ErrorOnHover;
-            this.button8.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button8.ForeColor = System.Drawing.Color.White;
-            this.button8.Image = null;
-            this.button8.ImageGlyph = null;
-            this.button8.ImageGlyphEnabled = false;
-            this.button8.Location = new System.Drawing.Point(401, 7);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(80, 34);
-            this.button8.TabIndex = 28;
-            this.button8.Text = "Close";
-            this.button8.UseVisualStyleBackColor = false;
-            this.button8.Click += new System.EventHandler(this.button8_Click);
-            // 
-            // button7
-            // 
-            this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button7.CustomColor = System.Drawing.Color.Empty;
-            this.button7.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.button7.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button7.Image = ((System.Drawing.Image)(resources.GetObject("button7.Image")));
-            this.button7.ImageGlyph = null;
-            this.button7.ImageGlyphEnabled = false;
-            this.button7.Location = new System.Drawing.Point(613, 7);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(244, 34);
-            this.button7.TabIndex = 26;
-            this.button7.Text = "Troubleshoot network connection";
-            this.button7.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
-            // 
-            // button6
-            // 
-            this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button6.CustomColor = System.Drawing.Color.Empty;
-            this.button6.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.button6.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button6.Image = ((System.Drawing.Image)(resources.GetObject("button6.Image")));
-            this.button6.ImageGlyph = null;
-            this.button6.ImageGlyphEnabled = false;
-            this.button6.Location = new System.Drawing.Point(487, 7);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(120, 34);
-            this.button6.TabIndex = 27;
-            this.button6.Text = "Retry";
-            this.button6.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
-            // 
-            // groupBox7
-            // 
-            this.groupBox7.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.groupBox7.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox7.Controls.Add(this.label7);
-            this.groupBox7.Controls.Add(this.label8);
-            this.groupBox7.Location = new System.Drawing.Point(49, 305);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(809, 61);
-            this.groupBox7.TabIndex = 170;
-            this.groupBox7.UseDecorationPattern = false;
-            this.groupBox7.UseSharpStyle = false;
-            // 
-            // label7
-            // 
-            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label7.BackColor = System.Drawing.Color.Transparent;
-            this.label7.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(6, 7);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(789, 22);
-            this.label7.TabIndex = 150;
-            this.label7.Text = "Check Network Settings";
-            // 
-            // label8
-            // 
-            this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label8.BackColor = System.Drawing.Color.Transparent;
-            this.label8.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(16, 34);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(710, 18);
-            this.label8.TabIndex = 151;
-            this.label8.Text = "- Go to Settings → Network && Internet → Status, or click \'Troubleshoot network c" +
-    "onnection\'.";
-            // 
-            // banner3
-            // 
-            this.banner3.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.banner3.BackColor = System.Drawing.Color.Transparent;
-            this.banner3.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.banner3.Image = null;
-            this.banner3.Location = new System.Drawing.Point(8, 305);
-            this.banner3.Name = "banner3";
-            this.banner3.Size = new System.Drawing.Size(35, 61);
-            this.banner3.TabIndex = 169;
-            this.banner3.TabStop = false;
-            this.banner3.Text = "4";
-            // 
-            // groupBox8
-            // 
-            this.groupBox8.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.groupBox8.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox8.Controls.Add(this.label5);
-            this.groupBox8.Controls.Add(this.label6);
-            this.groupBox8.Location = new System.Drawing.Point(49, 238);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(809, 61);
-            this.groupBox8.TabIndex = 168;
-            this.groupBox8.UseDecorationPattern = false;
-            this.groupBox8.UseSharpStyle = false;
-            // 
-            // label5
-            // 
-            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label5.BackColor = System.Drawing.Color.Transparent;
-            this.label5.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(6, 7);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(789, 22);
-            this.label5.TabIndex = 150;
-            this.label5.Text = "Check for service outages";
-            // 
-            // label6
-            // 
-            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label6.BackColor = System.Drawing.Color.Transparent;
-            this.label6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(16, 34);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(710, 18);
-            this.label6.TabIndex = 151;
-            this.label6.Text = "- Check if GitHub is accessible, visit your ISP’s website (using another device i" +
-    "f needed), or contact their support.";
-            // 
-            // banner2
-            // 
-            this.banner2.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.banner2.BackColor = System.Drawing.Color.Transparent;
-            this.banner2.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.banner2.Image = null;
-            this.banner2.Location = new System.Drawing.Point(8, 238);
-            this.banner2.Name = "banner2";
-            this.banner2.Size = new System.Drawing.Size(35, 61);
-            this.banner2.TabIndex = 167;
-            this.banner2.TabStop = false;
-            this.banner2.Text = "3";
-            // 
-            // groupBox9
-            // 
-            this.groupBox9.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.groupBox9.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox9.Controls.Add(this.label11);
-            this.groupBox9.Controls.Add(this.label12);
-            this.groupBox9.Location = new System.Drawing.Point(49, 158);
-            this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(809, 74);
-            this.groupBox9.TabIndex = 166;
-            this.groupBox9.UseDecorationPattern = false;
-            this.groupBox9.UseSharpStyle = false;
-            // 
-            // label11
-            // 
-            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label11.BackColor = System.Drawing.Color.Transparent;
-            this.label11.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(6, 7);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(789, 22);
-            this.label11.TabIndex = 150;
-            this.label11.Text = "Restart your router, modem, or internet connection";
-            // 
-            // label12
-            // 
-            this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label12.BackColor = System.Drawing.Color.Transparent;
-            this.label12.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(16, 34);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(710, 31);
-            this.label12.TabIndex = 151;
-            this.label12.Text = "- Power off the router or modem, wait about 10 seconds, then turn it back on.\r\n- " +
-    "For Wi-Fi, you can also try reconnecting to the network or switching to a differ" +
-    "ent network.\r\n";
-            // 
-            // banner1
-            // 
-            this.banner1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.banner1.BackColor = System.Drawing.Color.Transparent;
-            this.banner1.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.banner1.Image = null;
-            this.banner1.Location = new System.Drawing.Point(8, 158);
-            this.banner1.Name = "banner1";
-            this.banner1.Size = new System.Drawing.Size(35, 74);
-            this.banner1.TabIndex = 165;
-            this.banner1.TabStop = false;
-            this.banner1.Text = "2";
-            // 
-            // groupBox10
-            // 
-            this.groupBox10.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.groupBox10.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox10.Controls.Add(this.label13);
-            this.groupBox10.Location = new System.Drawing.Point(49, 118);
-            this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Size = new System.Drawing.Size(809, 34);
-            this.groupBox10.TabIndex = 164;
-            this.groupBox10.UseDecorationPattern = false;
-            this.groupBox10.UseSharpStyle = false;
-            // 
-            // label13
-            // 
-            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label13.BackColor = System.Drawing.Color.Transparent;
-            this.label13.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(6, 7);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(789, 22);
-            this.label13.TabIndex = 150;
-            this.label13.Text = "Check your Ethernet or Wi-Fi connection";
-            // 
-            // banner7
-            // 
-            this.banner7.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.banner7.BackColor = System.Drawing.Color.Transparent;
-            this.banner7.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.banner7.Image = null;
-            this.banner7.Location = new System.Drawing.Point(8, 118);
-            this.banner7.Name = "banner7";
-            this.banner7.Size = new System.Drawing.Size(35, 34);
-            this.banner7.TabIndex = 163;
-            this.banner7.TabStop = false;
-            this.banner7.Text = "1";
+            this.noNetworkPanel1.RetryClicked += new System.EventHandler(this.noNetworkPanel1_RetryClicked);
+            this.noNetworkPanel1.CloseClicked += new System.EventHandler(this.noNetworkPanel1_CloseClicked);
             // 
             // Updates
             // 
@@ -885,11 +591,8 @@ namespace WinPaletter
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(874, 513);
             this.Controls.Add(this.tablessControl1);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Updates";
@@ -919,11 +622,6 @@ namespace WinPaletter
             this.tablessControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
-            this.groupBox11.ResumeLayout(false);
-            this.groupBox7.ResumeLayout(false);
-            this.groupBox8.ResumeLayout(false);
-            this.groupBox9.ResumeLayout(false);
-            this.groupBox10.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -960,29 +658,10 @@ namespace WinPaletter
         private UI.WP.TablessControl tablessControl1;
         private TabPage tabPage1;
         private TabPage tabPage2;
-        private UI.WP.Button button6;
-        private UI.WP.Button button7;
-        private UI.WP.GroupBox groupBox7;
-        internal Label label7;
-        internal Label label8;
-        private UI.WP.Banner banner3;
-        private UI.WP.GroupBox groupBox8;
-        internal Label label5;
-        internal Label label6;
-        private UI.WP.Banner banner2;
-        private UI.WP.GroupBox groupBox9;
-        internal Label label11;
-        internal Label label12;
-        private UI.WP.Banner banner1;
-        private UI.WP.GroupBox groupBox10;
-        internal Label label13;
-        private UI.WP.Banner banner7;
-        private UI.WP.GroupBox groupBox11;
-        internal UI.WP.Button button8;
         private UI.WP.LabelAlt labelAlt4;
         private UI.WP.LabelAlt release_lbl;
         internal PictureBox pictureBox24;
         protected Label Label17;
-        private UI.WP.Banner banner4;
+        private Templates.NoNetworkPanel noNetworkPanel1;
     }
 }

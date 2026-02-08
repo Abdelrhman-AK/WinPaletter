@@ -8,6 +8,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Management;
+using System.Net;
 using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Security.AccessControl;
@@ -128,7 +129,7 @@ namespace WinPaletter
                     Program.Log?.Write(LogEventLevel.Information, $"GitHub user loaded: {GitHub.Login}");
 
                     GitHub_Avatar?.Dispose();
-                    await DownloadAvatarAsync().ConfigureAwait(false);
+                    await DownloadAvatarInternalAsync().ConfigureAwait(false);
                     Program.Log?.Write(LogEventLevel.Information, "GitHub avatar downloaded successfully.");
                 }
                 else
@@ -143,78 +144,6 @@ namespace WinPaletter
             catch (Exception ex)
             {
                 Program.Log?.Write(LogEventLevel.Error, "Error during GitHub user switch.", ex);
-            }
-        }
-
-        private static readonly string AvatarCache = Path.Combine(SysPaths.appData, "GitHub", "Avatar.png");
-        private static readonly string ETagPath = Path.Combine(SysPaths.appData, "GitHub", "Avatar.etag");
-
-        /// <summary>
-        /// Downloads the GitHub user avatar asynchronously and caches it locally.
-        /// </summary>
-        public static async Task DownloadAvatarAsync()
-        {
-            try
-            {
-                if (!Program.IsNetworkAvailable)
-                {
-                    Program.Log?.Write(LogEventLevel.Warning, "Network unavailable. Cannot download GitHub avatar.");
-                    return;
-                }
-
-                Program.Log?.Write(LogEventLevel.Information, "Starting GitHub avatar loading.");
-
-                Directory.CreateDirectory(Path.GetDirectoryName(AvatarCache)!);
-
-                string savedETag = File.Exists(ETagPath) ? File.ReadAllText(ETagPath) : null;
-                Program.Log?.Write(LogEventLevel.Information, $"Loaded saved ETag: {savedETag}");
-
-                using (HttpClient client = new())
-                {
-                    if (!string.IsNullOrEmpty(savedETag))
-                    {
-                        client.DefaultRequestHeaders.IfNoneMatch.ParseAdd(savedETag);
-                        Program.Log?.Write(LogEventLevel.Information, "ETag added to request headers.");
-                    }
-
-                    HttpResponseMessage response = await client.GetAsync(GitHub.AvatarUrl).ConfigureAwait(false);
-                    Program.Log?.Write(LogEventLevel.Information, $"HTTP GET {GitHub.AvatarUrl} returned {response.StatusCode}");
-
-                    if (response.StatusCode == System.Net.HttpStatusCode.NotModified && File.Exists(AvatarCache))
-                    {
-                        // Load cached avatar
-                        using (Bitmap bmp = BitmapMgr.Load(AvatarCache))
-                        {
-                            GitHub_Avatar = bmp.Resize(256, 256);
-                            Program.Log?.Write(LogEventLevel.Information, "Cached GitHub avatar loaded.");
-                        }
-                        return;
-                    }
-
-                    using (DownloadManager DM = new())
-                    {
-                        byte[] data = await DM.ReadAsync(GitHub.AvatarUrl);
-                        using (MemoryStream ms = new(data))
-                        using (Bitmap bmp = Image.FromStream(ms) as Bitmap)
-                        {
-                            GitHub_Avatar = bmp.Resize(256, 256);
-                            // Save locally
-                            bmp.Save(AvatarCache, ImageFormat.Png);
-                            Program.Log?.Write(LogEventLevel.Information, "GitHub avatar downloaded and saved locally.");
-                        }
-                    }
-
-                    // Save new ETag
-                    if (response.Headers.ETag is not null)
-                    {
-                        File.WriteAllText(ETagPath, response.Headers.ETag.Tag);
-                        Program.Log?.Write(LogEventLevel.Information, $"Saved new ETag: {response.Headers.ETag.Tag}");
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Program.Log?.Write(LogEventLevel.Error, "Error downloading GitHub avatar.", ex);
             }
         }
 
@@ -591,10 +520,143 @@ namespace WinPaletter
         /// </summary>
         public static bool GitHub_LoggedIn { get; private set; } = false;
 
+        private static Bitmap github_avatar;
+        private static Task avatarTask;
+        private static readonly object avatarLock = new();
+        private static readonly string AvatarCache = Path.Combine(SysPaths.appData, "GitHub", "Avatar.png");
+        private static readonly string ETagPath = Path.Combine(SysPaths.appData, "GitHub", "Avatar.etag");
+        public static event Action GitHubAvatarUpdated;
+        private static volatile bool avatarLoading;
+
         /// <summary>
         /// Avatar of the signed-in GitHub user
         /// </summary>
-        public static Bitmap GitHub_Avatar;
+        public static Bitmap GitHub_Avatar
+        {
+            get
+            {
+                if (!GitHub_LoggedIn || gitHub?.AvatarUrl == null)
+                {
+                    DisposeAvatar();
+                    return null;
+                }
+
+                EnsureAvatarPipelineStarted();
+                return github_avatar;
+            }
+        }
+
+        private static void EnsureAvatarPipelineStarted()
+        {
+            if (avatarLoading) return;
+
+            lock (avatarLock)
+            {
+                if (avatarLoading) return;
+
+                avatarLoading = true;
+                avatarTask = LoadAvatarPipelineAsync();
+            }
+        }
+
+        private static async Task LoadAvatarPipelineAsync()
+        {
+            try
+            {
+                bool hadCache = false;
+
+                if (File.Exists(AvatarCache))
+                {
+                    using (Bitmap bmp = BitmapMgr.Load(AvatarCache))
+                    {
+                        ReplaceAvatar(bmp.Resize(256, 256));
+                    }
+                    hadCache = true;
+                }
+
+                bool updated = await DownloadAvatarInternalAsync().ConfigureAwait(false);
+
+                if (updated || !hadCache)
+                {
+                    if (File.Exists(AvatarCache))
+                    {
+                        using (Bitmap bmp = BitmapMgr.Load(AvatarCache))
+                        {
+                            ReplaceAvatar(bmp.Resize(256, 256));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Program.Log?.Write(LogEventLevel.Error, "Failed to load GitHub avatar.", ex);
+            }
+            finally
+            {
+                avatarLoading = false;
+            }
+        }
+
+        private static async Task<bool> DownloadAvatarInternalAsync()
+        {
+            if (!Program.IsNetworkAvailable)
+            {
+                Program.Log?.Write(LogEventLevel.Warning, "Network unavailable. Cannot download GitHub avatar.");
+                return false;
+            }
+
+            Directory.CreateDirectory(Path.GetDirectoryName(AvatarCache)!);
+
+            string savedETag = File.Exists(ETagPath) ? File.ReadAllText(ETagPath) : null;
+
+            using (HttpClient client = new())
+            {
+                if (!string.IsNullOrEmpty(savedETag))
+                {
+                    client.DefaultRequestHeaders.IfNoneMatch.ParseAdd(savedETag);
+                }
+
+                HttpResponseMessage response = await client.GetAsync(GitHub.AvatarUrl).ConfigureAwait(false);
+
+                if (response.StatusCode == HttpStatusCode.NotModified)
+                {
+                    return false;
+                }
+
+                byte[] data = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+
+                using (MemoryStream ms = new(data))
+                using (Bitmap bmp = Image.FromStream(ms) as Bitmap)
+                {
+                    bmp.Save(AvatarCache, ImageFormat.Png);
+                }
+
+                if (response.Headers.ETag != null)
+                {
+                    File.WriteAllText(ETagPath, response.Headers.ETag.Tag);
+                }
+
+                return true;
+            }
+        }
+
+        private static void ReplaceAvatar(Bitmap newAvatar)
+        {
+            if (ReferenceEquals(github_avatar, newAvatar)) return;
+
+            Bitmap old = github_avatar;
+            github_avatar = newAvatar;
+            old?.Dispose();
+
+            GitHubAvatarUpdated?.Invoke();
+        }
+
+        private static void DisposeAvatar()
+        {
+            Bitmap old = github_avatar;
+            github_avatar = null;
+            old?.Dispose();
+        }
 
         /// <summary>
         /// Name of current user

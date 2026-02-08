@@ -6,7 +6,7 @@ using System.Windows.Forms;
 namespace WinPaletter
 {
     [Microsoft.VisualBasic.CompilerServices.DesignerGenerated()]
-    public partial class Store_Hover : BorderlessForm
+    public partial class Store_Hover : UI.WP.Form
     {
 
         // Form overrides dispose to clean up the component list.
@@ -45,12 +45,14 @@ namespace WinPaletter
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(528, 297);
             this.CloseOnClick = true;
+            this.CloseOnLostFocus = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Store_Hover";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.WindowsDefaultLocation;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Store Hover";
             this.TopMost = true;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Store_Hover_FormClosed);

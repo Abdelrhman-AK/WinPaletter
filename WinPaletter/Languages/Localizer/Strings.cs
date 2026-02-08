@@ -113,6 +113,11 @@ namespace WinPaletter
             /// A class that contains all the strings used for WinPaletter Aspects.
             /// </summary>
             public Aspects_Cls Aspects { get; set; } = new();
+
+            /// <summary>
+            /// A class that contains all the strings used for describing the no network connection error and its solutions.
+            /// </summary>
+            public NoNetwork_Cls NoNetwork { get; set; } = new();
         }
     }
 

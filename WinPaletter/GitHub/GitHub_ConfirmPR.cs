@@ -14,6 +14,7 @@ namespace WinPaletter
         public DialogResult ShowDialog(string branch)
         {
             label6.Text = branch;
+            Forms.GlassWindow.Show(Forms.MainForm);
             return base.ShowDialog();
         }
 
@@ -27,6 +28,11 @@ namespace WinPaletter
         {
             DialogResult = DialogResult.OK;
             Close();
+        }
+
+        private void GitHub_ConfirmPR_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Forms.GlassWindow.Close();
         }
     }
 }

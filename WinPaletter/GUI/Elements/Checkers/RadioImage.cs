@@ -258,7 +258,7 @@ namespace WinPaletter.UI.WP
             this.GetTextAndImageRectangles(TextAndImageRect, out RectangleF imageRectF, out RectangleF textRectF);
 
             // Draw image
-            if (Image != null) G.DrawImage(Image, Rectangle.Round(imageRectF));
+            if (Image is not null) G.DrawImage(Image, Rectangle.Round(imageRectF));
 
             // Draw text
             if (!string.IsNullOrEmpty(Text))

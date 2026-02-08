@@ -17,7 +17,7 @@ namespace WinPaletter.Theme.Structures
         public bool IsSecure { get; set; } = false;
 
         /// <summary>Inactivity (idle) time after which the screen saver will start</summary>
-        public int TimeOut { get; set; } = 60;
+        public int TimeOut { get; set; } = 600;
 
         /// <summary>Screen saver File</summary>
         public string File { get; set; } = string.Empty;

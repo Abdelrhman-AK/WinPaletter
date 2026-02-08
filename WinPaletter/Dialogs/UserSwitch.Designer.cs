@@ -44,6 +44,7 @@ namespace WinPaletter
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.groupBox3 = new WinPaletter.UI.WP.GroupBox();
             this.groupBox1 = new WinPaletter.UI.WP.GroupBox();
+            this.button4 = new WinPaletter.UI.WP.Button();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
             this.bottom_buttons.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -105,7 +106,7 @@ namespace WinPaletter
             // 
             this.Button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.Button2.CustomColor = System.Drawing.Color.Empty;
-            this.Button2.Flag = WinPaletter.UI.WP.Button.Flags.None;
+            this.Button2.Flag = WinPaletter.UI.WP.Button.Flags.ErrorOnHover;
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
             this.Button2.Image = null;
@@ -191,6 +192,7 @@ namespace WinPaletter
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.groupBox2.Controls.Add(this.button4);
             this.groupBox2.Controls.Add(this.button3);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.pictureBox2);
@@ -227,7 +229,7 @@ namespace WinPaletter
             this.label2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(67, 6);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(728, 55);
+            this.label2.Size = new System.Drawing.Size(341, 55);
             this.label2.TabIndex = 87;
             this.label2.Text = "0";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -277,6 +279,24 @@ namespace WinPaletter
             this.groupBox1.UseDecorationPattern = false;
             this.groupBox1.UseSharpStyle = false;
             // 
+            // button4
+            // 
+            this.button4.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.button4.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(242)))));
+            this.button4.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button4.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button4.Image = null;
+            this.button4.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_GitHub;
+            this.button4.ImageGlyphEnabled = true;
+            this.button4.Location = new System.Drawing.Point(414, 16);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(239, 34);
+            this.button4.TabIndex = 88;
+            this.button4.Text = "Manage and publish my themes";
+            this.button4.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
             // UserSwitch
             // 
             this.AcceptButton = this.Button1;
@@ -287,10 +307,7 @@ namespace WinPaletter
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox3);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForeColor = System.Drawing.Color.White;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(840, 449);
@@ -324,5 +341,6 @@ namespace WinPaletter
         private UI.WP.Button button3;
         private UI.WP.GroupBox groupBox3;
         private UI.WP.GroupBox groupBox1;
+        private UI.WP.Button button4;
     }
 }

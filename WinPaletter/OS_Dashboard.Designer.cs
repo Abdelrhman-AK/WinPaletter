@@ -6,7 +6,7 @@ using System.Windows.Forms;
 namespace WinPaletter
 {
     [Microsoft.VisualBasic.CompilerServices.DesignerGenerated()]
-    public partial class OS_Dashboard : BorderlessForm
+    public partial class OS_Dashboard : UI.WP.Form
     {
 
         // Form overrides dispose to clean up the component list.
@@ -203,7 +203,6 @@ namespace WinPaletter
             this.BackColor = System.Drawing.Color.Black;
             this.CancelButton = this.button7;
             this.ClientSize = new System.Drawing.Size(513, 115);
-            this.CloseOnLostFocus = false;
             this.ControlBox = false;
             this.Controls.Add(this.radioImage8);
             this.Controls.Add(this.radioImage7);
@@ -214,12 +213,14 @@ namespace WinPaletter
             this.Controls.Add(this.radioImage3);
             this.Controls.Add(this.radioImage1);
             this.Controls.Add(this.radioImage2);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "OS_Dashboard";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.Text = "OS Preview selection";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            this.Text = "";
             this.Load += new System.EventHandler(this.OS_Dashboard_Load);
             this.ResumeLayout(false);
 

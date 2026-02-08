@@ -68,7 +68,7 @@ namespace WinPaletter
 
                     case DWMStyles.None:
                         {
-                            DrawTransparentGray(hwnd);
+                            ResetEffect(hwnd);
                             return;
                         }
 

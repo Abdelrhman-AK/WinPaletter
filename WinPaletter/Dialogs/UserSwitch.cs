@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 using WinPaletter.Properties;
+using WinPaletter.TypesExtensions;
 using WinPaletter.UI.WP;
 
 namespace WinPaletter
@@ -20,6 +21,7 @@ namespace WinPaletter
             InitializeComponent();
             FormClosed += UserSwitch_FormClosed;
             Shown += UserSwitch_Shown;
+            User.GitHubAvatarUpdated += User_GitHubAvatarUpdated;
         }
 
         private void UserSwitch_Shown(object sender, EventArgs e)
@@ -39,7 +41,7 @@ namespace WinPaletter
 
             checkBox1.Checked = false;
 
-            User.GitHubUserSwitch += GitHub_OnSignedOut;
+            User.GitHubUserSwitch += GitHub_OnUserSwitch;
 
             Forms.GlassWindow.Show(Forms.MainForm);
             BringToFront();
@@ -47,7 +49,7 @@ namespace WinPaletter
             await UpdateGitHubLoginData();
         }
 
-        private async void GitHub_OnSignedOut(User.GitHubUserChangeEventArgs e)
+        private async void GitHub_OnUserSwitch(User.GitHubUserChangeEventArgs e)
         {
             await UpdateGitHubLoginData();
         }
@@ -66,20 +68,18 @@ namespace WinPaletter
                 button3.ImageGlyph = glyph;
             });
 
+            User_GitHubAvatarUpdated();
+        }
 
+        private void User_GitHubAvatarUpdated()
+        {
             Bitmap avatar = null;
 
-            if (User.GitHub_LoggedIn)
+            if (User.GitHub_LoggedIn && User.GitHub_Avatar is not null)
             {
-                // Wait for avatar to exist
-                if (User.GitHub_Avatar is null)
+                using (Bitmap bmp = User.GitHub_Avatar.Resize(pictureBox2.Size))
                 {
-                    await User.DownloadAvatarAsync();
-                }
-
-                if (User.GitHub_Avatar != null)
-                {
-                    avatar = User.GitHub_Avatar.ToCircular();
+                    avatar = bmp.ToCircular();
                 }
             }
 
@@ -247,6 +247,11 @@ namespace WinPaletter
             {
                 Forms.GitHub_Login.ShowDialog();
             }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.GitHub_Mgr);
         }
     }
 }

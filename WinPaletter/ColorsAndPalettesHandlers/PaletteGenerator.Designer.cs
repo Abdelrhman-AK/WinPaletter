@@ -6,7 +6,7 @@ using System.Windows.Forms;
 namespace WinPaletter
 {
     [Microsoft.VisualBasic.CompilerServices.DesignerGenerated()]
-    public partial class PaletteGenerator : BorderlessForm
+    public partial class PaletteGenerator : UI.WP.Form
     {
 
         // Form overrides dispose to clean up the component list.
@@ -634,11 +634,13 @@ namespace WinPaletter
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox14);
             this.Controls.Add(this.GroupBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "PaletteGenerator";
             this.Opacity = 0D;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Palette Generator";
             this.Load += new System.EventHandler(this.PaletteGenerateFromImage_Load);
             this.groupBox4.ResumeLayout(false);
