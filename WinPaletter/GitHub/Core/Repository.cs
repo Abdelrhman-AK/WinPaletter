@@ -17,7 +17,7 @@ namespace WinPaletter.GitHub
         /// <summary>
         /// Gets the globally configured <see cref="GitHubClient"/> instance.
         /// </summary>
-        private static GitHubClient _client => Program.GitHub.Client;
+        private static GitHubClient Client => Program.GitHub.Client;
 
         /// <summary>
         /// Gets the authenticated user login name (repository owner).
@@ -50,7 +50,7 @@ namespace WinPaletter.GitHub
 
             try
             {
-                Octokit.Repository repo = await _client.Repository.Get(Owner, repository).ConfigureAwait(false);
+                Octokit.Repository repo = await Client.Repository.Get(Owner, repository).ConfigureAwait(false);
                 Program.Log?.Write(LogEventLevel.Information, $"Repository found: {repo.FullName}");
                 return true;
             }
@@ -83,7 +83,7 @@ namespace WinPaletter.GitHub
 
             try
             {
-                Octokit.Repository forked = await _client.Repository.Forks.Create(OriginalOwner, repository, new()).ConfigureAwait(false);
+                Octokit.Repository forked = await Client.Repository.Forks.Create(OriginalOwner, repository, new()).ConfigureAwait(false);
                 Program.Log?.Write(LogEventLevel.Information, $"Forked repository: {forked.FullName}");
                 return forked;
             }
@@ -112,7 +112,7 @@ namespace WinPaletter.GitHub
             try
             {
                 NewPullRequest newPR = new(title, $"{Owner}:{Branch.Name}", "main") { Body = body };
-                PullRequest pr = await _client.PullRequest.Create(OriginalOwner, Name, newPR).ConfigureAwait(false);
+                PullRequest pr = await Client.PullRequest.Create(OriginalOwner, Name, newPR).ConfigureAwait(false);
                 Program.Log?.Write(LogEventLevel.Information, $"Pull request created: {pr.HtmlUrl}");
                 return pr;
             }
@@ -122,134 +122,6 @@ namespace WinPaletter.GitHub
             }
 
             return null;
-        }
-
-        /// <summary>
-        /// Represents the response schema from GitHub's <c>merge-upstream</c> API.
-        /// </summary>
-        public class MergeUpstreamResponse
-        {
-            /// <summary>
-            /// Gets or sets the merge strategy or result type.
-            /// </summary>
-            public string MergeType { get; set; }
-
-            /// <summary>
-            /// Gets or sets the SHA of the resulting merge commit.
-            /// </summary>
-            public string MergeCommitSha { get; set; }
-        }
-
-        /// <summary>
-        /// Creates a commit on the current branch in the forked repository.
-        /// </summary>
-        /// <param name="message">Commit message.</param>
-        /// <param name="changes">
-        /// Dictionary of file paths and their content.
-        /// Use null content to delete a file.
-        /// </param>
-        /// <returns>True if commit succeeded.</returns>
-        public static async Task<bool> CommitAsync(string message, Dictionary<string, string> changes)
-        {
-            if (!Program.IsNetworkAvailable) return false;
-            if (changes == null || changes.Count == 0) return false;
-
-            try
-            {
-                // Get current branch reference
-                var branchRef = await _client.Git.Reference.Get(
-                    Owner,
-                    Name,
-                    $"heads/{Branch.Name}"
-                ).ConfigureAwait(false);
-
-                // Get latest commit
-                var commit = await _client.Git.Commit.Get(
-                    Owner,
-                    Name,
-                    branchRef.Object.Sha
-                ).ConfigureAwait(false);
-
-                // Create blobs
-                var treeItems = new List<NewTreeItem>();
-
-                foreach (var kv in changes)
-                {
-                    if (kv.Value == null)
-                    {
-                        treeItems.Add(new NewTreeItem
-                        {
-                            Path = kv.Key,
-                            Mode = "100644",
-                            Type = TreeType.Blob,
-                            Sha = null
-                        });
-                        continue;
-                    }
-
-                    var blob = await _client.Git.Blob.Create(
-                        Owner,
-                        Name,
-                        new NewBlob
-                        {
-                            Content = kv.Value,
-                            Encoding = EncodingType.Utf8
-                        }
-                    ).ConfigureAwait(false);
-
-                    treeItems.Add(new NewTreeItem
-                    {
-                        Path = kv.Key,
-                        Mode = "100644",
-                        Type = TreeType.Blob,
-                        Sha = blob.Sha
-                    });
-                }
-
-                // Create tree
-                var newTree = new NewTree
-                {
-                    BaseTree = commit.Tree.Sha
-                };
-
-                foreach (var item in treeItems)
-                {
-                    newTree.Tree.Add(item);
-                }
-
-                var createdTree = await _client.Git.Tree.Create(
-                    Owner,
-                    Name,
-                    newTree
-                ).ConfigureAwait(false);
-
-                // Create commit
-                var newCommit = await _client.Git.Commit.Create(
-                    Owner,
-                    Name,
-                    new NewCommit(
-                        message,
-                        createdTree.Sha,
-                        new[] { commit.Sha }
-                    )
-                ).ConfigureAwait(false);
-
-                // Update branch ref
-                await _client.Git.Reference.Update(
-                    Owner,
-                    Name,
-                    $"heads/{Branch.Name}",
-                    new ReferenceUpdate(newCommit.Sha)
-                ).ConfigureAwait(false);
-
-                Program.Log?.Write(LogEventLevel.Information, $"Commit created on {Branch.Name}: {newCommit.Sha}");
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Program.Log?.Write(LogEventLevel.Error, "Commit failed", ex);
-                return false;
-            }
         }
 
         /// <summary>
@@ -269,19 +141,10 @@ namespace WinPaletter.GitHub
             try
             {
                 // Branch must exist on fork
-                await _client.Git.Reference.Get(
-                    Owner,
-                    Name,
-                    $"heads/{Branch.Name}"
-                ).ConfigureAwait(false);
+                await Client.Git.Reference.Get(Owner, Name, $"heads/{Branch.Name}").ConfigureAwait(false);
 
                 // Must have commits
-                var compare = await _client.Repository.Commit.Compare(
-                    OriginalOwner,
-                    Name,
-                    "main",
-                    $"{Owner}:{Branch.Name}"
-                ).ConfigureAwait(false);
+                var compare = await Client.Repository.Commit.Compare(OriginalOwner, Name, "main", $"{Owner}:{Branch.Name}").ConfigureAwait(false);
 
                 if (compare.TotalCommits == 0)
                 {
@@ -290,16 +153,13 @@ namespace WinPaletter.GitHub
                 }
 
                 // No duplicate PR
-                var prs = await _client.PullRequest.GetAllForRepository(
-                    OriginalOwner,
-                    Name,
+                var prs = await Client.PullRequest.GetAllForRepository(OriginalOwner, Name,
                     new PullRequestRequest
                     {
                         State = ItemStateFilter.Open,
                         Head = $"{Owner}:{Branch.Name}",
                         Base = "main"
-                    }
-                ).ConfigureAwait(false);
+                    }).ConfigureAwait(false);
 
                 if (prs.Any())
                 {

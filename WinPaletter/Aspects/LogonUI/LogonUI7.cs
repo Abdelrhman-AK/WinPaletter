@@ -230,7 +230,7 @@ namespace WinPaletter
             }
             else if (RadioButton2.Checked)
             {
-                bmpX = Program.WallpaperMonitor.FetchSuitableWallpaper(Program.TM, Program.WindowStyle);
+                bmpX = Program.WallpaperMonitor.Get(Program.TM, Program.WindowStyle);
             }
             else if (RadioButton3.Checked)
             {

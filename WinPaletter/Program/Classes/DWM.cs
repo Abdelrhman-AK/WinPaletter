@@ -124,11 +124,11 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Applies a visual drop effect to the specified <see cref="Form"/> using the provided settings.
+        /// Applies a visual drop effect to the specified <see cref="System.Windows.Forms.Form"/> using the provided settings.
         /// </summary>
         /// <remarks>This method customizes the appearance of a form by applying a drop effect, such as Mica or Acrylic,
         /// based on the specified style. Ensure that the form's handle is valid before calling this method.</remarks>
-        /// <param name="Form">The <see cref="Form"/> to which the drop effect will be applied. Cannot be <see langword="null"/>.</param>
+        /// <param name="Form">The <see cref="System.Windows.Forms.Form"/> to which the drop effect will be applied. Cannot be <see langword="null"/>.</param>
         /// <param name="Margins">The <see cref="Padding"/> that defines the margins for the drop effect. Defaults to <see cref="Padding.Empty"/> if
         /// not specified.</param>
         /// <param name="Border">A value indicating whether the form's border should be visible. Defaults to <see langword="true"/>.</param>
@@ -136,21 +136,21 @@ namespace WinPaletter
         /// cref="DWMStyles.Mica"/>.</param>
         /// <param name="useOldAcrylicMethod">A value indicating whether to use the legacy acrylic method for the drop effect. Defaults to <see
         /// langword="false"/>.</param>
-        public static void DropEffect(this Form Form, Padding Margins = default, bool Border = true, DWMStyles FormStyle = DWMStyles.Mica, bool useOldAcrylicMethod = false)
+        public static void DropEffect(this System.Windows.Forms.Form Form, Padding Margins = default, bool Border = true, DWMStyles FormStyle = DWMStyles.Mica, bool useOldAcrylicMethod = false)
         {
             DropEffect(Form.Handle, Margins, Border, FormStyle, useOldAcrylicMethod);
         }
 
         /// <summary>
-        /// Resets any visual effects applied to the specified <see cref="Form"/>.
+        /// Resets any visual effects applied to the specified <see cref="System.Windows.Forms.Form"/>.
         /// </summary>
         /// <remarks>This method performs the following actions to reset the visual effects of the form:
         /// <list type="bullet"> <item><description>Sets the system backdrop type to "None".</description></item>
         /// <item><description>Disables immersive dark mode if it was previously enabled.</description></item>
         /// <item><description>Clears any extended frame margins applied to the form.</description></item> </list> If
         /// the <paramref name="form"/> is null or disposed, the method does nothing.</remarks>
-        /// <param name="form">The <see cref="Form"/> instance to reset. Must not be null or disposed.</param>
-        public static void ResetEffect(this Form form)
+        /// <param name="form">The <see cref="System.Windows.Forms.Form"/> instance to reset. Must not be null or disposed.</param>
+        public static void ResetEffect(this System.Windows.Forms.Form form)
         {
             if (form == null || form.IsDisposed) return;
             ResetEffect(form.Handle);
@@ -358,13 +358,13 @@ namespace WinPaletter
             // Remove borders if requested
             if (noWindowBorders)
             {
-                int style = User32.GetWindowLong(hwnd, GWL_STYLE);
+                long style = User32.GetWindowLong(hwnd, GWL_STYLE);
                 style &= ~WS_BORDER & ~WS_CAPTION;
                 User32.SetWindowLong(hwnd, GWL_STYLE, style);
             }
 
             // Enable layered window style
-            int exStyle = User32.GetWindowLong(hwnd, GWL_EXSTYLE);
+            long exStyle = User32.GetWindowLong(hwnd, GWL_EXSTYLE);
             exStyle |= WS_EX_LAYERED;
             User32.SetWindowLong(hwnd, GWL_EXSTYLE, exStyle);
 

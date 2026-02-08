@@ -6,7 +6,7 @@ using System.Windows.Forms;
 namespace WinPaletter
 {
     [Microsoft.VisualBasic.CompilerServices.DesignerGenerated()]
-    public partial class Lang_Add_Snippet : Form
+    public partial class Lang_Add_Snippet : UI.WP.Form
     {
 
         // Form overrides dispose to clean up the component list.

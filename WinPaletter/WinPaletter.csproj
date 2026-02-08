@@ -100,8 +100,8 @@
       <HintPath>..\..\Workspace\WinPaletter_WorkingArea\3. Assemblies\Devcorp.Controls.VisualStyles.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="FastCloner, Version=3.4.3.0, Culture=neutral, PublicKeyToken=e66300c36cd73760, processorArchitecture=MSIL">
-      <HintPath>..\packages\FastCloner.3.4.3\lib\net46\FastCloner.dll</HintPath>
+    <Reference Include="FastCloner, Version=3.4.4.0, Culture=neutral, PublicKeyToken=e66300c36cd73760, processorArchitecture=MSIL">
+      <HintPath>..\packages\FastCloner.3.4.4\lib\net46\FastCloner.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="FluentTransitions, Version=2.0.3.0, Culture=neutral, PublicKeyToken=121ceb2df72b2338, processorArchitecture=MSIL">
@@ -143,7 +143,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Serilog, Version=4.3.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <HintPath>..\packages\Serilog.4.3.1-dev-02404\lib\net471\Serilog.dll</HintPath>
+      <HintPath>..\packages\Serilog.4.3.1-dev-02406\lib\net471\Serilog.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Serilog.Sinks.File, Version=8.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
@@ -561,7 +561,7 @@
     <Compile Include="GitHub\Core\VirtualRepositoryExplorer.cs" />
     <Compile Include="GitHub\Core\FileSystem.cs" />
     <Compile Include="GitHub\Core\Repository.cs" />
-    <Compile Include="Program\WallpaperMonitor.cs" />
+    <Compile Include="Program\Monitors\WallpaperMonitor.cs" />
     <Compile Include="Settings\Setup.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -798,7 +798,7 @@
     <Compile Include="Program\Users\User.cs" />
     <Compile Include="Program\Helpers.cs" />
     <Compile Include="Program\Invoker.cs" />
-    <Compile Include="Program\PreferencesMonitor.cs" />
+    <Compile Include="Program\Monitors\PreferencesMonitor.cs" />
     <Compile Include="Program\Tasks.cs" />
     <Compile Include="Program\Uninstaller.cs" />
     <Compile Include="Program\Variables\Variables.cs" />
@@ -860,6 +860,12 @@
     </Compile>
     <Compile Include="OS_Dashboard.Designer.cs">
       <DependentUpon>OS_Dashboard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Form.Designer.cs">
+      <DependentUpon>Form.cs</DependentUpon>
     </Compile>
     <Compile Include="Theme\Default\Schemes.cs" />
     <Compile Include="Theme\Default\Windows10.cs" />
@@ -1198,12 +1204,6 @@
       <DependentUpon>Store_SearchFilter.cs</DependentUpon>
     </Compile>
     <Compile Include="Store\Store_SearchFilter.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Store\Store_ThemeLicense.Designer.cs">
-      <DependentUpon>Store_ThemeLicense.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Store\Store_ThemeLicense.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Aspects\Terminals\CMD.Designer.cs">
@@ -1609,9 +1609,6 @@
     <EmbeddedResource Include="Store\Store_SearchFilter.resx">
       <DependentUpon>Store_SearchFilter.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Store\Store_ThemeLicense.resx">
-      <DependentUpon>Store_ThemeLicense.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="GitHub\GitHub_Login.resx">
       <DependentUpon>GitHub_Login.cs</DependentUpon>
     </EmbeddedResource>
@@ -1659,6 +1656,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Aspects\Terminals\WindowsTerminalDecide.resx">
       <DependentUpon>WindowsTerminalDecide.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GUI\Form.resx">
+      <DependentUpon>Form.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Updates\Updates.resx">
       <DependentUpon>Updates.cs</DependentUpon>
@@ -1713,8 +1713,8 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets'))" />
-    <Error Condition="!Exists('..\packages\Serilog.4.3.1-dev-02404\build\Serilog.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Serilog.4.3.1-dev-02404\build\Serilog.targets'))" />
+    <Error Condition="!Exists('..\packages\Serilog.4.3.1-dev-02406\build\Serilog.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Serilog.4.3.1-dev-02406\build\Serilog.targets'))" />
   </Target>
   <Import Project="..\packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets" Condition="Exists('..\packages\System.ValueTuple.4.6.1\build\net471\System.ValueTuple.targets')" />
-  <Import Project="..\packages\Serilog.4.3.1-dev-02404\build\Serilog.targets" Condition="Exists('..\packages\Serilog.4.3.1-dev-02404\build\Serilog.targets')" />
+  <Import Project="..\packages\Serilog.4.3.1-dev-02406\build\Serilog.targets" Condition="Exists('..\packages\Serilog.4.3.1-dev-02406\build\Serilog.targets')" />
 </Project>

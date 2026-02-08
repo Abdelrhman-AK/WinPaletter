@@ -6,7 +6,7 @@ using System.Windows.Forms;
 namespace WinPaletter
 {
     [Microsoft.VisualBasic.CompilerServices.DesignerGenerated()]
-    public partial class DownloadManager_Dlg : Form
+    public partial class DownloadManager_Dlg : UI.WP.Form
     {
 
         // Form overrides dispose to clean up the component list.
@@ -373,7 +373,6 @@ namespace WinPaletter
             this.Text = "Download manager";
             this.TopMost = true;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.DownloadManager_Dlg_FormClosed);
-            this.Load += new System.EventHandler(this.DownloadManager_Dlg_Load);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox4)).EndInit();

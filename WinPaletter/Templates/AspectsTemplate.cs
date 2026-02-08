@@ -15,7 +15,7 @@ namespace WinPaletter
     /// <summary>
     /// A template form for managing WinPaletter aspects editor
     /// </summary>
-    public partial class AspectsTemplate : Form
+    public partial class AspectsTemplate :UI.WP.Form
     {
         /// <summary>
         /// Creates a new instance of AspectsTemplate
@@ -61,10 +61,6 @@ namespace WinPaletter
         private void AspectsTemplate_Load(object sender, EventArgs e)
         {
             IsShown = false;
-            CheckForIllegalCrossThreadCalls = false;
-
-            this.Localize();
-            ApplyStyle(this);
         }
 
         /// <summary>
@@ -595,7 +591,7 @@ namespace WinPaletter
     /// Creates new data instance for managing WinPaletter aspects editor
     /// </remarks>
     /// <param name="Form"></param>
-    public class DesignerData(Form Form)
+    public class DesignerData(System.Windows.Forms.Form Form)
     {
         /// <summary>
         /// Name of Windows aspect being modified by specified form
@@ -610,7 +606,7 @@ namespace WinPaletter
         /// <summary>
         /// Parent form
         /// </summary>
-        public Form Form = Form;
+        public System.Windows.Forms.Form Form = Form;
 
         /// <summary>
         /// Gets or sets a value indicating whether the item can be opened in the Control Panel.

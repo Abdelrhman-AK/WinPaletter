@@ -1,7 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
+using WinPaletter.Theme.Structures;
 
 namespace WinPaletter.NativeMethods
 {
@@ -149,21 +154,32 @@ namespace WinPaletter.NativeMethods
         #endregion
 
         #region UxTheme
-        /// <summary>
-        /// Removes the titlebar text and icon from a specified form.
-        /// </summary>
-        /// <param name="handle">The handle of the form.</param>
-        public static void RemoveFormTitlebarTextAndIcon(IntPtr handle)
-        {
-            // Set the non-client rendering options to remove the titlebar text and icon
-            UxTheme.WTA_OPTIONS options = new()
-            {
-                Flags = UxTheme.WTNCA_NODRAWCAPTION | UxTheme.WTNCA_NODRAWICON,
-                Mask = UxTheme.WTNCA_NODRAWCAPTION | UxTheme.WTNCA_NODRAWICON
-            };
 
-            UxTheme.SetWindowThemeAttribute(handle, UxTheme.WindowThemeAttributeType.WTA_NONCLIENT, ref options, (uint)Marshal.SizeOf(options));
+        /// <summary>
+        /// Shows or hides the titlebar text and icon of a form.
+        /// </summary>
+        /// <param name="handle">Window handle.</param>
+        /// <param name="hide">True to hide caption text and icon, false to restore.</param>
+        public static void SetFormTitlebarTextAndIcon(IntPtr handle, bool hide)
+        {
+            if (handle == IntPtr.Zero) return;
+
+            // XP or older -> not supported
+            if (Environment.OSVersion.Version.Major < 6)
+                return;
+
+            UxTheme.WTA_OPTIONS options = new();
+            uint flags = UxTheme.WTNCA_NODRAWCAPTION | UxTheme.WTNCA_NODRAWICON;
+
+            options.Mask = flags;
+            options.Flags = hide ? flags : 0u;
+
+            UxTheme.SetWindowThemeAttribute(handle, UxTheme.WindowThemeAttributeType.WTA_NONCLIENT, ref options, (uint)Marshal.SizeOf(typeof(UxTheme.WTA_OPTIONS)));
+
+            // Force non-client area redraw
+            User32.SetWindowPos(handle, IntPtr.Zero, 0, 0, 0, 0, User32.SWP_NOMOVE | User32.SWP_NOSIZE | User32.SWP_NOZORDER | User32.SWP_FRAMECHANGED | User32.SWP_NOACTIVATE);
         }
+
         #endregion
 
         #region Winmm

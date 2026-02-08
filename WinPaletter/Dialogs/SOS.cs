@@ -8,17 +8,11 @@ using WinPaletter.Theme;
 
 namespace WinPaletter.Dialogs
 {
-    public partial class SOS : Form
+    public partial class SOS : UI.WP.Form
     {
         public SOS()
         {
             InitializeComponent();
-        }
-
-        private void RescueTools_Load(object sender, EventArgs e)
-        {
-            this.Localize();
-            ApplyStyle(this);
         }
 
         private void button1_Click(object sender, EventArgs e)

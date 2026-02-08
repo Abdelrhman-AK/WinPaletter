@@ -6,7 +6,7 @@ using System.Windows.Forms;
 namespace WinPaletter
 {
     [Microsoft.VisualBasic.CompilerServices.DesignerGenerated()]
-    public partial class ServiceInstaller : Form
+    public partial class ServiceInstaller : UI.WP.Form
     {
 
         // Form overrides dispose to clean up the component list.

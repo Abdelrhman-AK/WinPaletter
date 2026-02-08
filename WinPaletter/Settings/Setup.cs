@@ -6,7 +6,7 @@ using WinPaletter.Properties;
 
 namespace WinPaletter
 {
-    public partial class Setup : Form
+    public partial class Setup : UI.WP.Form
     {
         public Setup()
         {
@@ -15,9 +15,6 @@ namespace WinPaletter
 
         private void Setup_Load(object sender, EventArgs e)
         {
-            this.Localize();
-            ApplyStyle(this);
-            NativeMethods.Helpers.RemoveFormTitlebarTextAndIcon(Handle);
             Icon = FormsExtensions.Icon<MainForm>();
 
             labelAlt1.Text = Text;

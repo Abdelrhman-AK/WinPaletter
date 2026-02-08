@@ -10,7 +10,7 @@ using WinPaletter.Theme;
 
 namespace WinPaletter
 {
-    public partial class ThemeLog : Form
+    public partial class ThemeLog : UI.WP.Form
     {
         private int elapsedSecs = 0;
         private Thread Apply_Thread;
@@ -65,9 +65,6 @@ namespace WinPaletter
 
             if (this is not null)
             {
-                this.Localize();
-                ApplyStyle(this);
-                CheckForIllegalCrossThreadCalls = false;
                 if (TreeView1 is not null) TreeView1.ImageList = ImageLists.ThemeLog;
             }
         }

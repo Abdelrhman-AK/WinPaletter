@@ -32,7 +32,7 @@ namespace WinPaletter
             {
                 Invoke(() =>
                 {
-                    pnl_preview1.BackgroundImage = Program.WallpaperMonitor.FetchSuitableWallpaper(Program.TM, Program.WindowStyle);
+                    pnl_preview1.BackgroundImage = Program.WallpaperMonitor.Get(Program.TM, Program.WindowStyle);
                     Classic_Preview1.BackgroundImage = pnl_preview1.BackgroundImage.Clone() as Bitmap;
 
                     pnl_preview1.BackColor = e.BackgroundColor;
@@ -195,7 +195,7 @@ namespace WinPaletter
 
             RadioImage2.Image = WinLogos.WinXP;
 
-            pnl_preview1.BackgroundImage = Program.WallpaperMonitor.FetchSuitableWallpaper(Program.TM, Program.WindowStyle);
+            pnl_preview1.BackgroundImage = Program.WallpaperMonitor.Get(Program.TM, Program.WindowStyle);
             Classic_Preview1.BackgroundImage = pnl_preview1.BackgroundImage.Clone() as Bitmap;
 
             pnl_preview1.BackColor = Program.TM.Win32.Background;

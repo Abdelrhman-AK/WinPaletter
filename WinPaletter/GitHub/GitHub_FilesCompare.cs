@@ -6,7 +6,7 @@ using static WinPaletter.GitHub.FileSystem;
 
 namespace WinPaletter
 {
-    public partial class GitHub_FilesCompare : Form
+    public partial class GitHub_FilesCompare : UI.WP.Form
     {
         public FileConflictAction Action { get; private set; }
         public Dictionary<string, bool> ReplaceMap { get; private set; } = [];
@@ -55,13 +55,6 @@ namespace WinPaletter
                     listViewDestination.Items.Add(item);
                 }
             }
-        }
-
-
-        private void GitHub_FilesCompare_Load(object sender, EventArgs e)
-        {
-            ApplyStyle(this);
-            this.Localize();
         }
 
         private void listViewSource_ItemChecked(object sender, ItemCheckedEventArgs e)

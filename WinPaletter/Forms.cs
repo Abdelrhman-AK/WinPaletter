@@ -32,7 +32,7 @@ namespace WinPaletter
         /// <summary>
         /// List of forms in current project and not in the exclude list.
         /// </summary>
-        public static IEnumerable<Type> ITypes => Assembly.GetCallingAssembly().GetTypes().Where(t => !IExclude.Contains(t) && typeof(Form).IsAssignableFrom(t) && !t.IsAbstract && t.GetConstructor(Type.EmptyTypes) != null);
+        public static IEnumerable<Type> ITypes => Assembly.GetCallingAssembly().GetTypes().Where(t => !IExclude.Contains(t) && typeof(System.Windows.Forms.Form).IsAssignableFrom(t) && !t.IsAbstract && t.GetConstructor(Type.EmptyTypes) != null);
 
         /// <summary>
         /// Gets the instance of the form <see cref="Win12Colors"/> to manage Wiadows 12 colors and theme.
@@ -365,12 +365,6 @@ namespace WinPaletter
         private static Store_SearchFilter _Store_SearchFilter;
 
         /// <summary>
-        /// Gets the instance of the form <see cref="Store_ThemeLicense"/> to show the store theme license.
-        /// </summary>
-        public static Store_ThemeLicense Store_ThemeLicense => Get(ref _Store_ThemeLicense);
-        private static Store_ThemeLicense _Store_ThemeLicense;
-
-        /// <summary>
         /// Gets the instance of the form <see cref="CMD"/> to edit Windows Command Prompt and PowerShell appearance.
         /// </summary>
         public static CMD CMD => Get(ref _CMD);
@@ -492,7 +486,7 @@ namespace WinPaletter
 
         #region Engine
 
-        private static readonly Dictionary<Type, Form> formBeingCreated = new();
+        private static readonly Dictionary<Type, System.Windows.Forms.Form> formBeingCreated = new();
         private static readonly object formBeingCreatedLock = new();
 
         private static T Get<T>(ref T field) where T : Form, new()
@@ -515,7 +509,7 @@ namespace WinPaletter
                 if (instance != null && !instance.IsDisposed)
                     return instance;
 
-                if (formBeingCreated.TryGetValue(formType, out Form existing) &&
+                if (formBeingCreated.TryGetValue(formType, out System.Windows.Forms.Form existing) &&
                     existing is T existingTyped &&
                     !existingTyped.IsDisposed)
                 {

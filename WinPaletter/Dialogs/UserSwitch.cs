@@ -10,7 +10,7 @@ using WinPaletter.UI.WP;
 
 namespace WinPaletter
 {
-    public partial class UserSwitch : Form
+    public partial class UserSwitch : UI.WP.Form
     {
         private bool shown = false;
         private Dictionary<string, string> _UsersList = [];
@@ -37,11 +37,7 @@ namespace WinPaletter
         {
             shown = false;
 
-            ApplyStyle(this);
-            this.Localize();
-
             checkBox1.Checked = false;
-            CheckForIllegalCrossThreadCalls = false;
 
             User.GitHubUserSwitch += GitHub_OnSignedOut;
 

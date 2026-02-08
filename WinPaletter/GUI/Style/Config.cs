@@ -47,7 +47,7 @@ namespace WinPaletter.UI.Style
                 if (_renderingHint != value)
                 {
                     _renderingHint = value;
-                    foreach (Form form in Application.OpenForms)
+                    foreach (System.Windows.Forms.Form form in Application.OpenForms)
                     {
                         // Update the font smoothing for all controls
                         form.Refresh();

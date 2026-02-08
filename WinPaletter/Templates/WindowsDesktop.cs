@@ -51,7 +51,7 @@ namespace WinPaletter.Templates
             {
                 Invoke(() =>
                 {
-                    BackgroundImage = Program.WallpaperMonitor.FetchSuitableWallpaper(HookedTM, _windowStyle);
+                    BackgroundImage = Program.WallpaperMonitor.Get(HookedTM, _windowStyle);
                     BackColor = e.BackgroundColor;
                 });
             }
@@ -255,24 +255,22 @@ namespace WinPaletter.Templates
 
                         if (ExplorerPatcher.CanBeUsed)
                         {
+                            if ((bool)!Program.EP?.UseStart10)
                             {
-                                if ((bool)!Program.EP?.UseStart10)
-                                {
-                                    start.Style = WinElement.Styles.Start11;
-                                }
-                                else
-                                {
-                                    start.Style = WinElement.Styles.Start10;
-                                }
+                                start.Style = WinElement.Styles.Start11;
+                            }
+                            else
+                            {
+                                start.Style = WinElement.Styles.Start10;
+                            }
 
-                                if ((bool)!Program.EP?.UseTaskbar10)
-                                {
-                                    taskbar.Style = WinElement.Styles.Taskbar11;
-                                }
-                                else
-                                {
-                                    taskbar.Style = WinElement.Styles.Taskbar10;
-                                }
+                            if ((bool)!Program.EP?.UseTaskbar10)
+                            {
+                                taskbar.Style = WinElement.Styles.Taskbar11;
+                            }
+                            else
+                            {
+                                taskbar.Style = WinElement.Styles.Taskbar10;
                             }
                         }
                         else
@@ -2549,7 +2547,7 @@ namespace WinPaletter.Templates
 
             _hookedTM = TM;
 
-            BackgroundImage = Program.WallpaperMonitor.FetchSuitableWallpaper(HookedTM, _windowStyle);
+            BackgroundImage = Program.WallpaperMonitor.Get(HookedTM, _windowStyle);
             BackColor = HookedTM.Win32.Background;
 
             if (WindowStyle == WindowStyle.W12)
@@ -2656,7 +2654,6 @@ namespace WinPaletter.Templates
                 Win7Noise = HookedTM.Windows7.ColorizationGlassReflectionIntensity;
                 Win7Alpha = HookedTM.Windows7.ColorizationBlurBalance;
                 VisualStyles = HookedTM.Windows7.VisualStyles.VisualStylesType;
-
             }
 
             else if (WindowStyle == WindowStyle.WVista)

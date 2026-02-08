@@ -258,8 +258,8 @@ namespace WinPaletter
                             bool MainFormIsOpened = Application.OpenForms[Forms.MainForm.Name] is not null;
 
                             // List of opened forms before switching user
-                            List<Form> OpenForms = [];
-                            foreach (Form f in Application.OpenForms)
+                            List<System.Windows.Forms.Form> OpenForms = [];
+                            foreach (System.Windows.Forms.Form f in Application.OpenForms)
                             {
                                 // Exclude GlassWindow and UserSwitch forms from the list of opened forms
                                 if (f != Forms.GlassWindow && f != Forms.UserSwitch && f.Visible)
@@ -295,7 +295,7 @@ namespace WinPaletter
                             if (MainFormIsOpened) { Forms.Home.LoadData(); }
 
                             // Hide opened forms after switching user
-                            foreach (Form f in OpenForms)
+                            foreach (System.Windows.Forms.Form f in OpenForms)
                             {
                                 f.Visible = true;
                             }

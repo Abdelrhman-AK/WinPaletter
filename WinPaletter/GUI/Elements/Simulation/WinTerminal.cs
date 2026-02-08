@@ -22,6 +22,37 @@ namespace WinPaletter.UI.Simulation
         }
 
         #region Variables
+
+        private bool IsInDesignMode
+        {
+            get
+            {
+                // First check at control level
+                if (DesignMode)
+                    return true;
+
+                // Check at license context level
+                if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
+                    return true;
+
+                // Check through the site
+                ISite site = Site;
+                if (site != null && site.DesignMode)
+                    return true;
+
+                // Check parent chain
+                Control parent = Parent;
+                while (parent != null)
+                {
+                    if (parent.Site != null && parent.Site.DesignMode)
+                        return true;
+                    parent = parent.Parent;
+                }
+
+                return false;
+            }
+        }
+
         readonly Timer Timer = new() { Enabled = false, Interval = 500 };
 
         private static TextureBrush Noise = new(Resources.Noise.Fade(0.15f));
@@ -521,7 +552,14 @@ namespace WinPaletter.UI.Simulation
 
         private void GetBack()
         {
-            adaptedBack = Program.WallpaperMonitor.FetchSuitableWallpaper(Program.TM, Program.WindowStyle)?.Clone() as Bitmap;
+            if (IsInDesignMode) return;
+
+            adaptedBack?.Dispose();
+            adaptedBack = null;
+            adaptedBack = Program.WallpaperMonitor.Get(Program.TM, Program.WindowStyle)?.Clone() as Bitmap;
+
+            adaptedBackBlurred?.Dispose();
+            adaptedBackBlurred = null;
             adaptedBackBlurred = adaptedBack?.Blur(13);
         }
 

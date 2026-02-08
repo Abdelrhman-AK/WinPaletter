@@ -335,6 +335,8 @@
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(735, 34);
             this.groupBox6.TabIndex = 244;
+            this.groupBox6.UseDecorationPattern = false;
+            this.groupBox6.UseSharpStyle = false;
             // 
             // checkBox4
             // 
@@ -381,6 +383,8 @@
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(735, 34);
             this.groupBox4.TabIndex = 242;
+            this.groupBox4.UseDecorationPattern = false;
+            this.groupBox4.UseSharpStyle = false;
             this.groupBox4.Visible = false;
             // 
             // checkBox3
@@ -430,6 +434,8 @@
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(735, 80);
             this.groupBox3.TabIndex = 240;
+            this.groupBox3.UseDecorationPattern = false;
+            this.groupBox3.UseSharpStyle = false;
             this.groupBox3.Visible = false;
             // 
             // label12
@@ -494,6 +500,8 @@
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(735, 140);
             this.groupBox2.TabIndex = 239;
+            this.groupBox2.UseDecorationPattern = false;
+            this.groupBox2.UseSharpStyle = false;
             this.groupBox2.Visible = false;
             // 
             // checkBox1
@@ -636,6 +644,8 @@
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(735, 73);
             this.groupBox1.TabIndex = 238;
+            this.groupBox1.UseDecorationPattern = false;
+            this.groupBox1.UseSharpStyle = false;
             // 
             // pictureBox6
             // 
@@ -861,6 +871,8 @@
             this.groupBox5.Size = new System.Drawing.Size(751, 158);
             this.groupBox5.TabIndex = 244;
             this.groupBox5.Text = "groupBox5";
+            this.groupBox5.UseDecorationPattern = false;
+            this.groupBox5.UseSharpStyle = false;
             // 
             // label16
             // 
@@ -2391,6 +2403,8 @@
             this.bottom_buttons.Name = "bottom_buttons";
             this.bottom_buttons.Size = new System.Drawing.Size(759, 48);
             this.bottom_buttons.TabIndex = 120;
+            this.bottom_buttons.UseDecorationPattern = false;
+            this.bottom_buttons.UseSharpStyle = false;
             // 
             // button1
             // 
@@ -2509,13 +2523,12 @@
             this.Controls.Add(this.tablessControl1);
             this.Controls.Add(this.bottom_buttons);
             this.Controls.Add(this.titlebarExtender1);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForeColor = System.Drawing.Color.White;
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.Name = "WallStudio";
             this.ShowIcon = false;
+            this.ShowIconAndCaptionText = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "WallStudio";
             this.TopMost = true;

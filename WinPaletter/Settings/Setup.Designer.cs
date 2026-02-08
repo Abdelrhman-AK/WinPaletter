@@ -357,6 +357,8 @@
             this.groupBox62.Name = "groupBox62";
             this.groupBox62.Size = new System.Drawing.Size(730, 137);
             this.groupBox62.TabIndex = 55;
+            this.groupBox62.UseDecorationPattern = false;
+            this.groupBox62.UseSharpStyle = false;
             // 
             // checkBox1
             // 
@@ -503,6 +505,8 @@
             this.groupBox51.Name = "groupBox51";
             this.groupBox51.Size = new System.Drawing.Size(730, 48);
             this.groupBox51.TabIndex = 205;
+            this.groupBox51.UseDecorationPattern = false;
+            this.groupBox51.UseSharpStyle = false;
             // 
             // label95
             // 
@@ -588,6 +592,8 @@
             this.groupBox50.Name = "groupBox50";
             this.groupBox50.Size = new System.Drawing.Size(730, 219);
             this.groupBox50.TabIndex = 204;
+            this.groupBox50.UseDecorationPattern = false;
+            this.groupBox50.UseSharpStyle = false;
             // 
             // label62
             // 
@@ -789,6 +795,8 @@
             this.groupBox49.Name = "groupBox49";
             this.groupBox49.Size = new System.Drawing.Size(730, 48);
             this.groupBox49.TabIndex = 203;
+            this.groupBox49.UseDecorationPattern = false;
+            this.groupBox49.UseSharpStyle = false;
             // 
             // label29
             // 
@@ -888,6 +896,8 @@
             this.groupBox22.Name = "groupBox22";
             this.groupBox22.Size = new System.Drawing.Size(730, 48);
             this.groupBox22.TabIndex = 55;
+            this.groupBox22.UseDecorationPattern = false;
+            this.groupBox22.UseSharpStyle = false;
             // 
             // label30
             // 
@@ -938,6 +948,8 @@
             this.groupBox48.Name = "groupBox48";
             this.groupBox48.Size = new System.Drawing.Size(730, 150);
             this.groupBox48.TabIndex = 211;
+            this.groupBox48.UseDecorationPattern = false;
+            this.groupBox48.UseSharpStyle = false;
             // 
             // label58
             // 
@@ -1030,6 +1042,8 @@
             this.groupBox14.Name = "groupBox14";
             this.groupBox14.Size = new System.Drawing.Size(730, 84);
             this.groupBox14.TabIndex = 54;
+            this.groupBox14.UseDecorationPattern = false;
+            this.groupBox14.UseSharpStyle = false;
             // 
             // label68
             // 
@@ -1184,6 +1198,8 @@
             this.bottom_buttons.Name = "bottom_buttons";
             this.bottom_buttons.Size = new System.Drawing.Size(759, 48);
             this.bottom_buttons.TabIndex = 120;
+            this.bottom_buttons.UseDecorationPattern = false;
+            this.bottom_buttons.UseSharpStyle = false;
             // 
             // copyrightsLabel
             // 
@@ -1303,13 +1319,12 @@
             this.Controls.Add(this.tablessControl1);
             this.Controls.Add(this.bottom_buttons);
             this.Controls.Add(this.titlebarExtender1);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForeColor = System.Drawing.Color.White;
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.Name = "Setup";
             this.ShowIcon = false;
+            this.ShowIconAndCaptionText = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "WinPaletter Setup";
             this.TopMost = true;

@@ -18,9 +18,6 @@ namespace WinPaletter
         private void Lang_ReplaceText_Load(object sender, EventArgs e)
         {
             Icon = FormsExtensions.Icon<Lang_Editor>();
-            this.Localize();
-            ApplyStyle(this);
-
         }
 
         /// <summary>
@@ -71,7 +68,7 @@ namespace WinPaletter
         /// <param name="Form"></param>
         /// <param name="FindWhat"></param>
         /// <returns></returns>
-        public string Replace(Form Form, string FindWhat)
+        public string Replace(System.Windows.Forms.Form Form, string FindWhat)
         {
             // Hide the dialog
             using (Lang_ReplaceText dlg = new())

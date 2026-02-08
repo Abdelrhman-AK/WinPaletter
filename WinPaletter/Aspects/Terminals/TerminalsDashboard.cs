@@ -17,8 +17,6 @@ namespace WinPaletter
 
         private void TerminalsDashboard_Load(object sender, EventArgs e)
         {
-            this.Localize();
-            ApplyStyle(this);
             Icon = FormsExtensions.Icon<CMD>();
 
             BackColor = Color.Black;

@@ -170,6 +170,7 @@ namespace WinPaletter.NativeMethods
         #endregion
 
         #region Structures
+
         /// <summary>
         /// Struct that specifies Desktop Window Manager (DWM) blur behind settings.
         /// </summary>

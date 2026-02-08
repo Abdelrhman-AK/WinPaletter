@@ -4,7 +4,7 @@ using WinPaletter.UI.Retro;
 
 namespace WinPaletter
 {
-    public partial class Win32UI_Fullscreen : Form
+    public partial class Win32UI_Fullscreen : UI.WP.Form
     {
         public Win32UI_Fullscreen()
         {

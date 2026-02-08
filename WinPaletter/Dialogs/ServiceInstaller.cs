@@ -27,9 +27,6 @@ namespace WinPaletter
         private void BugReport_Load(object sender, EventArgs e)
         {
             Icon = FormsExtensions.Icon<SettingsX>();
-            this.Localize();
-            ApplyStyle(this);
-            CheckForIllegalCrossThreadCalls = false;
 
             Color c = PictureBox1.Image.AverageColor().CB(Program.Style.DarkMode ? -0.35f : 0.35f);
             AnimatedBox1.Color1 = c;

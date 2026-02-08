@@ -18,8 +18,6 @@ namespace WinPaletter
 
         private void TerminalInfo_Load(object sender, EventArgs e)
         {
-            this.Localize();
-            ApplyStyle(this);
             Icon = FormsExtensions.Icon<WindowsTerminal>();
         }
 

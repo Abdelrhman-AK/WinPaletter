@@ -19,8 +19,6 @@ namespace WinPaletter
 
         private void PE_Warning_Load(object sender, EventArgs e)
         {
-            this.Localize();
-            ApplyStyle(this);
             Color c = PictureBox1.Image.AverageColor().CB(Program.Style.DarkMode ? -0.35f : 0.35f);
             AnimatedBox1.BackColor = c;
             CheckBox1.Checked = Program.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert;

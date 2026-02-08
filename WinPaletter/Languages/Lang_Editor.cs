@@ -70,7 +70,7 @@ namespace WinPaletter
         /// <summary>
         /// The form that is currently opened to be translated.
         /// </summary>
-        private Form openedForm;
+        private System.Windows.Forms.Form openedForm;
 
         /// <summary>
         /// The name of the currently selected form.
@@ -278,10 +278,10 @@ namespace WinPaletter
         }
 
         // Create a mini form from the original form
-        private Form CreateMiniForm(Form Form, Form OriginalForm)
+        private System.Windows.Forms.Form CreateMiniForm(System.Windows.Forms.Form Form, System.Windows.Forms.Form OriginalForm)
         {
             // Create a new form with the same properties as the original form
-            Form child = new()
+            System.Windows.Forms.Form child = new()
             {
                 Name = Form.Name,
                 Text = Form.Text,
@@ -321,7 +321,7 @@ namespace WinPaletter
         }
 
         // Populate the sub controls of the form
-        private void PopulateSubControls(Control From, Control To, Form OriginalForm)
+        private void PopulateSubControls(Control From, Control To, System.Windows.Forms.Form OriginalForm)
         {
             foreach (Control ctrl in From.Controls)
             {
@@ -436,7 +436,7 @@ namespace WinPaletter
 
                             // Add event handlers to the panel (A click on the panel will select it to be translated)
                             if (pnl.Parent is TabPage) pnl.MouseDown += ParentTabPageClicked;
-                            else if (pnl.Parent is Form) pnl.Click += ParentFormPageClicked;
+                            else if (pnl.Parent is System.Windows.Forms.Form) pnl.Click += ParentFormPageClicked;
                         }
                         else
                         {
@@ -647,14 +647,14 @@ namespace WinPaletter
         #region Child form events
         private void Child_Load(object sender, EventArgs e)
         {
-            ApplyStyle((Form)sender);
+            ApplyStyle((System.Windows.Forms.Form)sender);
         }
 
         private void Child_Closing(object sender, FormClosingEventArgs e)
         {
             // Save the language of the form when it's closing to be used in the built list
-            JObject newLang = (sender as Form).ToJSON();
-            FormsList[(sender as Form).Name] = newLang;
+            JObject newLang = (sender as System.Windows.Forms.Form).ToJSON();
+            FormsList[(sender as System.Windows.Forms.Form).Name] = newLang;
             forms_box.Visible = true;
             properties_box.Visible = false;
             openedForm.Hide();
@@ -761,7 +761,7 @@ namespace WinPaletter
         private void ParentFormPageClicked(object sender, EventArgs e)
         {
             // Set the pressed state of the previously selected control to false
-            selectedControl = (sender as Control).Parent as Form;
+            selectedControl = (sender as Control).Parent as System.Windows.Forms.Form;
             selectedControl.Focus();
             ControlSelection?.Invoke(selectedControl, new EventArgs());
         }
@@ -780,7 +780,7 @@ namespace WinPaletter
                 textTranslationItem.Invalidate();
             }
 
-            selectedControl = sender as Form;
+            selectedControl = sender as System.Windows.Forms.Form;
             ControlSelection.Invoke(selectedControl, new EventArgs());
         }
 
@@ -856,7 +856,7 @@ namespace WinPaletter
                     EditingTag = false;
                 }
             }
-            else if (sender is Form || sender is TabPage)
+            else if (sender is System.Windows.Forms.Form || sender is TabPage)
             {
                 // Set original English text and tag in properties box to empty
                 // There is no tag set for forms and tabpages in WinPaletter
@@ -1024,9 +1024,6 @@ namespace WinPaletter
             AlertBox1.Visible = true;
             GroupBox8.Visible = false;
             TabControl1.Visible = false;
-
-            this.Localize();
-            ApplyStyle(this);
 
             ctrlName.Font = Fonts.ConsoleMedium;
             Label9.Font = ctrlName.Font;

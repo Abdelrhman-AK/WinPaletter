@@ -8,19 +8,13 @@ using System.Windows.Forms;
 
 namespace WinPaletter
 {
-    public partial class GitHub_ThemeUpload : Form
+    public partial class GitHub_ThemeUpload : UI.WP.Form
     {
         private bool _syncingToggles;
 
         public GitHub_ThemeUpload()
         {
             InitializeComponent();
-        }
-
-        private void GitHub_ThemeUpload_Load(object sender, EventArgs e)
-        {
-            ApplyStyle(this);
-            this.Localize();
         }
 
         private void toggle_uploadOne_CheckedChanged(object sender, EventArgs e)

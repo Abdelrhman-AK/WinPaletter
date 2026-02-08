@@ -324,11 +324,5 @@ namespace WinPaletter
         {
             WindowState = FormWindowState.Minimized;
         }
-
-        private void DownloadManager_Dlg_Load(object sender, EventArgs e)
-        {
-            ApplyStyle(this);
-            this.Localize();
-        }
     }
 }

@@ -16,8 +16,6 @@ namespace WinPaletter
 
         private void ThemeApply_list_Load(object sender, EventArgs e)
         {
-            this.Localize();
-            ApplyStyle(this);
             Icon = FormsExtensions.Icon<BugReport>();
 
             TreeView1.ImageList = ImageLists.ThemeLog;

@@ -72,7 +72,7 @@ namespace WinPaletter
         /// </summary>
         /// <param name="File"></param>
         /// <param name="form"></param>
-        public void Load(string File, Form form = null)
+        public void Load(string File, System.Windows.Forms.Form form = null)
         {
             if (System.IO.File.Exists(File))
             {
@@ -114,7 +114,7 @@ namespace WinPaletter
         /// </summary>
         /// <param name="File"></param>
         /// <param name="Forms"></param>
-        public void Save(string File, Form[] Forms = null)
+        public void Save(string File, System.Windows.Forms.Form[] Forms = null)
         {
             Information.AppVer = Program.Version;
 
@@ -125,7 +125,7 @@ namespace WinPaletter
             {
                 foreach (Type t in WinPaletter.Forms.ITypes)
                 {
-                    using (Form form = Activator.CreateInstance(t) as Form)
+                    using (System.Windows.Forms.Form form = Activator.CreateInstance(t) as System.Windows.Forms.Form)
                     {
                         j_Forms.Add(form.Name, form.ToJSON());
                     }
@@ -143,7 +143,7 @@ namespace WinPaletter
                     j_Forms = [];
                 }
 
-                foreach (Form form in Forms)
+                foreach (System.Windows.Forms.Form form in Forms)
                 {
                     if (j_Forms.ContainsKey(form.Name))
                     {
@@ -314,7 +314,7 @@ namespace WinPaletter
         /// Load the language strings into the forms
         /// </summary>
         /// <param name="form"></param>
-        public void LoadFromStrings(Form form)
+        public void LoadFromStrings(System.Windows.Forms.Form form)
         {
             if (form is not null)
             {
@@ -333,7 +333,7 @@ namespace WinPaletter
         /// </summary>
         /// <param name="form"></param>
         /// <param name="jObject"></param>
-        public void LoadFromStrings(Form form, JObject jObject)
+        public void LoadFromStrings(System.Windows.Forms.Form form, JObject jObject)
         {
             if (form is not null)
             {
@@ -353,7 +353,7 @@ namespace WinPaletter
         /// <param name="Form"></param>
         /// <param name="jObject"></param>
         /// <param name="Localizer"></param>
-        public static void LoadLanguage(Form Form, JObject jObject, Localizer Localizer)
+        public static void LoadLanguage(System.Windows.Forms.Form Form, JObject jObject, Localizer Localizer)
         {
             Localizer?.LoadFromStrings(Form, jObject);
         }
@@ -363,7 +363,7 @@ namespace WinPaletter
         /// </summary>
         /// <param name="PopCtrlList"></param>
         /// <param name="form"></param>
-        private void SetFormValues(List<Tuple<string, string, string, string>> PopCtrlList, Form form)
+        private void SetFormValues(List<Tuple<string, string, string, string>> PopCtrlList, System.Windows.Forms.Form form)
         {
             Program.Log?.Write(LogEventLevel.Information, $"Setting strings for form `{form.Name}`.");
 

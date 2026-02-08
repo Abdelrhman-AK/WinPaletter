@@ -68,8 +68,6 @@ namespace WinPaletter
 
         private void NewExtTerminal_Load(object sender, EventArgs e)
         {
-            this.Localize();
-            ApplyStyle(this);
             Icon = Resources.cmd;
         }
     }

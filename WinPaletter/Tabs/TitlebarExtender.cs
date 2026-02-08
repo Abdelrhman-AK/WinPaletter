@@ -175,7 +175,7 @@ namespace WinPaletter.Tabs
 
             if (!DesignMode)
             {
-                Form form = FindForm();
+                System.Windows.Forms.Form form = FindForm();
                 if (form != null)
                 {
                     form.Activated += Form_Activated;
@@ -208,7 +208,7 @@ namespace WinPaletter.Tabs
         {
             _firstBackdropUpdate = true;   // force redraw
             UpdateBackDrop();
-            ((Form)sender).Load -= Form_Load; // unsubscribe, only need once
+            ((System.Windows.Forms.Form)sender).Load -= Form_Load; // unsubscribe, only need once
         }
 
         private void OnSystemSettingsUpdated(object sender, UserPreferenceChangedEventArgs e)
@@ -356,7 +356,7 @@ namespace WinPaletter.Tabs
                 _ => Padding.Empty
             };
 
-            Form form = FindForm();
+            System.Windows.Forms.Form form = FindForm();
             if (form is not null && form.Parent is not null) form = form.Parent.FindForm();
 
             if (Flag != Flags.System || form is null) return;

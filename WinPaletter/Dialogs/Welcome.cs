@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace WinPaletter
 {
-    public partial class Welcome : Form
+    public partial class Welcome : UI.WP.Form
     {
         public Welcome()
         {
@@ -14,9 +14,6 @@ namespace WinPaletter
         {
             Icon = FormsExtensions.Icon<MainForm>();
             Button1.Text = Program.Localization.Strings.General.Next;
-
-            this.Localize();
-            ApplyStyle(this);
 
             checkBox1.Checked = Program.Settings.Miscellaneous.ShowWelcomeDialog;
         }

@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace WinPaletter.Dialogs
 {
-    public partial class ArgsHelp : Form
+    public partial class ArgsHelp : UI.WP.Form
     {
         public ArgsHelp()
         {
@@ -14,8 +14,6 @@ namespace WinPaletter.Dialogs
 
         private void ArgsHelp_Load(object sender, EventArgs e)
         {
-            this.Localize();
-            ApplyStyle(this);
             Icon = FormsExtensions.Icon<MainForm>();
 
             TextBox1.Font = Fonts.ConsoleMedium;

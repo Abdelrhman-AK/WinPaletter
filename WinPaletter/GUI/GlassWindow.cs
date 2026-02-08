@@ -3,14 +3,13 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
-using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter
 {
     /// <summary>
     /// A form with glass effect using DWM API.
     /// </summary>
-    public class GlassWindow : Form
+    public class GlassWindow : UI.WP.Form
     {
         private bool shownOverAParent = false;
 
@@ -29,10 +28,14 @@ namespace WinPaletter
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.Manual;
             WindowState = FormWindowState.Maximized;
+            PreventFocusSteal = true;
         }
 
-        const int LWA_COLORKEY = 0x1;
         const int LWA_ALPHA = 0x2;
+        const int GWL_EXSTYLE = -20;
+        const int WS_EX_LAYERED = 0x80000;
+        const int WS_EX_TRANSPARENT = 0x20;
+        const int WS_EX_NOACTIVATE = 0x08000000;
 
         public void Show(Form parent)
         {
@@ -72,6 +75,8 @@ namespace WinPaletter
 
         protected override void OnLoad(EventArgs e)
         {
+            base.OnLoad(e);
+
             if ((OS.W7 || OS.WVista) && DWMAPI.IsCompositionEnabled())
             {
                 // If the OS is Windows 7 or Vista and DWM is enabled, use Aero effect.
@@ -109,20 +114,13 @@ namespace WinPaletter
                 // If the OS is Windows XP, 8 or 8.1, use transparent gray effect.
                 this.DropEffect(Padding.Empty, shownOverAParent, DWM.DWMStyles.None);
             }
-
-            base.OnLoad(e);
         }
 
         protected override void OnHandleCreated(EventArgs e)
         {
             base.OnHandleCreated(e);
 
-            const int GWL_EXSTYLE = -20;
-            const int WS_EX_LAYERED = 0x80000;
-            const int WS_EX_TRANSPARENT = 0x20;
-            const int WS_EX_NOACTIVATE = 0x08000000;
-
-            int exStyle = User32.GetWindowLong(Handle, GWL_EXSTYLE);
+            long exStyle = User32.GetWindowLong(Handle, GWL_EXSTYLE);
             exStyle |= WS_EX_LAYERED | WS_EX_TRANSPARENT | WS_EX_NOACTIVATE;
             User32.SetWindowLong(Handle, GWL_EXSTYLE, exStyle);
 

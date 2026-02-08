@@ -26,7 +26,7 @@ namespace WinPaletter
     /// <summary>
     /// Home page of WinPaletter.
     /// </summary>
-    public partial class Home : Form
+    public partial class Home : UI.WP.Form
     {
         private bool isLoggedIn = false;    
 
@@ -51,9 +51,6 @@ namespace WinPaletter
 
         private void Home_Load(object sender, EventArgs e)
         {
-            this.Localize();
-            ApplyStyle(this);
-
             // Reset the logging off flag to false.
             Forms.MainForm.LoggingOff = false;
 
@@ -345,8 +342,6 @@ namespace WinPaletter
         /// </summary>
         public async void AutoUpdatesCheck()
         {
-            if (OS.WXP || OS.WVista) return;
-
             UpdatesInfo latestUpdate = null;
             bool hasNewerVersion = false;
 
@@ -452,7 +447,7 @@ namespace WinPaletter
 
         private void card1_Click(object sender, EventArgs e)
         {
-            Form form;
+            System.Windows.Forms.Form form;
 
             if (Program.WindowStyle == WindowStyle.W12)
             {

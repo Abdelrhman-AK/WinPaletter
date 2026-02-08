@@ -12,7 +12,7 @@ namespace WinPaletter.UI.Style
     /// <summary>
     /// A form for editing the color scheme of the application (Engineering mode)
     /// </summary>
-    public class SchemeEditor : Form
+    public class SchemeEditor : UI.WP.Form
     {
         /// <summary>
         /// The collection of colors instance that is being edited

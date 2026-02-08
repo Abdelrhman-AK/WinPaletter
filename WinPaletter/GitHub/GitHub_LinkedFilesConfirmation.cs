@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace WinPaletter
 {
-    public partial class GitHub_LinkedFilesConfirmation : Form
+    public partial class GitHub_LinkedFilesConfirmation : UI.WP.Form
     {
         public GitHub_LinkedFilesConfirmation()
         {
@@ -14,8 +14,6 @@ namespace WinPaletter
 
         private void GitHub_LinkedFilesConfirmation_Load(object sender, EventArgs e)
         {
-            ApplyStyle(this);
-            this.Localize();
             CheckBox1.Checked = Program.Settings.UsersServices.GitHub_AutoOperateOnLinkedFiles;
 
             label3.Font = Fonts.ConsoleMedium;

@@ -5,7 +5,7 @@ using static WinPaletter.GitHub.FileSystem;
 
 namespace WinPaletter
 {
-    public partial class GitHub_FileConflict : Form
+    public partial class GitHub_FileConflict : UI.WP.Form
     {
         public FileConflictAction Action { get; private set; }
         FileConflictInfo _info = null;
@@ -18,8 +18,6 @@ namespace WinPaletter
 
         private void GitHub_FileConflict_Load(object sender, EventArgs e)
         {
-            ApplyStyle(this);
-            this.Localize();
             CustomSystemSounds.Exclamation.Play();
         }
 

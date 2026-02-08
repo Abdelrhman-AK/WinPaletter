@@ -19,7 +19,7 @@ using static WinPaletter.TypesExtensions.BitmapExtensions;
 
 namespace WinPaletter
 {
-    public partial class WallStudio : Form
+    public partial class WallStudio : UI.WP.Form
     {
         List<Color> Palette = null;
         Manager TM;
@@ -40,11 +40,8 @@ namespace WinPaletter
 
         private void WallStudio_Load(object sender, EventArgs e)
         {
-            this.Localize();
-            ApplyStyle(this);
-
-            NativeMethods.Helpers.RemoveFormTitlebarTextAndIcon(Handle);
             Icon = FormsExtensions.Icon<MainForm>();
+
             tablessControl1.SelectedIndex = 0;
             progressBar1.Value = 0;
             canCloseWithoutMsg = false;
@@ -75,7 +72,6 @@ namespace WinPaletter
 
             CheckedListBox1.ForeColor = Program.Style.DarkMode ? Color.White : Color.Black;
 
-            // Make them all black after ApplyStyle(this);
             for (int i = 0; i <= tabs_preview_1.TabCount - 1; i++) { tabs_preview_1.TabPages[i].BackColor = Color.Black; }
 
             label7.ForeColor = Color.White;
@@ -845,7 +841,7 @@ namespace WinPaletter
         public void Adjust_Preview(Manager TM)
         {
             windowsDesktop1.WindowStyle = Program.WindowStyle;
-            windowsDesktop1.BackgroundImage = Program.WallpaperMonitor.FetchSuitableWallpaper(TM, Program.WindowStyle);
+            windowsDesktop1.BackgroundImage = Program.WallpaperMonitor.Get(TM, Program.WindowStyle);
             windowsDesktop1.LoadFromTM(TM);
             windowsDesktop1.LoadClassicColors(TM.Win32);
             retroDesktopColors1.LoadColors(TM);
@@ -908,7 +904,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    return Program.WallpaperMonitor.FetchSuitableWallpaper(Program.TM, Program.WindowStyle);
+                    return Program.WallpaperMonitor.Get(Program.TM, Program.WindowStyle);
                 }
             }
         }
@@ -951,7 +947,7 @@ namespace WinPaletter
             }
             else if (TM.LogonUI7.Mode == Theme.Structures.LogonUI7.Sources.Wallpaper)
             {
-                bmpX = Program.WallpaperMonitor.FetchSuitableWallpaper(Program.TM, Program.WindowStyle);
+                bmpX = Program.WallpaperMonitor.Get(Program.TM, Program.WindowStyle);
             }
             else if (TM.LogonUI7.Mode == Theme.Structures.LogonUI7.Sources.SolidColor)
             {

@@ -6,7 +6,7 @@ using System.Windows.Forms;
 namespace WinPaletter
 {
     [Microsoft.VisualBasic.CompilerServices.DesignerGenerated()]
-    public partial class NewExtTerminal : Form
+    public partial class NewExtTerminal : UI.WP.Form
     {
 
         // Form overrides dispose to clean up the component list.

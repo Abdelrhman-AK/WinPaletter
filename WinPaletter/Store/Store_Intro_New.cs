@@ -20,8 +20,6 @@ namespace WinPaletter
         private void Store_Intro_New_Load(object sender, EventArgs e)
         {
             CheckBox1.Checked = Program.Settings.Store.ShowNewXPIntro;
-            this.Localize();
-            ApplyStyle(this);
             Icon = FormsExtensions.Icon<Store>();
         }
 

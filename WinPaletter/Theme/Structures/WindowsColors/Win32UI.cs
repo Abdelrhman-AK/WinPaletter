@@ -375,7 +375,7 @@ namespace WinPaletter.Theme.Structures
                 // Determine if the current theme is classic or not
                 bool isClassic = string.IsNullOrEmpty(UxTheme.GetCurrentVS().Item1);
 
-                List<Form> fl = [];
+                List<System.Windows.Forms.Form> fl = [];
                 fl.Clear();
 
                 // Hiding forms is added as there is a bug occurs when a classic theme applied on classic Windows mode
@@ -383,7 +383,7 @@ namespace WinPaletter.Theme.Structures
                 {
                     Program.Log?.Write(LogEventLevel.Information, $"Hiding all visible forms to avoid a bug in classic mode when it is enabled.");
 
-                    foreach (Form f in Application.OpenForms)
+                    foreach (System.Windows.Forms.Form f in Application.OpenForms)
                     {
                         if (f.Visible)
                         {

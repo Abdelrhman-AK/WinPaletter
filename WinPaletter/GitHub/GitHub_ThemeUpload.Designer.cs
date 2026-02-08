@@ -658,7 +658,6 @@
             this.Name = "GitHub_ThemeUpload";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Theme Upload";
-            this.Load += new System.EventHandler(this.GitHub_ThemeUpload_Load);
             this.groupBox6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             this.groupBox5.ResumeLayout(false);

@@ -40,7 +40,7 @@ namespace WinPaletter
             {
                 Invoke(() =>
                 {
-                    pnl_preview.BackgroundImage = Program.WallpaperMonitor.FetchSuitableWallpaper(Program.TM, Program.WindowStyle);
+                    pnl_preview.BackgroundImage = Program.WallpaperMonitor.Get(Program.TM, Program.WindowStyle);
                     pnl_preview.BackColor = e.BackgroundColor;
                 });
             }
@@ -133,7 +133,7 @@ namespace WinPaletter
             PopulateControlPanelIcons();
             PopulateExplorerIcons();
 
-            pnl_preview.BackgroundImage = Program.WallpaperMonitor.FetchSuitableWallpaper(Program.TM, Program.WindowStyle);
+            pnl_preview.BackgroundImage = Program.WallpaperMonitor.Get(Program.TM, Program.WindowStyle);
             pnl_preview.BackColor = Program.TM.Win32.Background;
 
             foreach (WinIcon winIcon in pnl_preview.GetAllControls().OfType<WinIcon>())

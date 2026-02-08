@@ -132,7 +132,7 @@ namespace WinPaletter.TypesExtensions
             if (rect.Width <= 0 || rect.Height <= 0) return;
             if (backgroundBlurred is null) return;
 
-            // Clamp values inline (no Math.Clamp available)
+            // Clamp values inline
             if (colorBalance < 0f) colorBalance = 0f;
             if (colorBalance > 1f) colorBalance = 1f;
             if (glowBalance < 0f) glowBalance = 0f;

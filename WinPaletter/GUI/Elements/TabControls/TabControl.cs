@@ -28,8 +28,7 @@ namespace WinPaletter.UI.WP
         private bool CanAnimate => !DesignMode && Program.Style.Animations && this is not null && Visible && Parent is not null && Parent.Visible && FindForm() is not null && FindForm().Visible;
 
         private static readonly TextureBrush Noise = new(Resources.Noise.Fade(0.5f));
-        private bool _needsLayoutRefresh;
-        private readonly Dictionary<int, float> _tabAlpha = []; // stores 0..1 per tab
+        private readonly Dictionary<int, float> _tabAlpha = [];
         private int _lastSelectedIndex = -1;
         private RectangleF _currentSideTape;
         private RectangleF _previousSideTape;
@@ -76,8 +75,6 @@ namespace WinPaletter.UI.WP
             if (!IsHandleCreated || SelectedIndex < 0)
                 return;
 
-            _needsLayoutRefresh = true;
-
             // Cancel animation safely
             _animationTimer?.Stop();
         }
@@ -95,7 +92,7 @@ namespace WinPaletter.UI.WP
                 _targetSideTape = firstTabRect;
 
                 _tabAlpha.Clear();
-                _tabAlpha[SelectedIndex] = 0f;
+                _tabAlpha[SelectedIndex] = 1f;
 
                 _animStartTime = DateTime.Now;
                 if (_animationTimer == null)

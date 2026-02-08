@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace WinPaletter
 {
-    public partial class MagnifierDlg : Form
+    public partial class MagnifierDlg : UI.WP.Form
     {
         private MouseHook _mouseHook;
 

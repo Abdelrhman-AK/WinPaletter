@@ -29,9 +29,6 @@ namespace WinPaletter
 
         private void Lang_Add_Snippet_Load(object sender, EventArgs e)
         {
-            this.Localize();
-            ApplyStyle(this);
-
             DialogResult = DialogResult.None;
 
             ComboBox1.Items.Clear();

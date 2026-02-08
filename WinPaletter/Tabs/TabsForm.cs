@@ -6,7 +6,7 @@ namespace WinPaletter.Tabs
     /// <summary>
     /// The form that contains the tabs control.
     /// </summary>
-    public partial class TabsForm : Form
+    public partial class TabsForm : UI.WP.Form
     {
         //protected override void WndProc(ref Message m)
         //{
@@ -35,16 +35,6 @@ namespace WinPaletter.Tabs
         public TabsForm()
         {
             InitializeComponent();
-        }
-
-        private void TabsForm_Load(object sender, EventArgs e)
-        {
-            //ControlBox = false;
-            NativeMethods.Helpers.RemoveFormTitlebarTextAndIcon(Handle);
-            this.Localize();
-            ApplyStyle(this);
-
-            CheckForIllegalCrossThreadCalls = false;
         }
 
         private void titlebarExtender1_DoubleClick(object sender, EventArgs e)

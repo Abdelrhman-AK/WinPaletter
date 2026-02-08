@@ -25,7 +25,7 @@ namespace WinPaletter
         private Image img;
         private readonly List<Control> ChildControls_List = [];
         private Dictionary<Control, string[]> ColorControls_List = [];
-        private readonly List<Form> Forms_List = [];
+        private readonly List<System.Windows.Forms.Form> Forms_List = [];
         private List<Color> Colors_List = [];
         private bool enableAlpha;
         private Point newPoint = new();
@@ -152,7 +152,7 @@ namespace WinPaletter
 
             // 2. Hide all open forms
             Forms_List.Clear();
-            foreach (Form f in Application.OpenForms)
+            foreach (System.Windows.Forms.Form f in Application.OpenForms)
             {
                 if (f != this && f.Visible)
                 {
@@ -179,7 +179,7 @@ namespace WinPaletter
             foreach (Control ctrl in ChildControls_List) ctrl.Visible = true;
 
             // Restore other forms
-            foreach (Form f in Forms_List) f.Visible = true;
+            foreach (System.Windows.Forms.Form f in Forms_List) f.Visible = true;
 
             Forms_List.Clear();
             ChildControls_List.Clear();
@@ -520,7 +520,7 @@ namespace WinPaletter
 
         private void Button6_Click(object sender, EventArgs e)
         {
-            img = RadioButton1.Checked ? Program.WallpaperMonitor.FetchSuitableWallpaper(Program.TM, Program.WindowStyle) : BitmapMgr.Load(TextBox1.Text);
+            img = RadioButton1.Checked ? Program.WallpaperMonitor.Get(Program.TM, Program.WindowStyle) : BitmapMgr.Load(TextBox1.Text);
 
             if (CheckBox2.Checked) img = img.Resize(300, 300);
 

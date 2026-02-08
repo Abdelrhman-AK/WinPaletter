@@ -365,6 +365,7 @@ namespace WinPaletter
                 // Force SystemEvents window creation to avoid Windows XP crashes when subscribing to UserPreferenceChanged event
                 var dummy = typeof(SystemEvents);
                 SystemEvents.UserPreferenceChanged += WallpaperMonitor.OnUserPreferenceChanged;
+                WallpaperMonitor.FireWallpaperChanged(); // Init wallpaper
             }
         }
 
@@ -375,27 +376,27 @@ namespace WinPaletter
         {
             Program.Log?.Write(LogEventLevel.Information, $"Initializing Image Lists for Theme Log and Language TreeView.");
 
-            ImageLists.ThemeLog.Images.Add("info", Notifications.Info);
-            ImageLists.ThemeLog.Images.Add("apply", Notifications.Applying);
-            ImageLists.ThemeLog.Images.Add("error", Notifications.Error);
-            ImageLists.ThemeLog.Images.Add("warning", Notifications.Warning);
-            ImageLists.ThemeLog.Images.Add("time", Notifications.Time);
-            ImageLists.ThemeLog.Images.Add("success", Notifications.Success);
-            ImageLists.ThemeLog.Images.Add("skip", Notifications.Skip);
-            ImageLists.ThemeLog.Images.Add("admin", Notifications.Administrator);
-            ImageLists.ThemeLog.Images.Add("reg_add", Notifications.Reg_add);
-            ImageLists.ThemeLog.Images.Add("reg_delete", Notifications.Reg_delete);
-            ImageLists.ThemeLog.Images.Add("reg_skip", Notifications.Reg_skip);
-            ImageLists.ThemeLog.Images.Add("task_remove", Notifications.Task_remove);
-            ImageLists.ThemeLog.Images.Add("file_rename", Notifications.File_rename);
-            ImageLists.ThemeLog.Images.Add("dll", Notifications.DLL);
-            ImageLists.ThemeLog.Images.Add("pe_patch", Notifications.PE_patch);
-            ImageLists.ThemeLog.Images.Add("pe_backup", Notifications.PE_backup);
-            ImageLists.ThemeLog.Images.Add("pe_restore", Notifications.PE_restore);
+            ImageLists.ThemeLog.AddWithAlpha("info", Notifications.Info);
+            ImageLists.ThemeLog.AddWithAlpha("apply", Notifications.Applying);
+            ImageLists.ThemeLog.AddWithAlpha("error", Notifications.Error);
+            ImageLists.ThemeLog.AddWithAlpha("warning", Notifications.Warning);
+            ImageLists.ThemeLog.AddWithAlpha("time", Notifications.Time);
+            ImageLists.ThemeLog.AddWithAlpha("success", Notifications.Success);
+            ImageLists.ThemeLog.AddWithAlpha("skip", Notifications.Skip);
+            ImageLists.ThemeLog.AddWithAlpha("admin", Notifications.Administrator);
+            ImageLists.ThemeLog.AddWithAlpha("reg_add", Notifications.Reg_add);
+            ImageLists.ThemeLog.AddWithAlpha("reg_delete", Notifications.Reg_delete);
+            ImageLists.ThemeLog.AddWithAlpha("reg_skip", Notifications.Reg_skip);
+            ImageLists.ThemeLog.AddWithAlpha("task_remove", Notifications.Task_remove);
+            ImageLists.ThemeLog.AddWithAlpha("file_rename", Notifications.File_rename);
+            ImageLists.ThemeLog.AddWithAlpha("dll", Notifications.DLL);
+            ImageLists.ThemeLog.AddWithAlpha("pe_patch", Notifications.PE_patch);
+            ImageLists.ThemeLog.AddWithAlpha("pe_backup", Notifications.PE_backup);
+            ImageLists.ThemeLog.AddWithAlpha("pe_restore", Notifications.PE_restore);
 
-            ImageLists.Language.Images.Add("main", Resources.LangNode_Main);
-            ImageLists.Language.Images.Add("value", Resources.LangNode_Value);
-            ImageLists.Language.Images.Add("json", Resources.LangNode_JSON);
+            ImageLists.Language.AddWithAlpha("main", Resources.LangNode_Main);
+            ImageLists.Language.AddWithAlpha("value", Resources.LangNode_Value);
+            ImageLists.Language.AddWithAlpha("json", Resources.LangNode_JSON);
 
             Exceptions.ThemeApply.Clear();
             Exceptions.ThemeLoad.Clear();
@@ -727,13 +728,20 @@ namespace WinPaletter
             SendCommand(SysPaths.Explorer, false, true);
         }
 
-        /// <summary>
-        /// Indicates whether any network connection is available
-        /// </summary>
-        /// <returns>
-        ///    <c>true</c> if a network connection is available; otherwise, <c>false</c>.
-        /// </returns>
-        public static bool IsNetworkAvailable => IsNetworkOperational && HasNetworkInterfaces && Wininet.CheckNet();
+        public static bool IsNetworkAvailable
+        {
+            get
+            {
+                try
+                {
+                    return IsNetworkOperational && HasNetworkInterfaces && Wininet.CheckNet();
+                }
+                catch
+                {
+                    return Wininet.CheckNet(); // fallback on XP
+                }
+            }
+        }
 
         private static bool HasNetworkInterfaces
         {
@@ -741,39 +749,38 @@ namespace WinPaletter
             {
                 try
                 {
+                    if (OS.WXP) return true; // Assume XP has at least 1 interface
+
                     var interfaces = NetworkInterface.GetAllNetworkInterfaces();
-                    return interfaces.Any(nic => nic.OperationalStatus == OperationalStatus.Up);
+                    return interfaces?.Any(nic => nic.OperationalStatus == OperationalStatus.Up) ?? false;
                 }
-                catch (Exception ex)
+                catch
                 {
-                    Console.WriteLine("Interface check failed: " + ex.Message);
-                    return false;
+                    return true; // fallback
                 }
             }
         }
 
-        /// <summary>
-        /// Checks if network stack is available (to avoid dead network socket exception, especially in safe mode without networking).
-        /// </summary>
         public static bool IsNetworkOperational
         {
             get
             {
                 try
                 {
+                    if (OS.WXP) return true; // XP fallback
+
                     var interfaces = NetworkInterface.GetAllNetworkInterfaces();
-                    return interfaces.Any(nic =>
+                    return interfaces?.Any(nic =>
                         nic.OperationalStatus == OperationalStatus.Up &&
                         nic.NetworkInterfaceType != NetworkInterfaceType.Loopback &&
-                        nic.NetworkInterfaceType != NetworkInterfaceType.Tunnel);
+                        nic.NetworkInterfaceType != NetworkInterfaceType.Tunnel) ?? false;
                 }
                 catch
                 {
-                    return false;
+                    return true; // fallback
                 }
             }
         }
-
 
         /// <summary>
         /// Ping the given URL to check if it is reachable

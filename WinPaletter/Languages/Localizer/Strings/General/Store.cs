@@ -11,9 +11,6 @@
                 public string DownloadTheme { get; set; } = "Downloading theme '{0}' from '{1}'.";
                 public string DownloadingPackForTheme { get; set; } = "Downloading {0}'s resources pack";
                 public string LowAppVersionAlert { get; set; } = "This theme was created with WinPaletter {0}, which is newer than your current version ({1}). Please update WinPaletter to enjoy all the latest theme features and avoid potential errors.";
-                public string WontWork_Protocol { get; set; } = "Unfortunately, WinPaletter Store won't work as TLS 1.2 protocol isn't enabled in {0}.";
-                public string ThemeDesignedFor0 { get; set; } = "This theme is compatible with all supported versions of Windows, though it was specifically designed for:";
-                public string ThemeDesignedFor1 { get; set; } = "This theme is compatible with all supported versions of Windows:";
                 public string LogoffRecommended { get; set; } = "It is recommended to logoff your Windows and logon to apply all effects of the theme.";
                 public string AuthorURLRedirect { get; set; } = "This will redirect you to the author's social media URL. Do you want to continue?";
                 public string SearchCount { get; set; } = "Search results ({0})";

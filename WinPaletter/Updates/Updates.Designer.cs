@@ -6,7 +6,7 @@ using System.Windows.Forms;
 namespace WinPaletter
 {
     [Microsoft.VisualBasic.CompilerServices.DesignerGenerated()]
-    public partial class Updates : Form
+    public partial class Updates : UI.WP.Form
     {
 
         // Form overrides dispose to clean up the component list.
@@ -72,6 +72,7 @@ namespace WinPaletter
             this.tablessControl1 = new WinPaletter.UI.WP.TablessControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.banner4 = new WinPaletter.UI.WP.Banner();
             this.groupBox11 = new WinPaletter.UI.WP.GroupBox();
             this.button8 = new WinPaletter.UI.WP.Button();
             this.button7 = new WinPaletter.UI.WP.Button();
@@ -91,14 +92,6 @@ namespace WinPaletter
             this.groupBox10 = new WinPaletter.UI.WP.GroupBox();
             this.label13 = new System.Windows.Forms.Label();
             this.banner7 = new WinPaletter.UI.WP.Banner();
-            this.groupBox6 = new WinPaletter.UI.WP.GroupBox();
-            this.labelAlt1 = new WinPaletter.UI.WP.LabelAlt();
-            this.pictureBox7 = new System.Windows.Forms.PictureBox();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.button4 = new WinPaletter.UI.WP.Button();
-            this.button5 = new WinPaletter.UI.WP.Button();
-            this.labelAlt2 = new WinPaletter.UI.WP.LabelAlt();
-            this.pictureBox8 = new System.Windows.Forms.PictureBox();
             this.AnimatedBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
             this.bottom_buttons.SuspendLayout();
@@ -123,10 +116,6 @@ namespace WinPaletter
             this.groupBox8.SuspendLayout();
             this.groupBox9.SuspendLayout();
             this.groupBox10.SuspendLayout();
-            this.groupBox6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
-            this.tabPage3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
             this.SuspendLayout();
             // 
             // AnimatedBox1
@@ -568,7 +557,6 @@ namespace WinPaletter
             // 
             this.tablessControl1.Controls.Add(this.tabPage1);
             this.tablessControl1.Controls.Add(this.tabPage2);
-            this.tablessControl1.Controls.Add(this.tabPage3);
             this.tablessControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tablessControl1.Location = new System.Drawing.Point(0, 0);
             this.tablessControl1.Multiline = true;
@@ -597,6 +585,7 @@ namespace WinPaletter
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.tabPage2.Controls.Add(this.banner4);
             this.tabPage2.Controls.Add(this.groupBox11);
             this.tabPage2.Controls.Add(this.groupBox7);
             this.tabPage2.Controls.Add(this.banner3);
@@ -606,12 +595,26 @@ namespace WinPaletter
             this.tabPage2.Controls.Add(this.banner1);
             this.tabPage2.Controls.Add(this.groupBox10);
             this.tabPage2.Controls.Add(this.banner7);
-            this.tabPage2.Controls.Add(this.groupBox6);
             this.tabPage2.Location = new System.Drawing.Point(4, 24);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Size = new System.Drawing.Size(866, 485);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "1";
+            // 
+            // banner4
+            // 
+            this.banner4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.banner4.BackColor = System.Drawing.Color.Transparent;
+            this.banner4.Font = new System.Drawing.Font("Segoe UI", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.banner4.Image = ((System.Drawing.Bitmap)(resources.GetObject("banner4.Image")));
+            this.banner4.Location = new System.Drawing.Point(3, 3);
+            this.banner4.Name = "banner4";
+            this.banner4.Size = new System.Drawing.Size(860, 68);
+            this.banner4.TabIndex = 214;
+            this.banner4.TabStop = false;
+            this.banner4.Text = "WinPaletter was unable to connect to network and failed to fetch latest release d" +
+    "ata.";
             // 
             // groupBox11
             // 
@@ -875,121 +878,6 @@ namespace WinPaletter
             this.banner7.TabStop = false;
             this.banner7.Text = "1";
             // 
-            // groupBox6
-            // 
-            this.groupBox6.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox6.Controls.Add(this.labelAlt1);
-            this.groupBox6.Controls.Add(this.pictureBox7);
-            this.groupBox6.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox6.Location = new System.Drawing.Point(0, 0);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(866, 68);
-            this.groupBox6.TabIndex = 29;
-            this.groupBox6.Text = "groupBox6";
-            this.groupBox6.UseDecorationPattern = true;
-            this.groupBox6.UseSharpStyle = false;
-            // 
-            // labelAlt1
-            // 
-            this.labelAlt1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelAlt1.BackColor = System.Drawing.Color.Transparent;
-            this.labelAlt1.DrawOnGlass = false;
-            this.labelAlt1.Font = new System.Drawing.Font("Segoe UI Semibold", 14.25F);
-            this.labelAlt1.Location = new System.Drawing.Point(65, 10);
-            this.labelAlt1.Name = "labelAlt1";
-            this.labelAlt1.Size = new System.Drawing.Size(792, 48);
-            this.labelAlt1.TabIndex = 2;
-            this.labelAlt1.Text = "WinPaletter was unable to connect to network and failed to fetch latest release d" +
-    "ata.";
-            this.labelAlt1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // pictureBox7
-            // 
-            this.pictureBox7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.pictureBox7.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox7.Image")));
-            this.pictureBox7.Location = new System.Drawing.Point(10, 10);
-            this.pictureBox7.Name = "pictureBox7";
-            this.pictureBox7.Size = new System.Drawing.Size(48, 48);
-            this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox7.TabIndex = 0;
-            this.pictureBox7.TabStop = false;
-            // 
-            // tabPage3
-            // 
-            this.tabPage3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.tabPage3.Controls.Add(this.button4);
-            this.tabPage3.Controls.Add(this.button5);
-            this.tabPage3.Controls.Add(this.labelAlt2);
-            this.tabPage3.Controls.Add(this.pictureBox8);
-            this.tabPage3.Location = new System.Drawing.Point(4, 24);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(866, 485);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "2";
-            // 
-            // button4
-            // 
-            this.button4.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.button4.CustomColor = System.Drawing.Color.Empty;
-            this.button4.Flag = WinPaletter.UI.WP.Button.Flags.ErrorOnHover;
-            this.button4.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button4.Image = null;
-            this.button4.ImageGlyph = null;
-            this.button4.ImageGlyphEnabled = false;
-            this.button4.Location = new System.Drawing.Point(292, 326);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(282, 42);
-            this.button4.TabIndex = 17;
-            this.button4.Text = "Close";
-            this.button4.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // button5
-            // 
-            this.button5.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.button5.CustomColor = System.Drawing.Color.Empty;
-            this.button5.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.button5.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button5.Image = ((System.Drawing.Image)(resources.GetObject("button5.Image")));
-            this.button5.ImageGlyph = null;
-            this.button5.ImageGlyphEnabled = false;
-            this.button5.Location = new System.Drawing.Point(292, 278);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(282, 42);
-            this.button5.TabIndex = 16;
-            this.button5.Text = "Continue anyway";
-            this.button5.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
-            // 
-            // labelAlt2
-            // 
-            this.labelAlt2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.labelAlt2.BackColor = System.Drawing.Color.Transparent;
-            this.labelAlt2.DrawOnGlass = false;
-            this.labelAlt2.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelAlt2.Location = new System.Drawing.Point(25, 178);
-            this.labelAlt2.Name = "labelAlt2";
-            this.labelAlt2.Size = new System.Drawing.Size(817, 97);
-            this.labelAlt2.TabIndex = 15;
-            this.labelAlt2.Text = "0";
-            this.labelAlt2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // pictureBox8
-            // 
-            this.pictureBox8.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.pictureBox8.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox8.Image")));
-            this.pictureBox8.Location = new System.Drawing.Point(382, 77);
-            this.pictureBox8.Name = "pictureBox8";
-            this.pictureBox8.Size = new System.Drawing.Size(103, 100);
-            this.pictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox8.TabIndex = 14;
-            this.pictureBox8.TabStop = false;
-            // 
             // Updates
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1036,10 +924,6 @@ namespace WinPaletter
             this.groupBox8.ResumeLayout(false);
             this.groupBox9.ResumeLayout(false);
             this.groupBox10.ResumeLayout(false);
-            this.groupBox6.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
-            this.tabPage3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1076,9 +960,6 @@ namespace WinPaletter
         private UI.WP.TablessControl tablessControl1;
         private TabPage tabPage1;
         private TabPage tabPage2;
-        private UI.WP.GroupBox groupBox6;
-        private UI.WP.LabelAlt labelAlt1;
-        private PictureBox pictureBox7;
         private UI.WP.Button button6;
         private UI.WP.Button button7;
         private UI.WP.GroupBox groupBox7;
@@ -1096,16 +977,12 @@ namespace WinPaletter
         private UI.WP.GroupBox groupBox10;
         internal Label label13;
         private UI.WP.Banner banner7;
-        private TabPage tabPage3;
-        private UI.WP.Button button5;
-        private UI.WP.LabelAlt labelAlt2;
-        private PictureBox pictureBox8;
-        private UI.WP.Button button4;
         private UI.WP.GroupBox groupBox11;
         internal UI.WP.Button button8;
         private UI.WP.LabelAlt labelAlt4;
         private UI.WP.LabelAlt release_lbl;
         internal PictureBox pictureBox24;
         protected Label Label17;
+        private UI.WP.Banner banner4;
     }
 }

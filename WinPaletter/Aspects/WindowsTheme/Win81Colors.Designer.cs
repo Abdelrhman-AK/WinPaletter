@@ -193,7 +193,7 @@
             this.windowsDesktop1.Metrics_CaptionWidth = 22;
             this.windowsDesktop1.Metrics_PaddedBorderWidth = 4;
             this.windowsDesktop1.Name = "windowsDesktop1";
-            this.windowsDesktop1.Preview = WinPaletter.UI.Simulation.Window.Preview_Enum.W10;
+            this.windowsDesktop1.Preview = WinPaletter.UI.Simulation.Window.Preview_Enum.W8;
             this.windowsDesktop1.resVS = null;
             this.windowsDesktop1.Shadow = true;
             this.windowsDesktop1.Size = new System.Drawing.Size(528, 297);

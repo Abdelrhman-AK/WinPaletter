@@ -43,7 +43,7 @@ namespace WinPaletter.UI.WP
             {
                 if (FindForm() != null)
                 {
-                    Form form = FindForm();
+                    System.Windows.Forms.Form form = FindForm();
 
                     if (form.Parent == null)
                     {

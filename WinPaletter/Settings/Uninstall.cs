@@ -25,8 +25,6 @@ namespace WinPaletter
         }
         private void Uninstall_Load(object sender, EventArgs e)
         {
-            this.Localize();
-            ApplyStyle(this);
             Icon = Resources.Icon_Uninstall;
 
             if (OS.W12)

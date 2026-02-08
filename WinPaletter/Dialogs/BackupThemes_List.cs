@@ -12,7 +12,7 @@ using WinPaletter.Theme;
 
 namespace WinPaletter
 {
-    public partial class BackupThemes_List : Form
+    public partial class BackupThemes_List : UI.WP.Form
     {
         public BackupThemes_List()
         {
@@ -24,13 +24,7 @@ namespace WinPaletter
 
         private void BackupThemes_List_Load(object sender, EventArgs e)
         {
-            this.Localize();
-            ApplyStyle(this);
-
-            CheckForIllegalCrossThreadCalls = false;
-
             PopulateThemesBackups();
-            this.DoubleBuffer();
 
             // Set up columns for the ListView
             listView1.View = View.Details;
@@ -177,7 +171,7 @@ namespace WinPaletter
                         using (Manager TMx = new(Manager.Source.File, listView1.SelectedItems[0].SubItems[1].Text, true, true))
                         {
                             windowsDesktop1.LoadFromTM(TMx);
-                            windowsDesktop1.BackgroundImage = Program.WallpaperMonitor.FetchSuitableWallpaper(TMx, Program.WindowStyle);
+                            windowsDesktop1.BackgroundImage = Program.WallpaperMonitor.Get(TMx, Program.WindowStyle);
                         }
 
                         Program.Animator.ShowSync(windowsDesktop1);

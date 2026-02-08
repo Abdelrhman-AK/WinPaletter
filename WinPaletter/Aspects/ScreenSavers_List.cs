@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace WinPaletter
 {
-    public partial class ScreenSavers_List : Form
+    public partial class ScreenSavers_List : UI.WP.Form
     {
         public ScreenSavers_List()
         {
@@ -26,9 +26,6 @@ namespace WinPaletter
 
         private void ScreenSavers_List_Load(object sender, EventArgs e)
         {
-            this.Localize();
-            ApplyStyle(this);
-
             // Set up columns for the ListView
             listView1.View = View.Details;
             listView1.Columns.Clear();

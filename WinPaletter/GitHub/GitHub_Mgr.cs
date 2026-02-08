@@ -14,7 +14,7 @@ using WinPaletter.GitHub;
 
 namespace WinPaletter
 {
-    public partial class GitHub_Mgr : Form
+    public partial class GitHub_Mgr : UI.WP.Form
     {
         sealed class PendingBranch
         {
@@ -31,9 +31,6 @@ namespace WinPaletter
 
         private async void GitHubManager_Load(object sender, EventArgs e)
         {
-            ApplyStyle(this);
-            this.Localize();
-
             AddViewsToButton();
 
             await UpdateGitHubLoginData();
@@ -488,7 +485,7 @@ namespace WinPaletter
 
             bool canCreatePullRequest = await GitHub.Repository.CanCreatePullRequestAsync();
 
-            if (canCreatePullRequest && Forms.GitHub_ConfirmPR.ShowDialog(GitHub.Repository.Branch.Name) == DialogResult.OK)
+            if (canCreatePullRequest && Forms.GitHub_ConfirmPR.ShowDialog(branch: GitHub.Repository.Branch.Name) == DialogResult.OK)
             {
                 // Example: get list of changed theme files in the branch
                 List<string> changedFiles = [.. (await GitHub.Repository.Branch.GetChangedFilesAsync())];
@@ -1017,6 +1014,16 @@ Generated automatically by WinPaletter. Please review the changes before merging
 
                 Cursor = Cursors.Default;
             }
+        }
+
+        private void btn_new_MouseEnter(object sender, EventArgs e)
+        {
+            Transition.With(label15, nameof(label15.Text), ((sender as UI.WP.Button).Tag ?? string.Empty).ToString()).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+        }
+
+        private void btn_new_MouseLeave(object sender, EventArgs e)
+        {
+            Transition.With(label15, nameof(label15.Text), string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
         }
     }
 }

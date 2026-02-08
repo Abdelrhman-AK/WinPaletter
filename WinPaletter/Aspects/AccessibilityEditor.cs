@@ -114,7 +114,6 @@ namespace WinPaletter
             LoadData(data);
 
             LoadFromTM(Program.TM);
-
         }
 
         public void LoadFromTM(Manager TM)

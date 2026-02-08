@@ -5,17 +5,11 @@ using System.Windows.Forms;
 
 namespace WinPaletter
 {
-    public partial class GitHub_FileAction : Form
+    public partial class GitHub_FileAction : UI.WP.Form
     {
         public GitHub_FileAction()
         {
             InitializeComponent();
-        }
-
-        private void GitHub_FileAction_Load(object sender, EventArgs e)
-        {
-            ApplyStyle(this);
-            this.Localize();
         }
 
         public DialogResult ConfirmFileDelete(string name, string description, long size, Bitmap icon)

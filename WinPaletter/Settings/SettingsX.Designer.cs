@@ -6,7 +6,7 @@ using System.Windows.Forms;
 namespace WinPaletter
 {
     [Microsoft.VisualBasic.CompilerServices.DesignerGenerated()]
-    public partial class SettingsX : Form
+    public partial class SettingsX : UI.WP.Form
     {
 
         // Form overrides dispose to clean up the component list.
@@ -54,7 +54,6 @@ namespace WinPaletter
             this.Label4 = new System.Windows.Forms.Label();
             this.ComboBox2 = new WinPaletter.UI.WP.ComboBox();
             this.PictureBox5 = new System.Windows.Forms.PictureBox();
-            this.AlertBox17 = new WinPaletter.UI.WP.AlertBox();
             this.groupBox3 = new WinPaletter.UI.WP.GroupBox();
             this.label59 = new System.Windows.Forms.Label();
             this.PictureBox6 = new System.Windows.Forms.PictureBox();
@@ -926,7 +925,6 @@ namespace WinPaletter
             this.TabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.TabPage1.Controls.Add(this.banner1);
             this.TabPage1.Controls.Add(this.groupBox4);
-            this.TabPage1.Controls.Add(this.AlertBox17);
             this.TabPage1.Controls.Add(this.groupBox3);
             this.TabPage1.Location = new System.Drawing.Point(199, 4);
             this.TabPage1.Name = "TabPage1";
@@ -1001,23 +999,6 @@ namespace WinPaletter
             this.PictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.PictureBox5.TabIndex = 16;
             this.PictureBox5.TabStop = false;
-            // 
-            // AlertBox17
-            // 
-            this.AlertBox17.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Warning;
-            this.AlertBox17.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.AlertBox17.BackColor = System.Drawing.Color.Transparent;
-            this.AlertBox17.CenterText = true;
-            this.AlertBox17.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.AlertBox17.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.AlertBox17.Image = null;
-            this.AlertBox17.Location = new System.Drawing.Point(299, 163);
-            this.AlertBox17.Name = "AlertBox17";
-            this.AlertBox17.Size = new System.Drawing.Size(521, 20);
-            this.AlertBox17.TabIndex = 20;
-            this.AlertBox17.TabStop = false;
-            this.AlertBox17.Text = null;
-            this.AlertBox17.Visible = false;
             // 
             // groupBox3
             // 
@@ -4309,12 +4290,12 @@ namespace WinPaletter
             this.trackBarX1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.trackBarX1.Location = new System.Drawing.Point(11, 46);
             this.trackBarX1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.trackBarX1.Maximum = 300;
-            this.trackBarX1.Minimum = 5;
+            this.trackBarX1.Maximum = 300F;
+            this.trackBarX1.Minimum = 5F;
             this.trackBarX1.Name = "trackBarX1";
             this.trackBarX1.Size = new System.Drawing.Size(713, 26);
             this.trackBarX1.TabIndex = 55;
-            this.trackBarX1.Value = 5;
+            this.trackBarX1.Value = 5F;
             // 
             // Label27
             // 
@@ -7549,7 +7530,6 @@ namespace WinPaletter
         internal Panel Panel8;
         internal UI.WP.RadioButton RadioButton15;
         internal UI.WP.RadioButton RadioButton16;
-        internal UI.WP.AlertBox AlertBox17;
         internal PictureBox PictureBox61;
         internal UI.WP.AlertBox AlertBox18;
         internal PictureBox PictureBox62;

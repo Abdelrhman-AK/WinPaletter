@@ -12,7 +12,7 @@ using WinPaletter.UI.WP;
 namespace WinPaletter.TypesExtensions
 {
     /// <summary>
-    /// Extensions for <see cref="Form"/> class
+    /// Extensions for <see cref="System.Windows.Forms.Form"/> class
     /// </summary>
     public static class FormsExtensions
     {
@@ -20,7 +20,7 @@ namespace WinPaletter.TypesExtensions
         /// Center the form to the screen (It's a extension method that makes CenterToScreen() accessible as it is a private void in forms)
         /// </summary>
         /// <param name="form">Form to be centered to screen</param>
-        public static void CenterToScreen(this Form form)
+        public static void CenterToScreen(this System.Windows.Forms.Form form)
         {
             form.Location = new Point((Screen.PrimaryScreen.WorkingArea.Width - form.Width) / 2, (Screen.PrimaryScreen.WorkingArea.Height - form.Height) / 2);
         }
@@ -30,7 +30,7 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         /// <typeparam name="TForm">The type of the form.</typeparam>
         /// <returns>The icon of the form type, or null if not found.</returns>
-        public static Icon Icon<TForm>() where TForm : Form, new()
+        public static Icon Icon<TForm>() where TForm : UI.WP.Form, new()
         {
             // Create an instance of the form, but prevent it from triggering the Load event
             using (TForm form = Activator.CreateInstance(typeof(TForm), true) as TForm)
@@ -44,7 +44,7 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         /// <param name="Form"></param>
         /// <param name="Localizer"></param>
-        public static void Localize(this Form Form, Localizer Localizer = null)
+        public static void Localize(this System.Windows.Forms.Form Form, Localizer Localizer = null)
         {
             if (Localizer is null)
             {
@@ -62,7 +62,7 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         /// <param name="form"></param>
         /// <returns></returns>
-        public static JObject ToJSON(this Form form)
+        public static JObject ToJSON(this System.Windows.Forms.Form form)
         {
             if (Forms.IExclude.Contains(form.GetType())) return null;
 

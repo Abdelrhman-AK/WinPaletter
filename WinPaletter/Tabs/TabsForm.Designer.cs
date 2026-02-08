@@ -66,13 +66,10 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(933, 519);
             this.Controls.Add(this.titlebarExtender1);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForeColor = System.Drawing.Color.White;
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.DoubleBuffered = true;
             this.Name = "TabsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TabsForm";
-            this.Load += new System.EventHandler(this.TabsForm_Load);
             this.titlebarExtender1.ResumeLayout(false);
             this.ResumeLayout(false);
 

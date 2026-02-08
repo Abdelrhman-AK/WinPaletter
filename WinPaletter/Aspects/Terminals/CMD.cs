@@ -170,7 +170,7 @@ namespace WinPaletter
 
         private void CMD_Load(object sender, EventArgs e)
         {
-            CMD_Preview.BackgroundImage = Program.WallpaperMonitor.FetchSuitableWallpaper(Program.TM, Program.WindowStyle);
+            CMD_Preview.BackgroundImage = Program.WallpaperMonitor.Get(Program.TM, Program.WindowStyle);
 
             DesignerData data = new(this)
             {

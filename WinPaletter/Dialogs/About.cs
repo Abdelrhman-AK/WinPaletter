@@ -29,8 +29,7 @@ namespace WinPaletter
         private void About_Load(object sender, EventArgs e)
         {
             Icon = FormsExtensions.Icon<MainForm>();
-            this.Localize();
-            ApplyStyle(this);
+
             Label2.Text = Program.Version;
             Label1.Text = $"{Program.Localization.Strings.General.By} {Application.CompanyName}";
             Label17.Text = Application.ProductName;

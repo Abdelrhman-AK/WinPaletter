@@ -6,7 +6,7 @@ using System.Windows.Forms;
 namespace WinPaletter
 {
     [Microsoft.VisualBasic.CompilerServices.DesignerGenerated()]
-    public partial class WindowsTerminalCopycat : Form
+    public partial class WindowsTerminalCopycat : UI.WP.Form
     {
 
         // Form overrides dispose to clean up the component list.

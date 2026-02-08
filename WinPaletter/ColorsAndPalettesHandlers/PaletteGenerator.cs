@@ -29,7 +29,7 @@ namespace WinPaletter
         /// cref="UI.Controllers.ColorItem"/>  and its corresponding <see cref="System.Drawing.Color"/>. This collection
         /// is used to manage  and associate color-related data.</remarks>
         private List<(ColorItem Item, Color DefaultColor)> colorItems = [];
-        private Form form;
+        private System.Windows.Forms.Form form;
         ColorEffectControl[] colorEffectControls = null;
 
         /// <summary>
@@ -42,9 +42,6 @@ namespace WinPaletter
 
         private async void PaletteGenerateFromImage_Load(object sender, EventArgs e)
         {
-            ApplyStyle(this);
-            this.Localize();
-
             this.DoubleBuffer();
 
             Height = checkBox1.Checked ? Height : GroupBox1.Top + bottom_buttons.Height;
@@ -176,9 +173,9 @@ namespace WinPaletter
             ShowDialog();
         }
 
-        void ApplyPreview(Form f)
+        void ApplyPreview(System.Windows.Forms.Form f)
         {
-            if (f == null || f.IsDisposed || !Application.OpenForms.OfType<Form>().Any(form => form == f)) return;
+            if (f == null || f.IsDisposed || !Application.OpenForms.OfType<System.Windows.Forms.Form>().Any(form => form == f)) return;
 
             switch (f)
             {

@@ -50,6 +50,8 @@ namespace WinPaletter
 
         private bool ApplyOrEditToggle = true;
         private DialogResult togglesCheck = DialogResult.None;
+        private DialogResult licenseCheck = DialogResult.None;
+        TaskCompletionSource<DialogResult> licenseCheckCS = new();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Store"/> class.
@@ -70,7 +72,7 @@ namespace WinPaletter
         public void Adjust_Preview(Manager TM)
         {
             windowsDesktop1.WindowStyle = Program.WindowStyle;
-            windowsDesktop1.BackgroundImage = Program.WallpaperMonitor.FetchSuitableWallpaper(TM, Program.WindowStyle);
+            windowsDesktop1.BackgroundImage = Program.WallpaperMonitor.Get(TM, Program.WindowStyle);
             windowsDesktop1.LoadFromTM(TM);
             windowsDesktop1.LoadClassicColors(TM.Win32);
             retroDesktopColors1.LoadColors(TM);
@@ -247,17 +249,11 @@ namespace WinPaletter
             FinishedLoadingInitialTMs = false;
             _Shown = false;
 
-            this.Localize();
-            ApplyStyle(this, true);
-            this.DropEffect(default, true, DWM.DWMStyles.Acrylic);
-
             ThemesFetcher.RunWorkerAsync();
 
             this.DoubleBuffer();
 
             Apply_btn.Image = Forms.Home.apply_btn.Image;
-            labelAlt2.Text = string.Format(Program.Localization.Strings.Store.WontWork_Protocol, OS.WXP ? Program.Localization.Strings.Windows.WXP : Program.Localization.Strings.Windows.WVista);
-            if (OS.WXP || OS.WVista) Tabs.SelectedIndex = 4;
 
             if (ProgressBar1.Style != UI.WP.ProgressBar.ProgressBarStyle.Marquee) ProgressBar1.Style = UI.WP.ProgressBar.ProgressBarStyle.Marquee;
 
@@ -266,6 +262,7 @@ namespace WinPaletter
             desc_txt.Font = Fonts.ConsoleLarge;
             ver_lbl.Font = Fonts.Console;
             lbl_hint.Font = Fonts.Console;
+            TextBox1.Font = Fonts.ConsoleLarge;
 
             os_12.Image = Assets.Store.DesignedFor12;
             os_11.Image = Assets.Store.DesignedFor11;
@@ -285,8 +282,6 @@ namespace WinPaletter
                 UpdateLoginData();
             }
 
-            groupBox4.UpdatePattern(Program.TM.Info.Pattern);
-
             System.Windows.Forms.ToolStripMenuItem edit_btn = new() { Text = Program.Localization.Strings.General.Edit, Image = Assets.Store.Menu_Edit };
             System.Windows.Forms.ToolStripMenuItem save_as = new() { Text = Program.Localization.Strings.General.SaveAs, Image = Assets.Store.Menu_SaveAs };
 
@@ -295,7 +290,7 @@ namespace WinPaletter
             edit_btn.Click += Edit_btn_Click;
             save_as.Click += Save_as_Click;
 
-            foreach (PictureBox pictureBox in flowLayoutPanel4.Controls.OfType<PictureBox>()) 
+            foreach (PictureBox pictureBox in flowLayoutPanel4.Controls.OfType<PictureBox>())
             {
                 pictureBox.MouseEnter -= PictureBox_MouseEnter;
                 pictureBox.MouseEnter += PictureBox_MouseEnter;
@@ -381,13 +376,11 @@ namespace WinPaletter
             toggle_lockScreen.Visible = Program.WindowStyle != WindowStyle.WVista && Program.WindowStyle != WindowStyle.W8;
         }
 
-        private void Save_as_Click(object sender, EventArgs e)
+        private async void Save_as_Click(object sender, EventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(selectedItem.TM.Info.License))
             {
-                Forms.Store_ThemeLicense.TextBox1.Text = selectedItem.TM.Info.License;
-                if (!(Forms.Store_ThemeLicense.ShowDialog() == DialogResult.OK))
-                    return;
+                if (!await LicenseAcceptedAsync(selectedItem.TM.Info.License)) return;
             }
 
             string selectedPath = string.Empty;
@@ -430,14 +423,13 @@ namespace WinPaletter
             }
         }
 
-        private void Edit_btn_Click(object sender, EventArgs e)
+        private async void Edit_btn_Click(object sender, EventArgs e)
         {
             ApplyOrEditToggle = sender == Apply_btn;
 
             if (!string.IsNullOrWhiteSpace(selectedItem.TM.Info.License))
             {
-                Forms.Store_ThemeLicense.TextBox1.Text = selectedItem.TM.Info.License;
-                if (!(Forms.Store_ThemeLicense.ShowDialog() == DialogResult.OK)) return;
+                if (!await LicenseAcceptedAsync(selectedItem.TM.Info.License)) return;
             }
 
             if (StartedAsOnlineOrOffline)
@@ -466,7 +458,7 @@ namespace WinPaletter
                     {
                         using (Bitmap icon = Properties.Resources.ThemesResIcon.ToBitmap())
                         {
-                            if (Forms.DownloadManager_Dlg.DownloadFile(selectedItem.URL_PackFile, $"{Dir}\\{FileName}", -1, icon.Resize(24, 24)) == DialogResult.OK) 
+                            if (Forms.DownloadManager_Dlg.DownloadFile(selectedItem.URL_PackFile, $"{Dir}\\{FileName}", -1, icon.Resize(24, 24)) == DialogResult.OK)
                                 DoActionsAfterPackDownload();
                         }
                     }
@@ -1042,7 +1034,7 @@ namespace WinPaletter
                             Forms.Store_Hover.Show();
 
                             windowsDesktop.WindowStyle = Program.WindowStyle;
-                            windowsDesktop.BackgroundImage = Program.WallpaperMonitor.FetchSuitableWallpaper(TMx, Program.WindowStyle);
+                            windowsDesktop.BackgroundImage = Program.WallpaperMonitor.Get(TMx, Program.WindowStyle);
                             windowsDesktop.LoadFromTM(TMx);
                             windowsDesktop.LoadClassicColors(TMx.Win32);
 
@@ -1087,7 +1079,7 @@ namespace WinPaletter
                     respacksize_lbl.ForeColor = accentForeColor;
                     ver_lbl.ForeColor = accentBackColor;
                     ver_lbl.BackColor = accentForeColor;
-                    
+
                     FlowLayoutPanel1.ScrollControlIntoView(windowsDesktop1);
 
                     // Start processing the preview from the selected theme
@@ -1281,6 +1273,168 @@ namespace WinPaletter
 
         #region    Store
 
+        private async Task ShowTogglesAndWaitAsync(CancellationToken cancellationToken = default)
+        {
+            togglesCheck = DialogResult.None;
+
+            // Configure toggle visibility based on OS and theme capabilities
+            ConfigureTogglesVisibility();
+
+            // Set toggle checked states
+            ConfigureTogglesCheckedStates();
+
+            // Show the toggles tab
+            Program.Animator.HideSync(Tabs);
+            Tabs.SelectedIndex = 5;
+            CustomSystemSounds.Exclamation.Play();
+            Program.Animator.ShowSync(Tabs);
+
+            try
+            {
+                // Wait for user response with timeout
+                await WaitForTogglesResponseAsync(TimeSpan.FromSeconds(30), cancellationToken);
+
+                if (togglesCheck == DialogResult.OK)
+                {
+                    // Execute on UI thread
+                    if (this.InvokeRequired)
+                    {
+                        this.Invoke(() => ApplyThemeAndUpdateUI());
+                    }
+                    else
+                    {
+                        ApplyThemeAndUpdateUI();
+                    }
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                // User cancelled or timeout
+            }
+        }
+
+        private async Task WaitForTogglesResponseAsync(TimeSpan timeout, CancellationToken cancellationToken = default)
+        {
+            var tcs = new TaskCompletionSource<DialogResult>();
+
+            // If already set, return immediately
+            if (togglesCheck != DialogResult.None)
+            {
+                tcs.TrySetResult(togglesCheck);
+                await tcs.Task;
+                return;
+            }
+
+            // Set up polling with timeout
+            using (var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken))
+            {
+                cts.CancelAfter(timeout);
+
+                try
+                {
+                    while (togglesCheck == DialogResult.None && !cts.Token.IsCancellationRequested)
+                    {
+                        await Task.Delay(100, cts.Token);
+                    }
+
+                    if (togglesCheck == DialogResult.None)
+                    {
+                        togglesCheck = DialogResult.Cancel;
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    togglesCheck = DialogResult.Cancel;
+                }
+            }
+        }
+
+        private void ApplyThemeAndUpdateUI()
+        {
+            Apply_Theme();
+            Tabs.SelectedIndex = 1;
+            if (selectedItem.DoneByWinPaletter)
+            {
+                Program.TM.Info.Author = Application.CompanyName;
+            }
+            UpdateTitlebarColors();
+        }
+
+        private void ConfigureTogglesVisibility()
+        {
+            // List the enabled theme aspects
+            toggle_theme.Visible = (selectedItem.TM.Windows12.Enabled && OS.W12)
+                                   || (selectedItem.TM.Windows11.Enabled && OS.W11)
+                                   || (selectedItem.TM.Windows10.Enabled && OS.W10)
+                                   || (selectedItem.TM.Windows81.Enabled && OS.W81)
+                                   || (selectedItem.TM.Windows8.Enabled && OS.W8)
+                                   || (selectedItem.TM.Windows7.Enabled && OS.W7)
+                                   || (selectedItem.TM.WindowsVista.Enabled && OS.WVista)
+                                   || (selectedItem.TM.WindowsXP.Enabled && OS.WXP);
+
+            toggle_lockScreen.Visible = (selectedItem.TM.LogonUI12.Enabled && OS.W12)
+                                     || (selectedItem.TM.LogonUI11.Enabled && OS.W11)
+                                     || (selectedItem.TM.LogonUI10.Enabled && OS.W10)
+                                     || (selectedItem.TM.LogonUI81.Enabled && OS.W81)
+                                     || (selectedItem.TM.LogonUI7.Enabled && OS.W7)
+                                     || (selectedItem.TM.LogonUIXP.Enabled && OS.WXP);
+
+            toggle_classicColors.Visible = selectedItem.TM.Win32.Enabled;
+            toggle_cursors.Visible = selectedItem.TM.Cursors.Enabled;
+            toggle_metrics.Visible = selectedItem.TM.MetricsFonts.Enabled;
+            toggle_cmd.Visible = selectedItem.TM.CommandPrompt.Enabled;
+            toggle_ps86.Visible = selectedItem.TM.PowerShellx86.Enabled;
+            toggle_ps64.Visible = selectedItem.TM.PowerShellx64.Enabled;
+            toggle_terminal.Visible = selectedItem.TM.Terminal.Enabled;
+            toggle_terminalPreview.Visible = selectedItem.TM.TerminalPreview.Enabled;
+            toggle_wallpaper.Visible = selectedItem.TM.Wallpaper.Enabled;
+            toggle_effects.Visible = selectedItem.TM.WindowsEffects.Enabled;
+            toggle_sounds.Visible = selectedItem.TM.Sounds.Enabled;
+            toggle_screenSaver.Visible = selectedItem.TM.ScreenSaver.Enabled;
+            toggle_altTab.Visible = selectedItem.TM.AltTab.Enabled;
+            toggle_icons.Visible = selectedItem.TM.Icons.Enabled;
+            toggle_accessibility.Visible = selectedItem.TM.Accessibility.Enabled;
+            toggle_winPaletterTheme.Visible = selectedItem.TM.AppTheme.Enabled;
+        }
+
+        private void ConfigureTogglesCheckedStates()
+        {
+            // Check the enabled theme aspects
+            // Never depend on controls that are not visible yet in a tabpage not selected
+            toggle_theme.Checked = (selectedItem.TM.Windows12.Enabled && OS.W12)
+                                || (selectedItem.TM.Windows11.Enabled && OS.W11)
+                                || (selectedItem.TM.Windows10.Enabled && OS.W10)
+                                || (selectedItem.TM.Windows81.Enabled && OS.W81)
+                                || (selectedItem.TM.Windows8.Enabled && OS.W8)
+                                || (selectedItem.TM.Windows7.Enabled && OS.W7)
+                                || (selectedItem.TM.WindowsVista.Enabled && OS.WVista)
+                                || (selectedItem.TM.WindowsXP.Enabled && OS.WXP);
+
+            toggle_lockScreen.Checked = (selectedItem.TM.LogonUI12.Enabled && OS.W12)
+                                     || (selectedItem.TM.LogonUI11.Enabled && OS.W11)
+                                     || (selectedItem.TM.LogonUI10.Enabled && OS.W10)
+                                     || (selectedItem.TM.LogonUI81.Enabled && OS.W81)
+                                     || (selectedItem.TM.LogonUI7.Enabled && OS.W7)
+                                     || (selectedItem.TM.LogonUIXP.Enabled && OS.WXP);
+
+            toggle_classicColors.Checked = selectedItem.TM.Win32.Enabled;
+            toggle_cursors.Checked = selectedItem.TM.Cursors.Enabled;
+            toggle_metrics.Checked = selectedItem.TM.MetricsFonts.Enabled;
+            toggle_cmd.Checked = selectedItem.TM.CommandPrompt.Enabled;
+            toggle_ps86.Checked = selectedItem.TM.PowerShellx86.Enabled;
+            toggle_ps64.Checked = selectedItem.TM.PowerShellx64.Enabled;
+            toggle_terminal.Checked = selectedItem.TM.Terminal.Enabled;
+            toggle_terminalPreview.Checked = selectedItem.TM.TerminalPreview.Enabled;
+            toggle_wallpaper.Checked = selectedItem.TM.Wallpaper.Enabled;
+            toggle_effects.Checked = selectedItem.TM.WindowsEffects.Enabled;
+            toggle_sounds.Checked = selectedItem.TM.Sounds.Enabled;
+            toggle_screenSaver.Checked = selectedItem.TM.ScreenSaver.Enabled;
+            toggle_altTab.Checked = selectedItem.TM.AltTab.Enabled;
+            toggle_icons.Checked = selectedItem.TM.Icons.Enabled;
+            toggle_accessibility.Checked = selectedItem.TM.Accessibility.Enabled;
+            toggle_winPaletterTheme.Checked = selectedItem.TM.AppTheme.Enabled;
+        }
+
         // Apply the theme of the selected store item
         private void Apply_Theme()
         {
@@ -1302,109 +1456,11 @@ namespace WinPaletter
         }
 
         // After a pack is doenloaded, there are two remaining action; either apply the theme or edit it.
-        private void DoActionsAfterPackDownload()
+        private async void DoActionsAfterPackDownload()
         {
             if (ApplyOrEditToggle)
             {
-                // Apply button is pressed
-
-                togglesCheck = DialogResult.None;
-
-                // List the enabled theme aspects
-                toggle_theme.Visible = (selectedItem.TM.Windows12.Enabled && OS.W12)
-                                       || (selectedItem.TM.Windows11.Enabled && OS.W11)
-                                       || (selectedItem.TM.Windows10.Enabled && OS.W10)
-                                       || (selectedItem.TM.Windows81.Enabled && OS.W81)
-                                       || (selectedItem.TM.Windows8.Enabled && OS.W8)
-                                       || (selectedItem.TM.Windows7.Enabled && OS.W7)
-                                       || (selectedItem.TM.WindowsVista.Enabled && OS.WVista)
-                                       || (selectedItem.TM.WindowsXP.Enabled && OS.WXP);
-
-                toggle_lockScreen.Visible = (selectedItem.TM.LogonUI12.Enabled && OS.W12)
-                                         || (selectedItem.TM.LogonUI11.Enabled && OS.W11)
-                                         || (selectedItem.TM.LogonUI10.Enabled && OS.W10)
-                                         || (selectedItem.TM.LogonUI81.Enabled && OS.W81)
-                                         || (selectedItem.TM.LogonUI7.Enabled && OS.W7)
-                                         || (selectedItem.TM.LogonUIXP.Enabled && OS.WXP);
-
-                toggle_classicColors.Visible = selectedItem.TM.Win32.Enabled;
-                toggle_cursors.Visible = selectedItem.TM.Cursors.Enabled;
-                toggle_metrics.Visible = selectedItem.TM.MetricsFonts.Enabled;
-                toggle_cmd.Visible = selectedItem.TM.CommandPrompt.Enabled;
-                toggle_ps86.Visible = selectedItem.TM.PowerShellx86.Enabled;
-                toggle_ps64.Visible = selectedItem.TM.PowerShellx64.Enabled;
-                toggle_terminal.Visible = selectedItem.TM.Terminal.Enabled;
-                toggle_terminalPreview.Visible = selectedItem.TM.TerminalPreview.Enabled;
-                toggle_wallpaper.Visible = selectedItem.TM.Wallpaper.Enabled;
-                toggle_effects.Visible = selectedItem.TM.WindowsEffects.Enabled;
-                toggle_sounds.Visible = selectedItem.TM.Sounds.Enabled;
-                toggle_screenSaver.Visible = selectedItem.TM.ScreenSaver.Enabled;
-                toggle_altTab.Visible = selectedItem.TM.AltTab.Enabled;
-                toggle_icons.Visible = selectedItem.TM.Icons.Enabled;
-                toggle_accessibility.Visible = selectedItem.TM.Accessibility.Enabled;
-                toggle_winPaletterTheme.Visible = selectedItem.TM.AppTheme.Enabled;
-
-                // Check the enabled theme aspects
-                // Never depend on controls that are not visible yet in a tabpage not selected
-                toggle_theme.Checked = (selectedItem.TM.Windows12.Enabled && OS.W12)
-                                       || (selectedItem.TM.Windows11.Enabled && OS.W11)
-                                       || (selectedItem.TM.Windows10.Enabled && OS.W10)
-                                       || (selectedItem.TM.Windows81.Enabled && OS.W81)
-                                       || (selectedItem.TM.Windows8.Enabled && OS.W8)
-                                       || (selectedItem.TM.Windows7.Enabled && OS.W7)
-                                       || (selectedItem.TM.WindowsVista.Enabled && OS.WVista)
-                                       || (selectedItem.TM.WindowsXP.Enabled && OS.WXP);
-
-                toggle_lockScreen.Checked = (selectedItem.TM.LogonUI12.Enabled && OS.W12)
-                                         || (selectedItem.TM.LogonUI11.Enabled && OS.W11)
-                                         || (selectedItem.TM.LogonUI10.Enabled && OS.W10)
-                                         || (selectedItem.TM.LogonUI81.Enabled && OS.W81)
-                                         || (selectedItem.TM.LogonUI7.Enabled && OS.W7)
-                                         || (selectedItem.TM.LogonUIXP.Enabled && OS.WXP);
-
-                toggle_classicColors.Checked = selectedItem.TM.Win32.Enabled;
-                toggle_cursors.Checked = selectedItem.TM.Cursors.Enabled;
-                toggle_metrics.Checked = selectedItem.TM.MetricsFonts.Enabled;
-                toggle_cmd.Checked = selectedItem.TM.CommandPrompt.Enabled;
-                toggle_ps86.Checked = selectedItem.TM.PowerShellx86.Enabled;
-                toggle_ps64.Checked = selectedItem.TM.PowerShellx64.Enabled;
-                toggle_terminal.Checked = selectedItem.TM.Terminal.Enabled;
-                toggle_terminalPreview.Checked = selectedItem.TM.TerminalPreview.Enabled;
-                toggle_wallpaper.Checked = selectedItem.TM.Wallpaper.Enabled;
-                toggle_effects.Checked = selectedItem.TM.WindowsEffects.Enabled;
-                toggle_sounds.Checked = selectedItem.TM.Sounds.Enabled;
-                toggle_screenSaver.Checked = selectedItem.TM.ScreenSaver.Enabled;
-                toggle_altTab.Checked = selectedItem.TM.AltTab.Enabled;
-                toggle_icons.Checked = selectedItem.TM.Icons.Enabled;
-                toggle_accessibility.Checked = selectedItem.TM.Accessibility.Enabled;
-                toggle_winPaletterTheme.Checked = selectedItem.TM.AppTheme.Enabled;
-
-                Program.Animator.HideSync(Tabs);
-
-                Tabs.SelectedIndex = 5;
-
-                CustomSystemSounds.Exclamation.Play();
-
-                Program.Animator.ShowSync(Tabs);
-
-                Task.Run(async () =>
-                {
-                    while (togglesCheck == DialogResult.None)
-                    {
-                        Thread.Sleep(100);
-                    }
-
-                    if (togglesCheck == DialogResult.OK)
-                    {
-                        this.Invoke(() =>
-                        {
-                            Apply_Theme();
-                            Tabs.SelectedIndex = 1;
-                            if (selectedItem.DoneByWinPaletter) Program.TM.Info.Author = Application.CompanyName;
-                            UpdateTitlebarColors();
-                        });
-                    }
-                });
+                await ShowTogglesAndWaitAsync();
             }
             else
             {
@@ -1557,21 +1613,20 @@ namespace WinPaletter
 
             Tabs.SelectedIndex = Tabs.SelectedIndex != 5 ? 0 : 1;
             togglesCheck = DialogResult.None;
+            licenseCheck = DialogResult.None;
 
             titlebar_lbl.Text = string.Empty;
             Program.Animator.ShowSync(Tabs);
         }
 
         #region    Applying row
-        private void Apply_Edit_btn_Click(object sender, EventArgs e)
+        private async void Apply_Edit_btn_Click(object sender, EventArgs e)
         {
             ApplyOrEditToggle = sender == Apply_btn;
 
             if (!string.IsNullOrWhiteSpace(selectedItem.TM.Info.License))
             {
-                Forms.Store_ThemeLicense.TextBox1.Text = selectedItem.TM.Info.License;
-                if (!(Forms.Store_ThemeLicense.ShowDialog() == DialogResult.OK))
-                    return;
+                if (!await LicenseAcceptedAsync(selectedItem.TM.Info.License)) return;
             }
 
             if (StartedAsOnlineOrOffline)
@@ -1641,7 +1696,7 @@ namespace WinPaletter
         }
         private void Search_filter_btn_Click(object sender, EventArgs e)
         {
-            Forms.Store_SearchFilter.ShowDialog();
+            Forms.Store_SearchFilter.ShowDialog(search_filter_btn.Size, search_filter_btn.PointToScreen(Point.Empty));
         }
 
         #endregion
@@ -1861,5 +1916,51 @@ namespace WinPaletter
             togglesCheck = DialogResult.Cancel;
         }
 
+        private async Task<bool> LicenseAcceptedAsync(string license)
+        {
+            // Reset state
+            licenseCheck = DialogResult.None;
+            licenseCheckCS = new();
+
+            int previousIndex = Tabs.SelectedIndex;
+
+            // Show license text
+
+            Program.Animator.HideSync(Tabs);
+
+            TextBox1.Text = license;
+            Tabs.SelectedIndex = 4;
+            CustomSystemSounds.Exclamation.Play();
+
+            Program.Animator.ShowSync(Tabs);
+
+            // Ensure UI is visible
+            await Task.Yield(); // Give the UI thread a chance to render
+
+            // Start a 90-second timeout
+            Task timeoutTask = Task.Delay(TimeSpan.FromSeconds(90)).ContinueWith(_ => licenseCheckCS.TrySetResult(DialogResult.None));
+
+            // Wait for either button click or timeout
+            DialogResult result = await licenseCheckCS.Task;
+
+            Program.Animator.HideSync(Tabs);
+
+            Tabs.SelectedIndex = previousIndex;
+
+            Program.Animator.ShowSync(Tabs);
+
+            // Return true if user clicked OK
+            return result == DialogResult.OK;
+        }
+
+        private void button6_Click_1(object sender, EventArgs e)
+        {
+            licenseCheckCS.TrySetResult(DialogResult.No);
+        }
+
+        private void button7_Click_1(object sender, EventArgs e)
+        {
+            licenseCheckCS.TrySetResult(DialogResult.OK);
+        }
     }
 }

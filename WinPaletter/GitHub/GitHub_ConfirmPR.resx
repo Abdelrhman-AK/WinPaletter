@@ -152,28 +152,21 @@
   </data>
   <data name="label1.Text" xml:space="preserve">
     <value>- Every PR must be reviewed and approved by Abdelrhman-AK before it can be merged into the main branch and made publicly available to all WinPaletter users.
-
 - You should wait for approval, as it is not an instant process. The WinPaletter maintainer is available only a few hours per week.</value>
   </data>
   <data name="label3.Text" xml:space="preserve">
     <value>- You can continue updating your PR until it is approved.
-
 - Any fixes, improvements, or adjustments should be committed to the same branch you originally opened the PR from.
-
 - Avoid opening multiple PRs for the same themes uploading session unless necessary.</value>
   </data>
   <data name="label5.Text" xml:space="preserve">
     <value>- Once your PR is approved and merged, delete the branch.
-
 - Do not reuse old branches for new work; always create a fresh branch for each new theme upload or feature.
-
 - This keeps the repository clean and avoids merge conflicts.</value>
   </data>
   <data name="label11.Text" xml:space="preserve">
     <value>- Keep PRs focused—each PR should cover one themes update session.
-
 - To minimize conflicts, you can sync your branch to start over.
-
 - Review your changes locally in GitHub Explorer before submitting a PR to ensure no unintended files are included.</value>
   </data>
 </root>

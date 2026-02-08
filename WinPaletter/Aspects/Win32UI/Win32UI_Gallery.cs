@@ -7,7 +7,7 @@ using WinPaletter.UI.WP;
 
 namespace WinPaletter
 {
-    public partial class Win32UI_Gallery : Form
+    public partial class Win32UI_Gallery : UI.WP.Form
     {
         public Win32UI_Gallery()
         {
@@ -16,8 +16,6 @@ namespace WinPaletter
 
         private void Win32UI_Gallery_Load(object sender, EventArgs e)
         {
-            this.Localize();
-            ApplyStyle(this);
             Icon = FormsExtensions.Icon<Win32UI>();
 
             LoadGallery();

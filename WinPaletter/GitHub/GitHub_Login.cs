@@ -8,7 +8,7 @@ using static WinPaletter.TypesExtensions.BitmapExtensions;
 
 namespace WinPaletter
 {
-    public partial class GitHub_Login : Form
+    public partial class GitHub_Login : UI.WP.Form
     {
         CancellationTokenSource cts;
 
@@ -19,10 +19,8 @@ namespace WinPaletter
 
         private void Login_Load(object sender, EventArgs e)
         {
-            this.Localize();
-            ApplyStyle(this);
-            NativeMethods.Helpers.RemoveFormTitlebarTextAndIcon(Handle);
             Icon = FormsExtensions.Icon<MainForm>();
+
             tablessControl1.SelectedIndex = 0;
             signin_btn.Visible = true;
             cts = new();

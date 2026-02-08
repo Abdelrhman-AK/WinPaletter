@@ -353,7 +353,7 @@ namespace WinPaletter.TypesExtensions
             if (!listView.Focused) listView?.Focus();
 
             // Move focus to the parent form to commit the edit
-            Form parentForm = listView.FindForm();
+            System.Windows.Forms.Form parentForm = listView.FindForm();
             parentForm?.ActiveControl = listView; // temporarily focus the ListView
 
             item?.Selected = true;

@@ -32,7 +32,7 @@ namespace WinPaletter.Templates
             {
                 Invoke(() =>
                 {
-                    BackgroundImage = Program.WallpaperMonitor.FetchSuitableWallpaper(Program.TM, Program.WindowStyle);
+                    BackgroundImage = Program.WallpaperMonitor.Get(Program.TM, Program.WindowStyle);
                     BackColor = e.BackgroundColor;
                 });
             }
@@ -199,7 +199,7 @@ namespace WinPaletter.Templates
         /// <param name="TM"></param>
         public void LoadMetrics(Manager TM)
         {
-            BackgroundImage = Program.WallpaperMonitor.FetchSuitableWallpaper(TM, Program.WindowStyle);
+            BackgroundImage = Program.WallpaperMonitor.Get(TM, Program.WindowStyle);
             BackColor = TM.Win32.Background;
 
             Font = TM.MetricsFonts.IconFont;

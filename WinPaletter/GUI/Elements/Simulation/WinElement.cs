@@ -31,6 +31,36 @@ namespace WinPaletter.UI.Simulation
 
         #region Variables
 
+        private  bool IsInDesignMode
+        {
+            get
+            {
+                // First check at control level
+                if (DesignMode)
+                    return true;
+
+                // Check at license context level
+                if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
+                    return true;
+
+                // Check through the site
+                ISite site = Site;
+                if (site != null && site.DesignMode)
+                    return true;
+
+                // Check parent chain
+                Control parent = Parent;
+                while (parent != null)
+                {
+                    if (parent.Site != null && parent.Site.DesignMode)
+                        return true;
+                    parent = parent.Parent;
+                }
+
+                return false;
+            }
+        }
+
         private static TextureBrush Noise = new(Resources.Noise.Fade(0.15f));
         private static Bitmap Noise7 = Win7Preview.AeroGlass;
         private static Bitmap Noise7Start = Win7Preview.StartGlass;
@@ -377,6 +407,8 @@ namespace WinPaletter.UI.Simulation
 
         public void ProcessBack()
         {
+            if (IsInDesignMode) return;
+
             GetBack();
             BlurBack();
             NoiseBack();
@@ -384,71 +416,78 @@ namespace WinPaletter.UI.Simulation
 
         public void GetBack()
         {
-            Bitmap Wallpaper = Parent?.BackgroundImage as Bitmap ?? Program.WallpaperMonitor.FetchSuitableWallpaper(Program.TM, Program.WindowStyle);
+            if (IsInDesignMode) return;
 
-            if (Wallpaper != null && Bounds.Width > 0 && Bounds.Height > 0)
+            Bitmap wallpaper = Parent?.BackgroundImage as Bitmap ?? Program.WallpaperMonitor.Get(Program.TM, Program.WindowStyle);
+
+            back?.Dispose();
+            back = null;
+
+            if (wallpaper != null && Bounds.Width > 0 && Bounds.Height > 0)
             {
-                Rectangle imageBounds = new(0, 0, Wallpaper.Width, Wallpaper.Height);
-                back = imageBounds.Contains_ButNotExceed(Bounds) ? Wallpaper?.Clone(Bounds, Wallpaper.PixelFormat) : null;
+                Rectangle imageBounds = new(0, 0, wallpaper.Width, wallpaper.Height);
+                if (imageBounds.Contains_ButNotExceed(Bounds))
+                    back = wallpaper.Clone(Bounds, wallpaper.PixelFormat);
             }
-            else back = null;
         }
 
         public void BlurBack()
         {
-            if (Style == Styles.Taskbar11 || Style == Styles.Start11 || Style == Styles.ActionCenter11 || Style == Styles.AltTab11)
+            if (IsInDesignMode) return;
+
+            back_blurred?.Dispose();
+            back_blurred = null;
+
+            if (back == null || !Transparency) return;
+
+            int blurAmount = BlurPower;
+
+            if (Style is Styles.Start7Aero or Styles.Taskbar7Aero or Styles.StartVistaAero or Styles.TaskbarVistaAero or Styles.AltTab7Aero)
+                blurAmount = 3;
+
+            Bitmap blurred = back.Blur(blurAmount);
+            if (blurred == null) return;
+
+            if (Style is Styles.Taskbar11 or Styles.Start11 or Styles.ActionCenter11 or Styles.AltTab11 && DarkMode)
             {
-                if (Transparency && back != null)
-                {
-                    if (DarkMode)
-                    {
-                        using (Bitmap bmpBlurred = back?.Blur(BlurPower))
-                        {
-                            back_blurred = bmpBlurred?.AdjustHSL(null, 0.6f);
-                        }
-                    }
-                    else
-                    {
-                        back_blurred = back?.Blur(BlurPower);
-                    }
-                }
-                else
-                {
-                    back_blurred = null;
-                }
+                using Bitmap adjusted = blurred.AdjustHSL(null, 0.6f);
+                back_blurred = new Bitmap(adjusted);
+                blurred.Dispose();
             }
-            else if ((Style == Styles.Taskbar10 || Style == Styles.Start10 || Style == Styles.ActionCenter10) && Transparency)
+            else
             {
-                back_blurred = back?.Blur(BlurPower);
-            }
-            else if ((Style == Styles.Start7Aero || Style == Styles.Taskbar7Aero || Style == Styles.StartVistaAero || Style == Styles.TaskbarVistaAero || Style == Styles.AltTab7Aero) && back != null)
-            {
-                back_blurred = back?.Blur(3);
+                back_blurred = blurred;
             }
         }
 
         public void NoiseBack()
         {
-            if (Style == Styles.ActionCenter11 || Style == Styles.Start11 || Style == Styles.Taskbar11 || Style == Styles.AltTab11 ||
-                Style == Styles.ActionCenter10 || Style == Styles.Start10 || Style == Styles.Taskbar10)
+            if (IsInDesignMode) return;
+
+            // Windows 11/10
+            if (Style is Styles.ActionCenter11 or Styles.Start11 or Styles.Taskbar11 or Styles.AltTab11 or
+                         Styles.ActionCenter10 or Styles.Start10 or Styles.Taskbar10)
             {
-                if (Transparency)
-                {
-                    using (Bitmap b = Resources.Noise.Fade(_NoisePower))
-                    {
-                        Noise = new(b);
-                    }
-                }
+                if (!Transparency) return;
+
+                using Bitmap b = Resources.Noise.Fade(_NoisePower);
+
+                // Dispose old brush before creating a new one
+                Noise?.Dispose();
+                Noise = new TextureBrush(b);
             }
-            else if (Style == Styles.Start7Aero || Style == Styles.Taskbar7Aero || Style == Styles.AltTab7Aero ||
-                     Style == Styles.Start7Opaque || Style == Styles.Taskbar7Opaque || Style == Styles.AltTab7Opaque)
+            // Windows 7 / opaque
+            else if (Style is Styles.Start7Aero or Styles.Taskbar7Aero or Styles.AltTab7Aero or
+                              Styles.Start7Opaque or Styles.Taskbar7Opaque or Styles.AltTab7Opaque)
             {
-                using (Bitmap b0 = Win7Preview.AeroGlass.Fade(_NoisePower / 100f))
-                using (Bitmap b1 = Win7Preview.StartGlass.Fade(_NoisePower / 100f))
-                {
-                    Noise7 = new(b0);
-                    Noise7Start = new(b1);
-                }
+                using Bitmap b0 = Win7Preview.AeroGlass.Fade(_NoisePower / 100f);
+                using Bitmap b1 = Win7Preview.StartGlass.Fade(_NoisePower / 100f);
+
+                Noise7?.Dispose();
+                Noise7Start?.Dispose();
+
+                Noise7 = new Bitmap(b0);
+                Noise7Start = new Bitmap(b1);
             }
         }
 

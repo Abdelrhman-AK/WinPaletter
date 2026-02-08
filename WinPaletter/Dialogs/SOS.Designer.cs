@@ -596,7 +596,6 @@ namespace WinPaletter.Dialogs
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SOS: Helps you fix critical issues";
             this.TopMost = true;
-            this.Load += new System.EventHandler(this.RescueTools_Load);
             this.groupBox5.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);

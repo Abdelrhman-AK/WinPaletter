@@ -22,43 +22,6 @@ namespace WinPaletter
         static readonly List<Tuple<ManagementEventWatcher, EventArrivedEventHandler>> Watchers = [];
 
         /// <summary>
-        /// Get the Windows desktop wallpaper
-        /// </summary>
-        /// <returns></returns>
-        private static Bitmap GetWallpaperFromRegistry()
-        {
-            // If modern Windows, try TranscodedWallpaper first
-            if (!OS.WXP && !OS.WVista)
-            {
-                string themesPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Microsoft", "Windows", "Themes");
-                string transcodedPath = Path.Combine(themesPath, "TranscodedWallpaper");
-
-                if (File.Exists(transcodedPath))
-                {
-                    try
-                    {
-                        return BitmapMgr.Load(transcodedPath);
-                    }
-                    catch { }
-                }
-            }
-
-            // Get wallpaper type and path from registry
-            int wallpaperType = ReadReg("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Wallpapers", "BackgroundType", 0);
-            string wallpaperPath = (wallpaperType != 1) ? (ReadReg("HKEY_CURRENT_USER\\Control Panel\\Desktop", "Wallpaper", string.Empty) ?? string.Empty) : null;
-
-            // If the wallpaper type is a valid image and file exists, load it
-            if (wallpaperType != 1 && !string.IsNullOrEmpty(wallpaperPath) && File.Exists(wallpaperPath))
-            {
-                return BitmapMgr.Load(wallpaperPath);
-            }
-
-            // Otherwise, fallback to solid color wallpaper
-            string backgroundColor = ReadReg("HKEY_CURRENT_USER\\Control Panel\\Colors", "Background", Default.FromCurrentOS.Win32.Background.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)) ?? "255 255 255";
-            return backgroundColor.ToColorFromWin32().ToBitmap(Screen.PrimaryScreen.Bounds.Size);
-        }
-
-        /// <summary>
         /// Monitor Windows preference changes (wallpaper, dark mode, and personalization).
         /// </summary>
         public static void Monitor()

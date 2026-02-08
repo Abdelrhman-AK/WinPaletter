@@ -172,12 +172,10 @@ namespace WinPaletter
 
         private void ExternalTerminal_Load(object sender, EventArgs e)
         {
-            this.Localize();
-            ApplyStyle(this);
             _Shown = false;
             FillTerminals(ComboBox1);
             RasterList.BringToFront();
-            CMD_Preview.BackgroundImage = Program.WallpaperMonitor.FetchSuitableWallpaper(Program.TM, Program.WindowStyle);
+            CMD_Preview.BackgroundImage = Program.WallpaperMonitor.Get(Program.TM, Program.WindowStyle);
 
             Icon = Resources.cmd;
 

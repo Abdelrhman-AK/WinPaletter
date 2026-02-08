@@ -184,7 +184,6 @@ namespace WinPaletter
 
             LoadFromTM(LogonUI10x);
 
-            // Make them all black after ApplyStyle(this);
             for (int i = 0; i <= tabs_preview_1.TabCount - 1; i++) { tabs_preview_1.TabPages[i].BackColor = Color.Black; }
 
             UpdatePreview();
@@ -284,7 +283,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    result = Program.WallpaperMonitor.FetchSuitableWallpaper(Program.TM, Program.WindowStyle);
+                    result = Program.WallpaperMonitor.Get(Program.TM, Program.WindowStyle);
                 }
             }
 

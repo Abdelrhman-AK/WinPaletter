@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text;
 using static WinPaletter.NativeMethods.GDI32;
@@ -31,6 +30,16 @@ namespace WinPaletter.NativeMethods
         /// <returns></returns>
         [DllImport("user32.dll", SetLastError = true)]
         public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
+
+        public const uint SWP_NOSIZE = 0x0001;
+        public const uint SWP_NOMOVE = 0x0002;
+        public const uint SWP_NOZORDER = 0x0004;
+        public const uint SWP_NOACTIVATE = 0x0010;
+        public const uint SWP_FRAMECHANGED = 0x0020;
+
+        // Common constants
+        public const int GWL_STYLE = -16;
+        public const int GWL_EXSTYLE = -20;
 
         /// <summary>
         /// Retrieves the specified system metric or system configuration setting.
@@ -90,6 +99,9 @@ namespace WinPaletter.NativeMethods
         [DllImport("user32.dll")]
         public static extern bool AnimateWindow(IntPtr hWnd, int time, AnimateWindowFlags flags);
 
+        [DllImport("user32.dll")]
+        public static extern bool RedrawWindow(IntPtr hWnd, IntPtr lprcUpdate, IntPtr hrgnUpdate, uint flags);
+
         /// <summary>
         /// Destroys an icon and frees any memory the icon occupied.
         /// </summary>
@@ -112,6 +124,39 @@ namespace WinPaletter.NativeMethods
             return FindWindowEx(listViewHandle, IntPtr.Zero, "Edit", null);
         }
 
+        public const int WM_NCCALCSIZE = 0x0083;
+        public const int WM_NCPAINT = 0x0085;
+        public const int RDW_INVALIDATE = 0x0001;
+        public const int RDW_FRAME = 0x0400;
+        public const int RDW_UPDATENOW = 0x0100;
+        public const int RDW_ALLCHILDREN = 0x0080;
+
+        public static void RefreshNonClient(IntPtr handle)
+        {
+            // Recalculate frame
+            SendMessage(handle, WM_NCCALCSIZE, IntPtr.Zero, IntPtr.Zero);
+
+            // Force NC repaint
+            SendMessage(handle, WM_NCPAINT, IntPtr.Zero, IntPtr.Zero);
+
+            // Strong redraw
+            RedrawWindow(handle, IntPtr.Zero, IntPtr.Zero,
+                RDW_INVALIDATE | RDW_FRAME | RDW_UPDATENOW | RDW_ALLCHILDREN);
+        }
+
+        [DllImport("user32.dll", EntryPoint = "SetClassLong")]
+        private static extern int SetClassLong32(IntPtr hWnd, int nIndex, int dwNewLong);
+
+        [DllImport("user32.dll", EntryPoint = "SetClassLongPtr")]
+        private static extern IntPtr SetClassLongPtr64(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
+
+        public static IntPtr SetClassLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong)
+        {
+            if (IntPtr.Size == 8) return SetClassLongPtr64(hWnd, nIndex, dwNewLong);
+
+            return new IntPtr(SetClassLong32(hWnd, nIndex, dwNewLong.ToInt32()));
+        }
+
         /// <summary>
         /// Retrieves the current color of a specified display element.
         /// </summary>
@@ -132,36 +177,30 @@ namespace WinPaletter.NativeMethods
         [DllImport("user32.dll")]
         internal static extern int SetWindowCompositionAttribute(IntPtr hwnd, ref WindowCompositionAttributeData data);
 
-        /// <summary>
-        /// Retrieves information about the specified window. The function retrieves a value at the specified offset in the
-        /// window's extra memory or other window-related information.
-        /// </summary>
-        /// <remarks>Common values for <paramref name="nIndex"/> include constants like <c>GWL_STYLE</c>,
-        /// <c>GWL_EXSTYLE</c>, and <c>GWL_WNDPROC</c>. Refer to the Windows API documentation for a full list of valid
-        /// constants.</remarks>
-        /// <param name="hWnd">A handle to the window whose information is to be retrieved.</param>
-        /// <param name="nIndex">The zero-based offset to the value to be retrieved. This can be a predefined constant that specifies the type of
-        /// information to retrieve, such as window styles or extended styles.</param>
-        /// <returns>The requested value if the function succeeds, or 0 if it fails. To get extended error information, call <see
-        /// cref="Marshal.GetLastWin32Error"/>.</returns>
-        [DllImport("user32.dll", SetLastError = true)]
-        public static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+        [DllImport("user32.dll", EntryPoint = "GetWindowLong")]
+        public static extern int GetWindowLong32(IntPtr hWnd, int nIndex);
 
-        /// <summary>
-        /// Changes an attribute of the specified window.
-        /// </summary>
-        /// <remarks>This method is a wrapper for the native <c>SetWindowLong</c> function in the Windows
-        /// API.  Use this method with caution, as modifying certain attributes can affect the behavior and appearance
-        /// of the window.</remarks>
-        /// <param name="hWnd">A handle to the window whose attribute is to be changed.</param>
-        /// <param name="nIndex">The zero-based offset to the value to be set. This parameter specifies the attribute to modify, such as 
-        /// window styles or extended window styles. Common values include <see langword="GWL_STYLE"/> and <see
-        /// langword="GWL_EXSTYLE"/>.</param>
-        /// <param name="dwNewLong">The new value to set for the specified attribute.</param>
-        /// <returns>The previous value of the specified attribute if the function succeeds; otherwise, returns zero.  To get
-        /// extended error information, call <see cref="Marshal.GetLastWin32Error"/>.</returns>
-        [DllImport("user32.dll", SetLastError = true)]
-        public static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+        [DllImport("user32.dll", EntryPoint = "SetWindowLong")]
+        public static extern int SetWindowLong32(IntPtr hWnd, int nIndex, int dwNewLong);
+
+        [DllImport("user32.dll", EntryPoint = "GetWindowLongPtr")]
+        public static extern IntPtr GetWindowLongPtr64(IntPtr hWnd, int nIndex);
+
+        [DllImport("user32.dll", EntryPoint = "SetWindowLongPtr")]
+        public static extern IntPtr SetWindowLongPtr64(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
+
+        public static long GetWindowLong(IntPtr hWnd, int nIndex) => Environment.Is64BitProcess ? GetWindowLongPtr64(hWnd, nIndex).ToInt64() : GetWindowLong32(hWnd, nIndex);
+
+        public static void SetWindowLong(IntPtr hWnd, int nIndex, long value)
+        {
+            if (Environment.Is64BitProcess) SetWindowLongPtr64(hWnd, nIndex, new IntPtr(value)); else SetWindowLong32(hWnd, nIndex, (int)value);
+        }
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
+
+        [DllImport("user32.dll")]
+        public static extern bool EnableMenuItem(IntPtr hMenu, uint uIDEnableItem, uint uEnable);
 
         /// <summary>
         /// Sets the opacity and transparency color key of a layered window.

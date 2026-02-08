@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace WinPaletter
 {
-    public partial class GitHub_EntryProperties : Form
+    public partial class GitHub_EntryProperties : UI.WP.Form
     {
         private Octokit.RepositoryContent rc;
         private bool previousReadOnlyState;
@@ -22,9 +22,6 @@ namespace WinPaletter
 
         private void GitHub_EntryProperties_Load(object sender, EventArgs e)
         {
-            ApplyStyle(this);
-            this.Localize();
-
             textBox2.Font = Fonts.ConsoleMedium;
         }
 

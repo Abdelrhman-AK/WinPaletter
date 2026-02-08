@@ -186,7 +186,7 @@ namespace WinPaletter.UI.WP
             base.OnHandleDestroyed(e);
         }
 
-        private Form _hookedForm;
+        private System.Windows.Forms.Form _hookedForm;
 
         /// <summary>
         /// Hooks form events for both current form and topmost parent form.
@@ -197,11 +197,11 @@ namespace WinPaletter.UI.WP
 
             // Start from this control
             Control current = this;
-            Form topForm = null;
+            System.Windows.Forms.Form topForm = null;
 
             while (current != null)
             {
-                if (current is Form f)
+                if (current is System.Windows.Forms.Form f)
                 {
                     topForm = f; // found a Form in the hierarchy
                 }
@@ -393,7 +393,7 @@ namespace WinPaletter.UI.WP
         private void Form_Resize(object sender, EventArgs e)
         {
             // Stop when minimized, resume when restored
-            if (FindForm() is Form f)
+            if (FindForm() is System.Windows.Forms.Form f)
             {
                 _Focused = f.WindowState != FormWindowState.Minimized;
                 UpdateTimerState();

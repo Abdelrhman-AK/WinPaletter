@@ -116,7 +116,7 @@ namespace WinPaletter.Tabs
         /// Generate a tab page that have form inside, and add it into the tab control
         /// </summary>
         /// <param name="form"></param>
-        public void AddFormIntoTab(Form form)
+        public void AddFormIntoTab(System.Windows.Forms.Form form)
         {
             Cursor = Cursors.WaitCursor;
 
@@ -185,7 +185,7 @@ namespace WinPaletter.Tabs
             {
                 (form as AspectsTemplate).titlebarExtender1.Flag = TitlebarExtender.Flags.Tabs_Extended;
             }
-            else if (form is Form && form.Controls.OfType<TitlebarExtender>().Count() > 0)
+            else if (form is System.Windows.Forms.Form && form.Controls.OfType<TitlebarExtender>().Count() > 0)
             {
                 form.Controls.OfType<TitlebarExtender>().FirstOrDefault().Flag = TitlebarExtender.Flags.Tabs_Extended;
             }
@@ -517,7 +517,7 @@ namespace WinPaletter.Tabs
 
             if (!hasDetachedAnyTab)
             {
-                Form form = TabControl.FindForm();
+                System.Windows.Forms.Form form = TabControl.FindForm();
                 if (form != null)
                 {
                     form.WindowState = form.WindowState == FormWindowState.Maximized ? FormWindowState.Normal : FormWindowState.Maximized;
@@ -712,7 +712,7 @@ namespace WinPaletter.Tabs
             }
         }
 
-        private void DetachForm(Form form)
+        private void DetachForm(System.Windows.Forms.Form form)
         {
             form.Visible = false;
             if (form.Parent != null) form.Parent.Controls.Remove(form);
@@ -725,7 +725,7 @@ namespace WinPaletter.Tabs
             {
                 (form as AspectsTemplate).titlebarExtender1.Flag = TitlebarExtender.Flags.System;
             }
-            else if (form is Form && form.Controls.OfType<TitlebarExtender>().Count() > 0)
+            else if (form is System.Windows.Forms.Form && form.Controls.OfType<TitlebarExtender>().Count() > 0)
             {
                 form.Controls.OfType<TitlebarExtender>().FirstOrDefault().Flag = TitlebarExtender.Flags.System;
             }
@@ -1117,7 +1117,7 @@ namespace WinPaletter.Tabs
         {
             if (!IsBusy)
             {
-                if (e.Data.GetDataPresent(typeof(Form)))
+                if (e.Data.GetDataPresent(typeof(System.Windows.Forms.Form)))
                 {
                     e.Effect = DragDropEffects.Move;
                 }

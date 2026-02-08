@@ -339,19 +339,12 @@ namespace WinPaletter
 
         private void Updates_Load(object sender, EventArgs e)
         {
-            this.Localize();
-            ApplyStyle(this);
-
             toggle1.Checked = Program.Settings.Updates.AutoCheck;
 
             release_lbl.Font = Fonts.ConsoleLarge;
             channel_lbl.Font = Fonts.ConsoleLarge;
             releasedate_lbl.Font = Fonts.ConsoleLarge;
             size_lbl.Font = Fonts.ConsoleLarge;
-
-            groupBox6.UseDecorationPattern = true;
-
-            labelAlt2.Text = string.Format(Program.Localization.Strings.Updates.NoTLS12, OS.WXP ? Program.Localization.Strings.Windows.WXP : Program.Localization.Strings.Windows.WVista);
 
             // Restore previous fetched update if available
             if (CurrentUpdateStatic != null)
@@ -362,10 +355,6 @@ namespace WinPaletter
             if (!Program.IsNetworkAvailable)
             {
                 tablessControl1.SelectedIndex = 1;
-            }
-            else if (OS.WXP || OS.WVista)
-            {
-                tablessControl1.SelectedIndex = 2;
             }
         }
 

@@ -1372,7 +1372,7 @@ namespace WinPaletter
         {
             if (TerBackImage.Text == "desktopWallpaper")
             {
-                Terminal1.BackImage = Program.WallpaperMonitor.FetchSuitableWallpaper(Program.TM, Program.WindowStyle);
+                Terminal1.BackImage = Program.WallpaperMonitor.Get(Program.TM, Program.WindowStyle);
             }
             else if (File.Exists(TerBackImage.Text))
             {

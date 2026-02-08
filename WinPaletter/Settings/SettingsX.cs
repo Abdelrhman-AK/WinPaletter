@@ -378,7 +378,7 @@ namespace WinPaletter
                 {
                     Program.Localization = new();
                     Program.Localization.Load(Program.Settings.Language.File);
-                    foreach (Form f in Application.OpenForms) f.Localize();
+                    foreach (System.Windows.Forms.Form f in Application.OpenForms) f.Localize();
                 }
                 else
                 {
@@ -630,8 +630,7 @@ namespace WinPaletter
             ComboBox2.Items.Clear();
             ComboBox2.Items.Add(Program.Localization.Strings.General.Stable);
             ComboBox2.Items.Add(Program.Localization.Strings.General.Beta);
-            this.Localize();
-            ApplyStyle(this);
+
             LoadSettings();
 
             // Do some minor adjustments for appearance
@@ -650,18 +649,6 @@ namespace WinPaletter
             {
                 EP_ORB_11.Image = Win11Preview.StartBtn_11_EP.Invert().Resize(w, w);
                 EP_ORB_10.Image = Win10Preview.StartBtn_10Light.Resize(w, w);
-            }
-
-            if (OS.WXP)
-            {
-                AlertBox17.Visible = true;
-                AlertBox17.Text = string.Format(Program.Localization.Strings.Updates.NoTLS12, Program.Localization.Strings.Windows.WXP);
-            }
-
-            else if (OS.WVista)
-            {
-                AlertBox17.Visible = true;
-                AlertBox17.Text = string.Format(Program.Localization.Strings.Updates.NoTLS12, Program.Localization.Strings.Windows.WVista);
             }
 
             storage_data_lbl.Font = Fonts.ConsoleLarge;

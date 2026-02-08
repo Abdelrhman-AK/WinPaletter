@@ -150,7 +150,7 @@ namespace WinPaletter.UI.WP
                 SetControlTheme(Handle, CtrlTheme.DarkExplorer);
 
                 // Enable double-buffering at the window level to avoid flicker
-                int exStyle = User32.GetWindowLong(headerHandle, GWL_EXSTYLE);
+                long exStyle = User32.GetWindowLong(headerHandle, GWL_EXSTYLE);
                 User32.SetWindowLong(headerHandle, GWL_EXSTYLE, exStyle | WS_EX_COMPOSITED);
 
                 newHeaderProc = new User32.WndProcDelegate(HeaderWndProc);

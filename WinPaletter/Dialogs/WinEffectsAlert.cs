@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace WinPaletter.Dialogs
 {
-    public partial class WinEffectsAlert : Form
+    public partial class WinEffectsAlert : UI.WP.Form
     {
         public WinEffectsAlert()
         {
@@ -13,8 +13,6 @@ namespace WinPaletter.Dialogs
 
         private void WinEffectsAlert_Load(object sender, EventArgs e)
         {
-            this.Localize();
-            ApplyStyle(this);
             Icon = FormsExtensions.Icon<WinEffecter>();
 
             checkBox1.Checked = !Program.Settings.ThemeApplyingBehavior.Show_WinEffects_Alert;
@@ -28,7 +26,7 @@ namespace WinPaletter.Dialogs
 
         public new DialogResult ShowDialog(IWin32Window owner)
         {
-            Forms.GlassWindow.Show(owner as Form);
+            Forms.GlassWindow.Show(owner as System.Windows.Forms.Form);
             return base.ShowDialog(owner);
         }
 

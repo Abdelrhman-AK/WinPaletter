@@ -29,6 +29,36 @@ namespace WinPaletter.UI.Simulation
 
         #region Variables
 
+        private bool IsInDesignMode
+        {
+            get
+            {
+                // First check at control level
+                if (DesignMode)
+                    return true;
+
+                // Check at license context level
+                if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
+                    return true;
+
+                // Check through the site
+                ISite site = Site;
+                if (site != null && site.DesignMode)
+                    return true;
+
+                // Check parent chain
+                Control parent = Parent;
+                while (parent != null)
+                {
+                    if (parent.Site != null && parent.Site.DesignMode)
+                        return true;
+                    parent = parent.Parent;
+                }
+
+                return false;
+            }
+        }
+
         private Bitmap AdaptedBack, AdaptedBackBlurred;
         private Bitmap Noise7 = Win7Preview.AeroGlass;
 
@@ -411,13 +441,6 @@ namespace WinPaletter.UI.Simulation
 
         public delegate void MetricsChangedEventHandler();
 
-        //protected override void OnHandleCreated(EventArgs e)
-        //{
-        //    if (!DesignMode) ProcessBack();
-
-        //    base.OnHandleCreated(e);
-        //}
-
         protected override void OnBackgroundImageChanged(EventArgs e)
         {
             if (!DesignMode) ProcessBack();
@@ -444,44 +467,59 @@ namespace WinPaletter.UI.Simulation
 
         public void ProcessBack()
         {
-            // Styles support transparency (Mica/AeroGlass)
-            if (Preview == Preview_Enum.W11 || Preview == Preview_Enum.W11Lite || Preview == Preview_Enum.W7Aero)
+            if (IsInDesignMode) return;
+
+            if (Preview != Preview_Enum.W11 && Preview != Preview_Enum.W11Lite && Preview != Preview_Enum.W7Aero) return;
+
+            Bitmap source = null;
+
+            // Try parent background first
+            if (Parent?.BackgroundImage is Bitmap parentBmp)
+                source = parentBmp;
+            else
+                source = Program.WallpaperMonitor.Get(Program.TM, Program.WindowStyle);
+
+            if (source is not null)
             {
-                Bitmap Wallpaper = ((Parent?.BackgroundImage) ?? Program.WallpaperMonitor.FetchSuitableWallpaper(Program.TM, Program.WindowStyle)) as Bitmap;
-
-                if (Wallpaper is not null)
+                // Only clone the rectangle we need
+                Rectangle srcRect = new(0, 0, source.Width, source.Height);
+                if (srcRect.Contains_ButNotExceed(Bounds))
                 {
-                    Rectangle imageBounds = new(0, 0, Wallpaper.Width, Wallpaper.Height);
-                    if (imageBounds.Contains_ButNotExceed(Bounds)) AdaptedBack = Wallpaper.Clone(Bounds, Wallpaper.PixelFormat);
+                    AdaptedBack?.Dispose();
+                    AdaptedBack = source.Clone(Bounds, source.PixelFormat);
                 }
+            }
 
-                if (Preview == Preview_Enum.W11 || Preview == Preview_Enum.W11Lite)
+            if (AdaptedBack is null) return;
+
+            // W11 / W11Lite blur processing
+            if (Preview == Preview_Enum.W11 || Preview == Preview_Enum.W11Lite)
+            {
+                if (Active && !AccentColor_Enabled)
                 {
-                    if (Active && !AccentColor_Enabled && AdaptedBack is not null)
+                    if (DarkMode)
                     {
-                        if (DarkMode)
+                        using Bitmap b = AdaptedBack.Blur(15);
+                        if (b is not null)
                         {
-                            Bitmap b = AdaptedBack.Blur(15);
-
-                            if (b is not null)
-                            {
-                                using (Bitmap bmpContrast = b?.Contrast(-0.1f))
-                                {
-                                    AdaptedBackBlurred = bmpContrast.AdjustHSL(null, 0.7f);
-                                }
-                            }
+                            using Bitmap bmpContrast = b.Contrast(-0.1f);
+                            AdaptedBackBlurred?.Dispose();
+                            AdaptedBackBlurred = bmpContrast.AdjustHSL(null, 0.7f);
                         }
-
-                        else { AdaptedBackBlurred = AdaptedBack.Blur(15); }
+                    }
+                    else
+                    {
+                        AdaptedBackBlurred?.Dispose();
+                        AdaptedBackBlurred = AdaptedBack.Blur(15);
                     }
                 }
-
-                else if (Preview == Preview_Enum.W7Aero)
-                {
-                    if (AdaptedBack is not null) { AdaptedBackBlurred = AdaptedBack.Blur(3); }
-
-                    Noise7 = Win7Preview.AeroGlass.Fade(Win7Noise / 100);
-                }
+            }
+            // W7 Aero blur
+            else if (Preview == Preview_Enum.W7Aero)
+            {
+                AdaptedBackBlurred?.Dispose();
+                AdaptedBackBlurred = AdaptedBack.Blur(3);
+                Noise7 = Win7Preview.AeroGlass.Fade(Win7Noise / 100);
             }
         }
 
@@ -1422,314 +1460,310 @@ namespace WinPaletter.UI.Simulation
 
             else if (Preview == Preview_Enum.W7Aero | Preview == Preview_Enum.W7Opaque | Preview == Preview_Enum.W7Basic)
             {
+                if (Preview != Preview_Enum.W7Basic)
                 {
-                    if (Preview != Preview_Enum.W7Basic)
+                    #region Aero
+                    if (Shadow & Active & !DesignMode) { G.DrawGlow(Rect, Color.FromArgb(150, 0, 0, 0), 5, 15); }
+
+                    int Radius = 5;
+
+                    //Background aero effect
+                    if (Preview != Preview_Enum.W7Opaque)
                     {
-                        #region Aero
-                        if (Shadow & Active & !DesignMode) { G.DrawGlow(Rect, Color.FromArgb(150, 0, 0, 0), 5, 15); }
+                        float alpha = Active ? 1f - Win7Alpha / 100f : 0.25f;   // ColorBalance
+                        float ColBal = Win7ColorBal / 100f;   // ColorBalance
+                        float GlowBal = Win7GlowBal / 100f;   // AfterGlowBalance
 
-                        int Radius = 5;
+                        Color Color1 = Active ? AccentColor_Active : Color.FromArgb(128, AccentColor_Inactive);
+                        Color Color2 = Active ? AccentColor2_Active : Color.Transparent;
+                        G.ExcludeClip(Rectangle.Round(ClientBorderRect));
+                        G.DrawAeroEffect(Rect, AdaptedBackBlurred, Color1, ColBal, Color2, GlowBal, alpha, Radius, !ToolWindow);
+                        G.ResetClip();
+                    }
 
-                        //Background aero effect
-                        if (!(Preview == Preview_Enum.W7Opaque))
+                    else if (!ToolWindow)
+                    {
+                        using (SolidBrush br = new(Color.White)) { G.FillRoundedRect(br, Rect, Radius, true); }
+
+                        using (SolidBrush br = new(Color.FromArgb((int)(255f * Win7ColorBal / 100f), Active ? AccentColor_Active : AccentColor_Active.Light())))
                         {
-                            Bitmap bk = AdaptedBackBlurred;
-
-                            float alpha = Active ? 1 - (float)Win7Alpha / 100 : 0.25f;   // ColorBlurBalance
-                            float ColBal = Win7ColorBal / 100f;   // ColorBalance
-                            float GlowBal = Win7GlowBal / 100f;   // AfterGlowBalance
-
-                            Color Color1 = Active ? AccentColor_Active : Color.FromArgb(128, AccentColor_Inactive);
-                            Color Color2 = Active ? AccentColor2_Active : Color.Transparent;
-                            G.ExcludeClip(new Rectangle((int)ClientBorderRect.X, (int)ClientBorderRect.Y, (int)ClientBorderRect.Width, (int)ClientBorderRect.Height));
-                            G.DrawAeroEffect(Rect, bk, Color1, ColBal, Color2, GlowBal, alpha, Radius, !ToolWindow);
-                            G.ResetClip();
+                            G.FillRoundedRect(br, Rect, Radius, true);
                         }
-
-                        else if (!ToolWindow)
-                        {
-                            using (SolidBrush br = new(Color.White)) { G.FillRoundedRect(br, Rect, Radius, true); }
-
-                            using (SolidBrush br = new(Color.FromArgb((int)(255f * Win7ColorBal / 100f), Active ? AccentColor_Active : AccentColor_Active.Light())))
-                            {
-                                G.FillRoundedRect(br, Rect, Radius, true);
-                            }
-                        }
-
-                        else
-                        {
-                            using (SolidBrush br = new(Color.White)) { G.FillRectangle(br, Rect); }
-
-                            using (SolidBrush br = new(Color.FromArgb((int)(255f * Win7ColorBal / 100f), Active ? AccentColor_Active : AccentColor_Active.Light())))
-                            {
-                                G.FillRectangle(br, Rect);
-                            }
-                        }
-
-                        //Right and left glow panels
-                        if (Active)
-                        {
-                            G.DrawImage(Win7Preview.WindowSides, GlassSide1);
-                            G.DrawImage(Win7Preview.WindowSides, GlassSide2);
-
-                            float TitleTopW = Rect.Width * 0.6f;
-                            float TitleTopH = Rect.Height * 0.6f;
-
-                            G.SetClip(RectBorder);
-                            G.DrawImage(Win7Preview.TitleTopL, new RectangleF(Rect.X + (ToolWindow ? -1 : 1), Rect.Y, TitleTopW, TitleTopH));
-                            G.DrawImage(Win7Preview.TitleTopR, new RectangleF(Rect.X + Rect.Width - TitleTopW + 1, Rect.Y, TitleTopW, TitleTopH));
-                            G.ResetClip();
-                        }
-
-                        //Window borders
-                        if (!ToolWindow)
-                        {
-                            if (Noise7 != null)
-                                G.DrawRoundImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect, Radius, true);
-
-                            using (Pen P = new(Color.FromArgb(Active ? 130 : 100, 25, 25, 25))) { G.DrawRoundedRect(P, Rect, Radius, true); }
-
-                            using (Pen P = new(Color.FromArgb(100, 255, 255, 255))) { G.DrawRoundedRect(P, RectBorder, Radius, true); }
-
-                            using (Pen P = new(Color.FromArgb((int)(255f - 255 * Win7Alpha / 300f), base.BackColor.Light(0.2f)))) { G.DrawRoundedRect(P, ClientBorderRect, 1, true); }
-
-                            #region Editor
-
-                            if (!DesignMode && EnableEditingColors && CursorOverWindowAccent)
-                            {
-                                Color color0 = Color.FromArgb(80, 255, 255, 255);
-                                Color color1 = Color.FromArgb(80, 0, 0, 0);
-                                using (Pen P = new(color0))
-                                using (HatchBrush hb = new(HatchStyle.Percent25, color0, color1))
-                                {
-                                    G.FillRoundedRect(hb, Rect, Radius, true);
-                                    G.DrawRoundedRect(P, Rect, Radius, true);
-                                }
-                            }
-
-                            #endregion
-
-                            using (SolidBrush br = new(ClientAreaColor)) { G.FillRoundedRect(br, ClientBorderRect, 1, true); }
-
-                            using (Pen P = new(Color.FromArgb((int)(255f - 255 * Win7Alpha / 300f), base.BackColor.Dark(0.2f)))) { G.DrawRoundedRect(P, ClientRect, 1, true); }
-                        }
-
-                        else
-                        {
-                            if (Noise7 != null)
-                                G.DrawImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect);
-
-                            using (Pen P = new(Color.FromArgb(Active ? 130 : 100, 25, 25, 25))) { G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height); }
-
-                            using (Pen P = new(Color.FromArgb(100, 255, 255, 255))) { G.DrawRectangle(P, RectBorder.X, RectBorder.Y, RectBorder.Width, RectBorder.Height); }
-
-                            using (Pen P = new(Color.FromArgb((int)(255f - 255 * Win7Alpha / 300f), base.BackColor.Light(0.2f)))) { G.DrawRectangle(P, ClientBorderRect.X, ClientBorderRect.Y, ClientBorderRect.Width, ClientBorderRect.Height); }
-
-                            #region Editor
-
-                            if (!DesignMode && EnableEditingColors && CursorOverWindowAccent)
-                            {
-                                Color color0 = Color.FromArgb(80, 255, 255, 255);
-                                Color color1 = Color.FromArgb(80, 0, 0, 0);
-                                using (Pen P = new(color0))
-                                using (HatchBrush hb = new(HatchStyle.Percent25, color0, color1))
-                                {
-                                    G.FillRoundedRect(hb, Rect, Radius, true);
-                                    G.DrawRoundedRect(P, Rect, Radius, true);
-                                }
-                            }
-
-                            #endregion
-
-                            using (SolidBrush br = new(ClientAreaColor)) { G.FillRectangle(br, ClientBorderRect); }
-
-                            using (Pen P = new(Color.FromArgb((int)(255f - 255 * Win7Alpha / 300f), base.BackColor.Dark(0.2f)))) { G.DrawRectangle(P, ClientRect.X, ClientRect.Y, ClientRect.Width, ClientRect.Height); }
-                        }
-
-                        //Close button
-                        if (!ToolWindow)
-                        {
-                            Bitmap closeBtn;
-
-                            if (Active)
-                            {
-                                if (!WinVista) { closeBtn = Win7Preview.Close_Active; }
-
-                                else { closeBtn = WinVistaPreview.Close_Active; }
-                            }
-                            else if (!WinVista) { closeBtn = Win7Preview.Close_inactive; }
-
-                            else { closeBtn = WinVistaPreview.Close_Inactive; }
-
-                            CloseButtonRect = new(Rect.X + Rect.Width - closeBtn.Width - 5, Rect.Y + 1, closeBtn.Width, closeBtn.Height);
-
-                            G.DrawImage(closeBtn, CloseButtonRect);
-                        }
-
-                        else
-                        {
-                            int Btn_Height = Math.Max(10, _Metrics_CaptionHeight - 5);
-                            int Btn_Width = Btn_Height;
-
-                            CloseButtonRect = new(ClientBorderRect.Right - Btn_Width - 3, Rect.Y + (TitlebarRect.Height - Btn_Height) / 2f, Btn_Width, Btn_Height);
-
-                            if (Active)
-                            {
-                                float Factor = 0.5f;
-
-                                float UH = Factor * CloseButtonRect.Height;
-                                float LH = CloseButtonRect.Height - UH;
-                                float Interlapping = UH / CloseButtonRect.Height * 10f;
-
-                                RectangleF CloseRectUpperHalf = new(CloseButtonRect.X, CloseButtonRect.Y, CloseButtonRect.Width, UH + Interlapping);
-                                LinearGradientBrush CloseUpperPath = new(CloseRectUpperHalf, Color.FromArgb(50, CloseUpperAccent1), CloseUpperAccent2, LinearGradientMode.Vertical);
-
-                                RectangleF CloseRectLowerHalf = new(CloseButtonRect.X, CloseRectUpperHalf.Bottom - Interlapping, CloseButtonRect.Width, LH);
-                                LinearGradientBrush CloseLowerPath = new(CloseRectLowerHalf, CloseLowerAccent1, Color.FromArgb(50, CloseLowerAccent2), LinearGradientMode.Vertical);
-
-                                G.FillRoundedRect(CloseUpperPath, CloseRectUpperHalf, 1, true);
-                                G.FillRoundedRect(CloseLowerPath, CloseRectLowerHalf, 1, true);
-                            }
-                            else
-                            {
-                                LinearGradientBrush ClosePath = new(CloseButtonRect, Color.FromArgb(50, CloseUpperAccent1), Color.FromArgb(50, CloseLowerAccent2), LinearGradientMode.Vertical);
-                                G.FillRectangle(ClosePath, CloseButtonRect);
-                            }
-
-                            Bitmap CloseBtn;
-
-                            CloseBtn = Win7Preview.Close_Basic_ToolWindow;
-
-                            int xW = CloseButtonRect.Width % 2 == 0 ? CloseBtn.Width + 1 : CloseBtn.Width;
-                            int xH = CloseButtonRect.Height % 2 == 0 ? CloseBtn.Height + 1 : CloseBtn.Height;
-
-                            RectangleF closerenderrect = new(CloseButtonRect.X + (CloseButtonRect.Width - xW) / 2f, CloseButtonRect.Y + (CloseButtonRect.Height - xH) / 2f, xW, xH);
-
-                            G.DrawImage(CloseBtn, closerenderrect);
-
-                            using (Pen P = new(CloseOuterBorder)) { G.DrawRoundedRect(P, CloseButtonRect, 1, true); }
-
-                            using (Pen P = new(Color.FromArgb(50, CloseInnerBorder))) { G.DrawRectangle(P, CloseButtonRect.X + 1, CloseButtonRect.Y + 1, CloseButtonRect.Width - 2, CloseButtonRect.Height - 2); }
-
-                        }
-
-                        //Window title
-                        int alpha_caption = Active ? 100 : 50;
-                        using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
-                        {
-                            G.DrawGlowString(1, Text, Font, CaptionColor, Color.FromArgb(alpha_caption, Color.White), RectAll, LabelRect, sf);
-                        }
-                        #endregion
                     }
 
                     else
                     {
-                        #region Basic
-                        RectangleF UpperPart = new(Rect.X, Rect.Y, Rect.Width + 1, TitlebarRect.Height + 4);
-                        RectangleF UpperPart_Modified = new(UpperPart.X + UpperPart.Width * 0.75f, UpperPart.Y, UpperPart.Width * 0.75f, UpperPart.Height);
+                        using (SolidBrush br = new(Color.White)) { G.FillRectangle(br, Rect); }
 
-                        G.SetClip(UpperPart);
-
-                        LinearGradientBrush pth_back = new(UpperPart, Titlebar_Backcolor1, Titlebar_Backcolor2, LinearGradientMode.Vertical);
-                        LinearGradientBrush pth_line = new(UpperPart, Titlebar_InnerBorder, Titlebar_Turquoise, LinearGradientMode.Vertical);
-
-                        // ### Render Titlebar
-                        if (!ToolWindow)
+                        using (SolidBrush br = new(Color.FromArgb((int)(255f * Win7ColorBal / 100f), Active ? AccentColor_Active : AccentColor_Active.Light())))
                         {
-                            G.FillRoundedRect(pth_back, Rect, Radius, true);
-                            using (Pen P = new(Titlebar_OuterBorder)) { G.DrawRoundedRect(P, Rect, Radius, true); }
-                            using (Pen P = new(Titlebar_InnerBorder)) { G.DrawRoundedRect(P, new RectangleF(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2), Radius, true); }
-                            G.SetClip(UpperPart_Modified);
-                            using (Pen P = new(pth_line)) { G.DrawRoundedRect(P, new RectangleF(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2), Radius, true); }
+                            G.FillRectangle(br, Rect);
                         }
-                        else
-                        {
-                            G.FillRectangle(pth_back, Rect);
-                            using (Pen P = new(Titlebar_OuterBorder)) { G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height); }
-                            using (Pen P = new(Titlebar_InnerBorder)) { G.DrawRectangle(P, Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2); }
-                            G.SetClip(UpperPart_Modified);
-                            using (Pen P = new(pth_line)) { G.DrawRectangle(P, Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2); }
-                        }
+                    }
 
+                    //Right and left glow panels
+                    if (Active)
+                    {
+                        G.DrawImage(Win7Preview.WindowSides, GlassSide1);
+                        G.DrawImage(Win7Preview.WindowSides, GlassSide2);
+
+                        float TitleTopW = Rect.Width * 0.6f;
+                        float TitleTopH = Rect.Height * 0.6f;
+
+                        G.SetClip(RectBorder);
+                        G.DrawImage(Win7Preview.TitleTopL, new RectangleF(Rect.X + (ToolWindow ? -1 : 1), Rect.Y, TitleTopW, TitleTopH));
+                        G.DrawImage(Win7Preview.TitleTopR, new RectangleF(Rect.X + Rect.Width - TitleTopW + 1, Rect.Y, TitleTopW, TitleTopH));
                         G.ResetClip();
-                        G.ExcludeClip(new Rectangle((int)UpperPart.X, (int)UpperPart.Y, (int)UpperPart.Width, (int)UpperPart.Height));
+                    }
 
-                        using (SolidBrush br = new(Titlebar_Backcolor2)) { G.FillRectangle(br, Rect); }
-                        using (Pen P = new(Titlebar_Turquoise)) { G.DrawRectangle(P, Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2); }
-                        using (Pen P = new(OuterBorder)) { G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height); }
-                        using (Pen P = new(Titlebar_InnerBorder)) { G.DrawLine(P, new PointF(Rect.X + 1, Rect.Y), new PointF(Rect.X + 1, Rect.Y + Rect.Height - 2)); }
+                    //Window borders
+                    if (!ToolWindow)
+                    {
+                        if (Noise7 != null)
+                            G.DrawRoundImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect, Radius, true);
+
+                        using (Pen P = new(Color.FromArgb(Active ? 130 : 100, 25, 25, 25))) { G.DrawRoundedRect(P, Rect, Radius, true); }
+
+                        using (Pen P = new(Color.FromArgb(100, 255, 255, 255))) { G.DrawRoundedRect(P, RectBorder, Radius, true); }
+
+                        using (Pen P = new(Color.FromArgb((int)(255f - 255 * Win7Alpha / 300f), base.BackColor.Light(0.2f)))) { G.DrawRoundedRect(P, ClientBorderRect, 1, true); }
+
+                        #region Editor
+
+                        if (!DesignMode && EnableEditingColors && CursorOverWindowAccent)
+                        {
+                            Color color0 = Color.FromArgb(80, 255, 255, 255);
+                            Color color1 = Color.FromArgb(80, 0, 0, 0);
+                            using (Pen P = new(color0))
+                            using (HatchBrush hb = new(HatchStyle.Percent25, color0, color1))
+                            {
+                                G.FillRoundedRect(hb, Rect, Radius, true);
+                                G.DrawRoundedRect(P, Rect, Radius, true);
+                            }
+                        }
+
+                        #endregion
+
+                        using (SolidBrush br = new(ClientAreaColor)) { G.FillRoundedRect(br, ClientBorderRect, 1, true); }
+
+                        using (Pen P = new(Color.FromArgb((int)(255f - 255 * Win7Alpha / 300f), base.BackColor.Dark(0.2f)))) { G.DrawRoundedRect(P, ClientRect, 1, true); }
+                    }
+
+                    else
+                    {
+                        if (Noise7 != null)
+                            G.DrawImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect);
+
+                        using (Pen P = new(Color.FromArgb(Active ? 130 : 100, 25, 25, 25))) { G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height); }
+
+                        using (Pen P = new(Color.FromArgb(100, 255, 255, 255))) { G.DrawRectangle(P, RectBorder.X, RectBorder.Y, RectBorder.Width, RectBorder.Height); }
+
+                        using (Pen P = new(Color.FromArgb((int)(255f - 255 * Win7Alpha / 300f), base.BackColor.Light(0.2f)))) { G.DrawRectangle(P, ClientBorderRect.X, ClientBorderRect.Y, ClientBorderRect.Width, ClientBorderRect.Height); }
+
+                        #region Editor
+
+                        if (!DesignMode && EnableEditingColors && CursorOverWindowAccent)
+                        {
+                            Color color0 = Color.FromArgb(80, 255, 255, 255);
+                            Color color1 = Color.FromArgb(80, 0, 0, 0);
+                            using (Pen P = new(color0))
+                            using (HatchBrush hb = new(HatchStyle.Percent25, color0, color1))
+                            {
+                                G.FillRoundedRect(hb, Rect, Radius, true);
+                                G.DrawRoundedRect(P, Rect, Radius, true);
+                            }
+                        }
+
+                        #endregion
+
+                        using (SolidBrush br = new(ClientAreaColor)) { G.FillRectangle(br, ClientBorderRect); }
+
+                        using (Pen P = new(Color.FromArgb((int)(255f - 255 * Win7Alpha / 300f), base.BackColor.Dark(0.2f)))) { G.DrawRectangle(P, ClientRect.X, ClientRect.Y, ClientRect.Width, ClientRect.Height); }
+                    }
+
+                    //Close button
+                    if (!ToolWindow)
+                    {
+                        Bitmap closeBtn;
 
                         if (Active)
                         {
-                            G.DrawImage(Win7Preview.WindowSides, GlassSide1);
-                            G.DrawImage(Win7Preview.WindowSides, GlassSide2);
+                            if (!WinVista) { closeBtn = Win7Preview.Close_Active; }
+
+                            else { closeBtn = WinVistaPreview.Close_Active; }
                         }
+                        else if (!WinVista) { closeBtn = Win7Preview.Close_inactive; }
 
-                        G.ResetClip();
+                        else { closeBtn = WinVistaPreview.Close_Inactive; }
 
-                        G.FillRectangle(Brushes.White, ClientBorderRect);
-                        using (Pen P = new(Color.FromArgb(186, 210, 234))) { G.DrawRectangle(P, ClientBorderRect.X, ClientBorderRect.Y, ClientBorderRect.Width, ClientBorderRect.Height); }
-                        if (!WinVista) { using (Pen P = new(Color.FromArgb(130, 135, 144))) { G.DrawRectangle(P, ClientRect.X, ClientRect.Y, ClientRect.Width, ClientRect.Height); } }
+                        CloseButtonRect = new(Rect.X + Rect.Width - closeBtn.Width - 5, Rect.Y + 1, closeBtn.Width, closeBtn.Height);
 
-                        //Render close button
+                        G.DrawImage(closeBtn, CloseButtonRect);
+                    }
+
+                    else
+                    {
                         int Btn_Height = Math.Max(10, _Metrics_CaptionHeight - 5);
-                        float Btn_Width;
-                        Btn_Width = !ToolWindow ? 31f / 17f * Btn_Height : Btn_Height;
-                        CloseButtonRect = new(ClientBorderRect.Right - Btn_Width - 3, ClientBorderRect.Top - Btn_Height - 3, Btn_Width, Btn_Height);
+                        int Btn_Width = Btn_Height;
+
+                        CloseButtonRect = new(ClientBorderRect.Right - Btn_Width - 3, Rect.Y + (TitlebarRect.Height - Btn_Height) / 2f, Btn_Width, Btn_Height);
 
                         if (Active)
                         {
-                            float Factor = 0.45f;
-                            if (ToolWindow)
-                                Factor = 0.2f;
+                            float Factor = 0.5f;
 
                             float UH = Factor * CloseButtonRect.Height;
                             float LH = CloseButtonRect.Height - UH;
                             float Interlapping = UH / CloseButtonRect.Height * 10f;
 
                             RectangleF CloseRectUpperHalf = new(CloseButtonRect.X, CloseButtonRect.Y, CloseButtonRect.Width, UH + Interlapping);
-                            RectangleF CloseRectLowerHalf = new(CloseButtonRect.X, CloseRectUpperHalf.Bottom - Interlapping, CloseButtonRect.Width, LH);
+                            LinearGradientBrush CloseUpperPath = new(CloseRectUpperHalf, Color.FromArgb(50, CloseUpperAccent1), CloseUpperAccent2, LinearGradientMode.Vertical);
 
-                            LinearGradientBrush CloseUpperPath = new(CloseRectUpperHalf, CloseUpperAccent1, CloseUpperAccent2, LinearGradientMode.Vertical);
-                            LinearGradientBrush CloseLowerPath = new(CloseRectLowerHalf, CloseLowerAccent1, CloseLowerAccent2, LinearGradientMode.Vertical);
+                            RectangleF CloseRectLowerHalf = new(CloseButtonRect.X, CloseRectUpperHalf.Bottom - Interlapping, CloseButtonRect.Width, LH);
+                            LinearGradientBrush CloseLowerPath = new(CloseRectLowerHalf, CloseLowerAccent1, Color.FromArgb(50, CloseLowerAccent2), LinearGradientMode.Vertical);
 
                             G.FillRoundedRect(CloseUpperPath, CloseRectUpperHalf, 1, true);
                             G.FillRoundedRect(CloseLowerPath, CloseRectLowerHalf, 1, true);
                         }
-
                         else
                         {
-                            LinearGradientBrush ClosePath = new(CloseButtonRect, CloseUpperAccent1, CloseLowerAccent2, LinearGradientMode.Vertical);
+                            LinearGradientBrush ClosePath = new(CloseButtonRect, Color.FromArgb(50, CloseUpperAccent1), Color.FromArgb(50, CloseLowerAccent2), LinearGradientMode.Vertical);
                             G.FillRectangle(ClosePath, CloseButtonRect);
                         }
 
                         Bitmap CloseBtn;
 
-                        if (!ToolWindow)
-                        {
-                            if (CloseButtonRect.Height >= 22) { CloseBtn = Win7Preview.Close_Basic_2; }
-                            else if (CloseButtonRect.Height >= 18) { CloseBtn = Win7Preview.Close_Basic_1; }
-                            else { CloseBtn = Win7Preview.Close_Basic_0; }
-                        }
+                        CloseBtn = Win7Preview.Close_Basic_ToolWindow;
 
-                        else { CloseBtn = Win7Preview.Close_Basic_ToolWindow; }
+                        int xW = CloseButtonRect.Width % 2 == 0 ? CloseBtn.Width + 1 : CloseBtn.Width;
+                        int xH = CloseButtonRect.Height % 2 == 0 ? CloseBtn.Height + 1 : CloseBtn.Height;
 
-                        G.DrawImage(CloseBtn, new PointF(CloseButtonRect.X + (CloseButtonRect.Width - CloseBtn.Width) / 2f + 1f, CloseButtonRect.Y + (CloseButtonRect.Height - CloseBtn.Height) / 2f));
+                        RectangleF closerenderrect = new(CloseButtonRect.X + (CloseButtonRect.Width - xW) / 2f, CloseButtonRect.Y + (CloseButtonRect.Height - xH) / 2f, xW, xH);
+
+                        G.DrawImage(CloseBtn, closerenderrect);
 
                         using (Pen P = new(CloseOuterBorder)) { G.DrawRoundedRect(P, CloseButtonRect, 1, true); }
 
-                        using (Pen P = new(CloseInnerBorder)) { G.DrawRoundedRect(P, new RectangleF(CloseButtonRect.X + 1, CloseButtonRect.Y + 1, CloseButtonRect.Width - 2, CloseButtonRect.Height - 2), 1, true); }
+                        using (Pen P = new(Color.FromArgb(50, CloseInnerBorder))) { G.DrawRectangle(P, CloseButtonRect.X + 1, CloseButtonRect.Y + 1, CloseButtonRect.Width - 2, CloseButtonRect.Height - 2); }
 
-                        //Window title
-                        using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
-                        {
-                            using (SolidBrush br = new(CaptionColor))
-                            {
-                                G.DrawString(Text, Font, br, LabelRect, sf);
-                            }
-                        }
-                        #endregion
                     }
+
+                    //Window title
+                    int alpha_caption = Active ? 100 : 50;
+                    using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
+                    {
+                        G.DrawGlowString(1, Text, Font, CaptionColor, Color.FromArgb(alpha_caption, Color.White), RectAll, LabelRect, sf);
+                    }
+                    #endregion
+                }
+
+                else
+                {
+                    #region Basic
+                    RectangleF UpperPart = new(Rect.X, Rect.Y, Rect.Width + 1, TitlebarRect.Height + 4);
+                    RectangleF UpperPart_Modified = new(UpperPart.X + UpperPart.Width * 0.75f, UpperPart.Y, UpperPart.Width * 0.75f, UpperPart.Height);
+
+                    G.SetClip(UpperPart);
+
+                    LinearGradientBrush pth_back = new(UpperPart, Titlebar_Backcolor1, Titlebar_Backcolor2, LinearGradientMode.Vertical);
+                    LinearGradientBrush pth_line = new(UpperPart, Titlebar_InnerBorder, Titlebar_Turquoise, LinearGradientMode.Vertical);
+
+                    // ### Render Titlebar
+                    if (!ToolWindow)
+                    {
+                        G.FillRoundedRect(pth_back, Rect, Radius, true);
+                        using (Pen P = new(Titlebar_OuterBorder)) { G.DrawRoundedRect(P, Rect, Radius, true); }
+                        using (Pen P = new(Titlebar_InnerBorder)) { G.DrawRoundedRect(P, new RectangleF(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2), Radius, true); }
+                        G.SetClip(UpperPart_Modified);
+                        using (Pen P = new(pth_line)) { G.DrawRoundedRect(P, new RectangleF(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2), Radius, true); }
+                    }
+                    else
+                    {
+                        G.FillRectangle(pth_back, Rect);
+                        using (Pen P = new(Titlebar_OuterBorder)) { G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height); }
+                        using (Pen P = new(Titlebar_InnerBorder)) { G.DrawRectangle(P, Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2); }
+                        G.SetClip(UpperPart_Modified);
+                        using (Pen P = new(pth_line)) { G.DrawRectangle(P, Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2); }
+                    }
+
+                    G.ResetClip();
+                    G.ExcludeClip(new Rectangle((int)UpperPart.X, (int)UpperPart.Y, (int)UpperPart.Width, (int)UpperPart.Height));
+
+                    using (SolidBrush br = new(Titlebar_Backcolor2)) { G.FillRectangle(br, Rect); }
+                    using (Pen P = new(Titlebar_Turquoise)) { G.DrawRectangle(P, Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2); }
+                    using (Pen P = new(OuterBorder)) { G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height); }
+                    using (Pen P = new(Titlebar_InnerBorder)) { G.DrawLine(P, new PointF(Rect.X + 1, Rect.Y), new PointF(Rect.X + 1, Rect.Y + Rect.Height - 2)); }
+
+                    if (Active)
+                    {
+                        G.DrawImage(Win7Preview.WindowSides, GlassSide1);
+                        G.DrawImage(Win7Preview.WindowSides, GlassSide2);
+                    }
+
+                    G.ResetClip();
+
+                    G.FillRectangle(Brushes.White, ClientBorderRect);
+                    using (Pen P = new(Color.FromArgb(186, 210, 234))) { G.DrawRectangle(P, ClientBorderRect.X, ClientBorderRect.Y, ClientBorderRect.Width, ClientBorderRect.Height); }
+                    if (!WinVista) { using (Pen P = new(Color.FromArgb(130, 135, 144))) { G.DrawRectangle(P, ClientRect.X, ClientRect.Y, ClientRect.Width, ClientRect.Height); } }
+
+                    //Render close button
+                    int Btn_Height = Math.Max(10, _Metrics_CaptionHeight - 5);
+                    float Btn_Width;
+                    Btn_Width = !ToolWindow ? 31f / 17f * Btn_Height : Btn_Height;
+                    CloseButtonRect = new(ClientBorderRect.Right - Btn_Width - 3, ClientBorderRect.Top - Btn_Height - 3, Btn_Width, Btn_Height);
+
+                    if (Active)
+                    {
+                        float Factor = 0.45f;
+                        if (ToolWindow)
+                            Factor = 0.2f;
+
+                        float UH = Factor * CloseButtonRect.Height;
+                        float LH = CloseButtonRect.Height - UH;
+                        float Interlapping = UH / CloseButtonRect.Height * 10f;
+
+                        RectangleF CloseRectUpperHalf = new(CloseButtonRect.X, CloseButtonRect.Y, CloseButtonRect.Width, UH + Interlapping);
+                        RectangleF CloseRectLowerHalf = new(CloseButtonRect.X, CloseRectUpperHalf.Bottom - Interlapping, CloseButtonRect.Width, LH);
+
+                        LinearGradientBrush CloseUpperPath = new(CloseRectUpperHalf, CloseUpperAccent1, CloseUpperAccent2, LinearGradientMode.Vertical);
+                        LinearGradientBrush CloseLowerPath = new(CloseRectLowerHalf, CloseLowerAccent1, CloseLowerAccent2, LinearGradientMode.Vertical);
+
+                        G.FillRoundedRect(CloseUpperPath, CloseRectUpperHalf, 1, true);
+                        G.FillRoundedRect(CloseLowerPath, CloseRectLowerHalf, 1, true);
+                    }
+
+                    else
+                    {
+                        LinearGradientBrush ClosePath = new(CloseButtonRect, CloseUpperAccent1, CloseLowerAccent2, LinearGradientMode.Vertical);
+                        G.FillRectangle(ClosePath, CloseButtonRect);
+                    }
+
+                    Bitmap CloseBtn;
+
+                    if (!ToolWindow)
+                    {
+                        if (CloseButtonRect.Height >= 22) { CloseBtn = Win7Preview.Close_Basic_2; }
+                        else if (CloseButtonRect.Height >= 18) { CloseBtn = Win7Preview.Close_Basic_1; }
+                        else { CloseBtn = Win7Preview.Close_Basic_0; }
+                    }
+
+                    else { CloseBtn = Win7Preview.Close_Basic_ToolWindow; }
+
+                    G.DrawImage(CloseBtn, new PointF(CloseButtonRect.X + (CloseButtonRect.Width - CloseBtn.Width) / 2f + 1f, CloseButtonRect.Y + (CloseButtonRect.Height - CloseBtn.Height) / 2f));
+
+                    using (Pen P = new(CloseOuterBorder)) { G.DrawRoundedRect(P, CloseButtonRect, 1, true); }
+
+                    using (Pen P = new(CloseInnerBorder)) { G.DrawRoundedRect(P, new RectangleF(CloseButtonRect.X + 1, CloseButtonRect.Y + 1, CloseButtonRect.Width - 2, CloseButtonRect.Height - 2), 1, true); }
+
+                    //Window title
+                    using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
+                    {
+                        using (SolidBrush br = new(CaptionColor))
+                        {
+                            G.DrawString(Text, Font, br, LabelRect, sf);
+                        }
+                    }
+                    #endregion
                 }
             }
 

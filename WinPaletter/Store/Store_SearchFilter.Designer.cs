@@ -6,7 +6,7 @@ using System.Windows.Forms;
 namespace WinPaletter
 {
     [Microsoft.VisualBasic.CompilerServices.DesignerGenerated()]
-    public partial class Store_SearchFilter : Form
+    public partial class Store_SearchFilter : BorderlessForm
     {
 
         // Form overrides dispose to clean up the component list.
@@ -56,8 +56,8 @@ namespace WinPaletter
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = null;
-            this.Button1.ImageGlyphEnabled = false;
             this.Button1.ImageGlyph = null;
+            this.Button1.ImageGlyphEnabled = false;
             this.Button1.Location = new System.Drawing.Point(274, 7);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(90, 34);
@@ -74,8 +74,8 @@ namespace WinPaletter
             this.Button7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button7.ForeColor = System.Drawing.Color.White;
             this.Button7.Image = null;
-            this.Button7.ImageGlyphEnabled = false;
             this.Button7.ImageGlyph = null;
+            this.Button7.ImageGlyphEnabled = false;
             this.Button7.Location = new System.Drawing.Point(188, 7);
             this.Button7.Name = "Button7";
             this.Button7.Size = new System.Drawing.Size(80, 34);
@@ -151,33 +151,31 @@ namespace WinPaletter
             this.bottom_buttons.Controls.Add(this.Button1);
             this.bottom_buttons.Controls.Add(this.Button7);
             this.bottom_buttons.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.bottom_buttons.Location = new System.Drawing.Point(0, 243);
+            this.bottom_buttons.Location = new System.Drawing.Point(0, 136);
             this.bottom_buttons.Name = "bottom_buttons";
             this.bottom_buttons.Size = new System.Drawing.Size(371, 48);
             this.bottom_buttons.TabIndex = 213;
+            this.bottom_buttons.UseDecorationPattern = false;
+            this.bottom_buttons.UseSharpStyle = false;
             // 
             // Store_SearchFilter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(371, 291);
+            this.ClientSize = new System.Drawing.Size(371, 184);
             this.Controls.Add(this.CheckBox3);
             this.Controls.Add(this.CheckBox2);
             this.Controls.Add(this.CheckBox1);
             this.Controls.Add(this.Label6);
             this.Controls.Add(this.PictureBox16);
             this.Controls.Add(this.bottom_buttons);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForeColor = System.Drawing.Color.White;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Store_SearchFilter";
+            this.Opacity = 0D;
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Search filter";
             this.Load += new System.EventHandler(this.Store_SearchFilter_Load);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox16)).EndInit();

@@ -70,9 +70,6 @@ namespace WinPaletter
 
         private void BugReport_Load(object sender, EventArgs e)
         {
-            this.Localize();
-            ApplyStyle(this);
-
             Color c = PictureBox1.Image.AverageColor().CB(Program.Style.DarkMode ? -0.35f : 0.35f);
             AnimatedBox1.BackColor = c;
 

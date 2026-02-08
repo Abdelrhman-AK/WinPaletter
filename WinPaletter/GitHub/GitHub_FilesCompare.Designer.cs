@@ -2,7 +2,7 @@
 
 namespace WinPaletter
 {
-    partial class GitHub_FilesCompare : Form
+    partial class GitHub_FilesCompare : UI.WP.Form
     {
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
         private UI.WP.ListView listViewSource;
@@ -240,7 +240,6 @@ namespace WinPaletter
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Files Conflict";
-            this.Load += new System.EventHandler(this.GitHub_FilesCompare_Load);
             this.tableLayoutPanel.ResumeLayout(false);
             this.bottom_buttons.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);

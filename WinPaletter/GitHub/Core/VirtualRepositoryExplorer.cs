@@ -25,6 +25,44 @@ namespace WinPaletter.GitHub
         /// SemaphoreSlim to limit concurrent GitHub API requests for repository data fetching.
         /// </summary>
         private static readonly SemaphoreSlim _semaphore = new(5);
+        private static readonly SemaphoreSlim _treeLock = new(1, 1);
+        private static string _cachedHeadSha;
+        private static IReadOnlyList<TreeItem> _cachedTree;
+
+        private static async Task<IReadOnlyList<TreeItem>> GetCachedTreeAsync(CancellationToken token = default)
+        {
+            var reference = await Program.GitHub.Client.Git.Reference.Get(
+                Repository.Owner,
+                Repository.Name,
+                $"heads/{Repository.Branch.Name}");
+
+            string currentSha = reference.Object.Sha;
+
+            if (_cachedTree != null && _cachedHeadSha == currentSha)
+                return _cachedTree;
+
+            await _treeLock.WaitAsync(token);
+            try
+            {
+                // Double-check inside lock
+                if (_cachedTree != null && _cachedHeadSha == currentSha)
+                    return _cachedTree;
+
+                var tree = await Program.GitHub.Client.Git.Tree.GetRecursive(
+                    Repository.Owner,
+                    Repository.Name,
+                    currentSha);
+
+                _cachedHeadSha = currentSha;
+                _cachedTree = tree.Tree;
+
+                return _cachedTree;
+            }
+            finally
+            {
+                _treeLock.Release();
+            }
+        }
 
         /// <summary>
         /// Recursively fetches repository contents starting at the specified path,
@@ -39,77 +77,51 @@ namespace WinPaletter.GitHub
         /// <returns>A task representing the recursive fetch.</returns>
         private static async Task FetchRecursive(string path, List<RepositoryContent> output, Action<RepositoryContent> reportProgress = null, CancellationTokenSource cts = default, int maxDepth = -1, int currentDepth = 0)
         {
-            if (cts.IsCancellationRequested) return;
-            if (maxDepth >= 0 && currentDepth > maxDepth) return;
-
-            IReadOnlyList<RepositoryContent> items;
+            cts ??= new();
+            if (cts.Token.IsCancellationRequested) return;
 
             try
             {
-                await _semaphore.WaitAsync(cts.Token); // wait for slot
-                items = await Cache.GetDirectoryRecursiveAsync(path);   // cached fetch
+                var tree = await GetCachedTreeAsync(cts.Token);
+
+                string normalizedPath = string.IsNullOrEmpty(path) ? string.Empty : path.Trim('/');
+
+                foreach (var item in tree)
+                {
+                    if (cts.Token.IsCancellationRequested) return;
+
+                    if (!string.IsNullOrEmpty(normalizedPath))
+                    {
+                        if (!item.Path.StartsWith(normalizedPath + "/", StringComparison.OrdinalIgnoreCase) &&
+                            !item.Path.Equals(normalizedPath, StringComparison.OrdinalIgnoreCase))
+                            continue;
+                    }
+
+                    int depth = item.Path.Count(c => c == '/');
+                    if (maxDepth >= 0 && depth > maxDepth) continue;
+
+                    RepositoryContent content = new(
+                        System.IO.Path.GetFileName(item.Path),
+                        item.Path,
+                        item.Sha,
+                        item.Size,
+                        ConvertTreeType(item.Type.Value),
+                        null,
+                        item.Url,
+                        item.Url,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null);
+
+                    output.Add(content);
+                    reportProgress?.Invoke(content);
+                }
             }
             catch
             {
-                return; // ignore failures
-            }
-            finally
-            {
-                _semaphore.Release();
-            }
-
-            List<string> subDirs = [];
-
-            foreach (RepositoryContent entry in items)
-            {
-                if (cts.IsCancellationRequested) return;
-
-                output.Add(entry);
-                reportProgress?.Invoke(entry);
-
-                if (entry.Type == Octokit.ContentType.Dir) subDirs.Add(entry.Path);
-            }
-
-            IEnumerable<Task> tasks = subDirs.Select(subDir => FetchRecursive(subDir, output, reportProgress, cts, maxDepth, currentDepth + 1));
-
-            await Task.WhenAll(tasks);
-        }
-
-        /// <summary>
-        /// Recursively enumerates directories or files, depending on <paramref name="onlyDirs"/>,
-        /// and reports incremental progress.
-        /// </summary>
-        /// <param name="path">The GitHub path to enumerate.</param>
-        /// <param name="output">A list receiving matching directory or file paths.</param>
-        /// <param name="cts">Cancellation token source.</param>
-        /// <param name="onlyDirs">If true, only directories are returned; otherwise only files.</param>
-        /// <param name="reportProgress">Optional progress reporter (0-100%).</param>
-        /// <param name="maxDepth">Maximum recursion depth; -1 for unlimited.</param>
-        /// <param name="currentDepth">Internal recursion depth counter.</param>
-        /// <returns>A task representing the recursive enumeration.</returns>
-        private static async Task FetchRecursive(string path, List<string> output, CancellationTokenSource cts, bool onlyDirs, Action<int> reportProgress = null, int maxDepth = -1, int currentDepth = 0)
-        {
-            cts ??= new();
-            if (maxDepth >= 0 && currentDepth > maxDepth) return;
-
-            IReadOnlyList<RepositoryContent> items;
-            try { items = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(Repository.Owner, GitHub.Repository.Name, path, GitHub.Repository.Branch.Name); }
-            catch { return; }
-
-            int total = items.Count;
-            int processed = 0;
-            foreach (RepositoryContent entry in items)
-            {
-                if (cts is not null && cts.Token.IsCancellationRequested) return;
-
-                if ((onlyDirs && entry.Type == Octokit.ContentType.Dir) || (!onlyDirs && entry.Type != Octokit.ContentType.Dir))
-                    output.Add(entry.Path);
-
-                if (entry.Type == Octokit.ContentType.Dir)
-                    await FetchRecursive(entry.Path, output, cts, onlyDirs, reportProgress, maxDepth, currentDepth + 1);
-
-                processed++;
-                reportProgress?.Invoke((int)((processed * 100L) / total));
+                return;
             }
         }
 
@@ -119,21 +131,43 @@ namespace WinPaletter.GitHub
 
             try
             {
-                // Get the contents of the parent directory
-                string parent = Path.GetDirectoryName(path)?.Replace("\\", "/") ?? string.Empty;
-                string name = Path.GetFileName(path);
+                var tree = await GetCachedTreeAsync();
 
-                IReadOnlyList<RepositoryContent> parentContents =
-                    await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(
-                        Repository.Owner, Repository.Name, parent, Repository.Branch.Name);
+                var item = tree.FirstOrDefault(t =>
+                    t.Path.Equals(path.Trim('/'), StringComparison.OrdinalIgnoreCase));
 
-                // Find the exact item in the parent folder
-                return parentContents.FirstOrDefault(c => c.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+                if (item == null) return null;
+
+                return new RepositoryContent(
+                    System.IO.Path.GetFileName(item.Path),
+                    item.Path,
+                    item.Sha,
+                    item.Size,
+                    ConvertTreeType(item.Type.Value),
+                    null,
+                    item.Url,
+                    item.Url,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null);
             }
-            catch (Octokit.NotFoundException)
+            catch (NotFoundException)
             {
-                return null; // path does not exist
+                return null;
             }
+        }
+
+        private static ContentType ConvertTreeType(TreeType treeType)
+        {
+            return treeType switch
+            {
+                TreeType.Blob => ContentType.File,
+                TreeType.Tree => ContentType.Dir,
+                TreeType.Commit => ContentType.Submodule,
+                _ => ContentType.File
+            };
         }
 
         /// <summary>

@@ -45,7 +45,8 @@ namespace WinPaletter
             // 
             // tabsContainer1
             // 
-            this.tabsContainer1.Size = new System.Drawing.Size(1156, 34);
+            this.tabsContainer1.ForeColor = System.Drawing.Color.White;
+            this.tabsContainer1.Size = new System.Drawing.Size(1172, 34);
             this.tabsContainer1.TabControl = this.tabControl1;
             // 
             // tabControl1
@@ -58,7 +59,7 @@ namespace WinPaletter
             this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1156, 729);
+            this.tabControl1.Size = new System.Drawing.Size(1172, 740);
             this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl1.TabIndex = 121;
             // 
@@ -67,9 +68,9 @@ namespace WinPaletter
             this.Status_pnl.BackColor = System.Drawing.Color.Transparent;
             this.Status_pnl.Controls.Add(this.Status_lbl);
             this.Status_pnl.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.Status_pnl.Location = new System.Drawing.Point(0, 763);
+            this.Status_pnl.Location = new System.Drawing.Point(0, 774);
             this.Status_pnl.Name = "Status_pnl";
-            this.Status_pnl.Size = new System.Drawing.Size(1156, 24);
+            this.Status_pnl.Size = new System.Drawing.Size(1172, 24);
             this.Status_pnl.TabIndex = 122;
             // 
             // Status_lbl
@@ -79,7 +80,7 @@ namespace WinPaletter
             this.Status_lbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Status_lbl.Location = new System.Drawing.Point(0, 0);
             this.Status_lbl.Name = "Status_lbl";
-            this.Status_lbl.Size = new System.Drawing.Size(1156, 24);
+            this.Status_lbl.Size = new System.Drawing.Size(1172, 24);
             this.Status_lbl.TabIndex = 39;
             this.Status_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Status_lbl.Paint += new System.Windows.Forms.PaintEventHandler(this.Status_lbl_Paint);
@@ -91,7 +92,7 @@ namespace WinPaletter
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.ClientSize = new System.Drawing.Size(1156, 787);
+            this.ClientSize = new System.Drawing.Size(1172, 798);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.Status_pnl);
             this.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -99,6 +100,7 @@ namespace WinPaletter
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(1172, 798);
             this.Name = "MainForm";
+            this.ShowIconAndCaptionText = false;
             this.Text = "WinPaletter";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFrm_FormClosing);
             this.Load += new System.EventHandler(this.MainFrm_Load);

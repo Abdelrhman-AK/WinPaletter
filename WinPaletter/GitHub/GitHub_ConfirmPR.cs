@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace WinPaletter
 {
-    public partial class GitHub_ConfirmPR : Form
+    public partial class GitHub_ConfirmPR : UI.WP.Form
     {
         public GitHub_ConfirmPR()
         {
@@ -27,12 +27,6 @@ namespace WinPaletter
         {
             DialogResult = DialogResult.OK;
             Close();
-        }
-
-        private void GitHub_ConfirmPR_Load(object sender, EventArgs e)
-        {
-            ApplyStyle(this);
-            this.Localize();
         }
     }
 }

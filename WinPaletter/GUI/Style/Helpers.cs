@@ -101,7 +101,7 @@ namespace WinPaletter.UI.Style
         /// </summary>
         /// <param name="Form">The form to apply the style to. If null, applies to all open forms.</param>
         /// <param name="IgnoreTitleBar">Flag indicating whether to ignore the title bar when applying the style.</param>
-        public static void ApplyStyle(Form Form = null, bool IgnoreTitleBar = false)
+        public static void ApplyStyle(System.Windows.Forms.Form Form = null, bool IgnoreTitleBar = false)
         {
             Program.Log?.Write(LogEventLevel.Information, $"WinPaletter is loading style for {Form?.Name ?? "whole application"}");
 
@@ -171,7 +171,7 @@ namespace WinPaletter.UI.Style
             if (Form is null)
             {
                 // Apply the style to all open forms
-                foreach (Form form in Application.OpenForms)
+                foreach (System.Windows.Forms.Form form in Application.OpenForms)
                 {
                     if (form != Forms.GlassWindow)
                     {

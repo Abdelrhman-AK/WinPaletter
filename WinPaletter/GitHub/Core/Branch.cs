@@ -199,7 +199,7 @@ namespace WinPaletter.GitHub
                 try
                 {
                     // Use provided branch or fetch by name
-                    Octokit.Branch forkBranch = branch ?? await _client.Repository.Branch.Get(Owner, Name, branch.Name).ConfigureAwait(false);
+                    Octokit.Branch forkBranch = branch ?? await Client.Repository.Branch.Get(Owner, Name, branch.Name).ConfigureAwait(false);
                     if (forkBranch?.Commit == null)
                     {
                         Program.Log?.Write(LogEventLevel.Warning, $"Source branch '{branch.Name}' not found in {Owner}/{Name}.");
@@ -210,7 +210,7 @@ namespace WinPaletter.GitHub
                     Octokit.Branch upstreamBranch = null;
                     try
                     {
-                        upstreamBranch = await _client.Repository.Branch.Get(OriginalOwner, Name, originalBranch).ConfigureAwait(false);
+                        upstreamBranch = await Client.Repository.Branch.Get(OriginalOwner, Name, originalBranch).ConfigureAwait(false);
                     }
                     catch (Octokit.NotFoundException)
                     {
@@ -219,7 +219,7 @@ namespace WinPaletter.GitHub
                     }
 
                     // Compare (base = upstream, head = fork)
-                    CompareResult compare = await _client.Repository.Commit.Compare(OriginalOwner, Name, upstreamBranch.Commit.Sha, forkBranch.Commit.Sha);
+                    CompareResult compare = await Client.Repository.Commit.Compare(OriginalOwner, Name, upstreamBranch.Commit.Sha, forkBranch.Commit.Sha);
 
                     bool updated = compare.BehindBy == 0;
 
@@ -240,7 +240,7 @@ namespace WinPaletter.GitHub
                 try
                 {
                     // Get fork/source branch
-                    Octokit.Branch forkBranch = await _client.Repository.Branch.Get(Owner, Name, branch).ConfigureAwait(false);
+                    Octokit.Branch forkBranch = await Client.Repository.Branch.Get(Owner, Name, branch).ConfigureAwait(false);
                     if (forkBranch?.Commit == null)
                     {
                         Program.Log?.Write(LogEventLevel.Warning, $"Source branch '{branch}' not found in {Owner}/{Name}.");
@@ -251,7 +251,7 @@ namespace WinPaletter.GitHub
                     Octokit.Branch upstreamBranch = null;
                     try
                     {
-                        upstreamBranch = await _client.Repository.Branch.Get(OriginalOwner, Name, originalBranch).ConfigureAwait(false);
+                        upstreamBranch = await Client.Repository.Branch.Get(OriginalOwner, Name, originalBranch).ConfigureAwait(false);
                     }
                     catch (Octokit.NotFoundException)
                     {
@@ -260,7 +260,7 @@ namespace WinPaletter.GitHub
                     }
 
                     // Correct Compare order: base = upstream, head = fork
-                    CompareResult compare = await _client.Repository.Commit.Compare(OriginalOwner, Name, upstreamBranch.Commit.Sha, forkBranch.Commit.Sha);
+                    CompareResult compare = await Client.Repository.Commit.Compare(OriginalOwner, Name, upstreamBranch.Commit.Sha, forkBranch.Commit.Sha);
 
                     // If BehindBy == 0, source branch is up-to-date (may be equal or ahead)
                     bool updated = compare.BehindBy == 0;
@@ -355,7 +355,7 @@ namespace WinPaletter.GitHub
             /// <returns></returns>
             public static async Task<List<string>> GetChangedFilesAsync(string baseBranch = "main")
             {
-                CompareResult comparison = await _client.Repository.Commit.Compare(Owner, Repository.Name, baseBranch, Name);
+                CompareResult comparison = await Client.Repository.Commit.Compare(Owner, Repository.Name, baseBranch, Name);
                 List<string> files = [.. comparison.Files.Select(f => f.Filename)];
                 return files;
             }
@@ -369,7 +369,7 @@ namespace WinPaletter.GitHub
             /// <returns></returns>
             public static async Task<bool> IsNewFileAsync(string filePath, string baseBranch = "main")
             {
-                CompareResult comparison = await _client.Repository.Commit.Compare(Owner, Repository.Name, baseBranch, Name);
+                CompareResult comparison = await Client.Repository.Commit.Compare(Owner, Repository.Name, baseBranch, Name);
                 GitHubCommitFile file = comparison.Files.FirstOrDefault(f => f.Filename == filePath);
                 if (file != null)
                 {
