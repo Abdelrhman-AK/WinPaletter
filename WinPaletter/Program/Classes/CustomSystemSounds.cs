@@ -58,6 +58,11 @@ namespace System.Media
         /// </summary>
         public static Sound ThemeChange { get; } = new(105, () => Program.TM.Sounds.Snd_Win_ChangeTheme);
 
+        /// <summary>
+        /// Gets the sound associated with emptying the Windows Recycle Bin.
+        /// </summary>
+        public static Sound EmptyRecycleBin { get; } = new(106, () => Program.TM.Sounds.Snd_Explorer_EmptyRecycleBin);
+
         private CustomSystemSounds() { }
 
         public sealed class Sound

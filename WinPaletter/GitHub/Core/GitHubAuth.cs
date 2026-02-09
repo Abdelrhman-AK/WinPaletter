@@ -29,158 +29,6 @@ namespace WinPaletter.GitHub
             Client = new(new ProductHeaderValue(System.Windows.Forms.Application.ProductName));
         }
 
-        #region Events
-
-        /// <summary>
-        /// Raised when the device flow is initiated successfully.
-        /// Provides the user code, expiration time in seconds, and the verification URL to open in a browser.
-        /// </summary>
-        /// <remarks>Subscribe in your UI to display the user code and verification URL to the user.</remarks>
-        public event Action<string, int, string> OnDeviceFlowInitiated;
-
-        /// <summary>
-        /// Raised when the countdown for device flow starts.
-        /// Provides the total expiration time in seconds.
-        /// </summary>
-        /// <remarks>Subscribe in your UI to initialize a countdown progress bar or timer display.</remarks>
-        public event Action<int> OnCountdownStarted;
-
-        /// <summary>
-        /// Raised periodically during the countdown for device flow.
-        /// Provides the remaining seconds.
-        /// </summary>
-        /// <remarks>Subscribe to update countdown display or progress bar in the UI.</remarks>
-        public event Action<int> OnCountdownTick;
-
-        /// <summary>
-        /// Raised when the countdown has finished.
-        /// </summary>
-        /// <remarks>Use this to indicate in the UI that the login code has expired.</remarks>
-        public event Action OnCountdownEnded;
-
-        /// <summary>
-        /// Raised when GitHub returns "authorization_pending", indicating the user has not yet approved the request.
-        /// </summary>
-        /// <remarks>Use this to show a "Waiting for user approval" message in the UI.</remarks>
-        public event Action OnAuthorizationPending;
-
-        /// <summary>
-        /// Raised when the user successfully authorizes the device flow.
-        /// Provides the authenticated GitHub user object.
-        /// </summary>
-        /// <remarks>Subscribe to update the UI with user info, profile picture, or proceed to the main app.</remarks>
-        public event Action<Octokit.User> OnAuthorizationSuccess;
-
-        /// <summary>
-        /// Raised when authorization fails.
-        /// Provides an error message describing the failure.
-        /// </summary>
-        /// <remarks>Subscribe to show an error message to the user.</remarks>
-        public event Action<string> OnAuthorizationFailure;
-
-        /// <summary>
-        /// Raised when initiating the device flow fails.
-        /// </summary>
-        /// <remarks>Use this to notify the user that the device flow could not start.</remarks>
-        public event Action OnDeviceFlowInitiationFailed;
-
-        /// <summary>
-        /// Raised when no device flow has been initiated but a poll or other action was attempted.
-        /// </summary>
-        /// <remarks>Use this to show that the device flow was never started.</remarks>
-        public event Action OnDeviceFlowNotInitiated;
-
-        /// <summary>
-        /// Raised when the user cancels the login process.
-        /// </summary>
-        /// <remarks>Subscribe to show cancellation confirmation in the UI.</remarks>
-        public event Action OnLoginCanceled;
-
-        /// <summary>
-        /// Raised when the login attempt times out without user authorization.
-        /// </summary>
-        /// <remarks>Use this to notify the user that the code has expired and they need to restart login.</remarks>
-        public event Action OnLoginTimedOut;
-
-        /// <summary>
-        /// Raised when a saved token is loaded from local storage.
-        /// Provides the token string.
-        /// </summary>
-        /// <remarks>Subscribe if you want to verify the token or pre-fill some UI info.</remarks>
-        public event Action<string> OnTokenLoaded;
-
-        /// <summary>
-        /// Raised when a loaded token is invalid or expired.
-        /// </summary>
-        /// <remarks>Use this to trigger re-login in the UI.</remarks>
-        public event Action OnTokenInvalid;
-
-        /// <summary>
-        /// Raised when a local token is deleted or revoked.
-        /// </summary>
-        /// <remarks>Use this to clear any cached credentials from the UI.</remarks>
-        public event Action OnTokenRevoked;
-
-        /// <summary>
-        /// Raised when the device flow fails due to insufficient permissions (e.g., bad verification code).
-        /// </summary>
-        /// <remarks>Use this to notify the user they need to adjust GitHub OAuth app permissions.</remarks>
-        public event Action OnInsufficientPermissions;
-
-        /// <summary>
-        /// Raised when a network error occurs during login or token operations.
-        /// Provides the error message.
-        /// </summary>
-        /// <remarks>Subscribe to show a network error alert in the UI.</remarks>
-        public event Action<string> OnNetworkError;
-
-        /// <summary>
-        /// Raised when GitHub's rate limit is exceeded.
-        /// Provides the number of seconds to wait until the limit resets.
-        /// </summary>
-        /// <remarks>Subscribe to show a "Rate limit exceeded" message and optionally a countdown.</remarks>
-        public event Action<int> OnRateLimitExceeded;
-
-        /// <summary>
-        /// Raised when an unexpected error occurs during login or token operations.
-        /// Provides the error message.
-        /// </summary>
-        /// <remarks>Subscribe to display unexpected errors to the user for troubleshooting.</remarks>
-        public event Action<string> OnUnexpectedError;
-
-        /// <summary>
-        /// Raised when GitHub services are unavailable.
-        /// </summary>
-        /// <remarks>Subscribe to inform the user about GitHub downtime or maintenance.</remarks>
-        public event Action OnServiceUnavailable;
-
-        /// <summary>
-        /// Raised when a login attempt starts (e.g., user triggers device flow login).
-        /// </summary>
-        /// <remarks>Use this to show a "Login in progress" indicator in the UI.</remarks>
-        public event Action OnLoginInProgress;
-
-        /// <summary>
-        /// Raised when a retry is performed due to GitHub's "slow_down" response.
-        /// </summary>
-        /// <remarks>Subscribe to show a "Retrying..." message or spinner in the UI.</remarks>
-        public event Action OnLoginRetry;
-
-        /// <summary>
-        /// Raised when the user successfully signs out.
-        /// </summary>
-        /// <remarks>Use this to clear UI data and return to the login screen.</remarks>
-        public event Action OnSignedOut;
-
-        /// <summary>
-        /// Raised when sign out fails.
-        /// Provides an error message describing the failure.
-        /// </summary>
-        /// <remarks>Subscribe to show a sign out error message to the user.</remarks>
-        public event Action<string> OnSignOutFailed;
-
-        #endregion
-
         #region Public Login Methods
 
         /// <summary>
@@ -208,7 +56,7 @@ namespace WinPaletter.GitHub
             if (!Program.IsNetworkAvailable)
             {
                 Program.Log?.Write(LogEventLevel.Warning, "Cannot check login: Network unavailable.");
-                OnNetworkError?.Invoke("Network unavailable.");
+                Events.OnNetworkLost();
                 return false;
             }
 
@@ -220,28 +68,34 @@ namespace WinPaletter.GitHub
             }
 
             Client.Credentials = new(token);
-            OnTokenLoaded?.Invoke(token);
+            Events.OnTokenLoadedEvent(token);
             Program.Log?.Write(LogEventLevel.Information, "Token loaded from local storage.");
 
-            try
+            // Wrap the GitHub call with the safe helper
+            bool result = await Helpers.ExecuteGitHubActionSafeAsync(async () =>
             {
-                Octokit.User user = await Client.User.Current();
-                Program.Log?.Write(LogEventLevel.Information, $"Logged in as {user.Login}.");
-                return true;
-            }
-            catch (AuthorizationException)
+                try
+                {
+                    Octokit.User user = await Client.User.Current();
+                    Program.Log?.Write(LogEventLevel.Information, $"Logged in as {user.Login}.");
+                    return true;
+                }
+                catch (AuthorizationException)
+                {
+                    Program.Log?.Write(LogEventLevel.Warning, "Saved token invalid or expired.");
+                    Events.OnTokenInvalidEvent();
+                    DeleteToken();
+                    return false;
+                }
+            });
+
+            // Optional: handle cases where the helper returned default due to network/server/rate-limit
+            if (!result)
             {
-                Program.Log?.Write(LogEventLevel.Warning, "Saved token invalid or expired.");
-                OnTokenInvalid?.Invoke();
-                DeleteToken();
-                return false;
+                Program.Log?.Write(LogEventLevel.Warning, "Login check could not complete due to network, rate limit, or server issues.");
             }
-            catch (Exception ex)
-            {
-                Program.Log?.Write(LogEventLevel.Error, "Unexpected error during IsLoggedInAsync.", ex);
-                OnUnexpectedError?.Invoke(ex.Message);
-                return false;
-            }
+
+            return result;
         }
 
         /// <summary>
@@ -260,13 +114,13 @@ namespace WinPaletter.GitHub
             if (!Program.IsNetworkAvailable)
             {
                 Program.Log?.Write(LogEventLevel.Warning, "Cannot start login: Network unavailable.");
-                OnNetworkError?.Invoke("Network unavailable.");
+                Events.OnNetworkLost();
                 return;
             }
 
-            OnLoginInProgress?.Invoke();
+            Events.OnNetworkLost();
             Program.Log?.Write(LogEventLevel.Information, "Starting GitHub Device Flow login.");
-            await InitiateDeviceFlowLoginAsync().ConfigureAwait(false);
+            await InitiateDeviceFlowLoginAsync();
         }
 
         /// <summary>
@@ -288,7 +142,7 @@ namespace WinPaletter.GitHub
                 _cancellationTokenSource = null;
 
                 Program.Log?.Write(LogEventLevel.Information, "GitHub Device Flow login cancelled successfully.");
-                OnLoginCanceled?.Invoke();
+                Events.OnNetworkLost();
             }
             else
             {
@@ -322,9 +176,19 @@ namespace WinPaletter.GitHub
         {
             try
             {
-                OauthDeviceFlowRequest deviceFlowRequest = new(ClientId) { Scopes = { "repo" } };
+                // Wrap the GitHub API call with the safe helper
+                deviceFlow = await Helpers.ExecuteGitHubActionSafeAsync(async () =>
+                {
+                    OauthDeviceFlowRequest deviceFlowRequest = new(ClientId) { Scopes = { "repo" } };
+                    return await Client.Oauth.InitiateDeviceFlow(deviceFlowRequest).ConfigureAwait(false);
+                });
 
-                deviceFlow = await Client.Oauth.InitiateDeviceFlow(deviceFlowRequest).ConfigureAwait(false);
+                if (deviceFlow == null)
+                {
+                    Program.Log?.Write(LogEventLevel.Warning, "Device Flow initiation could not complete due to network, rate limit, or server issues.");
+                    Events.OnNetworkLost();
+                    return false;
+                }
 
                 // Open verification URL
                 ProcessStartInfo pci = new() { FileName = deviceFlow.VerificationUri, UseShellExecute = true };
@@ -338,8 +202,8 @@ namespace WinPaletter.GitHub
                     }
                 }
 
-                OnDeviceFlowInitiated?.Invoke(deviceFlow.UserCode, deviceFlow.ExpiresIn, deviceFlow.VerificationUri);
-                OnCountdownStarted?.Invoke(deviceFlow.ExpiresIn);
+                Events.OnDeviceFlowInitiatedResolver(deviceFlow.UserCode, deviceFlow.ExpiresIn, deviceFlow.VerificationUri);
+                Events.OnCountdownStartedEvent(deviceFlow.ExpiresIn);
 
                 using (_cancellationTokenSource = new CancellationTokenSource())
                 {
@@ -351,14 +215,14 @@ namespace WinPaletter.GitHub
             catch (OperationCanceledException)
             {
                 Program.Log?.Write(LogEventLevel.Information, "Device Flow login canceled by user.");
-                OnLoginCanceled?.Invoke();
+                Events.OnLoginCanceledEvent();
                 return false;
             }
             catch (Exception ex)
             {
                 Program.Log?.Write(LogEventLevel.Error, "Device Flow initiation failed.", ex);
-                OnDeviceFlowInitiationFailed?.Invoke();
-                OnUnexpectedError?.Invoke(ex.Message);
+                Events.OnDeviceFlowInitiationFailedEvent();
+                Events.OnUnexpectedErrorEvent(ex.Message);
                 return false;
             }
         }
@@ -391,7 +255,7 @@ namespace WinPaletter.GitHub
             if (deviceFlow == null)
             {
                 Program.Log?.Write(LogEventLevel.Warning, "PollForAuthorizationAsync called but deviceFlow is null.");
-                OnDeviceFlowNotInitiated?.Invoke();
+                Events.OnDeviceFlowNotInitiatedEvent();
                 return;
             }
 
@@ -403,12 +267,12 @@ namespace WinPaletter.GitHub
             {
                 while (remaining > 0 && !cancellationToken.IsCancellationRequested)
                 {
-                    OnCountdownTick?.Invoke(remaining);
+                    Events.OnCountdownTickEvent(remaining);
                     await Task.Delay(1000, cancellationToken).ConfigureAwait(false);
                     remaining--;
                 }
 
-                if (!cancellationToken.IsCancellationRequested) OnCountdownTick?.Invoke(0);
+                if (!cancellationToken.IsCancellationRequested) Events.OnCountdownTickEvent(0);
             }, cancellationToken);
 
             try
@@ -417,41 +281,59 @@ namespace WinPaletter.GitHub
                 {
                     try
                     {
-                        token = await Client.Oauth.CreateAccessTokenForDeviceFlow(ClientId, deviceFlow).ConfigureAwait(false);
+                        // Safe GitHub call for token creation
+                        token = await Helpers.ExecuteGitHubActionSafeAsync(async () =>
+                        {
+                            return await Client.Oauth.CreateAccessTokenForDeviceFlow(ClientId, deviceFlow);
+                        });
+
+                        if (token == null)
+                        {
+                            Program.Log?.Write(LogEventLevel.Warning, "Token request failed due to network, rate limit, or server issues.");
+                            await Task.Delay(deviceFlow.Interval * 1000, cancellationToken).ConfigureAwait(false);
+                            continue;
+                        }
 
                         if (!string.IsNullOrEmpty(token.AccessToken))
                         {
-                            Client.Credentials = new Credentials(token.AccessToken);
-                            Octokit.User user = await Client.User.Current().ConfigureAwait(false);
-                            OnAuthorizationSuccess?.Invoke(user);
-                            Program.Log?.Write(LogEventLevel.Information, $"Authorization successful for {user.Login}.");
+                            // Safe GitHub call for user info
+                            Octokit.User user = await Helpers.ExecuteGitHubActionSafeAsync(async () =>
+                            {
+                                Client.Credentials = new Credentials(token.AccessToken);
+                                return await Client.User.Current().ConfigureAwait(false);
+                            });
 
-                            SaveToken(token.AccessToken);
-                            return;
+                            if (user != null)
+                            {
+                                Events.OnAuthorizationSuccessEvent(user);
+                                Program.Log?.Write(LogEventLevel.Information, $"Authorization successful for {user.Login}.");
+                                SaveToken(token.AccessToken);
+                                return;
+                            }
                         }
                     }
                     catch (AuthorizationException ex)
                     {
                         if (ex.Message.Contains("authorization_pending"))
                         {
-                            OnAuthorizationPending?.Invoke();
+                            Events.OnAuthorizationPendingEvent();
                             Program.Log?.Write(LogEventLevel.Information, "Authorization pending.");
                         }
                         else if (ex.Message.Contains("slow_down"))
                         {
-                            OnLoginRetry?.Invoke();
+                            Events.OnLoginRetryEvent();
                             Program.Log?.Write(LogEventLevel.Information, "GitHub requested slow_down, retrying...");
                             await Task.Delay(deviceFlow.Interval * 2000, cancellationToken).ConfigureAwait(false);
                         }
                         else if (ex.Message.Contains("bad_verification_code"))
                         {
-                            OnInsufficientPermissions?.Invoke();
+                            Events.OnInsufficientPermissionsEvent();
                             Program.Log?.Write(LogEventLevel.Warning, "Bad verification code: insufficient permissions.");
                             return;
                         }
                         else
                         {
-                            OnAuthorizationFailure?.Invoke(ex.Message);
+                            Events.OnAuthorizationFailureEvent(ex.Message);
                             Program.Log?.Write(LogEventLevel.Error, "Authorization failed.", ex);
                             return;
                         }
@@ -462,18 +344,18 @@ namespace WinPaletter.GitHub
 
                 if (!cancellationToken.IsCancellationRequested)
                 {
-                    OnLoginTimedOut?.Invoke();
+                    Events.OnLoginTimedOutEvent();
                     Program.Log?.Write(LogEventLevel.Warning, "Device Flow login timed out.");
                 }
                 else
                 {
-                    OnLoginCanceled?.Invoke();
+                    Events.OnLoginCanceledEvent();
                     Program.Log?.Write(LogEventLevel.Information, "Device Flow login canceled.");
                 }
             }
             catch (OperationCanceledException)
             {
-                OnLoginCanceled?.Invoke();
+                Events.OnLoginCanceledEvent();
                 Program.Log?.Write(LogEventLevel.Information, "Polling canceled.");
             }
             finally
@@ -538,7 +420,7 @@ namespace WinPaletter.GitHub
                     if (process != null)
                     {
                         // Wait a bit for the window to appear
-                        await Task.Delay(1000).ConfigureAwait(false);
+                        await Task.Delay(1000);
 
                         // Bring to front using Win32 API
                         NativeMethods.User32.SetForegroundWindow(process.Handle);
@@ -549,16 +431,15 @@ namespace WinPaletter.GitHub
                 // Update user info
                 User.UpdateGitHubLoginStatus(false);
                 User.GitHub = null;
-                await Forms.UserSwitch.UpdateGitHubLoginData().ConfigureAwait(false);
 
                 // Fire signed out event
                 Program.Log?.Write(LogEventLevel.Information, "GitHub sign out completed successfully.");
-                OnSignedOut?.Invoke();
+                Events.OnSignedOutEvent();
             }
             catch (Exception ex)
             {
                 Program.Log?.Write(LogEventLevel.Error, "GitHub sign out failed.", ex);
-                OnSignOutFailed?.Invoke(ex.Message);
+                Events.OnSignOutFailedEvent(ex.Message);
             }
         }
 

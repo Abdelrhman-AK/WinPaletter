@@ -15,6 +15,7 @@ using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinPaletter.GitHub;
 using WinPaletter.NativeMethods;
 
 namespace WinPaletter
@@ -85,65 +86,6 @@ namespace WinPaletter
                 /// Event raised after switching user
                 /// </summary>
                 AfterChange
-            }
-        }
-
-        /// <summary>
-        /// Event args that have data of GitHub user login statue change event
-        /// </summary>
-        public class GitHubUserChangeEventArgs : EventArgs
-        {
-            public bool IsLoggedIn { get; set; } = false;
-        }
-
-        /// <summary>
-        /// Delegate for user change event
-        /// </summary>
-        /// <param name="e"></param>
-        public delegate void GitHubUserChangeEventHandler(GitHubUserChangeEventArgs e);
-
-        /// <summary>
-        /// Event for user change
-        /// </summary>
-        public static event GitHubUserChangeEventHandler GitHubUserSwitch;
-
-        /// <summary>
-        /// Void method occurs on GitHub user change event
-        /// </summary>
-        /// <param name="e"></param>
-        public async static void OnGitHubUserSwitch(GitHubUserChangeEventArgs e)
-        {
-            try
-            {
-                Program.Log?.Write(LogEventLevel.Information, $"GitHub user switch event triggered. {nameof(e.IsLoggedIn)}: {e.IsLoggedIn}");
-
-                if (e.IsLoggedIn)
-                {
-                    if (!Program.IsNetworkAvailable)
-                    {
-                        Program.Log?.Write(LogEventLevel.Warning, "Network unavailable. Cannot load GitHub user.");
-                        return;
-                    }
-
-                    GitHub = await Program.GitHub.Client.User.Current().ConfigureAwait(false);
-                    Program.Log?.Write(LogEventLevel.Information, $"GitHub user loaded: {GitHub.Login}");
-
-                    GitHub_Avatar?.Dispose();
-                    await DownloadAvatarInternalAsync().ConfigureAwait(false);
-                    Program.Log?.Write(LogEventLevel.Information, "GitHub avatar downloaded successfully.");
-                }
-                else
-                {
-                    GitHub = null;
-                    GitHub_Avatar?.Dispose();
-                    Program.Log?.Write(LogEventLevel.Information, "GitHub user logged out. Avatar disposed.");
-                }
-
-                GitHubUserSwitch?.Invoke(e);
-            }
-            catch (Exception ex)
-            {
-                Program.Log?.Write(LogEventLevel.Error, "Error during GitHub user switch.", ex);
             }
         }
 
@@ -525,7 +467,6 @@ namespace WinPaletter
         private static readonly object avatarLock = new();
         private static readonly string AvatarCache = Path.Combine(SysPaths.appData, "GitHub", "Avatar.png");
         private static readonly string ETagPath = Path.Combine(SysPaths.appData, "GitHub", "Avatar.etag");
-        public static event Action GitHubAvatarUpdated;
         private static volatile bool avatarLoading;
 
         /// <summary>
@@ -597,7 +538,7 @@ namespace WinPaletter
             }
         }
 
-        private static async Task<bool> DownloadAvatarInternalAsync()
+        public static async Task<bool> DownloadAvatarInternalAsync()
         {
             if (!Program.IsNetworkAvailable)
             {
@@ -648,7 +589,7 @@ namespace WinPaletter
             github_avatar = newAvatar;
             old?.Dispose();
 
-            GitHubAvatarUpdated?.Invoke();
+            Events.OnGitHubAvatarUpdated();
         }
 
         private static void DisposeAvatar()
@@ -719,7 +660,7 @@ namespace WinPaletter
         public static void UpdateGitHubLoginStatus(bool status)
         {
             GitHub_LoggedIn = status;
-            OnGitHubUserSwitch(new GitHubUserChangeEventArgs() { IsLoggedIn = status });
+            Events.OnGitHubUserSwitch(new() { IsLoggedIn = status });
         }
 
         /// <summary>

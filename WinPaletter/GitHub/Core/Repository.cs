@@ -46,11 +46,16 @@ namespace WinPaletter.GitHub
         /// </remarks>
         public static async Task<bool> ExistsAsync(string repository = null)
         {
-            if (!Program.IsNetworkAvailable) return false;
-
             try
             {
-                Octokit.Repository repo = await Client.Repository.Get(Owner, repository).ConfigureAwait(false);
+                Octokit.Repository repo = await Helpers.ExecuteGitHubActionSafeAsync(() =>
+                {
+                    return Client.Repository.Get(Owner, repository);
+                });
+
+                // If rate-limited, helper returns default => null
+                if (repo == null) return false;
+
                 Program.Log?.Write(LogEventLevel.Information, $"Repository found: {repo.FullName}");
                 return true;
             }
@@ -79,17 +84,26 @@ namespace WinPaletter.GitHub
         /// </remarks>
         public static async Task<Octokit.Repository> ForkAsync(string repository = null)
         {
-            if (!Program.IsNetworkAvailable) return null;
-
             try
             {
-                Octokit.Repository forked = await Client.Repository.Forks.Create(OriginalOwner, repository, new()).ConfigureAwait(false);
+                Octokit.Repository forked = await Helpers.ExecuteGitHubActionSafeAsync(() =>
+                {
+                    return Client.Repository.Forks.Create(OriginalOwner, repository, new());
+                });
+
+                if (forked == null) return null; // rate-limited
+
                 Program.Log?.Write(LogEventLevel.Information, $"Forked repository: {forked.FullName}");
                 return forked;
             }
+            catch (NotFoundException)
+            {
+                Program.Log?.Write(LogEventLevel.Warning, $"Original repository not found: {OriginalOwner}/{repository}");
+                return null;
+            }
             catch (Exception ex)
             {
-                Program.Log?.Write(LogEventLevel.Error, $"Error forking repository {Owner}/{repository}", ex);
+                Program.Log?.Write(LogEventLevel.Error, $"Error forking repository {OriginalOwner}/{repository}", ex);
                 return null;
             }
         }
@@ -107,21 +121,30 @@ namespace WinPaletter.GitHub
         /// <exception cref="Octokit.ApiException">Thrown when GitHub API rejects the request.</exception>
         public static async Task<PullRequest> CreatePullRequestAsync(string title, string body)
         {
-            if (!Program.IsNetworkAvailable) return null;
-
             try
             {
                 NewPullRequest newPR = new(title, $"{Owner}:{Branch.Name}", "main") { Body = body };
-                PullRequest pr = await Client.PullRequest.Create(OriginalOwner, Name, newPR).ConfigureAwait(false);
+
+                PullRequest pr = await Helpers.ExecuteGitHubActionSafeAsync(() =>
+                {
+                    return Client.PullRequest.Create(OriginalOwner, Name, newPR);
+                });
+
+                if (pr == null) return null; // rate-limited
+
                 Program.Log?.Write(LogEventLevel.Information, $"Pull request created: {pr.HtmlUrl}");
                 return pr;
+            }
+            catch (NotFoundException)
+            {
+                Program.Log?.Write(LogEventLevel.Warning, $"Repository not found: {OriginalOwner}/{Name}");
+                return null;
             }
             catch (Exception ex)
             {
                 Program.Log?.Write(LogEventLevel.Error, $"Error creating pull request to {OriginalOwner}/{Name}", ex);
+                return null;
             }
-
-            return null;
         }
 
         /// <summary>
@@ -130,8 +153,6 @@ namespace WinPaletter.GitHub
         /// <returns>True if PR creation is valid.</returns>
         public static async Task<bool> CanCreatePullRequestAsync()
         {
-            if (!Program.IsNetworkAvailable) return false;
-
             if (string.IsNullOrWhiteSpace(Branch.Name) || Branch.Name.Equals("main", StringComparison.OrdinalIgnoreCase))
             {
                 Program.Log?.Write(LogEventLevel.Error, "Invalid branch for PR.");
@@ -141,10 +162,14 @@ namespace WinPaletter.GitHub
             try
             {
                 // Branch must exist on fork
-                await Client.Git.Reference.Get(Owner, Name, $"heads/{Branch.Name}").ConfigureAwait(false);
+                Reference reference = await Helpers.ExecuteGitHubActionSafeAsync(() => Client.Git.Reference.Get(Owner, Name, $"heads/{Branch.Name}"));
+
+                if (reference == null) return false; // rate-limited
 
                 // Must have commits
-                var compare = await Client.Repository.Commit.Compare(OriginalOwner, Name, "main", $"{Owner}:{Branch.Name}").ConfigureAwait(false);
+                CompareResult compare = await Helpers.ExecuteGitHubActionSafeAsync(() => Client.Repository.Commit.Compare(OriginalOwner, Name, "main", $"{Owner}:{Branch.Name}"));
+
+                if (compare == null) return false; // rate-limited
 
                 if (compare.TotalCommits == 0)
                 {
@@ -153,13 +178,15 @@ namespace WinPaletter.GitHub
                 }
 
                 // No duplicate PR
-                var prs = await Client.PullRequest.GetAllForRepository(OriginalOwner, Name,
-                    new PullRequestRequest
-                    {
-                        State = ItemStateFilter.Open,
-                        Head = $"{Owner}:{Branch.Name}",
-                        Base = "main"
-                    }).ConfigureAwait(false);
+                IReadOnlyList<PullRequest> prs = await Helpers.ExecuteGitHubActionSafeAsync(() => Client.PullRequest.GetAllForRepository(OriginalOwner, Name,
+                        new PullRequestRequest
+                        {
+                            State = ItemStateFilter.Open,
+                            Head = $"{Owner}:{Branch.Name}",
+                            Base = "main"
+                        }));
+
+                if (prs == null) return false; // rate-limited
 
                 if (prs.Any())
                 {
@@ -168,6 +195,11 @@ namespace WinPaletter.GitHub
                 }
 
                 return true;
+            }
+            catch (NotFoundException)
+            {
+                Program.Log?.Write(LogEventLevel.Warning, $"Branch or repository not found: {Owner}/{Name}");
+                return false;
             }
             catch (Exception ex)
             {

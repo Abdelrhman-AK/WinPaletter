@@ -363,6 +363,8 @@
       <DependentUpon>ColorEffectControl.cs</DependentUpon>
     </Compile>
     <Compile Include="GitHub\Core\Branch.cs" />
+    <Compile Include="GitHub\Core\Events.cs" />
+    <Compile Include="GitHub\Core\Helpers.cs" />
     <Compile Include="GitHub\GitHub_Dashboard.cs">
       <SubType>Form</SubType>
     </Compile>

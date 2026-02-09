@@ -24,8 +24,7 @@ namespace WinPaletter.GitHub
         private static List<ListViewItem> copiedItems;
         private static ListViewItem itemBeingEdited;
         private static CancellationTokenSource cts = new();
-        private static SoundPlayer SP = new();
-        private static bool AltPlayingMethod = false;
+
         public static ActionQueue ActionQueue { get; private set; } = new();
 
         #region Properties
@@ -204,7 +203,7 @@ namespace WinPaletter.GitHub
         /// Set the branch to use for repository access.
         /// </summary>
         /// <param name="branch"></param>
-        public static async void SetBranch(string branch)
+        private static async void SetBranch(string branch)
         {
             GitHub.Repository.Branch.Name = branch;
             Cache.Clear();
@@ -268,7 +267,7 @@ namespace WinPaletter.GitHub
                 await FetchRecursive(_root, entries, null, cts);
 
                 // After this, store entries in _infoCache
-                foreach (var entry in entries)
+                foreach (RepositoryContent entry in entries)
                 {
                     if (entry == null) continue;
 
@@ -339,6 +338,9 @@ namespace WinPaletter.GitHub
 
                 throw;
             }
+
+            breadCrumb?.FinishLoadingAnimation();
+            breadCrumb.Value = breadCrumb.Minimum;
         }
 
         /// <summary>
@@ -648,7 +650,7 @@ namespace WinPaletter.GitHub
                 if (_boundTree.Nodes.Count == 0) return;
 
                 TreeNode rootNode = _boundTree.Nodes[0];
-                if (rootNode.Tag == null) rootNode.Tag = _root;
+                rootNode.Tag ??= _root;
 
                 path = path?.Trim().TrimEnd('/');
 
@@ -769,8 +771,7 @@ namespace WinPaletter.GitHub
             _boundTree.Nodes.Add(root);
 
             // Add children starting from parent of last segment
-            string parentPath = string.Join("/", _root.Split('/').Take(_root.Split('/').Length - 1));
-            AddChildren(root, _root); // still pass full _root, AddChildren will now add only children
+            AddChildren(root, _root);
 
             _boundTree.EndUpdate();
             Program.Log?.Write(LogEventLevel.Information, "BuildTree finished");
@@ -797,7 +798,7 @@ namespace WinPaletter.GitHub
                 return;
             }
 
-            foreach (var dir in Cache.GetSubEntries(NormalizePath(parentPath), Cache.EntryFilter.DirectoriesOnly))
+            foreach (Entry dir in Cache.GetSubEntries(NormalizePath(parentPath), Cache.EntryFilter.DirectoriesOnly))
             {
                 TreeNode node = new(dir.Name)
                 {
@@ -945,7 +946,7 @@ namespace WinPaletter.GitHub
                 notCutItem.ImageKey = notCutItem.ImageKey.Replace("ghost_", string.Empty);
             }
 
-            CanPasteChanged?.Invoke(null, CanPaste);
+            Events.OnCanPasteChanged(CanPaste);
         }
 
         public static void Init_Copy()
@@ -995,7 +996,7 @@ namespace WinPaletter.GitHub
                 copiedItems = [.. itemsToCopy];
             }
 
-            CanPasteChanged?.Invoke(null, CanPaste);
+            Events.OnCanPasteChanged(CanPaste);
         }
 
         #region Context Menus Initialization
@@ -1125,13 +1126,7 @@ namespace WinPaletter.GitHub
 
         #region Events
 
-        public static event EventHandler<bool> CanPasteChanged;
 
-        public static event EventHandler<bool> CanDoIOChanged;
-
-        public static event EventHandler<string> Navigated;
-
-        public static event EventHandler<string> StatusLabelChanged;
 
         /// <summary>
         /// Attaches event handlers to the specified tree and list controls for navigation and interaction.
@@ -1329,7 +1324,7 @@ namespace WinPaletter.GitHub
             item.Text = newName;
             await RenameFile(item, parentDirPath, e);
 
-            if (linkedItem != null && newName != oldText && (Program.Settings.UsersServices.GitHub_AutoOperateOnLinkedFiles ||  Forms.GitHub_LinkedFilesConfirmation.ShowDialog(oldBaseName, newBaseName, GitHub_LinkedFilesConfirmation.Operation.Rename) == DialogResult.Yes))
+            if (linkedItem != null && newName != oldText && (Program.Settings.UsersServices.GitHub_AutoOperateOnLinkedFiles || Forms.GitHub_LinkedFilesConfirmation.ShowDialog(oldBaseName, newBaseName, GitHub_LinkedFilesConfirmation.Operation.Rename) == DialogResult.Yes))
             {
                 string linkedNewName = $"{newBaseName}{linkedExt}";
                 linkedItem.Text = linkedNewName;
@@ -1412,7 +1407,10 @@ namespace WinPaletter.GitHub
             }
             else if (e.Alt && e.KeyCode == Keys.Enter)
             {
-                // Show properties/details of selected item
+                if (_boundList.SelectedItems.Count > 0)
+                {
+                    Forms.GitHub_EntryProperties.Load_Entries([.. _boundList.SelectedItems.Cast<ListViewItem>()]);
+                }
             }
             else if (e.Control && e.KeyCode == Keys.F)
             {
@@ -1428,18 +1426,18 @@ namespace WinPaletter.GitHub
 
         private static void ListView_SelectedIndexChanged(object sender, EventArgs e)
         {
-            StatusLabelChanged?.Invoke(null, FileSystem.StatusLabel);
-            CanDoIOChanged?.Invoke(null, _boundList.SelectedItems.Count > 0);
+            Events.OnStatusLabelChanged(StatusLabel);
+            Events.OnCanDoIOChanged(_boundList.SelectedItems.Count > 0);
         }
 
         private static void ListView_ItemChecked(object sender, ItemCheckedEventArgs e)
         {
-            StatusLabelChanged?.Invoke(null, FileSystem.StatusLabel);
+            Events.OnStatusLabelChanged(StatusLabel);
         }
 
         private static void ListView_ItemActivate(object sender, EventArgs e)
         {
-            StatusLabelChanged?.Invoke(null, FileSystem.StatusLabel);
+            Events.OnStatusLabelChanged(StatusLabel);
         }
 
         #region Context Menus Event Handlers
@@ -1551,8 +1549,7 @@ namespace WinPaletter.GitHub
             bool willPlayAudio = CurrentPath is not null && !CurrentPath.Equals(newPath, StringComparison.OrdinalIgnoreCase);
 
             // Ensure path starts with root
-            if (!newPath.StartsWith(_root, StringComparison.OrdinalIgnoreCase))
-                newPath = _root + "/" + newPath.TrimStart('/');
+            if (!newPath.StartsWith(_root, StringComparison.OrdinalIgnoreCase)) newPath = _root + "/" + newPath.TrimStart('/');
 
             string resolvedPath = newPath;
             while (!Cache.Contains(resolvedPath) && !string.Equals(resolvedPath, _root, StringComparison.OrdinalIgnoreCase))
@@ -1580,7 +1577,8 @@ namespace WinPaletter.GitHub
             }
 
             CurrentPath = resolvedPath;
-            Navigated?.Invoke(null, CurrentPath);
+
+            Events.OnNavigated(CurrentPath);
 
             await PopulateListViewAsync(CurrentPath);
 
@@ -1832,13 +1830,17 @@ namespace WinPaletter.GitHub
                     _boundbreadcrumbControl.Value = 0;
                     _boundbreadcrumbControl.StartMarquee();
 
-                    // Add initial placeholder items
+                    // Add initial placeholder items that does not exist on bound list
                     List<ListViewItem> placeholderItems = [];
                     foreach (ListViewItem item in items)
                     {
-                        ListViewItem fakeItem = new() { Text = item.Text, Tag = null, ImageKey = item.ImageKey };
-                        placeholderItems.Add(fakeItem);
-                        _boundList?.Items.Add(fakeItem);
+                        bool exists = _boundList.Items.Cast<ListViewItem>().Any(i => i.Text == item.Text);
+                        if (!exists)
+                        {
+                            ListViewItem newItem = new() { Text = item.Text, Tag = null, ImageKey = item.ImageKey };
+                            placeholderItems.Add(newItem);
+                            _boundList.Items.Add(newItem);
+                        }
                     }
 
                     // Separate files and directories
@@ -1950,7 +1952,7 @@ namespace WinPaletter.GitHub
                 // Remove cut items from memory
                 if ((cutItems?.Count ?? 0) > 0) cutItems.Clear();
 
-                CanPasteChanged?.Invoke(null, CanPaste);
+                Events.OnCanPasteChanged(CanPaste);
 
                 _boundbreadcrumbControl.FinishLoadingAnimation();
             }
@@ -2129,8 +2131,7 @@ namespace WinPaletter.GitHub
                 _boundbreadcrumbControl.StopMarquee();
                 _boundbreadcrumbControl.Value = 0;
 
-                StopAudio();
-                PlayAudio(Program.TM.Sounds.Snd_Explorer_EmptyRecycleBin);
+                CustomSystemSounds.EmptyRecycleBin.Play();
             }
         }
 
@@ -2342,62 +2343,6 @@ namespace WinPaletter.GitHub
 
         #endregion
 
-        #region Audio helpers
-
-        private static void PlayAudio(string snd)
-        {
-            AltPlayingMethod = false;
-
-            if (File.Exists(snd))
-            {
-                if (SP is not null)
-                {
-                    SP?.Stop();
-                    SP?.Dispose();
-                }
-
-                try
-                {
-                    using (FileStream FS = new(snd, System.IO.FileMode.Open, FileAccess.Read))
-                    {
-                        SP = new(FS);
-                        SP?.Load();
-                        SP?.Play();
-                    }
-                }
-                catch // Use method #2
-                {
-                    AltPlayingMethod = true;
-                    NativeMethods.Helpers.PlayAudio(snd);
-                }
-            }
-
-            else
-            {
-                if (AltPlayingMethod)
-                    NativeMethods.Helpers.StopAudio();
-
-                if (SP is not null)
-                {
-                    SP?.Stop();
-                    SP?.Dispose();
-                }
-            }
-        }
-
-        private static void StopAudio()
-        {
-            if (AltPlayingMethod) NativeMethods.Helpers.StopAudio();
-
-            if (SP is not null)
-            {
-                SP?.Stop();
-                SP?.Dispose();
-            }
-        }
-
-        #endregion
-
         #region Search
 
         /// <summary>
@@ -2477,11 +2422,10 @@ namespace WinPaletter.GitHub
                     }
                 });
 
-                matches = matches
+                matches = [.. matches
                     .Where(e => e.Path.StartsWith(CurrentPath, StringComparison.OrdinalIgnoreCase))
                     .OrderBy(e => e.Type == Octokit.ContentType.Dir ? 0 : 1)
-                    .ThenBy(e => e.Name)
-                    .ToList();
+                    .ThenBy(e => e.Name)];
 
                 Program.Log?.Write(LogEventLevel.Information, $"SearchAsync found {matches.Count} matching entries under '{CurrentPath}'");
 

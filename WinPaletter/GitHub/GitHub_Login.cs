@@ -51,62 +51,70 @@ namespace WinPaletter
 
             githubLbl_elapsedSec.Font = Fonts.ConsoleMedium;
 
-            Program.GitHub?.OnCountdownStarted += LoginManager_OnCountdownStarted;
-            Program.GitHub?.OnCountdownTick += LoginManager_OnCountdownTick;
-            Program.GitHub?.OnCountdownEnded += LoginManager_OnCountdownEnded;
-            Program.GitHub?.OnDeviceFlowInitiated += LoginManager_OnDeviceFlowInitiated;
-            Program.GitHub?.OnAuthorizationSuccess += LoginManager_OnAuthorizationSuccess;
-            Program.GitHub?.OnAuthorizationFailure += LoginManager_OnAuthorizationFailure;
+            GitHub.Events.OnCountdownStarted += LoginManager_OnCountdownStarted;
+            GitHub.Events.OnCountdownTick += LoginManager_OnCountdownTick;
+            GitHub.Events.OnCountdownEnded += LoginManager_OnCountdownEnded;
+            GitHub.Events.OnDeviceFlowInitiated += LoginManager_OnDeviceFlowInitiated;
+            GitHub.Events.OnAuthorizationSuccess += LoginManager_OnAuthorizationSuccess;
+            GitHub.Events.OnAuthorizationFailure += LoginManager_OnAuthorizationFailure;
 
             Forms.GlassWindow.Show(Forms.MainForm);
         }
 
-        private void LoginManager_OnAuthorizationFailure(string obj)
+        private void LoginManager_OnAuthorizationFailure(object sender, string obj)
         {
-            Invoke(() =>
+            if (IsHandleCreated && IsShown)
             {
-                label23.Text = obj;
-                signin_btn.Visible = true;
-                Program.Animator.HideSync(tablessControl1);
-                tablessControl1.SelectedIndex = 4;
-                Program.Animator.ShowSync(tablessControl1);
-            });
+                    Invoke(() =>
+                {
+                    label23.Text = obj;
+                    signin_btn.Visible = true;
+                    Program.Animator.HideSync(tablessControl1);
+                    tablessControl1.SelectedIndex = 4;
+                    Program.Animator.ShowSync(tablessControl1);
+                });
+            }
         }
 
-        private async void LoginManager_OnAuthorizationSuccess(Octokit.User obj)
+        private async void LoginManager_OnAuthorizationSuccess(object sender, Octokit.User obj)
         {
-            progressBar2.Visible = true;
-
-            Program.Animator.HideSync(tablessControl1);
-            tablessControl1.SelectedIndex = 1;
-            Program.Animator.ShowSync(tablessControl1);
-
-            User.GitHub = await Program.GitHub.Client.User.Current();
-
-            using (DownloadManager DM = new())
+            if (IsHandleCreated && IsShown)
             {
-                byte[] data = await DM.ReadAsync(User.GitHub.AvatarUrl).ConfigureAwait(false);
-                using (MemoryStream ms = new(data))
-                using (Bitmap bmp = Image.FromStream(ms) as Bitmap)
-                using (Bitmap bmp_resized = bmp.Resize(pictureBox6.Size))
+                progressBar2.Visible = true;
+
+                Program.Animator.HideSync(tablessControl1);
+                tablessControl1.SelectedIndex = 1;
+                Program.Animator.ShowSync(tablessControl1);
+
+                User.GitHub = await Program.GitHub.Client.User.Current();
+
+                using (DownloadManager DM = new())
                 {
-                    pictureBox6.Image = bmp_resized.ToCircular();
+                    byte[] data = await DM.ReadAsync(User.GitHub.AvatarUrl).ConfigureAwait(false);
+                    using (MemoryStream ms = new(data))
+                    using (Bitmap bmp = Image.FromStream(ms) as Bitmap)
+                    using (Bitmap bmp_resized = bmp.Resize(pictureBox6.Size))
+                    {
+                        pictureBox6.Image = bmp_resized.ToCircular();
+                    }
                 }
+
+                label13.Text = $"{Program.Localization.Strings.General.Welcome}, {User.GitHub.Login}!";
+
+                Program.Animator.HideSync(tablessControl1);
+                tablessControl1.SelectedIndex = 3;
+                Program.Animator.ShowSync(tablessControl1);
+
+                progressBar2.Visible = false;
             }
-
-            label13.Text = $"{Program.Localization.Strings.General.Welcome}, {User.GitHub.Login}!";
-
-            Program.Animator.HideSync(tablessControl1);
-            tablessControl1.SelectedIndex = 3;
-            Program.Animator.ShowSync(tablessControl1);
-
-            progressBar2.Visible = false;
         }
 
         private void LoginManager_OnDeviceFlowInitiated(string arg1, int arg2, string arg3)
         {
-            // Invoke is needed because this event is raised from a non-UI thread
-            Invoke(() =>
+            if (IsHandleCreated && IsShown)
+            {
+                // Invoke is needed because this event is raised from a non-UI thread
+                Invoke(() =>
             {
                 progressBar2.Visible = false;
 
@@ -129,30 +137,40 @@ namespace WinPaletter
                 progressBar3.Value = expiresIn;
                 githubLbl_elapsedSec.Text = $"{expiresIn / 60:D2}:{expiresIn % 60:D2}";
             });
+            }
         }
 
-        private void LoginManager_OnCountdownEnded()
+        private void LoginManager_OnCountdownEnded(object sender, EventArgs e)
         {
-            // Invoke is needed because this event is raised from a non-UI thread
-            Invoke(() =>
+            if (IsHandleCreated && IsShown)
+            {
+                // Invoke is needed because this event is raised from a non-UI thread
+                Invoke(() =>
             {
                 progressBar3.Visible = false;
                 tablessControl1.SelectedIndex = 0;
                 signin_btn.Visible = true;
             });
+            }
         }
 
-        private void LoginManager_OnCountdownTick(int obj)
+        private void LoginManager_OnCountdownTick(object sender, int obj)
         {
-            progressBar3.Value = obj;
-            githubLbl_elapsedSec.Text = $"{obj / 60:D2}:{obj % 60:D2}";
+            if (IsHandleCreated && IsShown)
+            {
+                progressBar3.Value = obj;
+                githubLbl_elapsedSec.Text = $"{obj / 60:D2}:{obj % 60:D2}";
+            }
         }
 
-        private void LoginManager_OnCountdownStarted(int obj)
+        private void LoginManager_OnCountdownStarted(object sender, int obj)
         {
-            Program.Animator.HideSync(tablessControl1);
-            tablessControl1.SelectedIndex = 2;
-            Program.Animator.ShowSync(tablessControl1);
+            if (IsHandleCreated && IsShown)
+            {
+                Program.Animator.HideSync(tablessControl1);
+                tablessControl1.SelectedIndex = 2;
+                Program.Animator.ShowSync(tablessControl1);
+            }
         }
 
         private async void Button2_Click(object sender, EventArgs e)
@@ -200,12 +218,12 @@ namespace WinPaletter
         protected override async void OnFormClosing(FormClosingEventArgs e)
         {
             // Detach events
-            Program.GitHub?.OnCountdownStarted -= LoginManager_OnCountdownStarted;
-            Program.GitHub?.OnCountdownTick -= LoginManager_OnCountdownTick;
-            Program.GitHub?.OnCountdownEnded -= LoginManager_OnCountdownEnded;
-            Program.GitHub?.OnDeviceFlowInitiated -= LoginManager_OnDeviceFlowInitiated;
-            Program.GitHub?.OnAuthorizationSuccess -= LoginManager_OnAuthorizationSuccess;
-            Program.GitHub?.OnAuthorizationFailure -= LoginManager_OnAuthorizationFailure;
+            GitHub.Events.OnCountdownStarted -= LoginManager_OnCountdownStarted;
+            GitHub.Events.OnCountdownTick -= LoginManager_OnCountdownTick;
+            GitHub.Events.OnCountdownEnded -= LoginManager_OnCountdownEnded;
+            GitHub.Events.OnDeviceFlowInitiated -= LoginManager_OnDeviceFlowInitiated;
+            GitHub.Events.OnAuthorizationSuccess -= LoginManager_OnAuthorizationSuccess;
+            GitHub.Events.OnAuthorizationFailure -= LoginManager_OnAuthorizationFailure;
 
             Program.GitHub.CancelLogin();
 

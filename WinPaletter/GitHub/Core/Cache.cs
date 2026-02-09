@@ -56,18 +56,6 @@ namespace WinPaletter.GitHub
             /// </summary>
             public static readonly TimeSpan CacheTTL = TimeSpan.FromSeconds(30);
 
-            private static string _lastRepoTreeSha;
-
-            private static async Task<bool> RepositoryTreeChangedAsync()
-            {
-                var reference = await Program.GitHub.Client.Git.Reference.Get(Repository.Owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}");
-                string currentSha = reference.Object.Sha;
-
-                if (_lastRepoTreeSha == currentSha) return false;
-
-                _lastRepoTreeSha = currentSha;
-                return true;
-            }
 
             public static void Add(string path, Entry entry)
             {
@@ -139,9 +127,7 @@ namespace WinPaletter.GitHub
                 path = NormalizePath(path);
 
                 // Remove from _cache recursively (file or directory)
-                foreach (var key in _cache.Keys
-                    .Where(k => k.Equals(path, StringComparison.OrdinalIgnoreCase) || k.StartsWith(path + "/", StringComparison.OrdinalIgnoreCase))
-                    .ToList())
+                foreach (string key in _cache.Keys.Where(k => k.Equals(path, StringComparison.OrdinalIgnoreCase) || k.StartsWith(path + "/", StringComparison.OrdinalIgnoreCase)).ToList())
                 {
                     _cache.TryRemove(key, out _);
                 }
@@ -199,7 +185,7 @@ namespace WinPaletter.GitHub
                 };
 
                 // Apply sorting
-                List<Entry> result = entries.ToList();
+                List<Entry> result = [.. entries];
                 switch (sort)
                 {
                     case EntrySort.Default:
@@ -364,48 +350,6 @@ namespace WinPaletter.GitHub
                 }
             }
 
-            /// <summary>
-            /// Builds a dictionary of changes from the FileSystem cache.
-            /// Key = repository path, Value = new content (null if deleted)
-            /// </summary>
-            public static Dictionary<string, string> BuildChanges()
-            {
-                var changes = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-
-                foreach (var kv in _cache)
-                {
-                    Entry entry = kv.Value.Entry;
-
-                    if (entry.Type == EntryType.File)
-                    {
-                        string currentContent = entry.Content?.Content;
-                        string lastSha = entry.CommitSha;
-
-                        if (currentContent == null)
-                        {
-                            // File removed from UI
-                            changes[entry.Path] = null;
-                        }
-                        else
-                        {
-                            string contentSha = ComputeSha1(currentContent);
-
-                            // New file or modified content
-                            if (string.IsNullOrEmpty(lastSha) || lastSha != contentSha)
-                                changes[entry.Path] = currentContent;
-                        }
-                    }
-                    else if (entry.Type == EntryType.Dir && entry.Children != null)
-                    {
-                        // Recurse into children
-                        foreach (Entry child in entry.Children)
-                            RecurseEntry(child, changes);
-                    }
-                }
-
-                return changes;
-            }
-
             private static void RecurseEntry(Entry entry, Dictionary<string, string> changes)
             {
                 if (entry.Type == EntryType.File)
@@ -433,14 +377,16 @@ namespace WinPaletter.GitHub
 
             public static async Task<List<RepositoryContent>> GetDirectoryRecursiveAsync(string path)
             {
-                List<RepositoryContent> result = new();
+                List<RepositoryContent> result = [];
 
-                IReadOnlyList<RepositoryContent> contents =
-                    await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(
+                IReadOnlyList<RepositoryContent> contents = await Helpers.ExecuteGitHubActionSafeAsync(() =>
+                     Program.GitHub.Client.Repository.Content.GetAllContentsByRef(
                         Repository.Owner,
                         GitHub.Repository.Name,
                         path,
-                        GitHub.Repository.Branch.Name);
+                        GitHub.Repository.Branch.Name));
+
+                if (contents == null) return result; // rate-limited or network failure
 
                 foreach (RepositoryContent item in contents)
                 {

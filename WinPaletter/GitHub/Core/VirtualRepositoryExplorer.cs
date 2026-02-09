@@ -1,4 +1,5 @@
 ﻿using Octokit;
+using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -31,27 +32,33 @@ namespace WinPaletter.GitHub
 
         private static async Task<IReadOnlyList<TreeItem>> GetCachedTreeAsync(CancellationToken token = default)
         {
-            var reference = await Program.GitHub.Client.Git.Reference.Get(
-                Repository.Owner,
-                Repository.Name,
-                $"heads/{Repository.Branch.Name}");
+            // Safe call for getting the branch reference
+            Reference reference = await Helpers.ExecuteGitHubActionSafeAsync(async () => await Program.GitHub.Client.Git.Reference.Get(Repository.Owner, Repository.Name, $"heads/{Repository.Branch.Name}").ConfigureAwait(false));
+
+            if (reference == null)
+            {
+                Program.Log?.Write(LogEventLevel.Warning, "Failed to get Git reference due to network, rate limit, or server error.");
+                return null;
+            }
 
             string currentSha = reference.Object.Sha;
 
-            if (_cachedTree != null && _cachedHeadSha == currentSha)
-                return _cachedTree;
+            if (_cachedTree != null && _cachedHeadSha == currentSha) return _cachedTree;
 
             await _treeLock.WaitAsync(token);
             try
             {
                 // Double-check inside lock
-                if (_cachedTree != null && _cachedHeadSha == currentSha)
-                    return _cachedTree;
+                if (_cachedTree != null && _cachedHeadSha == currentSha) return _cachedTree;
 
-                var tree = await Program.GitHub.Client.Git.Tree.GetRecursive(
-                    Repository.Owner,
-                    Repository.Name,
-                    currentSha);
+                // Safe call for getting the recursive tree
+                TreeResponse tree = await Helpers.ExecuteGitHubActionSafeAsync(async () => await Program.GitHub.Client.Git.Tree.GetRecursive(Repository.Owner, Repository.Name, currentSha));
+
+                if (tree == null)
+                {
+                    Program.Log?.Write(LogEventLevel.Warning, "Failed to get Git tree due to network, rate limit, or server error.");
+                    return null;
+                }
 
                 _cachedHeadSha = currentSha;
                 _cachedTree = tree.Tree;
@@ -82,25 +89,30 @@ namespace WinPaletter.GitHub
 
             try
             {
-                var tree = await GetCachedTreeAsync(cts.Token);
+                IReadOnlyList<TreeItem> tree = await GetCachedTreeAsync(cts.Token);
+
+                if (tree == null)
+                {
+                    Program.Log?.Write(LogEventLevel.Warning, "FetchRecursive aborted: Git tree unavailable due to network, rate limit, or server error.");
+                    return;
+                }
 
                 string normalizedPath = string.IsNullOrEmpty(path) ? string.Empty : path.Trim('/');
 
-                foreach (var item in tree)
+                foreach (TreeItem item in tree)
                 {
                     if (cts.Token.IsCancellationRequested) return;
 
                     if (!string.IsNullOrEmpty(normalizedPath))
                     {
-                        if (!item.Path.StartsWith(normalizedPath + "/", StringComparison.OrdinalIgnoreCase) &&
-                            !item.Path.Equals(normalizedPath, StringComparison.OrdinalIgnoreCase))
+                        if (!item.Path.StartsWith(normalizedPath + "/", StringComparison.OrdinalIgnoreCase) && !item.Path.Equals(normalizedPath, StringComparison.OrdinalIgnoreCase))
                             continue;
                     }
 
                     int depth = item.Path.Count(c => c == '/');
                     if (maxDepth >= 0 && depth > maxDepth) continue;
 
-                    // Generate proper URLs based on the repository
+                    // Generate URLs for the repository
                     string htmlUrl = GenerateHtmlUrl(item.Path);
                     string apiUrl = GenerateApiUrl(item.Path);
                     string gitUrl = GenerateGitUrl(item.Path);
@@ -112,22 +124,23 @@ namespace WinPaletter.GitHub
                         sha: item.Sha,
                         size: item.Size,
                         type: ConvertTreeType(item.Type.Value),
-                        downloadUrl: downloadUrl, // Can be null for directories
-                        url: apiUrl, // API URL
-                        gitUrl: gitUrl, // Git URL
-                        htmlUrl: htmlUrl, // Browser URL
-                        encoding: null, // Only for files with content
-                        encodedContent: null, // Only for files with content
-                        target: null, // For symlinks
-                        submoduleGitUrl: null // For submodules
+                        downloadUrl: downloadUrl,
+                        url: apiUrl,
+                        gitUrl: gitUrl,
+                        htmlUrl: htmlUrl,
+                        encoding: null,
+                        encodedContent: null,
+                        target: null,
+                        submoduleGitUrl: null
                     );
 
                     output.Add(content);
                     reportProgress?.Invoke(content);
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                Program.Log?.Write(LogEventLevel.Error, "FetchRecursive failed.", ex);
                 return;
             }
         }
@@ -168,12 +181,22 @@ namespace WinPaletter.GitHub
 
             try
             {
-                var tree = await GetCachedTreeAsync();
+                IReadOnlyList<TreeItem> tree = await GetCachedTreeAsync();
 
-                var item = tree.FirstOrDefault(t =>
-                    t.Path.Equals(path.Trim('/'), StringComparison.OrdinalIgnoreCase));
+                if (tree == null)
+                {
+                    Program.Log?.Write(LogEventLevel.Warning, $"GetRepositoryContentAsync aborted: Git tree unavailable due to network, rate limit, or server error for path '{path}'.");
+                    return null;
+                }
+
+                TreeItem item = tree.FirstOrDefault(t => t.Path.Equals(path.Trim('/'), StringComparison.OrdinalIgnoreCase));
 
                 if (item == null) return null;
+
+                string htmlUrl = GenerateHtmlUrl(item.Path);
+                string apiUrl = GenerateApiUrl(item.Path);
+                string gitUrl = GenerateGitUrl(item.Path);
+                string downloadUrl = GenerateDownloadUrl(item.Path);
 
                 return new RepositoryContent(
                     System.IO.Path.GetFileName(item.Path),
@@ -181,21 +204,26 @@ namespace WinPaletter.GitHub
                     item.Sha,
                     item.Size,
                     ConvertTreeType(item.Type.Value),
-                    null,
-                    item.Url,
-                    item.Url,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null);
+                    downloadUrl: downloadUrl,
+                    url: apiUrl,
+                    gitUrl: gitUrl,
+                    htmlUrl: htmlUrl,
+                    encoding: null,
+                    encodedContent: null,
+                    target: null,
+                    submoduleGitUrl: null
+                );
             }
             catch (NotFoundException)
             {
                 return null;
             }
+            catch (Exception ex)
+            {
+                Program.Log?.Write(LogEventLevel.Error, $"GetRepositoryContentAsync failed for path '{path}'.", ex);
+                return null;
+            }
         }
-
         private static ContentType ConvertTreeType(TreeType treeType)
         {
             return treeType switch
@@ -220,12 +248,17 @@ namespace WinPaletter.GitHub
 
             try
             {
-                // Fetch latest commits for this path
-                GitHubCommit latestCommit = (await Program.GitHub.Client.Repository.Commit.GetAll(Repository.Owner, GitHub.Repository.Name, new CommitRequest { Path = path })).FirstOrDefault();
+                // Helper to fetch the latest commit for a path safely
+                async Task<GitHubCommit> GetLatestCommitAsync(string p) =>
+                    await Helpers.ExecuteGitHubActionSafeAsync(async () =>
+                        (await Program.GitHub.Client.Repository.Commit.GetAll(Repository.Owner, GitHub.Repository.Name, new CommitRequest { Path = p }))
+                        .FirstOrDefault()
+                    );
 
                 // File entry validation
                 if (cachedEntry.Type == EntryType.File)
                 {
+                    GitHubCommit latestCommit = await GetLatestCommitAsync(path);
                     if (latestCommit != null && latestCommit.Sha == cachedEntry.CommitSha) return cachedEntry;
 
                     Cache.Remove(path);
@@ -238,17 +271,18 @@ namespace WinPaletter.GitHub
                     List<string> childPaths = [.. cachedEntry.Children.Select(c => c.Path)];
                     Dictionary<string, string> latestShas = new(StringComparer.OrdinalIgnoreCase);
 
-                    // Fetch latest SHAs for all children
+                    // Fetch latest SHAs for all children safely
                     foreach (string childPath in childPaths)
                     {
-                        GitHubCommit latest = (await Program.GitHub.Client.Repository.Commit.GetAll(Repository.Owner, GitHub.Repository.Name, new CommitRequest { Path = childPath })).FirstOrDefault();
+                        GitHubCommit latest = await GetLatestCommitAsync(childPath);
                         if (latest != null) latestShas[childPath] = latest.Sha;
                     }
 
                     // Compare with cached SHAs
                     foreach (Entry child in cachedEntry.Children)
                     {
-                        if (!Cache.TryGetValue(child.Path, out Cache.CacheData cachedChildTuple) || (latestShas.TryGetValue(child.Path, out string latestSha) && cachedChildTuple.Entry.CommitSha != latestSha))
+                        if (!Cache.TryGetValue(child.Path, out Cache.CacheData cachedChildTuple) ||
+                            (latestShas.TryGetValue(child.Path, out string latestSha) && cachedChildTuple.Entry.CommitSha != latestSha))
                         {
                             Cache.Remove(path);
                             return null;
@@ -260,7 +294,7 @@ namespace WinPaletter.GitHub
             }
             catch
             {
-                // fallback to cache if API fails
+                // Fallback to cache if API fails
                 return cachedEntry;
             }
 
@@ -302,15 +336,19 @@ namespace WinPaletter.GitHub
                 if (valid) return cachedTuple.Entry;
             }
 
-            // 2. Fetch contents from GitHub
-            IReadOnlyList<RepositoryContent> contents;
-            try
-            {
-                contents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(Repository.Owner, GitHub.Repository.Name, path, GitHub.Repository.Branch.Name);
-            }
-            catch
+            // 2. Fetch contents from GitHub safely
+            IReadOnlyList<RepositoryContent> contents = await Helpers.ExecuteGitHubActionSafeAsync(async () =>
+                await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(
+                    Repository.Owner,
+                    GitHub.Repository.Name,
+                    path,
+                    GitHub.Repository.Branch.Name).ConfigureAwait(false)
+            );
+
+            if (contents == null)
             {
                 Cache.Remove(path);
+                Program.Log?.Write(LogEventLevel.Warning, $"GetInfoAsync: Failed to fetch contents for '{path}' due to network, rate limit, or server issues.");
                 return null;
             }
 
@@ -324,6 +362,7 @@ namespace WinPaletter.GitHub
             if (recursive && entry.Type == EntryType.Dir && maxDepth != 0)
             {
                 List<Entry> children = [];
+
                 foreach (RepositoryContent item in contents)
                 {
                     Entry childEntry = null;
@@ -332,7 +371,12 @@ namespace WinPaletter.GitHub
                     if (useShaValidation && Cache.TryGetValue(item.Path, out Cache.CacheData cachedChildTuple))
                     {
                         Entry cachedChild = cachedChildTuple.Entry;
-                        GitHubCommit latest = (await Program.GitHub.Client.Repository.Commit.GetAll(Repository.Owner, GitHub.Repository.Name, new CommitRequest { Path = item.Path })).FirstOrDefault();
+
+                        // Safe fetch latest commit for SHA validation
+                        GitHubCommit latest = await Helpers.ExecuteGitHubActionSafeAsync(async () =>
+                            (await Program.GitHub.Client.Repository.Commit.GetAll(Repository.Owner, GitHub.Repository.Name, new CommitRequest { Path = item.Path }))
+                            .FirstOrDefault()
+                        );
 
                         if (latest != null && cachedChild.CommitSha == latest.Sha) childEntry = cachedChild;
                     }
@@ -348,6 +392,7 @@ namespace WinPaletter.GitHub
 
                     if (childEntry != null) children.Add(childEntry);
                 }
+
                 entry.Children = children;
             }
 
@@ -372,11 +417,10 @@ namespace WinPaletter.GitHub
             if (string.IsNullOrEmpty(path)) return null;
 
             cts ??= new();
-            if (cts is not null && cts.Token.IsCancellationRequested) return null;
+            if (cts.Token.IsCancellationRequested) return null;
 
             // Return cached entry if fresh
-            if (!forceRefresh && Cache.TryGetValue(path, out Cache.CacheData cachedTuple) &&
-                DateTime.UtcNow - cachedTuple.Fetched < Cache.CacheTTL)
+            if (!forceRefresh && Cache.TryGetValue(path, out Cache.CacheData cachedTuple) && DateTime.UtcNow - cachedTuple.Fetched < Cache.CacheTTL)
             {
                 return cachedTuple.Entry;
             }
@@ -385,50 +429,59 @@ namespace WinPaletter.GitHub
 
             try
             {
-                // Attempt to get directory contents
-                IReadOnlyList<RepositoryContent> contents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(Repository.Owner, GitHub.Repository.Name, path, GitHub.Repository.Branch.Name);
+                // Safe fetch directory contents
+                IReadOnlyList<RepositoryContent> contents = await Helpers.ExecuteGitHubActionSafeAsync(async () =>
+                    await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(
+                        Repository.Owner,
+                        GitHub.Repository.Name,
+                        path,
+                        GitHub.Repository.Branch.Name
+                    )
+                );
 
-                // If the path is empty or contains multiple children → directory
-                entry = new Entry
+                if (contents != null && contents.Count > 0)
                 {
-                    Path = path,
-                    Type = EntryType.Dir,
-                    FetchedAt = DateTime.UtcNow,
-                    Children = []
-                };
-
-                if (maxDepth > 0)
-                {
-                    foreach (var item in contents)
+                    // Directory entry
+                    entry = new()
                     {
-                        if (cts is not null && cts.Token.IsCancellationRequested) return null;
-                        Entry childEntry = await GetEntryCachedAsync(item.Path, forceRefresh, maxDepth - 1, cts);
-                        if (childEntry != null) entry.Children.Add(childEntry);
+                        Path = path,
+                        Type = EntryType.Dir,
+                        FetchedAt = DateTime.UtcNow,
+                        Children = []
+                    };
+
+                    if (maxDepth > 0)
+                    {
+                        foreach (var item in contents)
+                        {
+                            if (cts.Token.IsCancellationRequested) return null;
+                            Entry childEntry = await GetEntryCachedAsync(item.Path, forceRefresh, maxDepth - 1, cts);
+                            if (childEntry != null) entry.Children.Add(childEntry);
+                        }
                     }
                 }
             }
             catch (Octokit.NotFoundException)
             {
-                // If not found as directory, try as file
-                try
-                {
-                    var fileContents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(Repository.Owner, GitHub.Repository.Name, path, GitHub.Repository.Branch.Name);
+                // Try as a file if directory not found
+                IReadOnlyList<RepositoryContent> fileContents = await Helpers.ExecuteGitHubActionSafeAsync(async () =>
+                    await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(
+                        Repository.Owner,
+                        GitHub.Repository.Name,
+                        path,
+                        GitHub.Repository.Branch.Name
+                    )
+                );
 
-                    if (fileContents.Count == 1)
-                    {
-                        entry = new Entry
-                        {
-                            Path = path,
-                            Type = EntryType.File,
-                            Content = fileContents[0],
-                            FetchedAt = DateTime.UtcNow
-                        };
-                    }
-                }
-                catch (Octokit.NotFoundException)
+                if (fileContents != null && fileContents.Count == 1)
                 {
-                    // Path does not exist
-                    return null;
+                    entry = new()
+                    {
+                        Path = path,
+                        Type = EntryType.File,
+                        Content = fileContents[0],
+                        FetchedAt = DateTime.UtcNow
+                    };
                 }
             }
 
@@ -441,7 +494,7 @@ namespace WinPaletter.GitHub
         private static async Task<List<Entry>> GetEntriesCachedAsync(string path, bool forceRefresh = false, CancellationTokenSource cts = null)
         {
             cts ??= new();
-            if (cts is not null && cts.Token.IsCancellationRequested) return null;
+            if (cts.Token.IsCancellationRequested) return null;
 
             var result = new List<Entry>();
 
@@ -449,34 +502,38 @@ namespace WinPaletter.GitHub
             Entry entry = await GetEntryCachedAsync(path, forceRefresh, maxDepth: 0, cts);
 
             // If not cached, create a directory entry manually
-            if (entry == null)
-            {
-                entry = new Entry
+            entry ??= new()
                 {
                     Path = path,
                     Type = EntryType.Dir,
                     Content = null,
                     FetchedAt = DateTime.UtcNow
                 };
-            }
 
             // Add the directory itself
             result.Add(entry);
 
-            // Fetch children from GitHub
-            IReadOnlyList<RepositoryContent> contents;
-            try
+            // Fetch children safely from GitHub
+            IReadOnlyList<RepositoryContent> contents = await Helpers.ExecuteGitHubActionSafeAsync(async () =>
+                await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(
+                    Repository.Owner,
+                    GitHub.Repository.Name,
+                    path,
+                    GitHub.Repository.Branch.Name
+                )
+            );
+
+            if (contents == null)
             {
-                contents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(Repository.Owner, GitHub.Repository.Name, path, GitHub.Repository.Branch.Name);
-            }
-            catch (Octokit.NotFoundException)
-            {
-                return result; // directory exists but empty
+                Program.Log?.Write(LogEventLevel.Warning, $"GetEntriesCachedAsync: Failed to fetch contents for '{path}' due to network, rate limit, or server issues.");
+                return result; // fallback to containing directory only
             }
 
             foreach (var item in contents)
             {
-                var childEntry = new Entry
+                if (cts.Token.IsCancellationRequested) break;
+
+                Entry childEntry = new()
                 {
                     Path = item.Path,
                     Type = item.Type == ContentType.Dir ? EntryType.Dir : EntryType.File,
@@ -490,7 +547,10 @@ namespace WinPaletter.GitHub
                 if (childEntry.Type == EntryType.Dir)
                 {
                     var subChildren = await GetEntriesCachedAsync(item.Path, forceRefresh, cts);
-                    result.AddRange(subChildren.Skip(1)); // skip subdirectory itself, already added
+                    if (subChildren != null && subChildren.Count > 1)
+                    {
+                        result.AddRange(subChildren.Skip(1)); // skip subdirectory itself, already added
+                    }
                 }
             }
 
@@ -534,7 +594,6 @@ namespace WinPaletter.GitHub
                 processed++;
                 reportProgress?.Invoke(total > 0 ? (int)((processed * 100L) / total) : 100);
             }
-            //}
         }
     }
 }

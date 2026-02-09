@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinPaletter.GitHub;
 using WinPaletter.NativeMethods;
 using WinPaletter.Properties;
 using WinPaletter.TypesExtensions;
@@ -21,7 +22,16 @@ namespace WinPaletter
             InitializeComponent();
             FormClosed += UserSwitch_FormClosed;
             Shown += UserSwitch_Shown;
-            User.GitHubAvatarUpdated += User_GitHubAvatarUpdated;
+            GitHub.Events.GitHubAvatarUpdated += User_GitHubAvatarUpdated;
+            GitHub.Events.OnSignedOut += GitHub_OnSignedOut;
+        }
+
+        private async void GitHub_OnSignedOut(object sender, EventArgs e)
+        {
+            if (IsHandleCreated && IsShown)
+            {
+                await Forms.UserSwitch.UpdateGitHubLoginData();
+            }
         }
 
         private void UserSwitch_Shown(object sender, EventArgs e)
@@ -41,7 +51,7 @@ namespace WinPaletter
 
             checkBox1.Checked = false;
 
-            User.GitHubUserSwitch += GitHub_OnUserSwitch;
+            GitHub.Events.GitHubUserSwitch += GitHub_OnUserSwitch;
 
             Forms.GlassWindow.Show(Forms.MainForm);
             BringToFront();
@@ -49,7 +59,7 @@ namespace WinPaletter
             await UpdateGitHubLoginData();
         }
 
-        private async void GitHub_OnUserSwitch(User.GitHubUserChangeEventArgs e)
+        private async void GitHub_OnUserSwitch(Events.GitHubUserChangeEventArgs e)
         {
             await UpdateGitHubLoginData();
         }
@@ -69,30 +79,33 @@ namespace WinPaletter
                     button3.ImageGlyph?.Dispose();
                     button3.ImageGlyph = glyph;
 
-                    User_GitHubAvatarUpdated();
+                    User_GitHubAvatarUpdated(null, null);
                 });
             }
         }
 
-        private void User_GitHubAvatarUpdated()
+        private void User_GitHubAvatarUpdated(object sender, EventArgs e)
         {
-            Bitmap avatar = null;
-
-            if (User.GitHub_LoggedIn && User.GitHub_Avatar is not null)
+            if (IsHandleCreated && IsShown)
             {
-                using (Bitmap bmp = User.GitHub_Avatar.Resize(pictureBox2.Size))
+                Bitmap avatar = null;
+
+                if (User.GitHub_LoggedIn && User.GitHub_Avatar is not null)
                 {
-                    avatar = bmp.ToCircular();
+                    using (Bitmap bmp = User.GitHub_Avatar.Resize(pictureBox2.Size))
+                    {
+                        avatar = bmp.ToCircular();
+                    }
                 }
-            }
 
-            if (avatar is null)
-            {
-                avatar = Properties.Resources.GitHub_SignInForFeatures.Clone() as Bitmap;
-            }
+                if (avatar is null)
+                {
+                    avatar = Properties.Resources.GitHub_SignInForFeatures.Clone() as Bitmap;
+                }
 
-            pictureBox2.Image?.Dispose();
-            pictureBox2.Image = avatar;
+                pictureBox2.Image?.Dispose();
+                pictureBox2.Image = avatar;
+            }
         }
 
         private void ListUsers(Dictionary<string, string> UsersList)

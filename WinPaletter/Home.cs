@@ -47,7 +47,7 @@ namespace WinPaletter
         {
             InitializeComponent();
             Icon = FormsExtensions.Icon<MainForm>();
-            User.GitHubAvatarUpdated += UpdateUserButtonAvatar;
+            GitHub.Events.GitHubAvatarUpdated += UpdateUserButtonAvatar;
         }
 
         private void Home_Load(object sender, EventArgs e)
@@ -56,7 +56,7 @@ namespace WinPaletter
             Forms.MainForm.LoggingOff = false;
 
             isLoggedIn = User.GitHub_LoggedIn;
-            User.GitHubUserSwitch += User_GitHubUserSwitch;
+            GitHub.Events.GitHubUserSwitch += User_GitHubUserSwitch;
 
             NotifyUpdates.Icon = Icon;
             groupBox1.UseSharpStyle = true;
@@ -97,7 +97,7 @@ namespace WinPaletter
             }
         }
 
-        private void User_GitHubUserSwitch(User.GitHubUserChangeEventArgs e)
+        private void User_GitHubUserSwitch(GitHub.Events.GitHubUserChangeEventArgs e)
         {
             isLoggedIn = e.IsLoggedIn;
             LoadData();
@@ -165,11 +165,11 @@ namespace WinPaletter
             }
         }
 
-        private void UpdateUserButtonAvatar()
+        private void UpdateUserButtonAvatar(object sender, EventArgs e)
         {
             if (InvokeRequired)
             {
-                BeginInvoke((Action)UpdateUserButtonAvatar);
+                BeginInvoke(UpdateUserButtonAvatar);
                 return;
             }
 
@@ -222,7 +222,7 @@ namespace WinPaletter
 
                 userButton.Tag = User.GitHub.Login + " > " + User.Name;
 
-                UpdateUserButtonAvatar();
+                UpdateUserButtonAvatar(null, null);
             }
             else
             {

@@ -24,8 +24,8 @@ namespace WinPaletter
         public GitHub_Mgr()
         {
             InitializeComponent();
-            User.GitHubAvatarUpdated += User_GitHubAvatarUpdated;
-            User.GitHubUserSwitch += User_GitHubUserSwitch;
+            GitHub.Events.GitHubAvatarUpdated += User_GitHubAvatarUpdated;
+            GitHub.Events.GitHubUserSwitch += User_GitHubUserSwitch;
         }
 
 
@@ -39,11 +39,13 @@ namespace WinPaletter
             LoadInternal(false);
         }
 
-        private void LoadInternal(bool animate = true)
+        private async void LoadInternal(bool animate = true)
         {
             if (!animate) tablessControl1.Visible = true;
 
             if (animate) Program.Animator.HideSync(tablessControl1);
+
+            (int remainingTrials, DateTime whenWillReset) remaining = await GitHub.Helpers.RemainingTrials();
 
             if (!Program.IsNetworkAvailable)
             {
@@ -53,6 +55,12 @@ namespace WinPaletter
             else if (!User.GitHub_LoggedIn)
             {
                 tablessControl1.SelectedIndex = 2;
+                if (animate) Program.Animator.ShowSync(tablessControl1);
+            }
+            else if (remaining.remainingTrials == 0)
+            {
+                labelAlt3.Text = string.Format(Program.Localization.Strings.GitHubStrings.API_RateLimited, remaining.whenWillReset.ToLocalTime());
+                tablessControl1.SelectedIndex = 4;
                 if (animate) Program.Animator.ShowSync(tablessControl1);
             }
             else
@@ -66,10 +74,10 @@ namespace WinPaletter
         private async void Init()
         {
             AddViewsToButton();
-            FileSystem.Navigated += FileSystem_Navigated;
-            FileSystem.CanPasteChanged += FileSystem_CanPasteChanged;
-            FileSystem.StatusLabelChanged += FileSystem_StatusLabelChanged;
-            FileSystem.CanDoIOChanged += FileSystem_CanDoIOChanged;
+            GitHub.Events.Navigated += FileSystem_Navigated;
+            GitHub.Events.CanPasteChanged += FileSystem_CanPasteChanged;
+            GitHub.Events.StatusLabelChanged += FileSystem_StatusLabelChanged;
+            GitHub.Events.CanDoIOChanged += FileSystem_CanDoIOChanged;
             toggle1.Checked = GitHub.FileSystem.ShowHiddenFiles;
 
             await UpdateGitHubLoginData();
@@ -240,7 +248,7 @@ namespace WinPaletter
             button7.ImageGlyph = data.glyph;
         }
 
-        private void User_GitHubAvatarUpdated()
+        private void User_GitHubAvatarUpdated(object sender, EventArgs e)
         {
             Bitmap avatar = null;
 
@@ -264,12 +272,11 @@ namespace WinPaletter
             {
                 Invoke(() =>
                 {
-                    User_GitHubAvatarUpdated();
+                    User_GitHubAvatarUpdated(null, null);
 
                     label1.Text = User.GitHub.Login;
 
                     url_lbl.Text = User.GitHub.HtmlUrl;
-                    bio_lbl.Text = User.GitHub.Bio;
 
                     followers_count_lbl.Font = Fonts.ConsoleLarge;
                     following_count_lbl.Font = Fonts.ConsoleLarge;
@@ -1062,7 +1069,7 @@ Generated automatically by WinPaletter. Please review the changes before merging
             LoadInternal();
         }
 
-        private void User_GitHubUserSwitch(User.GitHubUserChangeEventArgs e)
+        private void User_GitHubUserSwitch(Events.GitHubUserChangeEventArgs e)
         {
             LoadInternal();
         }
@@ -1075,6 +1082,16 @@ Generated automatically by WinPaletter. Please review the changes before merging
         private void button21_Click(object sender, EventArgs e)
         {
             Forms.GitHub_Login.ShowDialog();
+        }
+
+        private void button22_Click(object sender, EventArgs e)
+        {
+            Process.Start(Links.GitHubProfileSettings);
+        }
+
+        private void button24_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }
