@@ -32,7 +32,7 @@ namespace WinPaletter.UI.WP
         private Panel _backdropPaddingPanel;
         private static bool layeredSet = false;
 
-        public new bool DesignMode => base.DesignMode || LicenseManager.UsageMode == LicenseUsageMode.Designtime;
+        //public new bool DesignMode => base.DesignMode || LicenseManager.UsageMode == LicenseUsageMode.Designtime;
 
         public Form()
         {

@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using WinPaletter;
-
-public partial class Localizer
+﻿public partial class Localizer
 {
     public partial class Strings_Cls
     {
@@ -88,8 +79,8 @@ public partial class Localizer
             public string Explorer_Conflict_Moving { get; set; } = "Moving";
             public string Explorer_Conflict_From { get; set; } = "from";
             public string Explorer_Conflict_To { get; set; } = "to";
-            public string Explorer_Conflict_DestHasFile { get; set; } = $"The destination already has a file named \"{0}\".";
-            public string Explorer_Conflict_DestHasFiles { get; set; } = $"The destination already has these {0} files.";
+            public string Explorer_Conflict_DestHasFile { get; set; } = "The destination already has a file named \"{0}\".";
+            public string Explorer_Conflict_DestHasFiles { get; set; } = "The destination already has these {0} files.";
             public string Explorer_Conflict_Replace2Files { get; set; } = "Replace the file in the destination";
             public string Explorer_Conflict_Skip2Files { get; set; } = "Skip this file";
             public string Explorer_Conflict_Compare2Files { get; set; } = "Compare info for both files";

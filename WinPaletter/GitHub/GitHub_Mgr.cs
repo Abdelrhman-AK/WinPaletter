@@ -286,8 +286,15 @@ namespace WinPaletter
                     updated_lbl.Text = ToFriendlyString(User.GitHub.UpdatedAt);
                 });
 
-                repo = await Program.GitHub.Client.Repository.Get(GitHub.Repository.Owner, GitHub.Repository.Name);
-                upstreamBranch = await Program.GitHub.Client.Repository.Branch.Get(GitHub.Repository.OriginalOwner, GitHub.Repository.Name, "main");
+                try
+                {
+                    repo = await Program.GitHub.Client.Repository.Get(GitHub.Repository.Owner, GitHub.Repository.Name);
+                    upstreamBranch = await Program.GitHub.Client.Repository.Branch.Get(GitHub.Repository.OriginalOwner, GitHub.Repository.Name, "main");
+                }
+                catch (ApiException ex) when ((int)ex.StatusCode == 503 || (int)ex.StatusCode == 502)
+                {
+                    Forms.BugReport.Throw(ex);
+                }
             }
         }
 

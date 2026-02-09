@@ -56,19 +56,22 @@ namespace WinPaletter
 
         public async Task UpdateGitHubLoginData()
         {
-            // Prepare the glyph bitmap safely
-            Image glyph = User.GitHub_LoggedIn ? (Image)Properties.Resources.Glyph_SignOut.Clone() : (Image)Properties.Resources.Glyph_GitHub.Clone();
-
-            Forms.MainForm.Invoke(() =>
+            if (IsHandleCreated && IsShown)
             {
-                label2.Text = User.GitHub_LoggedIn ? User.GitHub?.Login ?? Program.Localization.Strings.Users.GitHub_NotSigned : Program.Localization.Strings.Users.GitHub_NotSigned;
-                button3.Text = User.GitHub_LoggedIn ? Program.Localization.Strings.General.SignOut : Program.Localization.Strings.General.SignIn;
+                // Prepare the glyph bitmap safely
+                Image glyph = User.GitHub_LoggedIn ? (Image)Properties.Resources.Glyph_SignOut.Clone() : (Image)Properties.Resources.Glyph_GitHub.Clone();
 
-                button3.ImageGlyph?.Dispose();
-                button3.ImageGlyph = glyph;
-            });
+                Forms.MainForm.Invoke(() =>
+                {
+                    label2.Text = User.GitHub_LoggedIn ? User.GitHub?.Login ?? Program.Localization.Strings.Users.GitHub_NotSigned : Program.Localization.Strings.Users.GitHub_NotSigned;
+                    button3.Text = User.GitHub_LoggedIn ? Program.Localization.Strings.General.SignOut : Program.Localization.Strings.General.SignIn;
 
-            User_GitHubAvatarUpdated();
+                    button3.ImageGlyph?.Dispose();
+                    button3.ImageGlyph = glyph;
+
+                    User_GitHubAvatarUpdated();
+                });
+            }
         }
 
         private void User_GitHubAvatarUpdated()
@@ -251,6 +254,7 @@ namespace WinPaletter
 
         private void button4_Click(object sender, EventArgs e)
         {
+            Close();
             Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.GitHub_Mgr);
         }
     }

@@ -170,7 +170,7 @@ namespace WinPaletter.UI.WP
         }
 
 
-        private Color _customColor;
+        private Color _customColor = Color.FromArgb(0, 122, 242);
         public Color CustomColor
         {
             get => _customColor;

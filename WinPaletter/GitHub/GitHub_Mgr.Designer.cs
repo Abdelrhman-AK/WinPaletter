@@ -121,7 +121,6 @@
             this.groupBox11 = new WinPaletter.UI.WP.GroupBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.button21 = new WinPaletter.UI.WP.Button();
-            this.button22 = new WinPaletter.UI.WP.Button();
             this.labelAlt2 = new WinPaletter.UI.WP.LabelAlt();
             this.labelAlt1 = new WinPaletter.UI.WP.LabelAlt();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -140,6 +139,7 @@
             this.button4 = new WinPaletter.UI.WP.Button();
             this.button6 = new WinPaletter.UI.WP.Button();
             this.pin_button = new WinPaletter.UI.WP.Button();
+            this.button3 = new WinPaletter.UI.WP.Button();
             this.tablessControl1.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -1503,10 +1503,9 @@
             this.groupBox11.Controls.Add(this.labelAlt2);
             this.groupBox11.Controls.Add(this.labelAlt1);
             this.groupBox11.Controls.Add(this.panel1);
-            this.groupBox11.Location = new System.Drawing.Point(113, 122);
+            this.groupBox11.Location = new System.Drawing.Point(113, 154);
             this.groupBox11.Name = "groupBox11";
-            this.groupBox11.Padding = new System.Windows.Forms.Padding(1);
-            this.groupBox11.Size = new System.Drawing.Size(762, 351);
+            this.groupBox11.Size = new System.Drawing.Size(762, 286);
             this.groupBox11.TabIndex = 6;
             this.groupBox11.UseDecorationPattern = false;
             this.groupBox11.UseSharpStyle = false;
@@ -1514,13 +1513,13 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.panel2.Controls.Add(this.button3);
             this.panel2.Controls.Add(this.button21);
-            this.panel2.Controls.Add(this.button22);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(1, 215);
+            this.panel2.Location = new System.Drawing.Point(0, 211);
             this.panel2.Name = "panel2";
             this.panel2.Padding = new System.Windows.Forms.Padding(0, 0, 1, 0);
-            this.panel2.Size = new System.Drawing.Size(760, 135);
+            this.panel2.Size = new System.Drawing.Size(762, 75);
             this.panel2.TabIndex = 7;
             // 
             // button21
@@ -1529,33 +1528,17 @@
             this.button21.CustomColor = System.Drawing.Color.Empty;
             this.button21.Flag = ((WinPaletter.UI.WP.Button.Flags)(((WinPaletter.UI.WP.Button.Flags.TintedOnHover | WinPaletter.UI.WP.Button.Flags.ErrorOnHover) 
             | WinPaletter.UI.WP.Button.Flags.CustomColorOnHover)));
-            this.button21.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button21.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button21.Image = null;
             this.button21.ImageGlyph = null;
             this.button21.ImageGlyphEnabled = false;
-            this.button21.Location = new System.Drawing.Point(171, 12);
+            this.button21.Location = new System.Drawing.Point(144, 12);
             this.button21.Name = "button21";
-            this.button21.Size = new System.Drawing.Size(419, 60);
+            this.button21.Size = new System.Drawing.Size(419, 50);
             this.button21.TabIndex = 1;
             this.button21.Text = "Sign in";
             this.button21.UseVisualStyleBackColor = true;
             this.button21.Click += new System.EventHandler(this.button21_Click);
-            // 
-            // button22
-            // 
-            this.button22.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.button22.CustomColor = System.Drawing.Color.Empty;
-            this.button22.Flag = WinPaletter.UI.WP.Button.Flags.None;
-            this.button22.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button22.Image = null;
-            this.button22.ImageGlyph = null;
-            this.button22.ImageGlyphEnabled = false;
-            this.button22.Location = new System.Drawing.Point(171, 78);
-            this.button22.Name = "button22";
-            this.button22.Size = new System.Drawing.Size(419, 44);
-            this.button22.TabIndex = 2;
-            this.button22.Text = "Open Wiki for help";
-            this.button22.UseVisualStyleBackColor = true;
             // 
             // labelAlt2
             // 
@@ -1564,9 +1547,9 @@
             this.labelAlt2.BackColor = System.Drawing.Color.Transparent;
             this.labelAlt2.DrawOnGlass = false;
             this.labelAlt2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelAlt2.Location = new System.Drawing.Point(4, 152);
+            this.labelAlt2.Location = new System.Drawing.Point(3, 151);
             this.labelAlt2.Name = "labelAlt2";
-            this.labelAlt2.Size = new System.Drawing.Size(754, 53);
+            this.labelAlt2.Size = new System.Drawing.Size(756, 53);
             this.labelAlt2.TabIndex = 5;
             this.labelAlt2.Text = "Sign in with GitHub to take full control of your WinPaletter themes: upload new d" +
     "esigns, update existing ones, and keep everything synced with your GitHub reposi" +
@@ -1580,9 +1563,9 @@
             this.labelAlt1.BackColor = System.Drawing.Color.Transparent;
             this.labelAlt1.DrawOnGlass = false;
             this.labelAlt1.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelAlt1.Location = new System.Drawing.Point(4, 102);
+            this.labelAlt1.Location = new System.Drawing.Point(3, 101);
             this.labelAlt1.Name = "labelAlt1";
-            this.labelAlt1.Size = new System.Drawing.Size(754, 41);
+            this.labelAlt1.Size = new System.Drawing.Size(756, 41);
             this.labelAlt1.TabIndex = 4;
             this.labelAlt1.Text = "Sign in with GitHub";
             this.labelAlt1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1594,10 +1577,10 @@
             this.panel1.Controls.Add(this.transparentPictureBox1);
             this.panel1.Controls.Add(this.transparentPictureBox2);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(1, 1);
+            this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Padding = new System.Windows.Forms.Padding(0, 0, 1, 0);
-            this.panel1.Size = new System.Drawing.Size(760, 94);
+            this.panel1.Size = new System.Drawing.Size(762, 94);
             this.panel1.TabIndex = 6;
             // 
             // separatorH1
@@ -1607,7 +1590,7 @@
             this.separatorH1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.separatorH1.Location = new System.Drawing.Point(0, 93);
             this.separatorH1.Name = "separatorH1";
-            this.separatorH1.Size = new System.Drawing.Size(759, 1);
+            this.separatorH1.Size = new System.Drawing.Size(761, 1);
             this.separatorH1.TabIndex = 0;
             this.separatorH1.TabStop = false;
             this.separatorH1.Text = "separatorH1";
@@ -1617,7 +1600,7 @@
             this.transparentPictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.transparentPictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.transparentPictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("transparentPictureBox1.Image")));
-            this.transparentPictureBox1.Location = new System.Drawing.Point(389, 15);
+            this.transparentPictureBox1.Location = new System.Drawing.Point(390, 15);
             this.transparentPictureBox1.Name = "transparentPictureBox1";
             this.transparentPictureBox1.Size = new System.Drawing.Size(64, 64);
             this.transparentPictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -1629,7 +1612,7 @@
             this.transparentPictureBox2.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.transparentPictureBox2.BackColor = System.Drawing.Color.Transparent;
             this.transparentPictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("transparentPictureBox2.Image")));
-            this.transparentPictureBox2.Location = new System.Drawing.Point(307, 15);
+            this.transparentPictureBox2.Location = new System.Drawing.Point(308, 15);
             this.transparentPictureBox2.Name = "transparentPictureBox2";
             this.transparentPictureBox2.Size = new System.Drawing.Size(64, 64);
             this.transparentPictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -1831,6 +1814,23 @@
             this.pin_button.Visible = false;
             this.pin_button.Click += new System.EventHandler(this.pin_button_Click);
             // 
+            // button3
+            // 
+            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button3.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(242)))));
+            this.button3.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button3.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button3.ForeColor = System.Drawing.Color.White;
+            this.button3.Image = null;
+            this.button3.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Help;
+            this.button3.ImageGlyphEnabled = true;
+            this.button3.Location = new System.Drawing.Point(569, 12);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(49, 50);
+            this.button3.TabIndex = 135;
+            this.button3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button3.UseVisualStyleBackColor = false;
+            // 
             // GitHub_Mgr
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1992,11 +1992,11 @@
         private UI.WP.TransparentPictureBox transparentPictureBox1;
         private UI.WP.LabelAlt labelAlt2;
         private UI.WP.LabelAlt labelAlt1;
-        private UI.WP.Button button22;
         private UI.WP.Button button21;
         private UI.WP.GroupBox groupBox11;
         private UI.WP.SeparatorH separatorH1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
+        internal UI.WP.Button button3;
     }
 }

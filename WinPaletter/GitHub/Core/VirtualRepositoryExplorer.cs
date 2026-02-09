@@ -100,20 +100,27 @@ namespace WinPaletter.GitHub
                     int depth = item.Path.Count(c => c == '/');
                     if (maxDepth >= 0 && depth > maxDepth) continue;
 
+                    // Generate proper URLs based on the repository
+                    string htmlUrl = GenerateHtmlUrl(item.Path);
+                    string apiUrl = GenerateApiUrl(item.Path);
+                    string gitUrl = GenerateGitUrl(item.Path);
+                    string downloadUrl = GenerateDownloadUrl(item.Path);
+
                     RepositoryContent content = new(
-                        System.IO.Path.GetFileName(item.Path),
-                        item.Path,
-                        item.Sha,
-                        item.Size,
-                        ConvertTreeType(item.Type.Value),
-                        null,
-                        item.Url,
-                        item.Url,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null);
+                        name: System.IO.Path.GetFileName(item.Path),
+                        path: item.Path,
+                        sha: item.Sha,
+                        size: item.Size,
+                        type: ConvertTreeType(item.Type.Value),
+                        downloadUrl: downloadUrl, // Can be null for directories
+                        url: apiUrl, // API URL
+                        gitUrl: gitUrl, // Git URL
+                        htmlUrl: htmlUrl, // Browser URL
+                        encoding: null, // Only for files with content
+                        encodedContent: null, // Only for files with content
+                        target: null, // For symlinks
+                        submoduleGitUrl: null // For submodules
+                    );
 
                     output.Add(content);
                     reportProgress?.Invoke(content);
@@ -123,6 +130,36 @@ namespace WinPaletter.GitHub
             {
                 return;
             }
+        }
+
+        // Helper methods to generate proper URLs
+        private static string GenerateHtmlUrl(string path)
+        {
+            if (string.IsNullOrEmpty(path))
+                return $"https://github.com/{Repository.Owner}/{GitHub.Repository.Name}";
+
+            return $"https://github.com/{Repository.Owner}/{GitHub.Repository.Name}/blob/{GitHub.Repository.Branch.Name}/{path}";
+        }
+
+        private static string GenerateApiUrl(string path)
+        {
+            var encodedPath = Uri.EscapeDataString(path);
+            return $"https://api.github.com/repos/{Repository.Owner}/{GitHub.Repository.Name}/contents/{encodedPath}?ref={GitHub.Repository.Branch.Name}";
+        }
+
+        private static string GenerateGitUrl(string path)
+        {
+            var encodedPath = Uri.EscapeDataString(path);
+            return $"https://api.github.com/repos/{Repository.Owner}/{GitHub.Repository.Name}/git/trees/{encodedPath}";
+        }
+
+        private static string GenerateDownloadUrl(string path)
+        {
+            if (string.IsNullOrEmpty(path))
+                return null;
+
+            var encodedPath = Uri.EscapeDataString(path);
+            return $"https://raw.githubusercontent.com/{Repository.Owner}/{GitHub.Repository.Name}/{GitHub.Repository.Branch.Name}/{encodedPath}";
         }
 
         public static async Task<RepositoryContent> GetRepositoryContentAsync(string path)

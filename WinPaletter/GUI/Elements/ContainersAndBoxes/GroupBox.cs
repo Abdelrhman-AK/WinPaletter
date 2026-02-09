@@ -140,6 +140,21 @@ namespace WinPaletter.UI.WP
             if (UseDecorationPattern) UpdatePattern(Program.Style.Pattern);
         }
 
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+
+            if (!DesignMode)
+            {
+                Rectangle rect = new(0, 0, Width, Height);
+
+                using (GraphicsPath path = rect.Round())
+                {
+                    Region?.Dispose();
+                    Region = new Region(path);
+                }
+            }
+        }
 
         protected override void OnPaintBackground(PaintEventArgs pevent)
         {
@@ -165,7 +180,7 @@ namespace WinPaletter.UI.WP
                 BackColor = ParentColor.CB(ParentColor.IsDark() ? 0.04f : -0.05f);
 
                 using (SolidBrush br = new(BackColor))
-                using (Pen P = new(ParentColor.CB(ParentColor.IsDark() ? 0.06f : -0.07f)))
+                using (Pen P = new(ParentColor.CB(ParentColor.IsDark() ? 0.09f : -0.09f)))
                 {
                     if (!useSharpStyle)
                     {
