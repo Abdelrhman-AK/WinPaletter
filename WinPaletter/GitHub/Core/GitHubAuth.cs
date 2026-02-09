@@ -72,7 +72,7 @@ namespace WinPaletter.GitHub
             Program.Log?.Write(LogEventLevel.Information, "Token loaded from local storage.");
 
             // Wrap the GitHub call with the safe helper
-            bool result = await Helpers.ExecuteGitHubActionSafeAsync(async () =>
+            bool result = await Helpers.Do(async () =>
             {
                 try
                 {
@@ -177,7 +177,7 @@ namespace WinPaletter.GitHub
             try
             {
                 // Wrap the GitHub API call with the safe helper
-                deviceFlow = await Helpers.ExecuteGitHubActionSafeAsync(async () =>
+                deviceFlow = await Helpers.Do(async () =>
                 {
                     OauthDeviceFlowRequest deviceFlowRequest = new(ClientId) { Scopes = { "repo" } };
                     return await Client.Oauth.InitiateDeviceFlow(deviceFlowRequest).ConfigureAwait(false);
@@ -282,7 +282,7 @@ namespace WinPaletter.GitHub
                     try
                     {
                         // Safe GitHub call for token creation
-                        token = await Helpers.ExecuteGitHubActionSafeAsync(async () =>
+                        token = await Helpers.Do(async () =>
                         {
                             return await Client.Oauth.CreateAccessTokenForDeviceFlow(ClientId, deviceFlow);
                         });
@@ -297,7 +297,7 @@ namespace WinPaletter.GitHub
                         if (!string.IsNullOrEmpty(token.AccessToken))
                         {
                             // Safe GitHub call for user info
-                            Octokit.User user = await Helpers.ExecuteGitHubActionSafeAsync(async () =>
+                            Octokit.User user = await Helpers.Do(async () =>
                             {
                                 Client.Credentials = new Credentials(token.AccessToken);
                                 return await Client.User.Current().ConfigureAwait(false);
@@ -383,63 +383,66 @@ namespace WinPaletter.GitHub
         /// <returns>A <see cref="Task"/> representing the asynchronous sign-out operation.</returns>
         public async Task SignOutAsync()
         {
-            try
+            if (MsgBox(Program.Localization.Strings.Messages.GitHub_SignoutMsg, System.Windows.Forms.MessageBoxButtons.YesNo, System.Windows.Forms.MessageBoxIcon.Question, Program.Localization.Strings.Messages.GitHub_SignoutMsg2) == System.Windows.Forms.DialogResult.Yes)
             {
-                Program.Log?.Write(LogEventLevel.Information, "Attempting GitHub sign out...");
-
-                // Check network availability
-                if (!System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
+                try
                 {
-                    Program.Log?.Write(LogEventLevel.Warning, "Network unavailable. Sign-out will continue locally.");
-                }
+                    Program.Log?.Write(LogEventLevel.Information, "Attempting GitHub sign out...");
 
-                // Cancel ongoing login if any
-                if (_cancellationTokenSource != null)
-                {
-                    Program.Log?.Write(LogEventLevel.Information, "Cancelling any ongoing GitHub login before sign-out...");
-                    _cancellationTokenSource.Cancel();
-                    _cancellationTokenSource.Dispose();
-                    _cancellationTokenSource = null;
-                }
-
-                // Simulate async operation
-                await Task.Delay(100).ConfigureAwait(false);
-
-                // Delete local token
-                Program.Log?.Write(LogEventLevel.Information, "Deleting local GitHub OAuth token...");
-                DeleteToken();
-
-                // Reset credentials
-                Client.Credentials = Credentials.Anonymous;
-                Program.Log?.Write(LogEventLevel.Information, "GitHub client credentials reset to anonymous.");
-
-                // Open GitHub applications settings page for user to revoke token manually, maximized, focused and brought to top
-                ProcessStartInfo pci = new() { FileName = "https://github.com/settings/applications", UseShellExecute = true };
-                using (Process process = Process.Start(pci))
-                {
-                    if (process != null)
+                    // Check network availability
+                    if (!System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable())
                     {
-                        // Wait a bit for the window to appear
-                        await Task.Delay(1000);
-
-                        // Bring to front using Win32 API
-                        NativeMethods.User32.SetForegroundWindow(process.Handle);
-                        Program.Log?.Write(LogEventLevel.Information, "Opened GitHub applications settings page in browser.");
+                        Program.Log?.Write(LogEventLevel.Warning, "Network unavailable. Sign-out will continue locally.");
                     }
+
+                    // Cancel ongoing login if any
+                    if (_cancellationTokenSource != null)
+                    {
+                        Program.Log?.Write(LogEventLevel.Information, "Cancelling any ongoing GitHub login before sign-out...");
+                        _cancellationTokenSource.Cancel();
+                        _cancellationTokenSource.Dispose();
+                        _cancellationTokenSource = null;
+                    }
+
+                    // Simulate async operation
+                    await Task.Delay(100).ConfigureAwait(false);
+
+                    // Delete local token
+                    Program.Log?.Write(LogEventLevel.Information, "Deleting local GitHub OAuth token...");
+                    DeleteToken();
+
+                    // Reset credentials
+                    Client.Credentials = Credentials.Anonymous;
+                    Program.Log?.Write(LogEventLevel.Information, "GitHub client credentials reset to anonymous.");
+
+                    // Open GitHub applications settings page for user to revoke token manually, maximized, focused and brought to top
+                    ProcessStartInfo pci = new() { FileName = "https://github.com/settings/applications", UseShellExecute = true };
+                    using (Process process = Process.Start(pci))
+                    {
+                        if (process != null)
+                        {
+                            // Wait a bit for the window to appear
+                            await Task.Delay(1000);
+
+                            // Bring to front using Win32 API
+                            NativeMethods.User32.SetForegroundWindow(process.Handle);
+                            Program.Log?.Write(LogEventLevel.Information, "Opened GitHub applications settings page in browser.");
+                        }
+                    }
+
+                    // Update user info
+                    User.UpdateGitHubLoginStatus(false);
+                    User.GitHub = null;
+
+                    // Fire signed out event
+                    Program.Log?.Write(LogEventLevel.Information, "GitHub sign out completed successfully.");
+                    Events.OnSignedOutEvent();
                 }
-
-                // Update user info
-                User.UpdateGitHubLoginStatus(false);
-                User.GitHub = null;
-
-                // Fire signed out event
-                Program.Log?.Write(LogEventLevel.Information, "GitHub sign out completed successfully.");
-                Events.OnSignedOutEvent();
-            }
-            catch (Exception ex)
-            {
-                Program.Log?.Write(LogEventLevel.Error, "GitHub sign out failed.", ex);
-                Events.OnSignOutFailedEvent(ex.Message);
+                catch (Exception ex)
+                {
+                    Program.Log?.Write(LogEventLevel.Error, "GitHub sign out failed.", ex);
+                    Events.OnSignOutFailedEvent(ex.Message);
+                }
             }
         }
 

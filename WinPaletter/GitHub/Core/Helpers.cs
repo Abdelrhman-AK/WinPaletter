@@ -9,14 +9,35 @@ namespace WinPaletter.GitHub
 {
     public static class Helpers
     {
+        // Cached rate limit to avoid multiple API calls
+        private static (int remaining, DateTime reset) _cachedRateLimit;
+        private static DateTime _lastRateLimitCheck;
+
         public static async Task<(int remainingTrials, DateTime whenWillReset)> RemainingTrials()
         {
-            MiscellaneousRateLimit rateLimits = await Program.GitHub.Client.RateLimit.GetRateLimits();
-            RateLimit coreLimit = rateLimits.Resources.Core;
-            return (coreLimit.Remaining, coreLimit.Reset.UtcDateTime);
+            // Use cached rate limit if checked in last 20 seconds
+            if ((DateTime.UtcNow - _lastRateLimitCheck).TotalSeconds < 20)
+                return _cachedRateLimit;
+
+            try
+            {
+                MiscellaneousRateLimit rateLimits = await Program.GitHub.Client.RateLimit.GetRateLimits();
+                RateLimit coreLimit = rateLimits.Resources.Core;
+                _cachedRateLimit = (coreLimit.Remaining, coreLimit.Reset.UtcDateTime);
+                _lastRateLimitCheck = DateTime.UtcNow;
+                return _cachedRateLimit;
+            }
+            catch
+            {
+                // On failure, assume 0 remaining to prevent API abuse
+                return (0, DateTime.UtcNow.AddMinutes(1));
+            }
         }
 
-        public static async Task<T> ExecuteGitHubActionSafeAsync<T>(Func<Task<T>> action)
+        /// <summary>
+        /// Executes a GitHub API action safely, handling network issues, rate limits, and server errors.
+        /// </summary>
+        public static async Task<T> Do<T>(Func<Task<T>> action)
         {
             if (!Program.IsNetworkAvailable)
             {
@@ -45,6 +66,16 @@ namespace WinPaletter.GitHub
                 Events.OnServerUnavailable();
                 return default;
             }
+            catch (Octokit.NotFoundException)
+            {
+                // Resource missing → treat as null
+                return default;
+            }
+            catch (Octokit.AuthorizationException ex)
+            {
+                Events.OnAuthorizationFailureEvent(ex.Message);
+                return default;
+            }
             catch (HttpRequestException)
             {
                 Events.OnNetworkLost();
@@ -52,6 +83,7 @@ namespace WinPaletter.GitHub
             }
             catch (Exception)
             {
+                // Only rethrow truly unexpected exceptions
                 throw;
             }
         }

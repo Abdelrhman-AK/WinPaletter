@@ -33,7 +33,7 @@ namespace WinPaletter.GitHub
         private static async Task<IReadOnlyList<TreeItem>> GetCachedTreeAsync(CancellationToken token = default)
         {
             // Safe call for getting the branch reference
-            Reference reference = await Helpers.ExecuteGitHubActionSafeAsync(async () => await Program.GitHub.Client.Git.Reference.Get(Repository.Owner, Repository.Name, $"heads/{Repository.Branch.Name}").ConfigureAwait(false));
+            Reference reference = await Helpers.Do(async () => await Program.GitHub.Client.Git.Reference.Get(Repository.Owner, Repository.Name, $"heads/{Repository.Branch.Name}").ConfigureAwait(false));
 
             if (reference == null)
             {
@@ -52,7 +52,7 @@ namespace WinPaletter.GitHub
                 if (_cachedTree != null && _cachedHeadSha == currentSha) return _cachedTree;
 
                 // Safe call for getting the recursive tree
-                TreeResponse tree = await Helpers.ExecuteGitHubActionSafeAsync(async () => await Program.GitHub.Client.Git.Tree.GetRecursive(Repository.Owner, Repository.Name, currentSha));
+                TreeResponse tree = await Helpers.Do(async () => await Program.GitHub.Client.Git.Tree.GetRecursive(Repository.Owner, Repository.Name, currentSha));
 
                 if (tree == null)
                 {
@@ -250,7 +250,7 @@ namespace WinPaletter.GitHub
             {
                 // Helper to fetch the latest commit for a path safely
                 async Task<GitHubCommit> GetLatestCommitAsync(string p) =>
-                    await Helpers.ExecuteGitHubActionSafeAsync(async () =>
+                    await Helpers.Do(async () =>
                         (await Program.GitHub.Client.Repository.Commit.GetAll(Repository.Owner, GitHub.Repository.Name, new CommitRequest { Path = p }))
                         .FirstOrDefault()
                     );
@@ -337,7 +337,7 @@ namespace WinPaletter.GitHub
             }
 
             // 2. Fetch contents from GitHub safely
-            IReadOnlyList<RepositoryContent> contents = await Helpers.ExecuteGitHubActionSafeAsync(async () =>
+            IReadOnlyList<RepositoryContent> contents = await Helpers.Do(async () =>
                 await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(
                     Repository.Owner,
                     GitHub.Repository.Name,
@@ -373,7 +373,7 @@ namespace WinPaletter.GitHub
                         Entry cachedChild = cachedChildTuple.Entry;
 
                         // Safe fetch latest commit for SHA validation
-                        GitHubCommit latest = await Helpers.ExecuteGitHubActionSafeAsync(async () =>
+                        GitHubCommit latest = await Helpers.Do(async () =>
                             (await Program.GitHub.Client.Repository.Commit.GetAll(Repository.Owner, GitHub.Repository.Name, new CommitRequest { Path = item.Path }))
                             .FirstOrDefault()
                         );
@@ -430,7 +430,7 @@ namespace WinPaletter.GitHub
             try
             {
                 // Safe fetch directory contents
-                IReadOnlyList<RepositoryContent> contents = await Helpers.ExecuteGitHubActionSafeAsync(async () =>
+                IReadOnlyList<RepositoryContent> contents = await Helpers.Do(async () =>
                     await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(
                         Repository.Owner,
                         GitHub.Repository.Name,
@@ -464,7 +464,7 @@ namespace WinPaletter.GitHub
             catch (Octokit.NotFoundException)
             {
                 // Try as a file if directory not found
-                IReadOnlyList<RepositoryContent> fileContents = await Helpers.ExecuteGitHubActionSafeAsync(async () =>
+                IReadOnlyList<RepositoryContent> fileContents = await Helpers.Do(async () =>
                     await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(
                         Repository.Owner,
                         GitHub.Repository.Name,
@@ -514,7 +514,7 @@ namespace WinPaletter.GitHub
             result.Add(entry);
 
             // Fetch children safely from GitHub
-            IReadOnlyList<RepositoryContent> contents = await Helpers.ExecuteGitHubActionSafeAsync(async () =>
+            IReadOnlyList<RepositoryContent> contents = await Helpers.Do(async () =>
                 await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(
                     Repository.Owner,
                     GitHub.Repository.Name,

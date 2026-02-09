@@ -25,7 +25,7 @@ namespace WinPaletter.GitHub
             /// <returns>A list of branch objects.</returns>
             public static async Task<List<Octokit.Branch>> GetBranchesAsync(bool excludeMain = false)
             {
-                IReadOnlyList<Octokit.Branch> branches = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Repository.Branch.GetAll(Owner, Repository.Name));
+                IReadOnlyList<Octokit.Branch> branches = await Helpers.Do(() => Program.GitHub.Client.Repository.Branch.GetAll(Owner, Repository.Name));
 
                 if (branches == null) return []; // rate-limited or network failure
 
@@ -43,18 +43,18 @@ namespace WinPaletter.GitHub
                 try
                 {
                     // Get the reference for the base branch
-                    Reference baseRef = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Reference.Get(Owner, Name, $"heads/{baseBranchName}"));
+                    Reference baseRef = await Helpers.Do(() => Program.GitHub.Client.Git.Reference.Get(Owner, Name, $"heads/{baseBranchName}"));
 
                     if (baseRef == null) return null; // rate-limited or network failure
 
                     // Create the new branch reference
                     NewReference newRef = new($"refs/heads/{newBranchName}", baseRef.Object.Sha);
-                    Reference createdRef = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Reference.Create(Owner, Name, newRef));
+                    Reference createdRef = await Helpers.Do(() => Program.GitHub.Client.Git.Reference.Create(Owner, Name, newRef));
 
                     if (createdRef == null) return null; // rate-limited or network failure
 
                     // Fetch and return the newly created branch
-                    Octokit.Branch createdBranch = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Repository.Branch.Get(Owner, Name, newBranchName));
+                    Octokit.Branch createdBranch = await Helpers.Do(() => Program.GitHub.Client.Repository.Branch.Get(Owner, Name, newBranchName));
 
                     return createdBranch; // could still be null if rate-limited
                 }
@@ -74,7 +74,7 @@ namespace WinPaletter.GitHub
                 try
                 {
                     // Use ExecuteGitHubActionSafeAsync with Task as T
-                    await Helpers.ExecuteGitHubActionSafeAsync(async () =>
+                    await Helpers.Do(async () =>
                     {
                         await Program.GitHub.Client.Git.Reference.Delete(Owner, Name, $"heads/{branchName}");
                         return true; // Return a value just to satisfy generic
@@ -97,7 +97,7 @@ namespace WinPaletter.GitHub
             {
                 try
                 {
-                    Octokit.Branch branch = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Repository.Branch.Get(Owner, Name, branchName));
+                    Octokit.Branch branch = await Helpers.Do(() => Program.GitHub.Client.Repository.Branch.Get(Owner, Name, branchName));
                     return branch; // could be null if rate-limited or network lost
                 }
                 catch
@@ -121,18 +121,18 @@ namespace WinPaletter.GitHub
                     if (await GetBranch(newBranchName) is not null) return null;
 
                     // Get old branch reference
-                    Reference oldRef = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Reference.Get(Owner, Name, $"heads/{oldBranchName}"));
+                    Reference oldRef = await Helpers.Do(() => Program.GitHub.Client.Git.Reference.Get(Owner, Name, $"heads/{oldBranchName}"));
 
                     if (oldRef == null) return null; // rate-limited or network failure
 
                     // Create new branch reference
                     NewReference newRef = new($"refs/heads/{newBranchName}", oldRef.Object.Sha);
-                    Reference createdRef = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Reference.Create(Owner, Name, newRef));
+                    Reference createdRef = await Helpers.Do(() => Program.GitHub.Client.Git.Reference.Create(Owner, Name, newRef));
 
                     if (createdRef == null) return null; // rate-limited or network failure
 
                     // Delete old branch
-                    await Helpers.ExecuteGitHubActionSafeAsync(async () => Program.GitHub.Client.Git.Reference.Delete(Owner, Name, $"heads/{oldBranchName}"));
+                    await Helpers.Do(async () => Program.GitHub.Client.Git.Reference.Delete(Owner, Name, $"heads/{oldBranchName}"));
 
                     // Return the newly created branch
                     return await GetBranch(newBranchName);
@@ -197,14 +197,14 @@ namespace WinPaletter.GitHub
                     {
                         BranchProtectionSettingsUpdate protectionSettings = new(requiredStatusChecks: null, enforceAdmins: true, requiredPullRequestReviews: null, restrictions: null);
 
-                        await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Repository.Branch.UpdateBranchProtection(Owner, Name, branchName, protectionSettings));
+                        await Helpers.Do(() => Program.GitHub.Client.Repository.Branch.UpdateBranchProtection(Owner, Name, branchName, protectionSettings));
                     }
                     else
                     {
-                        await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Repository.Branch.DeleteBranchProtection(Owner, Name, branchName));
+                        await Helpers.Do(() => Program.GitHub.Client.Repository.Branch.DeleteBranchProtection(Owner, Name, branchName));
                     }
 
-                    Octokit.Branch updatedBranch = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Repository.Branch.Get(Owner, Name, branchName));
+                    Octokit.Branch updatedBranch = await Helpers.Do(() => Program.GitHub.Client.Repository.Branch.Get(Owner, Name, branchName));
 
                     return updatedBranch; // could be null if rate-limited or network failure
                 }
@@ -224,7 +224,7 @@ namespace WinPaletter.GitHub
                 try
                 {
                     // Get fork/source branch
-                    Octokit.Branch forkBranch = await Helpers.ExecuteGitHubActionSafeAsync(() => Client.Repository.Branch.Get(Owner, Name, branch));
+                    Octokit.Branch forkBranch = await Helpers.Do(() => Client.Repository.Branch.Get(Owner, Name, branch));
 
                     if (forkBranch?.Commit == null)
                     {
@@ -236,7 +236,7 @@ namespace WinPaletter.GitHub
                     Octokit.Branch upstreamBranch = null;
                     try
                     {
-                        upstreamBranch = await Helpers.ExecuteGitHubActionSafeAsync(() => Client.Repository.Branch.Get(OriginalOwner, Name, originalBranch));
+                        upstreamBranch = await Helpers.Do(() => Client.Repository.Branch.Get(OriginalOwner, Name, originalBranch));
                     }
                     catch (Octokit.NotFoundException)
                     {
@@ -247,7 +247,7 @@ namespace WinPaletter.GitHub
                     if (upstreamBranch?.Commit == null) return true;
 
                     // Compare commits: base = upstream, head = fork
-                    CompareResult compare = await Helpers.ExecuteGitHubActionSafeAsync(() => Client.Repository.Commit.Compare(OriginalOwner, Name, upstreamBranch.Commit.Sha, forkBranch.Commit.Sha));
+                    CompareResult compare = await Helpers.Do(() => Client.Repository.Commit.Compare(OriginalOwner, Name, upstreamBranch.Commit.Sha, forkBranch.Commit.Sha));
 
                     if (compare == null) return false; // rate-limited or network failure
 
@@ -277,7 +277,7 @@ namespace WinPaletter.GitHub
                     // Get default upstream branch if not provided
                     if (string.IsNullOrWhiteSpace(upstreamBranch))
                     {
-                        Octokit.Repository upstreamRepo = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Repository.Get(OriginalOwner, Name));
+                        Octokit.Repository upstreamRepo = await Helpers.Do(() => Program.GitHub.Client.Repository.Get(OriginalOwner, Name));
 
                         if (upstreamRepo == null) return false; // rate-limited or network failure
 
@@ -285,7 +285,7 @@ namespace WinPaletter.GitHub
                     }
 
                     // Get upstream reference
-                    Reference upstreamRef = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Reference.Get(OriginalOwner, Name, $"heads/{upstreamBranch}"));
+                    Reference upstreamRef = await Helpers.Do(() => Program.GitHub.Client.Git.Reference.Get(OriginalOwner, Name, $"heads/{upstreamBranch}"));
 
                     if (upstreamRef == null) return false;
 
@@ -293,11 +293,11 @@ namespace WinPaletter.GitHub
                     Reference forkRef;
                     try
                     {
-                        forkRef = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Reference.Get(Repository.Owner, Name, $"heads/{forkBranch}"));
+                        forkRef = await Helpers.Do(() => Program.GitHub.Client.Git.Reference.Get(Repository.Owner, Name, $"heads/{forkBranch}"));
                     }
                     catch (Octokit.NotFoundException)
                     {
-                        forkRef = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Reference.Create(Repository.Owner, Name, new NewReference($"refs/heads/{forkBranch}", upstreamRef.Object.Sha)));
+                        forkRef = await Helpers.Do(() => Program.GitHub.Client.Git.Reference.Create(Repository.Owner, Name, new NewReference($"refs/heads/{forkBranch}", upstreamRef.Object.Sha)));
                     }
 
                     if (forkRef == null) return false;
@@ -315,7 +315,7 @@ namespace WinPaletter.GitHub
                         try
                         {
                             Uri endpoint = new($"repos/{Repository.Owner}/{Name}/merge-upstream", UriKind.Relative);
-                            await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Connection.Put<object>(endpoint, new { branch = forkBranch }, "application/json"));
+                            await Helpers.Do(() => Program.GitHub.Client.Connection.Put<object>(endpoint, new { branch = forkBranch }, "application/json"));
 
                             Program.Log?.Write(LogEventLevel.Information, $"merge-upstream succeeded.");
                             return true;
@@ -332,7 +332,7 @@ namespace WinPaletter.GitHub
                     }
 
                     // Hard reset fork branch to upstream
-                    await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Reference.Update(Repository.Owner, Name, $"heads/{forkBranch}", new ReferenceUpdate(upstreamRef.Object.Sha, true)));
+                    await Helpers.Do(() => Program.GitHub.Client.Git.Reference.Update(Repository.Owner, Name, $"heads/{forkBranch}", new ReferenceUpdate(upstreamRef.Object.Sha, true)));
 
                     Program.Log?.Write(LogEventLevel.Information, $"Force-synced {forkBranch} to {OriginalOwner}/{upstreamBranch}.");
                     return true;
@@ -352,7 +352,7 @@ namespace WinPaletter.GitHub
             /// <returns></returns>
             public static async Task<List<string>> GetChangedFilesAsync(string baseBranch = "main")
             {
-                CompareResult comparison = await Helpers.ExecuteGitHubActionSafeAsync(() => Client.Repository.Commit.Compare(Owner, Repository.Name, baseBranch, Name));
+                CompareResult comparison = await Helpers.Do(() => Client.Repository.Commit.Compare(Owner, Repository.Name, baseBranch, Name));
 
                 if (comparison == null) return []; // rate-limited or network failure
 
@@ -368,7 +368,7 @@ namespace WinPaletter.GitHub
             /// <returns></returns>
             public static async Task<bool> IsNewFileAsync(string filePath, string baseBranch = "main")
             {
-                CompareResult comparison = await Helpers.ExecuteGitHubActionSafeAsync(() => Client.Repository.Commit.Compare(Owner, Repository.Name, baseBranch, Name));
+                CompareResult comparison = await Helpers.Do(() => Client.Repository.Commit.Compare(Owner, Repository.Name, baseBranch, Name));
 
                 if (comparison == null) return false; // rate-limited or network failure
 

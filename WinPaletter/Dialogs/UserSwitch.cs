@@ -66,7 +66,7 @@ namespace WinPaletter
 
         public async Task UpdateGitHubLoginData()
         {
-            if (IsHandleCreated && IsShown)
+            if (IsHandleCreated)
             {
                 // Prepare the glyph bitmap safely
                 Image glyph = User.GitHub_LoggedIn ? (Image)Properties.Resources.Glyph_SignOut.Clone() : (Image)Properties.Resources.Glyph_GitHub.Clone();
@@ -269,6 +269,20 @@ namespace WinPaletter
         {
             Close();
             Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.GitHub_Mgr);
+        }
+
+        private async void button23_Click(object sender, EventArgs e)
+        {
+            bool isLoggedIn = await Program.GitHub.IsLoggedInAsync();
+            User.UpdateGitHubLoginStatus(isLoggedIn);
+
+            if (!isLoggedIn)
+            {
+                MsgBox(Program.Localization.Strings.Messages.GitHub_NotSignedUp, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            await UpdateGitHubLoginData();
         }
     }
 }

@@ -203,7 +203,7 @@ namespace WinPaletter.GitHub
             if (info == null || info.Type != EntryType.File)
                 throw new FileNotFoundException($"File `{path}` does not exist on GitHub.");
 
-            IReadOnlyList<RepositoryContent> content = await Helpers.ExecuteGitHubActionSafeAsync(() =>
+            IReadOnlyList<RepositoryContent> content = await Helpers.Do(() =>
                 Program.GitHub.Client.Repository.Content.GetAllContentsByRef(
                     Repository.Owner,
                     GitHub.Repository.Name,
@@ -256,7 +256,7 @@ namespace WinPaletter.GitHub
 
             if (existing == null)
             {
-                await Helpers.ExecuteGitHubActionSafeAsync(() =>
+                await Helpers.Do(() =>
                     client.CreateFile(
                         Repository.Owner,
                         GitHub.Repository.Name,
@@ -269,14 +269,14 @@ namespace WinPaletter.GitHub
 
                 if (string.IsNullOrEmpty(sha))
                 {
-                    IReadOnlyList<RepositoryContent> remote = await Helpers.ExecuteGitHubActionSafeAsync(() =>
+                    IReadOnlyList<RepositoryContent> remote = await Helpers.Do(() =>
                         client.GetAllContentsByRef(Repository.Owner, GitHub.Repository.Name, normalizedPath, GitHub.Repository.Branch.Name));
 
                     if (remote == null || !remote.Any()) return null; // rate-limited or network failure
                     sha = remote[0].Sha;
                 }
 
-                await Helpers.ExecuteGitHubActionSafeAsync(() =>
+                await Helpers.Do(() =>
                     client.UpdateFile(
                         Repository.Owner,
                         GitHub.Repository.Name,
@@ -285,7 +285,7 @@ namespace WinPaletter.GitHub
             }
 
             // Update cache
-            IReadOnlyList<RepositoryContent> updatedContent = await Helpers.ExecuteGitHubActionSafeAsync(() =>
+            IReadOnlyList<RepositoryContent> updatedContent = await Helpers.Do(() =>
                 client.GetAllContentsByRef(Repository.Owner, GitHub.Repository.Name, normalizedPath, GitHub.Repository.Branch.Name));
 
             if (updatedContent != null && updatedContent.Count > 0)
@@ -374,7 +374,7 @@ namespace WinPaletter.GitHub
                 // 3. TEXT FILE → Contents API
                 string content = Encoding.UTF8.GetString(fileBytes);
 
-                RepositoryContent existingContent = await Helpers.ExecuteGitHubActionSafeAsync(async () =>
+                RepositoryContent existingContent = await Helpers.Do(async () =>
                 {
                     try
                     {
@@ -389,12 +389,12 @@ namespace WinPaletter.GitHub
                 if (existingContent == null)
                 {
                     CreateFileRequest create = new(commitMessage, content, GitHub.Repository.Branch.Name);
-                    await Helpers.ExecuteGitHubActionSafeAsync(() => client.Repository.Content.CreateFile(Repository.Owner, GitHub.Repository.Name, githubPath, create));
+                    await Helpers.Do(() => client.Repository.Content.CreateFile(Repository.Owner, GitHub.Repository.Name, githubPath, create));
                 }
                 else
                 {
                     UpdateFileRequest update = new(commitMessage, content, existingContent.Sha, GitHub.Repository.Branch.Name);
-                    await Helpers.ExecuteGitHubActionSafeAsync(() => client.Repository.Content.UpdateFile(Repository.Owner, GitHub.Repository.Name, githubPath, update));
+                    await Helpers.Do(() => client.Repository.Content.UpdateFile(Repository.Owner, GitHub.Repository.Name, githubPath, update));
                 }
             }
             else
@@ -405,7 +405,7 @@ namespace WinPaletter.GitHub
                 int maxRetries = 5;
                 for (int attempt = 0; attempt < maxRetries; attempt++)
                 {
-                    BlobReference blobRef = await Helpers.ExecuteGitHubActionSafeAsync(() =>
+                    BlobReference blobRef = await Helpers.Do(() =>
                     {
                         NewBlob blob = new()
                         {
@@ -415,11 +415,11 @@ namespace WinPaletter.GitHub
                         return client.Git.Blob.Create(Repository.Owner, GitHub.Repository.Name, blob);
                     });
 
-                    Reference branchRef = await Helpers.ExecuteGitHubActionSafeAsync(() => client.Git.Reference.Get(Repository.Owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}"));
+                    Reference branchRef = await Helpers.Do(() => client.Git.Reference.Get(Repository.Owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}"));
 
-                    Commit latestCommit = await Helpers.ExecuteGitHubActionSafeAsync(() => client.Git.Commit.Get(Repository.Owner, GitHub.Repository.Name, branchRef.Object.Sha));
+                    Commit latestCommit = await Helpers.Do(() => client.Git.Commit.Get(Repository.Owner, GitHub.Repository.Name, branchRef.Object.Sha));
 
-                    TreeResponse baseTree = await Helpers.ExecuteGitHubActionSafeAsync(() => client.Git.Tree.Get(Repository.Owner, GitHub.Repository.Name, latestCommit.Tree.Sha));
+                    TreeResponse baseTree = await Helpers.Do(() => client.Git.Tree.Get(Repository.Owner, GitHub.Repository.Name, latestCommit.Tree.Sha));
 
                     NewTree newTree = new Octokit.NewTree { BaseTree = baseTree.Sha };
                     newTree.Tree.Add(new Octokit.NewTreeItem
@@ -430,14 +430,14 @@ namespace WinPaletter.GitHub
                         Sha = blobRef.Sha
                     });
 
-                    TreeResponse createdTree = await Helpers.ExecuteGitHubActionSafeAsync(() => client.Git.Tree.Create(Repository.Owner, GitHub.Repository.Name, newTree));
+                    TreeResponse createdTree = await Helpers.Do(() => client.Git.Tree.Create(Repository.Owner, GitHub.Repository.Name, newTree));
 
                     NewCommit newCommit = new Octokit.NewCommit(commitMessage, createdTree.Sha, latestCommit.Sha);
-                    Commit commit = await Helpers.ExecuteGitHubActionSafeAsync(() => client.Git.Commit.Create(Repository.Owner, GitHub.Repository.Name, newCommit));
+                    Commit commit = await Helpers.Do(() => client.Git.Commit.Create(Repository.Owner, GitHub.Repository.Name, newCommit));
 
                     try
                     {
-                        await Helpers.ExecuteGitHubActionSafeAsync(() => client.Git.Reference.Update(Repository.Owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}", new Octokit.ReferenceUpdate(commit.Sha)));
+                        await Helpers.Do(() => client.Git.Reference.Update(Repository.Owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}", new Octokit.ReferenceUpdate(commit.Sha)));
                         break; // success
                     }
                     catch (Octokit.ApiValidationException ex) when (ex.Message.Contains("fast forward") && attempt < maxRetries - 1)
@@ -450,7 +450,7 @@ namespace WinPaletter.GitHub
             if (cts.IsCancellationRequested) return null;
 
             // 5. Refresh cache
-            IReadOnlyList<RepositoryContent> refreshed = await Helpers.ExecuteGitHubActionSafeAsync(() => client.Repository.Content.GetAllContentsByRef(Repository.Owner, GitHub.Repository.Name, githubPath, GitHub.Repository.Branch.Name));
+            IReadOnlyList<RepositoryContent> refreshed = await Helpers.Do(() => client.Repository.Content.GetAllContentsByRef(Repository.Owner, GitHub.Repository.Name, githubPath, GitHub.Repository.Branch.Name));
 
             if (refreshed == null || !refreshed.Any()) return null;
 
@@ -490,9 +490,9 @@ namespace WinPaletter.GitHub
                     return Forms.GitHub_FileConflict.Action;
                 };
 
-            Reference masterRef = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Reference.Get(Repository.Owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}"));
+            Reference masterRef = await Helpers.Do(() => Program.GitHub.Client.Git.Reference.Get(Repository.Owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}"));
 
-            Commit latestCommit = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Commit.Get(Repository.Owner, GitHub.Repository.Name, masterRef.Object.Sha));
+            Commit latestCommit = await Helpers.Do(() => Program.GitHub.Client.Git.Commit.Get(Repository.Owner, GitHub.Repository.Name, masterRef.Object.Sha));
 
             NewTree newTree = new NewTree { BaseTree = latestCommit.Tree.Sha };
 
@@ -588,12 +588,12 @@ namespace WinPaletter.GitHub
             if (processed == 0) return;
 
             // Commit tree safely
-            TreeResponse createdTree = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Tree.Create(Repository.Owner, GitHub.Repository.Name, newTree));
+            TreeResponse createdTree = await Helpers.Do(() => Program.GitHub.Client.Git.Tree.Create(Repository.Owner, GitHub.Repository.Name, newTree));
 
             NewCommit commit = new($"Copy {processed} file(s) to `{destDir}` by {Repository.Owner}", createdTree.Sha, latestCommit.Sha);
-            Commit createdCommit = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Commit.Create(Repository.Owner, GitHub.Repository.Name, commit));
+            Commit createdCommit = await Helpers.Do(() => Program.GitHub.Client.Git.Commit.Create(Repository.Owner, GitHub.Repository.Name, commit));
 
-            await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Reference.Update(Repository.Owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}", new ReferenceUpdate(createdCommit.Sha)));
+            await Helpers.Do(() => Program.GitHub.Client.Git.Reference.Update(Repository.Owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}", new ReferenceUpdate(createdCommit.Sha)));
 
             reportProgress?.Invoke(100);
         }
@@ -617,9 +617,9 @@ namespace WinPaletter.GitHub
                     return Forms.GitHub_FileConflict.Action;
                 };
 
-            Reference masterRef = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Reference.Get(Repository.Owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}"));
+            Reference masterRef = await Helpers.Do(() => Program.GitHub.Client.Git.Reference.Get(Repository.Owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}"));
 
-            Commit latestCommit = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Commit.Get(Repository.Owner, GitHub.Repository.Name, masterRef.Object.Sha));
+            Commit latestCommit = await Helpers.Do(() => Program.GitHub.Client.Git.Commit.Get(Repository.Owner, GitHub.Repository.Name, masterRef.Object.Sha));
 
             NewTree newTree = new() { BaseTree = latestCommit.Tree.Sha };
 
@@ -720,13 +720,13 @@ namespace WinPaletter.GitHub
             }
 
             // Commit all changes safely
-            TreeResponse createdTree = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Tree.Create(Repository.Owner, GitHub.Repository.Name, newTree));
+            TreeResponse createdTree = await Helpers.Do(() => Program.GitHub.Client.Git.Tree.Create(Repository.Owner, GitHub.Repository.Name, newTree));
 
             string commitMessage = $"Copy {sourceDirs.Count} directories to `{destDirRoot}` by {Repository.Owner}";
             NewCommit newCommit = new NewCommit(commitMessage, createdTree.Sha, latestCommit.Sha);
-            Commit commit = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Commit.Create(Repository.Owner, GitHub.Repository.Name, newCommit));
+            Commit commit = await Helpers.Do(() => Program.GitHub.Client.Git.Commit.Create(Repository.Owner, GitHub.Repository.Name, newCommit));
 
-            await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Reference.Update(Repository.Owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}", new ReferenceUpdate(commit.Sha)));
+            await Helpers.Do(() => Program.GitHub.Client.Git.Reference.Update(Repository.Owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}", new ReferenceUpdate(commit.Sha)));
 
             // Update cache for directories
             foreach (string sourceDir in sourceDirs)
@@ -756,9 +756,9 @@ namespace WinPaletter.GitHub
             bool replaceAll = false;
             bool skipAll = false;
 
-            Reference masterRef = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Reference.Get(Repository.Owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}"));
+            Reference masterRef = await Helpers.Do(() => Program.GitHub.Client.Git.Reference.Get(Repository.Owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}"));
 
-            Commit latestCommit = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Commit.Get(Repository.Owner, GitHub.Repository.Name, masterRef.Object.Sha));
+            Commit latestCommit = await Helpers.Do(() => Program.GitHub.Client.Git.Commit.Get(Repository.Owner, GitHub.Repository.Name, masterRef.Object.Sha));
 
             NewTree newTree = new() { BaseTree = latestCommit.Tree.Sha };
 
@@ -864,12 +864,12 @@ namespace WinPaletter.GitHub
 
             if (processed > 0)
             {
-                TreeResponse createdTree = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Tree.Create(Repository.Owner, GitHub.Repository.Name, newTree));
+                TreeResponse createdTree = await Helpers.Do(() => Program.GitHub.Client.Git.Tree.Create(Repository.Owner, GitHub.Repository.Name, newTree));
 
                 NewCommit commit = new(message ?? $"Move {processed} file(s) to `{destDir}` by {Repository.Owner}", createdTree.Sha, latestCommit.Sha);
-                Commit createdCommit = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Commit.Create(Repository.Owner, GitHub.Repository.Name, commit));
+                Commit createdCommit = await Helpers.Do(() => Program.GitHub.Client.Git.Commit.Create(Repository.Owner, GitHub.Repository.Name, commit));
 
-                await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Reference.Update(Repository.Owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}", new ReferenceUpdate(createdCommit.Sha)));
+                await Helpers.Do(() => Program.GitHub.Client.Git.Reference.Update(Repository.Owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}", new ReferenceUpdate(createdCommit.Sha)));
 
                 // Update cache
                 foreach (string srcPath in sourcePaths)
@@ -905,9 +905,9 @@ namespace WinPaletter.GitHub
 
             if (cts.Token.IsCancellationRequested) return null;
 
-            Reference masterRef = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Reference.Get(Repository.Owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}"));
+            Reference masterRef = await Helpers.Do(() => Program.GitHub.Client.Git.Reference.Get(Repository.Owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}"));
 
-            Commit latestCommit = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Commit.Get(Repository.Owner, GitHub.Repository.Name, masterRef.Object.Sha));
+            Commit latestCommit = await Helpers.Do(() => Program.GitHub.Client.Git.Commit.Get(Repository.Owner, GitHub.Repository.Name, masterRef.Object.Sha));
 
             NewTree newTree = new() { BaseTree = latestCommit.Tree.Sha };
 
@@ -958,13 +958,13 @@ namespace WinPaletter.GitHub
             Cache.Remove(src);
             reportProgress?.Invoke(50);
 
-            TreeResponse createdTree = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Tree.Create(Repository.Owner, GitHub.Repository.Name, newTree));
+            TreeResponse createdTree = await Helpers.Do(() => Program.GitHub.Client.Git.Tree.Create(Repository.Owner, GitHub.Repository.Name, newTree));
 
             NewCommit commit = new(message ?? $"Move file `{FileName(src)}` to `{ParentDirectoryName(dest)}` by {Repository.Owner}", createdTree.Sha, latestCommit.Sha);
 
-            Commit createdCommit = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Commit.Create(Repository.Owner, GitHub.Repository.Name, commit));
+            Commit createdCommit = await Helpers.Do(() => Program.GitHub.Client.Git.Commit.Create(Repository.Owner, GitHub.Repository.Name, commit));
 
-            await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Reference.Update(Repository.Owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}", new ReferenceUpdate(createdCommit.Sha)));
+            await Helpers.Do(() => Program.GitHub.Client.Git.Reference.Update(Repository.Owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}", new ReferenceUpdate(createdCommit.Sha)));
 
             reportProgress?.Invoke(100);
 
@@ -998,8 +998,8 @@ namespace WinPaletter.GitHub
                 };
 
             // 1. Get latest commit safely
-            Reference masterRef = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Reference.Get(Repository.Owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}"));
-            Commit latestCommit = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Commit.Get(Repository.Owner, GitHub.Repository.Name, masterRef.Object.Sha));
+            Reference masterRef = await Helpers.Do(() => Program.GitHub.Client.Git.Reference.Get(Repository.Owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}"));
+            Commit latestCommit = await Helpers.Do(() => Program.GitHub.Client.Git.Commit.Get(Repository.Owner, GitHub.Repository.Name, masterRef.Object.Sha));
             NewTree newTree = new() { BaseTree = latestCommit.Tree.Sha };
 
             bool replaceAll = false;
@@ -1088,10 +1088,10 @@ namespace WinPaletter.GitHub
             // 4. Commit all changes safely
             if (allEntries.Count > 0)
             {
-                TreeResponse createdTree = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Tree.Create(Repository.Owner, GitHub.Repository.Name, newTree));
+                TreeResponse createdTree = await Helpers.Do(() => Program.GitHub.Client.Git.Tree.Create(Repository.Owner, GitHub.Repository.Name, newTree));
                 NewCommit commit = new NewCommit(message ?? $"Move {allEntries.Count} item(s) to `{destDirRoot}` by {Repository.Owner}", createdTree.Sha, latestCommit.Sha);
-                Commit createdCommit = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Commit.Create(Repository.Owner, GitHub.Repository.Name, commit));
-                await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Reference.Update(Repository.Owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}", new ReferenceUpdate(createdCommit.Sha)));
+                Commit createdCommit = await Helpers.Do(() => Program.GitHub.Client.Git.Commit.Create(Repository.Owner, GitHub.Repository.Name, commit));
+                await Helpers.Do(() => Program.GitHub.Client.Git.Reference.Update(Repository.Owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}", new ReferenceUpdate(createdCommit.Sha)));
 
                 // Update cache
                 foreach (string sourceDir in sourceDirs)
@@ -1126,8 +1126,8 @@ namespace WinPaletter.GitHub
             string dstRootFull = NormalizePath(destDirectory).TrimEnd('/');
 
             // Get latest commit safely
-            Reference masterRef = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Reference.Get(Repository.Owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}"));
-            Commit latestCommit = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Commit.Get(Repository.Owner, GitHub.Repository.Name, masterRef.Object.Sha));
+            Reference masterRef = await Helpers.Do(() => Program.GitHub.Client.Git.Reference.Get(Repository.Owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}"));
+            Commit latestCommit = await Helpers.Do(() => Program.GitHub.Client.Git.Commit.Get(Repository.Owner, GitHub.Repository.Name, masterRef.Object.Sha));
             NewTree newTree = new() { BaseTree = latestCommit.Tree.Sha };
 
             bool replaceAll = false;
@@ -1209,10 +1209,10 @@ namespace WinPaletter.GitHub
             // Commit changes safely
             if (totalItems > 0)
             {
-                TreeResponse createdTree = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Tree.Create(Repository.Owner, GitHub.Repository.Name, newTree));
+                TreeResponse createdTree = await Helpers.Do(() => Program.GitHub.Client.Git.Tree.Create(Repository.Owner, GitHub.Repository.Name, newTree));
                 NewCommit commit = new(message ?? $"Move directory `{FileName(srcDir)}` to `{destDirectory}` by {Repository.Owner}", createdTree.Sha, latestCommit.Sha);
-                Commit createdCommit = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Commit.Create(Repository.Owner, GitHub.Repository.Name, commit));
-                await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Reference.Update(Repository.Owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}", new ReferenceUpdate(createdCommit.Sha)));
+                Commit createdCommit = await Helpers.Do(() => Program.GitHub.Client.Git.Commit.Create(Repository.Owner, GitHub.Repository.Name, commit));
+                await Helpers.Do(() => Program.GitHub.Client.Git.Reference.Update(Repository.Owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}", new ReferenceUpdate(createdCommit.Sha)));
             }
 
             Cache.Remove(srcDir);
@@ -1259,7 +1259,7 @@ namespace WinPaletter.GitHub
                     };
 
                     // Execute DeleteFile safely
-                    await Helpers.ExecuteGitHubActionSafeAsync(async () => Program.GitHub.Client.Repository.Content.DeleteFile(Repository.Owner, GitHub.Repository.Name, file.Path, deleteRequest));
+                    await Helpers.Do(async () => Program.GitHub.Client.Repository.Content.DeleteFile(Repository.Owner, GitHub.Repository.Name, file.Path, deleteRequest));
 
                     Cache.Remove(normalizedPath);
                     if (workingDir.Equals(CurrentPath, StringComparison.OrdinalIgnoreCase)) await UpdateExplorerView(workingDir);
@@ -1307,9 +1307,9 @@ namespace WinPaletter.GitHub
                 if (string.IsNullOrEmpty(GitHub.Repository.Name)) throw new InvalidOperationException("Repository name is null or empty.");
                 if (string.IsNullOrEmpty(GitHub.Repository.Branch.Name)) throw new InvalidOperationException("Branch is null or empty.");
 
-                Reference branchRef = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Reference.Get(Repository.Owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}"));
-                Commit latestCommit = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Commit.Get(Repository.Owner, GitHub.Repository.Name, branchRef.Object.Sha));
-                TreeResponse tree = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Tree.GetRecursive(Repository.Owner, GitHub.Repository.Name, latestCommit.Tree.Sha));
+                Reference branchRef = await Helpers.Do(() => Program.GitHub.Client.Git.Reference.Get(Repository.Owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}"));
+                Commit latestCommit = await Helpers.Do(() => Program.GitHub.Client.Git.Commit.Get(Repository.Owner, GitHub.Repository.Name, branchRef.Object.Sha));
+                TreeResponse tree = await Helpers.Do(() => Program.GitHub.Client.Git.Tree.GetRecursive(Repository.Owner, GitHub.Repository.Name, latestCommit.Tree.Sha));
 
                 foreach (string dir in normalizedDirs)
                 {
@@ -1341,11 +1341,11 @@ namespace WinPaletter.GitHub
                     NewTree newTree = new() { BaseTree = latestCommit.Tree.Sha };
                     foreach (var item in allFilesToDelete) newTree.Tree.Add(item);
 
-                    TreeResponse createdTree = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Tree.Create(Repository.Owner, GitHub.Repository.Name, newTree));
+                    TreeResponse createdTree = await Helpers.Do(() => Program.GitHub.Client.Git.Tree.Create(Repository.Owner, GitHub.Repository.Name, newTree));
                     string commitMessage = $"Delete directories recursively by {Repository.Owner}";
                     NewCommit newCommit = new NewCommit(commitMessage, createdTree.Sha, latestCommit.Sha);
-                    Commit commit = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Commit.Create(Repository.Owner, GitHub.Repository.Name, newCommit));
-                    await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Git.Reference.Update(Repository.Owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}", new ReferenceUpdate(commit.Sha)));
+                    Commit commit = await Helpers.Do(() => Program.GitHub.Client.Git.Commit.Create(Repository.Owner, GitHub.Repository.Name, newCommit));
+                    await Helpers.Do(() => Program.GitHub.Client.Git.Reference.Update(Repository.Owner, GitHub.Repository.Name, $"heads/{GitHub.Repository.Branch.Name}", new ReferenceUpdate(commit.Sha)));
                 }
             }
             catch (OperationCanceledException)
@@ -1379,7 +1379,7 @@ namespace WinPaletter.GitHub
             IReadOnlyList<RepositoryContent> contents;
             try
             {
-                contents = await Helpers.ExecuteGitHubActionSafeAsync(() => Program.GitHub.Client.Repository.Content.GetAllContentsByRef(Repository.Owner, GitHub.Repository.Name, path, GitHub.Repository.Branch.Name));
+                contents = await Helpers.Do(() => Program.GitHub.Client.Repository.Content.GetAllContentsByRef(Repository.Owner, GitHub.Repository.Name, path, GitHub.Repository.Branch.Name));
             }
             catch (Octokit.NotFoundException)
             {

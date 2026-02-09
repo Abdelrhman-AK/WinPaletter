@@ -379,7 +379,7 @@ namespace WinPaletter.GitHub
             {
                 List<RepositoryContent> result = [];
 
-                IReadOnlyList<RepositoryContent> contents = await Helpers.ExecuteGitHubActionSafeAsync(() =>
+                IReadOnlyList<RepositoryContent> contents = await Helpers.Do(() =>
                      Program.GitHub.Client.Repository.Content.GetAllContentsByRef(
                         Repository.Owner,
                         GitHub.Repository.Name,

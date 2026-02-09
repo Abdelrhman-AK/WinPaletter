@@ -73,5 +73,25 @@ namespace WinPaletter
             await Program.GitHub.SignOutAsync();
             Close();
         }
+
+        private async void button5_Click(object sender, EventArgs e)
+        {
+            bool isLoggedIn = await Program.GitHub.IsLoggedInAsync();
+            User.UpdateGitHubLoginStatus(isLoggedIn);
+
+            if (!isLoggedIn)
+            {
+                MsgBox(Program.Localization.Strings.Messages.GitHub_NotSignedUp, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else
+            {
+                Program.Animator.HideSync(tablessControl1);
+                label2.Text = User.GitHub.Login;
+                User_GitHubAvatarUpdated();
+                tablessControl1.SelectedIndex = 0;
+                Program.Animator.ShowSync(tablessControl1);
+            }
+        }
     }
 }

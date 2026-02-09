@@ -47,7 +47,6 @@ namespace WinPaletter
         {
             InitializeComponent();
             Icon = FormsExtensions.Icon<MainForm>();
-            GitHub.Events.GitHubAvatarUpdated += UpdateUserButtonAvatar;
         }
 
         private void Home_Load(object sender, EventArgs e)
@@ -57,6 +56,7 @@ namespace WinPaletter
 
             isLoggedIn = User.GitHub_LoggedIn;
             GitHub.Events.GitHubUserSwitch += User_GitHubUserSwitch;
+            GitHub.Events.GitHubAvatarUpdated += UpdateUserButtonAvatar;
 
             NotifyUpdates.Icon = Icon;
             groupBox1.UseSharpStyle = true;
@@ -169,7 +169,7 @@ namespace WinPaletter
         {
             if (InvokeRequired)
             {
-                BeginInvoke(UpdateUserButtonAvatar);
+                BeginInvoke(() => UpdateUserButtonAvatar(sender, e));
                 return;
             }
 

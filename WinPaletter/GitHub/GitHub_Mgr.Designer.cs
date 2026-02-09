@@ -163,6 +163,7 @@
             this.button4 = new WinPaletter.UI.WP.Button();
             this.button6 = new WinPaletter.UI.WP.Button();
             this.pin_button = new WinPaletter.UI.WP.Button();
+            this.button23 = new WinPaletter.UI.WP.Button();
             this.tablessControl1.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -1732,6 +1733,7 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.panel2.Controls.Add(this.button23);
             this.panel2.Controls.Add(this.button3);
             this.panel2.Controls.Add(this.button21);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -1770,9 +1772,9 @@
             this.button21.ImageGlyphEnabled = false;
             this.button21.Location = new System.Drawing.Point(144, 12);
             this.button21.Name = "button21";
-            this.button21.Size = new System.Drawing.Size(419, 50);
+            this.button21.Size = new System.Drawing.Size(301, 50);
             this.button21.TabIndex = 1;
-            this.button21.Text = "Sign in";
+            this.button21.Text = "Sign up";
             this.button21.UseVisualStyleBackColor = true;
             this.button21.Click += new System.EventHandler(this.button21_Click);
             // 
@@ -1787,9 +1789,9 @@
             this.labelAlt2.Name = "labelAlt2";
             this.labelAlt2.Size = new System.Drawing.Size(756, 53);
             this.labelAlt2.TabIndex = 5;
-            this.labelAlt2.Text = "Sign in with GitHub to take full control of your WinPaletter themes: upload new d" +
-    "esigns, update existing ones, and keep everything synced with your GitHub reposi" +
-    "tories.";
+            this.labelAlt2.Text = "Log in or sign up with GitHub to take full control of your WinPaletter themes: up" +
+    "load new designs, update existing ones, and keep everything synced with your Git" +
+    "Hub repositories.";
             this.labelAlt2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // labelAlt1
@@ -1803,7 +1805,7 @@
             this.labelAlt1.Name = "labelAlt1";
             this.labelAlt1.Size = new System.Drawing.Size(756, 41);
             this.labelAlt1.TabIndex = 4;
-            this.labelAlt1.Text = "Sign in with GitHub";
+            this.labelAlt1.Text = "Log in to GitHub";
             this.labelAlt1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel1
@@ -2168,6 +2170,25 @@
             this.pin_button.Visible = false;
             this.pin_button.Click += new System.EventHandler(this.pin_button_Click);
             // 
+            // button23
+            // 
+            this.button23.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.button23.CustomColor = System.Drawing.Color.Empty;
+            this.button23.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button23.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button23.ForeColor = System.Drawing.Color.White;
+            this.button23.Image = null;
+            this.button23.ImageGlyph = null;
+            this.button23.ImageGlyphEnabled = false;
+            this.button23.Location = new System.Drawing.Point(451, 12);
+            this.button23.Name = "button23";
+            this.button23.Size = new System.Drawing.Size(112, 50);
+            this.button23.TabIndex = 136;
+            this.button23.Text = "Log in";
+            this.button23.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button23.UseVisualStyleBackColor = false;
+            this.button23.Click += new System.EventHandler(this.button23_Click);
+            // 
             // GitHub_Mgr
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -2381,5 +2402,6 @@
         private System.Windows.Forms.Panel panel4;
         private UI.WP.SeparatorH separatorH2;
         private UI.WP.TransparentPictureBox transparentPictureBox3;
+        internal UI.WP.Button button23;
     }
 }

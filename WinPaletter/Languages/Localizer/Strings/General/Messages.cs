@@ -79,6 +79,9 @@
                 public string ChangeExt_Themes { get; set; } = "Changing the file type will break WinPaletter theme compatibility.\r\n\r\nThis file will no longer work as a valid WinPaletter theme.";
                 public string ChangeExt { get; set; } = "If you change a file name extension, the file might become unusable.";
                 public string ChangeExt_Confirm { get; set; } = "Are you sure you want to change it?";
+                public string GitHub_NotSignedUp { get; set; } = "There are no accounts saved in Windows Credentials. Try restarting WinPaletter or signing up again with GitHub within WinPaletter.";
+                public string GitHub_SignoutMsg { get; set; } = "Are you sure you want to sign out from GitHub?";
+                public string GitHub_SignoutMsg2 { get; set; } = "This will remove your GitHub account from Windows Credentials, but it won't delete any of your data in GitHub. You can sign in again with the same account or another account whenever you want.";
             }
         }
     }

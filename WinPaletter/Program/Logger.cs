@@ -155,13 +155,15 @@ namespace WinPaletter
 
         public void Write(LogEventLevel level, string messageTemplate, System.Exception ex = null)
         {
+            messageTemplate = messageTemplate.Replace("\r", ", ").Replace("\n", ", ").Trim();
+
             if (ex is null)
             {
-                Debugger.Log((int)level, level.ToString(), $"[{level}] {messageTemplate} \r\n");
+                Debugger.Log((int)level, level.ToString(), $"[{DateTime.Now}] [{level}] {messageTemplate} \r\n");
             }
             else
             {
-                Debugger.Log((int)level, level.ToString(), $"[{level}] {messageTemplate}; {ex.Message} \r\n");
+                Debugger.Log((int)level, level.ToString(), $"[{DateTime.Now}] [{level}] {messageTemplate}; {ex.Message} \r\n");
             }
 
 
@@ -172,12 +174,12 @@ namespace WinPaletter
                 if (ex is null)
                 {
                     UpdateStatusLabel(level, $"[{level}] {messageTemplate}");
-                    _log?.Write(level, messageTemplate);
+                    _log?.Write(level, $"[{DateTime.Now}] {messageTemplate}");
                 }
                 else
                 {
                     UpdateStatusLabel(level, $"[{level}] {messageTemplate}; {ex.Message}");
-                    _log?.Write(level, $"{messageTemplate}; {ex.Message}", ex);
+                    _log?.Write(level, $"[{DateTime.Now}] {messageTemplate}; {ex.Message}", ex);
                 }
             }
         }

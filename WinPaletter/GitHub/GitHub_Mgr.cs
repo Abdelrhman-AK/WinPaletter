@@ -1093,5 +1093,17 @@ Generated automatically by WinPaletter. Please review the changes before merging
         {
             Close();
         }
+
+        private async void button23_Click(object sender, EventArgs e)
+        {
+            bool isLoggedIn = await Program.GitHub.IsLoggedInAsync();
+            User.UpdateGitHubLoginStatus(isLoggedIn);
+
+            if (!isLoggedIn)
+            {
+                MsgBox(Program.Localization.Strings.Messages.GitHub_NotSignedUp, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+        }
     }
 }

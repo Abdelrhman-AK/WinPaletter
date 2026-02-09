@@ -48,7 +48,7 @@ namespace WinPaletter.GitHub
         {
             try
             {
-                Octokit.Repository repo = await Helpers.ExecuteGitHubActionSafeAsync(() =>
+                Octokit.Repository repo = await Helpers.Do(() =>
                 {
                     return Client.Repository.Get(Owner, repository);
                 });
@@ -86,7 +86,7 @@ namespace WinPaletter.GitHub
         {
             try
             {
-                Octokit.Repository forked = await Helpers.ExecuteGitHubActionSafeAsync(() =>
+                Octokit.Repository forked = await Helpers.Do(() =>
                 {
                     return Client.Repository.Forks.Create(OriginalOwner, repository, new());
                 });
@@ -125,7 +125,7 @@ namespace WinPaletter.GitHub
             {
                 NewPullRequest newPR = new(title, $"{Owner}:{Branch.Name}", "main") { Body = body };
 
-                PullRequest pr = await Helpers.ExecuteGitHubActionSafeAsync(() =>
+                PullRequest pr = await Helpers.Do(() =>
                 {
                     return Client.PullRequest.Create(OriginalOwner, Name, newPR);
                 });
@@ -162,12 +162,12 @@ namespace WinPaletter.GitHub
             try
             {
                 // Branch must exist on fork
-                Reference reference = await Helpers.ExecuteGitHubActionSafeAsync(() => Client.Git.Reference.Get(Owner, Name, $"heads/{Branch.Name}"));
+                Reference reference = await Helpers.Do(() => Client.Git.Reference.Get(Owner, Name, $"heads/{Branch.Name}"));
 
                 if (reference == null) return false; // rate-limited
 
                 // Must have commits
-                CompareResult compare = await Helpers.ExecuteGitHubActionSafeAsync(() => Client.Repository.Commit.Compare(OriginalOwner, Name, "main", $"{Owner}:{Branch.Name}"));
+                CompareResult compare = await Helpers.Do(() => Client.Repository.Commit.Compare(OriginalOwner, Name, "main", $"{Owner}:{Branch.Name}"));
 
                 if (compare == null) return false; // rate-limited
 
@@ -178,7 +178,7 @@ namespace WinPaletter.GitHub
                 }
 
                 // No duplicate PR
-                IReadOnlyList<PullRequest> prs = await Helpers.ExecuteGitHubActionSafeAsync(() => Client.PullRequest.GetAllForRepository(OriginalOwner, Name,
+                IReadOnlyList<PullRequest> prs = await Helpers.Do(() => Client.PullRequest.GetAllForRepository(OriginalOwner, Name,
                         new PullRequestRequest
                         {
                             State = ItemStateFilter.Open,
