@@ -513,7 +513,7 @@ namespace WinPaletter.GitHub
                     TotalCount = sourcePaths.Count
                 }) ?? FileFilterAction.Continue;
 
-                if (filterAction == FileFilterAction.Cancel) throw new OperationCanceledException();
+                if (filterAction == FileFilterAction.Cancel) cts?.Cancel();
                 if (filterAction == FileFilterAction.Skip) continue;
 
                 string src = NormalizePath(srcPath);
@@ -786,7 +786,7 @@ namespace WinPaletter.GitHub
                     TotalCount = sourcePaths.Count
                 }) ?? FileFilterAction.Continue;
 
-                if (filterAction == FileFilterAction.Cancel) throw new OperationCanceledException();
+                if (filterAction == FileFilterAction.Cancel) cts?.Cancel();
                 if (filterAction == FileFilterAction.Skip) continue;
 
                 string src = NormalizePath(srcPath);
@@ -804,7 +804,7 @@ namespace WinPaletter.GitHub
             // Resolve conflicts, add to Git tree
             foreach (var (srcEntry, destPath, destEntry) in entriesToMove)
             {
-                if (cts.Token.IsCancellationRequested) throw new OperationCanceledException();
+                if (cts is not null && cts.Token.IsCancellationRequested) cts?.Cancel();
 
                 string finalDest = destPath;
 

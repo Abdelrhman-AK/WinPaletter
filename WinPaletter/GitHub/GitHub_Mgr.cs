@@ -16,6 +16,10 @@ namespace WinPaletter
 {
     public partial class GitHub_Mgr : UI.WP.Form
     {
+        Octokit.Repository repo;
+        Branch upstreamBranch;
+        int previousIndex = -1;
+
         sealed class PendingBranch
         {
             public string BaseBranch { get; set; } = "main";
@@ -24,60 +28,109 @@ namespace WinPaletter
         public GitHub_Mgr()
         {
             InitializeComponent();
+
             GitHub.Events.GitHubAvatarUpdated += User_GitHubAvatarUpdated;
             GitHub.Events.GitHubUserSwitch += User_GitHubUserSwitch;
-        }
-
-
-        Octokit.Repository repo;
-        Branch upstreamBranch;
-
-        private async void GitHubManager_Load(object sender, EventArgs e)
-        {
-            groupBox6.UseDecorationPattern = true;
-
-            LoadInternal(false);
-        }
-
-        private async void LoadInternal(bool animate = true)
-        {
-            if (!animate) tablessControl1.Visible = true;
-
-            if (animate) Program.Animator.HideSync(tablessControl1);
-
-            (int remainingTrials, DateTime whenWillReset) remaining = await GitHub.Helpers.RemainingTrials();
-
-            if (!Program.IsNetworkAvailable)
-            {
-                tablessControl1.SelectedIndex = 3;
-                if (animate) Program.Animator.ShowSync(tablessControl1);
-            }
-            else if (!User.GitHub_LoggedIn)
-            {
-                tablessControl1.SelectedIndex = 2;
-                if (animate) Program.Animator.ShowSync(tablessControl1);
-            }
-            else if (remaining.remainingTrials == 0)
-            {
-                labelAlt3.Text = string.Format(Program.Localization.Strings.GitHubStrings.API_RateLimited, remaining.whenWillReset.ToLocalTime());
-                tablessControl1.SelectedIndex = 4;
-                if (animate) Program.Animator.ShowSync(tablessControl1);
-            }
-            else
-            {
-                tablessControl1.SelectedIndex = 0;
-                if (animate) Program.Animator.ShowSync(tablessControl1);
-                Init();
-            }
-        }
-
-        private async void Init()
-        {
-            AddViewsToButton();
+            GitHub.Events.NetworkLost += Events_NetworkLost;
+            GitHub.Events.RateLimitExceeded += Events_RateLimitExceeded;
             GitHub.Events.Navigated += FileSystem_Navigated;
             GitHub.Events.CanPasteChanged += FileSystem_CanPasteChanged;
             GitHub.Events.StatusLabelChanged += FileSystem_StatusLabelChanged;
             GitHub.Events.CanDoIOChanged += FileSystem_CanDoIOChanged;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // Unsubscribe from events
+                GitHub.Events.GitHubAvatarUpdated -= User_GitHubAvatarUpdated;
+                GitHub.Events.GitHubUserSwitch -= User_GitHubUserSwitch;
+                GitHub.Events.NetworkLost -= Events_NetworkLost;
+                GitHub.Events.RateLimitExceeded -= Events_RateLimitExceeded;
+                GitHub.Events.Navigated -= FileSystem_Navigated;
+                GitHub.Events.CanPasteChanged -= FileSystem_CanPasteChanged;
+                GitHub.Events.StatusLabelChanged -= FileSystem_StatusLabelChanged;
+                GitHub.Events.CanDoIOChanged -= FileSystem_CanDoIOChanged;
+
+                // Dispose other managed resources if any
+                components?.Dispose();
+            }
+
+            base.Dispose(disposing);
+        }
+
+        private async void GitHub_Mgr_Load(object sender, EventArgs e)
+        {
+            groupBox6.UseDecorationPattern = true;
+            previousIndex = -1;
+            tablessControl1.SelectedIndex = 5;
+
+            await LoadInternal();
+        }
+
+
+        private async Task LoadInternal()
+        {
+            if (!IsHandleCreated) return;
+
+            if (!Program.IsNetworkAvailable)
+            {
+                ShowTab(3, false);
+                return;
+            }
+
+            var (remainingTrials, whenWillReset) = await GitHub.Helpers.RemainingTrials();
+
+            if (remainingTrials == 0)
+            {
+                labelAlt3.Text = string.Format(Program.Localization.Strings.GitHubStrings.API_RateLimited, whenWillReset.ToLocalTime());
+                ShowTab(4, false);
+                return;
+            }
+
+            if (!User.GitHub_LoggedIn)
+            {
+                ShowTab(2, false);
+                return;
+            }
+
+            ShowTab(0, false);
+
+            await Init();
+        }
+
+        private void ShowTab(int index, bool animate = true)
+        {
+            if (animate) Program.Animator.HideSync(tablessControl1);
+            tablessControl1.SelectedIndex = index;
+            if (animate) Program.Animator.ShowSync(tablessControl1);
+        }
+
+        private void Events_RateLimitExceeded(object sender, DateTime e)
+        {
+            if (IsHandleCreated)
+            {
+                Program.Animator.HideSync(tablessControl1);
+                labelAlt3.Text = string.Format(Program.Localization.Strings.GitHubStrings.API_RateLimited, e.ToLocalTime());
+                previousIndex = tablessControl1.SelectedIndex;
+                tablessControl1.SelectedIndex = 4;
+                Program.Animator.ShowSync(tablessControl1);
+            }
+        }
+
+        private void Events_NetworkLost(object sender, EventArgs e)
+        {
+            if (IsHandleCreated)
+            {
+                ShowTab(3);
+            }
+        }
+
+        private async Task Init()
+        {
+            AddViewsToButton();
+
             toggle1.Checked = GitHub.FileSystem.ShowHiddenFiles;
 
             await UpdateGitHubLoginData();
@@ -103,6 +156,7 @@ namespace WinPaletter
         {
             branchesView.Cursor = Cursors.WaitCursor;
             groupBox5.Enabled = false;
+            button18.Enabled = false;
 
             branchesView.BeginUpdate();
             branchesView.Columns.Clear();
@@ -117,6 +171,9 @@ namespace WinPaletter
             branchesView.EndUpdate();
 
             IReadOnlyList<Branch> branches = await GitHub.Repository.Branch.GetBranchesAsync(true);
+
+            repo = await Program.GitHub.Client.Repository.Get(GitHub.Repository.Owner, GitHub.Repository.Name);
+            upstreamBranch = await Program.GitHub.Client.Repository.Branch.Get(GitHub.Repository.OriginalOwner, GitHub.Repository.Name, "main");
 
             SemaphoreSlim gate = new(6);
             List<Task<ListViewItem>> tasks = new(branches.Count);
@@ -153,6 +210,7 @@ namespace WinPaletter
                 tablessControl2.SelectedIndex = 0;
             }
 
+            button18.Enabled = true;
             groupBox5.Enabled = true;
             branchesView.Cursor = Cursors.Default;
         }
@@ -221,26 +279,29 @@ namespace WinPaletter
 
         private void FileSystem_CanPasteChanged(object sender, bool e)
         {
-            btn_paste.Enabled = e;
+            if (IsHandleCreated) btn_paste.Enabled = e;
         }
 
         private void FileSystem_Navigated(object sender, string path)
         {
-            UpdateExplorerLayout();
+            if (IsHandleCreated) UpdateExplorerLayout();
         }
 
         private void FileSystem_StatusLabelChanged(object sender, string e)
         {
-            status_lbl.Text = e;
+            if (IsHandleCreated) status_lbl.Text = e;
         }
 
         private void FileSystem_CanDoIOChanged(object sender, bool e)
         {
-            btn_cut.Enabled = e;
-            btn_copy.Enabled = e;
-            btn_rename.Enabled = e;
-            btn_delete.Enabled = e;
-            btn_download.Enabled = e;
+            if (IsHandleCreated)
+            {
+                btn_cut.Enabled = e;
+                btn_copy.Enabled = e;
+                btn_rename.Enabled = e;
+                btn_delete.Enabled = e;
+                btn_download.Enabled = e;
+            }
         }
 
         public void UpdateViewButton((string label, Bitmap icon, Bitmap glyph, View view) data)
@@ -250,19 +311,14 @@ namespace WinPaletter
 
         private void User_GitHubAvatarUpdated(object sender, EventArgs e)
         {
-            Bitmap avatar = null;
-
-            // Wait for avatar to exist
-            avatar = User.GitHub_Avatar;
-
-            if (avatar is null)
+            if (IsHandleCreated)
             {
-                avatar = Properties.Resources.GitHub_SignInForFeatures.Clone() as Bitmap;
-            }
+                Bitmap avatar = User.GitHub_Avatar ?? Properties.Resources.GitHub_SignInForFeatures.Clone() as Bitmap;
 
-            using (Bitmap avatar_resized = avatar.Resize(pictureBox1.Size))
-            {
-                pictureBox1.Image = avatar_resized.ToCircular();
+                using (Bitmap avatar_resized = avatar.Resize(pictureBox1.Size))
+                {
+                    pictureBox1.Image = avatar_resized.ToCircular();
+                }
             }
         }
 
@@ -292,16 +348,6 @@ namespace WinPaletter
                     created_lbl.Text = ToFriendlyString(User.GitHub.CreatedAt);
                     updated_lbl.Text = ToFriendlyString(User.GitHub.UpdatedAt);
                 });
-
-                try
-                {
-                    repo = await Program.GitHub.Client.Repository.Get(GitHub.Repository.Owner, GitHub.Repository.Name);
-                    upstreamBranch = await Program.GitHub.Client.Repository.Branch.Get(GitHub.Repository.OriginalOwner, GitHub.Repository.Name, "main");
-                }
-                catch (ApiException ex) when ((int)ex.StatusCode == 503 || (int)ex.StatusCode == 502)
-                {
-                    Forms.BugReport.Throw(ex);
-                }
             }
         }
 
@@ -1064,14 +1110,14 @@ Generated automatically by WinPaletter. Please review the changes before merging
             Transition.With(label15, nameof(label15.Text), string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
         }
 
-        private void noNetworkPanel1_RetryClicked(object sender, EventArgs e)
+        private async void noNetworkPanel1_RetryClicked(object sender, EventArgs e)
         {
-            LoadInternal();
+            await LoadInternal();
         }
 
-        private void User_GitHubUserSwitch(Events.GitHubUserChangeEventArgs e)
+        private async void User_GitHubUserSwitch(Events.GitHubUserChangeEventArgs e)
         {
-            LoadInternal();
+            if (IsHandleCreated) await LoadInternal();
         }
 
         private void noNetworkPanel1_CloseClicked(object sender, EventArgs e)
@@ -1079,9 +1125,12 @@ Generated automatically by WinPaletter. Please review the changes before merging
             Close();
         }
 
-        private void button21_Click(object sender, EventArgs e)
+        private async void button21_Click(object sender, EventArgs e)
         {
-            Forms.GitHub_Login.ShowDialog();
+            if (Forms.GitHub_Login.ShowDialog() == DialogResult.OK && IsHandleCreated)
+            {
+                await LoadInternal();
+            }
         }
 
         private void button22_Click(object sender, EventArgs e)
@@ -1104,6 +1153,13 @@ Generated automatically by WinPaletter. Please review the changes before merging
                 MsgBox(Program.Localization.Strings.Messages.GitHub_NotSignedUp, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
+            ShowTab(5);
+        }
+
+        private void button25_Click(object sender, EventArgs e)
+        {
+            ShowTab(previousIndex > -1 ? previousIndex : 0);
         }
     }
 }

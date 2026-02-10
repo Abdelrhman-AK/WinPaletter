@@ -23,6 +23,8 @@ namespace WinPaletter.Templates
 
         private void NoNetworkPanel_Load(object sender, EventArgs e)
         {
+            this.SuspendLayout();
+
             label26.Text = Program.Localization.Strings.NoNetwork.Title1;
             label24.Text = Program.Localization.Strings.NoNetwork.Title2;
             label25.Text = Program.Localization.Strings.NoNetwork.Tip2;
@@ -35,6 +37,8 @@ namespace WinPaletter.Templates
             button1.Text = Program.Localization.Strings.NoNetwork.NetworkSettings;
             button23.Text = Program.Localization.Strings.General.Retry;
             button21.Text = Program.Localization.Strings.General.Close;
+
+            this.ResumeLayout();
         }
 
         [Browsable(true)]

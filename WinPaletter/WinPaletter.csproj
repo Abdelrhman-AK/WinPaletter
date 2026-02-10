@@ -395,9 +395,7 @@
     <Compile Include="GitHub\GitHub_ThemeUpload.Designer.cs">
       <DependentUpon>GitHub_ThemeUpload.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\Elements\AdvancedControls\Breadcrumb.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="GUI\Elements\AdvancedControls\Breadcrumb.cs" />
     <Compile Include="GUI\Elements\Checkers\CheckImage.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -32,6 +32,9 @@ namespace WinPaletter.UI.WP
                 WordWrap = _WordWrap,
             };
 
+            // Initialize fixed TB height
+            _fixedTextBoxHeight = CalculateTextBoxHeight();
+
             alpha = 0;
 
             SetTBSizes();
@@ -44,6 +47,10 @@ namespace WinPaletter.UI.WP
         }
 
         #region Variables
+
+        // Fixed height for the inner TextBox (calculated from font)
+        private int _fixedTextBoxHeight;
+        private int leftOffset => Multiline ? 2 : 6;
 
         private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
 
@@ -83,6 +90,7 @@ namespace WinPaletter.UI.WP
             }
         }
         private System.Windows.Forms.TextBox tb;
+
 
         #endregion
 
@@ -170,14 +178,8 @@ namespace WinPaletter.UI.WP
                     {
                         tb.Multiline = value;
 
-                        if (value)
-                        {
-                            tb.Height = Height - 8;
-                        }
-                        else
-                        {
-                            Height = tb.Height + 8;
-                        }
+                        // Update TB sizes and anchors based on multiline setting
+                        UpdateTextBoxConfiguration();
                     }
                 }
             }
@@ -214,7 +216,12 @@ namespace WinPaletter.UI.WP
                     if (tb is not null)
                     {
                         tb.Font = value;
-                        SetTBSizes();
+
+                        // Recalculate fixed height for inner TextBox
+                        _fixedTextBoxHeight = CalculateTextBoxHeight();
+
+                        // Update TB configuration
+                        UpdateTextBoxConfiguration();
                     }
                 }
             }
@@ -279,19 +286,68 @@ namespace WinPaletter.UI.WP
 
         #region Events/Overrides
 
-        void SetTBSizes()
+        /// <summary>
+        /// Calculates the proper height for the inner TextBox based on current font
+        /// </summary>
+        private int CalculateTextBoxHeight()
         {
-            tb.Location = new(4, 4);
-            tb.Width = Width - tb.Location.X * 2;
+            // For single-line TextBox, calculate height based on font
+            // Using "Ay" to get proper height including ascenders and descenders
+            return TextRenderer.MeasureText("Ay", TB?.Font ?? this.Font).Height + (_Multiline ? 0 : 3);
+        }
+
+        /// <summary>
+        /// Updates the TextBox configuration based on current properties
+        /// </summary>
+        private void UpdateTextBoxConfiguration()
+        {
+            if (TB == null) return;
 
             if (_Multiline)
             {
-                tb.Height = Height - 8;
+                // For multiline: TB fills the entire container
+                TB.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+                TB.Location = new Point(leftOffset, 4);
+                TB.Height = Math.Max(Height - 8, _fixedTextBoxHeight); // Minimum height is font height
+                TB.Width = Width - (leftOffset * 2); // Account for both left and right
             }
             else
             {
-                Height = tb.Height + 8;
+                // For single line: fixed height, anchored left/right, centered vertically
+                TB.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+                TB.Height = _fixedTextBoxHeight;
+                TB.Width = Width - (leftOffset * 2); // Account for both left and right
+
+                // Center vertically
+                CenterTextBoxVertically(leftOffset);
             }
+        }
+
+        /// <summary>
+        /// Centers the TextBox vertically within the container
+        /// </summary>
+        private void CenterTextBoxVertically(int leftOffset)
+        {
+            if (TB == null || _Multiline) return;
+
+            int y = (Height - TB.Height) / 2;
+            // Ensure minimum padding
+            y = Math.Max(4, y);
+            TB.Location = new Point(leftOffset, y);
+        }
+
+        /// <summary>
+        /// Updates TB sizes and position
+        /// </summary>
+        void SetTBSizes()
+        {
+            if (TB == null) return;
+
+            // Update fixed height
+            _fixedTextBoxHeight = CalculateTextBoxHeight();
+
+            // Apply configuration
+            UpdateTextBoxConfiguration();
         }
 
         public event KeyboardPressEventHandler KeyboardPress;
@@ -300,7 +356,11 @@ namespace WinPaletter.UI.WP
 
         protected override void OnCreateControl()
         {
-            if (!Controls.Contains(TB)) Controls.Add(TB);
+            if (!Controls.Contains(TB))
+            {
+                Controls.Add(TB);
+                SetTBSizes();
+            }
 
             base.OnCreateControl();
         }
@@ -331,9 +391,28 @@ namespace WinPaletter.UI.WP
 
         protected override void OnResize(EventArgs e)
         {
-            SetTBSizes();
-
             base.OnResize(e);
+
+            // Update TB when container is resized
+            if (TB != null)
+            {
+                if (_Multiline)
+                {
+                    // Multiline: adjust TB height to fill container
+                    TB.Height = Math.Max(Height - 8, _fixedTextBoxHeight);
+                    TB.Width = Width - (leftOffset * 2);
+                    TB.Location = new Point(leftOffset, 4);
+                }
+                else
+                {
+                    // Single line: maintain fixed height, adjust width, and center
+                    TB.Height = _fixedTextBoxHeight;
+                    TB.Width = Width - (leftOffset * 2);
+                    CenterTextBoxVertically(leftOffset);
+                }
+            }
+
+            Invalidate();
         }
 
         protected override void OnMouseDown(MouseEventArgs e)

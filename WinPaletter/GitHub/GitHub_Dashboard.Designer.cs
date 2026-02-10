@@ -62,7 +62,7 @@
             this.tablessControl1.Multiline = true;
             this.tablessControl1.Name = "tablessControl1";
             this.tablessControl1.SelectedIndex = 0;
-            this.tablessControl1.Size = new System.Drawing.Size(347, 187);
+            this.tablessControl1.Size = new System.Drawing.Size(347, 185);
             this.tablessControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -74,7 +74,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(339, 159);
+            this.tabPage1.Size = new System.Drawing.Size(339, 157);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "0";
             // 
@@ -89,7 +89,7 @@
             this.button1.Image = null;
             this.button1.ImageGlyph = null;
             this.button1.ImageGlyphEnabled = false;
-            this.button1.Location = new System.Drawing.Point(6, 106);
+            this.button1.Location = new System.Drawing.Point(6, 104);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(327, 34);
             this.button1.TabIndex = 132;
@@ -109,7 +109,7 @@
             this.Button2.Image = null;
             this.Button2.ImageGlyph = null;
             this.Button2.ImageGlyphEnabled = false;
-            this.Button2.Location = new System.Drawing.Point(6, 146);
+            this.Button2.Location = new System.Drawing.Point(6, 142);
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(327, 34);
             this.Button2.TabIndex = 131;
@@ -166,7 +166,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 24);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(339, 159);
+            this.tabPage2.Size = new System.Drawing.Size(339, 157);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "1";
             // 
@@ -180,7 +180,7 @@
             this.button5.Image = null;
             this.button5.ImageGlyph = null;
             this.button5.ImageGlyphEnabled = false;
-            this.button5.Location = new System.Drawing.Point(178, 142);
+            this.button5.Location = new System.Drawing.Point(178, 140);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(112, 34);
             this.button5.TabIndex = 135;
@@ -202,7 +202,7 @@
             this.groupBox2.Controls.Add(this.pictureBox1);
             this.groupBox2.Location = new System.Drawing.Point(6, 6);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(327, 147);
+            this.groupBox2.Size = new System.Drawing.Size(327, 145);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.UseDecorationPattern = false;
             this.groupBox2.UseSharpStyle = false;
@@ -217,7 +217,7 @@
             this.button4.Image = null;
             this.button4.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Help;
             this.button4.ImageGlyphEnabled = true;
-            this.button4.Location = new System.Drawing.Point(290, 136);
+            this.button4.Location = new System.Drawing.Point(290, 134);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(34, 34);
             this.button4.TabIndex = 134;
@@ -236,7 +236,7 @@
             this.button3.Image = null;
             this.button3.ImageGlyph = null;
             this.button3.ImageGlyphEnabled = false;
-            this.button3.Location = new System.Drawing.Point(6, 136);
+            this.button3.Location = new System.Drawing.Point(6, 134);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(160, 34);
             this.button3.TabIndex = 133;
@@ -252,7 +252,7 @@
             this.labelAlt2.BackColor = System.Drawing.Color.Transparent;
             this.labelAlt2.DrawOnGlass = false;
             this.labelAlt2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelAlt2.Location = new System.Drawing.Point(3, 92);
+            this.labelAlt2.Location = new System.Drawing.Point(3, 90);
             this.labelAlt2.Name = "labelAlt2";
             this.labelAlt2.Size = new System.Drawing.Size(321, 38);
             this.labelAlt2.TabIndex = 6;
@@ -266,7 +266,7 @@
             this.labelAlt1.BackColor = System.Drawing.Color.Transparent;
             this.labelAlt1.DrawOnGlass = false;
             this.labelAlt1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelAlt1.Location = new System.Drawing.Point(3, 65);
+            this.labelAlt1.Location = new System.Drawing.Point(3, 64);
             this.labelAlt1.Name = "labelAlt1";
             this.labelAlt1.Size = new System.Drawing.Size(321, 29);
             this.labelAlt1.TabIndex = 5;
@@ -290,7 +290,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.Backdrop = true;
             this.BackdropStyle = WinPaletter.DWM.DWMStyles.Auto;
-            this.ClientSize = new System.Drawing.Size(347, 187);
+            this.ClientSize = new System.Drawing.Size(347, 185);
             this.CloseOnLostFocus = true;
             this.Controls.Add(this.tablessControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;

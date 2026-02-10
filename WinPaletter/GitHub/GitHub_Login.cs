@@ -115,28 +115,28 @@ namespace WinPaletter
             {
                 // Invoke is needed because this event is raised from a non-UI thread
                 Invoke(() =>
-            {
-                progressBar2.Visible = false;
+                {
+                    progressBar2.Visible = false;
 
-                string code = arg1;
-                c0.Text = code[0].ToString();
-                c1.Text = code[1].ToString();
-                c2.Text = code[2].ToString();
-                c3.Text = code[3].ToString();
-                c4.Text = code[5].ToString();
-                c5.Text = code[6].ToString();
-                c6.Text = code[7].ToString();
-                c7.Text = code[8].ToString();
+                    string code = arg1;
+                    c0.Text = code[0].ToString();
+                    c1.Text = code[1].ToString();
+                    c2.Text = code[2].ToString();
+                    c3.Text = code[3].ToString();
+                    c4.Text = code[5].ToString();
+                    c5.Text = code[6].ToString();
+                    c6.Text = code[7].ToString();
+                    c7.Text = code[8].ToString();
 
-                int expiresIn = arg2;
-                string verificationUrl = arg3;
-                linkLabel1.Text = verificationUrl;
+                    int expiresIn = arg2;
+                    string verificationUrl = arg3;
+                    linkLabel1.Text = verificationUrl;
 
-                progressBar3.Visible = true;
-                progressBar3.Maximum = expiresIn;
-                progressBar3.Value = expiresIn;
-                githubLbl_elapsedSec.Text = $"{expiresIn / 60:D2}:{expiresIn % 60:D2}";
-            });
+                    progressBar3.Visible = true;
+                    progressBar3.Maximum = expiresIn;
+                    progressBar3.Value = expiresIn;
+                    githubLbl_elapsedSec.Text = $"{expiresIn / 60:D2}:{expiresIn % 60:D2}";
+                });
             }
         }
 
@@ -228,7 +228,7 @@ namespace WinPaletter
             Program.GitHub.CancelLogin();
 
             // Keep continuation on UI thread
-            bool isLoggedIn = await Program.GitHub.IsLoggedInAsync();
+            bool isLoggedIn = await Program.GitHub?.IsLoggedInAsync();
 
             User.UpdateGitHubLoginStatus(isLoggedIn);
 

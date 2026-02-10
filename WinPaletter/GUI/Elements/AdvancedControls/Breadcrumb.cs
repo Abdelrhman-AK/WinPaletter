@@ -2,23 +2,113 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
+using System.Security.Policy;
 using System.Windows.Forms;
+using System.Windows.Forms.Design;
+using WinPaletter.UI.WP;
+using static Devcorp.Controls.VisualStyles.VisualStyleElement.ComboBox;
 
 namespace WinPaletter.UI.WP
 {
+    public class BreadcrumbDesigner : ParentControlDesigner
+    {
+        private Breadcrumb _breadcrumb;
+        private DesignerActionListCollection _actionLists;
+
+        public override void Initialize(IComponent component)
+        {
+            base.Initialize(component);
+            _breadcrumb = component as Breadcrumb;
+
+            // Enable design mode for RightPanel
+            if (_breadcrumb != null)
+            {
+                EnableDesignMode(_breadcrumb.RightPanel, "RightPanel");
+            }
+        }
+
+        public override DesignerActionListCollection ActionLists
+        {
+            get
+            {
+                if (_actionLists == null)
+                {
+                    _actionLists = new DesignerActionListCollection();
+                    _actionLists.Add(new BreadcrumbActionList(_breadcrumb));
+                }
+                return _actionLists;
+            }
+        }
+    }
+
+    public class BreadcrumbActionList : DesignerActionList
+    {
+        private readonly Breadcrumb _breadcrumb;
+        private readonly DesignerActionUIService _service;
+
+        public BreadcrumbActionList(Breadcrumb breadcrumb) : base(breadcrumb)
+        {
+            _breadcrumb = breadcrumb;
+            _service = GetService(typeof(DesignerActionUIService)) as DesignerActionUIService;
+        }
+
+        public int RightPanelWidth
+        {
+            get => _breadcrumb.RightPanelWidth;
+            set
+            {
+                // Use property descriptor to set value
+                PropertyDescriptor prop = TypeDescriptor.GetProperties(_breadcrumb)["RightPanelWidth"];
+                if (prop != null && prop.PropertyType == typeof(int))
+                {
+                    prop.SetValue(_breadcrumb, value);
+                    _breadcrumb.PerformLayout();
+                    _service?.Refresh(_breadcrumb);
+                }
+            }
+        }
+
+        public override DesignerActionItemCollection GetSortedActionItems()
+        {
+            DesignerActionItemCollection items =
+            [
+                new DesignerActionHeaderItem("Layout"),
+            new DesignerActionPropertyItem(nameof(RightPanelWidth),
+                "Right Panel Width",
+                "Layout",
+                "Adjust the width of the right panel"),
+        ];
+            return items;
+        }
+    }
+
     /// <summary>
     /// A custom breadcrumb control for navigation and progress display.
     /// </summary>
+    [Designer(typeof(BreadcrumbDesigner))]
     public partial class Breadcrumb : UserControl
     {
         #region Fields
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        [Category("Layout")]
+        [Description("Right panel for additional controls")]
+        public Panel RightPanel => rightPanel;
+
         private SmoothFlowLayoutPanel breadcrumbPanel;
         private TextBox pathTextBox;
         private Button overflowButton;
+
+        private Panel rightPanel;
+        private Splitter rightSplitter;
+        private int rightPanelWidth = 220;
+        private bool _isDraggingSplitter = false;
+        private int _dragStartX;
+        private int _dragStartWidth;
 
         private int paddingStart = 28;
         private Bitmap icon_dark = Properties.Resources.Glyph_Browse;
@@ -26,8 +116,11 @@ namespace WinPaletter.UI.WP
         private Bitmap icon_wait_dark = Properties.Resources.Glyph_Wait;
         private Bitmap icon_wait_light = Properties.Resources.Glyph_Wait.Invert();
 
-        private float _marqueeOffset = 0;
         private Timer _marqueeTimer;
+        private Timer _progressTimer;
+        private float _hoverOffset = 0;
+        private float _marqueeOffset = 0;
+
         private bool hasPaths = false;
 
         private TreeView boundTreeView;
@@ -139,6 +232,20 @@ namespace WinPaletter.UI.WP
 
                     if (value > progressMinimum && value < progressMaximum) btn_Stop.Visible = true;
                     else btn_Stop.Visible = false;
+
+                    // Enable/disable hover timer based on value
+                    if (_progressTimer != null && !DesignMode)
+                    {
+                        if (progressValue > progressMinimum && progressValue < progressMaximum)
+                        {
+                            if (!_progressTimer.Enabled) _progressTimer.Start();
+                        }
+                        else
+                        {
+                            if (_progressTimer.Enabled) _progressTimer.Stop();
+                            _hoverOffset = 0; // reset hover when out of range
+                        }
+                    }
                 }
             }
         }
@@ -200,6 +307,30 @@ namespace WinPaletter.UI.WP
             }
         }
 
+        [Browsable(true)]
+        [Category("Layout")]
+        [Description("Width of the right panel.")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        [DefaultValue(220)]
+        public int RightPanelWidth
+        {
+            get => rightPanelWidth;
+            set
+            {
+                if (rightPanelWidth != value)
+                {
+                    rightPanelWidth = Math.Max(50, Math.Min(400, value));
+
+                    if (rightPanel != null)
+                    {
+                        rightPanel.Width = rightPanelWidth;
+                        PerformLayout();
+                        Invalidate();
+                    }
+                }
+            }
+        }
+
         #endregion
 
         #region Constructor
@@ -210,12 +341,24 @@ namespace WinPaletter.UI.WP
         public Breadcrumb()
         {
             DoubleBuffered = true;
-            SetStyle(ControlStyles.SupportsTransparentBackColor, true);
+            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
             BackColor = Color.Transparent;
 
+            // Initialize RightPanel with proper docking
+            rightPanel = new Panel
+            {
+                Width = rightPanelWidth,
+                Dock = DockStyle.Right,  // Dock to right
+                BackColor = Color.Transparent,
+                Name = "RightPanel"
+            };
+
+            // Then initialize other controls
             InitializeControls();
+
             Resize += (s, e) => UpdateBreadcrumb(boundTreeView?.SelectedNode);
             SubscribeHoverEvents(this);
+            InitProgressAnimation();
         }
 
         #endregion
@@ -237,7 +380,50 @@ namespace WinPaletter.UI.WP
                 BackColor = Color.Transparent
             };
             breadcrumbPanel.MouseDown += BreadcrumbPanel_MouseDown;
-            Controls.Add(breadcrumbPanel);
+
+            rightSplitter = new Splitter
+            {
+                Width = 2,
+                Dock = DockStyle.Right,  // Splitter docks right
+                BackColor = Program.Style.Schemes.Main.Colors.Line(),
+                Cursor = Cursors.VSplit,
+            };
+            rightSplitter.MouseDown += (s, e) =>
+            {
+                if (e.Button == MouseButtons.Left)
+                {
+                    _isDraggingSplitter = true;
+                    // Store initial panel width and mouse X in parent coordinates
+                    _dragStartWidth = rightPanel.Width;
+                    _dragStartX = rightSplitter.PointToScreen(e.Location).X;
+                    rightSplitter.Capture = true;
+                }
+            };
+            rightSplitter.MouseMove += (s, e) =>
+            {
+                if (_isDraggingSplitter && rightSplitter.Capture)
+                {
+                    // Current mouse X in screen coordinates
+                    int mouseX = rightSplitter.PointToScreen(e.Location).X;
+
+                    // Delta from starting point
+                    int deltaX = mouseX - _dragStartX;
+
+                    // For a right-docked panel, increasing mouse X should decrease width
+                    int newWidth = Math.Max(24, _dragStartWidth - deltaX);
+
+                    rightPanelWidth = newWidth;
+                    rightPanel.Width = newWidth;
+
+                    PerformLayout();
+                    Invalidate();
+                }
+            };
+            rightSplitter.MouseUp += (s, e) =>
+            {
+                _isDraggingSplitter = false;
+                rightSplitter.Capture = false;
+            };
 
             btn_Stop = new()
             {
@@ -249,7 +435,6 @@ namespace WinPaletter.UI.WP
                 Height = Height - 4,
                 Width = 28,
                 Visible = true,
-                Location = new Point(this.Width - 30, 2),
             };
             btn_Stop.Click += (s, e) =>
             {
@@ -283,8 +468,21 @@ namespace WinPaletter.UI.WP
             pathTextBox.TB.AcceptsReturn = true;
             pathTextBox.TB.KeyUp += TB_KeyUp;
 
+            // 1. Breadcrumb panel
+            Controls.Add(breadcrumbPanel);
+
+            // 2. Splitter (dock right)
+            rightSplitter.Dock = DockStyle.Right;
+            Controls.Add(rightSplitter);
+
+            // 3. Right panel (dock right)
+            rightPanel.Dock = DockStyle.Right;
+            Controls.Add(rightPanel);
+
             Controls.Add(pathTextBox);
             Controls.Add(btn_Stop);
+
+            // Bring btn_Stop to front so it's visible
             btn_Stop.BringToFront();
         }
 
@@ -426,113 +624,6 @@ namespace WinPaletter.UI.WP
 
         #endregion
 
-        #region Marquee & Animation
-
-        /// <summary>
-        /// Starts a marquee animation for indeterminate progress.
-        /// </summary>
-        public void StartMarquee()
-        {
-            if (_marqueeTimer != null) return;
-
-            _isMarquee = true;
-
-            _marqueeTimer = new() { Interval = 20 };
-            _marqueeTimer.Tick += (s, e) =>
-            {
-                _marqueeOffset += 0.01f;
-                if (_marqueeOffset > 1) _marqueeOffset = 0;
-                Invalidate();
-            };
-            _marqueeTimer.Start();
-            btn_Stop.Visible = true;
-        }
-
-        /// <summary>
-        /// Stops the marquee animation.
-        /// </summary>
-        public void StopMarquee()
-        {
-            _marqueeTimer?.Stop();
-            _marqueeTimer?.Dispose();
-            _marqueeTimer = null;
-            _isMarquee = false;
-            _marqueeOffset = 0;
-            Invalidate();
-            btn_Stop.Visible = false;
-        }
-
-        /// <summary>
-        /// Performs the finish-loading animation (hides progress bar).
-        /// </summary>
-        public void FinishLoadingAnimation()
-        {
-            if (CanAnimate)
-            {
-                Transition.With(this, nameof(Alpha), 0)
-                          .HookOnCompletion(() =>
-                          {
-                              progressValue = 0;
-                              _animatedValue = 0;
-                              Invalidate();
-                              _alpha = 255;
-                              StopMarquee();
-                          })
-                          .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
-            }
-            else
-            {
-                Alpha = 0;
-                progressValue = 0;
-                _animatedValue = 0;
-                Invalidate();
-                _alpha = 255;
-                StopMarquee();
-            }
-            btn_Stop.Visible = false;
-        }
-
-        /// <summary>
-        /// Subscribes the specified control and all of its child controls to hover event handlers that trigger hover
-        /// animations when the mouse enters or leaves the control.
-        /// </summary>
-        /// <remarks>This method recursively attaches event handlers to the provided control and its
-        /// children to ensure consistent hover animation behavior throughout the control hierarchy.</remarks>
-        /// <param name="ctrl">The control to which hover event handlers will be attached, including all of its child controls. Cannot be
-        /// null.</param>
-        private void SubscribeHoverEvents(Control ctrl)
-        {
-            ctrl.MouseEnter += (s, e) => AnimateHover(true);
-            ctrl.MouseLeave += (s, e) =>
-            {
-                // Check if mouse is still inside main control
-                Point pt = this.PointToClient(Cursor.Position);
-                if (!this.ClientRectangle.Contains(pt)) AnimateHover(false);
-            };
-
-            foreach (Control child in ctrl.Controls) SubscribeHoverEvents(child);
-        }
-
-        /// <summary>
-        /// Animates the hover effect by transitioning the hover alpha value when the pointer enters or leaves the
-        /// control.
-        /// </summary>
-        /// <param name="enter">Indicates whether the pointer is entering (<see langword="true"/>) or leaving (<see langword="false"/>) the
-        /// control. If <see langword="true"/>, the hover effect is shown; otherwise, it is hidden.</param>
-        private void AnimateHover(bool enter)
-        {
-            if (CanAnimate)
-            {
-                Transition.With(this, nameof(HoverAlpha), enter ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-            }
-            else
-            {
-                HoverAlpha = enter ? 255 : 0;
-            }
-        }
-
-        #endregion
-
         #region Event Handlers
 
         private void TreeView_AfterSelect(object sender, TreeViewEventArgs e) => UpdateBreadcrumb(e.Node);
@@ -581,10 +672,52 @@ namespace WinPaletter.UI.WP
             }
         }
 
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+
+            // Ensure right panel is properly positioned
+            if (rightPanel != null)
+            {
+                rightPanel.Width = rightPanelWidth;
+                rightPanel.Dock = DockStyle.Right;
+            }
+        }
+
         protected override void OnLeave(EventArgs e)
         {
             base.OnLeave(e);
             if (pathTextBox.Visible) pathTextBox.Visible = false;
+        }
+
+        protected override void OnLayout(LayoutEventArgs e)
+        {
+            base.OnLayout(e);
+
+            // Update breadcrumb panel dimensions
+            breadcrumbPanel.Height = Height;
+
+            // Position stop button to the left of the splitter
+            btn_Stop.Height = Height - 4;
+            btn_Stop.Top = 2;
+            btn_Stop.Left = rightSplitter.Left - btn_Stop.Width - 4;
+
+            // Update breadcrumb panel width (space between start and stop button)
+            breadcrumbPanel.Width = Math.Max(0, btn_Stop.Left - breadcrumbPanel.Left - 4);
+
+            // Ensure right panel maintains its width
+            if (rightPanel.Width != rightPanelWidth)
+            {
+                rightPanel.Width = rightPanelWidth;
+            }
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+
+            // When control resizes, update layout
+            PerformLayout();
         }
 
         #endregion
@@ -658,6 +791,146 @@ namespace WinPaletter.UI.WP
 
         #endregion
 
+        #region Marquee & Animation
+
+        /// <summary>
+        /// Starts a marquee animation for indeterminate progress.
+        /// </summary>
+        public void StartMarquee()
+        {
+            if (_marqueeTimer != null || DesignMode) return;
+
+            _isMarquee = true;
+
+            _marqueeTimer = new() { Interval = 20 };
+            _marqueeTimer.Tick += (s, e) =>
+            {
+                _marqueeOffset += 0.01f;
+                if (_marqueeOffset > 1) _marqueeOffset = 0;
+                Invalidate();
+            };
+            _marqueeTimer.Start();
+            btn_Stop.Visible = true;
+        }
+
+        /// <summary>
+        /// Stops the marquee animation.
+        /// </summary>
+        public void StopMarquee()
+        {
+            _marqueeTimer?.Stop();
+            _marqueeTimer?.Dispose();
+            _marqueeTimer = null;
+            _isMarquee = false;
+            _marqueeOffset = 0;
+            Invalidate();
+            btn_Stop.Visible = false;
+        }
+
+        private void InitProgressAnimation()
+        {
+            if (_progressTimer != null || DesignMode) return;
+
+            _progressTimer = new() { Interval = 35 };
+            _progressTimer.Tick += (s, e) =>
+            {
+                // Smoothly animate progress value toward target
+                float diff = progressValue - _animatedValue;
+                _animatedValue += diff * 0.1f; // easing factor
+
+                // Move the highlight across the progress bar
+                _hoverOffset += 0.01f;
+                if (_hoverOffset > 1) _hoverOffset = 0;
+
+                Invalidate();
+            };
+
+            // Start timer only if value is between minimum and maximum
+            if (progressValue > progressMinimum && progressValue < progressMaximum)
+                _progressTimer.Start();
+        }
+
+        /// <summary>
+        /// Performs the finish-loading animation (hides progress bar).
+        /// </summary>
+        public void FinishLoadingAnimation()
+        {
+            if (CanAnimate)
+            {
+                Transition.With(this, nameof(Alpha), 0)
+                          .HookOnCompletion(() =>
+                          {
+                              progressValue = 0;
+                              _animatedValue = 0;
+                              Invalidate();
+                              _alpha = 255;
+                              StopMarquee();
+                          })
+                          .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+            }
+            else
+            {
+                Alpha = 0;
+                progressValue = 0;
+                _animatedValue = 0;
+                Invalidate();
+                _alpha = 255;
+                StopMarquee();
+            }
+            btn_Stop.Visible = false;
+        }
+
+        /// <summary>
+        /// Subscribes the specified control and all of its child controls to hover event handlers that trigger hover
+        /// animations when the mouse enters or leaves the control.
+        /// </summary>
+        /// <remarks>This method recursively attaches event handlers to the provided control and its
+        /// children to ensure consistent hover animation behavior throughout the control hierarchy.</remarks>
+        /// <param name="ctrl">The control to which hover event handlers will be attached, including all of its child controls. Cannot be
+        /// null.</param>
+        private void SubscribeHoverEvents(Control ctrl)
+        {
+            ctrl.MouseEnter += (s, e) => CheckHover();
+            ctrl.MouseLeave += (s, e) =>
+            {
+                // Check if mouse is still inside main control
+                Point pt = this.PointToClient(Cursor.Position);
+                if (!this.ClientRectangle.Contains(pt)) CheckHover();
+            };
+
+            foreach (Control child in ctrl.Controls) SubscribeHoverEvents(child);
+        }
+
+        private void CheckHover()
+        {
+            Point pt = this.PointToClient(Cursor.Position);
+
+            // Check if mouse is inside main area (left of splitter)
+            bool insideMain = pt.X >= 0 && pt.X < rightSplitter.Left && pt.Y >= 0 && pt.Y < this.Height;
+
+            AnimateHover(insideMain);
+        }
+
+        /// <summary>
+        /// Animates the hover effect by transitioning the hover alpha value when the pointer enters or leaves the
+        /// control.
+        /// </summary>
+        /// <param name="enter">Indicates whether the pointer is entering (<see langword="true"/>) or leaving (<see langword="false"/>) the
+        /// control. If <see langword="true"/>, the hover effect is shown; otherwise, it is hidden.</param>
+        private void AnimateHover(bool enter)
+        {
+            if (CanAnimate)
+            {
+                Transition.With(this, nameof(HoverAlpha), enter ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+            }
+            else
+            {
+                HoverAlpha = enter ? 255 : 0;
+            }
+        }
+
+        #endregion
+
         #region Overrides
 
         protected override void OnParentChanged(EventArgs e)
@@ -670,63 +943,66 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            // Let parent paint behind and hence transparent background
+            Graphics G = e.Graphics;
+            G.SmoothingMode = SmoothingMode.AntiAlias;
+
+            // Let parent paint behind and enable transparency
             if (Parent != null)
             {
-                GraphicsState state = e.Graphics.Save();
-                e.Graphics.TranslateTransform(-Left, -Top);
-                PaintEventArgs pea = new(e.Graphics, new Rectangle(Point.Empty, Parent.Size));
+                GraphicsState state = G.Save();
+                G.TranslateTransform(-Left, -Top);
+                PaintEventArgs pea = new(G, new Rectangle(Point.Empty, Parent.Size));
                 InvokePaintBackground(Parent, pea);
                 InvokePaint(Parent, pea);
-                e.Graphics.Restore(state);
+                G.Restore(state);
             }
 
-            Graphics G = e.Graphics;
-            Rectangle rect = new(0, 0, Width - 1, Height - 1);
-            bool isInProgress = _animatedValue > progressMinimum;
+            int gap = 4; // gap between main and container
 
+            Rectangle fullRect = new(0, 0, Width - 1, Height - 1);
+            Rectangle mainRect = new(0, 0, rightSplitter.Left - gap + 1, Height - 1);
+            Rectangle containerRect = new(rightSplitter.Left + gap, 0, Width - (rightSplitter.Left + gap) - 1, Height - 1);
+
+            // -------------------
+            // Paint Main Part
+            // -------------------
             using (SolidBrush br = new(Program.Style.Schemes.Main.Colors.Back(parentLevel)))
             using (SolidBrush br_hover = new(Color.FromArgb(_hoverAlpha, Program.Style.Schemes.Main.Colors.Back_Checked)))
             {
-                G.FillRoundedRect(br, rect);
-                G.FillRoundedRect(br_hover, rect);
+                G.FillRoundedRect(br, mainRect);
+                G.FillRoundedRect(br_hover, mainRect);
             }
 
-            float progressWidth;
+            using (Pen p = new(Color.FromArgb(200, Program.Style.Schemes.Main.Colors.Line_Hover(parentLevel))))
+            {
+                G.DrawRoundedRect(p, mainRect);
+            }
+
+            bool isInProgress = _animatedValue > progressMinimum;
 
             if (_isMarquee)
             {
-                float segmentWidth = rect.Width * 0.25f;
-                float offsetX = rect.Width * _marqueeOffset;
+                float segmentWidth = mainRect.Width * 0.25f;
+                float offsetX = mainRect.Width * _marqueeOffset;
 
-                // Define the marquee rectangle
-                RectangleF marqueeRect = new(offsetX, 0, segmentWidth, rect.Height);
-
-                // Create a horizontal gradient brush for the marquee
+                RectangleF marqueeRect = new(offsetX, 0, segmentWidth, mainRect.Height);
                 using (LinearGradientBrush brush = new(marqueeRect, Color.Transparent, Color.Transparent, LinearGradientMode.Horizontal))
                 {
-                    // ColorBlend with transparent edges and solid center
                     ColorBlend cb = new()
                     {
                         Colors = [Color.Transparent, Color.FromArgb(_alpha, Program.Style.Schemes.Tertiary.Colors.Accent), Color.Transparent],
                         Positions = [0f, 0.5f, 1f]
                     };
-
                     brush.InterpolationColors = cb;
 
-                    // Check if marquee wraps around the right edge
-                    if (offsetX + segmentWidth > rect.Width)
+                    if (offsetX + segmentWidth > mainRect.Width)
                     {
-                        // Right segment
-                        float rightWidth = rect.Width - offsetX;
-                        RectangleF rightRect = new(offsetX, 0, rightWidth, rect.Height);
-                        G.FillRoundedRect(brush, rightRect);  // Fill with gradient
+                        float rightWidth = mainRect.Width - offsetX;
+                        RectangleF rightRect = new(offsetX, 0, rightWidth, mainRect.Height);
+                        G.FillRoundedRect(brush, rightRect);
 
-                        // Left segment
                         float leftWidth = segmentWidth - rightWidth;
-                        RectangleF leftRect = new(0, 0, leftWidth, rect.Height);
-
-                        // Adjust gradient for left segment
+                        RectangleF leftRect = new(0, 0, leftWidth, mainRect.Height);
                         using (LinearGradientBrush leftBrush = new(leftRect, Color.Transparent, Color.Transparent, LinearGradientMode.Horizontal))
                         {
                             leftBrush.InterpolationColors = cb;
@@ -735,28 +1011,46 @@ namespace WinPaletter.UI.WP
                     }
                     else
                     {
-                        // Normal marquee (no wrap)
                         G.FillRoundedRect(brush, marqueeRect);
                     }
                 }
             }
-            else if (_animatedValue > progressMinimum)
+            else if (isInProgress)
             {
-                progressWidth = rect.Width * (_animatedValue - progressMinimum) / (progressMaximum - progressMinimum);
-                RectangleF progRect = new(0, 0, progressWidth, Height - 1);
+                float progressWidth = mainRect.Width * (_animatedValue - progressMinimum) / (progressMaximum - progressMinimum);
+                RectangleF progRect = new(0, 0, progressWidth, mainRect.Height);
+
                 using (SolidBrush br = new(Color.FromArgb(_alpha, Program.Style.Schemes.Tertiary.Colors.Accent)))
-                using (Pen p = new(Color.FromArgb(_alpha, Program.Style.Schemes.Tertiary.Colors.ForeColor_Accent)))
-                {
                     G.FillRoundedRect(br, progRect);
-                    G.DrawRoundedRect(p, progRect);
+
+                float gradientWidth = Math.Min(100, mainRect.Width);
+                float highlightPos = (_hoverOffset * (mainRect.Width + gradientWidth)) - gradientWidth;
+                float visibleWidth = Math.Min(highlightPos + gradientWidth, progRect.Width) - Math.Max(highlightPos, 0);
+
+                if (visibleWidth > 0)
+                {
+                    float drawX = Math.Max(highlightPos, 0);
+                    RectangleF highlightRect = new(drawX, 0, visibleWidth, mainRect.Height);
+
+                    using (LinearGradientBrush brush = new(highlightRect, Color.Transparent, Color.FromArgb(_alpha, Program.Style.Schemes.Tertiary.Colors.Line_Checked_Hover), LinearGradientMode.Horizontal))
+                    {
+                        ColorBlend cb = new()
+                        {
+                            Colors = [Color.Transparent, Color.FromArgb(_alpha, Program.Style.Schemes.Tertiary.Colors.Line_Checked_Hover), Color.Transparent],
+                            Positions = [0f, 0.5f, 1f]
+                        };
+                        brush.InterpolationColors = cb;
+                        G.FillRoundedRect(brush, highlightRect);
+                    }
                 }
+
+                using (Pen p = new(Color.FromArgb(_alpha, Program.Style.Schemes.Tertiary.Colors.ForeColor_Accent)))
+                    G.DrawRoundedRect(p, progRect);
             }
 
-            using (Pen p = new(Color.FromArgb(200, Program.Style.Schemes.Main.Colors.Line_Hover(parentLevel))))
-            using (Pen p_hover = new(Color.FromArgb(_hoverAlpha, Program.Style.Schemes.Main.Colors.Line_Checked)))
+            using (Pen p_hover = new(Color.FromArgb(_hoverAlpha, Program.Style.Schemes.Main.Colors.Line_Checked_Hover)))
             {
-                G.DrawRoundedRect(p, rect);
-                G.DrawRoundedRect(p_hover, rect);
+                G.DrawRoundedRect(p_hover, mainRect);
             }
 
             Bitmap img = !isInProgress && !_isMarquee
@@ -766,8 +1060,18 @@ namespace WinPaletter.UI.WP
             if (img is not null)
             {
                 int imageWidth = 16;
-                RectangleF imageRect = new(2f + (paddingStart - imageWidth) / 2f, (rect.Height - imageWidth) / 2f, imageWidth, imageWidth);
+                RectangleF imageRect = new(2f + (paddingStart - imageWidth) / 2f, (mainRect.Height - imageWidth) / 2f, imageWidth, imageWidth);
                 G.DrawImage(img, imageRect);
+            }
+
+            // -------------------
+            // Paint Container Part
+            // -------------------
+            using (SolidBrush br = new(Program.Style.Schemes.Main.Colors.Back(parentLevel)))
+            using (Pen p = new(Color.FromArgb(200, Program.Style.Schemes.Main.Colors.Line_Hover(parentLevel))))
+            {
+                G.FillRoundedRect(br, containerRect);
+                G.DrawRoundedRect(p, containerRect);
             }
         }
 

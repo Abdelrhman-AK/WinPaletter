@@ -86,7 +86,7 @@ namespace WinPaletter
 
         private void User_GitHubAvatarUpdated(object sender, EventArgs e)
         {
-            if (IsHandleCreated && IsShown)
+            if (IsHandleCreated)
             {
                 Bitmap avatar = null;
 

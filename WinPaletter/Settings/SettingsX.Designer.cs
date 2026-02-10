@@ -5919,7 +5919,7 @@ namespace WinPaletter
             this.button31.Image = null;
             this.button31.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button31.ImageGlyph")));
             this.button31.ImageGlyphEnabled = true;
-            this.button31.Location = new System.Drawing.Point(193, 22);
+            this.button31.Location = new System.Drawing.Point(193, 12);
             this.button31.Name = "button31";
             this.button31.Size = new System.Drawing.Size(28, 28);
             this.button31.TabIndex = 58;
@@ -5959,7 +5959,7 @@ namespace WinPaletter
             this.button32.Image = null;
             this.button32.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button32.ImageGlyph")));
             this.button32.ImageGlyphEnabled = true;
-            this.button32.Location = new System.Drawing.Point(227, 22);
+            this.button32.Location = new System.Drawing.Point(227, 12);
             this.button32.Name = "button32";
             this.button32.Size = new System.Drawing.Size(28, 28);
             this.button32.TabIndex = 57;
@@ -6083,7 +6083,7 @@ namespace WinPaletter
             this.button26.Image = null;
             this.button26.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button26.ImageGlyph")));
             this.button26.ImageGlyphEnabled = true;
-            this.button26.Location = new System.Drawing.Point(193, 22);
+            this.button26.Location = new System.Drawing.Point(193, 12);
             this.button26.Name = "button26";
             this.button26.Size = new System.Drawing.Size(28, 28);
             this.button26.TabIndex = 58;
@@ -6123,7 +6123,7 @@ namespace WinPaletter
             this.button25.Image = null;
             this.button25.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button25.ImageGlyph")));
             this.button25.ImageGlyphEnabled = true;
-            this.button25.Location = new System.Drawing.Point(227, 22);
+            this.button25.Location = new System.Drawing.Point(227, 12);
             this.button25.Name = "button25";
             this.button25.Size = new System.Drawing.Size(28, 28);
             this.button25.TabIndex = 57;
@@ -6205,7 +6205,7 @@ namespace WinPaletter
             this.button24.Image = null;
             this.button24.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button24.ImageGlyph")));
             this.button24.ImageGlyphEnabled = true;
-            this.button24.Location = new System.Drawing.Point(227, 22);
+            this.button24.Location = new System.Drawing.Point(227, 12);
             this.button24.Name = "button24";
             this.button24.Size = new System.Drawing.Size(28, 28);
             this.button24.TabIndex = 57;
@@ -6287,7 +6287,7 @@ namespace WinPaletter
             this.Button20.Image = null;
             this.Button20.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button20.ImageGlyph")));
             this.Button20.ImageGlyphEnabled = true;
-            this.Button20.Location = new System.Drawing.Point(227, 22);
+            this.Button20.Location = new System.Drawing.Point(227, 12);
             this.Button20.Name = "Button20";
             this.Button20.Size = new System.Drawing.Size(28, 28);
             this.Button20.TabIndex = 57;
@@ -6373,7 +6373,7 @@ namespace WinPaletter
             this.Button19.Image = null;
             this.Button19.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button19.ImageGlyph")));
             this.Button19.ImageGlyphEnabled = true;
-            this.Button19.Location = new System.Drawing.Point(227, 22);
+            this.Button19.Location = new System.Drawing.Point(227, 12);
             this.Button19.Name = "Button19";
             this.Button19.Size = new System.Drawing.Size(28, 28);
             this.Button19.TabIndex = 52;
@@ -7198,10 +7198,7 @@ namespace WinPaletter
             this.Controls.Add(this.titlebarExtender1);
             this.Controls.Add(this.TabControl1);
             this.Controls.Add(this.bottom_buttons);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForeColor = System.Drawing.Color.White;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(1020, 615);

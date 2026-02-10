@@ -734,11 +734,22 @@ namespace WinPaletter
             {
                 try
                 {
-                    return IsNetworkOperational && HasNetworkInterfaces && Wininet.CheckNet();
+                    if (OS.WXP) return Wininet.CheckNet(); // XP fallback
+
+                    NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();
+                    foreach (NetworkInterface nic in nics)
+                    {
+                        if (nic.OperationalStatus == OperationalStatus.Up && nic.NetworkInterfaceType != NetworkInterfaceType.Loopback && nic.NetworkInterfaceType != NetworkInterfaceType.Tunnel)
+                        {
+                            return Wininet.CheckNet();
+                        }
+                    }
+
+                    return false;
                 }
                 catch
                 {
-                    return Wininet.CheckNet(); // fallback on XP
+                    return Wininet.CheckNet(); // fallback
                 }
             }
         }
