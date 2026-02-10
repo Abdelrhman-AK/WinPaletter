@@ -18,6 +18,29 @@ namespace WinPaletter
 {
     public partial class CMD
     {
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            Program.SystemWallpaperChanged += SystemWallpaperChanged;
+            base.OnHandleCreated(e);
+        }
+
+        protected override void OnHandleDestroyed(EventArgs e)
+        {
+            Program.SystemWallpaperChanged -= SystemWallpaperChanged;
+            base.OnHandleDestroyed(e);
+        }
+
+        private void SystemWallpaperChanged(object sender, Program.WallpaperMonitor.WallpaperSnapshot e)
+        {
+            if (!Program.TM.Wallpaper.Enabled)
+            {
+                Invoke(() =>
+                {
+                    CMD_Preview.BackgroundImage = Program.WallpaperMonitor.Get(Program.TM, Program.WindowStyle);
+                });
+            }
+        }
+
         private Font F_cmd = new("Consolas", 16f, FontStyle.Regular);
         public Edition _Edition = Edition.CMD;
 
