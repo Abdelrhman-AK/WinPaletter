@@ -39,7 +39,6 @@
             this.bottom_buttons = new WinPaletter.UI.WP.GroupBox();
             this.Button1 = new WinPaletter.UI.WP.Button();
             this.Button2 = new WinPaletter.UI.WP.Button();
-            this.CheckBox1 = new WinPaletter.UI.WP.CheckBox();
             this.separatorH1 = new WinPaletter.UI.WP.SeparatorH();
             this.AnimatedBox1 = new WinPaletter.UI.WP.AnimatedBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
@@ -49,6 +48,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
+            this.button3 = new WinPaletter.UI.WP.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.bottom_buttons.SuspendLayout();
@@ -144,9 +144,9 @@
             // bottom_buttons
             // 
             this.bottom_buttons.BackColor = System.Drawing.Color.Transparent;
+            this.bottom_buttons.Controls.Add(this.button3);
             this.bottom_buttons.Controls.Add(this.Button1);
             this.bottom_buttons.Controls.Add(this.Button2);
-            this.bottom_buttons.Controls.Add(this.CheckBox1);
             this.bottom_buttons.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.bottom_buttons.Location = new System.Drawing.Point(0, 328);
             this.bottom_buttons.Name = "bottom_buttons";
@@ -192,19 +192,6 @@
             this.Button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button2.UseVisualStyleBackColor = false;
             this.Button2.Click += new System.EventHandler(this.Button2_Click);
-            // 
-            // CheckBox1
-            // 
-            this.CheckBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox1.Checked = false;
-            this.CheckBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.CheckBox1.ForeColor = System.Drawing.Color.White;
-            this.CheckBox1.Location = new System.Drawing.Point(9, 12);
-            this.CheckBox1.Name = "CheckBox1";
-            this.CheckBox1.Size = new System.Drawing.Size(557, 24);
-            this.CheckBox1.TabIndex = 123;
-            this.CheckBox1.Text = "Don’t show this again and automatically apply operations to linked files";
             // 
             // separatorH1
             // 
@@ -322,6 +309,25 @@
             this.pictureBox6.TabIndex = 134;
             this.pictureBox6.TabStop = false;
             // 
+            // button3
+            // 
+            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button3.CustomColor = System.Drawing.Color.Empty;
+            this.button3.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button3.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button3.ForeColor = System.Drawing.Color.White;
+            this.button3.Image = null;
+            this.button3.ImageGlyph = null;
+            this.button3.ImageGlyphEnabled = false;
+            this.button3.Location = new System.Drawing.Point(6, 7);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(310, 34);
+            this.button3.TabIndex = 118;
+            this.button3.Text = "Open Folder Options to control the default behavior";
+            this.button3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button3.UseVisualStyleBackColor = false;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
             // GitHub_LinkedFilesConfirmation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -341,10 +347,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox4);
             this.Controls.Add(this.AnimatedBox1);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "GitHub_LinkedFilesConfirmation";
@@ -352,7 +355,6 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Linked Files Confirmation";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.GitHub_LinkedFilesConfirmation_FormClosed);
             this.Load += new System.EventHandler(this.GitHub_LinkedFilesConfirmation_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
@@ -384,9 +386,9 @@
         private UI.WP.GroupBox bottom_buttons;
         internal UI.WP.Button Button1;
         internal UI.WP.Button Button2;
-        internal UI.WP.CheckBox CheckBox1;
         internal System.Windows.Forms.Label label6;
         internal System.Windows.Forms.Label label8;
         internal System.Windows.Forms.PictureBox pictureBox6;
+        internal UI.WP.Button button3;
     }
 }

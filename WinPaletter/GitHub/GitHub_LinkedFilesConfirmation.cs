@@ -14,8 +14,6 @@ namespace WinPaletter
 
         private void GitHub_LinkedFilesConfirmation_Load(object sender, EventArgs e)
         {
-            CheckBox1.Checked = Program.Settings.UsersServices.GitHub_AutoOperateOnLinkedFiles;
-
             label3.Font = Fonts.ConsoleMedium;
             label4.Font = Fonts.ConsoleMedium;
             label6.Font = Fonts.ConsoleMedium;
@@ -81,10 +79,9 @@ namespace WinPaletter
             this.Close();
         }
 
-        private void GitHub_LinkedFilesConfirmation_FormClosed(object sender, FormClosedEventArgs e)
+        private void button3_Click(object sender, EventArgs e)
         {
-            Program.Settings.UsersServices.GitHub_AutoOperateOnLinkedFiles = CheckBox1.Checked;
-            Program.Settings.UsersServices.Save();
+            Forms.GitHub_FolderOptions.ShowDialog();
         }
     }
 }

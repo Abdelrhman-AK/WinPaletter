@@ -196,6 +196,12 @@ namespace WinPaletter
         private static GitHub_Mgr _GitHub_Mgr;
 
         /// <summary>
+        /// Gets the instance of the form <see cref="GitHub_Mgr"/> to manage GitHub folder options.
+        /// </summary>
+        public static GitHub_FolderOptions GitHub_FolderOptions => Get(ref _GitHub_FolderOptions);
+        private static GitHub_FolderOptions _GitHub_FolderOptions;
+
+        /// <summary>
         /// Gets the instance of the form <see cref="ArgsHelp"/> to show the arguments help.
         /// </summary>
         public static ArgsHelp ArgsHelp => Get(ref _ArgsHelp);

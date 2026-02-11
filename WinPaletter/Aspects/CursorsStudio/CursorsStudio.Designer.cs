@@ -313,12 +313,12 @@ namespace WinPaletter
             this.trackBarX4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.trackBarX4.Location = new System.Drawing.Point(369, 103);
             this.trackBarX4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.trackBarX4.Maximum = 100;
-            this.trackBarX4.Minimum = 0;
+            this.trackBarX4.Maximum = 100F;
+            this.trackBarX4.Minimum = 0F;
             this.trackBarX4.Name = "trackBarX4";
             this.trackBarX4.Size = new System.Drawing.Size(372, 24);
             this.trackBarX4.TabIndex = 142;
-            this.trackBarX4.Value = 0;
+            this.trackBarX4.Value = 0F;
             this.trackBarX4.ValueChanged += new System.EventHandler(this.trackBarX4_ValueChanged);
             // 
             // trackBarX3
@@ -331,12 +331,12 @@ namespace WinPaletter
             this.trackBarX3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.trackBarX3.Location = new System.Drawing.Point(369, 103);
             this.trackBarX3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.trackBarX3.Maximum = 100;
-            this.trackBarX3.Minimum = 0;
+            this.trackBarX3.Maximum = 100F;
+            this.trackBarX3.Minimum = 0F;
             this.trackBarX3.Name = "trackBarX3";
             this.trackBarX3.Size = new System.Drawing.Size(372, 24);
             this.trackBarX3.TabIndex = 141;
-            this.trackBarX3.Value = 0;
+            this.trackBarX3.Value = 0F;
             this.trackBarX3.ValueChanged += new System.EventHandler(this.trackBarX3_ValueChanged);
             // 
             // trackBarX2
@@ -349,12 +349,12 @@ namespace WinPaletter
             this.trackBarX2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.trackBarX2.Location = new System.Drawing.Point(369, 103);
             this.trackBarX2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.trackBarX2.Maximum = 100;
-            this.trackBarX2.Minimum = 0;
+            this.trackBarX2.Maximum = 100F;
+            this.trackBarX2.Minimum = 0F;
             this.trackBarX2.Name = "trackBarX2";
             this.trackBarX2.Size = new System.Drawing.Size(372, 24);
             this.trackBarX2.TabIndex = 140;
-            this.trackBarX2.Value = 0;
+            this.trackBarX2.Value = 0F;
             this.trackBarX2.ValueChanged += new System.EventHandler(this.trackBarX2_ValueChanged);
             // 
             // trackBarX1
@@ -367,12 +367,12 @@ namespace WinPaletter
             this.trackBarX1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.trackBarX1.Location = new System.Drawing.Point(369, 103);
             this.trackBarX1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.trackBarX1.Maximum = 100;
-            this.trackBarX1.Minimum = 0;
+            this.trackBarX1.Maximum = 100F;
+            this.trackBarX1.Minimum = 0F;
             this.trackBarX1.Name = "trackBarX1";
             this.trackBarX1.Size = new System.Drawing.Size(372, 24);
             this.trackBarX1.TabIndex = 139;
-            this.trackBarX1.Value = 0;
+            this.trackBarX1.Value = 0F;
             this.trackBarX1.ValueChanged += new System.EventHandler(this.trackBarX1_ValueChanged);
             // 
             // CheckBox6
@@ -741,12 +741,12 @@ namespace WinPaletter
             this.trackBarX8.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.trackBarX8.Location = new System.Drawing.Point(370, 163);
             this.trackBarX8.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.trackBarX8.Maximum = 10;
-            this.trackBarX8.Minimum = 0;
+            this.trackBarX8.Maximum = 10F;
+            this.trackBarX8.Minimum = 0F;
             this.trackBarX8.Name = "trackBarX8";
             this.trackBarX8.Size = new System.Drawing.Size(372, 24);
             this.trackBarX8.TabIndex = 156;
-            this.trackBarX8.Value = 0;
+            this.trackBarX8.Value = 0F;
             this.trackBarX8.ValueChanged += new System.EventHandler(this.trackBarX8_ValueChanged);
             // 
             // trackBarX7
@@ -759,12 +759,12 @@ namespace WinPaletter
             this.trackBarX7.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.trackBarX7.Location = new System.Drawing.Point(370, 133);
             this.trackBarX7.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.trackBarX7.Maximum = 10;
-            this.trackBarX7.Minimum = 0;
+            this.trackBarX7.Maximum = 10F;
+            this.trackBarX7.Minimum = 0F;
             this.trackBarX7.Name = "trackBarX7";
             this.trackBarX7.Size = new System.Drawing.Size(372, 24);
             this.trackBarX7.TabIndex = 155;
-            this.trackBarX7.Value = 0;
+            this.trackBarX7.Value = 0F;
             this.trackBarX7.ValueChanged += new System.EventHandler(this.trackBarX7_ValueChanged);
             // 
             // trackBarX6
@@ -777,12 +777,12 @@ namespace WinPaletter
             this.trackBarX6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.trackBarX6.Location = new System.Drawing.Point(370, 103);
             this.trackBarX6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.trackBarX6.Maximum = 100;
-            this.trackBarX6.Minimum = 0;
+            this.trackBarX6.Maximum = 100F;
+            this.trackBarX6.Minimum = 0F;
             this.trackBarX6.Name = "trackBarX6";
             this.trackBarX6.Size = new System.Drawing.Size(372, 24);
             this.trackBarX6.TabIndex = 154;
-            this.trackBarX6.Value = 0;
+            this.trackBarX6.Value = 0F;
             this.trackBarX6.ValueChanged += new System.EventHandler(this.trackBarX6_ValueChanged);
             // 
             // trackBarX5
@@ -795,12 +795,12 @@ namespace WinPaletter
             this.trackBarX5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.trackBarX5.Location = new System.Drawing.Point(370, 73);
             this.trackBarX5.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.trackBarX5.Maximum = 20;
-            this.trackBarX5.Minimum = 0;
+            this.trackBarX5.Maximum = 20F;
+            this.trackBarX5.Minimum = 0F;
             this.trackBarX5.Name = "trackBarX5";
             this.trackBarX5.Size = new System.Drawing.Size(372, 24);
             this.trackBarX5.TabIndex = 153;
-            this.trackBarX5.Value = 0;
+            this.trackBarX5.Value = 0F;
             this.trackBarX5.ValueChanged += new System.EventHandler(this.trackBarX5_ValueChanged);
             // 
             // label4
@@ -927,9 +927,9 @@ namespace WinPaletter
             this.button20.Image = null;
             this.button20.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Browse;
             this.button20.ImageGlyphEnabled = true;
-            this.button20.Location = new System.Drawing.Point(707, 12);
+            this.button20.Location = new System.Drawing.Point(707, 9);
             this.button20.Name = "button20";
-            this.button20.Size = new System.Drawing.Size(34, 24);
+            this.button20.Size = new System.Drawing.Size(34, 30);
             this.button20.TabIndex = 139;
             this.button20.UseVisualStyleBackColor = false;
             this.button20.Click += new System.EventHandler(this.button20_Click);
@@ -939,7 +939,7 @@ namespace WinPaletter
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox1.ForeColor = System.Drawing.Color.White;
-            this.textBox1.Location = new System.Drawing.Point(146, 12);
+            this.textBox1.Location = new System.Drawing.Point(146, 9);
             this.textBox1.MaxLength = 32767;
             this.textBox1.Multiline = false;
             this.textBox1.Name = "textBox1";
@@ -948,7 +948,7 @@ namespace WinPaletter
             this.textBox1.SelectedText = "";
             this.textBox1.SelectionLength = 0;
             this.textBox1.SelectionStart = 0;
-            this.textBox1.Size = new System.Drawing.Size(555, 24);
+            this.textBox1.Size = new System.Drawing.Size(555, 30);
             this.textBox1.TabIndex = 79;
             this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.textBox1.UseSystemPasswordChar = false;
@@ -965,12 +965,12 @@ namespace WinPaletter
             this.trackBarX9.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.trackBarX9.Location = new System.Drawing.Point(136, 105);
             this.trackBarX9.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.trackBarX9.Maximum = 16;
-            this.trackBarX9.Minimum = 0;
+            this.trackBarX9.Maximum = 16F;
+            this.trackBarX9.Minimum = 0F;
             this.trackBarX9.Name = "trackBarX9";
             this.trackBarX9.Size = new System.Drawing.Size(609, 24);
             this.trackBarX9.TabIndex = 157;
-            this.trackBarX9.Value = 0;
+            this.trackBarX9.Value = 0F;
             // 
             // PictureBox13
             // 
@@ -1080,6 +1080,8 @@ namespace WinPaletter
             this.GroupBox1.Padding = new System.Windows.Forms.Padding(3);
             this.GroupBox1.Size = new System.Drawing.Size(309, 603);
             this.GroupBox1.TabIndex = 7;
+            this.GroupBox1.UseDecorationPattern = false;
+            this.GroupBox1.UseSharpStyle = false;
             // 
             // numericUpDown1
             // 
@@ -2002,12 +2004,12 @@ namespace WinPaletter
             this.trackBarX10.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.trackBarX10.Location = new System.Drawing.Point(136, 135);
             this.trackBarX10.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.trackBarX10.Maximum = 255;
-            this.trackBarX10.Minimum = 16;
+            this.trackBarX10.Maximum = 255F;
+            this.trackBarX10.Minimum = 16F;
             this.trackBarX10.Name = "trackBarX10";
             this.trackBarX10.Size = new System.Drawing.Size(609, 24);
             this.trackBarX10.TabIndex = 68;
-            this.trackBarX10.Value = 32;
+            this.trackBarX10.Value = 32F;
             this.trackBarX10.ValueChanged += new System.EventHandler(this.trackBarX10_ValueChanged);
             // 
             // PictureBox12
@@ -2054,6 +2056,8 @@ namespace WinPaletter
             this.groupBox2.Size = new System.Drawing.Size(756, 205);
             this.groupBox2.TabIndex = 139;
             this.groupBox2.Text = "groupBox2";
+            this.groupBox2.UseDecorationPattern = false;
+            this.groupBox2.UseSharpStyle = false;
             // 
             // groupBox3
             // 
@@ -2071,6 +2075,8 @@ namespace WinPaletter
             this.groupBox3.Size = new System.Drawing.Size(756, 137);
             this.groupBox3.TabIndex = 140;
             this.groupBox3.Text = "groupBox3";
+            this.groupBox3.UseDecorationPattern = false;
+            this.groupBox3.UseSharpStyle = false;
             this.groupBox3.Visible = false;
             // 
             // global
@@ -2169,6 +2175,8 @@ namespace WinPaletter
             this.groupBox4.Size = new System.Drawing.Size(748, 48);
             this.groupBox4.TabIndex = 141;
             this.groupBox4.Text = "groupBox4";
+            this.groupBox4.UseDecorationPattern = false;
+            this.groupBox4.UseSharpStyle = false;
             // 
             // pictureBox7
             // 
@@ -2309,7 +2317,7 @@ namespace WinPaletter
             this.tabPage7.Controls.Add(this.groupBox5);
             this.tabPage7.Location = new System.Drawing.Point(4, 24);
             this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Size = new System.Drawing.Size(748, 20);
+            this.tabPage7.Size = new System.Drawing.Size(748, 117);
             this.tabPage7.TabIndex = 1;
             this.tabPage7.Text = "1";
             // 
@@ -2326,6 +2334,8 @@ namespace WinPaletter
             this.groupBox5.Size = new System.Drawing.Size(748, 48);
             this.groupBox5.TabIndex = 141;
             this.groupBox5.Text = "groupBox5";
+            this.groupBox5.UseDecorationPattern = false;
+            this.groupBox5.UseSharpStyle = false;
             // 
             // pictureBox28
             // 
@@ -2404,6 +2414,8 @@ namespace WinPaletter
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(748, 183);
             this.groupBox7.TabIndex = 222;
+            this.groupBox7.UseDecorationPattern = false;
+            this.groupBox7.UseSharpStyle = false;
             // 
             // curstyle_aero
             // 
@@ -2528,6 +2540,8 @@ namespace WinPaletter
             this.groupBox8.Size = new System.Drawing.Size(748, 175);
             this.groupBox8.TabIndex = 223;
             this.groupBox8.Text = "groupBox8";
+            this.groupBox8.UseDecorationPattern = false;
+            this.groupBox8.UseSharpStyle = false;
             // 
             // separatorH2
             // 
@@ -2552,12 +2566,12 @@ namespace WinPaletter
             this.trackBarX12.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.trackBarX12.Location = new System.Drawing.Point(369, 141);
             this.trackBarX12.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.trackBarX12.Maximum = 30;
-            this.trackBarX12.Minimum = 0;
+            this.trackBarX12.Maximum = 30F;
+            this.trackBarX12.Minimum = 0F;
             this.trackBarX12.Name = "trackBarX12";
             this.trackBarX12.Size = new System.Drawing.Size(372, 24);
             this.trackBarX12.TabIndex = 166;
-            this.trackBarX12.Value = 10;
+            this.trackBarX12.Value = 10F;
             this.trackBarX12.ValueChanged += new System.EventHandler(this.trackBarX12_ValueChanged);
             // 
             // pictureBox32
@@ -2684,6 +2698,8 @@ namespace WinPaletter
             this.groupBox9.Size = new System.Drawing.Size(748, 183);
             this.groupBox9.TabIndex = 223;
             this.groupBox9.Text = "groupBox9";
+            this.groupBox9.UseDecorationPattern = false;
+            this.groupBox9.UseSharpStyle = false;
             // 
             // anistyle_modern
             // 
@@ -2881,6 +2897,8 @@ namespace WinPaletter
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.Size = new System.Drawing.Size(748, 175);
             this.groupBox10.TabIndex = 224;
+            this.groupBox10.UseDecorationPattern = false;
+            this.groupBox10.UseSharpStyle = false;
             // 
             // separatorH4
             // 
@@ -2905,12 +2923,12 @@ namespace WinPaletter
             this.trackBarX11.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.trackBarX11.Location = new System.Drawing.Point(368, 141);
             this.trackBarX11.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.trackBarX11.Maximum = 25;
-            this.trackBarX11.Minimum = 5;
+            this.trackBarX11.Maximum = 25F;
+            this.trackBarX11.Minimum = 5F;
             this.trackBarX11.Name = "trackBarX11";
             this.trackBarX11.Size = new System.Drawing.Size(372, 24);
             this.trackBarX11.TabIndex = 169;
-            this.trackBarX11.Value = 10;
+            this.trackBarX11.Value = 10F;
             this.trackBarX11.ValueChanged += new System.EventHandler(this.trackBarX11_ValueChanged);
             // 
             // pictureBox3
@@ -3034,6 +3052,8 @@ namespace WinPaletter
             this.groupBox11.Name = "groupBox11";
             this.groupBox11.Size = new System.Drawing.Size(748, 195);
             this.groupBox11.TabIndex = 225;
+            this.groupBox11.UseDecorationPattern = false;
+            this.groupBox11.UseSharpStyle = false;
             // 
             // toggle1
             // 

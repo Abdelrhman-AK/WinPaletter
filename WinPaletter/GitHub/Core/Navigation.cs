@@ -65,7 +65,25 @@ namespace WinPaletter.GitHub
         }
         private static bool showHiddenFiles = true;
 
-        public static bool FilesOperationsLinking { get; set; } = true;
+
+        public static View View
+        {
+            get => _view;
+            set
+            {
+                if (_view != value)
+                {
+                    _view = value;
+                    if (_boundList != null)
+                    {
+                        _boundList.View = value;
+                    }
+
+                    Events.OnViewChanged(value);
+                }
+            }
+        }
+        private static View _view = View.Details;
 
         #endregion
 
@@ -923,10 +941,18 @@ namespace WinPaletter.GitHub
                     // Skip if already selected / included
                     if (!itemsToCut.Contains(linkedItem))
                     {
-                        // Confirmation or Auto-apply
-                        if (FilesOperationsLinking && (Program.Settings.UsersServices.GitHub_AutoOperateOnLinkedFiles || Forms.GitHub_LinkedFilesConfirmation.ShowDialog(baseName, GitHub_LinkedFilesConfirmation.Operation.Cut) == DialogResult.Yes))
+                        switch (Program.Settings.GitHub.FilesLinking)
                         {
-                            itemsToCut.Add(linkedItem);
+                            case Settings.Structures.GitHub.FilesLinkingMode.AlwaysExecute:
+                                itemsToCut.Add(linkedItem);
+                                break;
+                            case Settings.Structures.GitHub.FilesLinkingMode.AskBeforeExecute:
+                                if (Forms.GitHub_LinkedFilesConfirmation.ShowDialog(baseName, GitHub_LinkedFilesConfirmation.Operation.Cut) == DialogResult.Yes)
+                                    itemsToCut.Add(linkedItem);
+                                break;
+                            case Settings.Structures.GitHub.FilesLinkingMode.NeverExecute:
+                                // do nothing
+                                break;
                         }
                     }
                 }
@@ -984,10 +1010,18 @@ namespace WinPaletter.GitHub
                         // Skip if already selected / included
                         if (!itemsToCopy.Contains(linkedItem))
                         {
-                            // Confirmation or Auto-apply
-                            if (FilesOperationsLinking && (Program.Settings.UsersServices.GitHub_AutoOperateOnLinkedFiles || Forms.GitHub_LinkedFilesConfirmation.ShowDialog(baseName, GitHub_LinkedFilesConfirmation.Operation.Copy) == DialogResult.Yes))
+                            switch (Program.Settings.GitHub.FilesLinking)
                             {
-                                itemsToCopy.Add(linkedItem);
+                                case Settings.Structures.GitHub.FilesLinkingMode.AlwaysExecute:
+                                    itemsToCopy.Add(linkedItem);
+                                    break;
+                                case Settings.Structures.GitHub.FilesLinkingMode.AskBeforeExecute:
+                                    if (Forms.GitHub_LinkedFilesConfirmation.ShowDialog(baseName, GitHub_LinkedFilesConfirmation.Operation.Copy) == DialogResult.Yes)
+                                        itemsToCopy.Add(linkedItem);
+                                    break;
+                                case Settings.Structures.GitHub.FilesLinkingMode.NeverExecute:
+                                    // do nothing
+                                    break;
                             }
                         }
                     }
@@ -1305,30 +1339,53 @@ namespace WinPaletter.GitHub
             }
 
             // Determine linked extension
-            string linkedExt = oldExt.Equals(".wpth", StringComparison.OrdinalIgnoreCase) ? ".wptp" : oldExt.Equals(".wptp", StringComparison.OrdinalIgnoreCase) ? ".wpth" : null;
+            string linkedExt = oldExt.Equals(".wpth", StringComparison.OrdinalIgnoreCase) ? ".wptp" :
+                               oldExt.Equals(".wptp", StringComparison.OrdinalIgnoreCase) ? ".wpth" : null;
 
             ListViewItem linkedItem = null;
 
-            if (linkedExt != null && FilesOperationsLinking && !extensionChanged)
+            // Find linked item if applicable
+            if (linkedExt != null && !extensionChanged)
             {
                 linkedItem = _boundList.Items.Cast<ListViewItem>().FirstOrDefault(i =>
                 {
                     if (i.Tag is RepositoryContent rc)
                     {
-                        return Path.GetFileNameWithoutExtension(rc.Name).Equals(oldBaseName, StringComparison.OrdinalIgnoreCase) && Path.GetExtension(rc.Name).Equals(linkedExt, StringComparison.OrdinalIgnoreCase);
+                        return Path.GetFileNameWithoutExtension(rc.Name).Equals(oldBaseName, StringComparison.OrdinalIgnoreCase) &&
+                               Path.GetExtension(rc.Name).Equals(linkedExt, StringComparison.OrdinalIgnoreCase);
                     }
                     return false;
                 });
             }
 
+            // Rename main item
             item.Text = newName;
             await RenameFile(item, parentDirPath, e);
 
-            if (linkedItem != null && newName != oldText && (Program.Settings.UsersServices.GitHub_AutoOperateOnLinkedFiles || Forms.GitHub_LinkedFilesConfirmation.ShowDialog(oldBaseName, newBaseName, GitHub_LinkedFilesConfirmation.Operation.Rename) == DialogResult.Yes))
+            // Rename linked item if found
+            if (linkedItem != null && newName != oldText)
             {
-                string linkedNewName = $"{newBaseName}{linkedExt}";
-                linkedItem.Text = linkedNewName;
-                await RenameFile(linkedItem, parentDirPath);
+                bool shouldRename = false;
+
+                switch (Program.Settings.GitHub.FilesLinking)
+                {
+                    case Settings.Structures.GitHub.FilesLinkingMode.AlwaysExecute:
+                        shouldRename = true;
+                        break;
+                    case Settings.Structures.GitHub.FilesLinkingMode.AskBeforeExecute:
+                        shouldRename = Forms.GitHub_LinkedFilesConfirmation.ShowDialog(oldBaseName, newBaseName, GitHub_LinkedFilesConfirmation.Operation.Rename) == DialogResult.Yes;
+                        break;
+                    case Settings.Structures.GitHub.FilesLinkingMode.NeverExecute:
+                        shouldRename = false;
+                        break;
+                }
+
+                if (shouldRename)
+                {
+                    string linkedNewName = $"{newBaseName}{linkedExt}";
+                    linkedItem.Text = linkedNewName;
+                    await RenameFile(linkedItem, parentDirPath);
+                }
             }
         }
 
@@ -1449,8 +1506,9 @@ namespace WinPaletter.GitHub
             foreach (ToolStripMenuItem other in menu_view.DropDown.Items) if (other != item) other.Checked = false;
 
             (string label, Bitmap icon, Bitmap glyph, View view) viewData = ((string label, Bitmap icon, Bitmap glyph, View view))item.Tag;
-            _boundList.View = viewData.view;
-            Forms.GitHub_Mgr.UpdateViewButton(viewData);
+            View = viewData.view;
+            Program.Settings.GitHub.DefaultView = viewData.view;
+            Program.Settings.GitHub.SaveViewOnly();
             item.Checked = true;
         }
 
@@ -2013,11 +2071,11 @@ namespace WinPaletter.GitHub
                 List<RepositoryContent> allFiles = [.. snapshot.Select(i => i.Tag as RepositoryContent).Where(rc => rc != null && rc.Type != ContentType.Dir && !rc.Name.Equals(".gitkeep", StringComparison.OrdinalIgnoreCase))];
 
                 // --- Step 1: Include linked files if needed ---
-                if (FilesOperationsLinking)
+                if (Program.Settings.GitHub.FilesLinking != Settings.Structures.GitHub.FilesLinkingMode.NeverExecute)
                 {
                     var allFileDict = _boundList.Items.Cast<ListViewItem>().Where(i => i.Tag is RepositoryContent rc && rc.Type != ContentType.Dir).ToDictionary(i => i.Text, i => i.Tag as RepositoryContent, StringComparer.OrdinalIgnoreCase);
 
-                    List<RepositoryContent> toAdd = [];
+                    List<RepositoryContent> toAdd = new();
 
                     foreach (var rc in allFiles)
                     {
@@ -2030,8 +2088,20 @@ namespace WinPaletter.GitHub
 
                         if (allFileDict.TryGetValue(linkedName, out var linkedRc) && !allFiles.Contains(linkedRc))
                         {
-                            // Ask user or auto-apply
-                            bool includeLinked = Program.Settings.UsersServices.GitHub_AutoOperateOnLinkedFiles || Forms.GitHub_LinkedFilesConfirmation.ShowDialog(baseName, GitHub_LinkedFilesConfirmation.Operation.Delete) == DialogResult.Yes;
+                            bool includeLinked = false;
+
+                            switch (Program.Settings.GitHub.FilesLinking)
+                            {
+                                case Settings.Structures.GitHub.FilesLinkingMode.AlwaysExecute:
+                                    includeLinked = true;
+                                    break;
+                                case Settings.Structures.GitHub.FilesLinkingMode.AskBeforeExecute:
+                                    includeLinked = Forms.GitHub_LinkedFilesConfirmation.ShowDialog(baseName, GitHub_LinkedFilesConfirmation.Operation.Delete) == DialogResult.Yes;
+                                    break;
+                                case Settings.Structures.GitHub.FilesLinkingMode.NeverExecute:
+                                    includeLinked = false;
+                                    break;
+                            }
 
                             if (includeLinked) toAdd.Add(linkedRc);
                         }
@@ -2226,7 +2296,22 @@ namespace WinPaletter.GitHub
 
                 if (availableFiles.TryGetValue(pairedFileName, out var pairedRc) && !selectedFiles.Contains(pairedFileName))
                 {
-                    if (FilesOperationsLinking && (Program.Settings.UsersServices.GitHub_AutoOperateOnLinkedFiles || Forms.GitHub_LinkedFilesConfirmation.ShowDialog(baseName, GitHub_LinkedFilesConfirmation.Operation.Download) == DialogResult.Yes))
+                    bool includePaired = false;
+
+                    switch (Program.Settings.GitHub.FilesLinking)
+                    {
+                        case Settings.Structures.GitHub.FilesLinkingMode.AlwaysExecute:
+                            includePaired = true;
+                            break;
+                        case Settings.Structures.GitHub.FilesLinkingMode.AskBeforeExecute:
+                            includePaired = Forms.GitHub_LinkedFilesConfirmation.ShowDialog(baseName, GitHub_LinkedFilesConfirmation.Operation.Download) == DialogResult.Yes;
+                            break;
+                        case Settings.Structures.GitHub.FilesLinkingMode.NeverExecute:
+                            includePaired = false;
+                            break;
+                    }
+
+                    if (includePaired)
                     {
                         selectedFiles.Add(pairedFileName);
 

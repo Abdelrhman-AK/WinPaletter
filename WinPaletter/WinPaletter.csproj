@@ -383,6 +383,12 @@
     <Compile Include="GitHub\GitHub_EntryProperties.Designer.cs">
       <DependentUpon>GitHub_EntryProperties.cs</DependentUpon>
     </Compile>
+    <Compile Include="GitHub\GitHub_FolderOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GitHub\GitHub_FolderOptions.Designer.cs">
+      <DependentUpon>GitHub_FolderOptions.cs</DependentUpon>
+    </Compile>
     <Compile Include="GitHub\GitHub_LinkedFilesConfirmation.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1336,6 +1342,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GitHub\GitHub_EntryProperties.resx">
       <DependentUpon>GitHub_EntryProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GitHub\GitHub_FolderOptions.resx">
+      <DependentUpon>GitHub_FolderOptions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GitHub\GitHub_LinkedFilesConfirmation.resx">
       <DependentUpon>GitHub_LinkedFilesConfirmation.cs</DependentUpon>

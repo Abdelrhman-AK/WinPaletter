@@ -114,6 +114,8 @@ namespace WinPaletter
             this.GroupBox3.Name = "GroupBox3";
             this.GroupBox3.Size = new System.Drawing.Size(562, 130);
             this.GroupBox3.TabIndex = 15;
+            this.GroupBox3.UseDecorationPattern = false;
+            this.GroupBox3.UseSharpStyle = false;
             // 
             // LogonUI_Lockscreen_Toggle
             // 
@@ -256,6 +258,8 @@ namespace WinPaletter
             this.previewContainer.Padding = new System.Windows.Forms.Padding(1);
             this.previewContainer.Size = new System.Drawing.Size(536, 345);
             this.previewContainer.TabIndex = 131;
+            this.previewContainer.UseDecorationPattern = false;
+            this.previewContainer.UseSharpStyle = false;
             // 
             // button7
             // 
@@ -410,6 +414,8 @@ namespace WinPaletter
             this.groupBox2.Size = new System.Drawing.Size(562, 198);
             this.groupBox2.TabIndex = 222;
             this.groupBox2.Text = "groupBox2";
+            this.groupBox2.UseDecorationPattern = false;
+            this.groupBox2.UseSharpStyle = false;
             // 
             // button5
             // 

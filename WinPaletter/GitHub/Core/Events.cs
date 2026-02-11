@@ -12,6 +12,7 @@ namespace WinPaletter.GitHub
         public static event EventHandler<string> Navigated;
 
         public static event EventHandler<string> StatusLabelChanged;
+        public static event EventHandler<System.Windows.Forms.View> ViewChanged;
 
         public static event EventHandler GitHubAvatarUpdated;
 
@@ -35,6 +36,7 @@ namespace WinPaletter.GitHub
         public static void OnCanDoIOChanged(bool value) => CanDoIOChanged?.Invoke(null, value);
         public static void OnNavigated(string url) => Navigated?.Invoke(null, url);
         public static void OnStatusLabelChanged(string status) => StatusLabelChanged?.Invoke(null, status);
+        public static void OnViewChanged(System.Windows.Forms.View view) => ViewChanged?.Invoke(null, view);
         public static void OnGitHubAvatarUpdated() => GitHubAvatarUpdated?.Invoke(null, new());
         public static void OnRateLimitExceeded(DateTime resetTime) => RateLimitExceeded?.Invoke(null, resetTime);
         public static void OnNetworkLost() => NetworkLost?.Invoke(null, new());

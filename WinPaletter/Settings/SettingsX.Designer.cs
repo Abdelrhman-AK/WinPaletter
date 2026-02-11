@@ -463,8 +463,8 @@ namespace WinPaletter
             this.PictureBox53 = new System.Windows.Forms.PictureBox();
             this.tabPage22 = new System.Windows.Forms.TabPage();
             this.groupBox63 = new WinPaletter.UI.WP.GroupBox();
+            this.button33 = new WinPaletter.UI.WP.Button();
             this.label99 = new System.Windows.Forms.Label();
-            this.toggle43 = new WinPaletter.UI.WP.Toggle();
             this.pictureBox72 = new System.Windows.Forms.PictureBox();
             this.banner11 = new WinPaletter.UI.WP.Banner();
             this.groupBox48 = new WinPaletter.UI.WP.GroupBox();
@@ -6420,8 +6420,8 @@ namespace WinPaletter
             this.groupBox63.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox63.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox63.Controls.Add(this.button33);
             this.groupBox63.Controls.Add(this.label99);
-            this.groupBox63.Controls.Add(this.toggle43);
             this.groupBox63.Controls.Add(this.pictureBox72);
             this.groupBox63.Location = new System.Drawing.Point(3, 263);
             this.groupBox63.Name = "groupBox63";
@@ -6430,6 +6430,25 @@ namespace WinPaletter
             this.groupBox63.UseDecorationPattern = false;
             this.groupBox63.UseSharpStyle = false;
             // 
+            // button33
+            // 
+            this.button33.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.button33.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(210)))));
+            this.button33.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
+            this.button33.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button33.ForeColor = System.Drawing.Color.White;
+            this.button33.Image = ((System.Drawing.Image)(resources.GetObject("button33.Image")));
+            this.button33.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Forward;
+            this.button33.ImageGlyphEnabled = true;
+            this.button33.Location = new System.Drawing.Point(690, 8);
+            this.button33.Name = "button33";
+            this.button33.Size = new System.Drawing.Size(120, 32);
+            this.button33.TabIndex = 80;
+            this.button33.Text = "Open";
+            this.button33.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button33.UseVisualStyleBackColor = false;
+            this.button33.Click += new System.EventHandler(this.button33_Click);
+            // 
             // label99
             // 
             this.label99.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -6437,21 +6456,10 @@ namespace WinPaletter
             this.label99.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label99.Location = new System.Drawing.Point(41, 7);
             this.label99.Name = "label99";
-            this.label99.Size = new System.Drawing.Size(719, 34);
+            this.label99.Size = new System.Drawing.Size(643, 34);
             this.label99.TabIndex = 18;
-            this.label99.Text = "Automatically do operations for linked themes and resources pack files (*.wpth, *" +
-    ".wptp) inside GitHub themes explorer";
+            this.label99.Text = "GitHub Manager (Themes Explorer) Folder Options";
             this.label99.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // toggle43
-            // 
-            this.toggle43.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.toggle43.Checked = false;
-            this.toggle43.DarkLight_Toggler = false;
-            this.toggle43.Location = new System.Drawing.Point(766, 14);
-            this.toggle43.Name = "toggle43";
-            this.toggle43.Size = new System.Drawing.Size(40, 20);
-            this.toggle43.TabIndex = 0;
             // 
             // pictureBox72
             // 
@@ -6544,9 +6552,9 @@ namespace WinPaletter
             this.button21.Image = null;
             this.button21.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button21.ImageGlyph")));
             this.button21.ImageGlyphEnabled = true;
-            this.button21.Location = new System.Drawing.Point(686, 8);
+            this.button21.Location = new System.Drawing.Point(690, 8);
             this.button21.Name = "button21";
-            this.button21.Size = new System.Drawing.Size(120, 33);
+            this.button21.Size = new System.Drawing.Size(120, 32);
             this.button21.TabIndex = 70;
             this.button21.Text = "Uninstall";
             this.button21.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -6563,9 +6571,9 @@ namespace WinPaletter
             this.button13.Image = null;
             this.button13.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button13.ImageGlyph")));
             this.button13.ImageGlyphEnabled = true;
-            this.button13.Location = new System.Drawing.Point(560, 8);
+            this.button13.Location = new System.Drawing.Point(564, 8);
             this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(120, 33);
+            this.button13.Size = new System.Drawing.Size(120, 32);
             this.button13.TabIndex = 68;
             this.button13.Text = "Reinstall";
             this.button13.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -6619,9 +6627,9 @@ namespace WinPaletter
             this.button22.Image = ((System.Drawing.Image)(resources.GetObject("button22.Image")));
             this.button22.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button22.ImageGlyph")));
             this.button22.ImageGlyphEnabled = true;
-            this.button22.Location = new System.Drawing.Point(686, 7);
+            this.button22.Location = new System.Drawing.Point(690, 7);
             this.button22.Name = "button22";
-            this.button22.Size = new System.Drawing.Size(120, 33);
+            this.button22.Size = new System.Drawing.Size(120, 32);
             this.button22.TabIndex = 79;
             this.button22.Text = "Switch user";
             this.button22.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -7869,7 +7877,6 @@ namespace WinPaletter
         private UI.WP.Toggle toggle42;
         private UI.WP.GroupBox groupBox63;
         internal Label label99;
-        private UI.WP.Toggle toggle43;
         internal PictureBox pictureBox72;
         private UI.WP.ProgressBar storage_data_prg;
         private UI.WP.ProgressBar storage_resPack_prg;
@@ -7878,5 +7885,6 @@ namespace WinPaletter
         private UI.WP.ProgressBar storage_store_prg;
         private UI.WP.ProgressBar storage_errors_prg;
         private UI.WP.Button button29;
+        private UI.WP.Button button33;
     }
 }

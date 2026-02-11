@@ -44,6 +44,7 @@ namespace WinPaletter
             static readonly string REG_Store = $"{REG}\\Store";
             static readonly string REG_NerdStats = $"{REG}\\NerdStats";
             static readonly string REG_UsersServices = $"{REG}\\UsersServices";
+            static readonly string REG_GitHub = $"{REG}\\GitHub";
             static readonly string REG_Miscellaneous = $"{REG}\\Miscellaneous";
             static readonly string REG_Backup = $"{REG}\\Backup";
             static readonly string REG_AspectsControl = $"{REG}\\AspectsControl";
@@ -1076,16 +1077,11 @@ namespace WinPaletter
                 public UsersServices() { }
 
                 /// <summary>
-                /// Determines if WinPaletter's GitHub mananger can automatically do operations on linked files without confirmation or not.
-                /// </summary>
-                public bool GitHub_AutoOperateOnLinkedFiles { get; set; } = false;
-
-                /// <summary>
                 /// Load settings from registry
                 /// </summary>
                 public void Load()
                 {
-                    GitHub_AutoOperateOnLinkedFiles = ReadReg(REG_UsersServices, nameof(GitHub_AutoOperateOnLinkedFiles), false);
+
                 }
 
                 /// <summary>
@@ -1093,7 +1089,70 @@ namespace WinPaletter
                 /// </summary>
                 public void Save()
                 {
-                    WriteReg(REG_NerdStats, nameof(GitHub_AutoOperateOnLinkedFiles), GitHub_AutoOperateOnLinkedFiles);
+
+                }
+            }
+
+            /// <summary>
+            /// Users and services settings structure
+            /// </summary>
+            public class GitHub
+            {
+                /// <summary>
+                /// Create new instance of UsersServices settings structure with default values
+                /// </summary>
+                public GitHub() { }
+
+                public enum FilesLinkingMode
+                {
+                    AlwaysExecute,   // skip dialog
+                    AskBeforeExecute,// show dialog, execute only if Yes
+                    NeverExecute     // do nothing
+                }
+
+                /// <summary>
+                /// Determines if WinPaletter's GitHub mananger can automatically do operations on linked files without confirmation or not.
+                /// </summary>
+                public FilesLinkingMode FilesLinking { get; set; } = FilesLinkingMode.AskBeforeExecute;
+
+                /// <summary>
+                /// Gets or sets a value indicating whether hidden files are displayed.
+                /// </summary>
+                /// <remarks>When set to <see langword="true"/>, hidden files are shown in the
+                /// file explorer. The default value is <see langword="false"/>, meaning hidden files are not
+                /// displayed.</remarks>
+                public bool ShowHiddenFiles { get; set; } = false;
+
+                /// <summary>
+                /// Gets or sets the current view mode used to display items in the control.
+                /// </summary>
+                /// <remarks>Changing the view mode affects how items are presented to the user,
+                /// such as showing them in a detailed list or as icons. The default value is View.Details.</remarks>
+                public View DefaultView { get; set; } = View.Details;
+
+                /// <summary>
+                /// Load settings from registry
+                /// </summary>
+                public void Load()
+                {
+                    FilesLinking = ReadReg(REG_GitHub, nameof(FilesLinking), FilesLinkingMode.AskBeforeExecute);
+                    ShowHiddenFiles = ReadReg(REG_GitHub, nameof(ShowHiddenFiles), false);
+                    DefaultView = ReadReg(REG_GitHub, nameof(DefaultView), View.Details);
+                }
+
+                /// <summary>
+                /// Save settings to registry
+                /// </summary>
+                public void Save()
+                {
+                    SaveViewOnly();
+                    WriteReg(REG_GitHub, nameof(FilesLinking), FilesLinking);
+                    WriteReg(REG_GitHub, nameof(ShowHiddenFiles), ShowHiddenFiles);
+                }
+
+                public void SaveViewOnly()
+                {
+                    WriteReg(REG_GitHub, nameof(DefaultView), DefaultView);
                 }
             }
 
@@ -1442,6 +1501,14 @@ namespace WinPaletter
         public Structures.AspectsControl AspectsControl = new();
 
         /// <summary>
+        /// Gets or sets the GitHub structure used for interacting with GitHub APIs.
+        /// </summary>
+        /// <remarks>This instance provides methods and properties to facilitate communication with GitHub
+        /// services. Ensure that the necessary authentication and configuration are set before making API
+        /// calls.</remarks>
+        public Structures.GitHub GitHub = new();
+
+        /// <summary>
         /// Source from/into which WinPalette settings are loaded/saved
         /// </summary>
         public enum Source
@@ -1493,6 +1560,7 @@ namespace WinPaletter
                     Miscellaneous.Load();
                     BackupTheme.Load();
                     AspectsControl.Load();
+                    GitHub.Load();
                     break;
 
                 case Source.File:
@@ -1576,6 +1644,7 @@ namespace WinPaletter
                     Miscellaneous.Save();
                     BackupTheme.Save();
                     AspectsControl.Save();
+                    GitHub.Save();
                     break;
 
                 case Source.File:
