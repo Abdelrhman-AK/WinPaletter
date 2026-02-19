@@ -438,6 +438,8 @@ namespace WinPaletter
 
         private void Button31_Click(object sender, EventArgs e)
         {
+            if (Program.Settings.Store.ShowNewXPIntro) Forms.Store_Intro_New.ShowDialog();
+
             Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Store);
         }
 

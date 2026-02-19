@@ -832,13 +832,6 @@ namespace WinPaletter
                 public bool Search_Descriptions = true;
 
                 /// <summary>
-                /// If <c>true</c>, WinPaletter will use online sources from <c>Online_Repositories</c> array
-                /// <br></br>
-                /// If <c>false</c>, WinPaletter will use offline sources from <c>Offline_Directories</c> array
-                /// </summary>
-                public bool Online_or_Offline = true;
-
-                /// <summary>
                 /// String array contains links to WinPaletter themes sources
                 /// </summary>
                 public string[] Online_Repositories = [Links.Store_MainDB, Links.Store_2ndDB];
@@ -847,6 +840,14 @@ namespace WinPaletter
                 /// String array contains directories to WinPaletter themes sources
                 /// </summary>
                 public string[] Offline_Directories = [string.Empty];
+
+                /// <summary>
+                /// Specifies the current mode of operation for the application.
+                /// </summary>
+                /// <remarks>The value of this field determines the application's behavior based
+                /// on the selected mode. Available modes are defined in the Modes enumeration. Changing this value may
+                /// alter how the application processes data or interacts with external resources.</remarks>
+                public Modes Mode = Modes.Online;
 
                 /// <summary>
                 /// Get themes from subdirectories when <c>Online_or_Offline == false</c>
@@ -863,15 +864,22 @@ namespace WinPaletter
                 /// </summary>
                 public Store() { }
 
+                public enum Modes
+                {
+                    Online,
+                    Offline,
+                    Hybrid
+                }
+
                 /// <summary>
                 /// Load settings from registry
                 /// </summary>
                 public void Load()
                 {
-                    Online_or_Offline = ReadReg(REG_Store, "Online_or_Offline", true);
+                    Offline_SubFolders = ReadReg(REG_Store, nameof(Offline_SubFolders), true);
                     Online_Repositories = ReadReg(REG_Store, "Online_Repositories", new[] { Links.Store_MainDB, Links.Store_2ndDB });
                     Offline_Directories = ReadReg(REG_Store, "Offline_Directories", new[] { string.Empty });
-                    Offline_SubFolders = ReadReg(REG_Store, "Offline_SubFolders", true);
+                    Mode = ReadReg(REG_Store, nameof(Mode), Modes.Online);
                     Search_ThemeNames = ReadReg(REG_Store, "Search_ThemeNames", true);
                     Search_AuthorsNames = ReadReg(REG_Store, "Search_AuthorsNames", true);
                     Search_Descriptions = ReadReg(REG_Store, "Search_Descriptions", true);
@@ -910,10 +918,10 @@ namespace WinPaletter
                     WriteReg(REG_Store, "Search_ThemeNames", Search_ThemeNames, RegistryValueKind.DWord);
                     WriteReg(REG_Store, "Search_AuthorsNames", Search_AuthorsNames, RegistryValueKind.DWord);
                     WriteReg(REG_Store, "Search_Descriptions", Search_Descriptions, RegistryValueKind.DWord);
-                    WriteReg(REG_Store, "Online_or_Offline", Online_or_Offline, RegistryValueKind.DWord);
+                    WriteReg(REG_Store, nameof(Offline_SubFolders), Offline_SubFolders, RegistryValueKind.DWord);
                     WriteReg(REG_Store, "Online_Repositories", Online_Repositories, RegistryValueKind.MultiString);
                     WriteReg(REG_Store, "Offline_Directories", Offline_Directories, RegistryValueKind.MultiString);
-                    WriteReg(REG_Store, "Offline_SubFolders", Offline_SubFolders, RegistryValueKind.DWord);
+                    WriteReg(REG_Store, nameof(Mode), Mode, RegistryValueKind.DWord);
                     WriteReg(REG_Store, "ShowNewXPIntro", ShowNewXPIntro, RegistryValueKind.DWord);
                 }
             }

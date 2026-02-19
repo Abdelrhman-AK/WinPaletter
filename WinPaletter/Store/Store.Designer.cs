@@ -715,7 +715,7 @@ namespace WinPaletter
             this.aspect_altTab.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.aspect_altTab.TabIndex = 173;
             this.aspect_altTab.TabStop = false;
-            this.aspect_altTab.Tag = "Modifies Windows Switcher (Alt+Tab)\'s appearamce";
+            this.aspect_altTab.Tag = "Modifies Windows Switcher\'s appearance";
             // 
             // aspect_icons
             // 
@@ -2847,7 +2847,6 @@ namespace WinPaletter
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Store_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Store_FormClosed);
             this.Load += new System.EventHandler(this.Store_Load);
-            this.Shown += new System.EventHandler(this.Store_Shown);
             this.ParentChanged += new System.EventHandler(this.Store_ParentChanged);
             this.Tabs.ResumeLayout(false);
             this.TabPage1.ResumeLayout(false);

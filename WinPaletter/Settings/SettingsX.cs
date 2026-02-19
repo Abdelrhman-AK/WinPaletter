@@ -176,8 +176,10 @@ namespace WinPaletter
 
             UpdateStorageUI();
 
-            RadioImage1.Checked = Sets.Store.Online_or_Offline;
-            RadioImage2.Checked = !Sets.Store.Online_or_Offline;
+            radioImage2.Checked = Sets.Store.Mode == Settings.Structures.Store.Modes.Online;
+            radioImage5.Checked = Sets.Store.Mode == Settings.Structures.Store.Modes.Offline;
+            radioImage1.Checked = Sets.Store.Mode == Settings.Structures.Store.Modes.Hybrid;
+
             ListBox1.Items.Clear();
             foreach (string x in Sets.Store.Online_Repositories)
             {
@@ -537,7 +539,9 @@ namespace WinPaletter
             Sets.ThemeApplyingBehavior.PE_ModifyByDefault = RadioButton25.Checked;
             Sets.ThemeApplyingBehavior.Show_WinEffects_Alert = toggle12.Checked;
 
-            Sets.Store.Online_or_Offline = RadioImage1.Checked;
+            Sets.Store.Mode = radioImage2.Checked ? Settings.Structures.Store.Modes.Online :
+                    radioImage5.Checked ? Settings.Structures.Store.Modes.Offline : Settings.Structures.Store.Modes.Hybrid;
+
             Sets.Store.Online_Repositories = [.. ListBox1.Items.OfType<string>().Where(s => !string.IsNullOrEmpty(s))];
             Sets.Store.Offline_Directories = [.. ListBox2.Items.OfType<string>().Where(s => !string.IsNullOrEmpty(s))];
             Sets.Store.Search_ThemeNames = CheckBox28.Checked;
@@ -1305,6 +1309,79 @@ namespace WinPaletter
         private void button33_Click(object sender, EventArgs e)
         {
             Forms.GitHub_FolderOptions.ShowDialog();
+        }
+
+        private void button15_Click_1(object sender, EventArgs e)
+        {
+            string inputText = string.Empty;
+            if (ListBox1.SelectedItem is not null)
+                inputText = ListBox1.SelectedItem.ToString();
+            string response = InputBox(Program.Localization.Strings.Messages.InputThemeRepos, inputText, Program.Localization.Strings.Messages.InputThemeRepos_Notice);
+            if (!ListBox1.Items.Contains(response))
+                ListBox1.Items.Add(response);
+        }
+
+        private void button14_Click_1(object sender, EventArgs e)
+        {
+            Process.Start(Links.Wiki.StoreCreateSource);
+        }
+
+        private void button34_Click(object sender, EventArgs e)
+        {
+            if (ListBox1.SelectedItem is not null)
+            {
+                int i = ListBox1.SelectedIndex;
+
+                if (!((ListBox1.SelectedItem.ToString().ToUpper() ?? string.Empty) == (Links.Store_2ndDB.ToUpper() ?? string.Empty)) & !((ListBox1.SelectedItem.ToString().ToUpper() ?? string.Empty) == (Links.Store_MainDB.ToUpper() ?? string.Empty)))
+                {
+                    ListBox1.Items.RemoveAt(i);
+                    if (i < ListBox1.Items.Count - 1)
+                        ListBox1.SelectedIndex = i;
+                    else
+                        ListBox1.SelectedIndex = ListBox1.Items.Count - 1;
+                }
+                else
+                {
+                    MsgBox(Program.Localization.Strings.Store.RemoveTip, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void Button18_Click_1(object sender, EventArgs e)
+        {
+            if (!OS.WXP)
+            {
+                VistaFolderBrowserDialog dlg = new();
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    if (!ListBox2.Items.Contains(dlg.SelectedPath))
+                        ListBox2.Items.Add(dlg.SelectedPath);
+                }
+                dlg.Dispose();
+            }
+            else
+            {
+                using (FolderBrowserDialog dlg = new())
+                {
+                    if (dlg.ShowDialog() == DialogResult.OK)
+                    {
+                        if (!ListBox2.Items.Contains(dlg.SelectedPath)) ListBox2.Items.Add(dlg.SelectedPath);
+                    }
+                }
+            }
+        }
+
+        private void Button17_Click_1(object sender, EventArgs e)
+        {
+            if (ListBox2.SelectedItem is not null)
+            {
+                int i = ListBox2.SelectedIndex;
+                ListBox2.Items.RemoveAt(i);
+                if (i < ListBox2.Items.Count - 1)
+                    ListBox2.SelectedIndex = i;
+                else
+                    ListBox2.SelectedIndex = ListBox2.Items.Count - 1;
+            }
         }
     }
 }

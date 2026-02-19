@@ -28,8 +28,6 @@ namespace WinPaletter
     public partial class Store
     {
         #region Variables
-
-        private bool StartedAsOnlineOrOffline = true;
         private bool FinishedLoadingInitialTMs;
         private readonly Dictionary<string, Manager> TMList = [];
 
@@ -432,14 +430,13 @@ namespace WinPaletter
                 if (!await LicenseAcceptedAsync(selectedItem.TM.Info.License)) return;
             }
 
-            if (StartedAsOnlineOrOffline)
-            {
-                // Online mode
+            bool url_themeFile_isAFile = !selectedItem.URL_ThemeFile.Contains("//") && !selectedItem.URL_ThemeFile.Contains(".com//") && System.IO.File.Exists(selectedItem.URL_ThemeFile);
 
+            if (!url_themeFile_isAFile) // Has a URL -> Online
+            {
                 string temp = selectedItem.URL_PackFile.Replace("?raw=true", string.Empty);
                 string FileName = temp.Split('/').Last();
                 temp = temp.Replace($"/{FileName}", string.Empty);
-                string FolderName = temp.Split('/').Last();
                 string Dir;
                 if (File.Exists(selectedItem.FileName))
                 {
@@ -487,7 +484,6 @@ namespace WinPaletter
                 // Offline mode, do actions directly.
                 DoActionsAfterPackDownload();
             }
-
         }
 
         void SetAspectsIcons()
@@ -545,12 +541,6 @@ namespace WinPaletter
 
             aspect_winPaletterAppTheme.Image?.Dispose();
             aspect_winPaletterAppTheme.Image = Program.Style.DarkMode ? Assets.Store.StoreAspect_WinPaletterAppTheme : Assets.Store.StoreAspect_WinPaletterAppTheme.Invert();
-        }
-
-        private void Store_Shown(object sender, EventArgs e)
-        {
-            _Shown = true;
-            if (Program.Settings.Store.ShowNewXPIntro) Forms.Store_Intro_New.ShowDialog();
         }
 
         private void Store_FormClosing(object sender, FormClosingEventArgs e)
@@ -883,7 +873,6 @@ namespace WinPaletter
             BeginInvoke(() =>
             {
                 ProgressBar1.Visible = true;
-                store_container.Visible = false;
             });
 
             int i = 0;
@@ -968,7 +957,6 @@ namespace WinPaletter
             BeginInvoke(() =>
             {
                 ProgressBar1.Visible = false;
-                store_container.Visible = true;
             });
 
             TMList.Clear();
@@ -978,23 +966,26 @@ namespace WinPaletter
 
         private void FilesFetcher_DoWork(object sender, DoWorkEventArgs e)
         {
-            if (Program.Settings.Store.Online_or_Offline)
+
+            if (Program.Settings.Store.Mode == Settings.Structures.Store.Modes.Online)
             {
                 if (!Program.IsNetworkAvailable)
                 {
-                    StartedAsOnlineOrOffline = false;
                     ProgressBar1.Visible = false;
                     Tabs.SelectedIndex = 3;
                 }
                 else
                 {
-                    StartedAsOnlineOrOffline = true;
                     OnlineMode();
                 }
             }
+            else if (Program.Settings.Store.Mode == Settings.Structures.Store.Modes.Offline)
+            {
+                OfflineMode();
+            }
             else
             {
-                StartedAsOnlineOrOffline = false;
+                OnlineMode();
                 OfflineMode();
             }
         }
@@ -1629,10 +1620,10 @@ namespace WinPaletter
                 if (!await LicenseAcceptedAsync(selectedItem.TM.Info.License)) return;
             }
 
-            if (StartedAsOnlineOrOffline)
-            {
-                // Online mode
+            bool url_themeFile_isAFile = !selectedItem.URL_ThemeFile.Contains("//") && !selectedItem.URL_ThemeFile.Contains(".com//") && System.IO.File.Exists(selectedItem.URL_ThemeFile);
 
+            if (!url_themeFile_isAFile) // Has a URL -> Online
+            {
                 string temp = selectedItem.URL_PackFile.Replace("?raw=true", string.Empty);
                 string FileName = temp.Split('/').Last();
                 temp = temp.Replace($"/{FileName}", string.Empty);
@@ -1763,7 +1754,6 @@ namespace WinPaletter
         private void button3_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
-            StartedAsOnlineOrOffline = false;
             RemoveAllStoreItems(store_container);
             Tabs.SelectedIndex = 0;
             OfflineMode([SysPaths.StoreCache]);
@@ -1773,7 +1763,6 @@ namespace WinPaletter
         private void button4_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
-            StartedAsOnlineOrOffline = false;
             RemoveAllStoreItems(store_container);
             Tabs.SelectedIndex = 0;
             OfflineMode();

@@ -86,9 +86,27 @@ namespace WinPaletter.UI.Controllers
 
         bool hasUpdate = false;
 
+        bool url_themeFile_isAFile = false;
+        string url_themeFile_fileName = string.Empty;
+
         public string MD5_ThemeFile { get; set; }
         public string MD5_PackFile { get; set; }
-        public string URL_ThemeFile { get; set; }
+        public string URL_ThemeFile
+        {
+            get => url_ThemeFile;
+            set
+            {
+                if (value != url_ThemeFile)
+                {
+                    url_ThemeFile = value;
+                    url_themeFile_isAFile = !url_ThemeFile.Contains("//") && !url_ThemeFile.Contains(".com//") && System.IO.File.Exists(url_ThemeFile);
+                    url_themeFile_fileName = url_themeFile_isAFile ? Path.GetFileName(value) : string.Empty;
+                }
+            }
+        }
+
+        private string url_ThemeFile;
+
         public string URL_PackFile { get; set; }
         public string FileName { get; set; }
         public bool DoneByWinPaletter { get; set; } = false;
@@ -382,7 +400,7 @@ namespace WinPaletter.UI.Controllers
                 float CircleR = rect_inner.Height * 0.4f;
                 float factor = CircleR * (alpha / 255f) / 4f;
 
-                int rowsNumber = File.Exists(URL_ThemeFile) ? 4 : 3;
+                int rowsNumber = url_themeFile_isAFile ? 4 : 3;
                 if (DesignedFor_Badges.Count > 0) rowsNumber++;
                 int titleHeight = 26;
                 int itemsHeight = 18;
@@ -434,10 +452,10 @@ namespace WinPaletter.UI.Controllers
 
                     G.DrawString($"{Program.Localization.Strings.General.By} {(DoneByWinPaletter ? Application.ProductName : TM.Info.Author)}", font, foreBrush, Author_Rect, sf);
 
-                    if (File.Exists(URL_ThemeFile))
+                    if (url_themeFile_isAFile && !string.IsNullOrEmpty(url_themeFile_fileName))
                     {
                         G.DrawImage(Assets.Store.Folder, FileRect_Img);
-                        G.DrawString(Path.GetFileName(URL_ThemeFile), Fonts.Console, foreBrush, File_Rect, sf);
+                        G.DrawString(url_themeFile_fileName, Fonts.Console, foreBrush, File_Rect, sf);
                     }
 
                     if (hasUpdate)
@@ -463,8 +481,6 @@ namespace WinPaletter.UI.Controllers
             }
 
             base.OnPaint(e);
-
-
         }
     }
 }
