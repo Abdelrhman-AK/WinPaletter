@@ -15,10 +15,6 @@ namespace WinPaletter
         {
             InitializeComponent();
         }
-        private void Lang_ReplaceText_Load(object sender, EventArgs e)
-        {
-            Icon = FormsExtensions.Icon<Lang_Editor>();
-        }
 
         /// <summary>
         /// Replaces text in a DataGridView.

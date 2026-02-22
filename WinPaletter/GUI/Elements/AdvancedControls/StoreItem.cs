@@ -188,7 +188,7 @@ namespace WinPaletter.UI.Controllers
 
             if (_TM is not null)
             {
-                if (_TM.Info.DesignedFor_Win12) DesignedFor_Badges.Add(Assets.Store.DesignedFor12);
+                if (_TM.Info.DesignedFor_Win12 && OS.IsWin12Released) DesignedFor_Badges.Add(Assets.Store.DesignedFor12);
                 if (_TM.Info.DesignedFor_Win11) DesignedFor_Badges.Add(Assets.Store.DesignedFor11);
                 if (_TM.Info.DesignedFor_Win10) DesignedFor_Badges.Add(Assets.Store.DesignedFor10);
                 if (_TM.Info.DesignedFor_Win81) DesignedFor_Badges.Add(Assets.Store.DesignedFor81);

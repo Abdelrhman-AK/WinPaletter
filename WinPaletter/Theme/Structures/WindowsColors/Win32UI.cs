@@ -682,7 +682,7 @@ namespace WinPaletter.Theme.Structures
                     }
                     else
                     {
-                        @default = Default.Windows12.Win32;
+                        @default = Default.Windows11.Win32;
                     }
 
                     WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ActiveTitle", Color.FromArgb(0, @default.ActiveTitle).Reverse().ToArgb(), RegistryValueKind.String);

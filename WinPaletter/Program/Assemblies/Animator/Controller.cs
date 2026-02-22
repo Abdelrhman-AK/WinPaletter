@@ -258,6 +258,9 @@ namespace AnimatorNS
 
         protected virtual void OnFramePainted(object sender, PaintEventArgs e)
         {
+            // Check if DoubleBitmap is null (disposed) - if so, skip
+            if (DoubleBitmap == null || DoubleBitmap.IsDisposed) return;
+
             FramePainted?.Invoke(this, e);
         }
 
@@ -400,6 +403,13 @@ namespace AnimatorNS
                 if (pixelsBuffer == null || pixelsBuffer.Length != numBytes)
                     pixelsBuffer = new byte[numBytes];
                 System.Runtime.InteropServices.Marshal.Copy(ptr, pixelsBuffer, 0, numBytes);
+
+                // CRITICAL FIX: Check DoubleBitmap again before creating the event args
+                if (DoubleBitmap == null || DoubleBitmap.IsDisposed)
+                {
+                    bmp.UnlockBits(bmpData);
+                    return bmp; // Return the unmodified bitmap instead of proceeding
+                }
 
                 var e = new NonLinearTransfromNeededEventArg()
                 {

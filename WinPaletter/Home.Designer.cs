@@ -53,11 +53,11 @@
             this.card15 = new WinPaletter.UI.WP.Card();
             this.card10 = new WinPaletter.UI.WP.Card();
             this.bottom_buttons = new WinPaletter.UI.WP.GroupBox();
-            this.button15 = new WinPaletter.UI.WP.Button();
             this.apply_btn = new WinPaletter.UI.WP.Button();
             this.Button13 = new WinPaletter.UI.WP.Button();
             this.restartExplorer_btn = new WinPaletter.UI.WP.Button();
             this.Button28 = new WinPaletter.UI.WP.Button();
+            this.button15 = new WinPaletter.UI.WP.Button();
             this.titlebarExtender2 = new WinPaletter.Tabs.TitlebarExtender();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.pin_button = new WinPaletter.UI.WP.Button();
@@ -408,24 +408,6 @@
             this.bottom_buttons.UseDecorationPattern = false;
             this.bottom_buttons.UseSharpStyle = false;
             // 
-            // button15
-            // 
-            this.button15.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.button15.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
-            this.button15.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button15.ForeColor = System.Drawing.Color.White;
-            this.button15.Image = null;
-            this.button15.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_GitHub;
-            this.button15.ImageGlyphEnabled = true;
-            this.button15.Location = new System.Drawing.Point(490, 3);
-            this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(32, 35);
-            this.button15.TabIndex = 35;
-            this.button15.Tag = "Manage and publish my themes (Experimental)";
-            this.button15.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button15.UseVisualStyleBackColor = false;
-            this.button15.Click += new System.EventHandler(this.button15_Click);
-            // 
             // apply_btn
             // 
             this.apply_btn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -501,6 +483,24 @@
             this.Button28.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button28.UseVisualStyleBackColor = false;
             this.Button28.Click += new System.EventHandler(this.Button28_Click);
+            // 
+            // button15
+            // 
+            this.button15.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.button15.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
+            this.button15.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button15.ForeColor = System.Drawing.Color.White;
+            this.button15.Image = null;
+            this.button15.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_GitHub;
+            this.button15.ImageGlyphEnabled = true;
+            this.button15.Location = new System.Drawing.Point(490, 3);
+            this.button15.Name = "button15";
+            this.button15.Size = new System.Drawing.Size(32, 35);
+            this.button15.TabIndex = 35;
+            this.button15.Tag = "Manage and publish my themes (Experimental)";
+            this.button15.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button15.UseVisualStyleBackColor = false;
+            this.button15.Click += new System.EventHandler(this.button15_Click);
             // 
             // titlebarExtender2
             // 
@@ -975,6 +975,7 @@
             this.Controls.Add(this.bottom_buttons);
             this.Controls.Add(this.titlebarExtender2);
             this.HelpButton = true;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Home";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "WinPaletter";

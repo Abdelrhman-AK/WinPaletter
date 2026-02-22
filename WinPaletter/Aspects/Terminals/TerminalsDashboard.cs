@@ -17,8 +17,6 @@ namespace WinPaletter
 
         private void TerminalsDashboard_Load(object sender, EventArgs e)
         {
-            Icon = FormsExtensions.Icon<CMD>();
-
             BackColor = Color.Black;
 
             DWM.DWMStyles style;

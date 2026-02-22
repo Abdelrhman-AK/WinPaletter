@@ -333,9 +333,9 @@ namespace WinPaletter
 
                         default:
                             {
-                                TerMode.Checked = !Program.TM.Windows12.AppMode_Light;
-                                Terminal1.Light = Program.TM.Windows12.AppMode_Light;
-                                Terminal2.Light = Program.TM.Windows12.AppMode_Light;
+                                TerMode.Checked = !Program.TM.Windows11.AppMode_Light;
+                                Terminal1.Light = Program.TM.Windows11.AppMode_Light;
+                                Terminal2.Light = Program.TM.Windows11.AppMode_Light;
                                 break;
                             }
                     }
@@ -1113,8 +1113,8 @@ namespace WinPaletter
 
                         default:
                             {
-                                Terminal1.Light = Program.TM.Windows12.AppMode_Light;
-                                Terminal2.Light = Program.TM.Windows12.AppMode_Light;
+                                Terminal1.Light = Program.TM.Windows11.AppMode_Light;
+                                Terminal2.Light = Program.TM.Windows11.AppMode_Light;
                                 break;
                             }
                     }
@@ -1220,7 +1220,7 @@ namespace WinPaletter
                     default:
                         {
                             if (TerThemes.SelectedIndex == 3)
-                                TerMode.Checked = !Program.TM.Windows12.AppMode_Light;
+                                TerMode.Checked = !Program.TM.Windows11.AppMode_Light;
                             break;
                         }
                 }

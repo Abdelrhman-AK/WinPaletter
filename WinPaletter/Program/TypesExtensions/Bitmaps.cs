@@ -497,71 +497,205 @@ namespace WinPaletter.TypesExtensions
         /// <returns>Resized bitmap, or null if src is null.</returns>
         public static Bitmap Resize(this Bitmap src, int targetWidth, int targetHeight)
         {
-            if (src == null) return null;
-            if (targetWidth <= 0 || targetHeight <= 0) throw new ArgumentOutOfRangeException("Width and height must be greater than 0.");
+            if (src is null) return null;
+            if (targetWidth <= 0 || targetHeight <= 0)
+                throw new ArgumentOutOfRangeException(nameof(targetWidth), "Width and height must be greater than 0.");
 
-            // Clone source for thread safety
-            using Bitmap localSrc = new Bitmap(src);
+            // Validate source bitmap dimensions
+            if (src.Width <= 0 || src.Height <= 0) return null;
 
-            // Determine pixel format
-            PixelFormat format = PixelFormat.Format32bppArgb;
-            bool hasAlpha = false;
-
-            for (int x = 0; x < localSrc.Width && !hasAlpha; x += Math.Max(1, localSrc.Width / 10))
-                for (int y = 0; y < localSrc.Height && !hasAlpha; y += Math.Max(1, localSrc.Height / 10))
-                    if (localSrc.GetPixel(x, y).A < 255) hasAlpha = true;
-
-            if (!hasAlpha) format = PixelFormat.Format24bppRgb;
-
-            const int MAX_STEP_PIXELS = 2000;
-            Bitmap current = localSrc;
-            Bitmap temp = null;
+            // Create a safe copy only if necessary (for thread safety)
+            // Use PixelFormat to ensure we don't lose data
+            Bitmap localSrc;
+            Rectangle rect = new(0, 0, src.Width, src.Height);
 
             try
             {
-                while (current.Width > MAX_STEP_PIXELS || current.Height > MAX_STEP_PIXELS)
-                {
-                    int stepWidth = current.Width > targetWidth ? Math.Max(targetWidth, current.Width / 2) : current.Width;
-                    int stepHeight = current.Height > targetHeight ? Math.Max(targetHeight, current.Height / 2) : current.Height;
-
-                    temp = new Bitmap(stepWidth, stepHeight, format);
-                    temp.SetResolution(current.HorizontalResolution, current.VerticalResolution);
-
-                    using Graphics g = Graphics.FromImage(temp);
-                    g.CompositingMode = CompositingMode.SourceOver;
-                    g.CompositingQuality = CompositingQuality.HighQuality;
-                    g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                    g.SmoothingMode = SmoothingMode.HighQuality;
-                    g.PixelOffsetMode = PixelOffsetMode.HighQuality;
-
-                    g.DrawImage(current, new Rectangle(0, 0, stepWidth, stepHeight));
-
-                    if (current != localSrc) current.Dispose();
-
-                    current = temp;
-                    temp = null;
-                }
-
-                Bitmap final = new Bitmap(targetWidth, targetHeight, format);
-                final.SetResolution(current.HorizontalResolution, current.VerticalResolution);
-
-                using Graphics G = Graphics.FromImage(final);
-                G.CompositingMode = CompositingMode.SourceOver;
-                G.CompositingQuality = CompositingQuality.HighQuality;
-                G.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                G.SmoothingMode = SmoothingMode.HighQuality;
-                G.PixelOffsetMode = PixelOffsetMode.HighQuality;
-
-                G.DrawImage(current, new Rectangle(0, 0, targetWidth, targetHeight));
-
-                if (current != localSrc) current.Dispose();
-
-                return final;
+                // Clone the bitmap data safely
+                localSrc = src.Clone(rect, src.PixelFormat);
             }
-            finally
+            catch
             {
-                temp?.Dispose();
+                // If cloning fails, try a different approach
+                try
+                {
+                    localSrc = new Bitmap(src.Width, src.Height, PixelFormat.Format32bppArgb);
+                    using (Graphics g = Graphics.FromImage(localSrc))
+                    {
+                        g.DrawImage(src, 0, 0, src.Width, src.Height);
+                    }
+                }
+                catch
+                {
+                    return null; // Can't create a working copy
+                }
             }
+
+            using (localSrc) // Ensure proper disposal
+            {
+                // Determine pixel format - use a more efficient alpha detection
+                PixelFormat format = PixelFormat.Format32bppArgb;
+                bool hasAlpha = DetectAlphaFast(localSrc);
+
+                if (!hasAlpha) format = PixelFormat.Format24bppRgb;
+
+                const int MAX_STEP_PIXELS = 2000;
+                Bitmap current = localSrc;
+                Bitmap temp = null;
+
+                try
+                {
+                    while (current.Width > MAX_STEP_PIXELS || current.Height > MAX_STEP_PIXELS)
+                    {
+                        int stepWidth = current.Width > targetWidth
+                            ? Math.Max(targetWidth, current.Width / 2)
+                            : current.Width;
+                        int stepHeight = current.Height > targetHeight
+                            ? Math.Max(targetHeight, current.Height / 2)
+                            : current.Height;
+
+                        temp = new Bitmap(stepWidth, stepHeight, format);
+                        temp.SetResolution(current.HorizontalResolution, current.VerticalResolution);
+
+                        using (Graphics g = Graphics.FromImage(temp))
+                        {
+                            // Optimize graphics settings for performance
+                            g.CompositingMode = CompositingMode.SourceCopy; // Better for scaling
+                            g.CompositingQuality = CompositingQuality.HighQuality;
+                            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                            g.SmoothingMode = SmoothingMode.HighQuality;
+                            g.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                            g.DrawImage(current, new Rectangle(0, 0, stepWidth, stepHeight));
+                        }
+
+                        if (current != localSrc)
+                            current.Dispose();
+
+                        current = temp;
+                        temp = null;
+                    }
+
+                    // Create final bitmap with the determined format
+                    Bitmap final = new Bitmap(targetWidth, targetHeight, format);
+                    final.SetResolution(current.HorizontalResolution, current.VerticalResolution);
+
+                    using (Graphics G = Graphics.FromImage(final))
+                    {
+                        G.CompositingMode = CompositingMode.SourceCopy;
+                        G.CompositingQuality = CompositingQuality.HighQuality;
+                        G.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                        G.SmoothingMode = SmoothingMode.HighQuality;
+                        G.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                        G.DrawImage(current, new Rectangle(0, 0, targetWidth, targetHeight));
+                    }
+
+                    return final;
+                }
+                finally
+                {
+                    if (current != localSrc)
+                        current?.Dispose();
+                    temp?.Dispose();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Efficiently detects if a bitmap has any non-opaque pixels.
+        /// </summary>
+        private static bool DetectAlpha(Bitmap bmp)
+        {
+            // Quick check: if format doesn't support alpha, return false
+            if (bmp.PixelFormat != PixelFormat.Format32bppArgb &&
+                bmp.PixelFormat != PixelFormat.Format32bppPArgb &&
+                bmp.PixelFormat != PixelFormat.Format64bppArgb)
+            {
+                return false;
+            }
+
+            // Sample the image to detect alpha
+            int sampleSize = Math.Max(1, Math.Min(bmp.Width, bmp.Height) / 20);
+
+            for (int x = 0; x < bmp.Width; x += sampleSize)
+            {
+                for (int y = 0; y < bmp.Height; y += sampleSize)
+                {
+                    try
+                    {
+                        Color pixel = bmp.GetPixel(x, y);
+                        if (pixel.A < 255)
+                            return true;
+                    }
+                    catch
+                    {
+                        // If we can't read a pixel, continue sampling
+                        continue;
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Alternative method using LockBits for more reliable alpha detection.
+        /// </summary>
+        private static bool DetectAlphaFast(Bitmap bmp)
+        {
+            // Check if format supports alpha
+            if (!IsAlphaFormat(bmp.PixelFormat))
+                return false;
+
+            try
+            {
+                // Lock the bitmap's bits
+                Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+                BitmapData bmpData = bmp.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+
+                try
+                {
+                    int stride = bmpData.Stride;
+                    IntPtr scan0 = bmpData.Scan0;
+
+                    // Sample every 10th pixel
+                    int sampleStep = 10;
+                    unsafe
+                    {
+                        byte* p = (byte*)(void*)scan0;
+
+                        for (int y = 0; y < bmp.Height; y += sampleStep)
+                        {
+                            byte* row = p + y * stride;
+
+                            for (int x = 3; x < bmp.Width * 4; x += 4 * sampleStep) // Alpha channel is 4th byte
+                            {
+                                if (row[x] < 255) // Check alpha value
+                                    return true;
+                            }
+                        }
+                    }
+
+                    return false;
+                }
+                finally
+                {
+                    bmp.UnlockBits(bmpData);
+                }
+            }
+            catch
+            {
+                // Fall back to GetPixel method if LockBits fails
+                return DetectAlpha(bmp);
+            }
+        }
+
+        private static bool IsAlphaFormat(PixelFormat format)
+        {
+            return format == PixelFormat.Format32bppArgb ||
+                   format == PixelFormat.Format32bppPArgb ||
+                   format == PixelFormat.Format64bppArgb;
         }
 
         /// <summary>

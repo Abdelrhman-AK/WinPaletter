@@ -62,7 +62,7 @@
             this.tablessControl1.Multiline = true;
             this.tablessControl1.Name = "tablessControl1";
             this.tablessControl1.SelectedIndex = 0;
-            this.tablessControl1.Size = new System.Drawing.Size(347, 185);
+            this.tablessControl1.Size = new System.Drawing.Size(347, 178);
             this.tablessControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -74,7 +74,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(339, 157);
+            this.tabPage1.Size = new System.Drawing.Size(339, 150);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "0";
             // 
@@ -89,9 +89,9 @@
             this.button1.Image = null;
             this.button1.ImageGlyph = null;
             this.button1.ImageGlyphEnabled = false;
-            this.button1.Location = new System.Drawing.Point(6, 104);
+            this.button1.Location = new System.Drawing.Point(5, 102);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(327, 34);
+            this.button1.Size = new System.Drawing.Size(329, 34);
             this.button1.TabIndex = 132;
             this.button1.Text = "Manage && upload themes";
             this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -109,9 +109,9 @@
             this.Button2.Image = null;
             this.Button2.ImageGlyph = null;
             this.Button2.ImageGlyphEnabled = false;
-            this.Button2.Location = new System.Drawing.Point(6, 142);
+            this.Button2.Location = new System.Drawing.Point(5, 139);
             this.Button2.Name = "Button2";
-            this.Button2.Size = new System.Drawing.Size(327, 34);
+            this.Button2.Size = new System.Drawing.Size(329, 34);
             this.Button2.TabIndex = 131;
             this.Button2.Text = "Sign out";
             this.Button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -161,18 +161,17 @@
             // tabPage2
             // 
             this.tabPage2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.tabPage2.Controls.Add(this.button5);
             this.tabPage2.Controls.Add(this.groupBox2);
             this.tabPage2.Location = new System.Drawing.Point(4, 24);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(339, 157);
+            this.tabPage2.Size = new System.Drawing.Size(339, 150);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "1";
             // 
             // button5
             // 
-            this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button5.CustomColor = System.Drawing.Color.Empty;
             this.button5.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.button5.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -180,9 +179,9 @@
             this.button5.Image = null;
             this.button5.ImageGlyph = null;
             this.button5.ImageGlyphEnabled = false;
-            this.button5.Location = new System.Drawing.Point(178, 140);
+            this.button5.Location = new System.Drawing.Point(171, 98);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(112, 34);
+            this.button5.Size = new System.Drawing.Size(110, 34);
             this.button5.TabIndex = 135;
             this.button5.Text = "Log in";
             this.button5.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -195,6 +194,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox2.Controls.Add(this.button5);
             this.groupBox2.Controls.Add(this.button4);
             this.groupBox2.Controls.Add(this.button3);
             this.groupBox2.Controls.Add(this.labelAlt2);
@@ -202,22 +202,22 @@
             this.groupBox2.Controls.Add(this.pictureBox1);
             this.groupBox2.Location = new System.Drawing.Point(6, 6);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(327, 145);
+            this.groupBox2.Size = new System.Drawing.Size(327, 138);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.UseDecorationPattern = false;
             this.groupBox2.UseSharpStyle = false;
             // 
             // button4
             // 
-            this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button4.CustomColor = System.Drawing.Color.Empty;
+            this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button4.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.button4.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.button4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button4.ForeColor = System.Drawing.Color.White;
             this.button4.Image = null;
             this.button4.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Help;
             this.button4.ImageGlyphEnabled = true;
-            this.button4.Location = new System.Drawing.Point(290, 134);
+            this.button4.Location = new System.Drawing.Point(287, 98);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(34, 34);
             this.button4.TabIndex = 134;
@@ -226,7 +226,7 @@
             // 
             // button3
             // 
-            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.button3.CustomColor = System.Drawing.Color.Empty;
             this.button3.Flag = ((WinPaletter.UI.WP.Button.Flags)(((WinPaletter.UI.WP.Button.Flags.TintedOnHover | WinPaletter.UI.WP.Button.Flags.ErrorOnHover) 
@@ -236,7 +236,7 @@
             this.button3.Image = null;
             this.button3.ImageGlyph = null;
             this.button3.ImageGlyphEnabled = false;
-            this.button3.Location = new System.Drawing.Point(6, 134);
+            this.button3.Location = new System.Drawing.Point(5, 98);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(160, 34);
             this.button3.TabIndex = 133;
@@ -247,38 +247,38 @@
             // 
             // labelAlt2
             // 
-            this.labelAlt2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.labelAlt2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.labelAlt2.BackColor = System.Drawing.Color.Transparent;
             this.labelAlt2.DrawOnGlass = false;
             this.labelAlt2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelAlt2.Location = new System.Drawing.Point(3, 90);
+            this.labelAlt2.Location = new System.Drawing.Point(5, 65);
             this.labelAlt2.Name = "labelAlt2";
-            this.labelAlt2.Size = new System.Drawing.Size(321, 38);
+            this.labelAlt2.Size = new System.Drawing.Size(316, 30);
             this.labelAlt2.TabIndex = 6;
             this.labelAlt2.Text = "Log in or sign up with GitHub to upload and publish your themes for everyone.";
             this.labelAlt2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // labelAlt1
             // 
-            this.labelAlt1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.labelAlt1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.labelAlt1.BackColor = System.Drawing.Color.Transparent;
             this.labelAlt1.DrawOnGlass = false;
             this.labelAlt1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelAlt1.Location = new System.Drawing.Point(3, 64);
+            this.labelAlt1.Location = new System.Drawing.Point(85, 7);
             this.labelAlt1.Name = "labelAlt1";
-            this.labelAlt1.Size = new System.Drawing.Size(321, 29);
+            this.labelAlt1.Size = new System.Drawing.Size(217, 55);
             this.labelAlt1.TabIndex = 5;
             this.labelAlt1.Text = "You are not logged in to Github";
-            this.labelAlt1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelAlt1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // pictureBox1
             // 
             this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(136, 7);
+            this.pictureBox1.Location = new System.Drawing.Point(24, 7);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(55, 55);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -290,7 +290,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.Backdrop = true;
             this.BackdropStyle = WinPaletter.DWM.DWMStyles.Auto;
-            this.ClientSize = new System.Drawing.Size(347, 185);
+            this.ClientSize = new System.Drawing.Size(347, 178);
             this.CloseOnLostFocus = true;
             this.Controls.Add(this.tablessControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;

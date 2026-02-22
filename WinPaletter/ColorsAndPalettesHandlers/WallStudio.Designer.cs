@@ -79,6 +79,7 @@
             this.banner2 = new WinPaletter.UI.WP.Banner();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.groupBox5 = new WinPaletter.UI.WP.GroupBox();
+            this.button11 = new WinPaletter.UI.WP.Button();
             this.label16 = new System.Windows.Forms.Label();
             this.toggle1 = new WinPaletter.UI.WP.Toggle();
             this.panel14 = new System.Windows.Forms.Panel();
@@ -123,7 +124,6 @@
             this.Cross = new WinPaletter.UI.Controllers.CursorControl();
             this.cur_anim_btn = new WinPaletter.UI.WP.Button();
             this.separatorH3 = new WinPaletter.UI.WP.SeparatorH();
-            this.label14 = new System.Windows.Forms.Label();
             this.banner3 = new WinPaletter.UI.WP.Banner();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.separatorH4 = new WinPaletter.UI.WP.SeparatorH();
@@ -205,7 +205,7 @@
             this.tablessControl1.Multiline = true;
             this.tablessControl1.Name = "tablessControl1";
             this.tablessControl1.SelectedIndex = 0;
-            this.tablessControl1.Size = new System.Drawing.Size(759, 618);
+            this.tablessControl1.Size = new System.Drawing.Size(809, 623);
             this.tablessControl1.TabIndex = 0;
             this.tablessControl1.SelectedIndexChanged += new System.EventHandler(this.tablessControl1_SelectedIndexChanged);
             // 
@@ -221,21 +221,23 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Margin = new System.Windows.Forms.Padding(0);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(751, 590);
+            this.tabPage1.Size = new System.Drawing.Size(801, 595);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "0";
             // 
             // radioImage2
             // 
+            this.radioImage2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.radioImage2.Checked = false;
             this.radioImage2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.radioImage2.ForeColor = System.Drawing.Color.White;
             this.radioImage2.Image = ((System.Drawing.Image)(resources.GetObject("radioImage2.Image")));
             this.radioImage2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.radioImage2.Location = new System.Drawing.Point(246, 388);
+            this.radioImage2.Location = new System.Drawing.Point(246, 368);
             this.radioImage2.Name = "radioImage2";
             this.radioImage2.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
-            this.radioImage2.Size = new System.Drawing.Size(497, 48);
+            this.radioImage2.Size = new System.Drawing.Size(534, 48);
             this.radioImage2.TabIndex = 4;
             this.radioImage2.Text = "Start with current theme (adjust the theme before proceeding for variant shades)";
             this.radioImage2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -243,15 +245,17 @@
             // 
             // radioImage1
             // 
+            this.radioImage1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.radioImage1.Checked = true;
             this.radioImage1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.radioImage1.ForeColor = System.Drawing.Color.White;
             this.radioImage1.Image = ((System.Drawing.Image)(resources.GetObject("radioImage1.Image")));
             this.radioImage1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.radioImage1.Location = new System.Drawing.Point(246, 334);
+            this.radioImage1.Location = new System.Drawing.Point(246, 314);
             this.radioImage1.Name = "radioImage1";
             this.radioImage1.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.radioImage1.Size = new System.Drawing.Size(497, 48);
+            this.radioImage1.Size = new System.Drawing.Size(534, 48);
             this.radioImage1.TabIndex = 3;
             this.radioImage1.Text = "Start from scratch (a default Windows Theme) (Recommended)";
             this.radioImage1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -264,7 +268,7 @@
             this.label2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(243, 58);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(500, 273);
+            this.label2.Size = new System.Drawing.Size(550, 233);
             this.label2.TabIndex = 2;
             this.label2.Text = resources.GetString("label2.Text");
             // 
@@ -275,7 +279,7 @@
             this.label1.Font = new System.Drawing.Font("Segoe UI", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(242, 14);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(504, 29);
+            this.label1.Size = new System.Drawing.Size(554, 29);
             this.label1.TabIndex = 1;
             this.label1.Text = "Welcome to WallStudio";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -289,7 +293,7 @@
             this.animatedBox1.Dock = System.Windows.Forms.DockStyle.Left;
             this.animatedBox1.Location = new System.Drawing.Point(0, 0);
             this.animatedBox1.Name = "animatedBox1";
-            this.animatedBox1.Size = new System.Drawing.Size(225, 590);
+            this.animatedBox1.Size = new System.Drawing.Size(225, 595);
             this.animatedBox1.Style = WinPaletter.UI.WP.AnimatedBox.Styles.MixedColors;
             this.animatedBox1.TabIndex = 0;
             this.animatedBox1.Text = "animatedBox1";
@@ -299,7 +303,7 @@
             this.PictureBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.PictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox1.Image")));
-            this.PictureBox1.Location = new System.Drawing.Point(48, 231);
+            this.PictureBox1.Location = new System.Drawing.Point(48, 233);
             this.PictureBox1.Name = "PictureBox1";
             this.PictureBox1.Size = new System.Drawing.Size(128, 128);
             this.PictureBox1.TabIndex = 1;
@@ -320,7 +324,7 @@
             this.tabPage2.Controls.Add(this.banner1);
             this.tabPage2.Location = new System.Drawing.Point(4, 24);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(751, 590);
+            this.tabPage2.Size = new System.Drawing.Size(801, 595);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "1";
             // 
@@ -333,7 +337,7 @@
             this.groupBox6.Controls.Add(this.pictureBox10);
             this.groupBox6.Location = new System.Drawing.Point(8, 207);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(735, 34);
+            this.groupBox6.Size = new System.Drawing.Size(785, 34);
             this.groupBox6.TabIndex = 244;
             this.groupBox6.UseDecorationPattern = false;
             this.groupBox6.UseSharpStyle = false;
@@ -367,7 +371,7 @@
             this.separatorH1.Dock = System.Windows.Forms.DockStyle.Top;
             this.separatorH1.Location = new System.Drawing.Point(0, 117);
             this.separatorH1.Name = "separatorH1";
-            this.separatorH1.Size = new System.Drawing.Size(751, 1);
+            this.separatorH1.Size = new System.Drawing.Size(801, 1);
             this.separatorH1.TabIndex = 243;
             this.separatorH1.TabStop = false;
             this.separatorH1.Text = "separatorH1";
@@ -381,7 +385,7 @@
             this.groupBox4.Controls.Add(this.pictureBox8);
             this.groupBox4.Location = new System.Drawing.Point(8, 479);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(735, 34);
+            this.groupBox4.Size = new System.Drawing.Size(785, 34);
             this.groupBox4.TabIndex = 242;
             this.groupBox4.UseDecorationPattern = false;
             this.groupBox4.UseSharpStyle = false;
@@ -416,9 +420,11 @@
             this.label11.Location = new System.Drawing.Point(0, 62);
             this.label11.Name = "label11";
             this.label11.Padding = new System.Windows.Forms.Padding(10);
-            this.label11.Size = new System.Drawing.Size(751, 55);
+            this.label11.Size = new System.Drawing.Size(801, 55);
             this.label11.TabIndex = 241;
-            this.label11.Text = resources.GetString("label11.Text");
+            this.label11.Text = "Adjust the way in which WallStudio creates your theme by choosing your own prefer" +
+    "ences below. These options will help WallStudio create a better look that feels " +
+    "just right for your own desktop look.";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // groupBox3
@@ -432,7 +438,7 @@
             this.groupBox3.Controls.Add(this.pictureBox2);
             this.groupBox3.Location = new System.Drawing.Point(8, 393);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(735, 80);
+            this.groupBox3.Size = new System.Drawing.Size(785, 80);
             this.groupBox3.TabIndex = 240;
             this.groupBox3.UseDecorationPattern = false;
             this.groupBox3.UseSharpStyle = false;
@@ -445,7 +451,7 @@
             this.label12.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.Location = new System.Drawing.Point(40, 36);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(688, 37);
+            this.label12.Size = new System.Drawing.Size(738, 37);
             this.label12.TabIndex = 240;
             this.label12.Text = resources.GetString("label12.Text");
             this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -456,7 +462,7 @@
             this.colorItem1.BackColor = System.Drawing.Color.DodgerBlue;
             this.colorItem1.DefaultBackColor = System.Drawing.Color.Transparent;
             this.colorItem1.DontShowInfo = false;
-            this.colorItem1.Location = new System.Drawing.Point(639, 5);
+            this.colorItem1.Location = new System.Drawing.Point(689, 5);
             this.colorItem1.Name = "colorItem1";
             this.colorItem1.Size = new System.Drawing.Size(90, 25);
             this.colorItem1.TabIndex = 239;
@@ -498,7 +504,7 @@
             this.groupBox2.Controls.Add(this.button4);
             this.groupBox2.Location = new System.Drawing.Point(8, 247);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(735, 140);
+            this.groupBox2.Size = new System.Drawing.Size(785, 140);
             this.groupBox2.TabIndex = 239;
             this.groupBox2.UseDecorationPattern = false;
             this.groupBox2.UseSharpStyle = false;
@@ -548,7 +554,7 @@
             this.textBox2.SelectedText = "";
             this.textBox2.SelectionLength = 0;
             this.textBox2.SelectionStart = 0;
-            this.textBox2.Size = new System.Drawing.Size(433, 24);
+            this.textBox2.Size = new System.Drawing.Size(483, 24);
             this.textBox2.TabIndex = 233;
             this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.textBox2.UseSystemPasswordChar = false;
@@ -564,7 +570,7 @@
             this.button5.Image = null;
             this.button5.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Browse;
             this.button5.ImageGlyphEnabled = true;
-            this.button5.Location = new System.Drawing.Point(694, 6);
+            this.button5.Location = new System.Drawing.Point(744, 6);
             this.button5.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(34, 24);
@@ -583,7 +589,7 @@
             this.button3.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.button3.ImageGlyph = null;
             this.button3.ImageGlyphEnabled = false;
-            this.button3.Location = new System.Drawing.Point(254, 36);
+            this.button3.Location = new System.Drawing.Point(304, 36);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(189, 30);
             this.button3.TabIndex = 236;
@@ -602,7 +608,7 @@
             this.button6.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.button6.ImageGlyph = null;
             this.button6.ImageGlyphEnabled = false;
-            this.button6.Location = new System.Drawing.Point(449, 72);
+            this.button6.Location = new System.Drawing.Point(499, 72);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(279, 30);
             this.button6.TabIndex = 237;
@@ -621,7 +627,7 @@
             this.button4.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.button4.ImageGlyph = null;
             this.button4.ImageGlyphEnabled = false;
-            this.button4.Location = new System.Drawing.Point(449, 36);
+            this.button4.Location = new System.Drawing.Point(499, 36);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(279, 30);
             this.button4.TabIndex = 235;
@@ -642,7 +648,7 @@
             this.groupBox1.Controls.Add(this.button8);
             this.groupBox1.Location = new System.Drawing.Point(8, 128);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(735, 73);
+            this.groupBox1.Size = new System.Drawing.Size(785, 73);
             this.groupBox1.TabIndex = 238;
             this.groupBox1.UseDecorationPattern = false;
             this.groupBox1.UseSharpStyle = false;
@@ -680,7 +686,7 @@
             this.textBox1.SelectedText = "";
             this.textBox1.SelectionLength = 0;
             this.textBox1.SelectionStart = 0;
-            this.textBox1.Size = new System.Drawing.Size(433, 24);
+            this.textBox1.Size = new System.Drawing.Size(483, 24);
             this.textBox1.TabIndex = 226;
             this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.textBox1.UseSystemPasswordChar = false;
@@ -697,7 +703,7 @@
             this.button10.Image = null;
             this.button10.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Browse;
             this.button10.ImageGlyphEnabled = true;
-            this.button10.Location = new System.Drawing.Point(694, 6);
+            this.button10.Location = new System.Drawing.Point(744, 6);
             this.button10.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(34, 24);
@@ -716,7 +722,7 @@
             this.Button2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.Button2.ImageGlyph = null;
             this.Button2.ImageGlyphEnabled = false;
-            this.Button2.Location = new System.Drawing.Point(254, 36);
+            this.Button2.Location = new System.Drawing.Point(304, 36);
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(189, 30);
             this.Button2.TabIndex = 230;
@@ -735,7 +741,7 @@
             this.button8.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.button8.ImageGlyph = null;
             this.button8.ImageGlyphEnabled = false;
-            this.button8.Location = new System.Drawing.Point(449, 36);
+            this.button8.Location = new System.Drawing.Point(499, 36);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(279, 30);
             this.button8.TabIndex = 229;
@@ -747,9 +753,9 @@
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label4.Location = new System.Drawing.Point(8, 533);
+            this.label4.Location = new System.Drawing.Point(8, 538);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(734, 24);
+            this.label4.Size = new System.Drawing.Size(784, 24);
             this.label4.TabIndex = 225;
             this.label4.Text = "0";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -761,9 +767,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.progressBar2.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Bar;
             this.progressBar2.BackColor = System.Drawing.Color.Transparent;
-            this.progressBar2.Location = new System.Drawing.Point(7, 560);
+            this.progressBar2.Location = new System.Drawing.Point(7, 565);
             this.progressBar2.Name = "progressBar2";
-            this.progressBar2.Size = new System.Drawing.Size(735, 20);
+            this.progressBar2.Size = new System.Drawing.Size(785, 20);
             this.progressBar2.State = WinPaletter.UI.WP.ProgressBar.ProgressBarState.Normal;
             this.progressBar2.Style = WinPaletter.UI.WP.ProgressBar.ProgressBarStyle.Continuous;
             this.progressBar2.TabIndex = 146;
@@ -778,7 +784,7 @@
             this.banner1.Image = ((System.Drawing.Bitmap)(resources.GetObject("banner1.Image")));
             this.banner1.Location = new System.Drawing.Point(0, 0);
             this.banner1.Name = "banner1";
-            this.banner1.Size = new System.Drawing.Size(751, 62);
+            this.banner1.Size = new System.Drawing.Size(801, 62);
             this.banner1.TabIndex = 2;
             this.banner1.TabStop = false;
             this.banner1.Text = "Preferences";
@@ -792,7 +798,7 @@
             this.tabPage3.Controls.Add(this.banner2);
             this.tabPage3.Location = new System.Drawing.Point(4, 24);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(751, 590);
+            this.tabPage3.Size = new System.Drawing.Size(801, 595);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "2";
             // 
@@ -803,7 +809,7 @@
             this.separatorH2.Dock = System.Windows.Forms.DockStyle.Top;
             this.separatorH2.Location = new System.Drawing.Point(0, 107);
             this.separatorH2.Name = "separatorH2";
-            this.separatorH2.Size = new System.Drawing.Size(751, 1);
+            this.separatorH2.Size = new System.Drawing.Size(801, 1);
             this.separatorH2.TabIndex = 244;
             this.separatorH2.TabStop = false;
             this.separatorH2.Text = "separatorH2";
@@ -815,7 +821,7 @@
             this.ImgPaletteContainer.Location = new System.Drawing.Point(0, 107);
             this.ImgPaletteContainer.Name = "ImgPaletteContainer";
             this.ImgPaletteContainer.Padding = new System.Windows.Forms.Padding(3);
-            this.ImgPaletteContainer.Size = new System.Drawing.Size(751, 483);
+            this.ImgPaletteContainer.Size = new System.Drawing.Size(801, 488);
             this.ImgPaletteContainer.TabIndex = 145;
             // 
             // label13
@@ -825,9 +831,9 @@
             this.label13.Location = new System.Drawing.Point(0, 62);
             this.label13.Name = "label13";
             this.label13.Padding = new System.Windows.Forms.Padding(10);
-            this.label13.Size = new System.Drawing.Size(751, 45);
+            this.label13.Size = new System.Drawing.Size(801, 45);
             this.label13.TabIndex = 242;
-            this.label13.Text = "Here’s a sneak peek at the colors WallStudio has extracted from your wallpaper.";
+            this.label13.Text = "Here is a preview for colors WallStudio has extracted from your wallpaper.";
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // banner2
@@ -838,7 +844,7 @@
             this.banner2.Image = ((System.Drawing.Bitmap)(resources.GetObject("banner2.Image")));
             this.banner2.Location = new System.Drawing.Point(0, 0);
             this.banner2.Name = "banner2";
-            this.banner2.Size = new System.Drawing.Size(751, 62);
+            this.banner2.Size = new System.Drawing.Size(801, 62);
             this.banner2.TabIndex = 1;
             this.banner2.TabStop = false;
             this.banner2.Text = "Generated palette (view-only)";
@@ -849,30 +855,49 @@
             this.tabPage4.Controls.Add(this.groupBox5);
             this.tabPage4.Controls.Add(this.FlowLayoutPanel1);
             this.tabPage4.Controls.Add(this.separatorH3);
-            this.tabPage4.Controls.Add(this.label14);
             this.tabPage4.Controls.Add(this.banner3);
             this.tabPage4.Location = new System.Drawing.Point(4, 24);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(751, 590);
+            this.tabPage4.Size = new System.Drawing.Size(801, 595);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "3";
             // 
             // groupBox5
             // 
             this.groupBox5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.groupBox5.Controls.Add(this.button11);
             this.groupBox5.Controls.Add(this.label16);
             this.groupBox5.Controls.Add(this.toggle1);
             this.groupBox5.Controls.Add(this.panel14);
             this.groupBox5.Controls.Add(this.pictureBox9);
             this.groupBox5.Controls.Add(this.label17);
             this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox5.Location = new System.Drawing.Point(0, 432);
+            this.groupBox5.Location = new System.Drawing.Point(0, 387);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(751, 158);
+            this.groupBox5.Size = new System.Drawing.Size(801, 208);
             this.groupBox5.TabIndex = 244;
             this.groupBox5.Text = "groupBox5";
             this.groupBox5.UseDecorationPattern = false;
             this.groupBox5.UseSharpStyle = false;
+            // 
+            // button11
+            // 
+            this.button11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button11.CustomColor = System.Drawing.Color.Empty;
+            this.button11.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button11.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button11.ForeColor = System.Drawing.Color.White;
+            this.button11.Image = null;
+            this.button11.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.button11.ImageGlyph = null;
+            this.button11.ImageGlyphEnabled = false;
+            this.button11.Location = new System.Drawing.Point(606, 12);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(138, 24);
+            this.button11.TabIndex = 230;
+            this.button11.Text = "Uncheck all effects";
+            this.button11.UseVisualStyleBackColor = false;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
             // 
             // label16
             // 
@@ -880,9 +905,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label16.BackColor = System.Drawing.Color.Transparent;
             this.label16.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(11, 128);
+            this.label16.Location = new System.Drawing.Point(11, 178);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(728, 24);
+            this.label16.Size = new System.Drawing.Size(777, 24);
             this.label16.TabIndex = 164;
             this.label16.Text = "0";
             this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -892,7 +917,7 @@
             this.toggle1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.toggle1.Checked = false;
             this.toggle1.DarkLight_Toggler = false;
-            this.toggle1.Location = new System.Drawing.Point(700, 14);
+            this.toggle1.Location = new System.Drawing.Point(750, 14);
             this.toggle1.Name = "toggle1";
             this.toggle1.Size = new System.Drawing.Size(40, 20);
             this.toggle1.TabIndex = 163;
@@ -909,7 +934,7 @@
             this.panel14.Location = new System.Drawing.Point(11, 46);
             this.panel14.Name = "panel14";
             this.panel14.Padding = new System.Windows.Forms.Padding(1);
-            this.panel14.Size = new System.Drawing.Size(728, 76);
+            this.panel14.Size = new System.Drawing.Size(778, 126);
             this.panel14.TabIndex = 162;
             // 
             // smoothPanel1
@@ -918,7 +943,7 @@
             this.smoothPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.smoothPanel1.Location = new System.Drawing.Point(1, 1);
             this.smoothPanel1.Name = "smoothPanel1";
-            this.smoothPanel1.Size = new System.Drawing.Size(726, 74);
+            this.smoothPanel1.Size = new System.Drawing.Size(776, 124);
             this.smoothPanel1.TabIndex = 0;
             // 
             // pictureBox9
@@ -940,7 +965,7 @@
             this.label17.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label17.Location = new System.Drawing.Point(41, 12);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(653, 24);
+            this.label17.Size = new System.Drawing.Size(559, 24);
             this.label17.TabIndex = 143;
             this.label17.Text = "Apply a filter (effect) to the theme:";
             this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -957,9 +982,9 @@
             this.FlowLayoutPanel1.Controls.Add(this.Panel1);
             this.FlowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.FlowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
-            this.FlowLayoutPanel1.Location = new System.Drawing.Point(0, 108);
+            this.FlowLayoutPanel1.Location = new System.Drawing.Point(0, 63);
             this.FlowLayoutPanel1.Name = "FlowLayoutPanel1";
-            this.FlowLayoutPanel1.Size = new System.Drawing.Size(751, 324);
+            this.FlowLayoutPanel1.Size = new System.Drawing.Size(801, 324);
             this.FlowLayoutPanel1.TabIndex = 139;
             // 
             // windowsDesktop1
@@ -2135,25 +2160,12 @@
             this.separatorH3.AlternativeLook = false;
             this.separatorH3.BackColor = System.Drawing.Color.Transparent;
             this.separatorH3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.separatorH3.Location = new System.Drawing.Point(0, 107);
+            this.separatorH3.Location = new System.Drawing.Point(0, 62);
             this.separatorH3.Name = "separatorH3";
-            this.separatorH3.Size = new System.Drawing.Size(751, 1);
+            this.separatorH3.Size = new System.Drawing.Size(801, 1);
             this.separatorH3.TabIndex = 245;
             this.separatorH3.TabStop = false;
             this.separatorH3.Text = "separatorH3";
-            // 
-            // label14
-            // 
-            this.label14.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label14.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.label14.Location = new System.Drawing.Point(0, 62);
-            this.label14.Name = "label14";
-            this.label14.Padding = new System.Windows.Forms.Padding(10);
-            this.label14.Size = new System.Drawing.Size(751, 45);
-            this.label14.TabIndex = 243;
-            this.label14.Text = "Now see your desktop come to life! WallStudio shows a live preview of how your th" +
-    "eme will look.";
-            this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // banner3
             // 
@@ -2163,10 +2175,10 @@
             this.banner3.Image = ((System.Drawing.Bitmap)(resources.GetObject("banner3.Image")));
             this.banner3.Location = new System.Drawing.Point(0, 0);
             this.banner3.Name = "banner3";
-            this.banner3.Size = new System.Drawing.Size(751, 62);
+            this.banner3.Size = new System.Drawing.Size(801, 62);
             this.banner3.TabIndex = 6;
             this.banner3.TabStop = false;
-            this.banner3.Text = "Preview";
+            this.banner3.Text = "Preview (approximate live preview of how your theme will look)";
             // 
             // tabPage5
             // 
@@ -2178,7 +2190,7 @@
             this.tabPage5.Controls.Add(this.banner5);
             this.tabPage5.Location = new System.Drawing.Point(4, 24);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(751, 590);
+            this.tabPage5.Size = new System.Drawing.Size(801, 595);
             this.tabPage5.TabIndex = 5;
             this.tabPage5.Text = "4";
             // 
@@ -2189,7 +2201,7 @@
             this.separatorH4.Dock = System.Windows.Forms.DockStyle.Top;
             this.separatorH4.Location = new System.Drawing.Point(0, 107);
             this.separatorH4.Name = "separatorH4";
-            this.separatorH4.Size = new System.Drawing.Size(751, 1);
+            this.separatorH4.Size = new System.Drawing.Size(801, 1);
             this.separatorH4.TabIndex = 246;
             this.separatorH4.TabStop = false;
             this.separatorH4.Text = "separatorH4";
@@ -2203,7 +2215,7 @@
             this.CheckedListBox1.FormattingEnabled = true;
             this.CheckedListBox1.Location = new System.Drawing.Point(8, 117);
             this.CheckedListBox1.Name = "CheckedListBox1";
-            this.CheckedListBox1.Size = new System.Drawing.Size(735, 414);
+            this.CheckedListBox1.Size = new System.Drawing.Size(785, 414);
             this.CheckedListBox1.TabIndex = 11;
             // 
             // panel3
@@ -2211,9 +2223,9 @@
             this.panel3.Controls.Add(this.button7);
             this.panel3.Controls.Add(this.button9);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel3.Location = new System.Drawing.Point(0, 537);
+            this.panel3.Location = new System.Drawing.Point(0, 542);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(751, 53);
+            this.panel3.Size = new System.Drawing.Size(801, 53);
             this.panel3.TabIndex = 245;
             // 
             // button7
@@ -2226,7 +2238,7 @@
             this.button7.Image = null;
             this.button7.ImageGlyph = null;
             this.button7.ImageGlyphEnabled = false;
-            this.button7.Location = new System.Drawing.Point(665, 9);
+            this.button7.Location = new System.Drawing.Point(715, 9);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(80, 34);
             this.button7.TabIndex = 216;
@@ -2244,7 +2256,7 @@
             this.button9.Image = null;
             this.button9.ImageGlyph = null;
             this.button9.ImageGlyphEnabled = false;
-            this.button9.Location = new System.Drawing.Point(579, 9);
+            this.button9.Location = new System.Drawing.Point(629, 9);
             this.button9.Name = "button9";
             this.button9.Size = new System.Drawing.Size(80, 34);
             this.button9.TabIndex = 215;
@@ -2259,7 +2271,7 @@
             this.label15.Location = new System.Drawing.Point(0, 62);
             this.label15.Name = "label15";
             this.label15.Padding = new System.Windows.Forms.Padding(10);
-            this.label15.Size = new System.Drawing.Size(751, 45);
+            this.label15.Size = new System.Drawing.Size(801, 45);
             this.label15.TabIndex = 244;
             this.label15.Text = "Before proceeding, WallStudio reviews all settings to prevent unintended changes " +
     "or conflicts.";
@@ -2273,7 +2285,7 @@
             this.banner5.Image = ((System.Drawing.Bitmap)(resources.GetObject("banner5.Image")));
             this.banner5.Location = new System.Drawing.Point(0, 0);
             this.banner5.Name = "banner5";
-            this.banner5.Size = new System.Drawing.Size(751, 62);
+            this.banner5.Size = new System.Drawing.Size(801, 62);
             this.banner5.TabIndex = 10;
             this.banner5.TabStop = false;
             this.banner5.Text = "Revision";
@@ -2290,7 +2302,7 @@
             this.tabPage7.Controls.Add(this.banner6);
             this.tabPage7.Location = new System.Drawing.Point(4, 24);
             this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Size = new System.Drawing.Size(751, 590);
+            this.tabPage7.Size = new System.Drawing.Size(801, 595);
             this.tabPage7.TabIndex = 6;
             this.tabPage7.Text = "5";
             // 
@@ -2298,7 +2310,7 @@
             // 
             this.label18.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label18.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.Location = new System.Drawing.Point(31, 451);
+            this.label18.Location = new System.Drawing.Point(56, 453);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(688, 28);
             this.label18.TabIndex = 8;
@@ -2314,7 +2326,7 @@
             this.radioImage5.ForeColor = System.Drawing.Color.White;
             this.radioImage5.Image = ((System.Drawing.Image)(resources.GetObject("radioImage5.Image")));
             this.radioImage5.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.radioImage5.Location = new System.Drawing.Point(128, 396);
+            this.radioImage5.Location = new System.Drawing.Point(153, 398);
             this.radioImage5.Name = "radioImage5";
             this.radioImage5.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
             this.radioImage5.Size = new System.Drawing.Size(494, 48);
@@ -2331,7 +2343,7 @@
             this.radioImage3.ForeColor = System.Drawing.Color.White;
             this.radioImage3.Image = ((System.Drawing.Image)(resources.GetObject("radioImage3.Image")));
             this.radioImage3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.radioImage3.Location = new System.Drawing.Point(128, 288);
+            this.radioImage3.Location = new System.Drawing.Point(153, 290);
             this.radioImage3.Name = "radioImage3";
             this.radioImage3.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
             this.radioImage3.Size = new System.Drawing.Size(494, 48);
@@ -2348,7 +2360,7 @@
             this.radioImage4.ForeColor = System.Drawing.Color.White;
             this.radioImage4.Image = ((System.Drawing.Image)(resources.GetObject("radioImage4.Image")));
             this.radioImage4.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.radioImage4.Location = new System.Drawing.Point(128, 342);
+            this.radioImage4.Location = new System.Drawing.Point(153, 344);
             this.radioImage4.Name = "radioImage4";
             this.radioImage4.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
             this.radioImage4.Size = new System.Drawing.Size(494, 48);
@@ -2361,7 +2373,7 @@
             // 
             this.label8.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label8.Font = new System.Drawing.Font("Segoe UI", 12.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(25, 225);
+            this.label8.Location = new System.Drawing.Point(50, 227);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(700, 39);
             this.label8.TabIndex = 3;
@@ -2373,7 +2385,7 @@
             this.pictureBox3.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.pictureBox3.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.Location = new System.Drawing.Point(343, 147);
+            this.pictureBox3.Location = new System.Drawing.Point(368, 149);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(64, 64);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -2388,7 +2400,7 @@
             this.banner6.Image = ((System.Drawing.Bitmap)(resources.GetObject("banner6.Image")));
             this.banner6.Location = new System.Drawing.Point(0, 0);
             this.banner6.Name = "banner6";
-            this.banner6.Size = new System.Drawing.Size(751, 62);
+            this.banner6.Size = new System.Drawing.Size(801, 62);
             this.banner6.TabIndex = 1;
             this.banner6.TabStop = false;
             this.banner6.Text = "Finished!";
@@ -2399,9 +2411,9 @@
             this.bottom_buttons.Controls.Add(this.button1);
             this.bottom_buttons.Controls.Add(this.next_btn);
             this.bottom_buttons.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.bottom_buttons.Location = new System.Drawing.Point(0, 673);
+            this.bottom_buttons.Location = new System.Drawing.Point(0, 678);
             this.bottom_buttons.Name = "bottom_buttons";
-            this.bottom_buttons.Size = new System.Drawing.Size(759, 48);
+            this.bottom_buttons.Size = new System.Drawing.Size(809, 48);
             this.bottom_buttons.TabIndex = 120;
             this.bottom_buttons.UseDecorationPattern = false;
             this.bottom_buttons.UseSharpStyle = false;
@@ -2416,7 +2428,7 @@
             this.button1.Image = null;
             this.button1.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Cancel;
             this.button1.ImageGlyphEnabled = true;
-            this.button1.Location = new System.Drawing.Point(638, 7);
+            this.button1.Location = new System.Drawing.Point(688, 7);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(115, 34);
             this.button1.TabIndex = 17;
@@ -2435,7 +2447,7 @@
             this.next_btn.Image = null;
             this.next_btn.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Forward;
             this.next_btn.ImageGlyphEnabled = true;
-            this.next_btn.Location = new System.Drawing.Point(517, 7);
+            this.next_btn.Location = new System.Drawing.Point(567, 7);
             this.next_btn.Name = "next_btn";
             this.next_btn.Size = new System.Drawing.Size(115, 34);
             this.next_btn.TabIndex = 3;
@@ -2455,7 +2467,7 @@
             this.titlebarExtender1.Flag = WinPaletter.Tabs.TitlebarExtender.Flags.System;
             this.titlebarExtender1.Location = new System.Drawing.Point(0, 0);
             this.titlebarExtender1.Name = "titlebarExtender1";
-            this.titlebarExtender1.Size = new System.Drawing.Size(759, 55);
+            this.titlebarExtender1.Size = new System.Drawing.Size(809, 55);
             this.titlebarExtender1.TabIndex = 121;
             this.titlebarExtender1.TabLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
             // 
@@ -2466,7 +2478,7 @@
             this.progressBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.progressBar1.Location = new System.Drawing.Point(0, 51);
             this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(759, 4);
+            this.progressBar1.Size = new System.Drawing.Size(809, 4);
             this.progressBar1.State = WinPaletter.UI.WP.ProgressBar.ProgressBarState.Pause;
             this.progressBar1.Style = WinPaletter.UI.WP.ProgressBar.ProgressBarStyle.Continuous;
             this.progressBar1.TabIndex = 5;
@@ -2519,19 +2531,18 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(759, 721);
+            this.ClientSize = new System.Drawing.Size(809, 726);
             this.Controls.Add(this.tablessControl1);
             this.Controls.Add(this.bottom_buttons);
             this.Controls.Add(this.titlebarExtender1);
-            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "WallStudio";
             this.ShowIcon = false;
             this.ShowIconAndCaptionText = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "WallStudio";
-            this.TopMost = true;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.WallStudio_FormClosed);
             this.Load += new System.EventHandler(this.WallStudio_Load);
             this.tablessControl1.ResumeLayout(false);
@@ -2666,7 +2677,6 @@
         private System.Windows.Forms.Label label11;
         internal System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label14;
         internal System.Windows.Forms.CheckedListBox CheckedListBox1;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Panel panel3;
@@ -2695,5 +2705,6 @@
         private UI.WP.GroupBox groupBox6;
         private UI.WP.CheckBox checkBox4;
         internal System.Windows.Forms.PictureBox pictureBox10;
+        internal UI.WP.Button button11;
     }
 }

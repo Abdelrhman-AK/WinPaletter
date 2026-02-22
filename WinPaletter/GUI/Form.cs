@@ -369,7 +369,7 @@ namespace WinPaletter.UI.WP
 
         private bool _shown = false;
         /// <summary>
-        /// Controls if form is shown
+        /// Gets if form is shown or not
         /// </summary>
         public bool IsShown
         {

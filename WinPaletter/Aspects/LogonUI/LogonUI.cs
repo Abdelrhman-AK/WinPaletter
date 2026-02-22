@@ -59,7 +59,7 @@ namespace WinPaletter
                         else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W10)
                             LoadFromTM(TMx.LogonUI10);
                         else
-                            LoadFromTM(TMx.LogonUI12);
+                            LoadFromTM(TMx.LogonUI11);
                     }
                 }
             }
@@ -72,7 +72,7 @@ namespace WinPaletter
                 if (Program.WindowStyle == PreviewHelpers.WindowStyle.W12) LoadFromTM(TMx.LogonUI12);
                 else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W11) LoadFromTM(TMx.LogonUI11);
                 else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W10) LoadFromTM(TMx.LogonUI10);
-                else LoadFromTM(TMx.LogonUI12);
+                else LoadFromTM(TMx.LogonUI11);
             }
         }
 
@@ -83,7 +83,7 @@ namespace WinPaletter
                 if (Program.WindowStyle == PreviewHelpers.WindowStyle.W12) LoadFromTM(TMx.LogonUI12);
                 else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W11) LoadFromTM(TMx.LogonUI11);
                 else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W10) LoadFromTM(TMx.LogonUI10);
-                else LoadFromTM(TMx.LogonUI12);
+                else LoadFromTM(TMx.LogonUI11);
             }
         }
 
@@ -134,9 +134,9 @@ namespace WinPaletter
             }
             else
             {
-                LogonUI10x.Apply("12");
-                ApplyToTM(Program.TM.LogonUI12);
-                ApplyToTM(Program.TM_Original.LogonUI12);
+                LogonUI10x.Apply("11");
+                ApplyToTM(Program.TM.LogonUI11);
+                ApplyToTM(Program.TM_Original.LogonUI11);
             }
 
             Cursor = Cursors.Default;

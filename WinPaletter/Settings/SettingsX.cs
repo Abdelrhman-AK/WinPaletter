@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WinPaletter.Assets;
 using WinPaletter.Properties;
@@ -1136,12 +1137,15 @@ namespace WinPaletter
 
         private void button30_Click(object sender, EventArgs e)
         {
-            Program.Settings.General.SetupCompleted = false;
-            Program.Settings.General.Save();
-
-            if (MsgBox(Program.Localization.Strings.Messages.RerunSetup_Msg0, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Localization.Strings.Messages.ExitWinPaletter) == DialogResult.Yes)
+            if (MsgBox(Program.Localization.Strings.Messages.RerunSetup_Msg0, MessageBoxButtons.YesNo,
+                       MessageBoxIcon.Question, Program.Localization.Strings.Messages.ExitWinPaletter) == DialogResult.Yes)
             {
-                Program.ForceExit();
+                Program.Settings.General.SetupCompleted = false;
+                Program.Settings.General.Save();
+
+                Forms.MainForm.LoggingOff = true;
+
+                Program.Restart();
             }
         }
 

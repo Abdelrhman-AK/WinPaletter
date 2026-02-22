@@ -58,6 +58,8 @@
             this.bottom_buttons.Name = "bottom_buttons";
             this.bottom_buttons.Size = new System.Drawing.Size(1049, 48);
             this.bottom_buttons.TabIndex = 119;
+            this.bottom_buttons.UseDecorationPattern = false;
+            this.bottom_buttons.UseSharpStyle = false;
             // 
             // btn_cancel
             // 
@@ -107,12 +109,10 @@
             this.ClientSize = new System.Drawing.Size(1049, 559);
             this.Controls.Add(this.schemes);
             this.Controls.Add(this.bottom_buttons);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForeColor = System.Drawing.Color.White;
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Win32UI_Gallery";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Classic Colors schemes gallery";
             this.Load += new System.EventHandler(this.Win32UI_Gallery_Load);

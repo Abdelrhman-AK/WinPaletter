@@ -115,6 +115,8 @@ namespace WinPaletter
             this.GroupBox3.Name = "GroupBox3";
             this.GroupBox3.Size = new System.Drawing.Size(477, 233);
             this.GroupBox3.TabIndex = 18;
+            this.GroupBox3.UseDecorationPattern = false;
+            this.GroupBox3.UseSharpStyle = false;
             // 
             // trackBarX2
             // 
@@ -126,12 +128,12 @@ namespace WinPaletter
             this.trackBarX2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.trackBarX2.Location = new System.Drawing.Point(39, 197);
             this.trackBarX2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.trackBarX2.Maximum = 100;
-            this.trackBarX2.Minimum = 0;
+            this.trackBarX2.Maximum = 100F;
+            this.trackBarX2.Minimum = 0F;
             this.trackBarX2.Name = "trackBarX2";
             this.trackBarX2.Size = new System.Drawing.Size(430, 25);
             this.trackBarX2.TabIndex = 120;
-            this.trackBarX2.Value = 0;
+            this.trackBarX2.Value = 0F;
             this.trackBarX2.ValueChanged += new System.EventHandler(this.trackBarX2_ValueChanged);
             // 
             // PictureBox3
@@ -168,12 +170,12 @@ namespace WinPaletter
             this.trackBarX1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.trackBarX1.Location = new System.Drawing.Point(39, 101);
             this.trackBarX1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.trackBarX1.Maximum = 40;
-            this.trackBarX1.Minimum = 0;
+            this.trackBarX1.Maximum = 40F;
+            this.trackBarX1.Minimum = 0F;
             this.trackBarX1.Name = "trackBarX1";
             this.trackBarX1.Size = new System.Drawing.Size(428, 25);
             this.trackBarX1.TabIndex = 119;
-            this.trackBarX1.Value = 0;
+            this.trackBarX1.Value = 0F;
             this.trackBarX1.ValueChanged += new System.EventHandler(this.trackBarX1_ValueChanged);
             // 
             // PictureBox8
@@ -278,6 +280,8 @@ namespace WinPaletter
             this.GroupBox8.Padding = new System.Windows.Forms.Padding(1);
             this.GroupBox8.Size = new System.Drawing.Size(536, 305);
             this.GroupBox8.TabIndex = 15;
+            this.GroupBox8.UseDecorationPattern = false;
+            this.GroupBox8.UseSharpStyle = false;
             // 
             // pnl_preview
             // 
@@ -327,6 +331,8 @@ namespace WinPaletter
             this.GroupBox2.Name = "GroupBox2";
             this.GroupBox2.Size = new System.Drawing.Size(477, 260);
             this.GroupBox2.TabIndex = 17;
+            this.GroupBox2.UseDecorationPattern = false;
+            this.GroupBox2.UseSharpStyle = false;
             // 
             // img6
             // 
@@ -631,6 +637,7 @@ namespace WinPaletter
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.CanGeneratePalette = true;
             this.ClientSize = new System.Drawing.Size(1042, 628);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.pictureBox1);
@@ -638,6 +645,7 @@ namespace WinPaletter
             this.Controls.Add(this.GroupBox8);
             this.Controls.Add(this.GroupBox2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsShown = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;

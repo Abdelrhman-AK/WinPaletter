@@ -13,8 +13,6 @@ namespace WinPaletter.Dialogs
 
         private void WinEffectsAlert_Load(object sender, EventArgs e)
         {
-            Icon = FormsExtensions.Icon<WinEffecter>();
-
             checkBox1.Checked = !Program.Settings.ThemeApplyingBehavior.Show_WinEffects_Alert;
 
             CustomSystemSounds.Exclamation.Play();

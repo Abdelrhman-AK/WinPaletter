@@ -770,5 +770,15 @@ namespace WinPaletter
         {
             Distribute();
         }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            foreach (ColorEffectControl colorEffectControl in colorEffectControls)
+            {
+                colorEffectControl.toggle.Checked = false;
+            }
+
+            ApplyEffects();
+        }
     }
 }

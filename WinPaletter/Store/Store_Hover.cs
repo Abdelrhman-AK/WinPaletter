@@ -33,8 +33,6 @@ namespace WinPaletter
 
         private void Store_Hover_Load(object sender, EventArgs e)
         {
-            Icon = FormsExtensions.Icon<Store>();
-
             Point p;
             if (Forms.Store.selectedItem is not null)
             {

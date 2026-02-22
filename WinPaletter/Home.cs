@@ -46,7 +46,6 @@ namespace WinPaletter
         public Home()
         {
             InitializeComponent();
-            Icon = FormsExtensions.Icon<MainForm>();
         }
 
         private void Home_Load(object sender, EventArgs e)
@@ -315,12 +314,12 @@ namespace WinPaletter
                     break;
 
                 default:
-                    card1.Image = Themes_Banners.Theme_12;
-                    card3.Image = Themes_Banners.LogonUI_12;
+                    card1.Image = Themes_Banners.Theme_11;
+                    card3.Image = Themes_Banners.LogonUI_11;
                     card3.Text = Program.Localization.Strings.Aspects.LockScreen;
                     card3.Tag = Program.Localization.Strings.Aspects.LockScreen_Description;
-                    winEdition.Image = WinLogos.Win12;
-                    winEdition.Tag = string.Format(Program.Localization.Strings.Tips.OS_PreviewingAs, Program.Localization.Strings.Windows.W12);
+                    winEdition.Image = WinLogos.Win11;
+                    winEdition.Tag = string.Format(Program.Localization.Strings.Tips.OS_PreviewingAs, Program.Localization.Strings.Windows.W11);
                     break;
             }
 
@@ -601,7 +600,7 @@ namespace WinPaletter
             }
             else
             {
-                Forms.Wallpaper_Editor.WT = Program.TM.WallpaperTone_W12;
+                Forms.Wallpaper_Editor.WT = Program.TM.WallpaperTone_W11;
             }
 
             Forms.MainForm.BackgroundImage = (sender as Card).Image;

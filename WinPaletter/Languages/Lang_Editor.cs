@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using WinPaletter.Assets;
+using WinPaletter.Properties;
 using WinPaletter.UI.Controllers;
 using WinPaletter.UI.Simulation;
 
@@ -1033,7 +1034,7 @@ namespace WinPaletter
             ControlSelection += Lang_JSON_GUI_ControlSelection;
 
             // Set the image list
-            imageList1.Images.Add("WinPaletter", FormsExtensions.Icon<MainForm>());
+            imageList1.Images.Add("WinPaletter", Resources.LangNode_Main);
             imageList1.Images.Add("Form", AspectsResources.JSON);
 
             // Load culture names into the ComboBox

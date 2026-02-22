@@ -441,7 +441,7 @@ namespace WinPaletter
 
                 default:
                     {
-                        Program.TM.WallpaperTone_W12 = WT;
+                        Program.TM.WallpaperTone_W11 = WT;
                         break;
                     }
 

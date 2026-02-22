@@ -11,8 +11,6 @@ namespace WinPaletter
         }
         private void WindowsTerminalCopycat_Load(object sender, EventArgs e)
         {
-            Icon = FormsExtensions.Icon<WindowsTerminal>();
-
             if (ComboBox1.Items.Count > 0) { ComboBox1.SelectedIndex = 0; }
         }
 

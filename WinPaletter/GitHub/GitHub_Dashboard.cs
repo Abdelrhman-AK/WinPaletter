@@ -20,7 +20,7 @@ namespace WinPaletter
             groupBox1.UseDecorationPattern = true;
             groupBox2.UseDecorationPattern = true;
 
-            if (!User.GitHub_LoggedIn || !Program.IsNetworkAvailable)
+            if (!User.GitHub_LoggedIn || User.GitHub is null || !Program.IsNetworkAvailable)
             {
                 tablessControl1.SelectedIndex = 1;
             }
@@ -40,15 +40,7 @@ namespace WinPaletter
 
         private void User_GitHubAvatarUpdated()
         {
-            Bitmap avatar = null;
-
-            // Wait for avatar to exist
-            avatar = User.GitHub_Avatar;
-
-            if (avatar is null)
-            {
-                avatar = Properties.Resources.GitHub_SignInForFeatures.Clone() as Bitmap;
-            }
+            Bitmap avatar = User.GitHub_Avatar ?? User.ProfilePicture;
 
             using (Bitmap avatar_resized = avatar.Resize(pictureBox2.Size))
             {

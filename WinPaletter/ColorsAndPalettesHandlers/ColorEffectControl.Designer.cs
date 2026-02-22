@@ -57,6 +57,8 @@
             this.groupBox1.Size = new System.Drawing.Size(400, 78);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.Text = "groupBox1";
+            this.groupBox1.UseDecorationPattern = false;
+            this.groupBox1.UseSharpStyle = false;
             // 
             // colorItem1
             // 
@@ -99,7 +101,6 @@
             this.toggle.Name = "toggle";
             this.toggle.Size = new System.Drawing.Size(40, 20);
             this.toggle.TabIndex = 127;
-            this.toggle.Text = "toggle1";
             this.toggle.CheckedChanged += new System.EventHandler(this.toggle_CheckedChanged);
             // 
             // pictureBox
@@ -138,12 +139,12 @@
             this.trackBar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.trackBar.Location = new System.Drawing.Point(75, 51);
             this.trackBar.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
-            this.trackBar.Maximum = 100;
-            this.trackBar.Minimum = 0;
+            this.trackBar.Maximum = 100F;
+            this.trackBar.Minimum = 0F;
             this.trackBar.Name = "trackBar";
             this.trackBar.Size = new System.Drawing.Size(264, 20);
             this.trackBar.TabIndex = 128;
-            this.trackBar.Value = 50;
+            this.trackBar.Value = 50F;
             this.trackBar.ValueChanged += new System.EventHandler(this.trackBar_ValueChanged);
             this.trackBar.VisibleChanged += new System.EventHandler(this.trackBar_VisibleChanged);
             // 
@@ -167,10 +168,10 @@
 
         private UI.WP.GroupBox groupBox1;
         private UI.Controllers.TrackBarX trackBar;
-        private UI.WP.Toggle toggle;
         private System.Windows.Forms.PictureBox pictureBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private UI.Controllers.ColorItem colorItem1;
+        public WP.Toggle toggle;
     }
 }

@@ -80,6 +80,8 @@ namespace WinPaletter
             this.GroupBox1.Name = "GroupBox1";
             this.GroupBox1.Size = new System.Drawing.Size(762, 100);
             this.GroupBox1.TabIndex = 212;
+            this.GroupBox1.UseDecorationPattern = false;
+            this.GroupBox1.UseSharpStyle = false;
             // 
             // CheckBox1
             // 
@@ -182,6 +184,8 @@ namespace WinPaletter
             this.GroupBox3.Name = "GroupBox3";
             this.GroupBox3.Size = new System.Drawing.Size(762, 243);
             this.GroupBox3.TabIndex = 211;
+            this.GroupBox3.UseDecorationPattern = false;
+            this.GroupBox3.UseSharpStyle = false;
             // 
             // Label2
             // 
@@ -269,15 +273,17 @@ namespace WinPaletter
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.CanGeneratePalette = true;
             this.ClientSize = new System.Drawing.Size(784, 471);
             this.Controls.Add(this.GroupBox1);
             this.Controls.Add(this.GroupBox3);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsShown = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "LogonUIXP";
-            this.Text = "LogonUI - Windows XP";
+            this.Text = "LogonUI";
             this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.Form_HelpButtonClicked);
             this.Load += new System.EventHandler(this.LogonUIXP_Load);
             this.Controls.SetChildIndex(this.GroupBox3, 0);

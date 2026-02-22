@@ -25,8 +25,7 @@ namespace WinPaletter
 
         private void OS_Dashboard_Load(object sender, EventArgs e)
         {
-            // Set the form icon.
-            Icon = FormsExtensions.Icon<MainForm>();
+            radioImage7.Enabled = OS.IsWin12Released;
 
             // Select the current OS style.
             switch (Program.WindowStyle)
@@ -106,10 +105,7 @@ namespace WinPaletter
             else if (radioImage3.Checked) Program.WindowStyle = WindowStyle.W7;
             else if (radioImage2.Checked) Program.WindowStyle = WindowStyle.WVista;
             else if (radioImage1.Checked) Program.WindowStyle = WindowStyle.WXP;
-            else Program.WindowStyle = WindowStyle.W12;
-
-            if (radioImage7.Checked)
-                MsgBox(Program.Localization.Strings.Messages.Win12_Preview_Msg0, MessageBoxButtons.OK, MessageBoxIcon.Information, Program.Localization.Strings.Messages.Win12_Preview_Msg1);
+            else Program.WindowStyle = WindowStyle.W11;
 
             DialogResult = DialogResult.OK;
         }

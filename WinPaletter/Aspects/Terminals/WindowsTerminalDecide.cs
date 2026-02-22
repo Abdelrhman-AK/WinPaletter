@@ -15,8 +15,6 @@ namespace WinPaletter
 
         private void WindowsTerminalDecide_Load(object sender, EventArgs e)
         {
-            Icon = FormsExtensions.Icon<WindowsTerminal>();
-
             Color c = PictureBox1.Image.AverageColor();
             Color c1 = c.CB(Program.Style.DarkMode ? -0.35f : 0.35f);
             Color c2 = c.CB(Program.Style.DarkMode ? -0.75f : 0.75f);

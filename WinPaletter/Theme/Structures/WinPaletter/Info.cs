@@ -48,7 +48,7 @@ namespace WinPaletter.Theme.Structures
         /// This theme is designed especially for Windows 12
         /// <br>- This does not inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
         /// </summary>
-        public bool DesignedFor_Win12 { get; set; } = true;
+        public bool DesignedFor_Win12 { get; set; } = false;
 
         /// <summary>
         /// This theme is designed especially for Windows 11
@@ -116,7 +116,7 @@ namespace WinPaletter.Theme.Structures
             Color2 = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "Color2", Default.FromCurrentOS.Info.Color2);
 
             Pattern = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "Pattern", 1);
-            DesignedFor_Win12 = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win12", true);
+            DesignedFor_Win12 = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win12", false);
             DesignedFor_Win11 = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win11", true);
             DesignedFor_Win10 = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win10", true);
             DesignedFor_Win81 = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win8.1", true);

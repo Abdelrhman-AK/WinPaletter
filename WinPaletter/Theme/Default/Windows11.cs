@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Security;
 using WinPaletter.Theme.Structures;
 
 namespace WinPaletter.Theme
@@ -29,6 +30,7 @@ namespace WinPaletter.Theme
             Info.Author = "Microsoft";
             Info.AuthorSocialMediaLink = "https://www.microsoft.com";
             Info.AppVersion = Program.Version;
+            Info.DesignedFor_Win12 = true;
 
             TM.Windows11.Enabled = true;
             TM.Windows11.Titlebar_Inactive = Color.FromArgb(32, 32, 32);

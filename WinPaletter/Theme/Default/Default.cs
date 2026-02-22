@@ -24,7 +24,7 @@ namespace WinPaletter.Theme
                 WindowStyle.W7 => Windows7,
                 WindowStyle.WVista => WindowsVista,
                 WindowStyle.WXP => WindowsXP,
-                _ => Windows12,
+                _ => Windows11,
             };
         }
 

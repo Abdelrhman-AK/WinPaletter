@@ -26,8 +26,6 @@ namespace WinPaletter
 
         private void BugReport_Load(object sender, EventArgs e)
         {
-            Icon = FormsExtensions.Icon<SettingsX>();
-
             Color c = PictureBox1.Image.AverageColor().CB(Program.Style.DarkMode ? -0.35f : 0.35f);
             AnimatedBox1.Color1 = c;
             AnimatedBox1.Color2 = Program.Style.Schemes.Main.Colors.AccentAlt;

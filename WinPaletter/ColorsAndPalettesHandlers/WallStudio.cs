@@ -40,8 +40,6 @@ namespace WinPaletter
 
         private void WallStudio_Load(object sender, EventArgs e)
         {
-            Icon = FormsExtensions.Icon<MainForm>();
-
             tablessControl1.SelectedIndex = 0;
             progressBar1.Value = 0;
             canCloseWithoutMsg = false;
@@ -79,6 +77,7 @@ namespace WinPaletter
             label9.ForeColor = Color.White;
             label10.ForeColor = Color.White;
 
+            AnimateList.Clear();
             foreach (CursorControl i in Cursors_Container.Controls.OfType<CursorControl>().Where(i => i.Prop_Cursor == Paths.CursorType.AppLoading | i.Prop_Cursor == Paths.CursorType.Busy))
             {
                 AnimateList.Add(i);
@@ -252,7 +251,7 @@ namespace WinPaletter
 
                 ColorProperties = [];
 
-                foreach (Control ctrl in FlowLayoutPanel1.Controls)
+                foreach (Control ctrl in FlowLayoutPanel1.Controls.Cast<Control>().Concat(Cursors_Container.Controls.Cast<Control>()))
                 {
                     // Skip FlowLayoutPanel itself
                     if (ctrl is FlowLayoutPanel) continue;
@@ -1090,6 +1089,16 @@ namespace WinPaletter
                 Program.Animator.HideSync(groupBox3);
                 Program.Animator.HideSync(groupBox2);
             }
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            foreach (ColorEffectControl colorEffectControl in colorEffectControls)
+            {
+                colorEffectControl.toggle.Checked = false;
+            }
+
+            ApplyEffects();
         }
 
         /// <summary>

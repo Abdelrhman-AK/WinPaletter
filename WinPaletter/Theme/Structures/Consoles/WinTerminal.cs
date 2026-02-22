@@ -1118,27 +1118,7 @@ namespace WinPaletter.Theme.Structures
         /// <returns></returns>
         bool IsNullOrWhiteSpace(JToken token)
         {
-            return token == null ||
-                   (token.Type == JTokenType.String && string.IsNullOrWhiteSpace(token.Value<string>())) ||
-                   (token.Type == JTokenType.Null);
-        }
-
-        /// <summary>
-        /// Take ownership of a File for the current Windows user
-        /// </summary>
-        /// <param name="filepath"></param>
-        private void TakeOwnership(string filepath)
-        {
-            Process proc = new();
-            proc.StartInfo.FileName = "takeown.exe";
-            proc.StartInfo.Arguments = $"/R /F \"{filepath}\"";
-            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            proc.Start();
-            proc.WaitForExit();
-            proc.StartInfo.FileName = "icacls.exe";
-            proc.StartInfo.Arguments = "\"{filepath}\" /grant *{GROUP_USERS_SID}:F /T";
-            proc.Start();
-            proc.WaitForExit();
+            return token == null || (token.Type == JTokenType.String && string.IsNullOrWhiteSpace(token.Value<string>())) || (token.Type == JTokenType.Null);
         }
 
         /// <summary>

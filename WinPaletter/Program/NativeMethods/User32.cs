@@ -119,6 +119,16 @@ namespace WinPaletter.NativeMethods
         [DllImport("user32.dll")]
         public static extern IntPtr FindWindowEx(IntPtr parent, IntPtr childAfter, string className, string windowTitle);
 
+        /// <summary>
+        /// Finds the handle of the edit control associated with a specified list view control.
+        /// </summary>
+        /// <remarks>This method is typically used to obtain the handle of the in-place edit control that
+        /// appears when a list view item is being edited. The returned handle can be used to interact with the edit
+        /// control directly, such as setting or retrieving text.</remarks>
+        /// <param name="listViewHandle">The handle of the list view control in which to search for the edit control. This handle must refer to a
+        /// valid list view window.</param>
+        /// <returns>An <see cref="IntPtr"/> representing the handle of the edit control if found; otherwise, <see
+        /// cref="IntPtr.Zero"/> if no edit control is present.</returns>
         public static IntPtr FindEditControl(IntPtr listViewHandle)
         {
             return FindWindowEx(listViewHandle, IntPtr.Zero, "Edit", null);
@@ -131,6 +141,14 @@ namespace WinPaletter.NativeMethods
         public const int RDW_UPDATENOW = 0x0100;
         public const int RDW_ALLCHILDREN = 0x0080;
 
+        /// <summary>
+        /// Refreshes the non-client area of a window, causing its frame and decorations to be recalculated and
+        /// repainted.
+        /// </summary>
+        /// <remarks>Call this method to update the appearance of a window's borders, title bar, and other
+        /// non-client elements after changes such as resizing, theme updates, or custom drawing. This method sends
+        /// messages to the specified window to recalculate and redraw its non-client area immediately.</remarks>
+        /// <param name="handle">The handle to the window whose non-client area is to be refreshed.</param>
         public static void RefreshNonClient(IntPtr handle)
         {
             // Recalculate frame
@@ -144,12 +162,44 @@ namespace WinPaletter.NativeMethods
                 RDW_INVALIDATE | RDW_FRAME | RDW_UPDATENOW | RDW_ALLCHILDREN);
         }
 
+        /// <summary>
+        /// Sets a new value for a specified class attribute of a window.
+        /// </summary>
+        /// <remarks>This method is a wrapper for the Win32 API function SetClassLong, which modifies
+        /// attributes of a window class. Ensure that the window handle is valid and that the specified index
+        /// corresponds to a valid class attribute.</remarks>
+        /// <param name="hWnd">A handle to the window whose class attribute is to be modified.</param>
+        /// <param name="nIndex">The zero-based offset to the value to be set. This specifies which class attribute to modify.</param>
+        /// <param name="dwNewLong">The new value to assign to the specified class attribute.</param>
+        /// <returns>The previous value of the specified class attribute. If the function fails, the return value is zero.</returns>
         [DllImport("user32.dll", EntryPoint = "SetClassLong")]
         private static extern int SetClassLong32(IntPtr hWnd, int nIndex, int dwNewLong);
 
+        /// <summary>
+        /// Sets a new value for the specified class attribute of a window.
+        /// </summary>
+        /// <remarks>This method is intended for use with 64-bit Windows operating systems. Modifying
+        /// class attributes can affect window behavior and appearance. Ensure that the window handle and attribute
+        /// index are valid before calling this method.</remarks>
+        /// <param name="hWnd">A handle to the window whose class attribute is to be modified.</param>
+        /// <param name="nIndex">The zero-based offset that specifies which class attribute to set.</param>
+        /// <param name="dwNewLong">The new value to assign to the specified class attribute.</param>
+        /// <returns>The previous value of the specified class attribute if successful; otherwise, <see cref="IntPtr.Zero"/> if
+        /// the operation fails.</returns>
         [DllImport("user32.dll", EntryPoint = "SetClassLongPtr")]
         private static extern IntPtr SetClassLongPtr64(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
 
+        /// <summary>
+        /// Sets a new value for the specified class attribute of a window.
+        /// </summary>
+        /// <remarks>This method automatically selects the appropriate implementation for 32-bit or 64-bit
+        /// platforms based on the current process architecture.</remarks>
+        /// <param name="hWnd">A handle to the window whose class attribute is to be modified.</param>
+        /// <param name="nIndex">The zero-based offset that specifies which class attribute to set.</param>
+        /// <param name="dwNewLong">The new value to assign to the specified class attribute. The meaning and type of this value depend on the
+        /// attribute identified by nIndex.</param>
+        /// <returns>A handle to the previous value of the specified class attribute if successful; otherwise, <see
+        /// cref="IntPtr.Zero"/>.</returns>
         public static IntPtr SetClassLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong)
         {
             if (IntPtr.Size == 8) return SetClassLongPtr64(hWnd, nIndex, dwNewLong);
@@ -172,33 +222,206 @@ namespace WinPaletter.NativeMethods
         public static extern int GetSysColor(int nIndex);
 
         /// <summary>
-        /// Sets the window composition attribute.
+        /// Registers a window message with the system and returns a unique message identifier that can be used for
+        /// inter-process communication.
         /// </summary>
+        /// <remarks>Use this method to define custom window messages for communication between different
+        /// applications or components. The message name should be unique across the system to prevent unintended
+        /// message handling. If the specified message is already registered, the existing identifier is
+        /// returned.</remarks>
+        /// <param name="lpString">The name of the message to register. This string should be unique to avoid conflicts with other registered
+        /// messages.</param>
+        /// <returns>A message identifier that can be used to send or receive the registered message. Returns zero if the
+        /// function fails.</returns>
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern uint RegisterWindowMessage(string lpString);
+
+        /// <summary>
+        /// Retrieves a handle to the top-level window whose class name and window name match the specified strings.
+        /// </summary>
+        /// <remarks>This method is a managed definition of the native FindWindow function in user32.dll.
+        /// If the function fails, call <see cref="System.Runtime.InteropServices.Marshal.GetLastWin32Error"/> to obtain
+        /// the error code. The search is case-sensitive and only matches top-level windows.</remarks>
+        /// <param name="lpClassName">The class name of the window to search for. Specify <see langword="null"/> to match any class name.</param>
+        /// <param name="lpWindowName">The window name (title) to search for. Specify <see langword="null"/> to match any window name.</param>
+        /// <returns>An <see cref="IntPtr"/> that represents the handle to the window if found; otherwise, <see
+        /// cref="IntPtr.Zero"/> if no matching window is found.</returns>
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+        /// <summary>
+        /// Sends the specified message to a window or windows by calling the window procedure for the given window
+        /// handle.
+        /// </summary>
+        /// <remarks>This method is a managed definition of the native SendMessage function from
+        /// user32.dll. It sends the message and waits for the window procedure to process it before returning. For
+        /// certain messages, this call may block until the message is processed. Use caution when sending messages that
+        /// may cause the receiving window to perform lengthy operations.</remarks>
+        /// <param name="hWnd">A handle to the window whose window procedure will receive the message. If this parameter is IntPtr.Zero,
+        /// the message is sent to all top-level windows.</param>
+        /// <param name="Msg">The message to be sent. This value determines the action to be performed and must be a valid window message
+        /// identifier.</param>
+        /// <param name="wParam">Additional message-specific information. The interpretation of this parameter depends on the value of the
+        /// Msg parameter.</param>
+        /// <param name="lParam">Additional message-specific information. The interpretation of this parameter depends on the value of the
+        /// Msg parameter.</param>
+        /// <returns>The result of the message processing, which depends on the message sent. If the function fails, the return
+        /// value is IntPtr.Zero.</returns>
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+
+        /// <summary>
+        /// Posts a message to the message queue of the specified window and returns immediately without waiting for the
+        /// window to process the message.
+        /// </summary>
+        /// <remarks>Unlike SendMessage, PostMessage returns immediately after posting the message to the
+        /// message queue, without waiting for the message to be processed. The message is processed asynchronously by
+        /// the target window's message loop. If hWnd is set to IntPtr.Zero, the message is posted to all top-level
+        /// windows in the system.</remarks>
+        /// <param name="hWnd">A handle to the window whose message queue will receive the message. This can be a handle to a top-level
+        /// window or a child window.</param>
+        /// <param name="Msg">The message identifier to be posted. This value must be one of the message constants defined by the Windows
+        /// API, such as WM_CLOSE or WM_SETTEXT.</param>
+        /// <param name="wParam">Additional message-specific information. The interpretation of this parameter depends on the value of the
+        /// Msg parameter.</param>
+        /// <param name="lParam">Additional message-specific information. The interpretation of this parameter also depends on the value of
+        /// the Msg parameter.</param>
+        /// <returns>true if the function succeeds; otherwise, false. To obtain extended error information, call
+        /// Marshal.GetLastWin32Error.</returns>
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+
+        /// <summary>
+        /// Sets the composition attribute for a specified window, enabling visual effects such as transparency or blur.
+        /// </summary>
+        /// <remarks>This method is typically used to modify the visual appearance of a window in desktop
+        /// applications. The window must be created with the appropriate styles to support composition effects. This
+        /// function is intended for advanced scenarios and may not be supported on all versions of Windows.</remarks>
+        /// <param name="hwnd">A handle to the window whose composition attribute is to be set. This must be a valid window handle.</param>
+        /// <param name="data">A reference to a structure that specifies the composition attribute to set and its associated data.</param>
+        /// <returns>An integer value that indicates whether the operation succeeded. Returns zero if the operation fails;
+        /// otherwise, returns a nonzero value.</returns>
         [DllImport("user32.dll")]
         internal static extern int SetWindowCompositionAttribute(IntPtr hwnd, ref WindowCompositionAttributeData data);
 
+        /// <summary>
+        /// Retrieves information about the specified window. This function is typically used to obtain window
+        /// attributes such as styles or extended styles for a window identified by its handle.
+        /// </summary>
+        /// <remarks>This method is a 32-bit version of the GetWindowLong function from the Windows API.
+        /// On 64-bit platforms, use GetWindowLongPtr instead. Supplying an invalid window handle or an unsupported
+        /// index may result in undefined behavior.</remarks>
+        /// <param name="hWnd">A handle to the window whose information is to be retrieved. This must be a valid window handle.</param>
+        /// <param name="nIndex">The zero-based offset to the value to be retrieved. This parameter specifies which attribute to obtain, such
+        /// as window style or extended window style.</param>
+        /// <returns>An integer value representing the requested information about the window. The meaning of the return value
+        /// depends on the attribute specified by the nIndex parameter.</returns>
         [DllImport("user32.dll", EntryPoint = "GetWindowLong")]
         public static extern int GetWindowLong32(IntPtr hWnd, int nIndex);
 
+        /// <summary>
+        /// Sets a new value for the specified window attribute for a 32-bit window.
+        /// </summary>
+        /// <remarks>This function is typically used to change window styles or other attributes for
+        /// 32-bit windows. Ensure that the window handle and attribute index are valid. If the function fails, call
+        /// GetLastError to obtain more information about the error.</remarks>
+        /// <param name="hWnd">A handle to the window whose attribute is to be modified. This must be a valid window handle.</param>
+        /// <param name="nIndex">The zero-based offset of the attribute to set. This parameter specifies which window attribute to modify,
+        /// such as window styles or extended styles.</param>
+        /// <param name="dwNewLong">The new value to assign to the specified window attribute. The value must be appropriate for the attribute
+        /// indicated by nIndex.</param>
+        /// <returns>The previous value of the specified window attribute. If the function fails, the return value is zero.</returns>
         [DllImport("user32.dll", EntryPoint = "SetWindowLong")]
         public static extern int SetWindowLong32(IntPtr hWnd, int nIndex, int dwNewLong);
 
+        /// <summary>
+        /// Retrieves information about the specified window by returning a value at the given offset from the window's
+        /// extra memory or attributes.
+        /// </summary>
+        /// <remarks>This method is typically used to access window attributes or user data associated
+        /// with a window. The caller must ensure that the window handle is valid and that the nIndex parameter
+        /// corresponds to a valid offset or attribute. On 32-bit versions of Windows, use GetWindowLong instead. This
+        /// function may return zero for some attributes; to distinguish between a valid zero result and an error, call
+        /// SetLastError(0) before calling this function, and then check GetLastError if the result is zero.</remarks>
+        /// <param name="hWnd">A handle to the window whose information is to be retrieved. This handle must refer to a valid window.</param>
+        /// <param name="nIndex">The zero-based offset, in bytes, to the value to be retrieved. This parameter specifies which attribute or
+        /// extra memory value to access. Common values include constants such as GWL_USERDATA or GWL_STYLE.</param>
+        /// <returns>An IntPtr that contains the value retrieved from the specified offset of the window's information. The
+        /// meaning of the value depends on the value of nIndex.</returns>
         [DllImport("user32.dll", EntryPoint = "GetWindowLongPtr")]
         public static extern IntPtr GetWindowLongPtr64(IntPtr hWnd, int nIndex);
 
+        /// <summary>
+        /// Sets a new value for the specified window attribute for a 64-bit window.
+        /// </summary>
+        /// <remarks>This function is typically used to change window styles or other attributes for
+        /// 32-bit windows. Ensure that the window handle and attribute index are valid. If the function fails, call
+        /// GetLastError to obtain more information about the error.</remarks>
+        /// <param name="hWnd">A handle to the window whose attribute is to be modified. This must be a valid window handle.</param>
+        /// <param name="nIndex">The zero-based offset of the attribute to set. This parameter specifies which window attribute to modify,
+        /// such as window styles or extended styles.</param>
+        /// <param name="dwNewLong">The new value to assign to the specified window attribute. The value must be appropriate for the attribute
+        /// indicated by nIndex.</param>
+        /// <returns>The previous value of the specified window attribute. If the function fails, the return value is zero.</returns>
         [DllImport("user32.dll", EntryPoint = "SetWindowLongPtr")]
         public static extern IntPtr SetWindowLongPtr64(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
 
+        /// <summary>
+        /// Retrieves information about the specified window attribute, such as window styles or extended styles, for a
+        /// given window handle.
+        /// </summary>
+        /// <remarks>This method automatically selects the appropriate underlying API based on the process
+        /// architecture (32-bit or 64-bit). Ensure that the hWnd parameter is valid to avoid undefined results. Common
+        /// values for nIndex include constants such as GWL_STYLE and GWL_EXSTYLE.</remarks>
+        /// <param name="hWnd">A handle to the window whose attribute is to be retrieved. This handle must refer to a valid, existing
+        /// window.</param>
+        /// <param name="nIndex">The zero-based offset of the value to retrieve. This parameter specifies which window attribute to obtain,
+        /// such as style or extended style.</param>
+        /// <returns>A long integer representing the requested window attribute. The meaning of the returned value depends on the
+        /// attribute specified by the nIndex parameter.</returns>
         public static long GetWindowLong(IntPtr hWnd, int nIndex) => Environment.Is64BitProcess ? GetWindowLongPtr64(hWnd, nIndex).ToInt64() : GetWindowLong32(hWnd, nIndex);
 
+        /// <summary>
+        /// Sets a specified attribute or property for a window identified by its handle.
+        /// </summary>
+        /// <remarks>This method updates various window properties, such as window styles or extended
+        /// styles, depending on the value of nIndex. The behavior may differ between 32-bit and 64-bit processes; the
+        /// appropriate native method is called based on the current process architecture.</remarks>
+        /// <param name="hWnd">A handle to the window whose attribute is to be set. This must refer to a valid, existing window.</param>
+        /// <param name="nIndex">The zero-based offset that specifies which window attribute or property to modify.</param>
+        /// <param name="value">The new value to assign to the specified window attribute. The interpretation of this value depends on the
+        /// attribute being set.</param>
         public static void SetWindowLong(IntPtr hWnd, int nIndex, long value)
         {
             if (Environment.Is64BitProcess) SetWindowLongPtr64(hWnd, nIndex, new IntPtr(value)); else SetWindowLong32(hWnd, nIndex, (int)value);
         }
 
+        /// <summary>
+        /// Retrieves a handle to the system menu for the specified window.
+        /// </summary>
+        /// <remarks>The system menu is the menu that appears when the user clicks the window's title bar
+        /// icon or presses Alt+Space. This function can be used to modify or restore the system menu. Modifying the
+        /// menu affects only the specified window.</remarks>
+        /// <param name="hWnd">A handle to the window whose system menu is to be retrieved. This handle must refer to a window that has a
+        /// system menu.</param>
+        /// <param name="bRevert">true to reset the window's system menu to its default state; false to retrieve the current system menu.</param>
+        /// <returns>A handle to the system menu of the specified window. Returns IntPtr.Zero if the window does not have a
+        /// system menu.</returns>
         [DllImport("user32.dll")]
         public static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
 
+        /// <summary>
+        /// Enables, disables, or grays a menu item in the specified menu.
+        /// </summary>
+        /// <remarks>This method is a platform invoke (P/Invoke) signature for the native EnableMenuItem
+        /// function in user32.dll. Ensure that the menu handle and item identifier are valid. Modifying menu items
+        /// dynamically can be useful for reflecting application state in the user interface.</remarks>
+        /// <param name="hMenu">A handle to the menu that contains the menu item to be modified.</param>
+        /// <param name="uIDEnableItem">The identifier or position of the menu item to be changed, depending on the value of uEnable.</param>
+        /// <param name="uEnable">Specifies the action to take on the menu item. Use MF_ENABLED to enable, MF_DISABLED to disable, or
+        /// MF_GRAYED to gray the item. This parameter can also include MF_BYCOMMAND or MF_BYPOSITION to indicate how
+        /// uIDEnableItem is interpreted.</param>
+        /// <returns>true if the function succeeds; otherwise, false.</returns>
         [DllImport("user32.dll")]
         public static extern bool EnableMenuItem(IntPtr hMenu, uint uIDEnableItem, uint uEnable);
 

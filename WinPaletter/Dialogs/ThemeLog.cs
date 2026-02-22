@@ -49,20 +49,6 @@ namespace WinPaletter
 
         private async void ThemeLog_Load(object sender, EventArgs e)
         {
-            // Task.Run is used as there is a bug of ex error: Icon is disposed while accessing it from different thread
-            await Task.Run(() =>
-            {
-                // Ensure you are on the UI thread if accessing UI elements
-                Invoke(() =>
-                {
-                    try
-                    {
-                        Icon = FormsExtensions.Icon<MainForm>();
-                    }
-                    catch { } // Ignore this exception when form or icon is disposed
-                });
-            });
-
             if (this is not null)
             {
                 if (TreeView1 is not null) TreeView1.ImageList = ImageLists.ThemeLog;

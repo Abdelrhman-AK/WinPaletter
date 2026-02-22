@@ -83,7 +83,7 @@ namespace WinPaletter.GitHub
 
                     User.GitHub_Avatar?.Dispose();
                     await User.DownloadAvatarInternalAsync().ConfigureAwait(false);
-                    Program.Log?.Write(LogEventLevel.Information, "GitHub avatar downloaded successfully.");
+                    Program.Log?.Write(LogEventLevel.Information, "GitHub avatar has been loaded successfully.");
                 }
                 else
                 {

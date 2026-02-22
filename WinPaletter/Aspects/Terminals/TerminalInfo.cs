@@ -16,11 +16,6 @@ namespace WinPaletter
             InitializeComponent();
         }
 
-        private void TerminalInfo_Load(object sender, EventArgs e)
-        {
-            Icon = FormsExtensions.Icon<WindowsTerminal>();
-        }
-
         public DialogResult OpenDialog(bool IsDefault = false)
         {
             TerName.Text = Profile.Name;

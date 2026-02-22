@@ -338,6 +338,8 @@ namespace WinPaletter
             this.bottom_buttons.Name = "bottom_buttons";
             this.bottom_buttons.Size = new System.Drawing.Size(494, 48);
             this.bottom_buttons.TabIndex = 214;
+            this.bottom_buttons.UseDecorationPattern = false;
+            this.bottom_buttons.UseSharpStyle = false;
             // 
             // TerminalInfo
             // 
@@ -363,18 +365,16 @@ namespace WinPaletter
             this.Controls.Add(this.Button11);
             this.Controls.Add(this.TerTabIcon);
             this.Controls.Add(this.bottom_buttons);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "TerminalInfo";
+            this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Terminal info";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TerminalInfo_FormClosing);
-            this.Load += new System.EventHandler(this.TerminalInfo_Load);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox47)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox38)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox28)).EndInit();

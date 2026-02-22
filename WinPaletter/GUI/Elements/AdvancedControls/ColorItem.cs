@@ -177,7 +177,7 @@ namespace WinPaletter.UI.Controllers
         private Rectangle RectInner;
         private Rectangle Rect_DefColor;
         private Rectangle Rect_DefColor_MouseHoverFixer;
-
+        private PointF mousePosition;
 
         public MouseState State = MouseState.None;
 
@@ -239,6 +239,7 @@ namespace WinPaletter.UI.Controllers
         protected override void OnMouseMove(MouseEventArgs e)
         {
             mousePosition_afterDrag = MousePosition;
+            mousePosition = PointToClient(MousePosition);
 
             if (InitializeDrag && mousePosition_beforeDrag != mousePosition_afterDrag)
             {
@@ -1070,9 +1071,8 @@ namespace WinPaletter.UI.Controllers
                         using (Region reg = new(path))
                         using (GraphicsPath gp = new())
                         {
-                            int i = Math.Max(Width, Height);
-                            Point px = PointToClient(MousePosition);
-                            RectangleF MouseCircle = new(px.X - 0.5f * i, px.Y - 0.5f * i, i, i);
+                            float i = Math.Max(Width, Height);
+                            RectangleF MouseCircle = new(mousePosition.X - 0.5f * i, mousePosition.Y - 0.5f * i, i, i);
                             gp.AddEllipse(MouseCircle);
 
                             G.SetClip(gp);

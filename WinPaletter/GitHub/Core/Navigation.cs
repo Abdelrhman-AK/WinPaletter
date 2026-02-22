@@ -1912,8 +1912,11 @@ namespace WinPaletter.GitHub
                         {
                             await GitHub.FileSystem.CopyFilesAsync(filePaths, destDir, cts, progress =>
                             {
-                                if (_boundbreadcrumbControl.IsMarquee) _boundbreadcrumbControl.StopMarquee();
-                                _boundbreadcrumbControl.Value = progress;
+                                if (progress > 0)
+                                {
+                                    if (_boundbreadcrumbControl.IsMarquee) _boundbreadcrumbControl.StopMarquee();
+                                    _boundbreadcrumbControl.Value = progress;
+                                }
                             });
 
                             if (!_boundbreadcrumbControl.IsMarquee) _boundbreadcrumbControl.StartMarquee();
@@ -1922,8 +1925,11 @@ namespace WinPaletter.GitHub
                         {
                             await GitHub.FileSystem.MoveFilesAsync(filePaths, destDir, null, cts, progress =>
                             {
-                                if (_boundbreadcrumbControl.IsMarquee) _boundbreadcrumbControl.StopMarquee();
-                                _boundbreadcrumbControl.Value = progress;
+                                if (progress > 0)
+                                {
+                                    if (_boundbreadcrumbControl.IsMarquee) _boundbreadcrumbControl.StopMarquee();
+                                    _boundbreadcrumbControl.Value = progress;
+                                }
                             });
 
                             if (!_boundbreadcrumbControl.IsMarquee) _boundbreadcrumbControl.StartMarquee();
@@ -1937,8 +1943,11 @@ namespace WinPaletter.GitHub
                         {
                             await GitHub.FileSystem.CopyDirectoriesAsync(dirPaths, destDir, cts, progress =>
                             {
-                                if (_boundbreadcrumbControl.IsMarquee) _boundbreadcrumbControl.StopMarquee();
-                                _boundbreadcrumbControl.Value = progress;
+                                if (progress > 0)
+                                {
+                                    if (_boundbreadcrumbControl.IsMarquee) _boundbreadcrumbControl.StopMarquee();
+                                    _boundbreadcrumbControl.Value = progress;
+                                }
                             });
 
                             if (!_boundbreadcrumbControl.IsMarquee) _boundbreadcrumbControl.StartMarquee();
@@ -1947,8 +1956,11 @@ namespace WinPaletter.GitHub
                         {
                             await GitHub.FileSystem.MoveDirectoriesAsync(dirPaths, destDir, null, cts, progress =>
                             {
-                                if (_boundbreadcrumbControl.IsMarquee) _boundbreadcrumbControl.StopMarquee();
-                                _boundbreadcrumbControl.Value = progress;
+                                if (progress > 0)
+                                {
+                                    if (_boundbreadcrumbControl.IsMarquee) _boundbreadcrumbControl.StopMarquee();
+                                    _boundbreadcrumbControl.Value = progress;
+                                }
                             });
 
                             if (!_boundbreadcrumbControl.IsMarquee) _boundbreadcrumbControl.StartMarquee();
@@ -2158,8 +2170,11 @@ namespace WinPaletter.GitHub
 
                     Action<int> progressCallback = progress =>
                     {
-                        if (_boundbreadcrumbControl.IsMarquee) _boundbreadcrumbControl.StopMarquee();
-                        _boundbreadcrumbControl.Value = progress;
+                        if (progress > 0)
+                        {
+                            if (_boundbreadcrumbControl.IsMarquee) _boundbreadcrumbControl.StopMarquee();
+                            _boundbreadcrumbControl.Value = progress;
+                        }
                     };
 
                     if (isDirectory)

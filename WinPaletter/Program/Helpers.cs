@@ -25,6 +25,47 @@ namespace WinPaletter
 {
     internal partial class Program
     {
+        // Custom message for single-instance communication
+        private static uint WM_RESTART = 0;
+
+        /// <summary>
+        /// Restart WinPaletter
+        /// </summary>
+        public static async void Restart()
+        {
+            // Register a custom message for restart
+            if (WM_RESTART == 0)
+            {
+                WM_RESTART = User32.RegisterWindowMessage("WinPaletter_Restart_" + Process.GetCurrentProcess().Id);
+            }
+
+            // Start new instance
+            Process.Start(Application.ExecutablePath);
+
+            // Wait asynchronously
+            await Task.Delay(500);
+
+            // Shutdown current instance
+            try
+            {
+                // Close forms safely
+                IEnumerable<Form> formsToClose = [.. Application.OpenForms.Cast<Form>()];
+                foreach (Form form in formsToClose)
+                {
+                    if (form?.IsDisposed == false)
+                    {
+                        form.Close();
+                    }
+                }
+
+                Environment.Exit(0);
+            }
+            catch
+            {
+                Environment.Exit(1);
+            }
+        }
+
         /// <summary>
         /// GetTextAndImageRectangles the MD5 hash of a file
         /// </summary>
@@ -206,7 +247,7 @@ namespace WinPaletter
 
             else if (OS.WXP) WindowStyle = PreviewHelpers.WindowStyle.WXP;
 
-            else WindowStyle = PreviewHelpers.WindowStyle.W12;
+            else WindowStyle = PreviewHelpers.WindowStyle.W11;
 
             // Load Manager
             if (!ExternalLink)

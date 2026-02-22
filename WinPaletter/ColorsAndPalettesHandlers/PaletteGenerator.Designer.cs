@@ -73,6 +73,7 @@ namespace WinPaletter
             this.checkBox1 = new WinPaletter.UI.WP.CheckBox();
             this.Button2 = new WinPaletter.UI.WP.Button();
             this.Button3 = new WinPaletter.UI.WP.Button();
+            this.button11 = new WinPaletter.UI.WP.Button();
             this.groupBox4.SuspendLayout();
             this.panel14.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -95,6 +96,7 @@ namespace WinPaletter
             this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
+            this.groupBox4.Controls.Add(this.button11);
             this.groupBox4.Controls.Add(this.label3);
             this.groupBox4.Controls.Add(this.toggle1);
             this.groupBox4.Controls.Add(this.panel14);
@@ -174,9 +176,9 @@ namespace WinPaletter
             this.label6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.Location = new System.Drawing.Point(41, 12);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(388, 24);
+            this.label6.Size = new System.Drawing.Size(244, 24);
             this.label6.TabIndex = 143;
-            this.label6.Text = "Apply a filter (effect) to the generated palette:";
+            this.label6.Text = "Apply an effect to the generated palette:";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // groupBox14
@@ -624,6 +626,25 @@ namespace WinPaletter
             this.Button3.UseVisualStyleBackColor = false;
             this.Button3.Click += new System.EventHandler(this.Button3_Click);
             // 
+            // button11
+            // 
+            this.button11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button11.CustomColor = System.Drawing.Color.Empty;
+            this.button11.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button11.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button11.ForeColor = System.Drawing.Color.White;
+            this.button11.Image = null;
+            this.button11.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.button11.ImageGlyph = null;
+            this.button11.ImageGlyphEnabled = false;
+            this.button11.Location = new System.Drawing.Point(291, 12);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(138, 24);
+            this.button11.TabIndex = 231;
+            this.button11.Text = "Uncheck all effects";
+            this.button11.UseVisualStyleBackColor = false;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
+            // 
             // PaletteGenerator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -699,5 +720,6 @@ namespace WinPaletter
         private UI.WP.SmoothPanel smoothPanel1;
         private UI.WP.CheckBox checkBox2;
         internal Label label3;
+        internal UI.WP.Button button11;
     }
 }

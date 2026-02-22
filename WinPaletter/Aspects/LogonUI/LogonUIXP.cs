@@ -116,7 +116,6 @@ namespace WinPaletter
 
             LoadData(data);
 
-            Icon = FormsExtensions.Icon<LogonUI>();
             LoadFromTM(Program.TM);
         }
 

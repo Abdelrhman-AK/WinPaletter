@@ -113,7 +113,6 @@ namespace WinPaletter
 
             LoadFromTM(Program.TM);
             ApplyPreview();
-            Icon = FormsExtensions.Icon<LogonUI>();
 
             PictureBox11.Image = LogonUIRes.Win7;
             PictureBox4.Image = WinLogos.Win7;

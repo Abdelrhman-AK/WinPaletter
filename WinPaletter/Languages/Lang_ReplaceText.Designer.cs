@@ -201,6 +201,8 @@ namespace WinPaletter
             this.bottom_buttons.Name = "bottom_buttons";
             this.bottom_buttons.Size = new System.Drawing.Size(444, 48);
             this.bottom_buttons.TabIndex = 212;
+            this.bottom_buttons.UseDecorationPattern = false;
+            this.bottom_buttons.UseSharpStyle = false;
             // 
             // Lang_ReplaceText
             // 
@@ -217,16 +219,13 @@ namespace WinPaletter
             this.Controls.Add(this.TextBox3);
             this.Controls.Add(this.TextBox4);
             this.Controls.Add(this.bottom_buttons);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForeColor = System.Drawing.Color.White;
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Lang_ReplaceText";
+            this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Replace";
-            this.Load += new System.EventHandler(this.Lang_ReplaceText_Load);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox25)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox24)).EndInit();
             this.bottom_buttons.ResumeLayout(false);

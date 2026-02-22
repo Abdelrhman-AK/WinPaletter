@@ -22,8 +22,6 @@ namespace WinPaletter
 
         private void Store_SearchFilter_Load(object sender, EventArgs e)
         {
-            Icon = FormsExtensions.Icon<Store>();
-
             CheckBox1.Checked = Program.Settings.Store.Search_ThemeNames;
             CheckBox2.Checked = Program.Settings.Store.Search_AuthorsNames;
             CheckBox3.Checked = Program.Settings.Store.Search_Descriptions;

@@ -12,7 +12,6 @@ namespace WinPaletter
 
         private void Welcome_Load(object sender, EventArgs e)
         {
-            Icon = FormsExtensions.Icon<MainForm>();
             Button1.Text = Program.Localization.Strings.General.Next;
 
             checkBox1.Checked = Program.Settings.Miscellaneous.ShowWelcomeDialog;

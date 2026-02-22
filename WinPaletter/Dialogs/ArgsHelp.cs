@@ -14,8 +14,6 @@ namespace WinPaletter.Dialogs
 
         private void ArgsHelp_Load(object sender, EventArgs e)
         {
-            Icon = FormsExtensions.Icon<MainForm>();
-
             TextBox1.Font = Fonts.ConsoleMedium;
             CustomSystemSounds.Exclamation.Play();
         }

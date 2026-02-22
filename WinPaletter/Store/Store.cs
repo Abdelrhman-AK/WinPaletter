@@ -39,7 +39,6 @@ namespace WinPaletter
         /// </summary>
         public StoreItem selectedItem;
 
-        private bool _Shown = false;
         private readonly List<CursorControl> AnimateList = [];
         private float Angle = 180f;
         private float Increment = 5f;
@@ -245,7 +244,6 @@ namespace WinPaletter
             CenterToScreen();
 
             FinishedLoadingInitialTMs = false;
-            _Shown = false;
 
             ThemesFetcher.RunWorkerAsync();
 
@@ -1568,7 +1566,7 @@ namespace WinPaletter
         #region Timers
         private void Cursor_Timer_Tick(object sender, EventArgs e)
         {
-            if (!_Shown) return;
+            if (!IsShown) return;
 
             foreach (CursorControl i in AnimateList)
             {

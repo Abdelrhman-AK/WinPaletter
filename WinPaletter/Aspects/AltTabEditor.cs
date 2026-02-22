@@ -188,7 +188,7 @@ namespace WinPaletter
 
                 default:
                     {
-                        RadioImage1.Image = WinLogos.Win12;
+                        RadioImage1.Image = WinLogos.Win11;
                         break;
                     }
             }

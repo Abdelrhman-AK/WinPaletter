@@ -15,8 +15,6 @@ namespace WinPaletter
 
         private void Setup_Load(object sender, EventArgs e)
         {
-            Icon = FormsExtensions.Icon<MainForm>();
-
             labelAlt1.Text = Text;
             next_btn.Text = Program.Localization.Strings.General.Next;
 
@@ -93,30 +91,7 @@ namespace WinPaletter
             }
             else if (tablessControl1.SelectedIndex == tablessControl1.TabCount - 2 && (checkBox1.Checked))
             {
-                if (!OS.WXP)
-                {
-                    ProgressDialog dlg = new()
-                    {
-                        Animation = AnimationResource.GetShellAnimation(ShellAnimation.FlyingPapers),
-                        Text = Program.Localization.Strings.General.RestorePoint_FirstTime_DialogTitle,
-                        Description = Program.Localization.Strings.General.RestorePoint_FirstTime_Desc,
-                        ProgressBarStyle = Ookii.Dialogs.WinForms.ProgressBarStyle.MarqueeProgressBar,
-                        ShowCancelButton = false,
-                        MinimizeBox = false,
-                        WindowTitle = Application.ProductName,
-                    };
-                    dlg.DoWork += (s, args) =>
-                    {
-                        // Create a system restore point
-                        SystemRestoreHelper.CreateRestorePoint(Program.Localization.Strings.General.RestorePoint_FirstTime);
-                    };
-
-                    dlg.ShowDialog();
-                }
-                else
-                {
-                    SystemRestoreHelper.CreateRestorePoint(Program.Localization.Strings.General.RestorePoint_FirstTime);
-                }
+                SystemRestoreHelper.CreateRestorePoint(Program.Localization.Strings.General.RestorePoint_FirstTime);
 
                 tablessControl1.SelectedIndex += 1;
 

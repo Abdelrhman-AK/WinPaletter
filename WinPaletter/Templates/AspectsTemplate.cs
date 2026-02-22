@@ -130,7 +130,7 @@ namespace WinPaletter
             ToolStripMenuItem import_msstyles = new();
             ToolStripMenuItem import_JSON = new();
             ToolStripMenuItem import_scheme = new();
-            ToolStripMenuItem import_scheme_12 = new();
+            //ToolStripMenuItem import_scheme_12 = new();
             ToolStripMenuItem import_scheme_11 = new();
             ToolStripMenuItem import_scheme_10 = new();
             ToolStripMenuItem import_scheme_81 = new();
@@ -153,7 +153,7 @@ namespace WinPaletter
             import_scheme_7.Text = Program.Localization.Strings.Windows.W7;
             import_scheme_Vista.Text = Program.Localization.Strings.Windows.WVista;
             import_scheme_XP.Text = Program.Localization.Strings.Windows.WXP;
-            import_scheme_12.Text = Program.Localization.Strings.Windows.W12;
+            //import_scheme_12.Text = Program.Localization.Strings.Windows.W12;
             applyThemeWithRP.Text = Program.Localization.Strings.Previewer.Apply_RestorePoint;
 
             import_JSON.Text = Program.Localization.Strings.Previewer.Import_JSON;
@@ -197,7 +197,7 @@ namespace WinPaletter
             import_msstyles.Image = AspectsResources.msstyles;
 
             import_scheme.Image = AspectsResources.Scheme;
-            import_scheme_12.Image = WinLogos.Add_Win12_20px;
+            //import_scheme_12.Image = WinLogos.Add_Win12_20px;
             import_scheme_11.Image = WinLogos.Add_Win11_20px;
             import_scheme_10.Image = WinLogos.Add_Win10_20px;
             import_scheme_81.Image = WinLogos.Add_Win81_20px;
@@ -210,7 +210,7 @@ namespace WinPaletter
             applyThemeWithRP.Image = AspectsResources.Restorepoint;
 
             import_scheme.DropDown = new UI.WP.ContextMenuStrip();
-            import_scheme.DropDown.Items.Add(import_scheme_12);
+            //import_scheme.DropDown.Items.Add(import_scheme_12);
             import_scheme.DropDown.Items.Add(import_scheme_11);
             import_scheme.DropDown.Items.Add(import_scheme_10);
             import_scheme.DropDown.Items.Add(import_scheme_81);
@@ -282,8 +282,8 @@ namespace WinPaletter
             if (import_defaultWindows != null)
                 import_defaultWindows.Click += _data.OnImportFromDefault ?? null;
 
-            if (import_scheme_12 != null)
-                import_scheme_12.Click += _data.OnImportFromScheme_12;
+            //if (import_scheme_12 != null)
+            //    import_scheme_12.Click += _data.OnImportFromScheme_12;
 
             if (import_scheme_11 != null)
                 import_scheme_11.Click += _data.OnImportFromScheme_11;
@@ -362,8 +362,8 @@ namespace WinPaletter
                 if (import_defaultWindows != null)
                     import_defaultWindows.Click -= _data.OnImportFromDefault ?? null;
 
-                if (import_scheme_12 != null)
-                    import_scheme_12.Click -= _data.OnImportFromScheme_12;
+                //if (import_scheme_12 != null)
+                //    import_scheme_12.Click -= _data.OnImportFromScheme_12;
 
                 if (import_scheme_11 != null)
                     import_scheme_11.Click -= _data.OnImportFromScheme_11;

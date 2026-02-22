@@ -24,8 +24,7 @@ namespace WinPaletter
         private void Store_Intro_New_Load(object sender, EventArgs e)
         {
             CheckBox1.Checked = Program.Settings.Store.ShowNewXPIntro;
-            Icon = FormsExtensions.Icon<Store>();
-            groupBox10.UseDecorationPattern = true;
+            groupBox7.UseDecorationPattern = true;
             groupBox9.UseDecorationPattern = true;
 
             Forms.GlassWindow.Show(Forms.MainForm);
@@ -51,9 +50,7 @@ namespace WinPaletter
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            if (tabControl1.SelectedIndex + 1 <= tabControl1.TabPages.Count - 1) tabControl1.SelectedIndex += 1;
-
-            if ((Button1.Text ?? string.Empty) == (Program.Localization.Strings.General.Finish ?? string.Empty))
+            if (Button1.Text == Program.Localization.Strings.General.Finish)
             {
                 Program.Settings.Store.Mode = RadioImage1.Checked ? Settings.Structures.Store.Modes.Online :
                     RadioImage2.Checked ? Settings.Structures.Store.Modes.Offline : Settings.Structures.Store.Modes.Hybrid;
@@ -66,25 +63,21 @@ namespace WinPaletter
                 Close();
                 tabControl1.SelectedIndex = 0;
                 Button1.Text = Program.Localization.Strings.General.Next;
+                return;
             }
 
-            if (tabControl1.SelectedIndex == tabControl1.TabPages.Count - 1)
-            {
-                Button1.Text = Program.Localization.Strings.General.Finish;
-                CheckBox1.Visible = true;
-            }
-            else
-            {
-                Button1.Text = Program.Localization.Strings.General.Next;
-                CheckBox1.Visible = false;
-            }
+            Program.Animator.HideSync(tabControl1);
+            if (tabControl1.SelectedIndex + 1 <= tabControl1.TabPages.Count - 1) tabControl1.SelectedIndex += 1;
+            Program.Animator.ShowSync(tabControl1);
         }
 
         private void Button2_Click(object sender, EventArgs e)
         {
+            Program.Animator.HideSync(tabControl1);
             if (tabControl1.SelectedIndex - 1 >= 0) tabControl1.SelectedIndex -= 1;
             Button1.Text = Program.Localization.Strings.General.Next;
             CheckBox1.Visible = false;
+            Program.Animator.ShowSync(tabControl1);
         }
 
         private void Store_Intro_New_FormClosing(object sender, FormClosingEventArgs e)
@@ -170,6 +163,20 @@ namespace WinPaletter
                     ListBox2.SelectedIndex = i;
                 else
                     ListBox2.SelectedIndex = ListBox2.Items.Count - 1;
+            }
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabControl1.SelectedIndex == tabControl1.TabPages.Count - 1)
+            {
+                Button1.Text = Program.Localization.Strings.General.Finish;
+                CheckBox1.Visible = true;
+            }
+            else
+            {
+                Button1.Text = Program.Localization.Strings.General.Next;
+                CheckBox1.Visible = false;
             }
         }
     }

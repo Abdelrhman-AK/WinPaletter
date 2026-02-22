@@ -19,8 +19,6 @@ namespace WinPaletter
 
         private void Login_Load(object sender, EventArgs e)
         {
-            Icon = FormsExtensions.Icon<MainForm>();
-
             tablessControl1.SelectedIndex = 0;
             signin_btn.Visible = true;
             cts = new();

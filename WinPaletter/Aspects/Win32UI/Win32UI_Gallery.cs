@@ -16,8 +16,6 @@ namespace WinPaletter
 
         private void Win32UI_Gallery_Load(object sender, EventArgs e)
         {
-            Icon = FormsExtensions.Icon<Win32UI>();
-
             LoadGallery();
         }
 

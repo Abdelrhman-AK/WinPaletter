@@ -98,8 +98,7 @@
                 public string RestorePoint_Aspect { get; set; } = "WinPaletter - Before applying {0}";
                 public string RestorePoint_Theme { get; set; } = "WinPaletter - Before applying theme '{0}'";
                 public string RestorePoint_FirstTime { get; set; } = "WinPaletter - First time System Restore Point";
-                public string RestorePoint_FirstTime_DialogTitle { get; set; } = "First time System Restore Point";
-                public string RestorePoint_FirstTime_Desc { get; set; } = "And that is to ensure you can revert changes if needed.";
+                public string RestorePoint_DialogTitle { get; set; } = "System Restore Point";
                 public string Help { get; set; } = "Help (from online GitHub Wiki)";
                 public string ThanksTo { get; set; } = "Thanks to";
                 public string SamplingPixels { get; set; } = "Sampling pixels";

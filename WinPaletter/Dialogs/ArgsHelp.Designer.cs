@@ -74,8 +74,8 @@
             this.button1.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button1.Image = null;
-            this.button1.ImageGlyphEnabled = false;
             this.button1.ImageGlyph = null;
+            this.button1.ImageGlyphEnabled = false;
             this.button1.Location = new System.Drawing.Point(458, 511);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(114, 38);
@@ -91,8 +91,8 @@
             this.button2.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button2.Image = null;
-            this.button2.ImageGlyphEnabled = false;
             this.button2.ImageGlyph = null;
+            this.button2.ImageGlyphEnabled = false;
             this.button2.Location = new System.Drawing.Point(282, 511);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(170, 38);
@@ -111,10 +111,8 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.Separator1);
             this.Controls.Add(this.TextBox1);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForeColor = System.Drawing.Color.White;
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "ArgsHelp";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Command line help";
             this.Load += new System.EventHandler(this.ArgsHelp_Load);

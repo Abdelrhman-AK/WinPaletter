@@ -176,7 +176,7 @@ namespace WinPaletter
             this.radioImage7.Name = "radioImage7";
             this.radioImage7.Size = new System.Drawing.Size(57, 68);
             this.radioImage7.TabIndex = 110;
-            this.radioImage7.Text = "12*";
+            this.radioImage7.Text = "12";
             this.radioImage7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.radioImage7.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 

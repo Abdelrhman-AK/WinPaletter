@@ -206,6 +206,8 @@ namespace WinPaletter
             checkBox29.Checked = Effects.AlwaysHibernateThumbnails;
 
             Panel2.Width = (int)Effects.Caret;
+            Label7.ForeColor = TM.Win32.WindowText;
+            Panel2.BackColor = TM.Win32.WindowText;
         }
 
         public void ApplyToTM(Manager TM)

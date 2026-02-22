@@ -35,6 +35,7 @@ namespace WinPaletter
         [DebuggerStepThrough()]
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Saving_ex_list));
             this.Button1 = new WinPaletter.UI.WP.Button();
             this.Button2 = new WinPaletter.UI.WP.Button();
             this.TreeView1 = new System.Windows.Forms.TreeView();
@@ -51,8 +52,8 @@ namespace WinPaletter
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = null;
-            this.Button1.ImageGlyphEnabled = false;
             this.Button1.ImageGlyph = null;
+            this.Button1.ImageGlyphEnabled = false;
             this.Button1.Location = new System.Drawing.Point(732, 7);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(95, 34);
@@ -69,8 +70,8 @@ namespace WinPaletter
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
             this.Button2.Image = null;
-            this.Button2.ImageGlyphEnabled = false;
             this.Button2.ImageGlyph = null;
+            this.Button2.ImageGlyphEnabled = false;
             this.Button2.Location = new System.Drawing.Point(436, 7);
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(290, 34);
@@ -124,6 +125,8 @@ namespace WinPaletter
             this.bottom_buttons.Name = "bottom_buttons";
             this.bottom_buttons.Size = new System.Drawing.Size(834, 48);
             this.bottom_buttons.TabIndex = 119;
+            this.bottom_buttons.UseDecorationPattern = false;
+            this.bottom_buttons.UseSharpStyle = false;
             // 
             // Saving_ex_list
             // 
@@ -134,9 +137,7 @@ namespace WinPaletter
             this.ClientSize = new System.Drawing.Size(834, 461);
             this.Controls.Add(this.TreeView1);
             this.Controls.Add(this.bottom_buttons);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForeColor = System.Drawing.Color.White;
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimizeBox = false;
             this.Name = "Saving_ex_list";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

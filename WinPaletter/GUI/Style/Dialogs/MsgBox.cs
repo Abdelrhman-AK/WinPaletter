@@ -158,7 +158,7 @@ namespace WinPaletter.UI.Style
                     };
 
                     // Get the icon of the footer
-                    if (FooterCustomIcon is null) FooterCustomIcon = FormsExtensions.Icon<MainForm>();
+                    if (FooterCustomIcon is null) FooterCustomIcon = informationIcon;
                     else TD.CustomFooterIcon = FooterCustomIcon;
 
                     // Create the buttons of the dialog

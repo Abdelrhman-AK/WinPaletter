@@ -233,6 +233,14 @@ namespace WinPaletter.TypesExtensions
             return level;
         }
 
+        public static void InvokeIfNeeded(this Control control, Action action)
+        {
+            if (control.InvokeRequired)
+                control.Invoke(action);
+            else
+                action();
+        }
+
         /// <summary>
         /// Set the text of a control in a thread safe way
         /// </summary>

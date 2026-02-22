@@ -26,20 +26,6 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Get the icon of a form type without creating an instance of the form and without form memory allocation.
-        /// </summary>
-        /// <typeparam name="TForm">The type of the form.</typeparam>
-        /// <returns>The icon of the form type, or null if not found.</returns>
-        public static Icon Icon<TForm>() where TForm : UI.WP.Form, new()
-        {
-            // Create an instance of the form, but prevent it from triggering the Load event
-            using (TForm form = Activator.CreateInstance(typeof(TForm), true) as TForm)
-            {
-                return form.Icon;
-            }
-        }
-
-        /// <summary>
         /// Load the language of a form.
         /// </summary>
         /// <param name="Form"></param>

@@ -110,6 +110,16 @@ namespace WinPaletter.NativeMethods
         }
 
         /// <summary>
+        /// Retrieves the process identifier for the current process.
+        /// </summary>
+        /// <remarks>This method is a managed wrapper for the native Windows API function
+        /// GetCurrentProcessId. The returned process identifier uniquely identifies the current process within the
+        /// system and can be used for logging, diagnostics, or inter-process communication scenarios.</remarks>
+        /// <returns>The process identifier (PID) of the calling process.</returns>
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern int GetCurrentProcessId();
+
+        /// <summary>
         /// GetModuleHandle function: Retrieves a module handle for the specified module.
         /// If the function succeeds, the return value is a handle to the specified module.
         /// If the function fails, the return value is IntPtr.Zero.

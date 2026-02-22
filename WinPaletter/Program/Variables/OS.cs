@@ -71,6 +71,11 @@ namespace WinPaletter.GlobalVariables
         public static bool W12 { get; } = RuntimeInformation.OSDescription.Contains("12") || Version.Major > 10;
 
         /// <summary>
+        /// A flag that determines that Windows 12 is released or not (for UI elements)
+        /// </summary>
+        public static bool IsWin12Released => false;
+
+        /// <summary>
         /// Gets a value indicating whether the current operating system is Windows 10, version 1909 (19H2 - build 18363) or later.
         /// </summary>
         public static bool W10_1909 { get; } = Version.Major == 10 && Version.Minor == 0 && Version.Build >= 18363;

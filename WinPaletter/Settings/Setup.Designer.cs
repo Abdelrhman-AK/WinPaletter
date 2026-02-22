@@ -1319,7 +1319,6 @@
             this.Controls.Add(this.tablessControl1);
             this.Controls.Add(this.bottom_buttons);
             this.Controls.Add(this.titlebarExtender1);
-            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "Setup";
@@ -1327,7 +1326,6 @@
             this.ShowIconAndCaptionText = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "WinPaletter Setup";
-            this.TopMost = true;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Setup_FormClosed);
             this.Load += new System.EventHandler(this.Setup_Load);
             this.tablessControl1.ResumeLayout(false);
