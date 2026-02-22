@@ -5962,6 +5962,7 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.storage_logs_prg.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Bar;
             this.storage_logs_prg.BackColor = System.Drawing.Color.Transparent;
+            this.storage_logs_prg.HighlightEffectEnabled = false;
             this.storage_logs_prg.Location = new System.Drawing.Point(11, 123);
             this.storage_logs_prg.Name = "storage_logs_prg";
             this.storage_logs_prg.Size = new System.Drawing.Size(245, 22);
@@ -6060,6 +6061,7 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.storage_data_prg.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Bar;
             this.storage_data_prg.BackColor = System.Drawing.Color.Transparent;
+            this.storage_data_prg.HighlightEffectEnabled = false;
             this.storage_data_prg.Location = new System.Drawing.Point(11, 123);
             this.storage_data_prg.Name = "storage_data_prg";
             this.storage_data_prg.Size = new System.Drawing.Size(245, 22);
@@ -6126,6 +6128,7 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.storage_errors_prg.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Bar;
             this.storage_errors_prg.BackColor = System.Drawing.Color.Transparent;
+            this.storage_errors_prg.HighlightEffectEnabled = false;
             this.storage_errors_prg.Location = new System.Drawing.Point(11, 123);
             this.storage_errors_prg.Name = "storage_errors_prg";
             this.storage_errors_prg.Size = new System.Drawing.Size(245, 22);
@@ -6225,6 +6228,7 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.storage_backup_prg.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Bar;
             this.storage_backup_prg.BackColor = System.Drawing.Color.Transparent;
+            this.storage_backup_prg.HighlightEffectEnabled = false;
             this.storage_backup_prg.Location = new System.Drawing.Point(11, 123);
             this.storage_backup_prg.Name = "storage_backup_prg";
             this.storage_backup_prg.Size = new System.Drawing.Size(245, 22);
@@ -6307,6 +6311,7 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.storage_resPack_prg.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Bar;
             this.storage_resPack_prg.BackColor = System.Drawing.Color.Transparent;
+            this.storage_resPack_prg.HighlightEffectEnabled = false;
             this.storage_resPack_prg.Location = new System.Drawing.Point(11, 123);
             this.storage_resPack_prg.Name = "storage_resPack_prg";
             this.storage_resPack_prg.Size = new System.Drawing.Size(245, 22);
@@ -6403,6 +6408,7 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.storage_store_prg.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Bar;
             this.storage_store_prg.BackColor = System.Drawing.Color.Transparent;
+            this.storage_store_prg.HighlightEffectEnabled = false;
             this.storage_store_prg.Location = new System.Drawing.Point(11, 123);
             this.storage_store_prg.Name = "storage_store_prg";
             this.storage_store_prg.Size = new System.Drawing.Size(245, 22);
