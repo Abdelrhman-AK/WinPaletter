@@ -28,7 +28,7 @@ namespace WinPaletter
         private static readonly object _cacheLock = new();
 
         // Pre-compiled format strings
-        private const string ComputerPrefix = @"Computer\";
+        private const string ComputerPrefix = "Computer\\";
         private const string HKCUPrefix = "HKEY_CURRENT_USER\\";
         private const string HKUPrefix = "HKEY_USERS\\";
         private const string HKMLPrefix = "HKEY_LOCAL_MACHINE\\";
