@@ -24,9 +24,6 @@ While significant new features are not anticipated, the goal is to place the pro
 > [!IMPORTANT]
 > Development during this comeback phase will be limited. The developer will be available only one or two days per week (or every two weeks), and not for the full day. As a result, progress will be slower compared to the more active development period prior to archiving.
 
-> [!WARNING]
-> Development may stop in **February 2026**, and the project will be archived once more. This end is not confirmed.
-
 ---
 
 #### WinPaletter is a portable tool designed to elevate your Windows desktop experience. Whether you're a designer, developer, or someone who loves personalization, WinPaletter offers an intuitive interface and robust features to streamline the management and application of colors and effects on your Windows system.
