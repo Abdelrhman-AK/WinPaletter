@@ -460,7 +460,15 @@ namespace WinPaletter
         /// <summary>
         /// A boolean that represents if the user is logged in to GitHub or not
         /// </summary>
-        public static bool GitHub_LoggedIn { get; private set; } = false;
+        public static bool GitHub_LoggedIn 
+        { 
+            get => gitHub_LoggedIn && GitHub is not null; 
+            private set
+            {
+                if (value != gitHub_LoggedIn) gitHub_LoggedIn = value;
+            }
+        }
+        private static bool gitHub_LoggedIn = false;
 
         private static Bitmap github_avatar;
         private static Task avatarTask;

@@ -17,12 +17,12 @@ namespace WinPaletter.GitHub
         /// <summary>
         /// Gets the globally configured <see cref="GitHubClient"/> instance.
         /// </summary>
-        private static GitHubClient Client => Program.GitHub.Client;
+        private static GitHubClient Client => Program.GitHub?.Client;
 
         /// <summary>
         /// Gets the authenticated user login name (repository owner).
         /// </summary>
-        public static string Owner => User.GitHub.Login;
+        public static string Owner => User.GitHub?.Login;
 
         /// <summary>
         /// Original owner of WinPaletter Themes repository

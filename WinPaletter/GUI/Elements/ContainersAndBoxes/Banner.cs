@@ -11,6 +11,8 @@ namespace WinPaletter.UI.WP
     [Description("Banner for WinPaletter UI")]
     public class Banner : Control
     {
+        private GraphicsExtensions.RoundedCorners corners = GraphicsExtensions.RoundedCorners.All;
+
         public Banner()
         {
             TabStop = false;
@@ -58,6 +60,37 @@ namespace WinPaletter.UI.WP
             base.OnPaintBackground(pevent);
         }
 
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            UpdateRegion();
+        }
+
+        protected override void OnDockChanged(EventArgs e)
+        {
+            base.OnDockChanged(e);
+            UpdateRegion();
+        }
+
+        private void UpdateRegion()
+        {
+            if (IsDisposed) return;
+
+            Rectangle rect = new(0, 0, Width, Height);
+
+            Region?.Dispose();
+
+            if (DesignMode)
+            {
+                Region = new Region(rect);
+                return;
+            }
+
+            corners = this.UndockedCorners();
+
+            using (GraphicsPath path = rect.Round(corners: corners)) Region = new(path);
+        }
+
         public new string Text
         {
             get => base.Text;
@@ -100,37 +133,37 @@ namespace WinPaletter.UI.WP
             using (LinearGradientBrush lgb1 = new(Rect_Fix, scheme.Colors.Line_Hover(parentLevel), _color_line, LinearGradientMode.Horizontal))
             using (Pen P = new(lgb1))
             {
-                if (Dock == DockStyle.None)
-                {
-                    G.FillRoundedRect(lgb0, Rect);
-                    G.FillRoundedRect(Noise, Rect);
-                    G.DrawRoundedRect(P, Rect);
-                }
-                else
-                {
-                    G.FillRectangle(lgb0, Rect);
-                    G.FillRectangle(Noise, Rect);
-                }
+                G.FillRoundedRect(lgb0, Rect, corners: corners);
+                G.FillRoundedRect(Noise, Rect, corners: corners);
+                G.DrawRoundedRect(P, Rect, corners: corners);
             }
 
             using (SolidBrush B = new(ForeColor))
             using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
             using (Font f = new(Fonts.Title, Font.Size, Font.Style))
             {
-                //Draw image
+                const float padding = 10f;
+                const float spacing = 10f;
+
+                float textLeft = Rect.X + padding;
+                float textWidth = Rect.Width - padding * 2f;
+
                 if (Image != null)
                 {
-                    ImageRect = new(Rect.X + 10, Rect.Y + (Rect.Height - _image.Height) / 2, _image.Width, _image.Height);
+                    float imageY = Rect.Y + (Rect.Height - _image.Height) / 2f;
+
+                    ImageRect = new RectangleF(Rect.X + padding, imageY, _image.Width, _image.Height);
+
                     G.DrawImage(Image, ImageRect);
-                    G.DrawString(Text, f, B, new RectangleF(ImageRect.Right + 10, 0, Width, Height), sf);
+
+                    textLeft = ImageRect.Right + spacing;
+                    textWidth = Rect.Right - padding - textLeft;
                 }
-                else
-                {
-                    G.DrawString(Text, f, B, new RectangleF(Rect.X + 10, Rect.Y, Rect.Width - 20, Rect.Height), sf);
-                }
+
+                RectangleF textRect = new(textLeft, Rect.Y, Math.Max(0, textWidth), Rect.Height);
+
+                G.DrawString(Text, f, B, textRect, sf);
             }
-
-
         }
     }
 }

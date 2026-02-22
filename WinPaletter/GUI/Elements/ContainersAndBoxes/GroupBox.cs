@@ -2,14 +2,22 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.IO;
 using System.Management.Instrumentation;
 using System.Windows.Forms;
+using static WinPaletter.TypesExtensions.GraphicsExtensions;
 
 namespace WinPaletter.UI.WP
 {
-    [Description("Themed GroupBox (fully optimized, memory-friendly)")]
+    [Description("Themed GroupBox")]
     public class GroupBox : Panel
     {
+        private TextureBrush _patternBrush;
+        private int _cachedPatternVal = -1;
+        private bool _cachedDarkMode = false;
+        private int parentLevel = 0;
+        private RoundedCorners corners = RoundedCorners.All;
+
         public GroupBox()
         {
             SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor | ControlStyles.OptimizedDoubleBuffer, true);
@@ -18,17 +26,6 @@ namespace WinPaletter.UI.WP
             Text = string.Empty;
         }
 
-        // ================================
-        // Cached pattern brush
-        // ================================
-        private TextureBrush _patternBrush;
-        private int _cachedPatternVal = -1;
-        private bool _cachedDarkMode = false;
-        private int parentLevel = 0;
-
-        // ================================
-        // Properties
-        // ================================
         private bool useDecorationPattern;
         public bool UseDecorationPattern
         {
@@ -46,14 +43,23 @@ namespace WinPaletter.UI.WP
         public bool UseSharpStyle
         {
             get => useSharpStyle;
-            set { useSharpStyle = value; Invalidate(); }
+            set 
+            { 
+                useSharpStyle = value;
+                UpdateRegion();
+                Invalidate(); 
+            }
         }
 
-        public override string Text { get; set; } = string.Empty;
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public override string Text
+        {
+            get => base.Text;
+            set => base.Text = value;
+        }
 
-        // ================================
-        // Parent changes
-        // ================================
         protected override void OnParentChanged(EventArgs e)
         {
             base.OnParentChanged(e);
@@ -82,9 +88,6 @@ namespace WinPaletter.UI.WP
             base.OnHandleDestroyed(e); 
         }
 
-        // ================================
-        // Update pattern brush
-        // ================================
         public void UpdatePattern(int? patternNO = null)
         {
             patternNO ??= Program.Style.Pattern;
@@ -132,9 +135,9 @@ namespace WinPaletter.UI.WP
                 _patternBrush = new TextureBrush(processed, WrapMode.Tile);
         }
 
-        // ================================
-        // Handle global style changes
-        // ================================
+        /// <summary>
+        /// Handle global style changes
+        /// </summary>
         private void OnGlobalStyleChanged()
         {
             if (UseDecorationPattern) UpdatePattern(Program.Style.Pattern);
@@ -143,17 +146,32 @@ namespace WinPaletter.UI.WP
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
+            UpdateRegion();
+        }
 
-            if (!DesignMode)
+        protected override void OnDockChanged(EventArgs e)
+        {
+            base.OnDockChanged(e);
+            UpdateRegion();
+        }
+
+        private void UpdateRegion()
+        {
+            if (IsDisposed) return;
+
+            Rectangle rect = new(0, 0, Width, Height);
+
+            Region?.Dispose();
+
+            if (DesignMode || useSharpStyle)
             {
-                Rectangle rect = new(0, 0, Width, Height);
-
-                using (GraphicsPath path = rect.Round())
-                {
-                    Region?.Dispose();
-                    Region = new Region(path);
-                }
+                Region = new Region(rect);
+                return;
             }
+
+            corners = this.UndockedCorners();
+
+            using (GraphicsPath path = rect.Round(corners: corners)) Region = new(path);
         }
 
         protected override void OnPaintBackground(PaintEventArgs pevent)
@@ -184,9 +202,9 @@ namespace WinPaletter.UI.WP
                 {
                     if (!useSharpStyle)
                     {
-                        G.FillRoundedRect(br, Rect);
+                        G.FillRoundedRect(br, Rect, corners: corners);
                         if (_patternBrush != null) G.FillRoundedRect(_patternBrush, Rect);
-                        G.DrawRoundedRect(P, Rect);
+                        G.DrawRoundedRect(P, Rect, corners: corners);
                     }
                     else
                     {
@@ -208,9 +226,6 @@ namespace WinPaletter.UI.WP
             }
         }
 
-        // ================================
-        // Cleanup
-        // ================================
         protected override void Dispose(bool disposing)
         {
             if (disposing)

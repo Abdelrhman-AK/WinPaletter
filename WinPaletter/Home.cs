@@ -58,7 +58,7 @@ namespace WinPaletter
             GitHub.Events.GitHubAvatarUpdated += UpdateUserButtonAvatar;
 
             NotifyUpdates.Icon = Icon;
-            groupBox1.UseSharpStyle = true;
+
             labelAlt1.Font = new(Fonts.Title, labelAlt1.Font.Size, labelAlt1.Font.Style);
             labelAlt2.Font = new(Fonts.Title, labelAlt2.Font.Size, labelAlt2.Font.Style);
             labelAlt3.Font = Fonts.Console;
@@ -174,20 +174,20 @@ namespace WinPaletter
 
             Bitmap avatar = User.GitHub_Avatar ?? User.ProfilePicture;
 
-            if (avatar == null)
+            if (avatar == null || !avatar.IsValid())
             {
                 userButton.Image = null;
                 return;
             }
 
-            using (Bitmap resizedAvatar = avatar.Resize(32, 32))
+            using (Bitmap resizedAvatar = avatar?.Resize(32, 32))
             using (Bitmap resizedUser = User.ProfilePicture?.Resize(16, 16))
-            using (Bitmap circularAvatar = resizedAvatar.ToCircular(Program.Style.Schemes.Main.Colors.ForeColor_Accent))
+            using (Bitmap circularAvatar = resizedAvatar?.ToCircular(Program.Style.Schemes.Main.Colors.ForeColor_Accent))
             using (Bitmap circularUser = resizedUser?.ToCircular())
             {
                 Bitmap finalImage;
 
-                if (circularUser != null)
+                if (circularUser is not null)
                 {
                     PointF overlayPoint = new(circularAvatar.Width - circularUser.Width, circularAvatar.Height - circularUser.Height);
                     finalImage = circularAvatar.Overlay(circularUser, overlayPoint);

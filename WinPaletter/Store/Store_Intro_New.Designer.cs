@@ -68,6 +68,7 @@ namespace WinPaletter
             this.Button14 = new WinPaletter.UI.WP.Button();
             this.Button15 = new WinPaletter.UI.WP.Button();
             this.tabPage9 = new System.Windows.Forms.TabPage();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.groupBox3 = new WinPaletter.UI.WP.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
             this.banner4 = new WinPaletter.UI.WP.Banner();
@@ -102,6 +103,7 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox54)).BeginInit();
             this.groupBox5.SuspendLayout();
             this.tabPage9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabPage10.SuspendLayout();
@@ -578,6 +580,7 @@ namespace WinPaletter
             // tabPage9
             // 
             this.tabPage9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.tabPage9.Controls.Add(this.pictureBox3);
             this.tabPage9.Controls.Add(this.groupBox3);
             this.tabPage9.Controls.Add(this.banner4);
             this.tabPage9.Controls.Add(this.groupBox1);
@@ -589,6 +592,17 @@ namespace WinPaletter
             this.tabPage9.Size = new System.Drawing.Size(778, 530);
             this.tabPage9.TabIndex = 2;
             this.tabPage9.Text = "Explore themes";
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
+            this.pictureBox3.Location = new System.Drawing.Point(21, 167);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(737, 357);
+            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox3.TabIndex = 253;
+            this.pictureBox3.TabStop = false;
             // 
             // groupBox3
             // 
@@ -901,6 +915,7 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox54)).EndInit();
             this.groupBox5.ResumeLayout(false);
             this.tabPage9.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.tabPage10.ResumeLayout(false);
@@ -965,5 +980,6 @@ namespace WinPaletter
         private UI.WP.GroupBox groupBox7;
         internal Label label7;
         private PictureBox pictureBox2;
+        private PictureBox pictureBox3;
     }
 }

@@ -64,7 +64,7 @@ namespace WinPaletter.GitHub
         /// Void method occurs on GitHub user change event
         /// </summary>
         /// <param name="e"></param>
-        public async static void OnGitHubUserSwitch(GitHubUserChangeEventArgs e)
+        public static async void OnGitHubUserSwitch(GitHubUserChangeEventArgs e)
         {
             try
             {

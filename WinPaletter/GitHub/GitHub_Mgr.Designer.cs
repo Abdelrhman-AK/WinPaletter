@@ -1603,7 +1603,7 @@
             this.button1.Image = null;
             this.button1.ImageGlyph = null;
             this.button1.ImageGlyphEnabled = true;
-            this.button1.Location = new System.Drawing.Point(676, 1);
+            this.button1.Location = new System.Drawing.Point(676, 2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(107, 28);
             this.button1.TabIndex = 15;
@@ -1616,7 +1616,7 @@
             this.status_lbl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.status_lbl.BackColor = System.Drawing.Color.Transparent;
             this.status_lbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.status_lbl.Location = new System.Drawing.Point(7, 9);
+            this.status_lbl.Location = new System.Drawing.Point(7, 8);
             this.status_lbl.Name = "status_lbl";
             this.status_lbl.Size = new System.Drawing.Size(754, 15);
             this.status_lbl.TabIndex = 13;
@@ -1632,7 +1632,7 @@
             this.button13.Image = null;
             this.button13.ImageGlyph = null;
             this.button13.ImageGlyphEnabled = true;
-            this.button13.Location = new System.Drawing.Point(787, 1);
+            this.button13.Location = new System.Drawing.Point(787, 2);
             this.button13.Name = "button13";
             this.button13.Size = new System.Drawing.Size(205, 28);
             this.button13.TabIndex = 14;

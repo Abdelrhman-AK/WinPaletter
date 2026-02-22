@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+using static WinPaletter.TypesExtensions.GraphicsExtensions;
 
 namespace WinPaletter.TypesExtensions
 {
@@ -179,8 +180,27 @@ namespace WinPaletter.TypesExtensions
             return Color.FromArgb(r, g, b);
         }
 
-        private static readonly PropertyInfo DoubleBufferedProp =
-            typeof(Control).GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
+        public static RoundedCorners UndockedCorners(this Control control)
+        {
+            if (control?.Parent == null) return RoundedCorners.All;
+
+            if (control.Dock == DockStyle.Fill)
+            {
+                if (control.Parent.Dock != DockStyle.None) return control.Parent.UndockedCorners();
+            }
+
+            return control.Dock switch
+            {
+                DockStyle.Top => RoundedCorners.BottomLeft | RoundedCorners.BottomRight,
+                DockStyle.Bottom => RoundedCorners.TopLeft | RoundedCorners.TopRight,
+                DockStyle.Left => RoundedCorners.TopRight | RoundedCorners.BottomRight,
+                DockStyle.Right => RoundedCorners.TopLeft | RoundedCorners.BottomLeft,
+                DockStyle.Fill => RoundedCorners.All,
+                _ => RoundedCorners.All
+            };
+        }
+
+        private static readonly PropertyInfo DoubleBufferedProp = typeof(Control).GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
 
         public static void DoubleBuffer(this Control control)
         {

@@ -486,6 +486,20 @@ namespace WinPaletter.TypesExtensions
             }
         }
 
+        public static bool IsValid(this Bitmap bmp)
+        {
+            try
+            {
+                _ = bmp.Width;
+                _ = bmp.Height;
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         /// <summary>
         /// Resizes a bitmap safely, avoiding per-pixel operations and handling very large images
         /// by progressive scaling. Chooses optimal pixel format based on alpha usage to save memory.
@@ -497,9 +511,9 @@ namespace WinPaletter.TypesExtensions
         /// <returns>Resized bitmap, or null if src is null.</returns>
         public static Bitmap Resize(this Bitmap src, int targetWidth, int targetHeight)
         {
-            if (src is null) return null;
-            if (targetWidth <= 0 || targetHeight <= 0)
-                throw new ArgumentOutOfRangeException(nameof(targetWidth), "Width and height must be greater than 0.");
+            if (src is null || !src.IsValid()) return null;
+            
+            if (targetWidth <= 0 || targetHeight <= 0) throw new ArgumentOutOfRangeException(nameof(targetWidth), "Width and height must be greater than 0.");
 
             // Validate source bitmap dimensions
             if (src.Width <= 0 || src.Height <= 0) return null;

@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -20,6 +21,7 @@ namespace WinPaletter
         Octokit.Repository repo;
         Branch upstreamBranch;
         bool pendingBranchesFetches = false;
+        private readonly SemaphoreSlim _initLock = new(1, 1);
 
         public GitHub_Mgr()
         {
@@ -60,44 +62,57 @@ namespace WinPaletter
             base.Dispose(disposing);
         }
 
-        private void GitHub_Mgr_Load(object sender, EventArgs e)
+        private async void GitHub_Mgr_Load(object sender, EventArgs e)
         {
             groupBox6.UseDecorationPattern = true;
+
             previousIndex = -1;
             tablessControl1.SelectedIndex = 5;
 
             created_lbl.Font = Fonts.ConsoleMedium;
             updated_lbl.Font = Fonts.ConsoleMedium;
 
-            LoadInternal();
+            AddViewsToButton();
+
+            await LoadInternal();
         }
 
         private async Task Init()
         {
-            AddViewsToButton();
+            if (!await _initLock.WaitAsync(0)) return;
 
-            UpdateGitHubLoginData();
-
-            bool forked = await GitHub.Repository.ExistsAsync(GitHub.Repository.Name);
-
-            label8.Text = forked
-                ? Program.Localization.Strings.GitHubStrings.ExplorerStatus_Forked
-                : $"{Program.Localization.Strings.GitHubStrings.ExplorerStatus_NotForked} {Program.Localization.Strings.GitHubStrings.ExplorerStatus_SyncAndForkToManage}";
-            button9.Enabled = !forked;
-            tablessControl2.SelectedIndex = 0;
-            groupBox4.UseSharpStyle = true;
-            groupBox1.UseSharpStyle = true;
-
-            if (forked)
+            try
             {
-                await GetBranches();
-            }
+                UpdateGitHubLoginData();
 
-            // After populating the tree for the first time
-            UpdateExplorerLayout();
+                bool forked = await GitHub.Repository.ExistsAsync(GitHub.Repository.Name);
+
+                label8.Text = forked
+                    ? Program.Localization.Strings.GitHubStrings.ExplorerStatus_Forked
+                    : $"{Program.Localization.Strings.GitHubStrings.ExplorerStatus_NotForked} {Program.Localization.Strings.GitHubStrings.ExplorerStatus_SyncAndForkToManage}";
+                button9.Enabled = !forked;
+                tablessControl2.SelectedIndex = 0;
+
+                if (forked)
+                {
+                    await GetBranches();
+                }
+
+                // After populating the tree for the first time
+                UpdateExplorerLayout();
+            }
+            catch (Exception ex)
+            {
+                Forms.BugReport.Throw(ex);
+                throw;
+            }
+            finally
+            {
+                _initLock.Release();
+            }
         }
 
-        private async void LoadInternal()
+        private async Task LoadInternal()
         {
             if (!IsHandleCreated)
             {
@@ -114,9 +129,7 @@ namespace WinPaletter
 
             if (remainingTrials == 0)
             {
-                labelAlt3.Text = string.Format(
-                    Program.Localization.Strings.GitHubStrings.API_RateLimited,
-                    whenWillReset.ToLocalTime());
+                labelAlt3.Text = string.Format(Program.Localization.Strings.GitHubStrings.API_RateLimited, whenWillReset.ToLocalTime());
                 ShowTab(4, false);
                 return;
             }
@@ -132,9 +145,9 @@ namespace WinPaletter
             await Init();
         }
 
-        private void Events_OnTokenLoaded(object sender, string e)
+        private async void Events_OnTokenLoaded(object sender, string e)
         {
-            if (IsHandleCreated) LoadInternal();
+            if (IsHandleCreated) await LoadInternal();
         }
 
         void AddViewsToButton()
@@ -842,11 +855,11 @@ Generated automatically by WinPaletter. Please review the changes before merging
 
         private async void button2_Click(object sender, EventArgs e) { await GitHub.FileSystem.GoBack(); }
 
-        private void button21_Click(object sender, EventArgs e)
+        private async void button21_Click(object sender, EventArgs e)
         {
             if (Forms.GitHub_Login.ShowDialog() == DialogResult.OK && IsHandleCreated)
             {
-                LoadInternal();
+                await LoadInternal();
             }
         }
 
@@ -1178,7 +1191,7 @@ Generated automatically by WinPaletter. Please review the changes before merging
 
         private void noNetworkPanel1_CloseClicked(object sender, EventArgs e) { Close(); }
 
-        private void noNetworkPanel1_RetryClicked(object sender, EventArgs e) { LoadInternal(); }
+        private async void noNetworkPanel1_RetryClicked(object sender, EventArgs e) { await LoadInternal(); }
 
         private void pin_button_Click(object sender, EventArgs e)
         { Forms.MainForm.tabsContainer1.AddFormIntoTab(this); }
@@ -1268,11 +1281,11 @@ Generated automatically by WinPaletter. Please review the changes before merging
         {
             if (IsHandleCreated)
             {
-                Bitmap avatar = (User.GitHub_Avatar ?? Properties.Resources.GitHub_SignInForFeatures).Clone() as Bitmap;
-
-                using (Bitmap avatar_resized = avatar.Resize(pictureBox1.Size))
+                using (Bitmap temp0 = new(User.GitHub_Avatar))
+                using (Bitmap temp1 = temp0?.Resize(pictureBox1.Size))
+                using (Bitmap temp2 = temp1?.ToCircular())
                 {
-                    pictureBox1.Image = avatar_resized.ToCircular();
+                    pictureBox1.Image = new Bitmap(temp2);
                 }
             }
         }
@@ -1281,7 +1294,7 @@ Generated automatically by WinPaletter. Please review the changes before merging
         {
             if (IsHandleCreated)
             {
-                LoadInternal();
+                await LoadInternal();
             }
         }
 
