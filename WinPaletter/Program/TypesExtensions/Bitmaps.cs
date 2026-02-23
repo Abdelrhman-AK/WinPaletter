@@ -490,6 +490,7 @@ namespace WinPaletter.TypesExtensions
         {
             try
             {
+                if (bmp is null) return false;
                 _ = bmp.Width;
                 _ = bmp.Height;
                 return true;

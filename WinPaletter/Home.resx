@@ -121,6 +121,24 @@
     <value>17, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="button21.ImageGlyph" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAL1JREFUSEvt
+        1DFKQ1EQheEEdAEBF2Ihaa0D7kPchwFJnyZrMXuQRJdgq9YJ+oULzyLH5CYvjSLvh6nmzD8wxfR6HX8G
+        DLHA2javGOM8Z1rRyGs8YpBzR4OvNAalf9tkr/Gwo+5xg376y1CND4ya3B1WGQgm6a8tWOISZ5hmcw/v
+        6a+CC8zTUiMdRZL3/K4Z3lJwiPTXTnQS6e8W/CD9/2PBoVfRhs/0H/Ps2vCU/rKgvOuXTJ7AM67S3/F7
+        bAAhZG78UqWg7QAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="button22.ImageGlyph" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAL1JREFUSEvt
+        1DFKQ1EQheEEdAEBF2Ihaa0D7kPchwFJnyZrMXuQRJdgq9YJ+oULzyLH5CYvjSLvh6nmzD8wxfR6HX8G
+        DLHA2javGOM8Z1rRyGs8YpBzR4OvNAalf9tkr/Gwo+5xg376y1CND4ya3B1WGQgm6a8tWOISZ5hmcw/v
+        6a+CC8zTUiMdRZL3/K4Z3lJwiPTXTnQS6e8W/CD9/2PBoVfRhs/0H/Ps2vCU/rKgvOuXTJ7AM67S3/F7
+        bAAhZG78UqWg7QAAAABJRU5ErkJggg==
+</value>
+  </data>
   <data name="button19.ImageGlyph" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAL1JREFUSEvt
