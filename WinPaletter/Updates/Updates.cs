@@ -18,8 +18,10 @@ namespace WinPaletter
         private static UpdatesInfo CurrentUpdateStatic;
         private UpdatesInfo CurrentUpdate => CurrentUpdateStatic;
 
-        private bool _Shown;
         private bool Disturbed;
+        private DateTime _lastSpeedCalculationTime = DateTime.Now;
+        private long _lastBytesReceived = 0;
+        private double _currentSpeed = 0;
 
         public sealed class UpdatesInfo
         {
@@ -137,9 +139,9 @@ namespace WinPaletter
                     return;
                 }
 
-                ProgressBar1.Value = 0;
-                Program.Animator.ShowSync(ProgressBar1);
-                ProgressBar1.Style = UI.WP.ProgressBar.ProgressBarStyle.Marquee;
+                progressGraph1.Reset();
+                Program.Animator.ShowSync(progressGraph1);
+                progressGraph1.Style = ProgressGraph.ProgressBarStyle.Marquee;
 
                 UpdatesInfo info = await FetchLatestUpdateAsync();
 
@@ -158,9 +160,9 @@ namespace WinPaletter
             }
             finally
             {
-                ProgressBar1.Value = 0;
-                Program.Animator.HideSync(ProgressBar1);
-                ProgressBar1.Style = UI.WP.ProgressBar.ProgressBarStyle.Continuous;
+                progressGraph1.Reset();
+                Program.Animator.HideSync(progressGraph1);
+                progressGraph1.Style = ProgressGraph.ProgressBarStyle.Continuous;
 
                 Label17.SetText(Text);
                 SetBusyState(false);
@@ -169,7 +171,7 @@ namespace WinPaletter
 
         private async Task PerformUpdateActionAsync(bool saveAs)
         {
-            Program.Animator.HideSync(ProgressBar1);
+            Program.Animator.HideSync(progressGraph1);
 
             if (saveAs)
             {
@@ -183,16 +185,16 @@ namespace WinPaletter
                 if (dlg.ShowDialog() != DialogResult.OK) return;
 
                 SetBusyState(true);
-                ProgressBar1.Value = 0;
-                Program.Animator.ShowSync(ProgressBar1);
+                progressGraph1.Reset();
+                Program.Animator.ShowSync(progressGraph1);
                 await DM.DownloadFileAsync(CurrentUpdate.Url, dlg.FileName);
                 return;
             }
             else
             {
                 SetBusyState(true);
-                ProgressBar1.Value = 0;
-                Program.Animator.ShowSync(ProgressBar1);
+                progressGraph1.Reset();
+                Program.Animator.ShowSync(progressGraph1);
 
                 string currentExe = Assembly.GetExecutingAssembly().Location;
                 string dir = Path.GetDirectoryName(currentExe);
@@ -284,8 +286,8 @@ namespace WinPaletter
             button2.Enabled = !busy;
             if (!busy)
             {
-                ProgressBar1.Value = 0;
-                Program.Animator.HideSync(ProgressBar1);
+                progressGraph1.Reset();
+                Program.Animator.HideSync(progressGraph1);
             }
         }
 
@@ -326,15 +328,65 @@ namespace WinPaletter
 
         private void UC_DownloadProgressChanged(object sender, DownloadManager.DownloadProgressEventArgs e)
         {
-            ProgressBar1.Value = (int)e.ProgressPercentage;
+            // Check if we need to switch from marquee to continuous
+            if (e.TotalBytesToReceive > 0 && progressGraph1.Style == ProgressGraph.ProgressBarStyle.Marquee)
+            {
+                progressGraph1.Style = ProgressGraph.ProgressBarStyle.Continuous;
+            }
+
+            if (e.TotalBytesToReceive == 0)
+            {
+                // Unknown total size - use marquee mode
+                progressGraph1.Style = ProgressGraph.ProgressBarStyle.Marquee;
+
+                // Optional: Still update with speed for the graph line
+                DateTime now = DateTime.Now;
+                TimeSpan timeDiff = now - _lastSpeedCalculationTime;
+
+                if (timeDiff.TotalSeconds > 0 && _lastBytesReceived > 0)
+                {
+                    long bytesDiff = e.BytesReceived - _lastBytesReceived;
+                    double speedBps = bytesDiff / timeDiff.TotalSeconds;
+
+                    const double smoothingFactor = 0.3;
+                    _currentSpeed = (_currentSpeed * (1 - smoothingFactor)) + (speedBps * smoothingFactor);
+
+                    // progressGraph1.Add(0, _currentSpeed);
+                }
+
+                _lastSpeedCalculationTime = now;
+                _lastBytesReceived = e.BytesReceived;
+            }
+            else
+            {
+                // Known total size - use continuous mode with progress
+                progressGraph1.Style = ProgressGraph.ProgressBarStyle.Continuous;
+
+                DateTime now = DateTime.Now;
+                TimeSpan timeDiff = now - _lastSpeedCalculationTime;
+
+                if (timeDiff.TotalSeconds > 0)
+                {
+                    long bytesDiff = e.BytesReceived - _lastBytesReceived;
+                    double speedBps = bytesDiff / timeDiff.TotalSeconds;
+
+                    const double smoothingFactor = 0.3;
+                    _currentSpeed = (_currentSpeed * (1 - smoothingFactor)) + (speedBps * smoothingFactor);
+
+                    progressGraph1.Add(e.ProgressPercentage, _currentSpeed);
+                }
+
+                _lastSpeedCalculationTime = now;
+                _lastBytesReceived = e.BytesReceived;
+            }
         }
 
         private void UC_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
             if (Disturbed) return;
-            ProgressBar1.Value = 0;
+            progressGraph1.Reset();
             SetBusyState(false);
-            Program.Animator.HideSync(ProgressBar1);
+            Program.Animator.HideSync(progressGraph1);
         }
 
         private void Updates_Load(object sender, EventArgs e)
@@ -357,8 +409,6 @@ namespace WinPaletter
                 tablessControl1.SelectedIndex = 1;
             }
         }
-
-        private void Updates_Shown(object sender, EventArgs e) => _Shown = true;
 
         private void Updates_FormClosing(object sender, FormClosingEventArgs e) => DisturbActions();
 
@@ -409,7 +459,7 @@ namespace WinPaletter
 
         private void toggle1_CheckedChanged(object sender, EventArgs e)
         {
-            if (!_Shown) return;
+            if (!IsShown) return;
             Program.Settings.Updates.AutoCheck = toggle1.Checked;
             Program.Settings.Updates.Save();
         }
