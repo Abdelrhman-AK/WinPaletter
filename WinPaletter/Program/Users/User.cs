@@ -476,6 +476,9 @@ namespace WinPaletter
         private static readonly string AvatarCache = Path.Combine(SysPaths.appData, "GitHub", "Avatar.png");
         private static readonly string ETagPath = Path.Combine(SysPaths.appData, "GitHub", "Avatar.etag");
         private static volatile bool avatarLoading;
+        private static string _lastAvatarUser;
+        private static int _refreshVersion;
+        private static int _currentVersion;
 
         /// <summary>
         /// Avatar of the signed-in GitHub user
@@ -491,7 +494,16 @@ namespace WinPaletter
                 }
 
                 EnsureAvatarPipelineStarted();
-                return github_avatar;
+
+                lock (avatarLock)
+                {
+                    if (github_avatar != null && _lastAvatarUser != gitHub?.Login)
+                    {
+                        RefreshAvatar();
+                        return null;
+                    }
+                    return github_avatar; // now safe
+                }
             }
         }
 
@@ -510,6 +522,12 @@ namespace WinPaletter
 
         private static async Task LoadAvatarPipelineAsync()
         {
+            int version;
+            lock (avatarLock)
+            {
+                version = _refreshVersion;
+            }
+
             try
             {
                 bool hadCache = false;
@@ -518,7 +536,12 @@ namespace WinPaletter
                 {
                     using (Bitmap bmp = BitmapMgr.Load(AvatarCache))
                     {
-                        ReplaceAvatar(bmp.Resize(256, 256));
+                        // Only apply if this task is still the latest
+                        lock (avatarLock)
+                        {
+                            if (version == _refreshVersion)
+                                ReplaceAvatar(bmp.Resize(256, 256));
+                        }
                     }
                     hadCache = true;
                 }
@@ -531,7 +554,11 @@ namespace WinPaletter
                     {
                         using (Bitmap bmp = BitmapMgr.Load(AvatarCache))
                         {
-                            ReplaceAvatar(bmp.Resize(256, 256));
+                            lock (avatarLock)
+                            {
+                                if (version == _refreshVersion)
+                                    ReplaceAvatar(bmp.Resize(256, 256));
+                            }
                         }
                     }
                 }
@@ -542,7 +569,12 @@ namespace WinPaletter
             }
             finally
             {
-                avatarLoading = false;
+                lock (avatarLock)
+                {
+                    // Only reset loading flag if this task is still the latest
+                    if (version == _refreshVersion)
+                        avatarLoading = false;
+                }
             }
         }
 
@@ -595,6 +627,7 @@ namespace WinPaletter
 
             Bitmap old = github_avatar;
             github_avatar = newAvatar;
+            _lastAvatarUser = gitHub?.Login;
             old?.Dispose();
 
             Events.OnGitHubAvatarUpdated();
@@ -605,6 +638,42 @@ namespace WinPaletter
             Bitmap old = github_avatar;
             github_avatar = null;
             old?.Dispose();
+        }
+
+        /// <summary>
+        /// Refresh avatar - checks for updates but preserves disk cache
+        /// </summary>
+        public static void RefreshAvatar()
+        {
+            lock (avatarLock)
+            {
+                // Increment version to invalidate older tasks
+                _refreshVersion++;
+                avatarLoading = false;
+                EnsureAvatarPipelineStarted();
+            }
+        }
+
+        /// <summary>
+        /// Clear avatar from memory on logout, preserve disk cache for next login
+        /// </summary>
+        public static void ClearAvatar()
+        {
+            lock (avatarLock)
+            {
+                // Clear GitHub user
+                GitHub = null;
+
+                // Clear avatar from memory only
+                DisposeAvatar();
+
+                // Reset pipeline state
+                avatarLoading = false;
+                avatarTask = null;
+
+                // DO NOT delete cache files - keep them for next login
+                // This preserves offline capability and ETag for conditional requests
+            }
         }
 
         /// <summary>

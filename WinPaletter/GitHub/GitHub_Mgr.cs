@@ -1281,12 +1281,14 @@ Generated automatically by WinPaletter. Please review the changes before merging
         {
             if (IsHandleCreated)
             {
+                Image old = pictureBox1.Image;
                 using (Bitmap temp0 = new(User.GitHub_Avatar))
                 using (Bitmap temp1 = temp0?.Resize(pictureBox1.Size))
                 using (Bitmap temp2 = temp1?.ToCircular())
                 {
                     pictureBox1.Image = new Bitmap(temp2);
                 }
+                old?.Dispose();
             }
         }
 

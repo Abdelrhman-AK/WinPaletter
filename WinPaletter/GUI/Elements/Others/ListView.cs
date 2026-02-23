@@ -216,6 +216,19 @@ namespace WinPaletter.UI.WP
             return User32.CallWindowProc(oldHeaderProc, hWnd, msg, wParam, lParam);
         }
 
+        protected override void WndProc(ref Message m)
+        {
+            // Trap WM_KILLFOCUS message
+            if (m.Msg == 0x0008) // WM_KILLFOCUS
+            {
+                // Don't pass the killfocus message to base
+                // This prevents the control from losing visual focus state
+                return;
+            }
+
+            base.WndProc(ref m);
+        }
+
         #endregion
     }
 }

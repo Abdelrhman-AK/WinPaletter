@@ -31,6 +31,15 @@ namespace WinPaletter.UI.WP
 
             InitializeTaskbar();
             StyleChanged += ProgressBar_StyleChanged;
+
+            // Initialize with starting point at 0% progress and 0 speed
+            lock (_lock)
+            {
+                _points.Add(new GraphicData(0, 0, true)); // true = progress is already normalized (0-1)
+                _currentSpeed = 0;
+                _speedText = FormatSpeed(0);
+                _realMaxSpeed = 0.1; // Keep the minimum
+            }
         }
 
         #endregion

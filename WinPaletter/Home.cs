@@ -164,6 +164,33 @@ namespace WinPaletter
             }
         }
 
+        private Bitmap CreateAvatarImage(Bitmap avatar, Bitmap userProfilePicture)
+        {
+            if (avatar == null) return null;
+
+            using (Bitmap resizedAvatar = avatar.Resize(32, 32))
+            using (Bitmap resizedUser = userProfilePicture?.Resize(16, 16))
+            {
+                if (resizedAvatar == null) return null;
+
+                using (Bitmap circularAvatar = resizedAvatar.ToCircular(Program.Style.Schemes.Main.Colors.ForeColor_Accent))
+                using (Bitmap circularUser = resizedUser?.ToCircular())
+                {
+                    if (circularAvatar == null) return null;
+
+                    if (circularUser != null)
+                    {
+                        PointF overlayPoint = new(circularAvatar.Width - circularUser.Width, circularAvatar.Height - circularUser.Height);
+                        return circularAvatar.Overlay(circularUser, overlayPoint);
+                    }
+                    else
+                    {
+                        return (Bitmap)circularAvatar.Clone();
+                    }
+                }
+            }
+        }
+
         private void UpdateUserButtonAvatar(object sender, EventArgs e)
         {
             if (InvokeRequired)
@@ -176,31 +203,17 @@ namespace WinPaletter
 
             if (avatar == null || !avatar.IsValid())
             {
+                Image old = userButton.Image;
                 userButton.Image = null;
+                old?.Dispose();
                 return;
             }
 
-            using (Bitmap resizedAvatar = avatar?.Resize(32, 32))
-            using (Bitmap resizedUser = User.ProfilePicture?.Resize(16, 16))
-            using (Bitmap circularAvatar = resizedAvatar?.ToCircular(Program.Style.Schemes.Main.Colors.ForeColor_Accent))
-            using (Bitmap circularUser = resizedUser?.ToCircular())
-            {
-                Bitmap finalImage;
+            Bitmap newImage = CreateAvatarImage(avatar, User.ProfilePicture);
 
-                if (circularUser is not null)
-                {
-                    PointF overlayPoint = new(circularAvatar.Width - circularUser.Width, circularAvatar.Height - circularUser.Height);
-                    finalImage = circularAvatar.Overlay(circularUser, overlayPoint);
-                }
-                else
-                {
-                    finalImage = (Bitmap)circularAvatar.Clone();
-                }
-
-                Image old = userButton.Image;
-                userButton.Image = finalImage;
-                old?.Dispose();
-            }
+            Image oldImage = userButton.Image;
+            userButton.Image = newImage;
+            oldImage?.Dispose();
         }
 
         /// <summary>

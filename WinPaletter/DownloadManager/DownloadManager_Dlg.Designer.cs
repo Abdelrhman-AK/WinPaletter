@@ -54,11 +54,11 @@ namespace WinPaletter
             this.label10 = new System.Windows.Forms.Label();
             this.separatorH2 = new WinPaletter.UI.WP.SeparatorH();
             this.listView1 = new WinPaletter.UI.WP.ListView();
-            this.progressBar2 = new WinPaletter.UI.WP.ProgressBar();
             this.progressBar1 = new WinPaletter.UI.WP.ProgressBar();
             this.bottom_buttons = new WinPaletter.UI.WP.GroupBox();
             this.button1 = new WinPaletter.UI.WP.Button();
             this.Button3 = new WinPaletter.UI.WP.Button();
+            this.progressGraph1 = new WinPaletter.UI.WP.ProgressGraph();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox4)).BeginInit();
@@ -72,9 +72,9 @@ namespace WinPaletter
             // 
             this.Label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Label2.Location = new System.Drawing.Point(165, 42);
+            this.Label2.Location = new System.Drawing.Point(165, 182);
             this.Label2.Name = "Label2";
-            this.Label2.Size = new System.Drawing.Size(557, 24);
+            this.Label2.Size = new System.Drawing.Size(447, 24);
             this.Label2.TabIndex = 2;
             this.Label2.Text = "0";
             this.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -83,9 +83,9 @@ namespace WinPaletter
             // 
             this.Label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Label3.Location = new System.Drawing.Point(165, 102);
+            this.Label3.Location = new System.Drawing.Point(165, 242);
             this.Label3.Name = "Label3";
-            this.Label3.Size = new System.Drawing.Size(557, 24);
+            this.Label3.Size = new System.Drawing.Size(447, 24);
             this.Label3.TabIndex = 3;
             this.Label3.Text = "0";
             this.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -94,9 +94,9 @@ namespace WinPaletter
             // 
             this.Label4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Label4.Location = new System.Drawing.Point(165, 132);
+            this.Label4.Location = new System.Drawing.Point(165, 272);
             this.Label4.Name = "Label4";
-            this.Label4.Size = new System.Drawing.Size(557, 24);
+            this.Label4.Size = new System.Drawing.Size(447, 24);
             this.Label4.TabIndex = 4;
             this.Label4.Text = "0";
             this.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -104,7 +104,7 @@ namespace WinPaletter
             // Label5
             // 
             this.Label5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label5.Location = new System.Drawing.Point(42, 132);
+            this.Label5.Location = new System.Drawing.Point(42, 272);
             this.Label5.Name = "Label5";
             this.Label5.Size = new System.Drawing.Size(117, 24);
             this.Label5.TabIndex = 7;
@@ -114,7 +114,7 @@ namespace WinPaletter
             // Label6
             // 
             this.Label6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label6.Location = new System.Drawing.Point(42, 102);
+            this.Label6.Location = new System.Drawing.Point(42, 242);
             this.Label6.Name = "Label6";
             this.Label6.Size = new System.Drawing.Size(117, 24);
             this.Label6.TabIndex = 6;
@@ -124,7 +124,7 @@ namespace WinPaletter
             // Label7
             // 
             this.Label7.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label7.Location = new System.Drawing.Point(42, 42);
+            this.Label7.Location = new System.Drawing.Point(42, 182);
             this.Label7.Name = "Label7";
             this.Label7.Size = new System.Drawing.Size(117, 24);
             this.Label7.TabIndex = 5;
@@ -134,7 +134,7 @@ namespace WinPaletter
             // PictureBox2
             // 
             this.PictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox2.Image")));
-            this.PictureBox2.Location = new System.Drawing.Point(12, 42);
+            this.PictureBox2.Location = new System.Drawing.Point(12, 182);
             this.PictureBox2.Name = "PictureBox2";
             this.PictureBox2.Size = new System.Drawing.Size(24, 24);
             this.PictureBox2.TabIndex = 34;
@@ -143,7 +143,7 @@ namespace WinPaletter
             // PictureBox3
             // 
             this.PictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox3.Image")));
-            this.PictureBox3.Location = new System.Drawing.Point(12, 102);
+            this.PictureBox3.Location = new System.Drawing.Point(12, 242);
             this.PictureBox3.Name = "PictureBox3";
             this.PictureBox3.Size = new System.Drawing.Size(24, 24);
             this.PictureBox3.TabIndex = 35;
@@ -152,7 +152,7 @@ namespace WinPaletter
             // PictureBox4
             // 
             this.PictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox4.Image")));
-            this.PictureBox4.Location = new System.Drawing.Point(12, 132);
+            this.PictureBox4.Location = new System.Drawing.Point(12, 272);
             this.PictureBox4.Name = "PictureBox4";
             this.PictureBox4.Size = new System.Drawing.Size(24, 24);
             this.PictureBox4.TabIndex = 36;
@@ -160,7 +160,7 @@ namespace WinPaletter
             // 
             // pictureBox5
             // 
-            this.pictureBox5.Location = new System.Drawing.Point(165, 12);
+            this.pictureBox5.Location = new System.Drawing.Point(165, 152);
             this.pictureBox5.Name = "pictureBox5";
             this.pictureBox5.Size = new System.Drawing.Size(24, 24);
             this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -170,7 +170,7 @@ namespace WinPaletter
             // pictureBox6
             // 
             this.pictureBox6.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox6.Image")));
-            this.pictureBox6.Location = new System.Drawing.Point(12, 12);
+            this.pictureBox6.Location = new System.Drawing.Point(12, 152);
             this.pictureBox6.Name = "pictureBox6";
             this.pictureBox6.Size = new System.Drawing.Size(24, 24);
             this.pictureBox6.TabIndex = 240;
@@ -179,7 +179,7 @@ namespace WinPaletter
             // label8
             // 
             this.label8.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(42, 12);
+            this.label8.Location = new System.Drawing.Point(42, 152);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(117, 24);
             this.label8.TabIndex = 239;
@@ -190,9 +190,9 @@ namespace WinPaletter
             // 
             this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label9.Location = new System.Drawing.Point(225, 12);
+            this.label9.Location = new System.Drawing.Point(225, 152);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(497, 24);
+            this.label9.Size = new System.Drawing.Size(387, 24);
             this.label9.TabIndex = 238;
             this.label9.Text = "0";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -200,7 +200,7 @@ namespace WinPaletter
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(12, 72);
+            this.pictureBox1.Location = new System.Drawing.Point(12, 212);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(24, 24);
             this.pictureBox1.TabIndex = 246;
@@ -209,7 +209,7 @@ namespace WinPaletter
             // label1
             // 
             this.label1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(42, 72);
+            this.label1.Location = new System.Drawing.Point(42, 212);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(117, 24);
             this.label1.TabIndex = 245;
@@ -220,9 +220,9 @@ namespace WinPaletter
             // 
             this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label10.Location = new System.Drawing.Point(165, 72);
+            this.label10.Location = new System.Drawing.Point(165, 212);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(557, 24);
+            this.label10.Size = new System.Drawing.Size(447, 24);
             this.label10.TabIndex = 244;
             this.label10.Text = "0";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -233,9 +233,9 @@ namespace WinPaletter
             this.separatorH2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.separatorH2.BackColor = System.Drawing.Color.Transparent;
-            this.separatorH2.Location = new System.Drawing.Point(12, 192);
+            this.separatorH2.Location = new System.Drawing.Point(12, 302);
             this.separatorH2.Name = "separatorH2";
-            this.separatorH2.Size = new System.Drawing.Size(710, 1);
+            this.separatorH2.Size = new System.Drawing.Size(600, 1);
             this.separatorH2.TabIndex = 251;
             this.separatorH2.TabStop = false;
             this.separatorH2.Text = "separatorH2";
@@ -250,35 +250,21 @@ namespace WinPaletter
             this.listView1.FullRowSelect = true;
             this.listView1.HideSelection = false;
             this.listView1.LabelEdit = true;
-            this.listView1.Location = new System.Drawing.Point(12, 199);
+            this.listView1.Location = new System.Drawing.Point(12, 309);
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
             this.listView1.RowHeight = 28;
-            this.listView1.Size = new System.Drawing.Size(714, 156);
+            this.listView1.Size = new System.Drawing.Size(604, 146);
             this.listView1.TabIndex = 247;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
-            // 
-            // progressBar2
-            // 
-            this.progressBar2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar2.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Bar;
-            this.progressBar2.BackColor = System.Drawing.Color.Transparent;
-            this.progressBar2.Location = new System.Drawing.Point(12, 162);
-            this.progressBar2.Name = "progressBar2";
-            this.progressBar2.Size = new System.Drawing.Size(710, 24);
-            this.progressBar2.State = WinPaletter.UI.WP.ProgressBar.ProgressBarState.Normal;
-            this.progressBar2.Style = WinPaletter.UI.WP.ProgressBar.ProgressBarStyle.Continuous;
-            this.progressBar2.TabIndex = 243;
-            this.progressBar2.TaskbarBroadcast = true;
             // 
             // progressBar1
             // 
             this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.progressBar1.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Circle;
             this.progressBar1.BackColor = System.Drawing.Color.Transparent;
-            this.progressBar1.Location = new System.Drawing.Point(195, 12);
+            this.progressBar1.Location = new System.Drawing.Point(85, 152);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(24, 24);
             this.progressBar1.State = WinPaletter.UI.WP.ProgressBar.ProgressBarState.Normal;
@@ -292,9 +278,9 @@ namespace WinPaletter
             this.bottom_buttons.Controls.Add(this.button1);
             this.bottom_buttons.Controls.Add(this.Button3);
             this.bottom_buttons.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.bottom_buttons.Location = new System.Drawing.Point(0, 363);
+            this.bottom_buttons.Location = new System.Drawing.Point(0, 463);
             this.bottom_buttons.Name = "bottom_buttons";
-            this.bottom_buttons.Size = new System.Drawing.Size(734, 48);
+            this.bottom_buttons.Size = new System.Drawing.Size(624, 48);
             this.bottom_buttons.TabIndex = 211;
             this.bottom_buttons.UseDecorationPattern = false;
             this.bottom_buttons.UseSharpStyle = false;
@@ -309,7 +295,7 @@ namespace WinPaletter
             this.button1.Image = null;
             this.button1.ImageGlyph = null;
             this.button1.ImageGlyphEnabled = false;
-            this.button1.Location = new System.Drawing.Point(648, 7);
+            this.button1.Location = new System.Drawing.Point(538, 7);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(80, 34);
             this.button1.TabIndex = 38;
@@ -327,7 +313,7 @@ namespace WinPaletter
             this.Button3.Image = null;
             this.Button3.ImageGlyph = null;
             this.Button3.ImageGlyphEnabled = false;
-            this.Button3.Location = new System.Drawing.Point(562, 7);
+            this.Button3.Location = new System.Drawing.Point(452, 7);
             this.Button3.Name = "Button3";
             this.Button3.Size = new System.Drawing.Size(80, 34);
             this.Button3.TabIndex = 37;
@@ -335,18 +321,27 @@ namespace WinPaletter
             this.Button3.UseVisualStyleBackColor = false;
             this.Button3.Click += new System.EventHandler(this.Button3_Click);
             // 
+            // progressGraph1
+            // 
+            this.progressGraph1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressGraph1.Location = new System.Drawing.Point(12, 12);
+            this.progressGraph1.Name = "progressGraph1";
+            this.progressGraph1.Size = new System.Drawing.Size(600, 130);
+            this.progressGraph1.TabIndex = 252;
+            // 
             // DownloadManager_Dlg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(734, 411);
+            this.ClientSize = new System.Drawing.Size(624, 511);
+            this.Controls.Add(this.progressGraph1);
             this.Controls.Add(this.separatorH2);
             this.Controls.Add(this.listView1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.progressBar2);
             this.Controls.Add(this.pictureBox5);
             this.Controls.Add(this.pictureBox6);
             this.Controls.Add(this.label8);
@@ -362,11 +357,8 @@ namespace WinPaletter
             this.Controls.Add(this.Label2);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.bottom_buttons);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.Name = "DownloadManager_Dlg";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
@@ -401,11 +393,11 @@ namespace WinPaletter
         internal Label label8;
         internal Label label9;
         internal UI.WP.Button button1;
-        internal UI.WP.ProgressBar progressBar2;
         internal PictureBox pictureBox1;
         internal Label label1;
         internal Label label10;
         private UI.WP.ListView listView1;
         private UI.WP.SeparatorH separatorH2;
+        private UI.WP.ProgressGraph progressGraph1;
     }
 }
