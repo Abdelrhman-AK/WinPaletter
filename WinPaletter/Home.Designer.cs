@@ -33,11 +33,13 @@
             this.NotifyUpdates = new System.Windows.Forms.NotifyIcon(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox1 = new WinPaletter.UI.WP.GroupBox();
+            this.button16 = new WinPaletter.UI.WP.Button();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.labelAlt1 = new WinPaletter.UI.WP.LabelAlt();
             this.labelAlt3 = new WinPaletter.UI.WP.LabelAlt();
             this.labelAlt2 = new WinPaletter.UI.WP.LabelAlt();
             this.flowLayoutPanel1 = new WinPaletter.UI.WP.SmoothFlowLayoutPanel();
+            this.progressGraph1 = new WinPaletter.UI.WP.ProgressGraph();
             this.card1 = new WinPaletter.UI.WP.Card();
             this.card2 = new WinPaletter.UI.WP.Card();
             this.card3 = new WinPaletter.UI.WP.Card();
@@ -83,6 +85,9 @@
             this.tip_label = new System.Windows.Forms.Label();
             this.userButton = new WinPaletter.UI.WP.Button();
             this.winEdition = new WinPaletter.UI.WP.Button();
+            this.button17 = new WinPaletter.UI.WP.Button();
+            this.button18 = new WinPaletter.UI.WP.Button();
+            this.button19 = new WinPaletter.UI.WP.Button();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.flowLayoutPanel3.SuspendLayout();
@@ -110,6 +115,10 @@
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox1.Controls.Add(this.button19);
+            this.groupBox1.Controls.Add(this.button18);
+            this.groupBox1.Controls.Add(this.button17);
+            this.groupBox1.Controls.Add(this.button16);
             this.groupBox1.Controls.Add(this.flowLayoutPanel3);
             this.groupBox1.Controls.Add(this.labelAlt2);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -120,6 +129,25 @@
             this.groupBox1.TabIndex = 161;
             this.groupBox1.UseDecorationPattern = true;
             this.groupBox1.UseSharpStyle = false;
+            // 
+            // button16
+            // 
+            this.button16.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.button16.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(127)))), ((int)(((byte)(0)))));
+            this.button16.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
+            this.button16.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button16.ForeColor = System.Drawing.Color.White;
+            this.button16.Image = null;
+            this.button16.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button16.ImageGlyph")));
+            this.button16.ImageGlyphEnabled = true;
+            this.button16.Location = new System.Drawing.Point(572, 18);
+            this.button16.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.button16.Name = "button16";
+            this.button16.Size = new System.Drawing.Size(32, 35);
+            this.button16.TabIndex = 159;
+            this.button16.Tag = "Open a WinPaletter theme file";
+            this.button16.UseVisualStyleBackColor = false;
+            this.button16.Click += new System.EventHandler(this.button16_Click);
             // 
             // flowLayoutPanel3
             // 
@@ -181,6 +209,7 @@
             this.flowLayoutPanel1.AutoScroll = true;
             this.flowLayoutPanel1.AutoSize = true;
             this.flowLayoutPanel1.BackColor = System.Drawing.Color.Transparent;
+            this.flowLayoutPanel1.Controls.Add(this.progressGraph1);
             this.flowLayoutPanel1.Controls.Add(this.card1);
             this.flowLayoutPanel1.Controls.Add(this.card2);
             this.flowLayoutPanel1.Controls.Add(this.card3);
@@ -203,12 +232,22 @@
             this.flowLayoutPanel1.TabIndex = 153;
             this.flowLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel1_Paint);
             // 
+            // progressGraph1
+            // 
+            this.progressGraph1.Location = new System.Drawing.Point(6, 8);
+            this.progressGraph1.Name = "progressGraph1";
+            this.progressGraph1.Size = new System.Drawing.Size(362, 177);
+            this.progressGraph1.State = WinPaletter.UI.WP.ProgressGraph.ProgressBarState.Normal;
+            this.progressGraph1.Style = WinPaletter.UI.WP.ProgressGraph.ProgressBarStyle.Continuous;
+            this.progressGraph1.TabIndex = 135;
+            this.progressGraph1.TaskbarBroadcast = true;
+            // 
             // card1
             // 
             this.card1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(39)))), ((int)(((byte)(84)))));
             this.card1.Compact = false;
             this.card1.Image = null;
-            this.card1.Location = new System.Drawing.Point(6, 8);
+            this.card1.Location = new System.Drawing.Point(374, 8);
             this.card1.Name = "card1";
             this.card1.Size = new System.Drawing.Size(277, 130);
             this.card1.TabIndex = 121;
@@ -222,7 +261,7 @@
             this.card2.Color = System.Drawing.Color.Teal;
             this.card2.Compact = false;
             this.card2.Image = ((System.Drawing.Image)(resources.GetObject("card2.Image")));
-            this.card2.Location = new System.Drawing.Point(289, 8);
+            this.card2.Location = new System.Drawing.Point(657, 8);
             this.card2.Name = "card2";
             this.card2.Size = new System.Drawing.Size(277, 130);
             this.card2.TabIndex = 120;
@@ -236,7 +275,7 @@
             this.card3.Color = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(102)))), ((int)(((byte)(183)))));
             this.card3.Compact = false;
             this.card3.Image = null;
-            this.card3.Location = new System.Drawing.Point(572, 8);
+            this.card3.Location = new System.Drawing.Point(6, 191);
             this.card3.Name = "card3";
             this.card3.Size = new System.Drawing.Size(277, 130);
             this.card3.TabIndex = 122;
@@ -249,7 +288,7 @@
             this.card6.Color = System.Drawing.Color.FromArgb(((int)(((byte)(126)))), ((int)(((byte)(7)))), ((int)(((byte)(14)))));
             this.card6.Compact = false;
             this.card6.Image = ((System.Drawing.Image)(resources.GetObject("card6.Image")));
-            this.card6.Location = new System.Drawing.Point(855, 8);
+            this.card6.Location = new System.Drawing.Point(289, 191);
             this.card6.Name = "card6";
             this.card6.Size = new System.Drawing.Size(277, 130);
             this.card6.TabIndex = 123;
@@ -263,7 +302,7 @@
             this.card5.Color = System.Drawing.Color.FromArgb(((int)(((byte)(95)))), ((int)(((byte)(75)))), ((int)(((byte)(17)))));
             this.card5.Compact = false;
             this.card5.Image = ((System.Drawing.Image)(resources.GetObject("card5.Image")));
-            this.card5.Location = new System.Drawing.Point(6, 144);
+            this.card5.Location = new System.Drawing.Point(572, 191);
             this.card5.Name = "card5";
             this.card5.Size = new System.Drawing.Size(277, 130);
             this.card5.TabIndex = 124;
@@ -277,7 +316,7 @@
             this.card4.Color = System.Drawing.Color.FromArgb(((int)(((byte)(77)))), ((int)(((byte)(77)))), ((int)(((byte)(77)))));
             this.card4.Compact = false;
             this.card4.Image = ((System.Drawing.Image)(resources.GetObject("card4.Image")));
-            this.card4.Location = new System.Drawing.Point(289, 144);
+            this.card4.Location = new System.Drawing.Point(855, 191);
             this.card4.Name = "card4";
             this.card4.Size = new System.Drawing.Size(277, 130);
             this.card4.TabIndex = 125;
@@ -291,7 +330,7 @@
             this.card8.Color = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(175)))), ((int)(((byte)(234)))));
             this.card8.Compact = false;
             this.card8.Image = ((System.Drawing.Image)(resources.GetObject("card8.Image")));
-            this.card8.Location = new System.Drawing.Point(572, 144);
+            this.card8.Location = new System.Drawing.Point(6, 327);
             this.card8.Name = "card8";
             this.card8.Size = new System.Drawing.Size(277, 130);
             this.card8.TabIndex = 127;
@@ -305,7 +344,7 @@
             this.card9.Color = System.Drawing.Color.DodgerBlue;
             this.card9.Compact = false;
             this.card9.Image = ((System.Drawing.Image)(resources.GetObject("card9.Image")));
-            this.card9.Location = new System.Drawing.Point(855, 144);
+            this.card9.Location = new System.Drawing.Point(289, 327);
             this.card9.Name = "card9";
             this.card9.Size = new System.Drawing.Size(277, 130);
             this.card9.TabIndex = 126;
@@ -318,7 +357,7 @@
             this.card7.Color = System.Drawing.Color.OrangeRed;
             this.card7.Compact = false;
             this.card7.Image = ((System.Drawing.Image)(resources.GetObject("card7.Image")));
-            this.card7.Location = new System.Drawing.Point(6, 280);
+            this.card7.Location = new System.Drawing.Point(572, 327);
             this.card7.Name = "card7";
             this.card7.Size = new System.Drawing.Size(277, 130);
             this.card7.TabIndex = 128;
@@ -331,7 +370,7 @@
             this.card11.Color = System.Drawing.Color.FromArgb(((int)(((byte)(172)))), ((int)(((byte)(14)))), ((int)(((byte)(12)))));
             this.card11.Compact = false;
             this.card11.Image = ((System.Drawing.Image)(resources.GetObject("card11.Image")));
-            this.card11.Location = new System.Drawing.Point(289, 280);
+            this.card11.Location = new System.Drawing.Point(855, 327);
             this.card11.Name = "card11";
             this.card11.Size = new System.Drawing.Size(277, 130);
             this.card11.TabIndex = 130;
@@ -344,7 +383,7 @@
             this.card12.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(82)))), ((int)(((byte)(0)))));
             this.card12.Compact = false;
             this.card12.Image = ((System.Drawing.Image)(resources.GetObject("card12.Image")));
-            this.card12.Location = new System.Drawing.Point(572, 280);
+            this.card12.Location = new System.Drawing.Point(6, 463);
             this.card12.Name = "card12";
             this.card12.Size = new System.Drawing.Size(277, 130);
             this.card12.TabIndex = 129;
@@ -357,7 +396,7 @@
             this.card13.Color = System.Drawing.Color.FromArgb(((int)(((byte)(207)))), ((int)(((byte)(25)))), ((int)(((byte)(40)))));
             this.card13.Compact = false;
             this.card13.Image = ((System.Drawing.Image)(resources.GetObject("card13.Image")));
-            this.card13.Location = new System.Drawing.Point(855, 280);
+            this.card13.Location = new System.Drawing.Point(289, 463);
             this.card13.Name = "card13";
             this.card13.Size = new System.Drawing.Size(277, 130);
             this.card13.TabIndex = 132;
@@ -371,7 +410,7 @@
             this.card15.Color = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(155)))), ((int)(((byte)(226)))));
             this.card15.Compact = false;
             this.card15.Image = ((System.Drawing.Image)(resources.GetObject("card15.Image")));
-            this.card15.Location = new System.Drawing.Point(6, 416);
+            this.card15.Location = new System.Drawing.Point(572, 463);
             this.card15.Name = "card15";
             this.card15.Size = new System.Drawing.Size(277, 130);
             this.card15.TabIndex = 134;
@@ -385,7 +424,7 @@
             this.card10.Color = System.Drawing.Color.FromArgb(((int)(((byte)(118)))), ((int)(((byte)(0)))), ((int)(((byte)(133)))));
             this.card10.Compact = false;
             this.card10.Image = ((System.Drawing.Image)(resources.GetObject("card10.Image")));
-            this.card10.Location = new System.Drawing.Point(289, 416);
+            this.card10.Location = new System.Drawing.Point(855, 463);
             this.card10.Name = "card10";
             this.card10.Size = new System.Drawing.Size(277, 130);
             this.card10.TabIndex = 131;
@@ -964,6 +1003,63 @@
             this.winEdition.UseVisualStyleBackColor = false;
             this.winEdition.Click += new System.EventHandler(this.winEdition_Click);
             // 
+            // button17
+            // 
+            this.button17.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.button17.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(127)))), ((int)(((byte)(0)))));
+            this.button17.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
+            this.button17.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button17.ForeColor = System.Drawing.Color.White;
+            this.button17.Image = null;
+            this.button17.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button17.ImageGlyph")));
+            this.button17.ImageGlyphEnabled = true;
+            this.button17.Location = new System.Drawing.Point(612, 18);
+            this.button17.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.button17.Name = "button17";
+            this.button17.Size = new System.Drawing.Size(32, 35);
+            this.button17.TabIndex = 160;
+            this.button17.Tag = "Open a WinPaletter theme file";
+            this.button17.UseVisualStyleBackColor = false;
+            this.button17.Click += new System.EventHandler(this.button17_Click);
+            // 
+            // button18
+            // 
+            this.button18.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.button18.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(127)))), ((int)(((byte)(0)))));
+            this.button18.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
+            this.button18.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button18.ForeColor = System.Drawing.Color.White;
+            this.button18.Image = null;
+            this.button18.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button18.ImageGlyph")));
+            this.button18.ImageGlyphEnabled = true;
+            this.button18.Location = new System.Drawing.Point(651, 18);
+            this.button18.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.button18.Name = "button18";
+            this.button18.Size = new System.Drawing.Size(32, 35);
+            this.button18.TabIndex = 161;
+            this.button18.Tag = "Open a WinPaletter theme file";
+            this.button18.UseVisualStyleBackColor = false;
+            this.button18.Click += new System.EventHandler(this.button18_Click);
+            // 
+            // button19
+            // 
+            this.button19.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.button19.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(127)))), ((int)(((byte)(0)))));
+            this.button19.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
+            this.button19.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button19.ForeColor = System.Drawing.Color.White;
+            this.button19.Image = null;
+            this.button19.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button19.ImageGlyph")));
+            this.button19.ImageGlyphEnabled = true;
+            this.button19.Location = new System.Drawing.Point(691, 18);
+            this.button19.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.button19.Name = "button19";
+            this.button19.Size = new System.Drawing.Size(32, 35);
+            this.button19.TabIndex = 162;
+            this.button19.Tag = "Open a WinPaletter theme file";
+            this.button19.UseVisualStyleBackColor = false;
+            this.button19.Click += new System.EventHandler(this.button19_Click_1);
+            // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1053,5 +1149,10 @@
         internal UI.WP.Button button4;
         internal UI.WP.Button button14;
         internal UI.WP.Button button15;
+        private UI.WP.ProgressGraph progressGraph1;
+        internal UI.WP.Button button16;
+        internal UI.WP.Button button19;
+        internal UI.WP.Button button18;
+        internal UI.WP.Button button17;
     }
 }

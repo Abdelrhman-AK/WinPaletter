@@ -28,7 +28,7 @@ namespace WinPaletter
     /// </summary>
     public partial class Home : UI.WP.Form
     {
-        private bool isLoggedIn = false;    
+        private bool isLoggedIn = false;
 
         /// <summary>
         /// File path of the theme File.
@@ -89,7 +89,7 @@ namespace WinPaletter
                 button.MouseLeave += (s, e) => Transition.With(tip_label, nameof(tip_label.Text), string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
             }
 
-            foreach (Card card in flowLayoutPanel1.Controls)
+            foreach (Card card in flowLayoutPanel1.Controls.OfType<Card>())
             {
                 card.MouseEnter += (s, e) => Transition.With(panel1, nameof(panel1.BackColor), Program.Style.DarkMode ? (s as Card).Color.Dark(0.7f) : (s as Card).Color.CB(0.7f)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
                 card.MouseLeave += (s, e) => Transition.With(panel1, nameof(panel1.BackColor), BackColor).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
@@ -113,7 +113,7 @@ namespace WinPaletter
         /// </summary>
         private void processCompactMode()
         {
-            foreach (Card card in flowLayoutPanel1.Controls)
+            foreach (Card card in flowLayoutPanel1.Controls.OfType<Card>())
             {
                 card.Compact = Program.Settings.General.CompactAspects;
                 card.Size = card.Compact ? new(144, 130) : new(277, 130);
@@ -143,7 +143,7 @@ namespace WinPaletter
                 {
                     using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = Forms.Home.File, Title = Program.Localization.Strings.Extensions.SaveWinPaletterTheme })
                     {
-                        bool result = Forms.MainForm.ExitWithChangedFileResponse(); 
+                        bool result = Forms.MainForm.ExitWithChangedFileResponse();
                         e.Cancel = !result;
                     }
                 }
@@ -210,7 +210,7 @@ namespace WinPaletter
         {
             if (isLoggedIn)
             {
-                Task.Run(() => 
+                Task.Run(() =>
                 {
                     Transition.With(tip_label, nameof(tip_label.Text), $"{Program.Localization.Strings.General.Welcome}, {User.GitHub.Login}").CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
 
@@ -855,6 +855,135 @@ namespace WinPaletter
             {
                 pin_button.Visible = true;
             }
+        }
+
+        private async void button16_Click(object sender, EventArgs e)
+        {
+            SimulateHugeSpikeTest();
+        }
+
+        // Fixed simulation that won't freeze the UI
+        private async void SimulateHugeSpikeTest()
+        {
+            // Disable the button if you have one
+            // btnTest.Enabled = false;
+
+            progressGraph1.Clear();
+
+            Random rand = new Random();
+            double progress = 0;
+
+            // Base speed in KB/s
+            double baseSpeed = 50 * 1024; // 50 KB/s base speed
+
+            // Run the simulation in a background task
+            await System.Threading.Tasks.Task.Run(async () =>
+            {
+                while (progress <= 100)
+                {
+                    double speed;
+
+                    // Normal operation in KB/s range
+                    if (progress < 30)
+                    {
+                        // Phase 1: Normal KB/s speeds (20-100 KB/s)
+                        speed = baseSpeed * (0.4 + rand.NextDouble() * 1.6);
+                    }
+                    else if (progress < 40)
+                    {
+                        // Phase 2: Transition zone - small spike to MB/s
+                        if (progress > 32 && progress < 38)
+                        {
+                            // HUGE SPIKE - jumps to MB/s range
+                            double spikeFactor = 50 + (rand.NextDouble() * 100); // 50-150x increase
+                            speed = baseSpeed * spikeFactor; // This will be in MB/s range
+                        }
+                        else
+                        {
+                            speed = baseSpeed * (0.4 + rand.NextDouble() * 1.6);
+                        }
+                    }
+                    else if (progress < 60)
+                    {
+                        // Phase 3: Back to KB/s
+                        speed = baseSpeed * (0.5 + rand.NextDouble() * 1.5);
+
+                        // Occasional mini-spikes to low MB/s
+                        if (rand.NextDouble() < 0.1)
+                        {
+                            speed = baseSpeed * (20 + rand.NextDouble() * 30); // Small MB/s spikes
+                        }
+                    }
+                    else if (progress < 75)
+                    {
+                        // Phase 4: Another huge spike zone
+                        if (progress > 62 && progress < 70)
+                        {
+                            // Multiple spikes in succession
+                            double spikeFactor = 80 + (rand.NextDouble() * 120); // 80-200x increase
+                            speed = baseSpeed * spikeFactor; // High MB/s range
+                        }
+                        else
+                        {
+                            speed = baseSpeed * (0.6 + rand.NextDouble() * 1.4);
+                        }
+                    }
+                    else
+                    {
+                        // Phase 5: Ending with variable speeds
+                        speed = baseSpeed * (0.3 + rand.NextDouble() * 3.0);
+
+                        // Final huge spike near the end
+                        if (progress > 90 && progress < 95 && rand.NextDouble() < 0.3)
+                        {
+                            speed = baseSpeed * (150 + rand.NextDouble() * 100); // Massive spike
+                        }
+                    }
+
+                    // Ensure speed is positive
+                    speed = Math.Max(baseSpeed * 0.1, speed);
+
+                    // Use Invoke to update the control on the UI thread
+                    this.Invoke(new Action(() =>
+                    {
+                        progressGraph1.Add(progress, speed);
+                    }));
+
+                    // Progress increases based on speed (faster speed = faster progress)
+                    double progressIncrement;
+                    if (speed > baseSpeed * 50) // If in MB/s range
+                    {
+                        progressIncrement = 2.0; // Fast progress during spikes
+                    }
+                    else
+                    {
+                        progressIncrement = (speed / baseSpeed) * 0.3;
+                    }
+
+                    progress += Math.Max(0.2, progressIncrement);
+
+                    // Small delay to prevent CPU overuse, but keep UI responsive
+                    await System.Threading.Tasks.Task.Delay(20);
+                }
+            });
+
+            // Re-enable the button
+            // btnTest.Enabled = true;
+        }
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+            progressGraph1.State = ProgressGraph.ProgressBarState.Normal;
+        }
+
+        private void button18_Click(object sender, EventArgs e)
+        {
+            progressGraph1.State = ProgressGraph.ProgressBarState.Error;
+        }
+
+        private void button19_Click_1(object sender, EventArgs e)
+        {
+            progressGraph1.State = ProgressGraph.ProgressBarState.Pause;
         }
     }
 }

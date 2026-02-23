@@ -414,6 +414,9 @@
     <Compile Include="GUI\Elements\Others\ListView.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="GUI\Elements\Others\ProgressGraph.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="GUI\Elements\Others\SkeletonOverlay.cs">
       <SubType>Component</SubType>
     </Compile>

@@ -1,8 +1,10 @@
 ﻿using FluentTransitions;
+using Newtonsoft.Json.Linq;
 using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -21,8 +23,6 @@ namespace WinPaletter.UI.WP
             BackColor = Color.Transparent;
             taskbarList?.HrInit();
             StyleChanged += ProgressBar_StyleChanged;
-
-            // Don't initialize timers here - they'll be initialized when needed
         }
 
         #region Variables
@@ -31,8 +31,9 @@ namespace WinPaletter.UI.WP
         readonly ITaskbarList3 taskbarList = !OS.WXP && !OS.WVista ? (ITaskbarList3)new CTaskbarList() : null;
         private IntPtr FormHwnd = IntPtr.Zero;
         private static readonly TextureBrush Noise = new(Resources.Noise);
+        private DateTime _lastTaskbarUpdate = DateTime.MinValue;
 
-        // Animation fields (copied from Breadcrumb)
+        // Animation fields
         private System.Windows.Forms.Timer _marqueeTimer;
         private System.Windows.Forms.Timer _progressTimer;
         private float _marqueeOffset = 0;
@@ -40,8 +41,9 @@ namespace WinPaletter.UI.WP
         private int _alpha = 255;
         private bool _disposed = false;
 
-        // New property field
+        // Property fields
         private bool _highlightEffectEnabled = true;
+        private int _highlightAnimationSpeed = 300;
         #endregion
 
         #region Events/Overrides
@@ -161,7 +163,7 @@ namespace WinPaletter.UI.WP
 
         private void ProgressBar_StyleChanged(object sender, EventArgs e)
         {
-            UpdateTaskbar();
+            ThrottleTaskbarUpdate();
             Invalidate();
         }
 
@@ -194,7 +196,7 @@ namespace WinPaletter.UI.WP
                 if (Visible)
                 {
                     EnsureTimersInitialized();
-                    UpdateTaskbar();
+                    ThrottleTaskbarUpdate();
                     if (Style == ProgressBarStyle.Marquee)
                         StartMarqueeTimer();
                     else
@@ -230,7 +232,7 @@ namespace WinPaletter.UI.WP
                     }
                     else { Value_Animation = _value; }
 
-                    UpdateTaskbar();
+                    ThrottleTaskbarUpdate();
                     OnValueChanged(new EventArgs());
                 }
             }
@@ -256,6 +258,33 @@ namespace WinPaletter.UI.WP
             }
         }
 
+        /// <summary>
+        /// Gets or sets the speed of the highlight animation.
+        /// Higher values = faster animation, Lower values = slower animation
+        /// Default is 300 which gives a moderate speed
+        /// </summary>
+        [Category("Behavior")]
+        [Description("The speed of the highlight animation. Higher values = faster animation, Lower values = slower animation")]
+        [DefaultValue(300)]
+        public int HighlightAnimationSpeed
+        {
+            get => _highlightAnimationSpeed;
+            set
+            {
+                if (_highlightAnimationSpeed != value && value > 0)
+                {
+                    _highlightAnimationSpeed = value;
+
+                    // Reinitialize progress timer with new speed if it's running
+                    if (_progressTimer != null && _progressTimer.Enabled)
+                    {
+                        StopHighlightEffect();
+                        UpdateProgressTimerState();
+                    }
+                }
+            }
+        }
+
         private ProgressBarState _state = ProgressBarState.Normal;
         public ProgressBarState State
         {
@@ -272,7 +301,7 @@ namespace WinPaletter.UI.WP
                     {
                         case ProgressBarState.Normal:
                             {
-                                color = Program.Style.Schemes.Main.Colors.Line_Checked_Hover;
+                                color = Program.Style.Schemes.Tertiary.Colors.Line_Checked_Hover;
                                 break;
                             }
 
@@ -284,21 +313,21 @@ namespace WinPaletter.UI.WP
 
                         case ProgressBarState.Pause:
                             {
-                                color = Program.Style.Schemes.Tertiary.Colors.AccentAlt;
+                                color = Program.Style.Schemes.Main.Colors.AccentAlt;
                                 break;
                             }
 
                         default:
                             {
-                                color = Program.Style.Schemes.Main.Colors.Line_Checked_Hover;
+                                color = Program.Style.Schemes.Tertiary.Colors.Line_Checked_Hover;
                                 break;
                             }
                     }
 
-                    if (CanAnimate) { Transition.With(this, nameof(StateColor), color).Rubberband(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick)); }
+                    if (CanAnimate) { Transition.With(this, nameof(StateColor), color).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick)); }
                     else { StateColor = color; }
 
-                    UpdateTaskbar();
+                    ThrottleTaskbarUpdate();
                     Invalidate();
                 }
             }
@@ -318,8 +347,8 @@ namespace WinPaletter.UI.WP
             }
         }
 
-        private float Percentage => _animatedValue / (float)(Maximum - Minimum);
-        private float Percentage_Actual => _value / (float)(Maximum - Minimum);
+        private double Percentage => _animatedValue / (double)(Maximum - Minimum);
+        private double Percentage_Actual => _value / (double)(Maximum - Minimum);
 
         private bool _TaskbarBroadcast = true;
         public bool TaskbarBroadcast
@@ -336,7 +365,7 @@ namespace WinPaletter.UI.WP
                         foreach (ProgressBar PB in FindForm().GetAllControls().OfType<ProgressBar>()) { if (PB != this) PB.TaskbarBroadcast = false; }
                     }
 
-                    UpdateTaskbar();
+                    ThrottleTaskbarUpdate();
                 }
             }
         }
@@ -374,18 +403,18 @@ namespace WinPaletter.UI.WP
 
         private int _animatedValue = 0;
 
-        private Color _StateColor = Program.Style.Schemes.Main.Colors.Line_Checked_Hover;
+        private Color _stateColor = Program.Style.Schemes.Tertiary.Colors.Line_Checked_Hover;
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Browsable(false)]
         public Color StateColor
         {
-            get => _StateColor;
+            get => _stateColor;
             set
             {
-                if (value != _StateColor)
+                if (value != _stateColor)
                 {
-                    _StateColor = value;
+                    _stateColor = value;
                     Invalidate();
                 }
             }
@@ -438,6 +467,18 @@ namespace WinPaletter.UI.WP
         public void PerformStep(int step)
         {
             Value += step;
+        }
+
+        private void ThrottleTaskbarUpdate()
+        {
+            if (DesignMode || FormHwnd == IntPtr.Zero)
+                return;
+
+            if ((DateTime.Now - _lastTaskbarUpdate).TotalMilliseconds >= 200)
+            {
+                _lastTaskbarUpdate = DateTime.Now;
+                UpdateTaskbar();
+            }
         }
 
         private void UpdateTaskbar()
@@ -512,8 +553,7 @@ namespace WinPaletter.UI.WP
         {
             if (_disposed || DesignMode) return;
 
-            EnsureProgressTimerInitialized();
-            // Don't auto-start marquee timer here - it will be started by Style property
+            // Don't auto-start timers here - they'll be started by their respective properties
         }
 
         /// <summary>
@@ -523,12 +563,22 @@ namespace WinPaletter.UI.WP
         {
             if (_progressTimer != null || _disposed || DesignMode) return;
 
-            _progressTimer = new System.Windows.Forms.Timer { Interval = 35 };
+            // Calculate interval based on HighlightAnimationSpeed
+            // Higher speed = smaller interval = faster animation
+            // Lower speed = larger interval = slower animation
+            // Speed of 100 gives interval of 35ms (default)
+            // Speed of 200 gives interval of ~17ms (faster)
+            // Speed of 50 gives interval of 70ms (slower)
+            int interval = Math.Max(1, 3500 / Math.Max(1, _highlightAnimationSpeed));
+
+            _progressTimer = new System.Windows.Forms.Timer { Interval = interval };
             _progressTimer.Tick += (s, e) =>
             {
                 if (_disposed) return;
-                // Move the highlight across the progress bar
+
+                // Increment is constant regardless of interval to maintain smooth motion
                 _hoverOffset += 0.01f;
+
                 if (_hoverOffset > 1) _hoverOffset = 0;
                 Invalidate();
             };
@@ -541,11 +591,19 @@ namespace WinPaletter.UI.WP
         {
             if (_marqueeTimer != null || _disposed || DesignMode) return;
 
-            _marqueeTimer = new System.Windows.Forms.Timer { Interval = 20 };
+            // Calculate interval based on MarqueeAnimationSpeed
+            // Higher speed = smaller interval = faster animation
+            // Lower speed = larger interval = slower animation
+            int interval = Math.Max(1, 2000 / Math.Max(1, MarqueeAnimationSpeed));
+
+            _marqueeTimer = new System.Windows.Forms.Timer { Interval = interval };
             _marqueeTimer.Tick += (s, e) =>
             {
                 if (_disposed) return;
-                _marqueeOffset += 0.02f; // Slightly faster for smoother animation
+
+                // Increment is constant regardless of interval
+                _marqueeOffset += 0.02f;
+
                 if (_marqueeOffset > 1) _marqueeOffset = 0;
                 Invalidate();
             };
@@ -570,6 +628,18 @@ namespace WinPaletter.UI.WP
 
             _hoverOffset = 0;
             _marqueeOffset = 0;
+        }
+
+        /// <summary>
+        /// Stops the highlight effect timer
+        /// </summary>
+        private void StopHighlightEffect()
+        {
+            if (_progressTimer != null)
+            {
+                _progressTimer.Stop();
+            }
+            _hoverOffset = 0;
         }
 
         /// <summary>
@@ -709,10 +779,10 @@ namespace WinPaletter.UI.WP
 
             if (Appearance == ProgressBarAppearance.Bar)
             {
-                float _percent = Style == ProgressBarStyle.Continuous ? Percentage : 0.5f;
-                float _startX = Style == ProgressBarStyle.Continuous ? 0 : Width * Percentage - 0.25f * Width;
+                double _percent = Style == ProgressBarStyle.Continuous ? Percentage : 0.5d;
+                double _startX = Style == ProgressBarStyle.Continuous ? 0 : Width * Percentage - 0.25d * Width;
 
-                RectangleF rectValue = new(_startX, 0, rect.Width * _percent, Height - 1);
+                RectangleF rectValue = new((float)_startX, 0, rect.Width * (float)_percent, Height - 1);
 
                 int radius = Height / 3;
 
@@ -736,7 +806,7 @@ namespace WinPaletter.UI.WP
                     {
                         ColorBlend cb = new()
                         {
-                            Colors = [Color.Transparent, Color.FromArgb(_alpha, StateColor), Color.Transparent],
+                            Colors = [Color.Transparent, Color.FromArgb(_alpha, Program.Style.DarkMode ? _stateColor.Light(0.1f) : _stateColor.Dark(0.1f)), Color.Transparent],
                             Positions = [0f, 0.5f, 1f]
                         };
                         brush.InterpolationColors = cb;
@@ -767,7 +837,7 @@ namespace WinPaletter.UI.WP
                 else
                 {
                     // Normal progress bar with hover highlight effect (copied from Breadcrumb)
-                    using (LinearGradientBrush br = new(rect, Program.Style.DarkMode ? StateColor.Dark(0.05f) : StateColor.Light(), StateColor, Percentage * 360f, true))
+                    using (LinearGradientBrush br = new(rect, Program.Style.DarkMode ? _stateColor.Dark(0.05f) : _stateColor.Light(), _stateColor, (float)Percentage * 360f, true))
                     {
                         if (Dock == DockStyle.None) G.FillRoundedRect(br, rectValue, radius);
                         else G.FillRectangle(br, rectValue);
@@ -779,47 +849,91 @@ namespace WinPaletter.UI.WP
                     // Add moving highlight effect (controlled by HighlightEffectEnabled)
                     if (_highlightEffectEnabled && _value > Minimum && _value < Maximum)
                     {
-                        float gradientWidth = Math.Min(100, rect.Width);
-                        float highlightPos = (_hoverOffset * (rect.Width + gradientWidth)) - gradientWidth;
-                        float visibleWidth = Math.Min(highlightPos + gradientWidth, rectValue.Width) - Math.Max(highlightPos, 0);
+                        // Fixed width highlight
+                        float highlightWidth = rectValue.Width * 0.3f;
 
-                        if (visibleWidth > 0)
+                        // Calculate position based on hover offset (0 to 1)
+                        // This makes the highlight move from left edge to right edge of the progress portion
+                        float highlightLeft = (_hoverOffset * (rectValue.Width + highlightWidth)) - highlightWidth;
+
+                        // Clamp to ensure highlight stays within progress bounds
+                        highlightLeft = Math.Max(rectValue.Left - highlightWidth, Math.Min(highlightLeft, rectValue.Right));
+
+                        RectangleF highlightRect = new(highlightLeft, rectValue.Top, highlightWidth, rectValue.Height);
+
+                        // Calculate alpha based on how much of the highlight is within the progress area
+                        float intersectLeft = Math.Max(highlightRect.Left, rectValue.Left);
+                        float intersectRight = Math.Min(highlightRect.Right, rectValue.Right);
+                        float intersectWidth = Math.Max(0, intersectRight - intersectLeft);
+
+                        // Alpha is proportional to the visible portion
+                        float visibleRatio = intersectWidth / highlightWidth;
+
+                        // Create a region for clipping to the progress area
+                        GraphicsPath clipPath;
+                        if (Program.Style.RoundedCorners)
                         {
-                            float drawX = Math.Max(highlightPos, 0);
-                            RectangleF highlightRect = new(drawX, 0, visibleWidth, rect.Height);
-
-                            using (LinearGradientBrush brush = new(highlightRect, Color.Transparent, Program.Style.DarkMode ? StateColor.Light() : StateColor.Dark(), LinearGradientMode.Horizontal))
-                            {
-                                ColorBlend cb = new()
-                                {
-                                    Colors = [Color.Transparent, Color.FromArgb(_alpha, Program.Style.DarkMode ? StateColor.Light() : StateColor.Dark()), Color.Transparent],
-                                    Positions = [0f, 0.5f, 1f]
-                                };
-                                brush.InterpolationColors = cb;
-                                if (Dock == DockStyle.None) G.FillRoundedRect(brush, highlightRect, radius);
-                                else G.FillRectangle(brush, highlightRect);
-                            }
+                            clipPath = rectValue.Round(radius);
                         }
+                        else
+                        {
+                            clipPath = new();
+                            clipPath.AddRectangle(rectValue);
+                        }
+
+                        if (Dock == DockStyle.None && Program.Style.RoundedCorners)
+                        {
+                            G.SetClip(clipPath);
+                        }
+                        else
+                        {
+                            G.SetClip(rectValue);
+                        }
+
+                        // Draw the highlight with alpha based on visibility
+                        Color hilightColor = Program.Style.DarkMode ? _stateColor.Light() : _stateColor.Dark();
+                        using (LinearGradientBrush brush = new(highlightRect,Color.Transparent, hilightColor, LinearGradientMode.Horizontal))
+                        {
+                            ColorBlend cb = new()
+                            {
+                                Colors = [Color.FromArgb(0, hilightColor), Color.FromArgb((int)(128 * visibleRatio), hilightColor), Color.FromArgb(0, hilightColor)],
+                                Positions = [0f, 0.5f, 1f]
+                            };
+                            brush.InterpolationColors = cb;
+
+                            if (Dock == DockStyle.None && Program.Style.RoundedCorners)
+                                G.FillRoundedRect(brush, highlightRect, radius);
+                            else
+                                G.FillRectangle(brush, highlightRect);
+                        }
+
+                        G.ResetClip();
+                        clipPath?.Dispose();
                     }
                 }
 
                 G.ResetClip();
 
                 using (Pen P = new(scheme.Colors.Line_Hover(parentLevel)))
-                using (Pen P_Value = new(Color.FromArgb((int)(Percentage * 255), StateColor)))
+                using (Pen P_Value = new(Color.FromArgb(100, Program.Style.DarkMode ? _stateColor.Light() : _stateColor.Dark())))
                 {
-                    if (Dock == DockStyle.None) G.DrawRoundedRect(P, rect, radius);
-                    else G.DrawRectangle(P, rect);
-
-                    if (Dock == DockStyle.None) G.DrawRoundedRect(P_Value, rectValue, radius);
-                    else G.DrawRectangle(P_Value, rectValue.X, rectValue.Y, rectValue.Width, rectValue.Height);
+                    if (Dock == DockStyle.None)
+                    {
+                        G.DrawRoundedRect(P, rect, radius);
+                        if (Style != ProgressBarStyle.Marquee) G.DrawRoundedRect(P_Value, rectValue, radius);
+                    }
+                    else
+                    {
+                        G.DrawRectangle(P, rect);
+                        if (Style != ProgressBarStyle.Marquee) G.DrawRectangle(P_Value, Rectangle.Round(rectValue));
+                    }
                 }
             }
 
             else if (Appearance == ProgressBarAppearance.Circle)
             {
                 float PenWidth = 0.15f * Math.Max(Width, Height);
-                float _percent = Style == ProgressBarStyle.Continuous ? Percentage : 0.5f;
+                float _percent = Style == ProgressBarStyle.Continuous ? (float)Percentage : 0.5f;
                 float _startAngle = Style == ProgressBarStyle.Continuous ? -90 : -90; // Start from top for marquee
 
                 RectangleF CircleRect = new(PenWidth, PenWidth, rect.Width - PenWidth * 2, rect.Height - PenWidth * 2 + 1);
@@ -842,7 +956,7 @@ namespace WinPaletter.UI.WP
                     float sweepAngle = 120; // 120 degree segment
                     float startAngle = (_marqueeOffset * 360) - 60; // Rotate around
 
-                    using (LinearGradientBrush br = new(rect, StateColor, Program.Style.DarkMode ? StateColor.Light() : StateColor.LightLight(), Percentage * 360f, true))
+                    using (LinearGradientBrush br = new(rect, _stateColor, Program.Style.DarkMode ? _stateColor.Light() : _stateColor.LightLight(), (float)Percentage * 360f, true))
                     using (Pen pen = new(br, PenWidth))
                     {
                         pen.StartCap = Program.Style.RoundedCorners ? LineCap.Round : LineCap.Flat;
@@ -861,7 +975,7 @@ namespace WinPaletter.UI.WP
                 else
                 {
                     // Normal progress circle
-                    using (LinearGradientBrush br = new(rect, StateColor, Program.Style.DarkMode ? StateColor.Light() : StateColor.LightLight(), Percentage * 360f, true))
+                    using (LinearGradientBrush br = new(rect, _stateColor, Program.Style.DarkMode ? _stateColor.Light() : _stateColor.LightLight(), (float)Percentage * 360f, true))
                     using (Pen pen = new(br, PenWidth))
                     {
                         pen.StartCap = Program.Style.RoundedCorners ? LineCap.Round : LineCap.Flat;
