@@ -1,110 +1,156 @@
-## 1. User preference mask (UPM)
+## Applying Themes to All Users and LogonUI
 
-- UPM includes some items like Windows animations, shadows, cursors shadows, ...
+WinPaletter allows you to **apply theme elements** not only to the current user, but also to **all users and the LogonUI screen**. This section explains each configurable option and registry behavior.
 
-- You can apply UPM not only to current user, but also to all users and LogonUI screen
+---
 
-- Open Settings `>` Theme applying behavior `>` General `>` Check `Include User Preference Mask for all users HKEY_USERS\.DEFAULT\Control Panel\Desktop : UserPreferencesMask)`
+### 1. User Preference Mask (UPM)
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Settings/UPM.png?raw=true)
+- UPM includes items like **Windows animations, shadows, cursor shadows**, and more.  
+- Can be applied to **current user, all users, and LogonUI**.
+- Navigate: **Settings** → **Theme Applying Behavior** → **General** → Check:  
+  `Include User Preference Mask for all users (HKEY_USERS\.DEFAULT\Control Panel\Desktop : UserPreferencesMask)`
 
-***
+![User Preference Mask](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Settings/UPM.png?raw=true)
 
-## 2. Desktop wallpaper
+> [!WARNING]
+> - Modifying UPM for all users may affect login experience and system-wide behavior.  
+> - Ensure you have **backups** or a restore point before applying changes to `.DEFAULT`.
 
-- You can change Wallpaper in all users and LogonUI screen
+---
 
-- Open Settings `>` Theme applying behavior `>` General `>` and check one choice from these
+### 2. Desktop Wallpaper
 
+- You can change the **desktop wallpaper** for all users and LogonUI.  
+- Navigate: **Settings** → **Theme Applying Behavior** → **General** → Choose one of:
 ```
-  1. Copy from current desktop
-  2. Don't change
-  3. Restore defaults (No wallpaper on LogonUI)
-```
-
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Settings/CopyWallpaper.png?raw=true)
-
-***
-
-## 3. Classic colors
-
-- You can change classic colors in all users and LogonUI screen
-
-- Open Settings `>` Theme applying behavior `>` Classic Colors
-
-- There are 2 registry levels which can be changed:
-
-```
-HKEY_USERS\.DEFAULT\Control Panel\Colors (For all users & LogonUI): there are 2 choices
-  1. Overwrite
-  2. Don't change
-
-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard (For LogonUI in Windows 8.1 and later): there are 4 choices:
-  1. Overwrite
-  2. Restore defaults
-  3. Erase (Remove)
-  4. Don't change
+Copy from current desktop
+Don't change
+Restore defaults (No wallpaper on LogonUI)
 ```
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Settings/CopyClassicColors.png?raw=true)
+![Copy Wallpaper](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Settings/CopyWallpaper.png?raw=true)
 
-***
+> [!INFO]
+> - `Restore defaults` removes the LogonUI wallpaper while keeping user desktops intact.  
+> - `Copy from current desktop` ensures consistency across all accounts.
 
-## 4. Metrics and fonts
+---
 
-- You can change metrics and fonts in all users and LogonUI screen
+### 3. Classic Colors
 
-- Open Settings `>` Theme applying behavior `>` Metrics and fonts
+- Classic colors can be applied to all users and LogonUI.  
+- Navigate: **Settings** → **Theme Applying Behavior** → **Classic Colors**  
 
+Registry levels:
+
+`HKEY_USERS.DEFAULT\Control Panel\Colors (All users & LogonUI)`
 ```
-HKEY_USERS\.DEFAULT\Control Panel\Desktop\WindowMetrics (For all users & LogonUI): there are 2 choices
-  1. Overwrite
-  2. Don't change
-```
-
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Settings/CopyMetricsFonts.png?raw=true)
-
-***
-
-## 5. Cursors
-
-- You can change cursors in all users and LogonUI screen
-
-- Open Settings `>` Theme applying behavior `>` Cursors
-
-```
-HKEY_USERS\.DEFAULT\Control Panel\Cursors (For all users & LogonUI): there are 2 choices
-  1. Overwrite
-  2. Don't change
+Overwrite
+Don't change
 ```
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Settings/CopyCursors.png?raw=true)
-
-## 6. Consoles (Command Prompt and PowerShell)
-
-- You can change consoles in all users and LogonUI screen
-
-- Open Settings `>` Theme applying behavior `>` Consoles
-
+`HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard (LogonUI Windows 8.1+)`
 ```
-On applying Command Prompt:
-HKEY_USERS\.DEFAULT\Console (For all users & LogonUI): there are 2 choices
-  1. Overwrite
-  2. Don't change
-
-On applying PowerShell x86:
-HKEY_USERS\.DEFAULT\Console\%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe (For all users & LogonUI): there are 2 choices
-  1. Overwrite
-  2. Don't change
-
-On applying PowerShell x64:
-HKEY_USERS\.DEFAULT\Console\%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe (For all users & LogonUI): there are 2 choices
-  1. Overwrite
-  2. Don't change
+Overwrite
+Restore defaults
+Erase (Remove)
+Don't change
 ```
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Settings/CopyConsoles.png?raw=true)
+![Copy Classic Colors](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Settings/CopyClassicColors.png?raw=true)
 
-- You can override user preferences made to Command Prompt, just check `Override Command Prompt custom user preferences (Manually edited preferences)`
+> [!WARNING]
+> - Overwriting DefaultColors can affect LogonUI theme.  
+> - Always verify changes on a test account before applying system-wide.
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Settings/OverrideCommandPrompt.png?raw=true)
+---
+
+### 4. Metrics and Fonts
+
+- Change **window metrics and fonts** for all users and LogonUI.  
+- Navigate: **Settings** → **Theme Applying Behavior** → **Metrics and Fonts**
+
+Registry:
+
+`HKEY_USERS.DEFAULT\Control Panel\Desktop\WindowMetrics (All users & LogonUI)`
+```
+Overwrite
+Don't change
+```
+
+![Copy Metrics & Fonts](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Settings/CopyMetricsFonts.png?raw=true)
+
+> [!WARNING]
+> - Applying metrics/fonts with apps open may **crash the system**.  
+> - Consider enabling the **logoff/logon delay option** for safer application.
+
+---
+
+### 5. Cursors
+
+- Change **cursors** for all users and LogonUI.  
+- Navigate: **Settings** → **Theme Applying Behavior** → **Cursors**
+
+Registry:
+
+`HKEY_USERS.DEFAULT\Control Panel\Cursors (All users & LogonUI)`
+```
+Overwrite
+Don't change
+```
+
+![Copy Cursors](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Settings/CopyCursors.png?raw=true)
+
+> [!INFO]
+> - Overwriting cursor settings ensures consistency across accounts and LogonUI.  
+> - `Don't change` preserves user-customized cursors.
+
+---
+
+### 6. Consoles (Command Prompt & PowerShell)
+
+- Apply console themes to **all users and LogonUI**.  
+- Navigate: **Settings** → **Theme Applying Behavior** → **Consoles**
+
+Registry paths and choices:
+
+`Command Prompt`
+`HKEY_USERS.DEFAULT\Console (All users & LogonUI)`
+```
+Overwrite
+Don't change
+```
+
+`PowerShell x86`
+`HKEY_USERS.DEFAULT\Console%SystemRoot%_System32_WindowsPowerShell_v1.0_powershell.exe`
+```
+Overwrite
+Don't change
+```
+
+`PowerShell x64`
+`HKEY_USERS.DEFAULT\Console%SystemRoot%_SysWOW64_WindowsPowerShell_v1.0_powershell.exe`
+```
+Overwrite
+Don't change
+```
+
+- Optional: Override user preferences for Command Prompt:
+
+![Override Command Prompt](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Settings/OverrideCommandPrompt.png?raw=true)
+
+> [!WARNING]
+> - Overwriting console settings may **reset user-customized preferences**.  
+> - Only enable override if consistent behavior across accounts is required.
+
+> [!TIP]
+> - Test console changes in a secondary account before applying system-wide.  
+> - Consider creating a **backup `.reg` file** of keys mentioned above.
+
+---
+
+**Summary:**  
+- These options allow developers and power users to **apply theme elements system-wide**.  
+- Always use caution when modifying `.DEFAULT` and system-level registry keys.  
+- Recommended workflow: **backup → apply → test**.

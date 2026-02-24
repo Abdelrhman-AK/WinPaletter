@@ -1,72 +1,70 @@
-## What WinPaletter Does
+# WinPaletter: Take Full Control of Windows Customization
 
-Windows lets you customize many elements of your interface—like system colors, wallpapers, sounds, and cursors. WinPaletter takes that further by giving you full control over these elements, with a clean UI and extra tools.
-
-### Key Features
-- Edit system colors (including hidden or classic ones).
-- Customize UI metrics and fonts.
-- Manage wallpapers, system sounds, and cursors.
-- Save and load themes as files.
-- Browse and apply themes online from the built-in **WinPaletter Store**.
+WinPaletter is a powerful tool that lets you customize Windows beyond the standard Settings app. Whether you want to tweak colors, fonts, sounds, or cursors, WinPaletter gives you complete control in a clean, user-friendly interface.
 
 ---
 
-## How WinPaletter Works (Behind the Scenes)
+## What WinPaletter Does
 
-WinPaletter creates **in-memory structures (variables)** that represent your Windows customization settings. Each structure is responsible for a specific part of the Windows appearance.
+Windows already allows you to personalize certain elements—like accent colors, desktop backgrounds, and sound schemes. WinPaletter expands on this by unlocking hidden settings and providing extra features to make your PC truly yours.
 
-For example:
+### Key Features
+- **Full Color Control**: Modify system colors, including hidden or classic Windows colors not available in standard settings.
+- **UI Customization**: Adjust window metrics, spacing, and fonts to your liking.
+- **Complete Personalization**: Manage wallpapers, system sounds, and mouse cursors all in one place.
+- **Theme Management**: Save your customizations as theme files and reload them anytime.
+- **WinPaletter Store**: Browse, upload, and apply themes created by others directly from the app.
 
-| Structure Name             | Purpose                                |
+---
+
+## How WinPaletter Works (For Developers and Curious Users)
+
+Under the hood, WinPaletter uses organized data classes to manage your Windows customization settings. Each class represents a specific part of the Windows appearance, making it easy to read, modify, and apply changes safely.
+
+### Key Data Structures
+
+| Class Name                | Purpose                                |
 |---------------------------|----------------------------------------|
-| `ColorStructure`          | Holds main system colors               |
-| `ClassicColorsStructure`  | Stores legacy/classic Windows colors   |
-| `MetricsFontsStructure`   | Controls window sizes, spacing, fonts  |
-| `SoundsStructure`         | Custom sound scheme                    |
-| `CursorsStructure`        | Custom mouse pointers                  |
-| `WallpaperStructure`      | Wallpaper path and mode                |
+| `Color`                   | Stores main system colors (like accent and background colors) |
+| `ClassicColors`           | Manages legacy Windows colors from older versions |
+| `MetricsFonts`            | Controls window sizes, spacing, and fonts |
+| `Sounds`                  | Handles custom sound schemes for system events |
+| `Cursors`                 | Stores mouse pointer customizations |
+| `Wallpaper`               | Manages wallpaper path and display settings |
 
-### Diagram: WinPaletter Customization Flow
+### How It All Fits Together
+
+Here’s a simplified view of how WinPaletter applies your customizations:
 
 ```plaintext
 +------------------------+
-|   User interacts with  |
+|   You make changes in  |
 |     WinPaletter UI     |
 +----------+-------------+
            |
            v
-+-----------------------+
-| Structures are read from the Windows Registry and system settings, and stored in the app’s memory |
-     |-- [ ColorsStructure ]
-     |      |-- AccentColor
-     |      |-- BackgroundColor
-     |      |-- etc...
-     |
-     |-- [ FontsStructure ]
-     |      |-- CaptionFont
-     |      |-- MessageFont
-     |      |-- etc...
-     |
-     |-- [ WallpaperStructure ]
-     |      |-- Path
-     |      |-- Style
-     |      |-- etc...
-+----------+------------+
++------------------------+
+|   WinPaletter stores   |
+|   your settings in     |
+|   memory               |
+|  (Colors, Fonts, etc.) |
++----------+-------------+
            |
            v
 +------------------------+
-|    Windows Registry    |
-| (Settings are applied) |
+|   Settings are written |
+|   to the Windows       |
+|   Registry and applied |
 +------------------------+
 ```
 
-This diagram shows the process:
-- You change something in the app.
-- WinPaletter updates its internal memory structures.
-- It writes the changes directly to the Windows Registry.
-
-Why This Approach?
+## Why This Approach?
 - 💾 Safe: All changes go through structured logic instead of directly editing the registry.
 - ♻️ Reversible: You can export and re-import your settings.
 - 🌐 Sharable: You can download themes made by others or upload your own to the Store.
 - 💡 Advanced Control: Access settings not easily reachable in Windows Settings or Control Panel.
+
+---
+
+## Get Started
+Whether you're a casual user looking to refresh your desktop or a developer curious about Windows customization, WinPaletter makes it easy and fun to personalize your PC.

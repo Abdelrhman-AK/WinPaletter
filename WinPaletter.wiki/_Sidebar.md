@@ -34,9 +34,13 @@
 
 - [Basics](https://github.com/Abdelrhman-AK/WinPaletter/wiki/WinPaletter-Store-basics)
 - [Design themes to be uploaded to servers\GitHub repositories](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Designing-themes-rules)
-- [Upload themes to WinPaletter Store repository to be public to everyone](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Upload-themes-to-WinPaletter-Store-repository)
-- [`Optional` Create your own server\GitHub repository for hosting themes](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Create-an-online-WinPaletter-Store-source-(server%5CGitHub-repository)-for-hosting-WinPaletter-themes)
-- [`Optional` Add new themes sources to your current WinPaletter setup](https://github.com/Abdelrhman-AK/WinPaletter/wiki/WinPaletter-Sources-extension)
+- [Use GitHub manager to upload themes]: Wiki is under construction
+- [For Developers](https://github.com/Abdelrhman-AK/WinPaletter/wiki/WinPaletter-Store-Developers)
+
+## GitHub Manager (Within WinPaletter)
+- Wiki is under construction
+- Sign in\out GitHub using WinPaletter
+- [Use GitHub manager to manage and upload themes]: Coming soon
 
 ## Important WinPaletter settings
 
@@ -44,10 +48,7 @@
 - [Advanced options to patch PE files](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Advanced-options-to-patch-PE-files)
 - [Theme log verbose level](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Theme-log-verbose-level)
 - [Synchronize ExplorerPatcher settings with WinPaletter preview](https://github.com/Abdelrhman-AK/WinPaletter/wiki/ExplorerPatcher-synchronization)
-- [Delay applying of Metrics and Fonts](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Delay-applying-of-Metrics-and-Fonts)
 - [Apply preferences to all users and LogonUI screen](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Apply-preferences-to-all-users-and-LogonUI-screen)
-- [Disable cursors rendering or reset them](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Disable-cursors-rendering-or-reset-them)
-- [Use offline folders as sources for themes in WinPaletter Store](https://github.com/Abdelrhman-AK/WinPaletter/wiki/WinPaletter-Sources-extension#4-add-offline-sources-to-my-winpaletter-setup)
 
 ## Languages
 
@@ -57,9 +58,9 @@
 
 ## Backward compatibility
 
-- [Getting Windows XP and Vista ready to make them can launch WinPaletter](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Getting-Windows-XP-and-Vista-ready-to-make-them-can-launch-WinPaletter)
-- [Build .NET framework 4.8 for legacy operation systems (Windows XP, Vista)](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Build-.NET-Framework-4.8-for-legacy-operation-systems-(Windows-XP,-Vista))
-- [Install .NET Framework 4.8 on Windows 8 Build 9200](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Install-.NET-Framework-4.8-on-Windows-8-Build-9200)
+- [Extend compatibility for Windows XP](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Compatibility-XP)
+- [Extend compatibility for Windows Vista](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Compatibility-Vista)
+- [Extend compatibility for Windows 8 Build 9200](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Compatibility-8)
 
 ## Important notes/issues
 

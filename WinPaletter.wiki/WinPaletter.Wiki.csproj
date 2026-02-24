@@ -38,11 +38,11 @@
     <None Include="Build-.NET-Framework-4.8-for-legacy-operation-systems-%28Windows-XP,-Vista%29.md" />
     <None Include="Change-language.md" />
     <None Include="Color-picker-control.md" />
+    <None Include="Compatibility-8.md" />
+    <None Include="Compatibility-Vista.md" />
+    <None Include="Compatibility-XP.md" />
     <None Include="Convert-WinPaletter-themes-between-old-and-new-formats.md" />
-    <None Include="Create-an-online-WinPaletter-Store-source-%28server,-GitHub-repository%29-for-hosting-WinPaletter-themes.md" />
-    <None Include="Delay-applying-of-Metrics-and-Fonts.md" />
     <None Include="Designing-themes-rules.md" />
-    <None Include="Disable-cursors-rendering-or-reset-them.md" />
     <None Include="Disable-Explorer-restart.md" />
     <None Include="Edit-LogonUI-screen.md" />
     <None Include="Edit-Screen-Saver.md" />
@@ -60,10 +60,8 @@
     <None Include="Edit-WinPaletter-application-theme.md" />
     <None Include="ExplorerPatcher-synchronization.md" />
     <None Include="Get-WinPaletter.md" />
-    <None Include="Getting-Windows-XP-and-Vista-ready-to-make-them-can-launch-WinPaletter.md" />
     <None Include="Home.md" />
     <None Include="How-to-design-and-apply-a-theme.md" />
-    <None Include="Install-.NET-Framework-4.8-on-Windows-8-Build-9200.md" />
     <None Include="Language-creation-%28old-methods%29.md" />
     <None Include="Language-creation.md" />
     <None Include="Language-upload.md" />
@@ -72,9 +70,8 @@
     <None Include="Requirements.md" />
     <None Include="Skeleton-of-a-feature-modification.md" />
     <None Include="Theme-log-verbose-level.md" />
-    <None Include="Upload-themes-to-WinPaletter-Store-repository.md" />
-    <None Include="WinPaletter-sources-extension.md" />
     <None Include="WinPaletter-Store-basics.md" />
+    <None Include="WinPaletter-Store-Developers.md" />
     <None Include="_Footer.md" />
     <None Include="_Sidebar.md" />
   </ItemGroup>
