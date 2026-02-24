@@ -8,7 +8,7 @@
 
 Make it checked to make WinPaletter apply changes to Windows switcher
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/AltTab/0.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/AltTab/0.png?raw=true)
 
 ***
 
@@ -23,7 +23,7 @@ This will copy preferences from current Windows switcher settings into current o
 ### 3. Open from Default Windows
 This will copy preferences from default Windows theme into current open theme
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/AltTab/1.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/AltTab/1.png?raw=true)
 
 ***
 
@@ -33,19 +33,19 @@ This will copy preferences from default Windows theme into current open theme
 
 - You can select default style or classic NT style
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/AltTab/2.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/AltTab/2.png?raw=true)
 
 - This is preview part
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/AltTab/3.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/AltTab/3.png?raw=true)
 
 ### 2. Opacity
 
 - It is valid only for Windows 10 (or Windows 11 with ExplorerPatcher)
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/AltTab/4_0.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/AltTab/4_0.png?raw=true)
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/AltTab/4_1.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/AltTab/4_1.png?raw=true)
 
 ***
 
@@ -57,4 +57,4 @@ This will copy preferences from default Windows theme into current open theme
 
 3. **Cancel:** it will close this form without loading any modification made to Windows switcher
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/AltTab/5.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/AltTab/5.png?raw=true)

@@ -9,7 +9,7 @@ Copies settings from your current Windows configuration into the open theme (act
 ### 3. Open from Default Windows
 Copies settings from the default Windows theme into your open theme.
 
-![Toolbar Buttons](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/StructureModification/s0.png?raw=true)
+![Toolbar Buttons](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/StructureModification/s0.png?raw=true)
 
 ***
 
@@ -17,13 +17,13 @@ Copies settings from the default Windows theme into your open theme.
 
 This toggle locks or unlocks editing for the current Windows aspect. When locked (disabled), this part will be skipped when applying the theme in the main window.
 
-![Lock Toggle](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/StructureModification/s1.png?raw=true)
+![Lock Toggle](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/StructureModification/s1.png?raw=true)
 
 ***
 
 ## 3. Action Buttons
 
-![Action Buttons](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/StructureModification/s2.png?raw=true)
+![Action Buttons](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/StructureModification/s2.png?raw=true)
 
 1. **Load into current theme:** Loads the current settings into your open WinPaletter theme and closes this window, so you can continue editing other Windows aspects. When finished, click Apply in the main window to apply all changes.
 

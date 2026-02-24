@@ -2,13 +2,13 @@
 
 This is what a default color control looks like:
 
-![Color Control](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/ColorControlShape/0.png?raw=true)
+![Color Control](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/ColorControlShape/0.png?raw=true)
 
 ---
 
 ## 2. Color Control Components
 
-![Color Control Parts](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/ColorControlShape/shape.png?raw=true)
+![Color Control Parts](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/ColorControlShape/shape.png?raw=true)
 
 ### 1. Color Display
 
@@ -88,31 +88,31 @@ Drag and hover to navigate and move colors between different pages.
 
 * Left-clicking a color opens the WinPaletter color picker:
 
-![Color Picker](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/ColorControlShape/1.png?raw=true)
+![Color Picker](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/ColorControlShape/1.png?raw=true)
 
 * Choose from 7 different picker types:
 
-![Picker Types](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/ColorControlShape/2.png?raw=true)
+![Picker Types](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/ColorControlShape/2.png?raw=true)
 
 ### 1. RGB/HEX Picker
 
-![RGB/HEX Picker](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/ColorControlShape/3.png?raw=true)
+![RGB/HEX Picker](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/ColorControlShape/3.png?raw=true)
 
 ### 2. Color Grid
 
-![Color Grid](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/ColorControlShape/4.png?raw=true)
+![Color Grid](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/ColorControlShape/4.png?raw=true)
 
 * Import palettes from various formats (ACO, ACT, TXT, GPL, BBM, LBM, PAL):
 
-![Import Button](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/ColorControlShape/5.png?raw=true)
+![Import Button](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/ColorControlShape/5.png?raw=true)
 
 ### 3. Color Circle
 
-![Color Circle](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/ColorControlShape/6.png?raw=true)
+![Color Circle](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/ColorControlShape/6.png?raw=true)
 
 ### 4. Previous Colors
 
-![History](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/ColorControlShape/6_1.png?raw=true)
+![History](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/ColorControlShape/6_1.png?raw=true)
 
 ### 5. Extract From Image
 
@@ -120,31 +120,31 @@ Drag and hover to navigate and move colors between different pages.
 * Set color count, quality, ignore white, use acceleration
 * Click "Result" → "Extract" → pick a color
 
-![Extract Settings](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/ColorControlShape/7_1.png?raw=true)
+![Extract Settings](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/ColorControlShape/7_1.png?raw=true)
 
 ### 6. Extract From Windows Theme or Presets
 
 * Load from `.theme` or `.msstyles`
 
-![From Theme](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/ColorControlShape/8_0.png?raw=true)
+![From Theme](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/ColorControlShape/8_0.png?raw=true)
 
 * Or use built-in presets:
 
-![Presets](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/ColorControlShape/8_1.png?raw=true)
+![Presets](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/ColorControlShape/8_1.png?raw=true)
 
 * Click to apply extracted color:
 
-![Pick Color](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/ColorControlShape/8_2.png?raw=true)
+![Pick Color](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/ColorControlShape/8_2.png?raw=true)
 
 ### 7. Extract From WinPaletter Themes
 
 * Choose from current or built-in themes (XP to 11)
 
-![From Theme](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/ColorControlShape/9_0.png?raw=true)
+![From Theme](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/ColorControlShape/9_0.png?raw=true)
 
 * Click to select color:
 
-![Pick Color](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/ColorControlShape/9_1.png?raw=true)
+![Pick Color](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/ColorControlShape/9_1.png?raw=true)
 
 ### 8. Screen Pixel Picker
 
@@ -152,17 +152,17 @@ Drag and hover to navigate and move colors between different pages.
 2. Move your mouse to desired pixel
 3. Release to select color
 
-![Pixel Picker](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/ColorControlShape/10_0.png?raw=true)
+![Pixel Picker](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/ColorControlShape/10_0.png?raw=true)
 
-![Pixel Picker](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/ColorControlShape/10_1.png?raw=true)
+![Pixel Picker](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/ColorControlShape/10_1.png?raw=true)
 
-![Pixel Picker](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/ColorControlShape/10_2.png?raw=true)
+![Pixel Picker](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/ColorControlShape/10_2.png?raw=true)
 
 ### Tip: Use Classic Picker
 
 Enable classic Windows color picker via: **Settings > Color Item Info > Use Classic Picker**
 
-![Classic Picker](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/ColorControlShape/classic.png?raw=true)
+![Classic Picker](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/ColorControlShape/classic.png?raw=true)
 
 ---
 
@@ -170,47 +170,47 @@ Enable classic Windows color picker via: **Settings > Color Item Info > Use Clas
 
 * Right-click a color control to open the context menu:
 
-![Context Menu](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/ColorControlShape/11.png?raw=true)
+![Context Menu](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/ColorControlShape/11.png?raw=true)
 
 ### 1. Cut, Copy, Paste, Undo
 
-![Clipboard Actions](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/ColorControlShape/12.png?raw=true)
+![Clipboard Actions](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/ColorControlShape/12.png?raw=true)
 
 ### 2. Current Color
 
 Displays the current color with a slider to adjust brightness.
 
-![Current Color](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/ColorControlShape/13_0.png?raw=true)
+![Current Color](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/ColorControlShape/13_0.png?raw=true)
 
 ### 3. Default Color
 
 Shows the default color for the item with brightness control.
 
-![Default Color](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/ColorControlShape/13_1.png?raw=true)
+![Default Color](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/ColorControlShape/13_1.png?raw=true)
 
 ### 4. Previous Color
 
 The last used color with a brightness slider.
 
-![Previous Color](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/ColorControlShape/13_2.png?raw=true)
+![Previous Color](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/ColorControlShape/13_2.png?raw=true)
 
 ### 5. Inverted Color
 
 Automatically generated opposite color with a brightness slider.
 
-![Inverted Color](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/ColorControlShape/13_3.png?raw=true)
+![Inverted Color](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/ColorControlShape/13_3.png?raw=true)
 
 ### 6. Color Selection
 
 Click a color to apply it.
 
-![Select Color](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/ColorControlShape/13_4.png?raw=true)
+![Select Color](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/ColorControlShape/13_4.png?raw=true)
 
 ### 7. Color History
 
 Track color changes for the item.
 
-![Color History](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/ColorControlShape/14.png?raw=true)
+![Color History](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/ColorControlShape/14.png?raw=true)
 
 ---
 
@@ -218,4 +218,4 @@ Track color changes for the item.
 
 You can customize how the color control looks and behaves in settings:
 
-![Settings](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/ColorControlShape/settings.png?raw=true)
+![Settings](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/ColorControlShape/settings.png?raw=true)

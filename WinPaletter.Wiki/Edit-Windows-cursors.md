@@ -8,13 +8,13 @@ This feature is not dependent on Windows Registry only, but also it renders new 
 
 Make it checked to make WinPaletter can modify cursors
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Cursors/cursors_0.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/Cursors/cursors_0.png?raw=true)
 
 ***
 
 ## 3. Select cursor you want to modify
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Cursors/cursors_1.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/Cursors/cursors_1.png?raw=true)
 
 ***
 
@@ -26,21 +26,21 @@ Make it checked to make WinPaletter can modify cursors
 
 You can change style of cursor and its loading part, it include Aero, Modern and Classic
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Cursors/cursors_2_0.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/Cursors/cursors_2_0.png?raw=true)
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Cursors/cursors_2_1.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/Cursors/cursors_2_1.png?raw=true)
 
 ### 2. Cursor colors
 
 - You can change background color and line color
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Cursors/cursors_3_0.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/Cursors/cursors_3_0.png?raw=true)
 
 - The second color inside one section is used for gradience
 
 - To enable gradience, make this checked
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Cursors/cursors_3_1.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/Cursors/cursors_3_1.png?raw=true)
 
 - There are different gradience types; including `Vertical`, `Horizontal`, `Forward Diagonal`, `Backward Diagonal` and `Circle`
 
@@ -54,41 +54,41 @@ https://github.com/Abdelrhman-AK/WinPaletter/assets/59510211/6997e6be-9eba-4147-
 
 - They are exactly the same as Cursor colors (the previous part), but with different labels; Background of loading circle and Rotating part.
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Cursors/cursors_4_0.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/Cursors/cursors_4_0.png?raw=true)
 
 - They can be modified when two cursors are selected: app starting and busy
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Cursors/cursors_4_1.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/Cursors/cursors_4_1.png?raw=true)
 
 ### 4. Custom shadow
 
 It renders a shadow that is different from that Windows does
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Cursors/cursors_5_0.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/Cursors/cursors_5_0.png?raw=true)
 
 - Make it enabled if you like to use custom shadow in current selected cursor
 
 - If you enabled it, please disable shadow in miscellaneous part (to disable shadow that Windows renders and use shadow rendered by WinPaletter)
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Cursors/cursors_7_1.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/Cursors/cursors_7_1.png?raw=true)
 
 - You can change color of shadow with its blur power and opacity, with the ability to move it in `X` and `Y` coordinates
 
 - This is an example for a red shadow applied to app starting cursor
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Cursors/cursors_5_1.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/Cursors/cursors_5_1.png?raw=true)
 
 ### 5. Repeat previous steps from `2` to `5` with other cursors
 
 - Or instead, you can copy from a cursor you modified before and paste it into another cursor or all cursors
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Cursors/cursors_6.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/Cursors/cursors_6.png?raw=true)
 
 ### 6. Miscellaneous
 
 - You can control some options like shadow for cursors (rendered by Windows, not WinPaletter), cursor tracking (sonar) and trails
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Cursors/cursors_7_0.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/Cursors/cursors_7_0.png?raw=true)
 
 ***
 
@@ -100,4 +100,4 @@ It renders a shadow that is different from that Windows does
 
 3. **Cancel:** it will close this form without loading any modification made to cursors
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Cursors/cursors_8.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/Cursors/cursors_8.png?raw=true)

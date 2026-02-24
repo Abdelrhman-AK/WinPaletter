@@ -11,7 +11,7 @@ WinPaletter allows you to **apply theme elements** not only to the current user,
 - Navigate: **Settings** → **Theme Applying Behavior** → **General** → Check:  
   `Include User Preference Mask for all users (HKEY_USERS\.DEFAULT\Control Panel\Desktop : UserPreferencesMask)`
 
-![User Preference Mask](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Settings/UPM.png?raw=true)
+![User Preference Mask](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/Settings/UPM.png?raw=true)
 
 > [!WARNING]
 > - Modifying UPM for all users may affect login experience and system-wide behavior.  
@@ -29,7 +29,7 @@ Don't change
 Restore defaults (No wallpaper on LogonUI)
 ```
 
-![Copy Wallpaper](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Settings/CopyWallpaper.png?raw=true)
+![Copy Wallpaper](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/Settings/CopyWallpaper.png?raw=true)
 
 > [!INFO]
 > - `Restore defaults` removes the LogonUI wallpaper while keeping user desktops intact.  
@@ -58,7 +58,7 @@ Erase (Remove)
 Don't change
 ```
 
-![Copy Classic Colors](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Settings/CopyClassicColors.png?raw=true)
+![Copy Classic Colors](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/Settings/CopyClassicColors.png?raw=true)
 
 > [!WARNING]
 > - Overwriting DefaultColors can affect LogonUI theme.  
@@ -79,7 +79,7 @@ Overwrite
 Don't change
 ```
 
-![Copy Metrics & Fonts](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Settings/CopyMetricsFonts.png?raw=true)
+![Copy Metrics & Fonts](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/Settings/CopyMetricsFonts.png?raw=true)
 
 > [!WARNING]
 > - Applying metrics/fonts with apps open may **crash the system**.  
@@ -100,7 +100,7 @@ Overwrite
 Don't change
 ```
 
-![Copy Cursors](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Settings/CopyCursors.png?raw=true)
+![Copy Cursors](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/Settings/CopyCursors.png?raw=true)
 
 > [!INFO]
 > - Overwriting cursor settings ensures consistency across accounts and LogonUI.  
@@ -138,7 +138,7 @@ Don't change
 
 - Optional: Override user preferences for Command Prompt:
 
-![Override Command Prompt](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Settings/OverrideCommandPrompt.png?raw=true)
+![Override Command Prompt](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/Settings/OverrideCommandPrompt.png?raw=true)
 
 > [!WARNING]
 > - Overwriting console settings may **reset user-customized preferences**.  

@@ -2,7 +2,7 @@
 
 Make it checked to make WinPaletter apply changes to Screen Saver
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/ScreenSaver/0.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset//ScreenSaver/0.png?raw=true)
 
 ***
 
@@ -20,13 +20,13 @@ This will copy preferences from current Screen Saver settings into current open 
 ### 4. Open from Default Windows
 This will copy preferences from default Windows theme into current open theme
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/ScreenSaver/1.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset//ScreenSaver/1.png?raw=true)
 
 ***
 
 ## 3. Parts
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/ScreenSaver/2.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset//ScreenSaver/2.png?raw=true)
 
 - You can select Screen Saver file, there are some files by default in `%windir%/system32`
 
@@ -34,7 +34,7 @@ This will copy preferences from default Windows theme into current open theme
 
 - You can logoff after closing Screen Saver and protect your Windows by your user password (on resume, password protect)
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/ScreenSaver/3.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset//ScreenSaver/3.png?raw=true)
 
 1. If there a selected screen saver file, it will play it in full screen
 
@@ -56,4 +56,4 @@ This will copy preferences from default Windows theme into current open theme
 
 3. **Cancel:** it will close this form without loading any modification made to Screen Saver
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/ScreenSaver/4.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset//ScreenSaver/4.png?raw=true)

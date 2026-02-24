@@ -4,7 +4,7 @@
 
 2. Open app `>` Settings `>` Languages `>` Activate custom language `>` Open the downloaded file `>` Save settings
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Settings/Lang0.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/Settings/Lang0.png?raw=true)
 
 ---
 
@@ -12,4 +12,4 @@
 
 Open app `>` Settings `>` Languages `>` Deactivate custom language and erase the textbox of language file path `>` Save settings and finally restart WinPaletter
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Settings/Lang1.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/Settings/Lang1.png?raw=true)

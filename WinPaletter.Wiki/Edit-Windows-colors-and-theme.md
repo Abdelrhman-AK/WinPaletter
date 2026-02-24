@@ -3,7 +3,7 @@
 ## 1. Target OS Preview 
 Change it to Windows 11 or 10
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/OSPreview/11.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/OSPreview/11.png?raw=true)
 
 ## 2. `Optional` Generate a palette
 [Click here](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Palette-generator) to learn more about it
@@ -11,7 +11,7 @@ Change it to Windows 11 or 10
 ## 3. Parts
 There are main three areas in which you can customize these aspects
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/WindowsColors/mainformparts.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/WindowsColors/mainformparts.png?raw=true)
 
 ### 1. **Toggles**
 You can change some aspects by these toggles; including Windows dark/light mode, transparency, apply accent on elements like taskbar and start menu
@@ -29,7 +29,7 @@ You can change different Windows colors, and these colors are illustrated by lab
 ## 1. Target OS Preview 
 Change it to Windows 8.1
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/OSPreview/81.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/OSPreview/81.png?raw=true)
 
 ## 2. `Optional` Generate a palette
 [Click here](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Palette-generator) to learn more about it
@@ -37,7 +37,7 @@ Change it to Windows 8.1
 ## 3. Parts
 There are main two areas in which you can customize these aspects
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/WindowsColors/mainformparts_81.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/WindowsColors/mainformparts_81.png?raw=true)
 
 ### 1. **Colors**
 - You can change Windows main color (for taskbar and titlebars), foreground and background colors (for start, UWP apps, …)
@@ -50,7 +50,7 @@ You can change Windows theme, including two visual styles (Aero, Aero Lite), Sta
 
 You can change Start background from available presets here
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/WindowsColors/start_81.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/WindowsColors/start_81.png?raw=true)
 
 #### 2. **LogonUI color** 
 
@@ -58,7 +58,7 @@ It is only for Windows 8 (not 8.1)
 
 - Windows 8 is not supported but this feature is implemented anyway until this OS is supported
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/WindowsColors/logonuicolors_8.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/WindowsColors/logonuicolors_8.png?raw=true)
 
 
 ***
@@ -68,7 +68,7 @@ It is only for Windows 8 (not 8.1)
 ## 1. Target OS Preview 
 Change it to Windows 7
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/OSPreview/7.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/OSPreview/7.png?raw=true)
 
 ## 2. `Optional` Generate a palette
 [Click here](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Palette-generator) to learn more about it
@@ -76,7 +76,7 @@ Change it to Windows 7
 ## 3. Parts
 There are main three areas in which you can customize these aspects
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/WindowsColors/mainformparts_7.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/WindowsColors/mainformparts_7.png?raw=true)
 
 ### 1. **Main colors**
 - You can change Windows main color (colorization color and after glow color)
@@ -99,7 +99,7 @@ You can change Windows theme (Aero, Aero opaque, Basic and Classic)
 ## 1. Target OS Preview 
 Change it to Windows Vista
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/OSPreview/Vista.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/OSPreview/Vista.png?raw=true)
 
 ## 2. `Optional` Generate a palette
 [Click here](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Palette-generator) to learn more about it
@@ -107,7 +107,7 @@ Change it to Windows Vista
 ## 3. Parts
 There are main three areas in which you can customize these aspects
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/WindowsColors/mainformparts_vista.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/WindowsColors/mainformparts_vista.png?raw=true)
 
 ### 1. **Colorization color (main color)**
 You can change Windows main color (colorization color) with a track bar to control this color intensity
@@ -123,12 +123,12 @@ You can change Windows theme (Aero, Aero opaque, Basic and Classic)
 ## 1. Target OS Preview 
 Change it to Windows XP
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/OSPreview/XP.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/OSPreview/XP.png?raw=true)
 
 ## 2. Parts
 There are two main areas in which you can customize Windows XP themes
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/WindowsColors/mainformparts_xp.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/WindowsColors/mainformparts_xp.png?raw=true)
 
 ### 1. **Theme** 
 You can change Windows theme (Luna blue, Luna Green, Luna Silver, external visual styles and Windows classic)
@@ -148,4 +148,4 @@ Theme/Visual styles has values for classic colors, metrics and fonts inside thei
 
 - If `System fonts` is not checked, WinPaletter will apply fonts from the loaded values but not from the loaded Theme/Visual styles, and vice versa.
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/WindowsColors/mainform_override_xp.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/WindowsColors/mainform_override_xp.png?raw=true)
