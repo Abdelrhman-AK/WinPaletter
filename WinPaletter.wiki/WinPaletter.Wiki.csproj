@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{ABF93035-B1FD-4BAE-BAD1-B5757C3132FF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WinPaletter.Wiki</RootNamespace>
+    <AssemblyName>WinPaletter.Wiki</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="Advanced-options-to-patch-PE-files.md" />
+    <None Include="Antiviruses-or-browsers-download-issue.md" />
+    <None Include="Application-mechanism.md" />
+    <None Include="Apply-preferences-to-all-users-and-LogonUI-screen.md" />
+    <None Include="Build-.NET-Framework-4.8-for-legacy-operation-systems-%28Windows-XP,-Vista%29.md" />
+    <None Include="Change-language.md" />
+    <None Include="Color-picker-control.md" />
+    <None Include="Convert-WinPaletter-themes-between-old-and-new-formats.md" />
+    <None Include="Create-an-online-WinPaletter-Store-source-%28server,-GitHub-repository%29-for-hosting-WinPaletter-themes.md" />
+    <None Include="Delay-applying-of-Metrics-and-Fonts.md" />
+    <None Include="Designing-themes-rules.md" />
+    <None Include="Disable-cursors-rendering-or-reset-them.md" />
+    <None Include="Disable-Explorer-restart.md" />
+    <None Include="Edit-LogonUI-screen.md" />
+    <None Include="Edit-Screen-Saver.md" />
+    <None Include="Edit-Sounds.md" />
+    <None Include="Edit-theme-info.md" />
+    <None Include="Edit-Wallpaper.md" />
+    <None Include="Edit-Windows-classic-colors.md" />
+    <None Include="Edit-Windows-colors-and-theme.md" />
+    <None Include="Edit-Windows-consoles-%28Command-Prompt-and-PowerShell%29.md" />
+    <None Include="Edit-Windows-cursors.md" />
+    <None Include="Edit-Windows-Effects.md" />
+    <None Include="Edit-Windows-Metrics-and-Fonts.md" />
+    <None Include="Edit-Windows-switcher-%28Alt-Tab-appearance%29.md" />
+    <None Include="Edit-Windows-Terminals-%28Windows-10-and-later%29.md" />
+    <None Include="Edit-WinPaletter-application-theme.md" />
+    <None Include="ExplorerPatcher-synchronization.md" />
+    <None Include="Get-WinPaletter.md" />
+    <None Include="Getting-Windows-XP-and-Vista-ready-to-make-them-can-launch-WinPaletter.md" />
+    <None Include="Home.md" />
+    <None Include="How-to-design-and-apply-a-theme.md" />
+    <None Include="Install-.NET-Framework-4.8-on-Windows-8-Build-9200.md" />
+    <None Include="Language-creation-%28old-methods%29.md" />
+    <None Include="Language-creation.md" />
+    <None Include="Language-upload.md" />
+    <None Include="Main-form-parts.md" />
+    <None Include="Palette-generator.md" />
+    <None Include="Requirements.md" />
+    <None Include="Skeleton-of-a-feature-modification.md" />
+    <None Include="Theme-log-verbose-level.md" />
+    <None Include="Upload-themes-to-WinPaletter-Store-repository.md" />
+    <None Include="WinPaletter-sources-extension.md" />
+    <None Include="WinPaletter-Store-basics.md" />
+    <None Include="_Footer.md" />
+    <None Include="_Sidebar.md" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
