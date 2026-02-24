@@ -1,103 +1,91 @@
+# ⚠ Obsolete: Theme Format Conversion in WinPaletter
+
+> [!obsolete]
+> This guide is **obsolete**.  
+> Starting with WinPaletter **1.0.7.7 and later**, themes now use a JSON-based internal format. Manual conversion is rarely needed, as opening an old-format theme in WinPaletter will prompt automatic conversion.
+
+---
+
 ## Introduction
 
-- WinPaletter 1.0.7.7 (and later) now uses a new format for themes files, it is JSON-internally formatted which is easier in coding and also in editing by a code\text editor.
+- WinPaletter 1.0.7.7+ uses a **JSON-internally formatted theme file**, making it easier to code, edit, and maintain.  
+- Older themes (pre-1.0.7.7) can be converted to the new format using the built-in conversion tools.  
+- Conversion options include:
+  - **GUI Converter**
+  - **Command Line**
+  - **Command Line with a List File**
 
-- To reuse a theme you made in earlier versions of WinPaletter, you can convert between old format and new format using WinPaletter conversion tool (Inside WinPaletter).
-
-- When you open a theme file with old format, WinPaletter will offer you instant conversion of this file. If you want to convert other themes files, you can use converter by any of these 3 methods: **GUI converter, Command line, or Command line with a list file of themes**
-
----
-
-## 1. GUI converter
-
-1. Open WinPaletter and press on this button (![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Converter.png?raw=true))
-
-2. Open file. If it is an old-formatted file, it will be converted to new format, and vise versa
-
-3. Check options:
-   
-   1. Compress contents (valid for new JSON-internally-formatted themes) `Recommended`
-   
-   2. Make it valid for old version of WinPaletter less than 1.0.6.9 (valid for old themes format) `Not recommended`
-
-4. Press on `Export`
-
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Settings/WPTHConvert.png?raw=true)
+> [!warning]
+> If possible, prefer updating themes directly in WinPaletter 1.0.7.7+ rather than converting older files manually.
 
 ---
 
-## 2. Command line
+## 1. GUI Converter
 
-1. Open command prompt inside folder containing `WinPaletter.exe`
+1. Open WinPaletter and click the **Converter** button:  
 
-2. Use one of these line schemes to convert a theme file:
-   
-   ```
-   WinPaletter.exe /convert:"themefile_to_be_converted"|"themefile_to_be_exported"
-   ```
-   
-   ```
-   WinPaletter.exe /convert:"themefile_to_be_converted"|"themefile_to_be_exported"|x
-   ```
-   
-   ```
-   WinPaletter.exe /convert:"themefile_to_be_converted"|"themefile_to_be_exported"|x|y
-   ```
+2. Open your theme file:
+   - Old-format files are automatically converted to the new JSON format.
+   - You can also convert new-format files back to the old format (not recommended).
 
-3. Please respect the quotes ("), and make the arguments separated by | (not by spaces).
+3. Options:
+   - **Compress contents** (Recommended; for new JSON format)
+   - **Make compatible with WinPaletter <1.0.6.9** (Not recommended)
 
-4. `x` controls this option: `Compress contents (valid for new JSON-internally-formatted themes)`, it can be `0` if you don't want this option or `1` if you want.
-
-5. `y` controls this option: `Make it valid for old version of WinPaletter less than 1.0.6.9 (valid for old themes format)`, it can be `0` if you don't want this option or `1` if you want.
-
-6. WinPaletter will detect the file type and will convert between old and new formats
+4. Click **Export** to save the converted file.  
+   ![Converter GUI](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Wiki/Settings/WPTHConvert.png?raw=true)
 
 ---
 
-## C. Command line with a list file of themes
+## 2. Command Line Conversion
 
-1. Open notepad
+1. Open **Command Prompt** in the folder containing `WinPaletter.exe`.
 
-2. Type lines with one of these schemes:
-   
-   ```
-   "themefile_to_be_converted"
-   ```
-   
-   ```
-   "themefile_to_be_converted"|x
-   ```
-   
-   ```
-   "themefile_to_be_converted"|x|y
-   ```
+2. Use one of the following formats:
 
-3. Please respect the quotes ("), and make the arguments separated by | (not by spaces). 
+```cmd
+WinPaletter.exe /convert:"themefile_to_be_converted"|"themefile_to_be_exported"
+WinPaletter.exe /convert:"themefile_to_be_converted"|"themefile_to_be_exported"|x
+WinPaletter.exe /convert:"themefile_to_be_converted"|"themefile_to_be_exported"|x|y
+```
 
-4. `x` controls this option: `Compress contents (valid for new JSON-internally-formatted themes)`, it can be `0` if you don't want this option or `1` if you want.
+3. Arguments must be quoted and separated by `|`.
 
-5. `y` controls this option: `Make it valid for old version of WinPaletter less than 1.0.6.9 (valid for old themes format)`, it can be `0` if you don't want this option or `1` if you want.
+- `x` = Compress contents (0 = no, 1 = yes)
+- `y` = Make compatible with old WinPaletter (<1.0.6.9) (0 = no, 1 = yes)
 
-6. For example, text file can be like this:
-   
-   ```
-   "C:\Users\Username\Desktop\theme0.wpth"
-   "C:\Users\Username\Desktop\theme1.wpth"
-   "C:\Users\Username\Desktop\theme2.wpth|0|1"
-   "C:\Users\Username\Desktop\theme3.wpth|1"
-   "C:\Users\Username\Desktop\theme4.wpth"
-   "C:\Users\Username\Desktop\theme5.wpth|1|1"
-   "C:\Users\Username\Desktop\theme6.wpth"
-   ```
+4. WinPaletter will detect the file type and perform the conversion automatically.
 
-7. Save this text file
+> [!warning]
+> Manual command-line conversion is generally unnecessary with WinPaletter 1.0.7.7+.
 
-8. Type in command prompt: 
-   
-   ```
-   WinPaletter.exe /convert-list:"text_file"
-   ```
+## 3. Command Line: Batch Conversion Using a List of Themes
 
-9. WinPaletter will loop through lines of this file and detect the file type and will convert between old and new formats.
+1. Create a text file using **Notepad**.
+2. Each line should specify a theme file using one of the following formats:
+```
+"themefile_to_be_converted"
+"themefile_to_be_converted"|x
+"themefile_to_be_converted"|x|y
+```
+3. Example of a list file:
+```
+"C:\Users\Username\Desktop\theme0.wpth"
+"C:\Users\Username\Desktop\theme1.wpth"
+"C:\Users\Username\Desktop\theme2.wpth|0|1"
+"C:\Users\Username\Desktop\theme3.wpth|1"
+"C:\Users\Username\Desktop\theme4.wpth"
+"C:\Users\Username\Desktop\theme5.wpth|1|1"
+"C:\Users\Username\Desktop\theme6.wpth"
+```
+4. Save the text file (e.g., `themes_list.txt`) and run the following command in the folder containing `WinPaletter.exe`:
+```
+WinPaletter.exe /convert-list:"themes_list.txt"
+```
 
-10. The new files will be saved inside folder named `WinPaletterConversion` and it is located in the same folders of `themefile_to_be_converted` used.
+5. **WinPaletter** will process each line, converting files between the old and new formats.
+
+6. Converted files are saved in a folder named `WinPaletterConversion` located in the same directory as the original theme files.
+
+> [!warning]
+> This list file method is only needed for batch-converting legacy themes. Modern versions of WinPaletter do not support the legacy formatting.
