@@ -1,1 +1,1 @@
-This wiki is consistent with WinPaletter 1.0.8.9 and later
+This wiki is for WinPaletter 1.0.8.9 and later
