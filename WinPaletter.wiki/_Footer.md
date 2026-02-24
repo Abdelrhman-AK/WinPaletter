@@ -1,1 +1,2 @@
-This wiki is for WinPaletter 1.0.8.9 and later
+> [!IMPORTANT]
+> This wiki covers **WinPaletter version 1.0.8.9 and later**.

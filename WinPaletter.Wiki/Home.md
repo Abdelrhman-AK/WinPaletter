@@ -1,6 +1,8 @@
-# Welcome to the WinPaletter Wiki!
+# Welcome to the WinPaletter Wiki
 
-- This wiki will guide you on how to use WinPaletter.
-- If this is your first time using WinPaletter, please read all the sections in the sidebar in order.
-- If you've used WinPaletter before, feel free to read only the sections you need.
- 
+Welcome! This wiki is your complete guide to using **WinPaletter**, from getting started to advanced customization.
+
+- **New users:** We recommend reading the sections in the sidebar in order to get a full understanding of the app.
+- **Returning users:** Feel free to jump directly to the sections relevant to your needs.
+
+Explore, customize, and make Windows truly yours!
