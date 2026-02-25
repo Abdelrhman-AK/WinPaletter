@@ -2,7 +2,7 @@
 
 Make it checked to make WinPaletter apply changes to wallpaper
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset//Wallpaper/0.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset//Wallpaper/0.png?raw=true)
 
 ***
 
@@ -17,7 +17,7 @@ This will copy preferences from current Windows settings into current open theme
 ### 3. Open from Default Windows
 This will copy preferences from default Windows theme into current open theme
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset//Wallpaper/1.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset//Wallpaper/1.png?raw=true)
 
 ***
 
@@ -25,11 +25,11 @@ This will copy preferences from default Windows theme into current open theme
 
 - You can change wallpaper source, style, wallpaper path, solid color, wallpaper tone and slideshow
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset//Wallpaper/3.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset//Wallpaper/3.png?raw=true)
 
 - Every change you make in these parts will change this preview
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset//Wallpaper/2.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset//Wallpaper/2.png?raw=true)
 
 - Preview loading speed depends on image's size\resolution and your device's performance, so there may be a delay or high memory usage with high resolution images.
 
@@ -43,7 +43,7 @@ This will copy preferences from default Windows theme into current open theme
 
 - Applying slideshow source requires explorer restart.
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset//Wallpaper/4.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset//Wallpaper/4.png?raw=true)
 
 ***
 
@@ -53,7 +53,7 @@ This will copy preferences from default Windows theme into current open theme
 
 - Fill and fit positions and slideshow source are not available for Windows XP & Vista.
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset//Wallpaper/5.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset//Wallpaper/5.png?raw=true)
 
 ***
 
@@ -63,11 +63,11 @@ This will copy preferences from default Windows theme into current open theme
 
 - You can change wallpaper path from here
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset//Wallpaper/6_0.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset//Wallpaper/6_0.png?raw=true)
 
 - Press here to get path of current applied wallpaper or default wallpaper path
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset//Wallpaper/6_1.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset//Wallpaper/6_1.png?raw=true)
 
 ***
 
@@ -75,7 +75,7 @@ This will copy preferences from default Windows theme into current open theme
 
 - If `Color` source is selected, you can do modifications here
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset//Wallpaper/6_2.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset//Wallpaper/6_2.png?raw=true)
 
 - This color is shared with 'Classic Colors' (Window Objects > Background color)
 
@@ -89,31 +89,31 @@ This will copy preferences from default Windows theme into current open theme
 
 - Change target OS preview before changing Wallpaper Tone
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset//OSPreview/11.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset//OSPreview/11.png?raw=true)
 
 - Enter here image path on which WinPaletter will do modifications
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset//Wallpaper/7_0.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset//Wallpaper/7_0.png?raw=true)
 
 - Press here to get path of current applied wallpaper or default wallpaper path
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset//Wallpaper/7_1.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset//Wallpaper/7_1.png?raw=true)
 
 - Press here to save the modified wallpaper as a picture
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset//Wallpaper/7_2.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset//Wallpaper/7_2.png?raw=true)
 
 - Change image hue from this track bar
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset//Wallpaper/7_3.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset//Wallpaper/7_3.png?raw=true)
 
 - Change image saturation from this track bar
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset//Wallpaper/7_4.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset//Wallpaper/7_4.png?raw=true)
 
 - Change image lightness from this track bar
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset//Wallpaper/7_5.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset//Wallpaper/7_5.png?raw=true)
 
 ***
 
@@ -123,29 +123,29 @@ This will copy preferences from default Windows theme into current open theme
 
 - You can select one from these: `folder` or `list of images`
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset//Wallpaper/8_0.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset//Wallpaper/8_0.png?raw=true)
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset//Wallpaper/8_1.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset//Wallpaper/8_1.png?raw=true)
 
 - If you selected `folder`, change its path here
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset//Wallpaper/8_2.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset//Wallpaper/8_2.png?raw=true)
 
 - If you selected `list of images`, you can add, remove and re-order images here. Images in this list must be from the same folder.
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset//Wallpaper/8_3.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset//Wallpaper/8_3.png?raw=true)
 
 - This track bar will modify images changing interval (in ms (millisecond), each second equals 1000 ms)
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset//Wallpaper/8_4.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset//Wallpaper/8_4.png?raw=true)
 
 - You can shuffle images here
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset//Wallpaper/8_5.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset//Wallpaper/8_5.png?raw=true)
 
 - If `Slideshow` source is selected, the preview will contain buttons to navigate through images
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset//Wallpaper/8_6.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset//Wallpaper/8_6.png?raw=true)
 
 ***
 
@@ -157,4 +157,4 @@ This will copy preferences from default Windows theme into current open theme
 
 3. **Cancel:** it will close this form without loading any modification made to wallpaper
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset//Wallpaper/9.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset//Wallpaper/9.png?raw=true)

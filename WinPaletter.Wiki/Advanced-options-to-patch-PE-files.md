@@ -8,7 +8,7 @@
 
 - When you attempt to patch a **system file** located in any subfolder of `%windir%` (Windows directory), an **alert dialog** will appear:
 
-![PE Patch Alert](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/Settings/PE_0.png?raw=true)
+![PE Patch Alert](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/Settings/PE_0.png?raw=true)
 
 - Options in the dialog:  
   - **Modify** – proceed with patching the selected PE file.  
@@ -30,7 +30,7 @@ You can configure WinPaletter to **automate patching** or **restore defaults**.
 - **Disable alert dialog**:  
   - By checking this option, WinPaletter will **automatically apply your selected action** (Modify/Don't modify) without prompting each time.
 
-![PE Patching Settings](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/Settings/PE_1.png?raw=true)
+![PE Patching Settings](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/Settings/PE_1.png?raw=true)
 
 > [!INFO]
 > Use this setting **only if you are confident** in which PE files WinPaletter should patch automatically. Skipping confirmation may modify critical system files without warning.
@@ -41,7 +41,7 @@ You can configure WinPaletter to **automate patching** or **restore defaults**.
 
 - WinPaletter provides an option to **restore `imageres.dll`** health via **SFC (System File Checker)** when restoring the default Windows startup sound.  
 
-![Restore imageres.dll](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/Settings/PE_2.png?raw=true)
+![Restore imageres.dll](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/Settings/PE_2.png?raw=true)
 
 > [!WARNING]
 > - Always run this option **if you encounter issues** with Windows system sounds or UI after patching.  

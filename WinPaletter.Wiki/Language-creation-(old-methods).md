@@ -10,7 +10,7 @@
    
    - Press on `Generate New (English) and Open it` and save JSON file as you want anywhere. You will find the JSON file is deserialized into a tree node inside the application.
      
-      ![alt text](https://github.com/Abdelrhman-AK/WinPaletter//blob/master/WinPaletter.wiki/Asset/Lang/0.png?raw=true)
+      ![alt text](https://github.com/Abdelrhman-AK/WinPaletter//blob/master/WinPaletter.Wiki/Asset/Lang/0.png?raw=true)
 
 ***
 
@@ -20,7 +20,7 @@
 > 
 > We will use VSCode for example
 
-   ![alt text](https://github.com/Abdelrhman-AK/WinPaletter//blob/master/WinPaletter.wiki/Asset/Lang/3.png?raw=true)
+   ![alt text](https://github.com/Abdelrhman-AK/WinPaletter//blob/master/WinPaletter.Wiki/Asset/Lang/3.png?raw=true)
 
 - Modify the strings in the right part colored in orange
 
@@ -52,7 +52,7 @@
    
    - **Forms Strings**: contains text of the controls inside the form.
      
-     ![alt text](https://github.com/Abdelrhman-AK/WinPaletter//blob/master/WinPaletter.wiki/Asset/Lang/1.png?raw=true)
+     ![alt text](https://github.com/Abdelrhman-AK/WinPaletter//blob/master/WinPaletter.Wiki/Asset/Lang/1.png?raw=true)
 
 3. How to modify contents?
    
@@ -64,7 +64,7 @@
    
    - When you finish, press on `Save As ...` and close the form
    
-     ![alt text](https://github.com/Abdelrhman-AK/WinPaletter//blob/master/WinPaletter.wiki/Asset/Lang/2.png?raw=true)
+     ![alt text](https://github.com/Abdelrhman-AK/WinPaletter//blob/master/WinPaletter.Wiki/Asset/Lang/2.png?raw=true)
 
 - Load your language file as [explained here](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Change-language) to test it.
 
@@ -98,7 +98,7 @@
    
    > Never forget to check for "Information"'s section as it will be overwritten by other values everytime you do a language file update
 
-     ![alt text](https://github.com/Abdelrhman-AK/WinPaletter//blob/master/WinPaletter.wiki/Asset/Lang/4.png?raw=true)
+     ![alt text](https://github.com/Abdelrhman-AK/WinPaletter//blob/master/WinPaletter.Wiki/Asset/Lang/4.png?raw=true)
 
 - Load your language file as [explained here](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Change-language) to test it.
 

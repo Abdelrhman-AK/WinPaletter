@@ -2,11 +2,11 @@
 
 1. Click on this button
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/CMD/cmd_0.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/CMD/cmd_0.png?raw=true)
 
 2. Select the console you want to modify
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/CMD/cmd_1.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/CMD/cmd_1.png?raw=true)
 
 ***
 
@@ -14,7 +14,7 @@
 
 Make it checked to make WinPaletter apply changes to the console
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/CMD/cmd_2.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/CMD/cmd_2.png?raw=true)
 
 ***
 
@@ -22,7 +22,7 @@ Make it checked to make WinPaletter apply changes to the console
 
 You can modify 4 aspects in consoles: colors, fonts, cursor and tweaks
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/CMD/cmd_3.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/CMD/cmd_3.png?raw=true)
 
 ### 1. Colors
 
@@ -34,11 +34,11 @@ You can modify 4 aspects in consoles: colors, fonts, cursor and tweaks
 
 - You can change background and foreground of both console and console pop-up
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/CMD/cmd_4.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/CMD/cmd_4.png?raw=true)
 
 ### 2. Fonts
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/CMD/cmd_5.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/CMD/cmd_5.png?raw=true)
 
 - You can change font type, weight and size
 
@@ -46,7 +46,7 @@ You can modify 4 aspects in consoles: colors, fonts, cursor and tweaks
 
 - You can force using other fonts by checking this, but the console will render these fonts wrongly
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/CMD/cmd_6.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/CMD/cmd_6.png?raw=true)
 
 - Font weights can be `Don't care`, `Thin`, `Extra Light`, `Light`, `Normal`, `Medium`, `Semi Bold`, `Bold`, `Extra Bold` and `Heavy`
 
@@ -60,11 +60,11 @@ You can modify 4 aspects in consoles: colors, fonts, cursor and tweaks
 
 - You can change cursor color and style in Windows 10 1909 and later (provided that enhanced terminal is checked in 'Tweaks' section)
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/CMD/cmd_7_0.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/CMD/cmd_7_0.png?raw=true)
 
 - There are 6 cursors styles:
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/CMD/cmd_7_1.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/CMD/cmd_7_1.png?raw=true)
 
 ### 4. Tweaks
 
@@ -72,7 +72,7 @@ You can modify 4 aspects in consoles: colors, fonts, cursor and tweaks
 
 - The tweaks are: enhanced terminal, line selection, terminal scrolling and window opacity
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/CMD/cmd_8.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/CMD/cmd_8.png?raw=true)
 
 ***
 
@@ -84,7 +84,7 @@ You can modify 4 aspects in consoles: colors, fonts, cursor and tweaks
 
 3. **Cancel:** it will close this form without loading any modification made to the console
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/CMD/cmd_9.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/CMD/cmd_9.png?raw=true)
 
 ***
 
@@ -92,7 +92,7 @@ You can modify 4 aspects in consoles: colors, fonts, cursor and tweaks
 
 If you have pressed on 'Quick apply' or applied the whole theme, this button will open an instance of console so you can see the real effects of modifications you made.
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/CMD/cmd_10.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/CMD/cmd_10.png?raw=true)
 
 ***
 
@@ -102,10 +102,10 @@ Its modification is exactly the same as previous steps, except for terminal sele
 
 1. Select a terminal in this list and press on `Select` button
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/CMD/cmd_11_0.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/CMD/cmd_11_0.png?raw=true)
 
 2. Do your modifications
 
 3. Press on `Manual apply`
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.wiki/Asset/CMD/cmd_11_1.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/CMD/cmd_11_1.png?raw=true)
