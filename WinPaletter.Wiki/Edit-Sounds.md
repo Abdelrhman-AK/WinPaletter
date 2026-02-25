@@ -2,7 +2,7 @@
 
 Make it checked to make WinPaletter apply changes to sounds
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset//Sounds/0.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets//Sounds/0.png?raw=true)
 
 ***
 
@@ -20,7 +20,7 @@ This will copy preferences from current sounds settings into current open theme 
 ### 4. Open from Default Windows
 This will copy preferences from default Windows theme into current open theme
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset//Sounds/1.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets//Sounds/1.png?raw=true)
 
 ***
 
@@ -28,7 +28,7 @@ This will copy preferences from default Windows theme into current open theme
 
 ### 1. Item scheme
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset//Sounds/2.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets//Sounds/2.png?raw=true)
 
 1. Open WAV file
 
@@ -42,7 +42,7 @@ This will copy preferences from default Windows theme into current open theme
 
 They are: `main events`, `dialogs`, `window & menus`, `devices`, `fax`, `explorer events`, `notifications`, `alarms`, `ringtones`, `speech recognition`, `NetMeeting` and `others`
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset//Sounds/3.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets//Sounds/3.png?raw=true)
 
 #### 1. Main events
 
@@ -107,4 +107,4 @@ experience with these sounds won't be perfect (Unlike Windows 7 and below).
 
 3. **Cancel:** it will close this form without loading any modification made to sounds
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset//Sounds/4.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets//Sounds/4.png?raw=true)

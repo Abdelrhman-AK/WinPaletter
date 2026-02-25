@@ -10,7 +10,7 @@
 
 2. Go to `Settings` > `Theme file type management` and make sure **Save theme files compressed** is checked.
 
-![Save theme files compressed](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/Settings/WPTHCompress.png?raw=true)
+![Save theme files compressed](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/Settings/WPTHCompress.png?raw=true)
 
 ---
 
@@ -24,9 +24,9 @@
 
 - [Learn how to edit it here.](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Edit-WinPaletter-application-theme)
 
-![Application Theme](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/Store/WPTheme.png?raw=true)
+![Application Theme](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/Store/WPTheme.png?raw=true)
 
-![Theme Editing](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/WPTheme/4_0.png?raw=true)
+![Theme Editing](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/WPTheme/4_0.png?raw=true)
 
 #### 4. [Edit Theme Info](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Edit-theme-info)
 
@@ -38,7 +38,7 @@
 
    A. *(Optional)* Check **Make saving this theme as a file exports a resources pack that contains files used in theme** if your theme uses sounds or images not included in system directories.
 
-![Theme Resources Pack](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/ThemeInfo/i3.png?raw=true)
+![Theme Resources Pack](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/ThemeInfo/i3.png?raw=true)
 
    > If you check this, you are responsible for the copyrights of included resources (images, sounds, screen savers). WinPaletter's developer is not responsible for user-uploaded theme copyrights in the WinPaletter Store.
    
@@ -56,11 +56,11 @@
      | ------------------------------ | ----------------------------- | ----------------------------- |
      | Theme file name                | `MyWinPaletterThemeFile`      | `MyWinPaletterThemeFile.wpth` |
      | Theme resources Pack file name | `MyWinPaletterThemeFile`      | `MyWinPaletterThemeFile.wptp` |
-     | Screenshot                     | ![hidden ext](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/Store/extscheme0.png?raw=true) | ![visible ext](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/Store/extscheme1.png?raw=true) |
+     | Screenshot                     | ![hidden ext](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/Store/extscheme0.png?raw=true) | ![visible ext](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/Store/extscheme1.png?raw=true) |
 
    - This is incorrect—this will **not** load the theme resources pack:
 
-![Wrong File Name Example](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/Store/extscheme2.png?raw=true) 
+![Wrong File Name Example](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/Store/extscheme2.png?raw=true) 
 
    - The resources pack is extracted to `%localappdata%\Abdelrhman-AK\WinPaletter\ThemeResPack_Cache`
    
@@ -68,7 +68,7 @@
    
    B. Add credits and licenses for any files you used in your theme (images, audio, screensavers, etc.). Leave this empty if you didn't use any extra files. This is shown to users in the WinPaletter Store. If the user doesn't accept the licenses, the theme won't be applied.
 
-![Credits and Licenses](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/ThemeInfo/i4.png?raw=true)
+![Credits and Licenses](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/ThemeInfo/i4.png?raw=true)
 
 ---
 
@@ -76,19 +76,19 @@
 
    1. Pick two colors that best represent your theme—they should give users a sense of your theme's style.
 
-![Descriptive Colors](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/ThemeInfo/i5.png?raw=true)
+![Descriptive Colors](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/ThemeInfo/i5.png?raw=true)
 
    2. Choose a decoration pattern for your theme.
 
-![Decoration Pattern](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/ThemeInfo/i6.png?raw=true)
+![Decoration Pattern](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/ThemeInfo/i6.png?raw=true)
 
    3. Select the operating systems that your theme is designed for.
 
-![Operating Systems](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/ThemeInfo/i7.png?raw=true)
+![Operating Systems](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/ThemeInfo/i7.png?raw=true)
 
    4. Load the info into your current theme.
 
-![Load into Theme](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/ThemeInfo/i8.png?raw=true)
+![Load into Theme](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/ThemeInfo/i8.png?raw=true)
 
 ---
 

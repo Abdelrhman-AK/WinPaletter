@@ -6,4 +6,4 @@
  1. Open **Settings** → **Theme Applying Behavior** → **General**  
  2. Uncheck **"Automatic restart Explorer every time I apply a theme"**
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/Settings/DisableExplorerRestart.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/Settings/DisableExplorerRestart.png?raw=true)

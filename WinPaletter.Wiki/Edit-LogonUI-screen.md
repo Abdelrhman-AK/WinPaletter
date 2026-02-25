@@ -3,7 +3,7 @@
 ## 1. Target OS Preview 
 Change it to Windows 11 or 10
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/OSPreview/11.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/OSPreview/11.png?raw=true)
 
 ## 2. Contents
 
@@ -15,7 +15,7 @@ There are 3 toggles that will control Windows 11/10 LogonUI screen
 
 3. Enable/Disable lock screen
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/LogonUI/logonui_11.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/LogonUI/logonui_11.png?raw=true)
 
 ***
 
@@ -24,21 +24,21 @@ There are 3 toggles that will control Windows 11/10 LogonUI screen
 ## 1. Target OS Preview 
 Change it to Windows 8.1 or 7
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/OSPreview/81.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/OSPreview/81.png?raw=true)
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/OSPreview/7.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/OSPreview/7.png?raw=true)
 
 ## 2. Lock/Unlock toggle
 
 Make it checked to make WinPaletter can modify LogonUI screen
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/LogonUI/logonui_81_0.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/LogonUI/logonui_81_0.png?raw=true)
 
 ## 3. Contents
 
 There are 2 main parts:
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/LogonUI/logonui_81_1.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/LogonUI/logonui_81_1.png?raw=true)
 
 ### 1. Source
 
@@ -72,17 +72,17 @@ It is not supported (till now)
 ## 1. Target OS Preview 
 Change it to Windows XP
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/OSPreview/XP.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/OSPreview/XP.png?raw=true)
 
 ## 2. Lock/Unlock toggle
 
 Make it checked to make WinPaletter can modify LogonUI screen
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/LogonUI/logonui_xp_0.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/LogonUI/logonui_xp_0.png?raw=true)
 
 ## 3. Contents
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/LogonUI/logonui_xp_1.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/LogonUI/logonui_xp_1.png?raw=true)
 
 ### 1. LogonUI screen type
 

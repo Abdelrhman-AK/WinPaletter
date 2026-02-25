@@ -8,7 +8,7 @@
 
 5. Move the .Net Framework installer into the main extracted folder, it will be like that:
    
-    ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/dotNet/0.png?raw=true)
+    ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/dotNet/0.png?raw=true)
 
 6. Run `dotNetFx.cmd` as administrator and wait until it finishes processing the installer.
 
@@ -16,7 +16,7 @@
 
 8. You will find the new file like that: 
    
-    ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/dotNet/1.png?raw=true)
+    ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/dotNet/1.png?raw=true)
 
 9. Copy the new file to your real\virtual machine and setup it
 

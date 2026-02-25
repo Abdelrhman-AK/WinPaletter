@@ -6,13 +6,13 @@
 
 - To prevent changing application's theme and make it managed by its default mechanism, go to 'Settings' > 'Appearance' uncheck 'Make WinPaletter appearance is managed by the loaded theme' and then save settings.
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/WPTheme/setting.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/WPTheme/setting.png?raw=true)
 
 ## 2. Enable/Disable lock toggle
 
 Make it checked to make WinPaletter apply theme to itself
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/WPTheme/0.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/WPTheme/0.png?raw=true)
 
 ***
 
@@ -27,7 +27,7 @@ This will copy preferences from current WinPaletter application theme settings i
 ### 3. Open from Default Windows
 This will copy preferences from default Windows theme into current open theme
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/WPTheme/1.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/WPTheme/1.png?raw=true)
 
 ***
 
@@ -35,7 +35,7 @@ This will copy preferences from default Windows theme into current open theme
 
 - There are some schemes you can use from this menu
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/WPTheme/2.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/WPTheme/2.png?raw=true)
 
 - This menu includes: `Default Dark`, `Default Light`, `AMOLED`, `Extreme White`, `GitHub Dark`, `GitHub Light`, `Reddit Dark`, `Reddit Light`, `Discord Dark` and `Discord Light`
 
@@ -51,17 +51,17 @@ This will copy preferences from default Windows theme into current open theme
 
 4. Background color (for WinPaletter forms/pages)
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/WPTheme/3.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/WPTheme/3.png?raw=true)
 
 ***
 
 ## 6. Some screenshots
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/WPTheme/4_0.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/WPTheme/4_0.png?raw=true)
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/WPTheme/4_1.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/WPTheme/4_1.png?raw=true)
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/WPTheme/4_2.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/WPTheme/4_2.png?raw=true)
 
 
 ***
@@ -74,4 +74,4 @@ This will copy preferences from default Windows theme into current open theme
 
 3. **Cancel:** it will close this form without loading any modification made to WinPaletter application theme
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/WPTheme/5.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/WPTheme/5.png?raw=true)

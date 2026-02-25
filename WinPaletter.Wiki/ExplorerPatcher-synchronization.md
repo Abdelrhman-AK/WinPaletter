@@ -4,7 +4,7 @@
 
 - To disable this synchronization: Open Settings `>` ExplorerPatcher `>` Uncheck `Synchronize with Windows 11 preview if installed`
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/Settings/EPNoSync.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/Settings/EPNoSync.png?raw=true)
 
 ***
 
@@ -16,7 +16,7 @@
 
 - You can also deflect applied ExplorerPatcher settings
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/Settings/EPDeflect.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/Settings/EPDeflect.png?raw=true)
 
 ***
 
@@ -24,10 +24,10 @@
 
 - Here you are some applied ExplorerPatcher settings being synchronized with WinPaletter Windows 11 preview
 
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/Settings/EP0.png?raw=true)
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/Settings/EP1.png?raw=true)
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/Settings/EP2.png?raw=true)
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/Settings/EP3.png?raw=true)
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/Settings/EP4.png?raw=true)
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/Settings/EP5.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/Settings/EP0.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/Settings/EP1.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/Settings/EP2.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/Settings/EP3.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/Settings/EP4.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/Settings/EP5.png?raw=true)
 

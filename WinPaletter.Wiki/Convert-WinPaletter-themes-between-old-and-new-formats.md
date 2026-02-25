@@ -33,7 +33,7 @@
    - **Make compatible with WinPaletter <1.0.6.9** (Not recommended)
 
 4. Click **Export** to save the converted file.  
-   ![Converter GUI](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Asset/Settings/WPTHConvert.png?raw=true)
+   ![Converter GUI](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/Settings/WPTHConvert.png?raw=true)
 
 ---
 
