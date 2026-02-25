@@ -62,7 +62,7 @@ namespace WinPaletter.GitHub
 
         /// <summary>
         /// Void method occurs on GitHub user change event
-        /// </summary>
+        /// /// </summary>
         /// <param name="e"></param>
         public static async void OnGitHubUserSwitch(GitHubUserChangeEventArgs e)
         {
@@ -78,20 +78,25 @@ namespace WinPaletter.GitHub
                         return;
                     }
 
+                    // Get GitHub user info
                     User.GitHub = await Program.GitHub.Client.User.Current().ConfigureAwait(false);
                     Program.Log?.Write(LogEventLevel.Information, $"GitHub user loaded: {User.GitHub.Login}");
 
-                    User.GitHub_Avatar?.Dispose();
-                    await User.DownloadAvatarInternalAsync().ConfigureAwait(false);
-                    Program.Log?.Write(LogEventLevel.Information, "GitHub avatar has been loaded successfully.");
+                    // Trigger avatar refresh - this will use disk cache if available
+                    User.RefreshAvatar();
+
+                    Program.Log?.Write(LogEventLevel.Information, "GitHub avatar refresh triggered.");
                 }
                 else
                 {
+                    // User logged out - clear avatar from memory only, keep disk cache
                     User.GitHub = null;
-                    User.GitHub_Avatar?.Dispose();
-                    Program.Log?.Write(LogEventLevel.Information, "GitHub user logged out. Avatar disposed.");
+                    User.ClearAvatar();
+
+                    Program.Log?.Write(LogEventLevel.Information, "GitHub user logged out. Avatar cleared from memory.");
                 }
 
+                // Notify subscribers that GitHub user has changed
                 GitHubUserSwitch?.Invoke(e);
             }
             catch (Exception ex)

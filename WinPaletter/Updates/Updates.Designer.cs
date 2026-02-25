@@ -39,12 +39,12 @@ namespace WinPaletter
             this.AnimatedBox1 = new WinPaletter.UI.WP.AnimatedBox();
             this.PictureBox1 = new System.Windows.Forms.PictureBox();
             this.Label17 = new System.Windows.Forms.Label();
-            this.ProgressBar1 = new WinPaletter.UI.WP.ProgressBar();
             this.bottom_buttons = new WinPaletter.UI.WP.GroupBox();
             this.button2 = new WinPaletter.UI.WP.Button();
             this.Button1 = new WinPaletter.UI.WP.Button();
             this.Button3 = new WinPaletter.UI.WP.Button();
             this.groupBox55 = new WinPaletter.UI.WP.GroupBox();
+            this.progressGraph1 = new WinPaletter.UI.WP.ProgressGraph();
             this.pictureBox24 = new System.Windows.Forms.PictureBox();
             this.labelAlt4 = new WinPaletter.UI.WP.LabelAlt();
             this.release_lbl = new WinPaletter.UI.WP.LabelAlt();
@@ -132,19 +132,6 @@ namespace WinPaletter
             this.Label17.Text = "Updates";
             this.Label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // ProgressBar1
-            // 
-            this.ProgressBar1.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Circle;
-            this.ProgressBar1.BackColor = System.Drawing.Color.Transparent;
-            this.ProgressBar1.Location = new System.Drawing.Point(11, 12);
-            this.ProgressBar1.Name = "ProgressBar1";
-            this.ProgressBar1.Size = new System.Drawing.Size(48, 48);
-            this.ProgressBar1.State = WinPaletter.UI.WP.ProgressBar.ProgressBarState.Normal;
-            this.ProgressBar1.Style = WinPaletter.UI.WP.ProgressBar.ProgressBarStyle.Continuous;
-            this.ProgressBar1.TabIndex = 3;
-            this.ProgressBar1.TaskbarBroadcast = true;
-            this.ProgressBar1.Visible = false;
-            // 
             // bottom_buttons
             // 
             this.bottom_buttons.BackColor = System.Drawing.Color.Transparent;
@@ -220,9 +207,9 @@ namespace WinPaletter
             // 
             this.groupBox55.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.groupBox55.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox55.Controls.Add(this.progressGraph1);
             this.groupBox55.Controls.Add(this.pictureBox24);
             this.groupBox55.Controls.Add(this.labelAlt4);
-            this.groupBox55.Controls.Add(this.ProgressBar1);
             this.groupBox55.Controls.Add(this.release_lbl);
             this.groupBox55.Controls.Add(this.pictureBox9);
             this.groupBox55.Location = new System.Drawing.Point(168, 111);
@@ -231,6 +218,15 @@ namespace WinPaletter
             this.groupBox55.TabIndex = 213;
             this.groupBox55.UseDecorationPattern = false;
             this.groupBox55.UseSharpStyle = false;
+            // 
+            // progressGraph1
+            // 
+            this.progressGraph1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.progressGraph1.Location = new System.Drawing.Point(0, 0);
+            this.progressGraph1.Name = "progressGraph1";
+            this.progressGraph1.Size = new System.Drawing.Size(262, 128);
+            this.progressGraph1.TabIndex = 240;
+            this.progressGraph1.Visible = false;
             // 
             // pictureBox24
             // 
@@ -602,7 +598,6 @@ namespace WinPaletter
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Updates_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Updates_FormClosed);
             this.Load += new System.EventHandler(this.Updates_Load);
-            this.Shown += new System.EventHandler(this.Updates_Shown);
             this.AnimatedBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).EndInit();
             this.bottom_buttons.ResumeLayout(false);
@@ -628,7 +623,6 @@ namespace WinPaletter
 
         internal UI.WP.Button Button1;
         internal UI.WP.Button Button3;
-        internal UI.WP.ProgressBar ProgressBar1;
         internal UI.WP.AnimatedBox AnimatedBox1;
         internal PictureBox PictureBox1;
         private UI.WP.GroupBox bottom_buttons;
@@ -663,5 +657,6 @@ namespace WinPaletter
         internal PictureBox pictureBox24;
         protected Label Label17;
         private Templates.NoNetworkPanel noNetworkPanel1;
+        private UI.WP.ProgressGraph progressGraph1;
     }
 }

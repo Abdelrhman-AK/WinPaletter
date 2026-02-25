@@ -164,6 +164,33 @@ namespace WinPaletter
             }
         }
 
+        private Bitmap CreateAvatarImage(Bitmap avatar, Bitmap userProfilePicture)
+        {
+            if (avatar == null) return null;
+
+            using (Bitmap resizedAvatar = avatar.Resize(32, 32))
+            using (Bitmap resizedUser = userProfilePicture?.Resize(16, 16))
+            {
+                if (resizedAvatar == null) return null;
+
+                using (Bitmap circularAvatar = resizedAvatar.ToCircular(Program.Style.Schemes.Main.Colors.ForeColor_Accent))
+                using (Bitmap circularUser = resizedUser?.ToCircular())
+                {
+                    if (circularAvatar == null) return null;
+
+                    if (circularUser != null)
+                    {
+                        PointF overlayPoint = new(circularAvatar.Width - circularUser.Width, circularAvatar.Height - circularUser.Height);
+                        return circularAvatar.Overlay(circularUser, overlayPoint);
+                    }
+                    else
+                    {
+                        return (Bitmap)circularAvatar.Clone();
+                    }
+                }
+            }
+        }
+
         private void UpdateUserButtonAvatar(object sender, EventArgs e)
         {
             if (InvokeRequired)
@@ -176,31 +203,17 @@ namespace WinPaletter
 
             if (avatar == null || !avatar.IsValid())
             {
+                Image old = userButton.Image;
                 userButton.Image = null;
+                old?.Dispose();
                 return;
             }
 
-            using (Bitmap resizedAvatar = avatar?.Resize(32, 32))
-            using (Bitmap resizedUser = User.ProfilePicture?.Resize(16, 16))
-            using (Bitmap circularAvatar = resizedAvatar?.ToCircular(Program.Style.Schemes.Main.Colors.ForeColor_Accent))
-            using (Bitmap circularUser = resizedUser?.ToCircular())
-            {
-                Bitmap finalImage;
+            Bitmap newImage = CreateAvatarImage(avatar, User.ProfilePicture);
 
-                if (circularUser is not null)
-                {
-                    PointF overlayPoint = new(circularAvatar.Width - circularUser.Width, circularAvatar.Height - circularUser.Height);
-                    finalImage = circularAvatar.Overlay(circularUser, overlayPoint);
-                }
-                else
-                {
-                    finalImage = (Bitmap)circularAvatar.Clone();
-                }
-
-                Image old = userButton.Image;
-                userButton.Image = finalImage;
-                old?.Dispose();
-            }
+            Image oldImage = userButton.Image;
+            userButton.Image = newImage;
+            oldImage?.Dispose();
         }
 
         /// <summary>
@@ -855,127 +868,6 @@ namespace WinPaletter
             {
                 pin_button.Visible = true;
             }
-        }
-
-        private async void button16_Click(object sender, EventArgs e)
-        {
-            progressGraph1.Reset();
-            progressGraph1.Add(100, 100);
-
-            SimulateFileCopy();
-        }
-
-        private async void SimulateFileCopy()
-        {
-            progressGraph1.Reset();
-
-            Random rand = new Random();
-
-            // -------- 1️⃣ Random realistic file size --------
-
-            // Randomly choose size class
-            int sizeType = rand.Next(3);
-
-            double totalBytes;
-
-            if (sizeType == 0)
-            {
-                // 200 KB – 5 MB
-                totalBytes = rand.Next(200 * 1024, 5 * 1024 * 1024);
-            }
-            else if (sizeType == 1)
-            {
-                // 50 MB – 2 GB
-                totalBytes = rand.Next(50, 2000) * 1024.0 * 1024.0;
-            }
-            else
-            {
-                // 2 GB – 10 GB
-                totalBytes = rand.Next(2, 10) * 1024.0 * 1024.0 * 1024.0;
-            }
-
-            // -------- 2️⃣ Initial speed (bytes/sec) --------
-
-            // Start slow (like real systems)
-            double currentSpeed = 200 * 1024; // 200 KB/s initial
-            double targetSpeed = 5 * 1024 * 1024; // 5 MB/s base target
-
-            double downloadedBytes = 0;
-
-            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
-            double lastTime = stopwatch.Elapsed.TotalSeconds;
-
-            while (downloadedBytes < totalBytes)
-            {
-                double now = stopwatch.Elapsed.TotalSeconds;
-                double deltaTime = now - lastTime;
-                lastTime = now;
-
-                // -------- 3️⃣ Dynamic speed behavior --------
-
-                // Occasionally change target speed
-                if (rand.NextDouble() < 0.02)
-                {
-                    // 1 MB/s to 80 MB/s
-                    targetSpeed = (1 + rand.NextDouble() * 80) * 1024 * 1024;
-                }
-
-                // Smooth acceleration toward target
-                currentSpeed += (targetSpeed - currentSpeed) * 0.05;
-
-                // Random jitter
-                currentSpeed *= 0.95 + rand.NextDouble() * 0.1;
-
-                // Rare temporary drop (disk stall)
-                if (rand.NextDouble() < 0.01)
-                {
-                    currentSpeed *= 0.2;
-                }
-
-                currentSpeed = Math.Max(50 * 1024, currentSpeed);
-
-                // -------- 4️⃣ Transfer based on time --------
-
-                downloadedBytes += currentSpeed * deltaTime;
-                downloadedBytes = Math.Min(downloadedBytes, totalBytes);
-
-                double percent = (downloadedBytes / totalBytes) * 100;
-
-                // -------- 5️⃣ Update UI --------
-
-                progressGraph1.Add(percent, currentSpeed);
-
-                // -------- 6️⃣ Realistic delay --------
-
-                await Task.Delay(30);
-            }
-
-            progressGraph1.Add(100, 0);
-        }
-
-        private void button17_Click(object sender, EventArgs e)
-        {
-            progressGraph1.State = ProgressGraph.ProgressBarState.Normal;
-        }
-
-        private void button18_Click(object sender, EventArgs e)
-        {
-            progressGraph1.State = ProgressGraph.ProgressBarState.Error;
-        }
-
-        private void button19_Click_1(object sender, EventArgs e)
-        {
-            progressGraph1.State = ProgressGraph.ProgressBarState.Pause;
-        }
-
-        private void button22_Click(object sender, EventArgs e)
-        {
-            progressGraph1.Style = ProgressGraph.ProgressBarStyle.Continuous;
-        }
-
-        private void button21_Click(object sender, EventArgs e)
-        {
-            progressGraph1.Style = ProgressGraph.ProgressBarStyle.Marquee;
         }
     }
 }

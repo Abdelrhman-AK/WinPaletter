@@ -76,7 +76,7 @@ namespace WinPaletter
         {
             listView1.Items.Clear();
             listView1.Columns.Clear();
-            listView1.SmallImageList??= new();
+            listView1.SmallImageList ??= new();
             listView1.SmallImageList?.Images.Clear();
             listView1.SmallImageList.ImageSize = new(18, 24);
             listView1.SmallImageList.ColorDepth = ColorDepth.Depth32Bit;
@@ -107,14 +107,14 @@ namespace WinPaletter
                         Icon = icon ?? ico.ToBitmap()
                     };
                 }
-                
+
                 listView1.SmallImageList.AddWithAlpha(Path.GetExtension(saveAs), (item.Tag as FileState).Icon);
                 item.ImageKey = Path.GetExtension(saveAs);
                 listView1.Items.Add(item);
             }
 
             progressBar1.Value = 0;
-            progressBar2.Value = 0;
+            progressGraph1.Reset();
 
             Label2.Text = "0 / 0";
             label10.Text = "0 / 0";
@@ -218,7 +218,7 @@ namespace WinPaletter
             DateTime now = DateTime.UtcNow;
             TimeSpan elapsed = now - _lastOverallUpdate;
 
-            if (elapsed.TotalMilliseconds >= 500)
+            if (elapsed.TotalMilliseconds >= 50)
             {
                 long bytesDelta = _totalBytesDownloaded - _lastOverallBytes;
                 double speedBps = bytesDelta / elapsed.TotalSeconds;
@@ -232,7 +232,7 @@ namespace WinPaletter
 
                 Invoke(() =>
                 {
-                    progressBar2.Value = (int)(_totalBytesDownloaded * 100 / _totalBytesAllFiles);
+                    progressGraph1.Add(((double)_totalBytesDownloaded / (double)_totalBytesAllFiles) * 100, speedBps);
                     label10.Text = $"{_totalBytesDownloaded.ToStringFileSize()} / {_totalBytesAllFiles.ToStringFileSize()}";
                     Label3.Text = ((long)speedBps).ToStringFileSize(true);
                     Label4.Text = TimeSpan.FromSeconds(Math.Max(0, remainingSeconds)).ToString(@"mm\:ss");

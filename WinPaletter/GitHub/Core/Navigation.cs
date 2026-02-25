@@ -2248,6 +2248,9 @@ namespace WinPaletter.GitHub
 
                 if (rc.Type == ContentType.File)
                 {
+                    // Skip .gitkeep files
+                    if (string.Equals(rc.Name, ".gitkeep", StringComparison.OrdinalIgnoreCase)) continue;
+
                     string saveAs = Path.Combine(directory, rc.Name);
                     string parentDir = Path.GetDirectoryName(saveAs);
                     if (!Directory.Exists(parentDir)) Directory.CreateDirectory(parentDir);
@@ -2281,6 +2284,9 @@ namespace WinPaletter.GitHub
                             continue;
                         }
 
+                        // Skip .gitkeep files
+                        if (entry.Type == EntryType.File && string.Equals(Path.GetFileName(entry.Path), ".gitkeep", StringComparison.OrdinalIgnoreCase)) continue;
+
                         string parentDir = Path.GetDirectoryName(localFile);
                         if (!Directory.Exists(parentDir)) Directory.CreateDirectory(parentDir);
 
@@ -2296,6 +2302,9 @@ namespace WinPaletter.GitHub
             // --- Step 3: Handle paired files (.wpth / .wptp) ---
             foreach (var fileName in selectedFiles.ToList())
             {
+                // Skip .gitkeep files from pairing consideration
+                if (string.Equals(fileName, ".gitkeep", StringComparison.OrdinalIgnoreCase)) continue;
+
                 string baseName = Path.GetFileNameWithoutExtension(fileName);
                 string ext = Path.GetExtension(fileName).ToLower();
 
@@ -2308,6 +2317,9 @@ namespace WinPaletter.GitHub
                 if (pairedExt == null) continue;
 
                 string pairedFileName = baseName + pairedExt;
+
+                // Skip if the paired file is .gitkeep
+                if (string.Equals(pairedFileName, ".gitkeep", StringComparison.OrdinalIgnoreCase)) continue;
 
                 if (availableFiles.TryGetValue(pairedFileName, out var pairedRc) && !selectedFiles.Contains(pairedFileName))
                 {

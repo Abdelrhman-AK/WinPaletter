@@ -31,6 +31,15 @@ namespace WinPaletter.UI.WP
 
             InitializeTaskbar();
             StyleChanged += ProgressBar_StyleChanged;
+
+            // Initialize with starting point at 0% progress and 0 speed
+            lock (_lock)
+            {
+                _points.Add(new GraphicData(0, 0, true)); // true = progress is already normalized (0-1)
+                _currentSpeed = 0;
+                _speedText = FormatSpeed(0);
+                _realMaxSpeed = 0.1; // Keep the minimum
+            }
         }
 
         #endregion
@@ -52,7 +61,7 @@ namespace WinPaletter.UI.WP
         private Timer _marqueeTimer;
         private float _marqueeOffset = 0;
         private bool _disposed = false;
-        private double _realMaxSpeed = 1;
+        private double _realMaxSpeed = 0.1;
         private double _displayMaxSpeed = 1;
 
         // UI
@@ -496,7 +505,20 @@ namespace WinPaletter.UI.WP
                 }
 
                 _currentSpeed = SmoothSpeed(speed);
-                _realMaxSpeed = Math.Max(_realMaxSpeed, _currentSpeed);
+
+                // Improved max speed calculation for first values
+                if (_points.Count == 0)
+                {
+                    // For first point, set max speed to something reasonable
+                    // Use the current speed or a minimum value
+                    _realMaxSpeed = Math.Max(0.1, speed * 1.2); // Add 20% headroom
+                }
+                else
+                {
+                    // For subsequent points, update max speed with headroom
+                    _realMaxSpeed = Math.Max(_realMaxSpeed, speed * 1.1); // Add 10% headroom
+                }
+
                 _speedText = FormatSpeed(_currentSpeed);
 
                 // Add new point
@@ -537,8 +559,8 @@ namespace WinPaletter.UI.WP
             {
                 _points.Clear();
                 _currentSpeed = 0;
-                _realMaxSpeed = 1;
-                _displayMaxSpeed = 1;
+                _realMaxSpeed = 0.1;
+                _displayMaxSpeed = 0.1;
                 _speedText = FormatSpeed(0);
             }
 
@@ -662,30 +684,21 @@ namespace WinPaletter.UI.WP
             return (_currentSpeed * (1 - alpha)) + (newSpeed * alpha);
         }
 
-        private double GetMaxSpeed()
-        {
-            double max = 0;
-            for (int i = 0; i < _points.Count; i++)
-            {
-                if (_points[i].Speed > max)
-                    max = _points[i].Speed;
-            }
-            return max > 0 ? max : 1;
-        }
-
         private double GetGraphMaxSpeed()
         {
             if (_realMaxSpeed <= 0)
-                _realMaxSpeed = 1;
+                _realMaxSpeed = 0.1; // Changed from 1 to 0.1
 
             double delta = _realMaxSpeed - _displayMaxSpeed;
 
-            // Fast expand, slow shrink
+            // Fast expand, slow shrink - but with adaptive rate
             double factor = delta > 0 ? 0.25 : 0.05;
 
+            // Add a minimum speed floor to prevent going too low
             _displayMaxSpeed += delta * factor;
 
-            return _displayMaxSpeed <= 0 ? 1 : _displayMaxSpeed;
+            // Ensure we never go below a minimum display speed
+            return Math.Max(0.1, _displayMaxSpeed);
         }
 
         private string FormatSpeed(double speed)

@@ -103,8 +103,9 @@ namespace WinPaletter
                     avatar = Properties.Resources.GitHub_SignInForFeatures.Clone() as Bitmap;
                 }
 
-                pictureBox2.Image?.Dispose();
+                Image oldAvatar = pictureBox2.Image;
                 pictureBox2.Image = avatar;
+                oldAvatar?.Dispose();
             }
         }
 
