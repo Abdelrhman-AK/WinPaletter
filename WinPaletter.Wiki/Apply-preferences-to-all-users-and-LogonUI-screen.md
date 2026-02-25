@@ -31,7 +31,7 @@ Restore defaults (No wallpaper on LogonUI)
 
 ![Copy Wallpaper](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/Settings/CopyWallpaper.png?raw=true)
 
-> [!INFO]
+> [!IMPORTANT]
 > - `Restore defaults` removes the LogonUI wallpaper while keeping user desktops intact.  
 > - `Copy from current desktop` ensures consistency across all accounts.
 
@@ -102,7 +102,7 @@ Don't change
 
 ![Copy Cursors](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/Settings/CopyCursors.png?raw=true)
 
-> [!INFO]
+> [!IMPORTANT]
 > - Overwriting cursor settings ensures consistency across accounts and LogonUI.  
 > - `Don't change` preserves user-customized cursors.
 
