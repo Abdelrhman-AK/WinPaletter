@@ -49,8 +49,7 @@ namespace WinPaletter.UI.WP
         private string _speedText = "0 B/s";
 
         // Animation
-        private
-            Timer _marqueeTimer;
+        private Timer _marqueeTimer;
         private float _marqueeOffset = 0;
         private bool _disposed = false;
         private double _realMaxSpeed = 1;
