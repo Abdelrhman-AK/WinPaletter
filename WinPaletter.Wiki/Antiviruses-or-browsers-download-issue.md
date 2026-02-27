@@ -15,6 +15,15 @@
 2. **Extensive Windows Registry Editing**  
    WinPaletter modifies a large number of registry keys to customize Windows themes, colors, fonts, cursors, and startup sounds. This is a legitimate behavior for a theming tool but can trigger warnings in antiviruses, Windows SmartScreen, and browsers.
 
+3. **Patching `imageres.dll`** – Changing Windows startup sound involves patching system files. This action is **flagged by security software** as potentially harmful, even though it is safe.
+
+4. **WinPaletter System Events Sounds Service** – WinPaletter installs a lightweight **service** to handle Windows system event sounds (logon, logoff, shutdown, etc.) for Windows 8 and higher.  
+
+   - This service is fully optional and only created if you installed it manually in WinPaletter.  
+   - It operates in the background and triggers the assigned sounds when the corresponding system events occur.  
+   - Windows Security (Defender) may flag this as suspicious because it interacts with system events.  
+   - No malicious activity occurs; the service simply plays the sounds you configured in WinPaletter.  
+
 - Because of the above, browsers and antivirus programs often display warnings such as:
   - “Unknown Publisher”
   - “This file may harm your computer”
@@ -38,7 +47,7 @@ WinPaletter has been tested across several popular antiviruses:
 | SmadAV                                 | ✅ Safe                  |
 | BitDefender                           | ✅ Safe                  |
 | Windows Security (Defender)           | ✅ Safe                  |
-| [VirusTotal scan](https://www.virustotal.com/gui/file/c300f8055165b6bfc74883f2a3ca155562ef6e17e71ec45ab77029fcab9e64bf?nocache=1) | 2 detections / 71 AV engines |
+| [VirusTotal scan](https://www.virustotal.com/gui/file/a903562206d556144aad9481831a66de0f2619e7b6144434aff563f868bbd8cc/detection) | 2 detections / 72 AV engines |
 
 > [!note]
 > - Ensure your antivirus definitions are up to date before running WinPaletter.  
@@ -59,17 +68,6 @@ WinPaletter has been tested across several popular antiviruses:
 ```
 HKCU@S-1-5-21-957280099-1924274324-3775045331-1001\SOFTWARE\MICROSOFT\WINDOWS\CURRENTVERSION\UNINSTALL\WinPaletter
 ```
-
-These modifications are required for storing theme preferences and user settings.
-
-3. **Patching `imageres.dll`** – Changing Windows startup sound involves patching system files. This action is **flagged by security software** as potentially harmful, even though it is safe.
-
-4. **WinPaletter System Events Sounds Service** – WinPaletter installs a lightweight **service** to handle Windows system event sounds (logon, logoff, shutdown, etc.) for Windows 8 and higher.  
-
-   - This service is fully optional and only created if you installed it manually in WinPaletter.  
-   - It operates in the background and triggers the assigned sounds when the corresponding system events occur.  
-   - Windows Security (Defender) may flag this as suspicious because it interacts with system events.  
-   - No malicious activity occurs; the service simply plays the sounds you configured in WinPaletter.  
 
 > [!tip]
 > If Defender continues flagging WinPaletter, you can refresh its definitions and signatures:

@@ -38,7 +38,7 @@
 - [For Developers](https://github.com/Abdelrhman-AK/WinPaletter/wiki/WinPaletter-Store-Developers)
 
 ## GitHub Manager (Within WinPaletter)
-- [Introduction](https://github.com/Abdelrhman-AK/WinPaletter/wiki/GitHubMgr-Introduction)
+- [Introduction](https://github.com/Abdelrhman-AK/WinPaletter/wiki/GitHub-Manager-‐-Introduction)
 - Sign in\out GitHub using WinPaletter
 - [Use GitHub manager to manage and upload themes]: Coming soon
 

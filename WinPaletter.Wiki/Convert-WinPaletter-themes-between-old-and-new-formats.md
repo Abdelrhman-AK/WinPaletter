@@ -1,6 +1,6 @@
 # ⚠ Obsolete: Theme Format Conversion in WinPaletter
 
-> [!obsolete]
+> [!TIP]
 > This guide is **obsolete**.  
 > Starting with WinPaletter **1.0.7.7 and later**, themes now use a JSON-based internal format. Manual conversion is rarely needed, as opening an old-format theme in WinPaletter will prompt automatic conversion.
 
