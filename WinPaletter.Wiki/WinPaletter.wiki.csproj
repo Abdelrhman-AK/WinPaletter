@@ -59,6 +59,7 @@
     <None Include="Edit-Windows-Terminals-%28Windows-10-and-later%29.md" />
     <None Include="Edit-WinPaletter-application-theme.md" />
     <None Include="ExplorerPatcher-synchronization.md" />
+    <None Include="Sign-Up-GitHub.md" />
     <None Include="Get-WinPaletter.md" />
     <None Include="GitHubMgr-Introduction.md" />
     <None Include="Home.md" />
@@ -168,6 +169,17 @@
     <Content Include="Assets\Cursors\cursors_8.png" />
     <Content Include="Assets\dotNet\0.png" />
     <Content Include="Assets\dotNet\1.png" />
+    <Content Include="Assets\GitHub_SignUp\Browser_2FA.png" />
+    <Content Include="Assets\GitHub_SignUp\Browser_Auth.png" />
+    <Content Include="Assets\GitHub_SignUp\Browser_ChooseAccount.png" />
+    <Content Include="Assets\GitHub_SignUp\Browser_Success.png" />
+    <Content Include="Assets\GitHub_SignUp\MainForm_LoggedIn.png" />
+    <Content Include="Assets\GitHub_SignUp\MainForm_User.png" />
+    <Content Include="Assets\GitHub_SignUp\SignUp_AuthCode.png" />
+    <Content Include="Assets\GitHub_SignUp\SignUp_Success.png" />
+    <Content Include="Assets\GitHub_SignUp\SignUp_Wait.png" />
+    <Content Include="Assets\GitHub_SignUp\Store_UsersDashboard.png" />
+    <Content Include="Assets\GitHub_SignUp\Users_Dashboard.png" />
     <Content Include="Assets\illustration.png" />
     <Content Include="Assets\LanguageCreation\0.png" />
     <Content Include="Assets\LanguageCreation\1.png" />

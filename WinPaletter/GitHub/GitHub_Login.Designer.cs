@@ -499,7 +499,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(504, 29);
             this.label1.TabIndex = 1;
-            this.label1.Text = "WinPaletter – Sign in with GitHub";
+            this.label1.Text = "WinPaletter – Sign up with GitHub";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // animatedBox1
@@ -1003,7 +1003,7 @@
             this.signin_btn.Name = "signin_btn";
             this.signin_btn.Size = new System.Drawing.Size(115, 34);
             this.signin_btn.TabIndex = 3;
-            this.signin_btn.Text = "Sign in";
+            this.signin_btn.Text = "Sign up";
             this.signin_btn.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.signin_btn.UseVisualStyleBackColor = false;
             this.signin_btn.Click += new System.EventHandler(this.Button2_Click);
@@ -1073,14 +1073,13 @@
             this.Controls.Add(this.tablessControl1);
             this.Controls.Add(this.bottom_buttons);
             this.Controls.Add(this.titlebarExtender1);
-            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "GitHub_Login";
             this.ShowIcon = false;
             this.ShowIconAndCaptionText = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Sign in with GitHub";
+            this.Text = "Sign up with GitHub";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Login_FormClosed);
             this.Load += new System.EventHandler(this.Login_Load);
             this.tablessControl1.ResumeLayout(false);

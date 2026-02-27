@@ -1,4 +1,5 @@
 ﻿using FluentTransitions;
+using Newtonsoft.Json.Linq;
 using System;
 using System.ComponentModel;
 using System.Drawing;
@@ -6,6 +7,7 @@ using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
+using static WinPaletter.UI.Style.Config.Colors_Collection;
 
 namespace WinPaletter.UI.WP
 {
@@ -80,7 +82,6 @@ namespace WinPaletter.UI.WP
 
             _shown = true;
         }
-
 
         protected override void OnClick(EventArgs e)
         {
@@ -202,6 +203,16 @@ namespace WinPaletter.UI.WP
 
             // Only update backdrop panel at runtime
             if (!DesignMode && _backdrop && _backdropPaddingPanel != null) UpdateBackdropPaddingPanel();
+        }
+
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            base.OnHandleCreated(e);
+
+            if (!DesignMode && _screenCaptureBlock != ScreenCaptureBlockType.None)
+            {
+                ApplyScreenCaptureBlock();
+            }
         }
 
         // Backdrop property
@@ -525,6 +536,93 @@ namespace WinPaletter.UI.WP
             {
                 _opacityLayered = value;
                 if (IsHandleCreated) SetOpacityLayered(Handle, value);
+            }
+        }
+
+        public enum ScreenCaptureBlockType
+        {
+            /// <summary>
+            /// No screen capture blocking is applied.
+            /// </summary>
+            None = 0,
+
+            /// <summary>
+            /// Blocks screen capture by making the window content appear black or blank in screenshots.
+            /// Works on all Windows versions that support display affinity (Windows 7 and later).
+            /// </summary>
+            BlackBlock = 1,  // Maps to WDA_MONITOR
+
+            /// <summary>
+            /// Excludes the window from screen capture completely.
+            /// Only works on Windows 10 2004 (build 19041) and later.
+            /// Falls back to Basic on older systems.
+            /// </summary>
+            HideWindow = 2,  // Maps to WDA_EXCLUDEFROMCAPTURE
+        }
+
+        private ScreenCaptureBlockType _screenCaptureBlock = ScreenCaptureBlockType.None;
+
+        [Browsable(true)]
+        [Category("Advanced Native")]
+        [DefaultValue(ScreenCaptureBlockType.None)]
+        [Description("Controls how the window content is protected from screen capture. Advanced mode excludes the window from capture (Windows 10 2004+), Basic mode makes content appear black in screenshots.")]
+        public ScreenCaptureBlockType ScreenCaptureBlock
+        {
+            get => _screenCaptureBlock;
+            set
+            {
+                if (_screenCaptureBlock == value) return;
+                _screenCaptureBlock = value;
+
+                if (IsHandleCreated)
+                {
+                    ApplyScreenCaptureBlock();
+                }
+            }
+        }
+
+        private void ApplyScreenCaptureBlock()
+        {
+            uint affinity = User32.WDA_NONE;
+            bool useAdvanced = false;
+
+            switch (_screenCaptureBlock)
+            {
+                case ScreenCaptureBlockType.BlackBlock:
+                    affinity = User32.WDA_MONITOR;
+                    break;
+
+                case ScreenCaptureBlockType.HideWindow:
+                    // Check if OS supports advanced mode
+                    if (OS.W10_2004 || OS.W11 || OS.W12)
+                    {
+                        affinity = User32.WDA_EXCLUDEFROMCAPTURE;
+                        useAdvanced = true;
+                    }
+                    else
+                    {
+                        // Fall back to basic on older OS
+                        affinity = User32.WDA_MONITOR;
+                    }
+                    break;
+
+                case ScreenCaptureBlockType.None:
+                default:
+                    affinity = User32.WDA_NONE;
+                    break;
+            }
+
+            // Try to set the display affinity
+            if (!User32.SetWindowDisplayAffinity(Handle, affinity))
+            {
+                // If advanced fails and we haven't already fallen back to basic
+                if (useAdvanced)
+                {
+                    // Try fallback to basic
+                    affinity = User32.WDA_MONITOR;
+                    User32.SetWindowDisplayAffinity(Handle, affinity);
+                }
+                // If basic fails, there's not much we can do
             }
         }
 

@@ -81,6 +81,11 @@ namespace WinPaletter.GlobalVariables
         public static bool W10_1909 { get; } = Version.Major == 10 && Version.Minor == 0 && Version.Build >= 18363;
 
         /// <summary>
+        /// Gets a value indicating whether the current operating system is Windows 10, version 2004 (20H1 - build 19041) or later.
+        /// </summary>
+        public static bool W10_2004 { get; } = Version.Major == 10 && Version.Minor == 0 && Version.Build >= 19041;
+
+        /// <summary>
         /// Gets a value indicating whether the current operating system is Windows 10, version 1909 (19H2 - build 18363) or below.
         /// </summary>
         public static bool W10_1909_AndBelow { get; } = Version.Major == 10 && Version.Minor == 0 && Version.Build <= 18363;

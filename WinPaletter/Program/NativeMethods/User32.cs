@@ -31,16 +31,6 @@ namespace WinPaletter.NativeMethods
         [DllImport("user32.dll", SetLastError = true)]
         public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
 
-        public const uint SWP_NOSIZE = 0x0001;
-        public const uint SWP_NOMOVE = 0x0002;
-        public const uint SWP_NOZORDER = 0x0004;
-        public const uint SWP_NOACTIVATE = 0x0010;
-        public const uint SWP_FRAMECHANGED = 0x0020;
-
-        // Common constants
-        public const int GWL_STYLE = -16;
-        public const int GWL_EXSTYLE = -20;
-
         /// <summary>
         /// Retrieves the specified system metric or system configuration setting.
         /// </summary>
@@ -114,8 +104,6 @@ namespace WinPaletter.NativeMethods
         [DllImport("user32.dll")]
         public static extern bool SetSysColors(int cElements, int[] lpaElements, uint[] lpaRgbValues);
 
-        public const int EM_SETSEL = 0x00B1;
-
         [DllImport("user32.dll")]
         public static extern IntPtr FindWindowEx(IntPtr parent, IntPtr childAfter, string className, string windowTitle);
 
@@ -134,13 +122,6 @@ namespace WinPaletter.NativeMethods
             return FindWindowEx(listViewHandle, IntPtr.Zero, "Edit", null);
         }
 
-        public const int WM_NCCALCSIZE = 0x0083;
-        public const int WM_NCPAINT = 0x0085;
-        public const int RDW_INVALIDATE = 0x0001;
-        public const int RDW_FRAME = 0x0400;
-        public const int RDW_UPDATENOW = 0x0100;
-        public const int RDW_ALLCHILDREN = 0x0080;
-
         /// <summary>
         /// Refreshes the non-client area of a window, causing its frame and decorations to be recalculated and
         /// repainted.
@@ -158,8 +139,7 @@ namespace WinPaletter.NativeMethods
             SendMessage(handle, WM_NCPAINT, IntPtr.Zero, IntPtr.Zero);
 
             // Strong redraw
-            RedrawWindow(handle, IntPtr.Zero, IntPtr.Zero,
-                RDW_INVALIDATE | RDW_FRAME | RDW_UPDATENOW | RDW_ALLCHILDREN);
+            RedrawWindow(handle, IntPtr.Zero, IntPtr.Zero, RDW_INVALIDATE | RDW_FRAME | RDW_UPDATENOW | RDW_ALLCHILDREN);
         }
 
         /// <summary>
@@ -782,22 +762,6 @@ namespace WinPaletter.NativeMethods
         public static extern IntPtr SendMessageTimeout(IntPtr hWnd, uint Msg, UIntPtr wParam, string lParam, uint fuFlags, uint uTimeout, out UIntPtr lpdwResult);
 
         /// <summary>
-        /// Represents the Windows message identifier for a system-wide setting change notification.
-        /// </summary>
-        /// <remarks>This constant is used to identify the <c>WM_SETTINGCHANGE</c> message, which is sent
-        /// to all top-level windows when a system-wide setting or policy has changed. Applications can handle this
-        /// message to respond to changes in system settings, such as environment variables or user
-        /// preferences.</remarks>
-        public const uint WM_SETTINGCHANGE = 0x001A;
-
-        /// <summary>
-        /// Specifies that the message should be sent only if the receiving application is responsive.
-        /// </summary>
-        /// <remarks>This constant is used with the <c>SendMessageTimeout</c> function to indicate that
-        /// the operation  should be aborted if the receiving application is not responding.</remarks>
-        public const uint SMTO_ABORTIFHUNG = 0x0002;
-
-        /// <summary>
         /// Notifies the system that a setting has changed, allowing applications to update accordingly.
         /// </summary>
         /// <remarks>This method broadcasts a system-wide message to inform applications of the specified
@@ -830,11 +794,6 @@ namespace WinPaletter.NativeMethods
         public delegate IntPtr LowLevelMouseProc(int nCode, IntPtr wParam, IntPtr lParam);
 
         /// <summary>
-        /// Constant for LoadImage function specifying the type of image to load.
-        /// </summary>
-        public const uint IMAGE_CURSOR = 2;
-
-        /// <summary>
         /// The DrawIconEx function draws an icon or cursor into the specified device context.
         /// </summary>
         /// <param name="hdc">A handle to the device context into which the icon or cursor will be drawn.</param>
@@ -864,6 +823,48 @@ namespace WinPaletter.NativeMethods
         [DllImport("user32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool DrawIconEx(IntPtr hdc, int xLeft, int yTop, IntPtr hIcon, int cxWidth, int cyHeight, int istepIfAniCur, IntPtr hbrFlickerFreeDraw, int diFlags);
+
+        [DllImport("user32.dll")]
+        public static extern bool SetWindowDisplayAffinity(IntPtr hwnd, uint affinity);
+
+        /// <summary>
+        /// Constant for LoadImage function specifying the type of image to load.
+        /// </summary>
+        public const uint IMAGE_CURSOR = 2;
+
+        /// <summary>
+        /// Represents the Windows message identifier for a system-wide setting change notification.
+        /// </summary>
+        /// <remarks>This constant is used to identify the <c>WM_SETTINGCHANGE</c> message, which is sent
+        /// to all top-level windows when a system-wide setting or policy has changed. Applications can handle this
+        /// message to respond to changes in system settings, such as environment variables or user
+        /// preferences.</remarks>
+        public const uint WM_SETTINGCHANGE = 0x001A;
+
+        /// <summary>
+        /// Specifies that the message should be sent only if the receiving application is responsive.
+        /// </summary>
+        /// <remarks>This constant is used with the <c>SendMessageTimeout</c> function to indicate that
+        /// the operation  should be aborted if the receiving application is not responding.</remarks>
+        public const uint SMTO_ABORTIFHUNG = 0x0002;
+
+        public const int WM_NCCALCSIZE = 0x0083;
+        public const int WM_NCPAINT = 0x0085;
+        public const int RDW_INVALIDATE = 0x0001;
+        public const int RDW_FRAME = 0x0400;
+        public const int RDW_UPDATENOW = 0x0100;
+        public const int RDW_ALLCHILDREN = 0x0080;
+        public const uint SWP_NOSIZE = 0x0001;
+        public const uint SWP_NOMOVE = 0x0002;
+        public const uint SWP_NOZORDER = 0x0004;
+        public const uint SWP_NOACTIVATE = 0x0010;
+        public const uint SWP_FRAMECHANGED = 0x0020;
+        public const int GWL_STYLE = -16;
+        public const int GWL_EXSTYLE = -20;
+        public const uint WDA_NONE = 0x00000000;
+        public const uint WDA_MONITOR = 0x00000001;
+        public const uint WDA_EXCLUDEFROMCAPTURE = 0x00000011;
+        public const int EM_SETSEL = 0x00B1;
 
         /// <summary>
         /// Structure that contains information about the high contrast accessibility feature.
