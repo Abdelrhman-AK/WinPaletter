@@ -34,13 +34,13 @@
 
 - [Basics](https://github.com/Abdelrhman-AK/WinPaletter/wiki/WinPaletter-Store-basics)
 - [Design themes to be uploaded to servers\GitHub repositories](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Designing-themes-rules)
-- [Use GitHub manager to upload themes]: Wiki is under construction
+- Use GitHub manager to upload themes: Wiki is under construction
 - [For Developers](https://github.com/Abdelrhman-AK/WinPaletter/wiki/WinPaletter-Store-Developers)
 
 ## GitHub Manager (Within WinPaletter)
 - [Introduction](https://github.com/Abdelrhman-AK/WinPaletter/wiki/GitHub-Manager--Introduction)
 - [Sign in\out GitHub using WinPaletter](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Sign-Up-GitHub)
-- [Use GitHub manager to manage and upload themes]: Wiki is under construction
+- Use GitHub manager to manage and upload themes: Wiki is under construction
 
 ## Important WinPaletter settings
 
