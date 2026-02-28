@@ -39,7 +39,7 @@
 
 ## GitHub Manager (Within WinPaletter)
 - [Introduction](https://github.com/Abdelrhman-AK/WinPaletter/wiki/GitHub-Manager--Introduction)
-- Sign in\out GitHub using WinPaletter
+- [Sign in\out GitHub using WinPaletter](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Sign-Up-GitHub)
 - [Use GitHub manager to manage and upload themes]: Coming soon
 
 ## Important WinPaletter settings
