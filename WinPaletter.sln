@@ -12,8 +12,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinPaletter.SysEventsSounds", "WinPaletter.SysEventsSounds\WinPaletter.SysEventsSounds.csproj", "{C1E51D35-A55A-4CF5-ABFC-74C2DDC7DD7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinPaletter.wiki", "WinPaletter.Wiki\WinPaletter.wiki.csproj", "{ABF93035-B1FD-4BAE-BAD1-B5757C3132FF}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,10 +26,6 @@ Global
 		{C1E51D35-A55A-4CF5-ABFC-74C2DDC7DD7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1E51D35-A55A-4CF5-ABFC-74C2DDC7DD7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1E51D35-A55A-4CF5-ABFC-74C2DDC7DD7B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ABF93035-B1FD-4BAE-BAD1-B5757C3132FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ABF93035-B1FD-4BAE-BAD1-B5757C3132FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ABF93035-B1FD-4BAE-BAD1-B5757C3132FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ABF93035-B1FD-4BAE-BAD1-B5757C3132FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
