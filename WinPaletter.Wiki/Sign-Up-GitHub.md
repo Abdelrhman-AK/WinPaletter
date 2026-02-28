@@ -113,49 +113,124 @@ After successful authentication:
 
 ---
 
-## How to Sign up with GitHub to use WinPaletter's GitHub Manager to upload and publish your themes
+## How to Sign In with GitHub to Use WinPaletter’s GitHub Manager
 
-1. You can start by one method of these to sign up:
-
-|Method 1|Method 2|
-|--------|--------|
-| Click on users button in main form and start sign up process | Open WinPaletter Store for themes, Click on users button in main form and start sign up process|
-|![Main](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/GitHub_SignUp/MainForm_User.png?raw=true) ![UsersDashboard](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/GitHub_SignUp/Users_Dashboard.png?raw=true) | ![Store](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/GitHub_SignUp/Store_UsersDashboard.png?raw=true) |
-
-2. Read the terms and click on `Sign up`
-3. Wait until a browser instance starts
-![Wait](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/GitHub_SignUp/SignUp_Wait.png?raw=true)
-4. Select your targer account
-![SelectAccount](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/GitHub_SignUp/Browser_ChooseAccount.png?raw=true)
-
-5. GitHub will require a code, it is provided by WinPaletter, copy it from this button.
-![AuthCode](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/GitHub_SignUp/SignUp_AuthCode.png?raw=true)
-
-6. Paste it in browser and continue
-7. Read info and continue
-![Terms](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/GitHub_SignUp/Browser_Auth.png?raw=true)
-
-8. `Optional` If you are protecting your account by 2-Factor Authentication, enter its code and continue.
-![2FA](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/GitHub_SignUp/Browser_2FA.png?raw=true)
-
-9. Finally, your browser will tell you that you are connected and so WinPaletter.
-![Success](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/GitHub_SignUp/Browser_Success.png?raw=true)
-![Success](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/GitHub_SignUp/SignUp_Success.png?raw=true)
-
-10. You will find user name and avatar visible in Main form, an indication of loggin in.
-![MainFormAvatar](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/GitHub_SignUp/MainForm_LoggedIn.png?raw=true)
-
-11. Evreytime you open WinPaletter, it will sign in automatically using credentials saved in Windows Credentials.
+Follow these steps to connect your GitHub account and enable theme upload and publishing.
 
 ---
 
-## Sign out:
+### 1. Start the Sign-In Process
 
-1. You can start by one method of these to sign out:
+You can begin using one of the following methods:
 
-|Method 1|Method 2|
-|--------|--------|
-| Click on users button in main form and start sign out process | Open WinPaletter Store for themes, Click on users button in main form and start sign out process|
-|![MainFormAvatar](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/GitHub_SignUp/MainForm_LoggedIn.png?raw=true) ![UsersDashboard](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/GitHub_SignUp/Users_Dashboard_SignOut.png?raw=true) | ![Store](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/GitHub_SignUp/Store_UsersDashboard_SignOut.png?raw=true) |
+| Method 1 | Method 2 |
+|----------|----------|
+| Click the **Users** button on the main form to open the user dashboard. | Open **WinPaletter Store**, then click the **Users** button to open the user dashboard. |
+| ![Main](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/GitHub_SignUp/MainForm_User.png?raw=true) ![UsersDashboard](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/GitHub_SignUp/Users_Dashboard.png?raw=true) | ![Store](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/GitHub_SignUp/Store_UsersDashboard.png?raw=true) |
 
-2. That is it. Windows credentials removed your GitHub account. A browser will open with a page that revokes access. Revoke WinPaletter manually.
+---
+
+### 2. Accept Terms
+
+- Read the information displayed.
+- Click **`Sign up`** to continue.
+
+---
+
+### 3. Wait for Browser Authentication
+
+A browser window will automatically open for GitHub authentication.
+
+![Wait](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/GitHub_SignUp/SignUp_Wait.png?raw=true)
+
+---
+
+### 4. Choose Your GitHub Account
+
+Select the GitHub account you want to connect.
+
+![SelectAccount](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/GitHub_SignUp/Browser_ChooseAccount.png?raw=true)
+
+---
+
+### 5. Enter the Authorization Code
+
+GitHub will request a verification code.
+
+- Copy the code provided by WinPaletter using the button shown below.
+- Paste it into the browser page.
+
+![AuthCode](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/GitHub_SignUp/SignUp_AuthCode.png?raw=true)
+
+---
+
+### 6. Confirm Authorization
+
+- Review the requested permissions.
+- Click **Continue** to approve.
+
+![Terms](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/GitHub_SignUp/Browser_Auth.png?raw=true)
+
+---
+
+### 7. Two-Factor Authentication (If Enabled)
+
+If your GitHub account uses 2FA:
+
+- Enter your authentication code.
+- Continue to complete the process.
+
+![2FA](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/GitHub_SignUp/Browser_2FA.png?raw=true)
+
+---
+
+### 8. Successful Connection
+
+Once authentication is complete:
+
+- The browser will confirm successful connection.
+- WinPaletter will also display a success message.
+
+![Success](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/GitHub_SignUp/Browser_Success.png?raw=true)  
+![Success](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/GitHub_SignUp/SignUp_Success.png?raw=true)
+
+---
+
+### 9. Logged-In Indicator
+
+Your username and avatar will appear on the main form, confirming that you are signed in.
+
+![MainFormAvatar](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/GitHub_SignUp/MainForm_LoggedIn.png?raw=true)
+
+---
+
+### 10. Automatic Sign-In
+
+Each time you open WinPaletter, it will automatically sign you in using credentials stored in **Windows Credential Manager**.
+
+---
+
+# Sign Out
+
+To disconnect your GitHub account:
+
+---
+
+### 1. Start the Sign-Out Process
+
+You can sign out using one of the following methods:
+
+| Method 1 | Method 2 |
+|----------|----------|
+| Click the **Users** button on the main form and choose sign out. | Open **WinPaletter Store**, then click the **Users** button and choose sign out. |
+| ![MainFormAvatar](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/GitHub_SignUp/MainForm_LoggedIn.png?raw=true) ![UsersDashboard](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/GitHub_SignUp/Users_Dashboard_SignOut.png?raw=true) | ![Store](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/WinPaletter.Wiki/Assets/GitHub_SignUp/Store_UsersDashboard_SignOut.png?raw=true) |
+
+---
+
+### 2. Complete Sign Out
+
+- Your saved GitHub credentials will be removed from Windows Credential Manager.
+- A browser page will open allowing you to revoke WinPaletter’s access.
+- Revoke access manually from that page to fully disconnect.
+
+You are now signed out.
