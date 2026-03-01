@@ -263,9 +263,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Wiki\.vs\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="app.manifest" />
@@ -301,9 +299,9 @@
     <None Include="Wiki\Edit-Windows-Terminals-%28Windows-10-and-later%29.md" />
     <None Include="Wiki\Edit-WinPaletter-application-theme.md" />
     <None Include="Wiki\ExplorerPatcher-synchronization.md" />
+    <None Include="Wiki\GitHub-Manager.md" />
     <None Include="Wiki\Get-WinPaletter.md" />
     <None Include="Wiki\GitHub-Manager-Introduction.md" />
-    <None Include="Wiki\GitHubMgr-Introduction.md" />
     <None Include="Wiki\Home.md" />
     <None Include="Wiki\How-to-design-and-apply-a-theme.md" />
     <None Include="Wiki\Language-creation-%28old-methods%29.md" />

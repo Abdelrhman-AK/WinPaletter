@@ -643,7 +643,7 @@ namespace WinPaletter.UI.WP
             Control child = breadcrumbPanel.GetChildAtPoint(e.Location);
             if (child == null && e.Button == MouseButtons.Left)
             {
-                pathTextBox.Bounds = new Rectangle(breadcrumbPanel.Left + 6, breadcrumbPanel.Top + 4, Math.Max(120, breadcrumbPanel.Width - 6), 22);
+                pathTextBox.Bounds = new Rectangle(breadcrumbPanel.Left + 4, breadcrumbPanel.Top + 4, Math.Max(120, breadcrumbPanel.Width - 6), 24);
                 pathTextBox.Text = string.Join("\\", GetCurrentPathNodes());
 
                 PopulateAutoComplete();

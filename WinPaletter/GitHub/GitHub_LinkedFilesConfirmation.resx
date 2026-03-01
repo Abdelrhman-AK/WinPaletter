@@ -165,13 +165,13 @@
   <data name="label5.Text" xml:space="preserve">
     <value>- WinPaletter theme files (*.wpth) may have an optional theme resources pack (*.wptp).
 
-- To be linked correctly, both files must have the exact same name.
+- To be linked correctly, both files must have the exact same name, in the same folder.
 
-- If a *.wptp file has a different name or is not present in the same directory as the *.wpth file, it will not be loaded automatically when opening the theme.
+- If a *.wptp file has a different name or is not present in the same folder as the *.wpth file, it will not be loaded automatically when opening the theme.
 
 - So it is recommended to perform the same operation on the linked file to preserve consistency.
 
-- If you want to operate on a single file, disable this option in the GitHub Explorer form in WinPaletter.</value>
+- If you want to operate on a single file, disable this option in the GitHub Explorer Folder Options.</value>
   </data>
   <data name="pictureBox3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

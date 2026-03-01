@@ -40,7 +40,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.toggle_uploadCurrent = new WinPaletter.UI.WP.Toggle();
             this.groupBox4 = new WinPaletter.UI.WP.GroupBox();
-            this.separatorH2 = new WinPaletter.UI.WP.SeparatorH();
             this.label8 = new System.Windows.Forms.Label();
             this.pictureBox7 = new System.Windows.Forms.PictureBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -52,7 +51,6 @@
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
             this.toggle_uploadMultiple = new WinPaletter.UI.WP.Toggle();
             this.groupBox3 = new WinPaletter.UI.WP.GroupBox();
-            this.separatorH1 = new WinPaletter.UI.WP.SeparatorH();
             this.label5 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -94,7 +92,7 @@
             this.groupBox6.Controls.Add(this.pictureBox5);
             this.groupBox6.Controls.Add(this.label11);
             this.groupBox6.Controls.Add(this.toggle_wpTheme);
-            this.groupBox6.Location = new System.Drawing.Point(12, 330);
+            this.groupBox6.Location = new System.Drawing.Point(12, 282);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(800, 57);
             this.groupBox6.TabIndex = 143;
@@ -156,7 +154,7 @@
             this.groupBox5.Controls.Add(this.pictureBox4);
             this.groupBox5.Controls.Add(this.label4);
             this.groupBox5.Controls.Add(this.toggle_uploadCurrent);
-            this.groupBox5.Location = new System.Drawing.Point(12, 393);
+            this.groupBox5.Location = new System.Drawing.Point(12, 345);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(800, 57);
             this.groupBox5.TabIndex = 142;
@@ -214,31 +212,17 @@
             this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox4.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox4.Controls.Add(this.separatorH2);
             this.groupBox4.Controls.Add(this.label8);
             this.groupBox4.Controls.Add(this.pictureBox7);
             this.groupBox4.Controls.Add(this.label7);
             this.groupBox4.Controls.Add(this.groupBox2);
             this.groupBox4.Controls.Add(this.toggle_uploadMultiple);
-            this.groupBox4.Location = new System.Drawing.Point(12, 171);
+            this.groupBox4.Location = new System.Drawing.Point(12, 147);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(800, 153);
+            this.groupBox4.Size = new System.Drawing.Size(800, 129);
             this.groupBox4.TabIndex = 141;
             this.groupBox4.UseDecorationPattern = false;
             this.groupBox4.UseSharpStyle = false;
-            // 
-            // separatorH2
-            // 
-            this.separatorH2.AlternativeLook = false;
-            this.separatorH2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.separatorH2.BackColor = System.Drawing.Color.Transparent;
-            this.separatorH2.Location = new System.Drawing.Point(13, 57);
-            this.separatorH2.Name = "separatorH2";
-            this.separatorH2.Size = new System.Drawing.Size(772, 1);
-            this.separatorH2.TabIndex = 141;
-            this.separatorH2.TabStop = false;
-            this.separatorH2.Text = "separatorH2";
             // 
             // label8
             // 
@@ -277,17 +261,16 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.BackColor = System.Drawing.Color.Transparent;
             this.groupBox2.Controls.Add(this.CheckBox1);
             this.groupBox2.Controls.Add(this.button5);
             this.groupBox2.Controls.Add(this.textBox3);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.pictureBox6);
-            this.groupBox2.Location = new System.Drawing.Point(13, 67);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.groupBox2.Location = new System.Drawing.Point(0, 56);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(772, 73);
+            this.groupBox2.Size = new System.Drawing.Size(800, 73);
             this.groupBox2.TabIndex = 139;
             this.groupBox2.UseDecorationPattern = false;
             this.groupBox2.UseSharpStyle = false;
@@ -299,9 +282,9 @@
             this.CheckBox1.Checked = false;
             this.CheckBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox1.ForeColor = System.Drawing.Color.White;
-            this.CheckBox1.Location = new System.Drawing.Point(8, 39);
+            this.CheckBox1.Location = new System.Drawing.Point(13, 40);
             this.CheckBox1.Name = "CheckBox1";
-            this.CheckBox1.Size = new System.Drawing.Size(754, 24);
+            this.CheckBox1.Size = new System.Drawing.Size(772, 24);
             this.CheckBox1.TabIndex = 194;
             this.CheckBox1.Text = "Include subfolders";
             // 
@@ -315,7 +298,7 @@
             this.button5.Image = null;
             this.button5.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Browse;
             this.button5.ImageGlyphEnabled = true;
-            this.button5.Location = new System.Drawing.Point(723, 9);
+            this.button5.Location = new System.Drawing.Point(748, 9);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(39, 25);
             this.button5.TabIndex = 193;
@@ -326,7 +309,7 @@
             // 
             this.textBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox3.Location = new System.Drawing.Point(166, 9);
+            this.textBox3.Location = new System.Drawing.Point(171, 9);
             this.textBox3.MaxLength = 32767;
             this.textBox3.Multiline = false;
             this.textBox3.Name = "textBox3";
@@ -335,7 +318,7 @@
             this.textBox3.SelectedText = "";
             this.textBox3.SelectionLength = 0;
             this.textBox3.SelectionStart = 0;
-            this.textBox3.Size = new System.Drawing.Size(551, 24);
+            this.textBox3.Size = new System.Drawing.Size(571, 24);
             this.textBox3.TabIndex = 4;
             this.textBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.textBox3.UseSystemPasswordChar = false;
@@ -345,7 +328,7 @@
             // label6
             // 
             this.label6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(38, 9);
+            this.label6.Location = new System.Drawing.Point(43, 9);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(122, 24);
             this.label6.TabIndex = 2;
@@ -355,7 +338,7 @@
             // pictureBox6
             // 
             this.pictureBox6.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox6.Image")));
-            this.pictureBox6.Location = new System.Drawing.Point(8, 9);
+            this.pictureBox6.Location = new System.Drawing.Point(13, 9);
             this.pictureBox6.Name = "pictureBox6";
             this.pictureBox6.Size = new System.Drawing.Size(24, 24);
             this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -379,7 +362,6 @@
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox3.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox3.Controls.Add(this.separatorH1);
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Controls.Add(this.pictureBox1);
             this.groupBox3.Controls.Add(this.label1);
@@ -387,23 +369,10 @@
             this.groupBox3.Controls.Add(this.groupBox1);
             this.groupBox3.Location = new System.Drawing.Point(12, 12);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(800, 153);
+            this.groupBox3.Size = new System.Drawing.Size(800, 129);
             this.groupBox3.TabIndex = 140;
             this.groupBox3.UseDecorationPattern = false;
             this.groupBox3.UseSharpStyle = false;
-            // 
-            // separatorH1
-            // 
-            this.separatorH1.AlternativeLook = false;
-            this.separatorH1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.separatorH1.BackColor = System.Drawing.Color.Transparent;
-            this.separatorH1.Location = new System.Drawing.Point(13, 57);
-            this.separatorH1.Name = "separatorH1";
-            this.separatorH1.Size = new System.Drawing.Size(772, 1);
-            this.separatorH1.TabIndex = 5;
-            this.separatorH1.TabStop = false;
-            this.separatorH1.Text = "separatorH1";
             // 
             // label5
             // 
@@ -454,8 +423,6 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.BackColor = System.Drawing.Color.Transparent;
             this.groupBox1.Controls.Add(this.textBox2);
             this.groupBox1.Controls.Add(this.label3);
@@ -464,9 +431,10 @@
             this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.pictureBox2);
-            this.groupBox1.Location = new System.Drawing.Point(13, 67);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.groupBox1.Location = new System.Drawing.Point(0, 56);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(772, 73);
+            this.groupBox1.Size = new System.Drawing.Size(800, 73);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.UseDecorationPattern = false;
             this.groupBox1.UseSharpStyle = false;
@@ -475,7 +443,7 @@
             // 
             this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox2.Location = new System.Drawing.Point(166, 39);
+            this.textBox2.Location = new System.Drawing.Point(171, 39);
             this.textBox2.MaxLength = 32767;
             this.textBox2.Multiline = false;
             this.textBox2.Name = "textBox2";
@@ -484,7 +452,7 @@
             this.textBox2.SelectedText = "";
             this.textBox2.SelectionLength = 0;
             this.textBox2.SelectionStart = 0;
-            this.textBox2.Size = new System.Drawing.Size(596, 24);
+            this.textBox2.Size = new System.Drawing.Size(619, 24);
             this.textBox2.TabIndex = 196;
             this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.textBox2.UseSystemPasswordChar = false;
@@ -493,7 +461,7 @@
             // label3
             // 
             this.label3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(38, 39);
+            this.label3.Location = new System.Drawing.Point(43, 39);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(122, 24);
             this.label3.TabIndex = 195;
@@ -503,7 +471,7 @@
             // pictureBox3
             // 
             this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.Location = new System.Drawing.Point(8, 39);
+            this.pictureBox3.Location = new System.Drawing.Point(13, 39);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(24, 24);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -520,7 +488,7 @@
             this.Button16.Image = null;
             this.Button16.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Browse;
             this.Button16.ImageGlyphEnabled = true;
-            this.Button16.Location = new System.Drawing.Point(723, 9);
+            this.Button16.Location = new System.Drawing.Point(748, 9);
             this.Button16.Name = "Button16";
             this.Button16.Size = new System.Drawing.Size(39, 25);
             this.Button16.TabIndex = 193;
@@ -531,7 +499,7 @@
             // 
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(166, 9);
+            this.textBox1.Location = new System.Drawing.Point(171, 9);
             this.textBox1.MaxLength = 32767;
             this.textBox1.Multiline = false;
             this.textBox1.Name = "textBox1";
@@ -540,7 +508,7 @@
             this.textBox1.SelectedText = "";
             this.textBox1.SelectionLength = 0;
             this.textBox1.SelectionStart = 0;
-            this.textBox1.Size = new System.Drawing.Size(551, 24);
+            this.textBox1.Size = new System.Drawing.Size(571, 24);
             this.textBox1.TabIndex = 4;
             this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.textBox1.UseSystemPasswordChar = false;
@@ -550,7 +518,7 @@
             // label2
             // 
             this.label2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(38, 9);
+            this.label2.Location = new System.Drawing.Point(43, 9);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(122, 24);
             this.label2.TabIndex = 2;
@@ -560,7 +528,7 @@
             // pictureBox2
             // 
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(8, 9);
+            this.pictureBox2.Location = new System.Drawing.Point(13, 9);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(24, 24);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -574,7 +542,7 @@
             this.bottom_buttons.Controls.Add(this.button2);
             this.bottom_buttons.Controls.Add(this.button3);
             this.bottom_buttons.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.bottom_buttons.Location = new System.Drawing.Point(0, 461);
+            this.bottom_buttons.Location = new System.Drawing.Point(0, 413);
             this.bottom_buttons.Name = "bottom_buttons";
             this.bottom_buttons.Size = new System.Drawing.Size(824, 48);
             this.bottom_buttons.TabIndex = 134;
@@ -642,17 +610,14 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(824, 509);
+            this.ClientSize = new System.Drawing.Size(824, 461);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.bottom_buttons);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "GitHub_ThemeUpload";
@@ -708,9 +673,7 @@
         private UI.WP.GroupBox groupBox4;
         private UI.WP.GroupBox groupBox5;
         private UI.WP.AlertBox alertBox1;
-        private UI.WP.SeparatorH separatorH1;
         private System.Windows.Forms.Label label5;
-        private UI.WP.SeparatorH separatorH2;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private UI.WP.GroupBox groupBox6;

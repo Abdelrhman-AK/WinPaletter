@@ -73,7 +73,7 @@
             this.bottom_buttons.Controls.Add(this.label8);
             this.bottom_buttons.Controls.Add(this.label6);
             this.bottom_buttons.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.bottom_buttons.Location = new System.Drawing.Point(0, 479);
+            this.bottom_buttons.Location = new System.Drawing.Point(0, 513);
             this.bottom_buttons.Name = "bottom_buttons";
             this.bottom_buttons.Size = new System.Drawing.Size(769, 48);
             this.bottom_buttons.TabIndex = 124;
@@ -200,7 +200,7 @@
             this.banner2.BackColor = System.Drawing.Color.Transparent;
             this.banner2.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.banner2.Image = null;
-            this.banner2.Location = new System.Drawing.Point(12, 76);
+            this.banner2.Location = new System.Drawing.Point(12, 78);
             this.banner2.Name = "banner2";
             this.banner2.Size = new System.Drawing.Size(35, 94);
             this.banner2.TabIndex = 149;
@@ -239,7 +239,7 @@
             this.groupBox1.BackColor = System.Drawing.Color.Transparent;
             this.groupBox1.Controls.Add(this.label10);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(53, 76);
+            this.groupBox1.Location = new System.Drawing.Point(53, 78);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(704, 93);
             this.groupBox1.TabIndex = 152;
@@ -253,7 +253,7 @@
             this.groupBox2.BackColor = System.Drawing.Color.Transparent;
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Location = new System.Drawing.Point(53, 176);
+            this.groupBox2.Location = new System.Drawing.Point(53, 178);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(704, 93);
             this.groupBox2.TabIndex = 154;
@@ -290,7 +290,7 @@
             this.banner1.BackColor = System.Drawing.Color.Transparent;
             this.banner1.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.banner1.Image = null;
-            this.banner1.Location = new System.Drawing.Point(12, 176);
+            this.banner1.Location = new System.Drawing.Point(12, 178);
             this.banner1.Name = "banner1";
             this.banner1.Size = new System.Drawing.Size(35, 93);
             this.banner1.TabIndex = 153;
@@ -304,7 +304,7 @@
             this.groupBox3.BackColor = System.Drawing.Color.Transparent;
             this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Controls.Add(this.label5);
-            this.groupBox3.Location = new System.Drawing.Point(53, 275);
+            this.groupBox3.Location = new System.Drawing.Point(53, 277);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(704, 93);
             this.groupBox3.TabIndex = 156;
@@ -341,7 +341,7 @@
             this.banner3.BackColor = System.Drawing.Color.Transparent;
             this.banner3.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.banner3.Image = null;
-            this.banner3.Location = new System.Drawing.Point(12, 275);
+            this.banner3.Location = new System.Drawing.Point(12, 277);
             this.banner3.Name = "banner3";
             this.banner3.Size = new System.Drawing.Size(35, 93);
             this.banner3.TabIndex = 155;
@@ -355,9 +355,9 @@
             this.groupBox4.BackColor = System.Drawing.Color.Transparent;
             this.groupBox4.Controls.Add(this.label9);
             this.groupBox4.Controls.Add(this.label11);
-            this.groupBox4.Location = new System.Drawing.Point(53, 374);
+            this.groupBox4.Location = new System.Drawing.Point(53, 376);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(704, 93);
+            this.groupBox4.Size = new System.Drawing.Size(704, 121);
             this.groupBox4.TabIndex = 158;
             this.groupBox4.UseDecorationPattern = false;
             this.groupBox4.UseSharpStyle = false;
@@ -383,7 +383,7 @@
             this.label11.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.Location = new System.Drawing.Point(16, 36);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(681, 50);
+            this.label11.Size = new System.Drawing.Size(681, 78);
             this.label11.TabIndex = 151;
             this.label11.Text = resources.GetString("label11.Text");
             // 
@@ -392,9 +392,9 @@
             this.banner4.BackColor = System.Drawing.Color.Transparent;
             this.banner4.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.banner4.Image = null;
-            this.banner4.Location = new System.Drawing.Point(12, 374);
+            this.banner4.Location = new System.Drawing.Point(12, 376);
             this.banner4.Name = "banner4";
-            this.banner4.Size = new System.Drawing.Size(35, 93);
+            this.banner4.Size = new System.Drawing.Size(35, 121);
             this.banner4.TabIndex = 157;
             this.banner4.TabStop = false;
             this.banner4.Text = "4";
@@ -404,7 +404,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(769, 527);
+            this.ClientSize = new System.Drawing.Size(769, 561);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.banner4);
             this.Controls.Add(this.groupBox3);

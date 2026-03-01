@@ -166,6 +166,7 @@
   </data>
   <data name="label11.Text" xml:space="preserve">
     <value>- Keep PRs focused—each PR should cover one themes update session.
+- You are solely responsible for the copyrights of any included media (wallpapers, sounds, icons, screensavers, etc.) if a resource pack is included.
 - To minimize conflicts, you can sync your branch to start over.
 - Review your changes locally in GitHub Explorer before submitting a PR to ensure no unintended files are included.</value>
   </data>

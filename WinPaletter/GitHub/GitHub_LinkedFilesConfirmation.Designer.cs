@@ -37,6 +37,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.bottom_buttons = new WinPaletter.UI.WP.GroupBox();
+            this.button3 = new WinPaletter.UI.WP.Button();
             this.Button1 = new WinPaletter.UI.WP.Button();
             this.Button2 = new WinPaletter.UI.WP.Button();
             this.separatorH1 = new WinPaletter.UI.WP.SeparatorH();
@@ -48,7 +49,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
-            this.button3 = new WinPaletter.UI.WP.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.bottom_buttons.SuspendLayout();
@@ -154,6 +154,25 @@
             this.bottom_buttons.TabIndex = 133;
             this.bottom_buttons.UseDecorationPattern = false;
             this.bottom_buttons.UseSharpStyle = false;
+            // 
+            // button3
+            // 
+            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button3.CustomColor = System.Drawing.Color.Empty;
+            this.button3.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button3.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button3.ForeColor = System.Drawing.Color.White;
+            this.button3.Image = null;
+            this.button3.ImageGlyph = null;
+            this.button3.ImageGlyphEnabled = false;
+            this.button3.Location = new System.Drawing.Point(6, 7);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(310, 34);
+            this.button3.TabIndex = 118;
+            this.button3.Text = "Open Folder Options to control the default behavior";
+            this.button3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button3.UseVisualStyleBackColor = false;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // Button1
             // 
@@ -308,25 +327,6 @@
             this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.pictureBox6.TabIndex = 134;
             this.pictureBox6.TabStop = false;
-            // 
-            // button3
-            // 
-            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button3.CustomColor = System.Drawing.Color.Empty;
-            this.button3.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.button3.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button3.ForeColor = System.Drawing.Color.White;
-            this.button3.Image = null;
-            this.button3.ImageGlyph = null;
-            this.button3.ImageGlyphEnabled = false;
-            this.button3.Location = new System.Drawing.Point(6, 7);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(310, 34);
-            this.button3.TabIndex = 118;
-            this.button3.Text = "Open Folder Options to control the default behavior";
-            this.button3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button3.UseVisualStyleBackColor = false;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // GitHub_LinkedFilesConfirmation
             // 
