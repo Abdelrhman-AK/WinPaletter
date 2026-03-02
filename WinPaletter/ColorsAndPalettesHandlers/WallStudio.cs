@@ -467,7 +467,7 @@ namespace WinPaletter
             List<string> aspects_list = [];
             aspects_list.Clear();
 
-            if ((OS.W12 || ignoreOS) && TM.Windows12.Enabled) aspects_list.Add(string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W12));
+            if ((OS.W12 || ignoreOS) && TM.Windows12.Enabled && OS.IsWin12Released) aspects_list.Add(string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W12));
             if ((OS.W11 || ignoreOS) && TM.Windows11.Enabled) aspects_list.Add(string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W11));
             if ((OS.W10 || ignoreOS) && TM.Windows10.Enabled) aspects_list.Add(string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W10));
             if ((OS.W81 || ignoreOS) && TM.Windows81.Enabled) aspects_list.Add(string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W81));

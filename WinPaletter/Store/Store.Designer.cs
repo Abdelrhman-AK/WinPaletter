@@ -52,6 +52,7 @@ namespace WinPaletter
             this.separatorV3 = new WinPaletter.UI.WP.SeparatorV();
             this.ver_lbl = new System.Windows.Forms.Label();
             this.separatorV1 = new WinPaletter.UI.WP.SeparatorV();
+            this.path_lbl = new System.Windows.Forms.Label();
             this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
             this.os_12 = new System.Windows.Forms.PictureBox();
             this.os_11 = new System.Windows.Forms.PictureBox();
@@ -172,6 +173,7 @@ namespace WinPaletter
             this.search_filter_btn = new WinPaletter.UI.WP.Button();
             this.ProgressBar1 = new WinPaletter.UI.WP.ProgressBar();
             this.back_btn = new WinPaletter.UI.WP.Button();
+            this.separatorV5 = new WinPaletter.UI.WP.SeparatorV();
             this.Tabs.SuspendLayout();
             this.TabPage1.SuspendLayout();
             this.TabPage3.SuspendLayout();
@@ -302,7 +304,6 @@ namespace WinPaletter
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(1301, 130);
             this.groupBox5.TabIndex = 142;
-            this.groupBox5.Text = "groupBox5";
             this.groupBox5.UseDecorationPattern = true;
             this.groupBox5.UseSharpStyle = false;
             // 
@@ -351,6 +352,8 @@ namespace WinPaletter
             this.flowLayoutPanel5.Controls.Add(this.separatorV3);
             this.flowLayoutPanel5.Controls.Add(this.ver_lbl);
             this.flowLayoutPanel5.Controls.Add(this.separatorV1);
+            this.flowLayoutPanel5.Controls.Add(this.path_lbl);
+            this.flowLayoutPanel5.Controls.Add(this.separatorV5);
             this.flowLayoutPanel5.Location = new System.Drawing.Point(4, 40);
             this.flowLayoutPanel5.Name = "flowLayoutPanel5";
             this.flowLayoutPanel5.Size = new System.Drawing.Size(1088, 25);
@@ -413,6 +416,19 @@ namespace WinPaletter
             this.separatorV1.Size = new System.Drawing.Size(1, 18);
             this.separatorV1.TabIndex = 152;
             this.separatorV1.TabStop = false;
+            // 
+            // path_lbl
+            // 
+            this.path_lbl.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.path_lbl.AutoSize = true;
+            this.path_lbl.BackColor = System.Drawing.Color.Transparent;
+            this.path_lbl.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.path_lbl.Location = new System.Drawing.Point(62, 5);
+            this.path_lbl.Name = "path_lbl";
+            this.path_lbl.Size = new System.Drawing.Size(13, 15);
+            this.path_lbl.TabIndex = 157;
+            this.path_lbl.Text = "0";
+            this.path_lbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // flowLayoutPanel4
             // 
@@ -2830,6 +2846,16 @@ namespace WinPaletter
             this.back_btn.UseVisualStyleBackColor = false;
             this.back_btn.Click += new System.EventHandler(this.Back_btn_Click);
             // 
+            // separatorV5
+            // 
+            this.separatorV5.AlternativeLook = false;
+            this.separatorV5.BackColor = System.Drawing.Color.Transparent;
+            this.separatorV5.Location = new System.Drawing.Point(81, 3);
+            this.separatorV5.Name = "separatorV5";
+            this.separatorV5.Size = new System.Drawing.Size(1, 18);
+            this.separatorV5.TabIndex = 158;
+            this.separatorV5.TabStop = false;
+            // 
             // Store
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -3041,5 +3067,7 @@ namespace WinPaletter
         internal UI.WP.Button button7;
         internal UI.WP.TextBox TextBox1;
         private Templates.NoNetworkPanel noNetworkPanel1;
+        internal Label path_lbl;
+        internal SeparatorV separatorV5;
     }
 }

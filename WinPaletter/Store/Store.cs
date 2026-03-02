@@ -258,6 +258,7 @@ namespace WinPaletter
             desc_txt.Font = Fonts.ConsoleLarge;
             ver_lbl.Font = Fonts.Console;
             lbl_hint.Font = Fonts.Console;
+            path_lbl.Font = Fonts.Console;
             TextBox1.Font = Fonts.ConsoleLarge;
 
             os_12.Image = Assets.Store.DesignedFor12;
@@ -682,7 +683,7 @@ namespace WinPaletter
             if (store_container.Controls.Count == 0 || allThemes.Count == 0)
             {
                 ProgressBar1.Visible = false;
-                Tabs.SelectedIndex = 3;
+                if (Program.Settings.Store.Mode == Settings.Structures.Store.Modes.Online) Tabs.SelectedIndex = 3;
             }
 
             // Mark the process as finished
@@ -1049,6 +1050,9 @@ namespace WinPaletter
                     labelAlt3.Text = selectedItem.TM.Info.ThemeName;
                     author_lbl.Text = selectedItem.TM.Info.Author;
                     ver_lbl.Text = selectedItem.TM.Info.ThemeVersion;
+                    path_lbl.Text = System.IO.File.Exists(selectedItem.URL_ThemeFile) ? selectedItem.URL_ThemeFile : string.Empty;
+                    path_lbl.Visible = !string.IsNullOrEmpty(path_lbl.Text);
+                    separatorV1.Visible = !string.IsNullOrEmpty(path_lbl.Text);
 
                     Config style = new(selectedItem.TM.AppTheme.AccentColor, selectedItem.TM.AppTheme.SecondaryColor, selectedItem.TM.AppTheme.TertiaryColor, selectedItem.TM.AppTheme.DisabledColor, selectedItem.TM.AppTheme.BackColor, selectedItem.TM.AppTheme.DisabledBackColor, selectedItem.TM.AppTheme.DarkMode, selectedItem.TM.AppTheme.RoundCorners, selectedItem.TM.AppTheme.Animations);
                     Color accentForeColor = style.Schemes.Main.Colors.ForeColor_Accent;
@@ -1157,7 +1161,7 @@ namespace WinPaletter
                             flowLayoutPanel5.Controls.Add(tagLabel);
                         }
                     }
-                    separatorV1.Visible = foundATag;
+                    separatorV5.Visible = foundATag;
 
                     // Check if the theme is designed for the current version of WinPaletter or not and show an alert if not
                     if (Program.Version.CompareTo(selectedItem.TM.Info.AppVersion) != -1)

@@ -313,6 +313,7 @@
     <None Include="Wiki\Sign-Up-GitHub.md" />
     <None Include="Wiki\Skeleton-of-a-feature-modification.md" />
     <None Include="Wiki\Theme-log-verbose-level.md" />
+    <None Include="Wiki\WallStudio.md" />
     <None Include="Wiki\WinPaletter-Store-basics.md" />
     <None Include="Wiki\WinPaletter-Store-Developers.md" />
     <None Include="Wiki\_Footer.md" />

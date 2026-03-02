@@ -850,7 +850,7 @@ namespace WinPaletter.UI.WP
                     if (_highlightEffectEnabled && _value > Minimum && _value < Maximum)
                     {
                         // Fixed width highlight
-                        float highlightWidth = rectValue.Width * 0.3f;
+                        float highlightWidth = Math.Max(1, rectValue.Width * 0.3f);
 
                         // Calculate position based on hover offset (0 to 1)
                         // This makes the highlight move from left edge to right edge of the progress portion
@@ -892,7 +892,7 @@ namespace WinPaletter.UI.WP
 
                         // Draw the highlight with alpha based on visibility
                         Color hilightColor = Program.Style.DarkMode ? _stateColor.Light() : _stateColor.Dark();
-                        using (LinearGradientBrush brush = new(highlightRect,Color.Transparent, hilightColor, LinearGradientMode.Horizontal))
+                        using (LinearGradientBrush brush = new(highlightRect, Color.Transparent, hilightColor, LinearGradientMode.Horizontal))
                         {
                             ColorBlend cb = new()
                             {
