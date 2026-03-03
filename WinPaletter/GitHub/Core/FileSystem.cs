@@ -1,4 +1,4 @@
-﻿using Octokit;
+using Octokit;
 using Serilog.Events;
 using System;
 using System.Collections.Generic;
@@ -86,6 +86,16 @@ namespace WinPaletter.GitHub
             if (trimEnd) result = result.TrimEnd('/');
 
             return result;
+        }
+
+        /// <summary>
+        /// Returns true if the path is safe to use with the GitHub Contents API (no path traversal).
+        /// Rejects paths containing ".." to prevent escaping the repository root.
+        /// </summary>
+        public static bool IsPathSafeForRepository(string path)
+        {
+            if (string.IsNullOrEmpty(path)) return true;
+            return path.IndexOf("..", StringComparison.Ordinal) < 0;
         }
 
         public static string GetParent(string path)
@@ -198,6 +208,10 @@ namespace WinPaletter.GitHub
             cts ??= new();
             if (cts.Token.IsCancellationRequested) return null;
 
+            path = NormalizePath(path);
+            if (!IsPathSafeForRepository(path))
+                throw new ArgumentException("Path is not allowed for repository access.", nameof(path));
+
             // Get fresh file info without recursion
             Entry info = await FileSystem.GetInfoRefreshAsync(path, recursive: false, cts: cts);
             if (info == null || info.Type != EntryType.File)
@@ -233,6 +247,9 @@ namespace WinPaletter.GitHub
             commitMessage ??= $"Updated `{githubPath}` by {Repository.Owner}";
 
             string normalizedPath = NormalizePath(githubPath);
+            if (!IsPathSafeForRepository(normalizedPath))
+                return null;
+
             string workingDir = ParentDirectoryName(normalizedPath);
 
             // Read local file if needed
@@ -310,6 +327,9 @@ namespace WinPaletter.GitHub
             cts ??= new();
 
             string normalizedPath = NormalizePath(path);
+            if (!IsPathSafeForRepository(normalizedPath))
+                return null;
+
             string workingDir = ParentDirectoryName(normalizedPath);
 
             if (cts is not null && cts.Token.IsCancellationRequested) return null;
@@ -347,6 +367,9 @@ namespace WinPaletter.GitHub
             cts ??= new();
 
             githubPathDirectory = NormalizePath(githubPathDirectory);
+            if (!IsPathSafeForRepository(githubPathDirectory))
+                return null;
+
             commitMessage ??= $"Uploaded `{Path.GetFileName(localFilePath)}` into `{githubPathDirectory}` by {Repository.Owner}";
 
             if (cts.IsCancellationRequested) return null;
@@ -365,6 +388,9 @@ namespace WinPaletter.GitHub
             if (cts.IsCancellationRequested) return null;
 
             string githubPath = string.Join("/", githubPathDirectory, Path.GetFileName(localFilePath));
+            githubPath = NormalizePath(githubPath);
+            if (!IsPathSafeForRepository(githubPath))
+                return null;
 
             // 2. Detect if file is binary
             bool isBinary = fileBytes.Take(8000).Any(b => b == 0);

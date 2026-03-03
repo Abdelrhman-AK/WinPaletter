@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
@@ -308,10 +308,17 @@ namespace WinPaletter.NativeMethods
         public const int CRED_TYPE_GENERIC = 1;
 
         /// <summary>
-        /// Credential persistence type: local machine.  
-        /// Stored credentials are available to all users on the machine.
+        /// Credential persistence type: local machine.
+        /// The credential is stored in the local computer's credential store and is available to the current user only on the local computer.
         /// </summary>
         public const int CRED_PERSIST_LOCAL_MACHINE = 2;
+
+        /// <summary>
+        /// Credential persistence type: enterprise (user-scoped, roaming).
+        /// The credential is stored in the user's credential set and roams with the user profile. Only the current user can access it.
+        /// Prefer this for per-user secrets when possible.
+        /// </summary>
+        public const int CRED_PERSIST_ENTERPRISE = 3;
 
         /// <summary>
         /// Writes a credential to the Windows Credential Manager.

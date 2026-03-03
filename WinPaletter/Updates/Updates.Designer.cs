@@ -428,7 +428,7 @@ namespace WinPaletter
             // 
             this.toggle1.Checked = false;
             this.toggle1.DarkLight_Toggler = false;
-            this.toggle1.Location = new System.Drawing.Point(13, 70);
+            this.toggle1.Location = new System.Drawing.Point(15, 70);
             this.toggle1.Name = "toggle1";
             this.toggle1.Size = new System.Drawing.Size(40, 20);
             this.toggle1.TabIndex = 0;

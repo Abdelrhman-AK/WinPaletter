@@ -161,10 +161,12 @@ namespace WinPaletter.GitHub
         /// is cleared when a new navigation occurs that is not a forward action.</remarks>
         private static Stack<NavigationState> forwardStack = new();
 
+        private static string themesDir = "Themes";
+
         /// <summary>
         /// Gets the root path of the repository.
         /// </summary>
-        public static string _root = $"Themes/{Repository.Owner}";
+        private static string _root { get; set; } = $"{themesDir}/{Repository.Owner}";
 
         /// <summary>
         /// To remember the last entered folder for navigation purposes.
@@ -279,6 +281,7 @@ namespace WinPaletter.GitHub
 
                 List<RepositoryContent> entries = [];
 
+                CheckRoot();
                 bool rootExists = await DirectoryExistsAsync(_root, cts);
                 if (!rootExists) await CreateDirectoryAsync(_root, cts: cts);
 
@@ -385,6 +388,7 @@ namespace WinPaletter.GitHub
             {
                 Program.Log?.Write(LogEventLevel.Information, "Refreshing: FetchRecursive started");
 
+                CheckRoot();
                 List<RepositoryContent> entries = [];
                 await FetchRecursive(_root, entries, null, cts);
 
@@ -666,6 +670,7 @@ namespace WinPaletter.GitHub
             try
             {
                 if (_boundTree.Nodes.Count == 0) return;
+                CheckRoot();
 
                 TreeNode rootNode = _boundTree.Nodes[0];
                 rootNode.Tag ??= _root;
@@ -777,6 +782,7 @@ namespace WinPaletter.GitHub
 
             _boundTree.BeginUpdate();
             _boundTree.Nodes.Clear();
+            CheckRoot();
 
             // Use last segment of _root as the root node text
             string rootText = _root.Split('/').Last();
@@ -1605,6 +1611,7 @@ namespace WinPaletter.GitHub
         {
             if (string.IsNullOrEmpty(newPath)) return;
             bool willPlayAudio = CurrentPath is not null && !CurrentPath.Equals(newPath, StringComparison.OrdinalIgnoreCase);
+            CheckRoot();
 
             // Ensure path starts with root
             if (!newPath.StartsWith(_root, StringComparison.OrdinalIgnoreCase)) newPath = _root + "/" + newPath.TrimStart('/');
@@ -1739,6 +1746,7 @@ namespace WinPaletter.GitHub
         public static async Task GoUp()
         {
             if (!CanGoUp) return;
+            CheckRoot();
 
             string parent = GetParent(CurrentPath) ?? _root;
 
@@ -2451,6 +2459,11 @@ namespace WinPaletter.GitHub
         {
             cts?.Cancel();
             cts = new();
+        }
+
+        private static void CheckRoot()
+        {
+            if (string.IsNullOrWhiteSpace(_root) || _root.Equals($"{themesDir}/", StringComparison.OrdinalIgnoreCase)) _root = $"{themesDir}/{Repository.Owner}";
         }
 
         #endregion

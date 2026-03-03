@@ -1,4 +1,4 @@
-﻿using Octokit;
+using Octokit;
 using Serilog.Events;
 using System;
 using System.Collections.Concurrent;
@@ -378,6 +378,9 @@ namespace WinPaletter.GitHub
             public static async Task<List<RepositoryContent>> GetDirectoryRecursiveAsync(string path)
             {
                 List<RepositoryContent> result = [];
+                path = NormalizePath(path);
+                if (!IsPathSafeForRepository(path))
+                    return result;
 
                 IReadOnlyList<RepositoryContent> contents = await Helpers.Do(() =>
                      Program.GitHub.Client.Repository.Content.GetAllContentsByRef(

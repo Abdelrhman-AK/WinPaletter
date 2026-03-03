@@ -1,4 +1,4 @@
-﻿using Octokit;
+using Octokit;
 using Serilog.Events;
 using System;
 using System.Collections.Generic;
@@ -316,6 +316,9 @@ namespace WinPaletter.GitHub
         public static async Task<Entry> GetInfoAsync(string path, bool recursive = true, bool useShaValidation = true, bool useTtlCache = true, bool forceRefresh = false, int maxDepth = 20, CancellationTokenSource cts = default)
         {
             if (string.IsNullOrEmpty(path)) return null;
+            path = NormalizePath(path);
+            if (!IsPathSafeForRepository(path))
+                return null;
             if (cts is not null && cts.Token.IsCancellationRequested) return null;
 
             // 1. Check cache

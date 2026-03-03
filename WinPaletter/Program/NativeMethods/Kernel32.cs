@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -186,5 +186,14 @@ namespace WinPaletter.NativeMethods
         /// </remarks>
         [DllImport("kernel32.dll")]
         public static extern IntPtr LocalFree(IntPtr hMem);
+
+        /// <summary>
+        /// Fills a block of memory with zeros in a way that is guaranteed not to be optimized away.
+        /// Use when clearing sensitive data (e.g. passwords, tokens) from unmanaged memory before freeing.
+        /// </summary>
+        /// <param name="ptr">Pointer to the memory block to zero.</param>
+        /// <param name="cnt">Size of the block in bytes.</param>
+        [DllImport("kernel32.dll")]
+        public static extern void RtlSecureZeroMemory(IntPtr ptr, UIntPtr cnt);
     }
 }

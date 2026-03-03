@@ -1,4 +1,4 @@
-﻿using FluentTransitions;
+using FluentTransitions;
 using Octokit;
 using Ookii.Dialogs.WinForms;
 using System;
@@ -145,7 +145,7 @@ namespace WinPaletter
             await Init();
         }
 
-        private async void Events_OnTokenLoaded(object sender, string e)
+        private async void Events_OnTokenLoaded(object sender, EventArgs e)
         {
             if (IsHandleCreated) await LoadInternal();
         }
@@ -1386,5 +1386,6 @@ Generated automatically by WinPaletter. Please review the changes before merging
                 FileSystem.View = Program.Settings.GitHub.DefaultView;
             }
         }
+
     }
 }

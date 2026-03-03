@@ -190,9 +190,9 @@ namespace WinPaletter
             // 
             this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label9.Location = new System.Drawing.Point(225, 152);
+            this.label9.Location = new System.Drawing.Point(195, 152);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(387, 24);
+            this.label9.Size = new System.Drawing.Size(417, 24);
             this.label9.TabIndex = 238;
             this.label9.Text = "0";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;

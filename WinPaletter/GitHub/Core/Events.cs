@@ -1,4 +1,4 @@
-﻿using Serilog.Events;
+using Serilog.Events;
 using System;
 
 namespace WinPaletter.GitHub
@@ -186,11 +186,11 @@ namespace WinPaletter.GitHub
         public static event EventHandler OnLoginTimedOut;
 
         /// <summary>
-        /// Raised when a saved token is loaded from local storage.
-        /// Provides the token string.
+        /// Raised when a saved token is loaded from local storage and the client is ready.
+        /// The token is not passed to subscribers to avoid accidental exposure in logs or UI.
         /// </summary>
-        /// <remarks>Subscribe if you want to verify the token or pre-fill some UI info.</remarks>
-        public static event EventHandler<string> OnTokenLoaded;
+        /// <remarks>Subscribe to refresh UI or state (e.g. reload GitHub data) after silent login.</remarks>
+        public static event EventHandler OnTokenLoaded;
 
         /// <summary>
         /// Raised when a loaded token is invalid or expired.
@@ -267,7 +267,7 @@ namespace WinPaletter.GitHub
         public static void OnDeviceFlowNotInitiatedEvent() => OnDeviceFlowNotInitiated?.Invoke(null, new());
         public static void OnLoginCanceledEvent() => OnLoginCanceled?.Invoke(null, new());
         public static void OnLoginTimedOutEvent() => OnLoginTimedOut?.Invoke(null, new());
-        public static void OnTokenLoadedEvent(string token) => OnTokenLoaded?.Invoke(null, token);
+        public static void OnTokenLoadedEvent() => OnTokenLoaded?.Invoke(null, EventArgs.Empty);
         public static void OnTokenInvalidEvent() => OnTokenInvalid?.Invoke(null, new());
         public static void OnTokenRevokedEvent() => OnTokenRevoked?.Invoke(null, new());
         public static void OnInsufficientPermissionsEvent() => OnInsufficientPermissions?.Invoke(null, new());

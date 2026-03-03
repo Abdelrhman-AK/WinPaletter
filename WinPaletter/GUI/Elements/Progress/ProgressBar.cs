@@ -82,8 +82,8 @@ namespace WinPaletter.UI.WP
 
         protected override void OnHandleDestroyed(EventArgs e)
         {
-            SetProgressValue(0);
             SetProgressState(TaskbarProgressBarState.NoProgress);
+            SetProgressValue(0);
 
             // Stop timers but don't dispose them completely - they'll be recreated if needed
             StopAllTimers();
@@ -190,23 +190,33 @@ namespace WinPaletter.UI.WP
         protected override void OnVisibleChanged(EventArgs e)
         {
             base.OnVisibleChanged(e);
+            if (DesignMode) return;
 
-            if (!DesignMode)
+            if (Visible)
             {
-                if (Visible)
-                {
-                    EnsureTimersInitialized();
-                    ThrottleTaskbarUpdate();
-                    if (Style == ProgressBarStyle.Marquee)
-                        StartMarqueeTimer();
-                    else
-                        UpdateProgressTimerState();
-                }
+                EnsureTimersInitialized();
+
+                // Force taskbar update bypassing the throttle gate so the
+                // re-show always pushes the current state immediately.
+                _lastTaskbarUpdate = DateTime.MinValue;
+                UpdateTaskbar();
+
+                if (Style == ProgressBarStyle.Marquee)
+                    StartMarqueeTimer();
                 else
-                {
-                    SetProgressState(TaskbarProgressBarState.NoProgress);
-                    StopAllTimers();
-                }
+                    UpdateProgressTimerState();
+            }
+            else
+            {
+                // Directly clear taskbar state before stopping timers so no
+                // in-flight ThrottleTaskbarUpdate call can re-set it afterward.
+                SetProgressState(TaskbarProgressBarState.NoProgress);
+                SetProgressValue(0);
+                StopAllTimers();
+
+                // Reset the throttle timestamp so the next show triggers a
+                // fresh update rather than being silently swallowed.
+                _lastTaskbarUpdate = DateTime.MinValue;
             }
         }
 
@@ -484,6 +494,12 @@ namespace WinPaletter.UI.WP
         private void UpdateTaskbar()
         {
             if (DesignMode || FormHwnd == IntPtr.Zero) return;
+
+            if (!Visible)
+            {
+                SetProgressState(TaskbarProgressBarState.NoProgress);
+                return;
+            }
 
             if (_TaskbarBroadcast)
             {

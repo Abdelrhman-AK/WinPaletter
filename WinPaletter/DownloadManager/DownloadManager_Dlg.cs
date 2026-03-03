@@ -81,10 +81,10 @@ namespace WinPaletter
             listView1.SmallImageList.ImageSize = new(18, 24);
             listView1.SmallImageList.ColorDepth = ColorDepth.Depth32Bit;
 
-            listView1.Columns.Add("File", 220);
-            listView1.Columns.Add("URL", 260);
-            listView1.Columns.Add("Downloaded", 100);
-            listView1.Columns.Add("Size", 100);
+            listView1.Columns.Add(Program.Localization.Strings.Extensions.File, 220);
+            listView1.Columns.Add(Program.Localization.Strings.General.URL, 260);
+            listView1.Columns.Add(Program.Localization.Strings.General.Downloaded, 100);
+            listView1.Columns.Add(Program.Localization.Strings.General.Size, 100);
 
             foreach (var (url, saveAs, size, icon) in files)
             {
@@ -218,7 +218,7 @@ namespace WinPaletter
             DateTime now = DateTime.UtcNow;
             TimeSpan elapsed = now - _lastOverallUpdate;
 
-            if (elapsed.TotalMilliseconds >= 50)
+            if (elapsed.TotalMilliseconds >= 300)
             {
                 long bytesDelta = _totalBytesDownloaded - _lastOverallBytes;
                 double speedBps = bytesDelta / elapsed.TotalSeconds;

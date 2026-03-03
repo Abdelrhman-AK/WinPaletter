@@ -37,6 +37,7 @@
                 public string Delete { get; set; } = "Delete";
                 public string Rename { get; set; } = "Rename";
                 public string Download { get; set; } = "Download";
+                public string Downloaded { get; set; } = "Downloaded";
                 public string New { get; set; } = "New";
                 public string Edit { get; set; } = "Edit";
                 public string SaveAs { get; set; } = "Save as ...";
@@ -57,10 +58,13 @@
                 public string Logoff { get; set; } = "Log off";
                 public string SignOut { get; set; } = "Sign out";
                 public string SignIn { get; set; } = "Sign in";
+                public string URL { get; set; } = "URL";
+                public string Size { get; set; } = "Size";
                 public string TBSizeUnit { get; set; } = "TB";
                 public string GBSizeUnit { get; set; } = "GB";
                 public string MBSizeUnit { get; set; } = "MB";
                 public string KBSizeUnit { get; set; } = "KB";
+                public string Item { get; set; } = "item";
                 public string ByteSizeUnit { get; set; } = "B";
                 public string BytesSize { get; set; } = "bytes";
                 public string SecondUnit { get; set; } = "/s";

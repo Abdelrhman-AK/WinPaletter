@@ -458,10 +458,10 @@
     <Compile Include="GUI\Elements\ContainersAndBoxes\Banner.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="GUI\Elements\Others\ListView.cs">
+    <Compile Include="GUI\Elements\Lists\ListView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="GUI\Elements\Others\ProgressGraph.cs">
+    <Compile Include="GUI\Elements\Progress\ProgressGraph.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="GUI\Elements\Others\SkeletonOverlay.cs">
@@ -652,7 +652,7 @@
     <Compile Include="GUI\Elements\Input\ContextMenuStrip.Designer.cs">
       <DependentUpon>ContextMenuStrip.cs</DependentUpon>
     </Compile>
-    <Compile Include="GUI\Elements\Others\ProgressBar.cs">
+    <Compile Include="GUI\Elements\Progress\ProgressBar.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="GUI\Style\TestControl.cs">
@@ -1031,7 +1031,7 @@
     <Compile Include="GUI\Elements\Others\ToolStripMenuItem.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="GUI\Elements\Others\TreeView.cs">
+    <Compile Include="GUI\Elements\Lists\TreeView.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="GUI\Elements\Separators\SeparatorH.cs">

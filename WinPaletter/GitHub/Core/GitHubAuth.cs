@@ -1,4 +1,4 @@
-﻿using Octokit;
+using Octokit;
 using Serilog.Events;
 using System;
 using System.Diagnostics;
@@ -44,7 +44,7 @@ namespace WinPaletter.GitHub
         /// - Attempt to fetch the current GitHub user to verify validity.
         /// 
         /// Events triggered:
-        /// - <see cref="OnTokenLoaded"/> when a token is loaded successfully.
+        /// - <see cref="OnTokenLoaded"/> when a token is loaded successfully (token is not passed to subscribers).
         /// - <see cref="OnTokenInvalid"/> if the token is expired or invalid.
         /// - <see cref="OnUnexpectedError"/> if any unexpected exception occurs during the process.
         /// 
@@ -68,7 +68,7 @@ namespace WinPaletter.GitHub
             }
 
             Client.Credentials = new(token);
-            Events.OnTokenLoadedEvent(token);
+            Events.OnTokenLoadedEvent();
             Program.Log?.Write(LogEventLevel.Information, "Token loaded from local storage.");
 
             // Wrap the GitHub call with the safe helper
@@ -85,6 +85,7 @@ namespace WinPaletter.GitHub
                     Program.Log?.Write(LogEventLevel.Warning, "Saved token invalid or expired.");
                     Events.OnTokenInvalidEvent();
                     DeleteToken();
+                    Client.Credentials = Credentials.Anonymous;
                     return false;
                 }
             });
@@ -92,6 +93,7 @@ namespace WinPaletter.GitHub
             // Optional: handle cases where the helper returned default due to network/server/rate-limit
             if (!result)
             {
+                Client.Credentials = Credentials.Anonymous;
                 Program.Log?.Write(LogEventLevel.Warning, "Login check could not complete due to network, rate limit, or server issues.");
             }
 
@@ -220,7 +222,7 @@ namespace WinPaletter.GitHub
             }
             catch (Exception ex)
             {
-                Program.Log?.Write(LogEventLevel.Error, "Device Flow initiation failed.", ex);
+                Program.Log?.Write(LogEventLevel.Error, "Device Flow initiation failed", ex);
                 Events.OnDeviceFlowInitiationFailedEvent();
                 Events.OnUnexpectedErrorEvent(ex.Message);
                 return false;
@@ -334,7 +336,7 @@ namespace WinPaletter.GitHub
                         else
                         {
                             Events.OnAuthorizationFailureEvent(ex.Message);
-                            Program.Log?.Write(LogEventLevel.Error, "Authorization failed.", ex);
+                            Program.Log?.Write(LogEventLevel.Error, "Authorization failed", ex);
                             return;
                         }
                     }
@@ -440,7 +442,7 @@ namespace WinPaletter.GitHub
                 }
                 catch (Exception ex)
                 {
-                    Program.Log?.Write(LogEventLevel.Error, "GitHub sign out failed.", ex);
+                    Program.Log?.Write(LogEventLevel.Error, "GitHub sign out failed", ex);
                     Events.OnSignOutFailedEvent(ex.Message);
                 }
             }
@@ -455,8 +457,15 @@ namespace WinPaletter.GitHub
         /// </summary>
         private const string Target = $"WinPaletter_GitHubToken";
 
+        /// <summary>Minimum token length (characters). Rejects obviously invalid or truncated tokens.</summary>
+        private const int MinTokenLength = 20;
+
+        /// <summary>Maximum token length (characters). GitHub tokens are &lt;= 255; this bounds storage and load.</summary>
+        private const int MaxTokenLength = 256;
+
         /// <summary>
         /// Saves the GitHub OAuth token securely in Windows Credential Manager using a generic credential type.
+        /// Uses user-scoped persistence so only the current Windows user can read the token.
         /// </summary>
         /// <param name="token">The OAuth token string to store.</param>
         /// <exception cref="Exception">
@@ -464,29 +473,49 @@ namespace WinPaletter.GitHub
         /// The Win32 error code can be retrieved via <see cref="Marshal.GetLastWin32Error"/>.
         /// </exception>
         /// <remarks>
-        /// This method allocates unmanaged memory for the credential blob, writes it to Credential Manager, 
-        /// and then frees the unmanaged memory. The token is persisted in the local machine scope.
+        /// This method allocates unmanaged memory for the credential blob, writes it to Credential Manager,
+        /// and then frees the unmanaged memory. Uses CRED_PERSIST_ENTERPRISE so the token is stored in the
+        /// current user's credential set only and roams with the user profile.
         /// </remarks>
         public static void SaveToken(string token)
         {
+            if (token == null)
+            {
+                Program.Log?.Write(LogEventLevel.Warning, "SaveToken called with null token; not saving.");
+                return;
+            }
+
+            string trimmed = token.Trim();
+            if (trimmed.Length == 0)
+            {
+                Program.Log?.Write(LogEventLevel.Warning, "SaveToken called with empty or whitespace token; not saving.");
+                return;
+            }
+
+            if (trimmed.Length < MinTokenLength || trimmed.Length > MaxTokenLength)
+            {
+                Program.Log?.Write(LogEventLevel.Warning, "SaveToken called with token length outside valid range; not saving.");
+                return;
+            }
+
             Program.Log?.Write(LogEventLevel.Information, "Saving GitHub OAuth token to Windows Credential Manager...");
 
-            byte[] byteArray = Encoding.Unicode.GetBytes(token);
+            byte[] byteArray = Encoding.Unicode.GetBytes(trimmed);
             IntPtr blob = Marshal.AllocHGlobal(byteArray.Length);
-            Marshal.Copy(byteArray, 0, blob, byteArray.Length);
-
-            NativeMethods.ADVAPI.CREDENTIAL credential = new()
-            {
-                TargetName = Target,
-                Type = NativeMethods.ADVAPI.CRED_TYPE_GENERIC,
-                Persist = NativeMethods.ADVAPI.CRED_PERSIST_LOCAL_MACHINE,
-                CredentialBlobSize = byteArray.Length,
-                CredentialBlob = blob,
-                UserName = "GitHubToken"
-            };
-
             try
             {
+                Marshal.Copy(byteArray, 0, blob, byteArray.Length);
+
+                NativeMethods.ADVAPI.CREDENTIAL credential = new()
+                {
+                    TargetName = Target,
+                    Type = NativeMethods.ADVAPI.CRED_TYPE_GENERIC,
+                    Persist = NativeMethods.ADVAPI.CRED_PERSIST_ENTERPRISE,
+                    CredentialBlobSize = byteArray.Length,
+                    CredentialBlob = blob,
+                    UserName = "GitHubToken"
+                };
+
                 if (!NativeMethods.ADVAPI.CredWrite(ref credential, 0))
                 {
                     int error = Marshal.GetLastWin32Error();
@@ -498,7 +527,10 @@ namespace WinPaletter.GitHub
             }
             finally
             {
+                if (blob != IntPtr.Zero && byteArray.Length > 0)
+                    NativeMethods.Kernel32.RtlSecureZeroMemory(blob, (UIntPtr)(ulong)byteArray.Length);
                 Marshal.FreeHGlobal(blob);
+                Array.Clear(byteArray, 0, byteArray.Length);
             }
         }
 
@@ -521,16 +553,30 @@ namespace WinPaletter.GitHub
                 try
                 {
                     NativeMethods.ADVAPI.CREDENTIAL cred = (NativeMethods.ADVAPI.CREDENTIAL)Marshal.PtrToStructure(credPtr, typeof(NativeMethods.ADVAPI.CREDENTIAL));
-                    byte[] blob = new byte[cred.CredentialBlobSize];
-                    Marshal.Copy(cred.CredentialBlob, blob, 0, cred.CredentialBlobSize);
+                    int size = cred.CredentialBlobSize;
+                    if (size <= 0 || size > MaxTokenLength * 2) // Unicode: 2 bytes per char
+                    {
+                        Program.Log?.Write(LogEventLevel.Warning, "Stored credential blob size invalid; ignoring.");
+                        return null;
+                    }
+
+                    byte[] blob = new byte[size];
+                    Marshal.Copy(cred.CredentialBlob, blob, 0, size);
                     string token = Encoding.Unicode.GetString(blob);
+                    Array.Clear(blob, 0, blob.Length);
+
+                    if (token.Length < MinTokenLength || token.Length > MaxTokenLength)
+                    {
+                        Program.Log?.Write(LogEventLevel.Warning, "Stored token length invalid; ignoring.");
+                        return null;
+                    }
 
                     Program.Log?.Write(LogEventLevel.Information, "GitHub OAuth token loaded successfully.");
                     return token;
                 }
                 catch (Exception ex)
                 {
-                    Program.Log?.Write(LogEventLevel.Error, "Error loading GitHub OAuth token.", ex);
+                    Program.Log?.Write(LogEventLevel.Error, "Error loading GitHub OAuth token", ex);
                     return null;
                 }
                 finally
@@ -565,7 +611,7 @@ namespace WinPaletter.GitHub
             }
             catch (Exception ex)
             {
-                Program.Log?.Write(LogEventLevel.Error, "Error occurred while deleting GitHub OAuth token.", ex);
+                Program.Log?.Write(LogEventLevel.Error, "Error occurred while deleting GitHub OAuth token", ex);
             }
         }
 
@@ -582,6 +628,8 @@ namespace WinPaletter.GitHub
                     _cancellationTokenSource?.Cancel();
                     _cancellationTokenSource?.Dispose();
                     _cancellationTokenSource = null;
+                    // Clear credentials so the token is not retained in memory
+                    Client.Credentials = Credentials.Anonymous;
                 }
 
                 // Note: dispose unmanaged resources here
