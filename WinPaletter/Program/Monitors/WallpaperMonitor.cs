@@ -236,7 +236,18 @@ namespace WinPaletter
             {
                 if (themeMgr is null && lastState is null) return null;
 
-                bool useThemeMgr = themeMgr?.Wallpaper?.Enabled ?? false;
+                bool useThemeMgr;
+
+                if (themeMgr.Info.ExportResThemePack)
+                {
+                    useThemeMgr = (themeMgr?.Wallpaper?.Enabled ?? false) &&
+                                   themeMgr?.Wallpaper?.WallpaperType == Wallpaper.WallpaperTypes.Picture &&
+                                   File.Exists(themeMgr?.Wallpaper?.ImageFile ?? string.Empty);
+                }
+                else
+                {
+                    useThemeMgr = themeMgr?.Wallpaper?.Enabled ?? false;
+                }
 
                 if (previewConfig == (PreviewHelpers.WindowStyle)(-1)) previewConfig = WindowStyle;
 
