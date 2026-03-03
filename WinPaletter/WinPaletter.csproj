@@ -299,6 +299,7 @@
     <None Include="Wiki\Edit-Windows-Terminals-%28Windows-10-and-later%29.md" />
     <None Include="Wiki\Edit-WinPaletter-application-theme.md" />
     <None Include="Wiki\ExplorerPatcher-synchronization.md" />
+    <None Include="Wiki\GitHub-Manager-And-Security.md" />
     <None Include="Wiki\GitHub-Manager.md" />
     <None Include="Wiki\Get-WinPaletter.md" />
     <None Include="Wiki\GitHub-Manager-Introduction.md" />
@@ -310,7 +311,7 @@
     <None Include="Wiki\Main-form-parts.md" />
     <None Include="Wiki\Palette-generator.md" />
     <None Include="Wiki\Requirements.md" />
-    <None Include="Wiki\Sign-Up-GitHub.md" />
+    <None Include="Wiki\GitHub-Sign-Up.md" />
     <None Include="Wiki\Skeleton-of-a-feature-modification.md" />
     <None Include="Wiki\Theme-log-verbose-level.md" />
     <None Include="Wiki\WallStudio.md" />
