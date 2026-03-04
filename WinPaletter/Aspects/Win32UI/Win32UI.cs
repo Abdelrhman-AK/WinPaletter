@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.Templates;
@@ -959,89 +960,105 @@ namespace WinPaletter
             }
         }
 
-        private async Task<Task> Change3DStyle()
+        private CancellationTokenSource _cts3D = new();
+
+        private void Change3DStyle()
         {
-            return Task.Run(() =>
+            // Cancel any pending update
+            _cts3D?.Cancel();
+            _cts3D = new CancellationTokenSource();
+            var token = _cts3D.Token;
+
+            // Capture UI values immediately (on UI thread, safe)
+            float sliderValue = trackBarX1.Value;
+            bool isRadio2 = radioButton2.Checked;
+            Color buttonFace = retroDesktopColors1.ButtonFace;
+
+            // Color math is CPU-only — safe to offload
+            Task.Run(() =>
             {
-                if (trackBarX1.Value == 100)
+                if (token.IsCancellationRequested) return;
+
+                Color dkShadow, hilight, light, shadow;
+
+                if (sliderValue == 100)
                 {
-                    retroDesktopColors1.ButtonDkShadow = _btn_dkshadow;
-                    retroDesktopColors1.ButtonHilight = _btn_hilight;
-                    retroDesktopColors1.ButtonLight = _btn_light;
-                    retroDesktopColors1.ButtonShadow = _btn_shadow;
+                    dkShadow = _btn_dkshadow;
+                    hilight = _btn_hilight;
+                    light = _btn_light;
+                    shadow = _btn_shadow;
                 }
-                else
+                else if (isRadio2)
                 {
-                    if (radioButton2.Checked)
+                    if (sliderValue > 100)
                     {
-                        if (trackBarX1.Value > 100f)
-                        {
-                            float amount = 1f - ((trackBarX1.Value - 100f) / 100f);
-                            retroDesktopColors1.ButtonDkShadow = _btn_dkshadow.Blend(_btn_dkshadow.DarkDark(), amount);
-                            retroDesktopColors1.ButtonShadow = _btn_shadow.Blend(_btn_shadow.DarkDark(), amount);
-                            retroDesktopColors1.ButtonHilight = _btn_hilight.Blend(_btn_hilight.Dark(), amount);
-                            retroDesktopColors1.ButtonLight = _btn_light.Blend(_btn_light.Dark(), amount);
-                        }
-                        else if (trackBarX1.Value < 100f)
-                        {
-                            float amount = trackBarX1.Value / 100f;
-                            retroDesktopColors1.ButtonDkShadow = _btn_dkshadow.Blend(_btn_hilight, amount);
-                            retroDesktopColors1.ButtonShadow = _btn_shadow.Blend(_btn_light, amount);
-                            retroDesktopColors1.ButtonHilight = _btn_hilight.Blend(_btn_dkshadow, amount);
-                            retroDesktopColors1.ButtonLight = _btn_light.Blend(_btn_shadow, amount);
-                        }
+                        float amount = 1f - ((sliderValue - 100f) / 100f);
+                        dkShadow = _btn_dkshadow.Blend(_btn_dkshadow.DarkDark(), amount);
+                        shadow = _btn_shadow.Blend(_btn_shadow.DarkDark(), amount);
+                        hilight = _btn_hilight.Blend(_btn_hilight.Dark(), amount);
+                        light = _btn_light.Blend(_btn_light.Dark(), amount);
                     }
                     else
                     {
-                        if (trackBarX1.Value > 100f)
-                        {
-                            float amount = 1f - ((trackBarX1.Value - 100f) / 100f);
-                            retroDesktopColors1.ButtonDkShadow = _btn_dkshadow.Blend(_btn_shadow, amount);
-                            retroDesktopColors1.ButtonShadow = _btn_shadow.Blend(retroDesktopColors1.ButtonFace, amount);
-                            retroDesktopColors1.ButtonHilight = _btn_hilight.Blend(_btn_shadow, amount);
-                            retroDesktopColors1.ButtonLight = _btn_light.Blend(retroDesktopColors1.ButtonFace, amount);
-                        }
-                        else if (trackBarX1.Value < 100f)
-                        {
-                            float amount = trackBarX1.Value / 100f;
-                            retroDesktopColors1.ButtonDkShadow = _btn_dkshadow.Blend(retroDesktopColors1.ButtonFace, amount);
-                            retroDesktopColors1.ButtonShadow = _btn_shadow.Blend(retroDesktopColors1.ButtonFace, amount);
-                            retroDesktopColors1.ButtonHilight = _btn_hilight.Blend(retroDesktopColors1.ButtonFace, amount);
-                            retroDesktopColors1.ButtonLight = _btn_light.Blend(retroDesktopColors1.ButtonFace, amount);
-                        }
+                        float amount = sliderValue / 100f;
+                        dkShadow = _btn_dkshadow.Blend(_btn_hilight, amount);
+                        shadow = _btn_shadow.Blend(_btn_light, amount);
+                        hilight = _btn_hilight.Blend(_btn_dkshadow, amount);
+                        light = _btn_light.Blend(_btn_shadow, amount);
+                    }
+                }
+                else
+                {
+                    if (sliderValue > 100)
+                    {
+                        float amount = 1f - ((sliderValue - 100f) / 100f);
+                        dkShadow = _btn_dkshadow.Blend(_btn_shadow, amount);
+                        shadow = _btn_shadow.Blend(buttonFace, amount);
+                        hilight = _btn_hilight.Blend(_btn_shadow, amount);
+                        light = _btn_light.Blend(buttonFace, amount);
+                    }
+                    else
+                    {
+                        float amount = sliderValue / 100f;
+                        dkShadow = _btn_dkshadow.Blend(buttonFace, amount);
+                        shadow = _btn_shadow.Blend(buttonFace, amount);
+                        hilight = _btn_hilight.Blend(buttonFace, amount);
+                        light = _btn_light.Blend(buttonFace, amount);
                     }
                 }
 
-                btnshadow_pick.BackColor = retroDesktopColors1.ButtonShadow;
-                btndkshadow_pick.BackColor = retroDesktopColors1.ButtonDkShadow;
-                btnhilight_pick.BackColor = retroDesktopColors1.ButtonHilight;
-                btnlight_pick.BackColor = retroDesktopColors1.ButtonLight;
+                if (token.IsCancellationRequested) return;
 
-                Retro3DPreview1.ButtonDkShadow = retroDesktopColors1.ButtonDkShadow;
-                Retro3DPreview1.ButtonHilight = retroDesktopColors1.ButtonHilight;
-                Retro3DPreview1.ButtonLight = retroDesktopColors1.ButtonLight;
-                Retro3DPreview1.ButtonShadow = retroDesktopColors1.ButtonShadow;
-            });
+                // Marshal ALL UI writes back to the UI thread
+                this.BeginInvoke(() =>
+                {
+                    if (token.IsCancellationRequested) return;
+
+                    retroDesktopColors1.ButtonDkShadow = dkShadow;
+                    retroDesktopColors1.ButtonHilight = hilight;
+                    retroDesktopColors1.ButtonLight = light;
+                    retroDesktopColors1.ButtonShadow = shadow;
+
+                    btnshadow_pick.BackColor = shadow;
+                    btndkshadow_pick.BackColor = dkShadow;
+                    btnhilight_pick.BackColor = hilight;
+                    btnlight_pick.BackColor = light;
+
+                    Retro3DPreview1.ButtonDkShadow = dkShadow;
+                    Retro3DPreview1.ButtonHilight = hilight;
+                    Retro3DPreview1.ButtonLight = light;
+                    Retro3DPreview1.ButtonShadow = shadow;
+                });
+            }, token);
         }
 
-        private async void radioButton2_CheckedChanged(object sender, EventArgs e)
-        {
-            await Change3DStyle();
-        }
-
-        private async void radioButton1_CheckedChanged(object sender, EventArgs e)
-        {
-            await Change3DStyle();
-        }
+        private void radioButton2_CheckedChanged(object sender, EventArgs e) => Change3DStyle();
+        private void radioButton1_CheckedChanged(object sender, EventArgs e) => Change3DStyle();
+        private void trackBarX1_ValueChanged(object sender, EventArgs e) => Change3DStyle();
 
         private void ColorItem_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
             ApplyRetroPreview();
-        }
-
-        private async void trackBarX1_ValueChanged(object sender, EventArgs e)
-        {
-            await Change3DStyle();
         }
     }
 }
