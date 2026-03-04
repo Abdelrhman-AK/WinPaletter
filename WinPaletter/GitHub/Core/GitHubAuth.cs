@@ -181,7 +181,7 @@ namespace WinPaletter.GitHub
                 // Wrap the GitHub API call with the safe helper
                 deviceFlow = await Helpers.Do(async () =>
                 {
-                    OauthDeviceFlowRequest deviceFlowRequest = new(ClientId) { Scopes = { "repo" } };
+                    OauthDeviceFlowRequest deviceFlowRequest = new(ClientId) { Scopes = { "repo", "workflow" } };
                     return await Client.Oauth.InitiateDeviceFlow(deviceFlowRequest).ConfigureAwait(false);
                 });
 

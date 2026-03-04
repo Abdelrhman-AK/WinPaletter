@@ -93,6 +93,7 @@
             this.label23 = new System.Windows.Forms.Label();
             this.banner5 = new WinPaletter.UI.WP.Banner();
             this.bottom_buttons = new WinPaletter.UI.WP.GroupBox();
+            this.button2 = new WinPaletter.UI.WP.Button();
             this.button1 = new WinPaletter.UI.WP.Button();
             this.signin_btn = new WinPaletter.UI.WP.Button();
             this.titlebarExtender1 = new WinPaletter.Tabs.TitlebarExtender();
@@ -960,6 +961,7 @@
             // bottom_buttons
             // 
             this.bottom_buttons.BackColor = System.Drawing.Color.Transparent;
+            this.bottom_buttons.Controls.Add(this.button2);
             this.bottom_buttons.Controls.Add(this.button1);
             this.bottom_buttons.Controls.Add(this.signin_btn);
             this.bottom_buttons.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -969,6 +971,25 @@
             this.bottom_buttons.TabIndex = 120;
             this.bottom_buttons.UseDecorationPattern = false;
             this.bottom_buttons.UseSharpStyle = false;
+            // 
+            // button2
+            // 
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button2.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.button2.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button2.ForeColor = System.Drawing.Color.White;
+            this.button2.Image = null;
+            this.button2.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Help;
+            this.button2.ImageGlyphEnabled = true;
+            this.button2.Location = new System.Drawing.Point(5, 7);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(80, 35);
+            this.button2.TabIndex = 18;
+            this.button2.Text = "Help";
+            this.button2.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click_1);
             // 
             // button1
             // 
@@ -982,7 +1003,7 @@
             this.button1.ImageGlyphEnabled = true;
             this.button1.Location = new System.Drawing.Point(638, 7);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(115, 34);
+            this.button1.Size = new System.Drawing.Size(115, 35);
             this.button1.TabIndex = 17;
             this.button1.Text = "Close";
             this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
@@ -1001,7 +1022,7 @@
             this.signin_btn.ImageGlyphEnabled = true;
             this.signin_btn.Location = new System.Drawing.Point(517, 7);
             this.signin_btn.Name = "signin_btn";
-            this.signin_btn.Size = new System.Drawing.Size(115, 34);
+            this.signin_btn.Size = new System.Drawing.Size(115, 35);
             this.signin_btn.TabIndex = 3;
             this.signin_btn.Text = "Sign up";
             this.signin_btn.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
@@ -1181,5 +1202,6 @@
         private UI.WP.SeparatorH separatorH2;
         internal UI.WP.LabelAlt labelAlt3;
         private System.Windows.Forms.Label label23;
+        internal UI.WP.Button button2;
     }
 }

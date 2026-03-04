@@ -259,5 +259,10 @@ namespace WinPaletter
         {
             Process.Start(linkLabel1.Text);
         }
+
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            Process.Start(Links.Wiki.GitHubMgr_SignUp);
+        }
     }
 }

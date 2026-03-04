@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
@@ -84,6 +85,11 @@ namespace WinPaletter
                 tablessControl1.SelectedIndex = 0;
                 Program.Animator.ShowSync(tablessControl1);
             }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Process.Start(Links.Wiki.GitHubMgr_SignUp);
         }
     }
 }

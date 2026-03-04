@@ -1,6 +1,7 @@
 using FluentTransitions;
 using Octokit;
 using Ookii.Dialogs.WinForms;
+using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -17,6 +18,11 @@ namespace WinPaletter
 {
     public partial class GitHub_Mgr : UI.WP.Form
     {
+        sealed class PendingBranch
+        {
+            public string BaseBranch { get; set; } = "main";
+        }
+
         int previousIndex = -1;
         Octokit.Repository repo;
         Branch upstreamBranch;
@@ -223,11 +229,7 @@ namespace WinPaletter
                 }
                 else if (!GitHub.Repository.Branch.IsValidBranchName(newName))
                 {
-                    MsgBox(
-                        Program.Localization.Strings.GitHubStrings.Branch_InvalidName,
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error,
-                        Program.Localization.Strings.GitHubStrings.Branch_NamingRules);
+                    MsgBox(Program.Localization.Strings.GitHubStrings.Branch_InvalidName, MessageBoxButtons.OK, MessageBoxIcon.Error, Program.Localization.Strings.GitHubStrings.Branch_NamingRules);
                     e.CancelEdit = true;
                     if (item.Tag is PendingBranch)
                     {
@@ -242,10 +244,7 @@ namespace WinPaletter
 
                     if (await GitHub.Repository.Branch.GetBranch(newName) is not null)
                     {
-                        MsgBox(
-                            Program.Localization.Strings.GitHubStrings.NewBranch_AlreadyExists,
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Error);
+                        MsgBox(Program.Localization.Strings.GitHubStrings.NewBranch_AlreadyExists, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         e.CancelEdit = true;
                         item.Remove();
                         return;
@@ -256,25 +255,17 @@ namespace WinPaletter
 
                     try
                     {
-                        bool syncOk = await GitHub.Repository.Branch.IsUpdatedAsync(pb.BaseBranch, "main") ||
-                            await GitHub.Repository.Branch.SyncBranchAsync(pb.BaseBranch, "main");
+                        bool syncOk = await GitHub.Repository.Branch.IsUpdatedAsync(pb.BaseBranch, "main") || await GitHub.Repository.Branch.SyncBranchAsync(pb.BaseBranch, "main");
                         if (!syncOk)
                         {
-                            MsgBox(
-                                Program.Localization.Strings.GitHubStrings.NewBranch_Error,
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
-                            item.Remove();
+                            MsgBox(string.Format(Program.Localization.Strings.GitHubStrings.NewBranch_Error, newName), MessageBoxButtons.OK, MessageBoxIcon.Error); item.Remove();
                             return;
                         }
 
                         Branch branch = await GitHub.Repository.Branch.CreateBranchAsync(newName, pb.BaseBranch);
                         if (branch == null)
                         {
-                            MsgBox(
-                                string.Format(Program.Localization.Strings.GitHubStrings.NewBranch_Error, newName),
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
+                            MsgBox(string.Format(Program.Localization.Strings.GitHubStrings.NewBranch_Error, newName), MessageBoxButtons.OK, MessageBoxIcon.Error);
                             item.Remove();
                             return;
                         }
@@ -305,23 +296,13 @@ namespace WinPaletter
 
                     if (newName.Equals("main", StringComparison.OrdinalIgnoreCase))
                     {
-                        MsgBox(
-                            string.Format(
-                                Program.Localization.Strings.GitHubStrings.Branch_CannotDoOperation_Protected,
-                                "main"),
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Warning);
+                        MsgBox(string.Format(  Program.Localization.Strings.GitHubStrings.Branch_CannotDoOperation_Protected, "main"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         e.CancelEdit = true;
                         return;
                     }
                     if (existingBranch.Protected)
                     {
-                        MsgBox(
-                            string.Format(
-                                Program.Localization.Strings.GitHubStrings.Branch_CannotDoOperation_Protected,
-                                existingBranch.Name),
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Warning);
+                        MsgBox(string.Format(Program.Localization.Strings.GitHubStrings.Branch_CannotDoOperation_Protected, existingBranch.Name), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         e.CancelEdit = true;
                         return;
                     }
@@ -334,10 +315,7 @@ namespace WinPaletter
                     {
                         if (await GitHub.Repository.Branch.GetBranch(newName) is not null)
                         {
-                            MsgBox(
-                                Program.Localization.Strings.GitHubStrings.Branch_Rename_AlreadyExists,
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Error);
+                            MsgBox(Program.Localization.Strings.GitHubStrings.Branch_Rename_AlreadyExists, MessageBoxButtons.OK, MessageBoxIcon.Error);
                             e.CancelEdit = true;
                             return;
                         }
@@ -783,22 +761,14 @@ Generated automatically by WinPaletter. Please review the changes before merging
 
         private async void button17_Click_1(object sender, EventArgs e)
         {
-            if (MsgBox(
-                    Program.Localization.Strings.Messages.SyncingTip,
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question,
-                    Program.Localization.Strings.Messages.ConfirmSync) ==
-                DialogResult.Yes)
+            if (MsgBox(Program.Localization.Strings.Messages.SyncingTip, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Localization.Strings.Messages.ConfirmSync) == DialogResult.Yes)
             {
                 Cursor = Cursors.WaitCursor;
 
-                if (await GitHub.Repository.Branch.SyncBranchAsync(GitHub.Repository.Branch.Name, "main"))
+                if (await GitHub.Repository.Branch.SyncBranchAsync(branchesView?.SelectedItems[0]?.Text ?? "main", "main"))
                 {
                     await GetBranches();
-                    MsgBox(
-                        Program.Localization.Strings.Messages.SyncCompleted,
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
+                    MsgBox(Program.Localization.Strings.Messages.SyncCompleted, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
@@ -825,24 +795,15 @@ Generated automatically by WinPaletter. Please review the changes before merging
 
         private async void button19_Click(object sender, EventArgs e)
         {
-            if (MsgBox(
-                    Program.Localization.Strings.Messages.SyncingTip,
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question,
-                    Program.Localization.Strings.Messages.ConfirmSync) ==
-                DialogResult.Yes)
+            if (MsgBox(Program.Localization.Strings.Messages.SyncingTip, MessageBoxButtons.YesNo, MessageBoxIcon.Question, Program.Localization.Strings.Messages.ConfirmSync) == DialogResult.Yes)
             {
                 Cursor = Cursors.WaitCursor;
 
                 if (await GitHub.Repository.Branch.SyncBranchAsync(GitHub.Repository.Branch.Name, "main"))
                 {
                     await GetBranches();
-                    await GitHub.FileSystem
-                        .SetBranch(GitHub.Repository.Branch.Name, treeView1, listView1, breadcrumbControl1);
-                    MsgBox(
-                        Program.Localization.Strings.Messages.SyncCompleted,
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
+                    await GitHub.FileSystem.SetBranch(GitHub.Repository.Branch.Name, treeView1, listView1, breadcrumbControl1);
+                    MsgBox(Program.Localization.Strings.Messages.SyncCompleted,MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
@@ -1059,16 +1020,28 @@ Generated automatically by WinPaletter. Please review the changes before merging
             button18.Enabled = false;
 
             branchesView.BeginUpdate();
-            branchesView.Columns.Clear();
-            branchesView.SmallImageList = imageList1;
-            branchesView.Columns.Add(Program.Localization.Strings.GitHubStrings.Branch, 200);
-            branchesView.Columns.Add(Program.Localization.Strings.GitHubStrings.LastUpdated, 220);
-            branchesView.Columns.Add(Program.Localization.Strings.GitHubStrings.Branch_Ahead, 120, HorizontalAlignment.Right);
-            branchesView.Columns.Add(Program.Localization.Strings.GitHubStrings.Branch_Behind, 120);
-            branchesView.Columns.Add(Program.Localization.Strings.GitHubStrings.Committer, 140);
-            branchesView.Columns.Add(Program.Localization.Strings.GitHubStrings.LastCommitMsg, 380);
-            branchesView.Columns.Add("SHA", 70);
+
+            // DON'T clear columns if you're going to rebuild them with the same structure
+            // Instead, just clear the items
+            branchesView.Items.Clear();
+
+            // Only set up columns if they don't exist or if this is first load
+            if (branchesView.Columns.Count == 0)
+            {
+                branchesView.SmallImageList = imageList1;
+                branchesView.Columns.Add(Program.Localization.Strings.GitHubStrings.Branch, 200);
+                branchesView.Columns.Add(Program.Localization.Strings.GitHubStrings.LastUpdated, 220);
+                branchesView.Columns.Add(Program.Localization.Strings.GitHubStrings.Branch_Ahead, 120, HorizontalAlignment.Right);
+                branchesView.Columns.Add(Program.Localization.Strings.GitHubStrings.Branch_Behind, 120);
+                branchesView.Columns.Add(Program.Localization.Strings.GitHubStrings.Committer, 140);
+                branchesView.Columns.Add(Program.Localization.Strings.GitHubStrings.LastCommitMsg, 380);
+                branchesView.Columns.Add("SHA", 70);
+            }
+
             branchesView.EndUpdate();
+
+            // Update "main" branch
+            await GitHub.Repository.Branch.SyncBranchAsync("main", "main");
 
             IReadOnlyList<Branch> branches = await GitHub.Repository.Branch.GetBranchesAsync(true);
 
@@ -1104,7 +1077,7 @@ Generated automatically by WinPaletter. Please review the changes before merging
 
             progressBar1.Visible = false;
 
-            if (items.Count() > 0)
+            if (items.Length > 0)
             {
                 if (tablessControl2.SelectedIndex == 0)
                 {
@@ -1161,12 +1134,7 @@ Generated automatically by WinPaletter. Please review the changes before merging
             GitHubClient client = Program.GitHub.Client;
 
             GitHubCommit commit = await client.Repository.Commit.Get(repo.Id, branch.Commit.Sha);
-            CompareResult compare = await client.Repository.Commit
-                .Compare(
-                    GitHub.Repository.OriginalOwner,
-                    GitHub.Repository.Name,
-                    upstreamBranch.Commit.Sha,
-                    branch.Commit.Sha);
+            CompareResult compare = await client.Repository.Commit.Compare( GitHub.Repository.OriginalOwner, GitHub.Repository.Name, upstreamBranch.Commit.Sha, branch.Commit.Sha);
 
             ListViewItem item = new() { Text = branch.Name, Tag = branch };
 
@@ -1373,11 +1341,6 @@ Generated automatically by WinPaletter. Please review the changes before merging
         public async Task UploadListAsync(List<string> list)
         { FileSystem.ActionQueue.Enqueue(async () => await UploadInternal(list)); }
 
-        sealed class PendingBranch
-        {
-            public string BaseBranch { get; set; } = "main";
-        }
-
         private void button26_Click(object sender, EventArgs e)
         {
             if (Forms.GitHub_FolderOptions.ShowDialog() == DialogResult.OK)
@@ -1387,5 +1350,19 @@ Generated automatically by WinPaletter. Please review the changes before merging
             }
         }
 
+        private void button20_Click(object sender, EventArgs e)
+        {
+            Process.Start(Links.Wiki.GitHubMgr);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            Process.Start(Links.Wiki.GitHubMgr_SignUp);
+        }
+
+        private async void button27_Click(object sender, EventArgs e)
+        {
+            await GetBranches();
+        }
     }
 }

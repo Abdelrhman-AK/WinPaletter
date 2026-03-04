@@ -37,8 +37,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.button5 = new WinPaletter.UI.WP.Button();
             this.groupBox2 = new WinPaletter.UI.WP.GroupBox();
+            this.button5 = new WinPaletter.UI.WP.Button();
             this.button4 = new WinPaletter.UI.WP.Button();
             this.button3 = new WinPaletter.UI.WP.Button();
             this.labelAlt2 = new WinPaletter.UI.WP.LabelAlt();
@@ -169,25 +169,6 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "1";
             // 
-            // button5
-            // 
-            this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button5.CustomColor = System.Drawing.Color.Empty;
-            this.button5.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.button5.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button5.ForeColor = System.Drawing.Color.White;
-            this.button5.Image = null;
-            this.button5.ImageGlyph = null;
-            this.button5.ImageGlyphEnabled = false;
-            this.button5.Location = new System.Drawing.Point(171, 98);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(110, 34);
-            this.button5.TabIndex = 135;
-            this.button5.Text = "Log in";
-            this.button5.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.button5.UseVisualStyleBackColor = false;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
-            // 
             // groupBox2
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -207,6 +188,25 @@
             this.groupBox2.UseDecorationPattern = false;
             this.groupBox2.UseSharpStyle = false;
             // 
+            // button5
+            // 
+            this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.button5.CustomColor = System.Drawing.Color.Empty;
+            this.button5.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button5.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button5.ForeColor = System.Drawing.Color.White;
+            this.button5.Image = null;
+            this.button5.ImageGlyph = null;
+            this.button5.ImageGlyphEnabled = false;
+            this.button5.Location = new System.Drawing.Point(171, 98);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(110, 34);
+            this.button5.TabIndex = 135;
+            this.button5.Text = "Log in";
+            this.button5.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button5.UseVisualStyleBackColor = false;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
             // button4
             // 
             this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -223,6 +223,7 @@
             this.button4.TabIndex = 134;
             this.button4.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button4.UseVisualStyleBackColor = false;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button3
             // 

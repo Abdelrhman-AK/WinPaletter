@@ -340,13 +340,19 @@ namespace WinPaletter.GitHub
             }
 
             // 2. Fetch contents from GitHub safely
-            IReadOnlyList<RepositoryContent> contents = await Helpers.Do(async () =>
-                await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(
-                    Repository.Owner,
-                    GitHub.Repository.Name,
-                    path,
-                    GitHub.Repository.Branch.Name).ConfigureAwait(false)
-            );
+            IReadOnlyList<RepositoryContent> contents = null;
+
+            try
+            {
+                await Helpers.Do(async () =>
+                    await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(
+                        Repository.Owner,
+                        GitHub.Repository.Name,
+                        path,
+                        GitHub.Repository.Branch.Name).ConfigureAwait(false)
+                    );
+            }
+            catch { }
 
             if (contents == null)
             {
@@ -467,14 +473,18 @@ namespace WinPaletter.GitHub
             catch (Octokit.NotFoundException)
             {
                 // Try as a file if directory not found
-                IReadOnlyList<RepositoryContent> fileContents = await Helpers.Do(async () =>
+                IReadOnlyList<RepositoryContent> fileContents = null;
+                try
+                {
+                    fileContents = await Helpers.Do(async () =>
                     await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(
                         Repository.Owner,
                         GitHub.Repository.Name,
                         path,
                         GitHub.Repository.Branch.Name
-                    )
-                );
+                    ));
+                }
+                catch { entry = null; }
 
                 if (fileContents != null && fileContents.Count == 1)
                 {
@@ -506,12 +516,12 @@ namespace WinPaletter.GitHub
 
             // If not cached, create a directory entry manually
             entry ??= new()
-                {
-                    Path = path,
-                    Type = EntryType.Dir,
-                    Content = null,
-                    FetchedAt = DateTime.UtcNow
-                };
+            {
+                Path = path,
+                Type = EntryType.Dir,
+                Content = null,
+                FetchedAt = DateTime.UtcNow
+            };
 
             // Add the directory itself
             result.Add(entry);

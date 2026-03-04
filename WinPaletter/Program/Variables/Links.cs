@@ -138,14 +138,14 @@ namespace WinPaletter.GlobalVariables
             public static string StoreCreateSource => $"{WikiURL}/Create-an-online-WinPaletter-Store-source-(server%5CGitHub-repository)-for-hosting-WinPaletter-themes";
 
             /// <summary>
-            /// Link to the WinPaletter Store sources extension wiki.
+            /// Link to the WinPaletter GitHub Sign Up wiki.
             /// </summary>
-            public static string StoreExtension => $"{WikiURL}/WinPaletter-Sources-extension";
+            public static string GitHubMgr_SignUp => $"{WikiURL}/GitHub-Sign-Up";
 
             /// <summary>
-            /// Link to the WinPaletter Store themes upload wiki.
+            /// Link to the WinPaletter GitHub Manager wiki.
             /// </summary>
-            public static string StoreUpload => $"{WikiURL}/Upload-themes-to-WinPaletter-Store-repository";
+            public static string GitHubMgr => $"{WikiURL}/GitHub-Manager";
 
             /// <summary>
             /// Link to the WinPaletter Store basics wiki.

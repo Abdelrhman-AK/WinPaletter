@@ -56,6 +56,12 @@ namespace WinPaletter.GitHub
             {
                 return await action();
             }
+            catch (Octokit.NotFoundException)
+            {
+                // Let callers that wrap in try/catch handle this,
+                // but don't crash — rethrow so methods can catch it
+                throw;
+            }
             catch (Octokit.ApiException ex) when (IsRateLimitException(ex))
             {
                 Events.OnRateLimitExceeded(DateTime.UtcNow.AddMinutes(1));
@@ -64,11 +70,6 @@ namespace WinPaletter.GitHub
             catch (Octokit.ApiException ex) when (IsServerError(ex))
             {
                 Events.OnServerUnavailable();
-                return default;
-            }
-            catch (Octokit.NotFoundException)
-            {
-                // Resource missing → treat as null
                 return default;
             }
             catch (Octokit.AuthorizationException ex)
@@ -83,7 +84,6 @@ namespace WinPaletter.GitHub
             }
             catch (Exception)
             {
-                // Only rethrow truly unexpected exceptions
                 throw;
             }
         }
