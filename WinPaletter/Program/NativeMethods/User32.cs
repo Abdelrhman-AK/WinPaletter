@@ -285,95 +285,95 @@ namespace WinPaletter.NativeMethods
         internal static extern int SetWindowCompositionAttribute(IntPtr hwnd, ref WindowCompositionAttributeData data);
 
         /// <summary>
-        /// Retrieves information about the specified window. This function is typically used to obtain window
-        /// attributes such as styles or extended styles for a window identified by its handle.
+        /// Retrieves information about the specified window (32-bit version).
         /// </summary>
-        /// <remarks>This method is a 32-bit version of the GetWindowLong function from the Windows API.
-        /// On 64-bit platforms, use GetWindowLongPtr instead. Supplying an invalid window handle or an unsupported
-        /// index may result in undefined behavior.</remarks>
-        /// <param name="hWnd">A handle to the window whose information is to be retrieved. This must be a valid window handle.</param>
-        /// <param name="nIndex">The zero-based offset to the value to be retrieved. This parameter specifies which attribute to obtain, such
-        /// as window style or extended window style.</param>
-        /// <returns>An integer value representing the requested information about the window. The meaning of the return value
-        /// depends on the attribute specified by the nIndex parameter.</returns>
+        /// <param name="hWnd">A handle to the window whose information is to be retrieved.</param>
+        /// <param name="nIndex">The zero-based offset to the value to be retrieved, such as GWL_STYLE or GWL_EXSTYLE.</param>
+        /// <returns>The requested window attribute as an integer. Returns zero on failure.</returns>
         [DllImport("user32.dll", EntryPoint = "GetWindowLong")]
-        public static extern int GetWindowLong32(IntPtr hWnd, int nIndex);
+        private static extern int GetWindowLong32(IntPtr hWnd, int nIndex);
 
         /// <summary>
-        /// Sets a new value for the specified window attribute for a 32-bit window.
+        /// Sets a new value for the specified window attribute (32-bit version).
         /// </summary>
-        /// <remarks>This function is typically used to change window styles or other attributes for
-        /// 32-bit windows. Ensure that the window handle and attribute index are valid. If the function fails, call
-        /// GetLastError to obtain more information about the error.</remarks>
-        /// <param name="hWnd">A handle to the window whose attribute is to be modified. This must be a valid window handle.</param>
-        /// <param name="nIndex">The zero-based offset of the attribute to set. This parameter specifies which window attribute to modify,
-        /// such as window styles or extended styles.</param>
-        /// <param name="dwNewLong">The new value to assign to the specified window attribute. The value must be appropriate for the attribute
-        /// indicated by nIndex.</param>
-        /// <returns>The previous value of the specified window attribute. If the function fails, the return value is zero.</returns>
+        /// <param name="hWnd">A handle to the window whose attribute is to be modified.</param>
+        /// <param name="nIndex">The zero-based offset of the attribute to set, such as GWL_STYLE or GWL_EXSTYLE.</param>
+        /// <param name="dwNewLong">The new value to assign to the specified window attribute.</param>
+        /// <returns>The previous value of the specified attribute. Returns zero on failure.</returns>
         [DllImport("user32.dll", EntryPoint = "SetWindowLong")]
-        public static extern int SetWindowLong32(IntPtr hWnd, int nIndex, int dwNewLong);
+        private static extern int SetWindowLong32(IntPtr hWnd, int nIndex, int dwNewLong);
 
         /// <summary>
-        /// Retrieves information about the specified window by returning a value at the given offset from the window's
-        /// extra memory or attributes.
+        /// Retrieves information about the specified window (64-bit version).
         /// </summary>
-        /// <remarks>This method is typically used to access window attributes or user data associated
-        /// with a window. The caller must ensure that the window handle is valid and that the nIndex parameter
-        /// corresponds to a valid offset or attribute. On 32-bit versions of Windows, use GetWindowLong instead. This
-        /// function may return zero for some attributes; to distinguish between a valid zero result and an error, call
-        /// SetLastError(0) before calling this function, and then check GetLastError if the result is zero.</remarks>
-        /// <param name="hWnd">A handle to the window whose information is to be retrieved. This handle must refer to a valid window.</param>
-        /// <param name="nIndex">The zero-based offset, in bytes, to the value to be retrieved. This parameter specifies which attribute or
-        /// extra memory value to access. Common values include constants such as GWL_USERDATA or GWL_STYLE.</param>
-        /// <returns>An IntPtr that contains the value retrieved from the specified offset of the window's information. The
-        /// meaning of the value depends on the value of nIndex.</returns>
+        /// <param name="hWnd">A handle to the window whose information is to be retrieved.</param>
+        /// <param name="nIndex">The zero-based offset to the value to be retrieved, such as GWL_STYLE or GWL_EXSTYLE.</param>
+        /// <returns>The requested window attribute as an <see cref="IntPtr"/>. Returns zero on failure.</returns>
         [DllImport("user32.dll", EntryPoint = "GetWindowLongPtr")]
-        public static extern IntPtr GetWindowLongPtr64(IntPtr hWnd, int nIndex);
+        private static extern IntPtr GetWindowLongPtr64(IntPtr hWnd, int nIndex);
 
         /// <summary>
-        /// Sets a new value for the specified window attribute for a 64-bit window.
+        /// Sets a new value for the specified window attribute (64-bit version).
         /// </summary>
-        /// <remarks>This function is typically used to change window styles or other attributes for
-        /// 32-bit windows. Ensure that the window handle and attribute index are valid. If the function fails, call
-        /// GetLastError to obtain more information about the error.</remarks>
-        /// <param name="hWnd">A handle to the window whose attribute is to be modified. This must be a valid window handle.</param>
-        /// <param name="nIndex">The zero-based offset of the attribute to set. This parameter specifies which window attribute to modify,
-        /// such as window styles or extended styles.</param>
-        /// <param name="dwNewLong">The new value to assign to the specified window attribute. The value must be appropriate for the attribute
-        /// indicated by nIndex.</param>
-        /// <returns>The previous value of the specified window attribute. If the function fails, the return value is zero.</returns>
+        /// <param name="hWnd">A handle to the window whose attribute is to be modified.</param>
+        /// <param name="nIndex">The zero-based offset of the attribute to set, such as GWL_STYLE or GWL_EXSTYLE.</param>
+        /// <param name="dwNewLong">The new value to assign to the specified window attribute.</param>
+        /// <returns>The previous value of the specified attribute as an <see cref="IntPtr"/>. Returns zero on failure.</returns>
         [DllImport("user32.dll", EntryPoint = "SetWindowLongPtr")]
-        public static extern IntPtr SetWindowLongPtr64(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
+        private static extern IntPtr SetWindowLongPtr64(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
 
         /// <summary>
-        /// Retrieves information about the specified window attribute, such as window styles or extended styles, for a
-        /// given window handle.
+        /// Retrieves information about the specified window attribute, automatically selecting the correct
+        /// API based on whether the current process is 32-bit or 64-bit.
         /// </summary>
-        /// <remarks>This method automatically selects the appropriate underlying API based on the process
-        /// architecture (32-bit or 64-bit). Ensure that the hWnd parameter is valid to avoid undefined results. Common
-        /// values for nIndex include constants such as GWL_STYLE and GWL_EXSTYLE.</remarks>
-        /// <param name="hWnd">A handle to the window whose attribute is to be retrieved. This handle must refer to a valid, existing
-        /// window.</param>
-        /// <param name="nIndex">The zero-based offset of the value to retrieve. This parameter specifies which window attribute to obtain,
-        /// such as style or extended style.</param>
-        /// <returns>A long integer representing the requested window attribute. The meaning of the returned value depends on the
-        /// attribute specified by the nIndex parameter.</returns>
-        public static long GetWindowLong(IntPtr hWnd, int nIndex) => Environment.Is64BitProcess ? GetWindowLongPtr64(hWnd, nIndex).ToInt64() : GetWindowLong32(hWnd, nIndex);
+        /// <remarks>
+        /// Calls <see cref="GetWindowLongPtr64"/> on 64-bit processes and <see cref="GetWindowLong32"/>
+        /// on 32-bit processes. Common values for <paramref name="nIndex"/> include GWL_STYLE and GWL_EXSTYLE.
+        /// </remarks>
+        /// <param name="hWnd">A handle to the window whose attribute is to be retrieved.</param>
+        /// <param name="nIndex">The zero-based offset of the value to retrieve.</param>
+        /// <returns>A <see langword="long"/> representing the requested window attribute.</returns>
+        public static long GetWindowLong(IntPtr hWnd, int nIndex)
+        {
+            if (Environment.Is64BitProcess)  return GetWindowLongPtr64(hWnd, nIndex).ToInt64();
+            else return GetWindowLong32(hWnd, nIndex);
+        }
 
         /// <summary>
-        /// Sets a specified attribute or property for a window identified by its handle.
+        /// Sets a new value for the specified window attribute, automatically selecting the correct
+        /// API based on whether the current process is 32-bit or 64-bit.
         /// </summary>
-        /// <remarks>This method updates various window properties, such as window styles or extended
-        /// styles, depending on the value of nIndex. The behavior may differ between 32-bit and 64-bit processes; the
-        /// appropriate native method is called based on the current process architecture.</remarks>
-        /// <param name="hWnd">A handle to the window whose attribute is to be set. This must refer to a valid, existing window.</param>
-        /// <param name="nIndex">The zero-based offset that specifies which window attribute or property to modify.</param>
-        /// <param name="value">The new value to assign to the specified window attribute. The interpretation of this value depends on the
-        /// attribute being set.</param>
+        /// <remarks>
+        /// Calls <see cref="SetWindowLongPtr64"/> on 64-bit processes and <see cref="SetWindowLong32"/>
+        /// on 32-bit processes. This is the correct way to subclass a window procedure (WNDPROC) on
+        /// both architectures by passing <see cref="GWL_WNDPROC"/> as <paramref name="nIndex"/>.
+        /// </remarks>
+        /// <param name="hWnd">A handle to the window whose attribute is to be modified.</param>
+        /// <param name="nIndex">The zero-based offset of the attribute to set, such as GWL_WNDPROC or GWL_EXSTYLE.</param>
+        /// <param name="dwNewLong">The new value to assign to the specified window attribute.</param>
+        /// <returns>The previous value of the specified attribute as an <see cref="IntPtr"/>. Returns zero on failure.</returns>
+        public static IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong)
+        {
+            if (Environment.Is64BitProcess) return SetWindowLongPtr64(hWnd, nIndex, dwNewLong);
+            else return new IntPtr(SetWindowLong32(hWnd, nIndex, dwNewLong.ToInt32()));
+        }
+
+        /// <summary>
+        /// Sets a specified attribute or property for a window identified by its handle, accepting a
+        /// <see langword="long"/> value for convenience.
+        /// </summary>
+        /// <remarks>
+        /// Calls <see cref="SetWindowLongPtr64"/> on 64-bit processes and <see cref="SetWindowLong32"/>
+        /// on 32-bit processes. Use this overload when setting style flags such as WS_EX_COMPOSITED
+        /// via GWL_EXSTYLE, where the value is most naturally expressed as a <see langword="long"/>.
+        /// </remarks>
+        /// <param name="hWnd">A handle to the window whose attribute is to be set.</param>
+        /// <param name="nIndex">The zero-based offset of the attribute to set, such as GWL_STYLE or GWL_EXSTYLE.</param>
+        /// <param name="value">The new value to assign to the specified window attribute.</param>
         public static void SetWindowLong(IntPtr hWnd, int nIndex, long value)
         {
-            if (Environment.Is64BitProcess) SetWindowLongPtr64(hWnd, nIndex, new IntPtr(value)); else SetWindowLong32(hWnd, nIndex, (int)value);
+            if (Environment.Is64BitProcess) SetWindowLongPtr64(hWnd, nIndex, new IntPtr(value));
+            else SetWindowLong32(hWnd, nIndex, (int)value);
         }
 
         /// <summary>
@@ -441,16 +441,6 @@ namespace WinPaletter.NativeMethods
         /// </summary>
         [DllImport("user32.dll", SetLastError = true)]
         public static extern IntPtr SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-
-        /// <summary>
-        /// Set a new IntPtr to a hwnd
-        /// </summary>
-        /// <param name="hWnd"></param>
-        /// <param name="nIndex"></param>
-        /// <param name="dwNewLong"></param>
-        /// <returns></returns>
-        [DllImport("user32.dll", SetLastError = true)]
-        public static extern IntPtr SetWindowLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
 
         /// <summary>
         /// Passes a window message to the specified window procedure for processing.

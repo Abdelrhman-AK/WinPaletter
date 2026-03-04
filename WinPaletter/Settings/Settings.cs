@@ -467,6 +467,11 @@ namespace WinPaletter
                 public bool ManagedByTheme = true;
 
                 /// <summary>
+                /// Gets or sets last scheme used in WinPaletter Application Themes
+                /// </summary>
+                public string LastUsedScheme = string.Empty;
+
+                /// <summary>
                 /// Create new instance of Appearance settings structure with default values
                 /// </summary>
                 public Appearance() { }
@@ -489,6 +494,7 @@ namespace WinPaletter
                     DisabledBackColor = ReadReg(REG_Appearance, "DisabledBackColor", DefaultColors.DisabledBackColor_Dark);
                     RoundedCorners = ReadReg(REG_Appearance, "RoundedCorners", true);
                     ManagedByTheme = ReadReg(REG_Appearance, "ManagedByTheme", true);
+                    LastUsedScheme = ReadReg(REG_Appearance, nameof(LastUsedScheme), string.Empty);
                 }
 
                 /// <summary>
@@ -509,6 +515,7 @@ namespace WinPaletter
                     WriteReg(REG_Appearance, "DisabledBackColor", DisabledBackColor.ToArgb(), RegistryValueKind.DWord);
                     WriteReg(REG_Appearance, "RoundedCorners", RoundedCorners, RegistryValueKind.DWord);
                     WriteReg(REG_Appearance, "ManagedByTheme", ManagedByTheme, RegistryValueKind.DWord);
+                    WriteReg(REG_Appearance, nameof(LastUsedScheme), LastUsedScheme, RegistryValueKind.String);
                 }
             }
 
