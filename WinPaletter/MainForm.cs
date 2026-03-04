@@ -148,13 +148,13 @@ namespace WinPaletter
                 // Save WinPaletter appearance settings to the registry.
                 Settings old = new(Settings.Source.Registry);
                 {
-                    ref Settings.Structures.Appearance Appearance = ref Program.Settings.Appearance;
-                    Appearance.CustomColors = old.Appearance.CustomColors;
-                    Appearance.BackColor = old.Appearance.BackColor;
-                    Appearance.AccentColor = old.Appearance.AccentColor;
-                    Appearance.CustomTheme_DarkMode = old.Appearance.CustomTheme_DarkMode;
-                    Appearance.RoundedCorners = old.Appearance.RoundedCorners;
-                    Appearance.Save();
+                    Program.Settings.Appearance.CustomColors = old.Appearance.CustomColors;
+                    Program.Settings.Appearance.BackColor = old.Appearance.BackColor;
+                    Program.Settings.Appearance.AccentColor = old.Appearance.AccentColor;
+                    Program.Settings.Appearance.CustomTheme_DarkMode = old.Appearance.CustomTheme_DarkMode;
+                    Program.Settings.Appearance.RoundedCorners = old.Appearance.RoundedCorners;
+                    Program.Settings.Appearance.LastUsedScheme = old.Appearance.LastUsedScheme;
+                    Program.Settings.Appearance.Save();
                 }
             }
         }

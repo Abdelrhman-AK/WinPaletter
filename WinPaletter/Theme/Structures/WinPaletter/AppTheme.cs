@@ -86,21 +86,18 @@ namespace WinPaletter.Theme.Structures
             WriteReg(treeView, Settings.Structures.REG_Appearance, "DisabledBackColor", DisabledBackColor.ToArgb());
 
             // Apply settings to program settings
-            {
-                Program.Log?.Write(LogEventLevel.Information, $"Applying WinPaletter application theme (appearance) settings to program settings.");
+            Program.Log?.Write(LogEventLevel.Information, $"Applying WinPaletter application theme (appearance) settings to program settings.");
 
-                ref Settings.Structures.Appearance Appearance = ref Program.Settings.Appearance;
-                Appearance.CustomColors = Enabled;
-                Appearance.BackColor = BackColor;
-                Appearance.AccentColor = AccentColor;
-                Appearance.CustomTheme_DarkMode = DarkMode;
-                Appearance.RoundedCorners = RoundCorners;
-                Appearance.Animations = Animations;
-                Appearance.SecondaryColor = SecondaryColor;
-                Appearance.TertiaryColor = TertiaryColor;
-                Appearance.DisabledColor = DisabledColor;
-                Appearance.DisabledBackColor = DisabledBackColor;
-            }
+            Program.Settings.Appearance.CustomColors = Enabled;
+            Program.Settings.Appearance.BackColor = BackColor;
+            Program.Settings.Appearance.AccentColor = AccentColor;
+            Program.Settings.Appearance.CustomTheme_DarkMode = DarkMode;
+            Program.Settings.Appearance.RoundedCorners = RoundCorners;
+            Program.Settings.Appearance.Animations = Animations;
+            Program.Settings.Appearance.SecondaryColor = SecondaryColor;
+            Program.Settings.Appearance.TertiaryColor = TertiaryColor;
+            Program.Settings.Appearance.DisabledColor = DisabledColor;
+            Program.Settings.Appearance.DisabledBackColor = DisabledBackColor;
 
             ApplyStyle();
         }

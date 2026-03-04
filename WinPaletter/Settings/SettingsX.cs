@@ -250,53 +250,52 @@ namespace WinPaletter
 
             // A quick check for settings change
             {
-                ref Settings Settings = ref Program.Settings;
-                if (Settings.Appearance.DarkMode != toggle3.Checked)
+                if (Program.Settings.Appearance.DarkMode != toggle3.Checked)
                     ch_appearance = true;
-                if (Settings.Appearance.AutoDarkMode != toggle4.Checked)
+                if (Program.Settings.Appearance.AutoDarkMode != toggle4.Checked)
                     ch_appearance = true;
-                if (Settings.Appearance.ManagedByTheme != toggle5.Checked)
+                if (Program.Settings.Appearance.ManagedByTheme != toggle5.Checked)
                     ch_appearance = true;
 
-                if (Settings.NerdStats.Enabled != toggle25.Checked)
+                if (Program.Settings.NerdStats.Enabled != toggle25.Checked)
                     ch_nerd = true;
-                if ((int)Settings.NerdStats.Type != ComboBox3.SelectedIndex)
+                if ((int)Program.Settings.NerdStats.Type != ComboBox3.SelectedIndex)
                     ch_nerd = true;
-                if (Settings.NerdStats.ShowHexHash != CheckBox11.Checked)
+                if (Program.Settings.NerdStats.ShowHexHash != CheckBox11.Checked)
                     ch_nerd = true;
-                if (Settings.NerdStats.MoreLabelTransparency != toggle27.Checked)
+                if (Program.Settings.NerdStats.MoreLabelTransparency != toggle27.Checked)
                     ch_nerd = true;
-                if (Settings.NerdStats.UseWindowsMonospacedFont != toggle28.Checked)
+                if (Program.Settings.NerdStats.UseWindowsMonospacedFont != toggle28.Checked)
                     ch_nerd = true;
-                if (Settings.NerdStats.DotDefaultChangedIndicator != toggle26.Checked)
+                if (Program.Settings.NerdStats.DotDefaultChangedIndicator != toggle26.Checked)
                     ch_nerd = true;
 
-                if (Settings.AppLog.StatusPanel != toggle42.Checked)
+                if (Program.Settings.AppLog.StatusPanel != toggle42.Checked)
                     ch_logStatusPanel = true;
 
-                if (Settings.WindowsTerminals.Path_Deflection != toggle22.Checked)
+                if (Program.Settings.WindowsTerminals.Path_Deflection != toggle22.Checked)
                     ch_terminal = true;
-                if ((Settings.WindowsTerminals.Terminal_Stable_Path ?? string.Empty) != (TextBox1.Text ?? string.Empty))
+                if ((Program.Settings.WindowsTerminals.Terminal_Stable_Path ?? string.Empty) != (TextBox1.Text ?? string.Empty))
                     ch_terminal = true;
-                if ((Settings.WindowsTerminals.Terminal_Preview_Path ?? string.Empty) != (TextBox2.Text ?? string.Empty))
+                if ((Program.Settings.WindowsTerminals.Terminal_Preview_Path ?? string.Empty) != (TextBox2.Text ?? string.Empty))
                     ch_terminal = true;
 
-                if (Settings.Language.Enabled != toggle2.Checked)
+                if (Program.Settings.Language.Enabled != toggle2.Checked)
                     ch_lang = true;
-                if ((Settings.Language.File ?? string.Empty) != (TextBox3.Text ?? string.Empty))
+                if ((Program.Settings.Language.File ?? string.Empty) != (TextBox3.Text ?? string.Empty))
                     ch_lang = true;
 
-                if (Settings.ExplorerPatcher.Enabled != toggle23.Checked)
+                if (Program.Settings.ExplorerPatcher.Enabled != toggle23.Checked)
                     ch_EP = true;
-                if (Settings.ExplorerPatcher.Enabled_Force != toggle24.Checked)
+                if (Program.Settings.ExplorerPatcher.Enabled_Force != toggle24.Checked)
                     ch_EP = true;
-                if (Settings.ExplorerPatcher.UseStart10 != EP_Start_10.Checked)
+                if (Program.Settings.ExplorerPatcher.UseStart10 != EP_Start_10.Checked)
                     ch_EP = true;
-                if ((int)Settings.ExplorerPatcher.StartStyle != EP_Start_10_Type.SelectedIndex)
+                if ((int)Program.Settings.ExplorerPatcher.StartStyle != EP_Start_10_Type.SelectedIndex)
                     ch_EP = true;
-                if (Settings.ExplorerPatcher.UseTaskbar10 != EP_Taskbar_10.Checked)
+                if (Program.Settings.ExplorerPatcher.UseTaskbar10 != EP_Taskbar_10.Checked)
                     ch_EP = true;
-                if (Settings.ExplorerPatcher.TaskbarButton10 != EP_ORB_10.Checked)
+                if (Program.Settings.ExplorerPatcher.TaskbarButton10 != EP_ORB_10.Checked)
                     ch_EP = true;
             }
 

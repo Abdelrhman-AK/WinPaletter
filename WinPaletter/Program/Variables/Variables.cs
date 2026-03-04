@@ -17,7 +17,7 @@ namespace WinPaletter
         /// <summary>
         /// A class that represents WinPaletter's Settings
         /// </summary>
-        public static Settings Settings = new(Settings.Source.Registry);
+        public static Settings Settings { get; set; } = new(Settings.Source.Registry);
 
         /// <summary>
         /// An instance of WinPaletter logger class (wrapper for Serilog)
