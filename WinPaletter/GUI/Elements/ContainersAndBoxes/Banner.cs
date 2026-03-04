@@ -80,7 +80,7 @@ namespace WinPaletter.UI.WP
 
             Region?.Dispose();
 
-            if (DesignMode)
+            if (DesignMode || !Program.Style.RoundedCorners)
             {
                 Region = new Region(rect);
                 return;

@@ -666,6 +666,7 @@ namespace WinPaletter
             // AlertBox5
             // 
             this.AlertBox5.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
+            this.AlertBox5.AutoSize = true;
             this.AlertBox5.BackColor = System.Drawing.Color.Transparent;
             this.AlertBox5.CenterText = true;
             this.AlertBox5.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
@@ -673,7 +674,7 @@ namespace WinPaletter
             this.AlertBox5.Image = null;
             this.AlertBox5.Location = new System.Drawing.Point(36, 36);
             this.AlertBox5.Name = "AlertBox5";
-            this.AlertBox5.Size = new System.Drawing.Size(116, 22);
+            this.AlertBox5.Size = new System.Drawing.Size(104, 22);
             this.AlertBox5.TabIndex = 240;
             this.AlertBox5.TabStop = false;
             this.AlertBox5.Text = "Uses more power";
@@ -737,14 +738,15 @@ namespace WinPaletter
             this.AlertBox6.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
             this.AlertBox6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.AlertBox6.AutoSize = true;
             this.AlertBox6.BackColor = System.Drawing.Color.Transparent;
-            this.AlertBox6.CenterText = false;
+            this.AlertBox6.CenterText = true;
             this.AlertBox6.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.AlertBox6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.AlertBox6.Image = null;
             this.AlertBox6.Location = new System.Drawing.Point(36, 64);
             this.AlertBox6.Name = "AlertBox6";
-            this.AlertBox6.Size = new System.Drawing.Size(547, 24);
+            this.AlertBox6.Size = new System.Drawing.Size(668, 22);
             this.AlertBox6.TabIndex = 241;
             this.AlertBox6.TabStop = false;
             this.AlertBox6.Text = "If you are using Windows 11 version lower than the Moment 3 update, utilize Explo" +
@@ -923,12 +925,12 @@ namespace WinPaletter
             this.Trackbar1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Trackbar1.Location = new System.Drawing.Point(39, 93);
             this.Trackbar1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.Trackbar1.Maximum = 5000;
-            this.Trackbar1.Minimum = 1;
+            this.Trackbar1.Maximum = 5000F;
+            this.Trackbar1.Minimum = 1F;
             this.Trackbar1.Name = "Trackbar1";
             this.Trackbar1.Size = new System.Drawing.Size(543, 24);
             this.Trackbar1.TabIndex = 134;
-            this.Trackbar1.Value = 400;
+            this.Trackbar1.Value = 400F;
             // 
             // PictureBox22
             // 
@@ -1343,12 +1345,12 @@ namespace WinPaletter
             this.Trackbar5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Trackbar5.Location = new System.Drawing.Point(39, 92);
             this.Trackbar5.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.Trackbar5.Maximum = 100;
-            this.Trackbar5.Minimum = 1;
+            this.Trackbar5.Maximum = 100F;
+            this.Trackbar5.Minimum = 1F;
             this.Trackbar5.Name = "Trackbar5";
             this.Trackbar5.Size = new System.Drawing.Size(543, 24);
             this.Trackbar5.TabIndex = 219;
-            this.Trackbar5.Value = 5;
+            this.Trackbar5.Value = 5F;
             // 
             // PictureBox23
             // 
@@ -1466,12 +1468,12 @@ namespace WinPaletter
             this.Trackbar3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Trackbar3.Location = new System.Drawing.Point(39, 92);
             this.Trackbar3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.Trackbar3.Maximum = 4;
-            this.Trackbar3.Minimum = 1;
+            this.Trackbar3.Maximum = 4F;
+            this.Trackbar3.Minimum = 1F;
             this.Trackbar3.Name = "Trackbar3";
             this.Trackbar3.Size = new System.Drawing.Size(543, 24);
             this.Trackbar3.TabIndex = 142;
-            this.Trackbar3.Value = 1;
+            this.Trackbar3.Value = 1F;
             this.Trackbar3.ValueChanged += new System.EventHandler(this.trackBarX2_ValueChanged);
             // 
             // Trackbar2
@@ -1484,12 +1486,12 @@ namespace WinPaletter
             this.Trackbar2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Trackbar2.Location = new System.Drawing.Point(39, 33);
             this.Trackbar2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.Trackbar2.Maximum = 4;
-            this.Trackbar2.Minimum = 1;
+            this.Trackbar2.Maximum = 4F;
+            this.Trackbar2.Minimum = 1F;
             this.Trackbar2.Name = "Trackbar2";
             this.Trackbar2.Size = new System.Drawing.Size(543, 24);
             this.Trackbar2.TabIndex = 141;
-            this.Trackbar2.Value = 1;
+            this.Trackbar2.Value = 1F;
             this.Trackbar2.ValueChanged += new System.EventHandler(this.trackBarX1_ValueChanged);
             // 
             // ButtonR1
@@ -1588,12 +1590,12 @@ namespace WinPaletter
             this.Trackbar4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Trackbar4.Location = new System.Drawing.Point(39, 33);
             this.Trackbar4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.Trackbar4.Maximum = 40;
-            this.Trackbar4.Minimum = 1;
+            this.Trackbar4.Maximum = 40F;
+            this.Trackbar4.Minimum = 1F;
             this.Trackbar4.Name = "Trackbar4";
             this.Trackbar4.Size = new System.Drawing.Size(543, 24);
             this.Trackbar4.TabIndex = 142;
-            this.Trackbar4.Value = 1;
+            this.Trackbar4.Value = 1F;
             this.Trackbar4.ValueChanged += new System.EventHandler(this.trackBarX1_ValueChanged_1);
             // 
             // Panel1
@@ -1717,12 +1719,12 @@ namespace WinPaletter
             this.Trackbar6.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Trackbar6.Location = new System.Drawing.Point(39, 93);
             this.Trackbar6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.Trackbar6.Maximum = 5000;
-            this.Trackbar6.Minimum = 1;
+            this.Trackbar6.Maximum = 5000F;
+            this.Trackbar6.Minimum = 1F;
             this.Trackbar6.Name = "Trackbar6";
             this.Trackbar6.Size = new System.Drawing.Size(544, 24);
             this.Trackbar6.TabIndex = 144;
-            this.Trackbar6.Value = 1;
+            this.Trackbar6.Value = 1F;
             // 
             // Label5
             // 
@@ -1823,14 +1825,15 @@ namespace WinPaletter
             this.alertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
             this.alertBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.alertBox1.AutoSize = true;
             this.alertBox1.BackColor = System.Drawing.Color.Transparent;
-            this.alertBox1.CenterText = false;
+            this.alertBox1.CenterText = true;
             this.alertBox1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.alertBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.alertBox1.Image = null;
             this.alertBox1.Location = new System.Drawing.Point(39, 213);
             this.alertBox1.Name = "alertBox1";
-            this.alertBox1.Size = new System.Drawing.Size(544, 24);
+            this.alertBox1.Size = new System.Drawing.Size(463, 22);
             this.alertBox1.TabIndex = 242;
             this.alertBox1.TabStop = false;
             this.alertBox1.Text = "You should restart Windows Explorer after applying a new style to avoid UI glitch" +
@@ -1892,14 +1895,15 @@ namespace WinPaletter
             this.AlertBox3.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
             this.AlertBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.AlertBox3.AutoSize = true;
             this.AlertBox3.BackColor = System.Drawing.Color.Transparent;
-            this.AlertBox3.CenterText = false;
+            this.AlertBox3.CenterText = true;
             this.AlertBox3.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.AlertBox3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.AlertBox3.Image = null;
             this.AlertBox3.Location = new System.Drawing.Point(39, 66);
             this.AlertBox3.Name = "AlertBox3";
-            this.AlertBox3.Size = new System.Drawing.Size(544, 24);
+            this.AlertBox3.Size = new System.Drawing.Size(554, 22);
             this.AlertBox3.TabIndex = 238;
             this.AlertBox3.TabStop = false;
             this.AlertBox3.Text = "This will disable the navigation bar in Open/Save dialogs; anywhere else will req" +
@@ -2207,6 +2211,7 @@ namespace WinPaletter
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.CanGeneratePalette = true;
             this.ClientSize = new System.Drawing.Size(784, 561);
             this.Controls.Add(this.TabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -2232,6 +2237,7 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox21)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox3)).EndInit();
             this.tabPage10.ResumeLayout(false);
+            this.tabPage10.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox25)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox35)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox38)).EndInit();
@@ -2263,6 +2269,7 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox19)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox18)).EndInit();
             this.TabPage11.ResumeLayout(false);
+            this.TabPage11.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox30)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox26)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox29)).EndInit();

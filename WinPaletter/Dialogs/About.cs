@@ -31,6 +31,7 @@ namespace WinPaletter
             Label2.Text = Program.Version;
             Label1.Text = $"{Program.Localization.Strings.General.By} {Application.CompanyName}";
             Label17.Text = Application.ProductName;
+            Icon = Properties.Resources.Icon;
 
             // Get the assembly of the current executing code
             Assembly assembly = Assembly.GetExecutingAssembly();

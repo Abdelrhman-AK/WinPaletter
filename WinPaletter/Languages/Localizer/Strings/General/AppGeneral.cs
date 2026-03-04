@@ -17,6 +17,7 @@
                 public string Retry { get; set; } = "Retry";
                 public string Error { get; set; } = "Error";
                 public string Copy { get; set; } = "Copy";
+                public string Copied { get; set; } = "Copied";
                 public string Copy_AsPath { get; set; } = "Copy as path";
                 public string Copy_URL { get; set; } = "Copy URL";
                 public string Copy_HSL { get; set; } = "Copy in HSL format";

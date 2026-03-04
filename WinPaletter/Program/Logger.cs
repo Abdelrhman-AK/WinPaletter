@@ -11,127 +11,226 @@ using System.Windows.Forms;
 
 namespace WinPaletter
 {
-    public class Logger : IDisposable
+    /// <summary>
+    /// Specifies which registry sub-categories are included when calling <see cref="Logger.WriteReg"/>.
+    /// </summary>
+    [Flags]
+    public enum RegScope
     {
-        private static bool _initialized = false;
-        private static readonly object _lock = new();
+        None = 0,
+        Read = 1 << 0,
+        Write = 1 << 1,
+        Delete = 1 << 2,
+        Error = 1 << 3,
+        All = Read | Write | Delete | Error,
+    }
+
+    /// <summary>
+    /// Application-wide logger. Wraps Serilog and optionally surfaces messages on the main-form
+    /// status label.
+    /// </summary>
+    public sealed class Logger : IDisposable
+    {
+        // volatile ensures the double-checked lock is safe across CPU cores/compilers.
+        private static volatile bool _initialized;
+        private static readonly object _initLock = new();
         private static Serilog.Core.Logger _log;
-        private static readonly object _statusLock = new object();
+
+        private static readonly object _statusLock = new();
         private static System.Threading.Timer _statusResetTimer;
         private const int ResetMs = 3000;
+
         private bool _disposed;
 
+        /// <summary>Initialises the logger instance (calls <see cref="Initialize"/> once).</summary>
         public Logger()
         {
             Initialize();
+            UI.Style.Config.DarkModeChanged += StyleChanged;
+            UI.Style.Config.SchemeChanged += StyleChanged;
         }
 
+        private void StyleChanged()
+        {
+            MainForm mainForm = Application.OpenForms.OfType<MainForm>().FirstOrDefault();
+            if (mainForm is null || mainForm.IsDisposed) return;
+
+            ApplyStatusColor(mainForm, LogEventLevel.Information); 
+        }
+
+        /// <summary>
+        /// Configures the underlying Serilog sink. Safe to call multiple times; only the first
+        /// call has any effect.
+        /// </summary>
         public static void Initialize()
         {
-            if (_initialized) return;
+            // Fast-path: avoid the lock when already initialised.
+            if (_initialized || !Program.Settings.AppLog.SaveInLogFile) return;
 
-            lock (_lock)
+            lock (_initLock)
             {
-                if (_initialized) return;    // double-check inside lock
+                if (_initialized) return;   // re-check inside lock
 
-                // Make sure log directory exists
-                if (!Directory.Exists(SysPaths.LogsDir)) Directory.CreateDirectory(SysPaths.LogsDir);
+                Directory.CreateDirectory(SysPaths.LogsDir); // no-op if already exists
 
-                // Configure Serilog once at startup
                 _log = new LoggerConfiguration()
-                    .WriteTo.File(new JsonFormatter(),
-                                  Program.LogFile,
-                                  rollingInterval: RollingInterval.Infinite, // no auto-rolling
-                                  shared: false,                             // exclusive lock
-                                  fileSizeLimitBytes: null)                  // optional: disable size limit
+                    .Enrich.WithProperty("App", "WinPaletter")
+                    .WriteTo.File(
+                        new JsonFormatter(),
+                        Program.LogFile,
+                        rollingInterval: RollingInterval.Infinite,
+                        shared: false,
+                        fileSizeLimitBytes: null)
                     .CreateLogger();
 
                 _initialized = true;
             }
         }
 
-        void UpdateStatusColor(LogEventLevel level)
+        /// <summary>
+        /// Writes a log entry at the specified <paramref name="level"/> and optionally attaches an
+        /// exception.
+        /// </summary>
+        public void Write(LogEventLevel level, string messageTemplate, Exception ex = null)
         {
-            if (Forms.MainForm == null || Forms.MainForm.IsDisposed) return;
+            if (string.IsNullOrWhiteSpace(messageTemplate)) return;
 
-            Color color = level switch
-            {
-                LogEventLevel.Warning => Program.Style.Schemes.Tertiary.Colors.Line_Checked_Hover,
-                LogEventLevel.Error => Program.Style.Schemes.Secondary.Colors.Back_Checked_Hover,
-                LogEventLevel.Fatal => Program.Style.Schemes.Secondary.Colors.Back_Checked_Hover,
-                _ => Program.Style.Schemes.Main.Colors.Back(),
-            };
+            // Normalise newlines so single-line entries remain readable in a status label.
+            messageTemplate = messageTemplate
+                .Replace("\r\n", ", ")
+                .Replace('\r', ' ')
+                .Replace('\n', ' ')
+                .Trim();
 
-            if (Program.Style.Animations)
-            {
-                FluentTransitions.Transition.With(Forms.MainForm.Status_lbl, nameof(Forms.MainForm.Status_lbl.BackColor), color).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
-            }
+#if DEBUG
+            var debugLine = ex is null
+                ? $"[{DateTime.Now:O}] [{level}] {messageTemplate}\r\n"
+                : $"[{DateTime.Now:O}] [{level}] {messageTemplate}; {ex.Message}\r\n";
+            Debugger.Log((int)level, level.ToString(), debugLine);
+#endif
+
+            // Lazily initialise in case the settings were flipped after construction.
+            Initialize();
+
+            if (!Program.Settings.AppLog.Enabled) return;
+
+            string time = DateTime.Now.ToString("HH:mm:ss");
+
+            string statusText = ex is null
+                ? $"[{time}] [{level}] {messageTemplate}"
+                : $"[{time}] [{level}] {messageTemplate}; {ex.Message}";
+
+            UpdateStatusLabel(level, statusText);
+
+            if (!Program.Settings.AppLog.SaveInLogFile) return;
+
+            // Use Serilog structured properties instead of embedding values into the template
+            // string — this keeps JSON output queryable by field rather than as raw text.
+            if (ex is null)
+                _log?.Write(level, "[{Timestamp}] {Message}", DateTime.Now, messageTemplate);
             else
+                _log?.Write(level, ex, "[{Timestamp}] {Message}", DateTime.Now, messageTemplate);
+        }
+
+        /// <inheritdoc cref="Write"/>
+        public void Debug(string messageTemplate) => Write(LogEventLevel.Debug, messageTemplate);
+
+        /// <summary>
+        /// Writes a registry-related log entry when <c>AppLog.Reg</c> is enabled and the entry
+        /// falls within <paramref name="scope"/>.
+        /// </summary>
+        /// <param name="scope">
+        /// Bitwise combination of <see cref="RegScope"/> values that gate this entry.
+        /// Pass <see cref="RegScope.All"/> to respect only the top-level <c>Reg</c> switch.
+        /// </param>
+        public void WriteReg(LogEventLevel level, string messageTemplate, RegScope scope = RegScope.All, Exception ex = null)
+        {
+            if (!Program.Settings.AppLog.Reg) return;
+
+            bool allowed =
+                (scope.HasFlag(RegScope.Read) && Program.Settings.AppLog.RegRead) ||
+                (scope.HasFlag(RegScope.Write) && Program.Settings.AppLog.RegWrite) ||
+                (scope.HasFlag(RegScope.Delete) && Program.Settings.AppLog.RegDelete) ||
+                (scope.HasFlag(RegScope.Error) && Program.Settings.AppLog.Reg);
+
+            if (allowed) Write(level, messageTemplate, ex);
+        }
+
+        private static void InvokeOnMainForm(Action action)
+        {
+            MainForm mainForm = Application.OpenForms.OfType<MainForm>().FirstOrDefault();
+            if (mainForm is null || mainForm.IsDisposed) return;
+
+            try
             {
-                Forms.MainForm.Status_lbl.BackColor = color;
+                if (mainForm.InvokeRequired)
+                    mainForm.Invoke(action);
+                else
+                    action();
             }
+            catch (ObjectDisposedException) { /* form disposed mid-invoke — harmless */ }
+        }
+
+        private static Color StatusColor(LogEventLevel level) => level switch
+        {
+            LogEventLevel.Warning => Program.Style.Schemes.Tertiary.Colors.Line_Checked_Hover,
+            LogEventLevel.Error => Program.Style.Schemes.Secondary.Colors.Back_Checked_Hover,
+            LogEventLevel.Fatal => Program.Style.Schemes.Secondary.Colors.Back_Checked_Hover,
+            _ => Program.Style.Schemes.Main.Colors.Back(),
+        };
+
+        private static void ApplyStatusColor(MainForm mainForm, LogEventLevel level)
+        {
+            var color = StatusColor(level);
+            if (Program.Style.Animations)
+                FluentTransitions.Transition
+                    .With(mainForm.Status_lbl, nameof(mainForm.Status_lbl.BackColor), color)
+                    .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+            else
+                mainForm.Status_lbl.BackColor = color;
         }
 
         private void UpdateStatusLabel(LogEventLevel level, string message)
         {
-            MainForm mainForm = Application.OpenForms.OfType<MainForm>().FirstOrDefault();
-            if (mainForm is not null && !mainForm.IsDisposed)
-            {
-                if (mainForm.InvokeRequired)
-                {
-                    mainForm.Invoke(() =>
-                    {
-                        mainForm.Status_lbl.Text = message;
-                        UpdateStatusColor(level);
-                    });
-                }
-                else
-                {
-                    mainForm.Status_lbl.Text = message;
-                    UpdateStatusColor(level);
-                }
-            }
+            if (!Program.Settings.AppLog.StatusPanel) return;
 
+            InvokeOnMainForm(() =>
+            {
+                MainForm mainForm = Application.OpenForms.OfType<MainForm>().FirstOrDefault();
+                if (mainForm is null || mainForm.IsDisposed) return;
+
+                mainForm.Status_lbl.Text = message;
+                ApplyStatusColor(mainForm, level);
+            });
+
+            // (Re-)arm the reset timer — debounces rapid successive messages.
             lock (_statusLock)
             {
-                if (_statusResetTimer == null)
-                {
+                if (_statusResetTimer is null)
                     _statusResetTimer = new System.Threading.Timer(StatusResetTimer_Callback, null, ResetMs, Timeout.Infinite);
-                }
                 else
-                {
                     _statusResetTimer.Change(ResetMs, Timeout.Infinite);
-                }
             }
         }
 
-        private void StatusResetTimer_Callback(object state)
+        private static void StatusResetTimer_Callback(object _)
         {
-            // Called on threadpool thread: marshal to UI thread to clear label
-            if (Forms.MainForm == null || Forms.MainForm.IsDisposed) return;
+            if (!Program.Settings.AppLog.AutoHideLog) return;
 
-            try
+            InvokeOnMainForm(() =>
             {
-                if (Forms.MainForm.InvokeRequired)
-                {
-                    Forms.MainForm.Invoke(() =>
-                    {
-                        if (Program.Style.Animations) FluentTransitions.Transition.With(Forms.MainForm.Status_lbl, nameof(Forms.MainForm.Status_lbl.Text), string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
-                        else Forms.MainForm.Status_lbl.Text = string.Empty;
-                        UpdateStatusColor(default);
-                    });
-                }
+                MainForm mainForm = Application.OpenForms.OfType<MainForm>().FirstOrDefault();
+                if (mainForm is null || mainForm.IsDisposed) return;
+
+                if (Program.Style.Animations)
+                    FluentTransitions.Transition
+                        .With(mainForm.Status_lbl, nameof(mainForm.Status_lbl.Text), string.Empty)
+                        .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
                 else
-                {
-                    if (Program.Style.Animations) FluentTransitions.Transition.With(Forms.MainForm.Status_lbl, nameof(Forms.MainForm.Status_lbl.Text), string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
-                    else Forms.MainForm.Status_lbl.Text = string.Empty;
-                    UpdateStatusColor(default);
-                }
-            }
-            catch (ObjectDisposedException)
-            {
-                // Form disposed while invoking — ignore
-            }
+                    mainForm.Status_lbl.Text = string.Empty;
+
+                ApplyStatusColor(mainForm, default);
+            });
         }
 
         public void Dispose()
@@ -141,73 +240,17 @@ namespace WinPaletter
 
             lock (_statusLock)
             {
-                if (_statusResetTimer != null)
-                {
-                    try
-                    {
-                        _statusResetTimer.Dispose();
-                    }
-                    catch { /* ignore */ }
-                    _statusResetTimer = null;
-                }
+                _statusResetTimer?.Dispose();
+                _statusResetTimer = null;
             }
-        }
 
-        public void Write(LogEventLevel level, string messageTemplate, System.Exception ex = null)
-        {
-            messageTemplate = messageTemplate.Replace("\r", ", ").Replace("\n", ", ").Trim();
-
-            if (ex is null)
+            // Allow re-initialisation if a new Logger is constructed later in the same process.
+            lock (_initLock)
             {
-                Debugger.Log((int)level, level.ToString(), $"[{DateTime.Now}] [{level}] {messageTemplate} \r\n");
+                _log?.Dispose();
+                _log = null;
+                _initialized = false;
             }
-            else
-            {
-                Debugger.Log((int)level, level.ToString(), $"[{DateTime.Now}] [{level}] {messageTemplate}; {ex.Message} \r\n");
-            }
-
-
-            if (!_initialized) Initialize();
-
-            if (Program.Settings.AppLog.Enabled)
-            {
-                if (ex is null)
-                {
-                    UpdateStatusLabel(level, $"[{level}] {messageTemplate}");
-                    _log?.Write(level, $"[{DateTime.Now}] {messageTemplate}");
-                }
-                else
-                {
-                    UpdateStatusLabel(level, $"[{level}] {messageTemplate}; {ex.Message}");
-                    _log?.Write(level, $"[{DateTime.Now}] {messageTemplate}; {ex.Message}", ex);
-                }
-            }
-        }
-
-        public void Debug(string messageTemplate)
-        {
-            Write(LogEventLevel.Debug, messageTemplate);
-        }
-
-        public void WriteReg(LogEventLevel level, string messageTemplate, System.Exception ex = null)
-        {
-            if (Program.Settings.AppLog.Reg) Write(level, messageTemplate, ex);
-        }
-
-
-        public void WriteRegRead(LogEventLevel level, string messageTemplate, System.Exception ex = null)
-        {
-            if (Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegRead) Write(level, messageTemplate, ex);
-        }
-
-        public void WriteRegWrite(LogEventLevel level, string messageTemplate, System.Exception ex = null)
-        {
-            if (Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegWrite) Write(level, messageTemplate, ex);
-        }
-
-        public void WriteRegDel(LogEventLevel level, string messageTemplate, System.Exception ex = null)
-        {
-            if (Program.Settings.AppLog.Reg && Program.Settings.AppLog.RegDelete) Write(level, messageTemplate, ex);
         }
     }
 }

@@ -137,6 +137,8 @@ namespace WinPaletter
             checkBox17.Checked = Sets.AppLog.RegWrite;
             checkBox18.Checked = Sets.AppLog.RegDelete;
             toggle42.Checked = Sets.AppLog.StatusPanel;
+            toggle43.Checked = Sets.AppLog.AutoHideLog;
+            toggle44.Checked = Sets.AppLog.SaveInLogFile;
 
             toggle23.Checked = Sets.ExplorerPatcher.Enabled;
             toggle24.Checked = Sets.ExplorerPatcher.Enabled_Force;
@@ -466,6 +468,8 @@ namespace WinPaletter
             Sets.AppLog.RegRead = checkBox15.Checked;
             Sets.AppLog.RegWrite = checkBox17.Checked;
             Sets.AppLog.RegDelete = checkBox18.Checked;
+            Sets.AppLog.AutoHideLog = toggle43.Checked;
+            Sets.AppLog.SaveInLogFile = toggle44.Checked;
 
             Sets.ExplorerPatcher.Enabled = toggle23.Checked;
             Sets.ExplorerPatcher.Enabled_Force = toggle24.Checked;

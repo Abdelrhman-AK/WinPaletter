@@ -78,9 +78,9 @@ namespace WinPaletter
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
             this.Button2.Image = null;
-            this.Button2.ImageGlyphEnabled = false;
             this.Button2.ImageGlyph = null;
-            this.Button2.Location = new System.Drawing.Point(250, 7);
+            this.Button2.ImageGlyphEnabled = false;
+            this.Button2.Location = new System.Drawing.Point(254, 7);
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(80, 34);
             this.Button2.TabIndex = 201;
@@ -97,9 +97,9 @@ namespace WinPaletter
             this.Button1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = ((System.Drawing.Image)(resources.GetObject("Button1.Image")));
-            this.Button1.ImageGlyphEnabled = false;
             this.Button1.ImageGlyph = null;
-            this.Button1.Location = new System.Drawing.Point(336, 7);
+            this.Button1.ImageGlyphEnabled = false;
+            this.Button1.Location = new System.Drawing.Point(340, 7);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(160, 34);
             this.Button1.TabIndex = 200;
@@ -120,7 +120,7 @@ namespace WinPaletter
             this.AlertBox1.Image = global::WinPaletter.Assets.Notifications.Warning;
             this.AlertBox1.Location = new System.Drawing.Point(12, 44);
             this.AlertBox1.Name = "AlertBox1";
-            this.AlertBox1.Size = new System.Drawing.Size(479, 49);
+            this.AlertBox1.Size = new System.Drawing.Size(487, 45);
             this.AlertBox1.TabIndex = 199;
             this.AlertBox1.TabStop = false;
             this.AlertBox1.Text = "This feature is experimental. Ensure that you are selecting a console application" +
@@ -135,9 +135,9 @@ namespace WinPaletter
             this.Button16.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button16.ForeColor = System.Drawing.Color.White;
             this.Button16.Image = null;
+            this.Button16.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button16.ImageGlyph")));
             this.Button16.ImageGlyphEnabled = true;
-            this.Button16.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button16.ImageVector")));
-            this.Button16.Location = new System.Drawing.Point(461, 12);
+            this.Button16.Location = new System.Drawing.Point(469, 12);
             this.Button16.Name = "Button16";
             this.Button16.Size = new System.Drawing.Size(30, 24);
             this.Button16.TabIndex = 193;
@@ -158,7 +158,7 @@ namespace WinPaletter
             this.TextBox1.SelectedText = "";
             this.TextBox1.SelectionLength = 0;
             this.TextBox1.SelectionStart = 0;
-            this.TextBox1.Size = new System.Drawing.Size(351, 24);
+            this.TextBox1.Size = new System.Drawing.Size(359, 24);
             this.TextBox1.TabIndex = 102;
             this.TextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.TextBox1.UseSystemPasswordChar = false;
@@ -170,30 +170,31 @@ namespace WinPaletter
             this.bottom_buttons.Controls.Add(this.Button2);
             this.bottom_buttons.Controls.Add(this.Button1);
             this.bottom_buttons.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.bottom_buttons.Location = new System.Drawing.Point(0, 103);
+            this.bottom_buttons.Location = new System.Drawing.Point(0, 99);
             this.bottom_buttons.Name = "bottom_buttons";
-            this.bottom_buttons.Size = new System.Drawing.Size(503, 48);
+            this.bottom_buttons.Size = new System.Drawing.Size(511, 48);
             this.bottom_buttons.TabIndex = 212;
+            this.bottom_buttons.UseDecorationPattern = false;
+            this.bottom_buttons.UseSharpStyle = false;
             // 
             // NewExtTerminal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.ClientSize = new System.Drawing.Size(503, 151);
+            this.ClientSize = new System.Drawing.Size(511, 147);
             this.Controls.Add(this.AlertBox1);
             this.Controls.Add(this.Button16);
             this.Controls.Add(this.TextBox1);
             this.Controls.Add(this.PictureBox17);
             this.Controls.Add(this.Label102);
             this.Controls.Add(this.bottom_buttons);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "NewExtTerminal";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "New external terminal";
             this.Load += new System.EventHandler(this.NewExtTerminal_Load);

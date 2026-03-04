@@ -251,7 +251,40 @@ namespace WinPaletter
             "Reddit Dark",
             "Reddit Light",
             "Discord Dark",
-            "Discord Light"});
+            "Discord Light",
+            "Twitter Dark",
+            "Twitter Light",
+            "Slack Dark",
+            "Visual Studio Dark",
+            "Visual Studio Light",
+            "Notion Dark",
+            "Notion Light",
+            "Dracula",
+            "Nord",
+            "Monokai",
+            "Solarized Dark",
+            "Solarized Light",
+            "One Dark",
+            "Gruvbox Dark",
+            "Gruvbox Light",
+            "Tokyo Night",
+            "Catppuccin Mocha",
+            "Catppuccin Latte",
+            "Kanagawa",
+            "Rose Pine",
+            "Everforest Dark",
+            "Obsidian",
+            "Charcoal",
+            "Slate",
+            "Paper",
+            "Cyberpunk",
+            "Synthwave",
+            "Midnight Ocean",
+            "Forest",
+            "Sunset",
+            "Cherry Blossom",
+            "Lavender",
+            "Mint"});
             this.appearance_list.Location = new System.Drawing.Point(284, 3);
             this.appearance_list.Name = "appearance_list";
             this.appearance_list.Size = new System.Drawing.Size(714, 30);
@@ -342,6 +375,8 @@ namespace WinPaletter
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(1001, 37);
             this.groupBox2.TabIndex = 236;
+            this.groupBox2.UseDecorationPattern = false;
+            this.groupBox2.UseSharpStyle = false;
             // 
             // pictureBox3
             // 
@@ -382,6 +417,8 @@ namespace WinPaletter
             this.GroupBox1.Name = "GroupBox1";
             this.GroupBox1.Size = new System.Drawing.Size(1001, 130);
             this.GroupBox1.TabIndex = 237;
+            this.GroupBox1.UseDecorationPattern = false;
+            this.GroupBox1.UseSharpStyle = false;
             // 
             // pictureBox1
             // 
@@ -477,6 +514,8 @@ namespace WinPaletter
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(1001, 220);
             this.groupBox3.TabIndex = 238;
+            this.groupBox3.UseDecorationPattern = false;
+            this.groupBox3.UseSharpStyle = false;
             // 
             // label8
             // 
@@ -774,6 +813,7 @@ namespace WinPaletter
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.CanGeneratePalette = true;
             this.ClientSize = new System.Drawing.Size(1022, 586);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.GroupBox1);
@@ -781,7 +821,6 @@ namespace WinPaletter
             this.Controls.Add(this.AlertBox2);
             this.ForeColor = System.Drawing.Color.Black;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.HelpButton = true;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsShown = true;
             this.MaximizeBox = false;
@@ -789,7 +828,6 @@ namespace WinPaletter
             this.Name = "ApplicationThemer";
             this.Text = "WinPaletter application theme";
             this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.Form_HelpButtonClicked);
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ApplicationThemer_FormClosing);
             this.Load += new System.EventHandler(this.ApplicationThemer_Editor_Load);
             this.Controls.SetChildIndex(this.AlertBox2, 0);
             this.Controls.SetChildIndex(this.titlebarExtender1, 0);

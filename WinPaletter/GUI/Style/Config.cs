@@ -237,5 +237,8 @@ namespace WinPaletter.UI.Style
             }
         }
         private static int pattern = 1;
+
+        public static void OnSchemeChanged() { SchemeChanged?.Invoke(); }
+        public static event Action SchemeChanged;
     }
 }

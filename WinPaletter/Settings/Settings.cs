@@ -711,6 +711,16 @@ namespace WinPaletter
                 public bool StatusPanel = true;
 
                 /// <summary>
+                /// Save the log in logs directory. It can be disabled to compact appdata size.
+                /// </summary>
+                public bool SaveInLogFile = true;
+
+                /// <summary>
+                /// Automatically hide the log in status bar, for cleaner appearance.
+                /// </summary>
+                public bool AutoHideLog = true;
+
+                /// <summary>
                 /// Indicates whether logging registry operations are enabled.
                 /// </summary>
                 public bool Reg = true;
@@ -733,21 +743,25 @@ namespace WinPaletter
                 public void Load()
                 {
                     Enabled = ReadReg(REG_AppLog, string.Empty, true);
-                    StatusPanel = ReadReg(REG_AppLog, "StatusPanel", true);
-                    Reg = ReadReg(REG_AppLog, "Reg", true);
-                    RegRead = ReadReg(REG_AppLog, "RegRead", true);
-                    RegWrite = ReadReg(REG_AppLog, "RegWrite", true);
-                    RegDelete = ReadReg(REG_AppLog, "RegDelete", true);
+                    SaveInLogFile = ReadReg(REG_AppLog, nameof(SaveInLogFile), true);
+                    StatusPanel = ReadReg(REG_AppLog, nameof(StatusPanel), true);
+                    AutoHideLog = ReadReg(REG_AppLog, nameof(AutoHideLog), true);
+                    Reg = ReadReg(REG_AppLog, nameof(Reg), true);
+                    RegRead = ReadReg(REG_AppLog, nameof(RegRead), true);
+                    RegWrite = ReadReg(REG_AppLog, nameof(RegWrite), true);
+                    RegDelete = ReadReg(REG_AppLog, nameof(RegDelete), true);
                 }
 
                 public void Save()
                 {
                     WriteReg(REG_AppLog, string.Empty, Enabled, RegistryValueKind.DWord);
-                    WriteReg(REG_AppLog, "StatusPanel", StatusPanel, RegistryValueKind.DWord);
-                    WriteReg(REG_AppLog, "Reg", Reg, RegistryValueKind.DWord);
-                    WriteReg(REG_AppLog, "RegRead", RegRead, RegistryValueKind.DWord);
-                    WriteReg(REG_AppLog, "RegWrite", RegWrite, RegistryValueKind.DWord);
-                    WriteReg(REG_AppLog, "RegDelete", RegDelete, RegistryValueKind.DWord);
+                    WriteReg(REG_AppLog, nameof(SaveInLogFile), SaveInLogFile, RegistryValueKind.DWord);
+                    WriteReg(REG_AppLog, nameof(StatusPanel), StatusPanel, RegistryValueKind.DWord);
+                    WriteReg(REG_AppLog, nameof(AutoHideLog), AutoHideLog, RegistryValueKind.DWord);
+                    WriteReg(REG_AppLog, nameof(Reg), Reg, RegistryValueKind.DWord);
+                    WriteReg(REG_AppLog, nameof(RegRead), RegRead, RegistryValueKind.DWord);
+                    WriteReg(REG_AppLog, nameof(RegWrite), RegWrite, RegistryValueKind.DWord);
+                    WriteReg(REG_AppLog, nameof(RegDelete), RegDelete, RegistryValueKind.DWord);
                 }
             }
 

@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Threading;
 using System.Windows.Forms;
+using WinPaletter.Assets;
 using static WinPaletter.TypesExtensions.BitmapExtensions;
 
 namespace WinPaletter
@@ -253,6 +254,14 @@ namespace WinPaletter
         {
             string code = $"{c0.Text}{c1.Text}{c2.Text}{c3.Text}-{c4.Text}{c5.Text}{c6.Text}{c7.Text}";
             Clipboard.SetText(code);
+
+            Program.ToolTip.ToolTipText = string.Empty;
+            Program.ToolTip.ToolTipTitle = Program.Localization.Strings.General.Copied;
+            Program.ToolTip.Image = Notifications.Info;
+
+            Point location = new(-Program.ToolTip.Size.Width + ((Control)sender).Width, ((Control)sender).Height + 2);
+
+            Program.ToolTip.Show((Control)sender, Program.ToolTip.ToolTipTitle, Program.ToolTip.ToolTipText, Program.ToolTip.Image, location, 5000);
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

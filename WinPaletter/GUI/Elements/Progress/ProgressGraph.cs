@@ -718,7 +718,7 @@ namespace WinPaletter.UI.WP
             if (IsDisposed) return;
             Rectangle rect = new Rectangle(0, 0, Width, Height);
             Region?.Dispose();
-            if (DesignMode) { Region = new Region(rect); return; }
+            if (DesignMode || !Program.Style.RoundedCorners) { Region = new Region(rect); return; }
             _corners = this.UndockedCorners();
             using (GraphicsPath path = rect.Round(corners: _corners))
                 Region = new Region(path);

@@ -284,17 +284,17 @@ namespace WinPaletter
                 };
 
                 details = $"{ex.Message} - CMD: {string.Format(Program.Localization.Strings.ThemeManager.Advanced.RegAdd, Key, valueNameLog, valueLog, RegType.ToString())}";
-                treeView?.InvokeIfNeeded(() => ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {details}", "error"));
+                treeView?.InvokeIfNeeded(() => ThemeLog.AddNode(treeView, $"{DateTime.Now:T}: {details}", "error"));
                 Exceptions.ThemeApply.Add(new Tuple<string, Exception>(details, ex));
             }
             else
             {
                 details = ex.Message;
-                treeView?.InvokeIfNeeded(() => ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {details}", "error"));
+                treeView?.InvokeIfNeeded(() => ThemeLog.AddNode(treeView, $"{DateTime.Now:T}: {details}", "error"));
                 Exceptions.ThemeApply.Add(new Tuple<string, Exception>(details, ex));
             }
 
-            Program.Log?.WriteReg(LogEventLevel.Error, "Registry exception error", ex);
+            Program.Log?.WriteReg(LogEventLevel.Error, "Registry exception error", WinPaletter.RegScope.Error, ex);
         }
 
         public static RegistryValueKind GetRegistryValueKind(object value, bool preferQWord = false)
@@ -387,13 +387,13 @@ namespace WinPaletter
                 {
                     if (Program.Settings.ThemeLog.ShowSkippedItemsOnDetailedVerbose)
                     {
-                        Program.Log?.WriteRegWrite(LogEventLevel.Information, $"(EditReg skipped) `{Key_BeforeModification}` > `{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}`, existing value `{existingValue}` with value type `{RegType}`");
+                        Program.Log?.WriteReg(LogEventLevel.Information, $"(EditReg skipped) `{Key_BeforeModification}` > `{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}`, existing value `{existingValue}` with value type `{RegType}`", WinPaletter.RegScope.Write);
                     }
                     AddVerboseItem(treeView, true, Key_BeforeModification, ValueName, Value, RegType);
                     return;
                 }
 
-                Program.Log?.WriteRegWrite(LogEventLevel.Information, $"(EditReg) `{Key_BeforeModification}` > `{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}`, new value `{Value}` with value type `{RegType}`");
+                Program.Log?.WriteReg(LogEventLevel.Information, $"(EditReg) `{Key_BeforeModification}` > `{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}`, new value `{Value}` with value type `{RegType}`", WinPaletter.RegScope.Write);
 
                 // Try direct write first
                 if (CanWriteDirect(scope))
@@ -417,7 +417,7 @@ namespace WinPaletter
                     }
                     catch (Exception ex) when (ex is SecurityException or UnauthorizedAccessException)
                     {
-                        Program.Log?.WriteRegWrite(LogEventLevel.Error, $"Access exception: {ex.Message}");
+                        Program.Log?.WriteReg(LogEventLevel.Error, $"Access exception: {ex.Message}", WinPaletter.RegScope.Write);
                         // Fall through to CMD method
                     }
                 }
@@ -427,7 +427,7 @@ namespace WinPaletter
             }
             catch (Exception ex)
             {
-                Program.Log?.WriteRegWrite(LogEventLevel.Error, $"Registry write exception: {ex.Message}");
+                Program.Log?.WriteReg(LogEventLevel.Error, $"Registry write exception: {ex.Message}", WinPaletter.RegScope.Write);
 
                 try { WriteReg_CMD(treeView, Key_BeforeModification, ValueName, Value, RegType); }
                 catch { AddVerboseException(treeView, ex, processedKey, ValueName, Value, RegType); }
@@ -454,7 +454,7 @@ namespace WinPaletter
             string Key_BeforeModification = Key;
             Key = FormatKey_CMD(Key);
 
-            Program.Log?.WriteRegWrite(LogEventLevel.Information, $"Setting value `{ValueName}` to `{Value}` in `{Key_BeforeModification}` using REG.EXE");
+            Program.Log?.WriteReg(LogEventLevel.Information, $"Setting value `{ValueName}` to `{Value}` in `{Key_BeforeModification}` using REG.EXE", WinPaletter.RegScope.Write);
 
             if (RegType == RegistryValueKind.Unknown) RegType = GetRegistryValueKind(Value);
 
@@ -479,7 +479,7 @@ namespace WinPaletter
             }
             catch (Exception ex)
             {
-                Program.Log?.WriteRegWrite(LogEventLevel.Error, $"REG.EXE execution error: {ex.Message}");
+                Program.Log?.WriteReg(LogEventLevel.Error, $"REG.EXE execution error: {ex.Message}", WinPaletter.RegScope.Write);
                 AddVerboseException(treeView, ex, Key_BeforeModification, ValueName, Value, RegType);
             }
             finally
@@ -615,14 +615,14 @@ namespace WinPaletter
                     }
 
                     if (!skipLogging)
-                        Program.Log?.WriteRegRead(LogEventLevel.Information, $"(GetReg) `{Key_BeforeModification}` > `{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}` returned `{(IfNullReturnDefaultValue && result == null ? DefaultValue : result)}`");
+                        Program.Log?.WriteReg(LogEventLevel.Information, $"(GetReg) `{Key_BeforeModification}` > `{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}` returned `{(IfNullReturnDefaultValue && result == null ? DefaultValue : result)}`", WinPaletter.RegScope.Read);
 
                     return IfNullReturnDefaultValue && result == null ? DefaultValue : result;
                 }
             }
             catch (Exception ex)
             {
-                Program.Log?.WriteRegRead(LogEventLevel.Error, "Registry read error", ex);
+                Program.Log?.WriteReg(LogEventLevel.Error, "Registry read error", WinPaletter.RegScope.Error, ex);
                 Exceptions.ThemeLoad.Add(new Tuple<string, Exception>($"{Key_BeforeModification} : {ValueName}", ex));
 
                 if (RaiseExceptions) Forms.BugReport.Throw(ex);
@@ -656,7 +656,7 @@ namespace WinPaletter
                     if (subKey == null) return Array.Empty<string>();
 
                     string[] result = subKey.GetValueNames();
-                    Program.Log?.WriteRegRead(LogEventLevel.Information, $"GetValueNames({Key_BeforeModification}) returned `{string.Join(", ", result)}`");
+                    Program.Log?.WriteReg(LogEventLevel.Information, $"GetValueNames({Key_BeforeModification}) returned `{string.Join(", ", result)}`", WinPaletter.RegScope.Read);
                     return result;
                 }
             }
@@ -689,10 +689,10 @@ namespace WinPaletter
 
                 using (subKey = baseKey.OpenSubKey(processedKey, RegistryKeyPermissionCheck.ReadSubTree, RegistryRights.ReadKey))
                 {
-                    if (subKey == null) return Array.Empty<string>();
+                    if (subKey == null) return [];
 
                     string[] result = subKey.GetSubKeyNames();
-                    Program.Log?.WriteRegRead(LogEventLevel.Information, $"GetSubKeys({Key_BeforeModification}) `{string.Join(", ", result)}`");
+                    Program.Log?.WriteReg(LogEventLevel.Information, $"GetSubKeys({Key_BeforeModification}) `{string.Join(", ", result)}`", WinPaletter.RegScope.Read);
                     return result;
                 }
             }
@@ -722,13 +722,13 @@ namespace WinPaletter
             {
                 baseKey = OpenBaseKey(scope);
 
-                Program.Log?.WriteRegDel(LogEventLevel.Information, $"Deleting registry key: {Key_BeforeModification}");
+                Program.Log?.WriteReg(LogEventLevel.Information, $"Deleting registry key: {Key_BeforeModification}", WinPaletter.RegScope.Delete);
 
                 baseKey.DeleteSubKeyTree(processedKey, true);
 
                 if (deleteSubKeysAndValuesOnly)
                 {
-                    Program.Log?.WriteRegDel(LogEventLevel.Information, "Keeping the key intact and empty");
+                    Program.Log?.WriteReg(LogEventLevel.Information, "Keeping the key intact and empty", WinPaletter.RegScope.Delete);
                     baseKey.CreateSubKey(processedKey, true);
                 }
 
@@ -736,7 +736,7 @@ namespace WinPaletter
             }
             catch
             {
-                Program.Log?.WriteRegDel(LogEventLevel.Error, "Falling back to REG.EXE for key deletion");
+                Program.Log?.WriteReg(LogEventLevel.Error, "Falling back to REG.EXE for key deletion", WinPaletter.RegScope.Delete);
                 DeleteKeyAsAdministrator(Key_BeforeModification);
                 AddVerboseItem_DelKey(treeView, Key_BeforeModification);
             }
@@ -771,7 +771,7 @@ namespace WinPaletter
                 {
                     if (subKey == null) return;
 
-                    Program.Log?.WriteRegDel(LogEventLevel.Information, $"(Registry DelValue) `{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}` from `{Key_BeforeModification}`.");
+                    Program.Log?.WriteReg(LogEventLevel.Information, $"(Registry DelValue) `{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}` from `{Key_BeforeModification}`.", WinPaletter.RegScope.Delete);
 
                     subKey.DeleteValue(ValueName, true);
                     AddVerboseItem_DelValue(treeView, Key_BeforeModification, ValueName);
@@ -779,7 +779,7 @@ namespace WinPaletter
             }
             catch
             {
-                Program.Log?.WriteRegDel(LogEventLevel.Error, "Falling back to REG.EXE for value deletion");
+                Program.Log?.WriteReg(LogEventLevel.Error, "Falling back to REG.EXE for value deletion", WinPaletter.RegScope.Delete);
                 DeleteValueAsAdministrator(Key_BeforeModification, ValueName);
                 AddVerboseItem_DelValue(treeView, Key_BeforeModification, ValueName);
             }
@@ -865,7 +865,7 @@ namespace WinPaletter
             if (string.IsNullOrEmpty(Key)) return;
 
             string cmdKey = FormatKey_CMD(Key);
-            Program.Log?.WriteRegDel(LogEventLevel.Information, $"REG.EXE delete: reg delete \"{cmdKey}\\{ValueName}\" /f");
+            Program.Log?.WriteReg(LogEventLevel.Information, $"REG.EXE delete: reg delete \"{cmdKey}\\{ValueName}\" /f", WinPaletter.RegScope.Delete);
             Program.SendCommand($"reg delete \"{cmdKey}\\{ValueName}\" /f");
         }
 
@@ -874,7 +874,7 @@ namespace WinPaletter
             if (string.IsNullOrEmpty(Key)) return;
 
             string cmdKey = FormatKey_CMD(Key);
-            Program.Log?.WriteRegDel(LogEventLevel.Information, $"REG.EXE delete: reg delete \"{cmdKey}\" /f");
+            Program.Log?.WriteReg(LogEventLevel.Information, $"REG.EXE delete: reg delete \"{cmdKey}\" /f", WinPaletter.RegScope.Delete);
             Program.SendCommand($"reg delete \"{cmdKey}\" /f");
         }
 

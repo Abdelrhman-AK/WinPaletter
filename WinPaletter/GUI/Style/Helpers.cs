@@ -234,6 +234,8 @@ namespace WinPaletter.UI.Style
 
                 if (Form.Visible) Form.Invalidate();
             }
+
+            Config.OnSchemeChanged();
         }
 
         /// <summary>

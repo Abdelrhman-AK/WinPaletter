@@ -37,6 +37,7 @@ namespace WinPaletter
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PaletteGenerator));
             this.groupBox4 = new WinPaletter.UI.WP.GroupBox();
+            this.button11 = new WinPaletter.UI.WP.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.toggle1 = new WinPaletter.UI.WP.Toggle();
             this.panel14 = new System.Windows.Forms.Panel();
@@ -73,7 +74,6 @@ namespace WinPaletter
             this.checkBox1 = new WinPaletter.UI.WP.CheckBox();
             this.Button2 = new WinPaletter.UI.WP.Button();
             this.Button3 = new WinPaletter.UI.WP.Button();
-            this.button11 = new WinPaletter.UI.WP.Button();
             this.groupBox4.SuspendLayout();
             this.panel14.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -106,9 +106,27 @@ namespace WinPaletter
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(486, 247);
             this.groupBox4.TabIndex = 177;
-            this.groupBox4.Text = "groupBox4";
             this.groupBox4.UseDecorationPattern = false;
             this.groupBox4.UseSharpStyle = false;
+            // 
+            // button11
+            // 
+            this.button11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button11.CustomColor = System.Drawing.Color.Empty;
+            this.button11.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button11.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button11.ForeColor = System.Drawing.Color.White;
+            this.button11.Image = null;
+            this.button11.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.button11.ImageGlyph = null;
+            this.button11.ImageGlyphEnabled = false;
+            this.button11.Location = new System.Drawing.Point(291, 12);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(138, 24);
+            this.button11.TabIndex = 231;
+            this.button11.Text = "Uncheck all effects";
+            this.button11.UseVisualStyleBackColor = false;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
             // 
             // label3
             // 
@@ -626,25 +644,6 @@ namespace WinPaletter
             this.Button3.UseVisualStyleBackColor = false;
             this.Button3.Click += new System.EventHandler(this.Button3_Click);
             // 
-            // button11
-            // 
-            this.button11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button11.CustomColor = System.Drawing.Color.Empty;
-            this.button11.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.button11.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button11.ForeColor = System.Drawing.Color.White;
-            this.button11.Image = null;
-            this.button11.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button11.ImageGlyph = null;
-            this.button11.ImageGlyphEnabled = false;
-            this.button11.Location = new System.Drawing.Point(291, 12);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(138, 24);
-            this.button11.TabIndex = 231;
-            this.button11.Text = "Uncheck all effects";
-            this.button11.UseVisualStyleBackColor = false;
-            this.button11.Click += new System.EventHandler(this.button11_Click);
-            // 
             // PaletteGenerator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -661,6 +660,7 @@ namespace WinPaletter
             this.MinimizeBox = false;
             this.Name = "PaletteGenerator";
             this.Opacity = 0D;
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Palette Generator";
             this.Load += new System.EventHandler(this.PaletteGenerateFromImage_Load);

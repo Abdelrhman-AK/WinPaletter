@@ -57,6 +57,7 @@ namespace WinPaletter
             GitHub.Events.GitHubUserSwitch += User_GitHubUserSwitch;
             GitHub.Events.GitHubAvatarUpdated += UpdateUserButtonAvatar;
 
+            Icon = Properties.Resources.Icon;
             NotifyUpdates.Icon = Icon;
 
             labelAlt1.Font = new(Fonts.Title, labelAlt1.Font.Size, labelAlt1.Font.Style);
@@ -657,7 +658,6 @@ namespace WinPaletter
         private void card10_Click(object sender, EventArgs e)
         {
             Forms.MainForm.BackgroundImage = (sender as Card).Image;
-            Forms.ApplicationThemer.FixLanguageDarkModeBug = false;
             Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.ApplicationThemer);
         }
 

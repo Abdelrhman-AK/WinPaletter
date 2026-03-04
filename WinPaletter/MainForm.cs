@@ -39,6 +39,7 @@ namespace WinPaletter
             Size = new(Program.Settings.General.MainFormWidth, Program.Settings.General.MainFormHeight);
             CenterToScreen();
             WindowState = Program.Settings.General.MainFormStatus;
+            Icon = Properties.Resources.Icon;
 
             // Start showing home page tab.
             tabControl1.Visible = false;

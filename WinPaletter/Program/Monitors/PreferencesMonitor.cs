@@ -1,16 +1,8 @@
-﻿using Microsoft.Win32;
-using Microsoft.Xaml.Behaviors.Core;
-using Serilog.Events;
+﻿using Serilog.Events;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Linq;
 using System.Management;
-using System.Security.Principal;
 using System.Windows.Forms;
-using WinPaletter.Theme;
-using WinPaletter.Theme.Structures;
 
 namespace WinPaletter
 {

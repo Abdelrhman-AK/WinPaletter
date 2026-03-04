@@ -793,13 +793,14 @@ namespace WinPaletter
             this.Button5.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Button5.ForeColor = System.Drawing.Color.White;
             this.Button5.Image = null;
-            this.Button5.ImageGlyph = null;
+            this.Button5.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Add;
             this.Button5.ImageGlyphEnabled = true;
-            this.Button5.Location = new System.Drawing.Point(278, 42);
+            this.Button5.Location = new System.Drawing.Point(273, 42);
             this.Button5.Name = "Button5";
-            this.Button5.Size = new System.Drawing.Size(186, 25);
+            this.Button5.Size = new System.Drawing.Size(191, 25);
             this.Button5.TabIndex = 197;
-            this.Button5.Text = "Set from current wallpaper";
+            this.Button5.Text = "Get from current wallpaper";
+            this.Button5.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button5.UseVisualStyleBackColor = false;
             this.Button5.Click += new System.EventHandler(this.Button5_Click);
             // 
@@ -2122,12 +2123,12 @@ namespace WinPaletter
             this.TerFontSizeBar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TerFontSizeBar.Location = new System.Drawing.Point(138, 12);
             this.TerFontSizeBar.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.TerFontSizeBar.Maximum = 48;
-            this.TerFontSizeBar.Minimum = 5;
+            this.TerFontSizeBar.Maximum = 48F;
+            this.TerFontSizeBar.Minimum = 5F;
             this.TerFontSizeBar.Name = "TerFontSizeBar";
             this.TerFontSizeBar.Size = new System.Drawing.Size(370, 24);
             this.TerFontSizeBar.TabIndex = 101;
-            this.TerFontSizeBar.Value = 5;
+            this.TerFontSizeBar.Value = 5F;
             this.TerFontSizeBar.ValueChanged += new System.EventHandler(this.trackBarX1_ValueChanged_2);
             // 
             // groupBox5
@@ -2359,12 +2360,12 @@ namespace WinPaletter
             this.TerCursorHeightBar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TerCursorHeightBar.Location = new System.Drawing.Point(138, 12);
             this.TerCursorHeightBar.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.TerCursorHeightBar.Maximum = 100;
-            this.TerCursorHeightBar.Minimum = 0;
+            this.TerCursorHeightBar.Maximum = 100F;
+            this.TerCursorHeightBar.Minimum = 0F;
             this.TerCursorHeightBar.Name = "TerCursorHeightBar";
             this.TerCursorHeightBar.Size = new System.Drawing.Size(370, 26);
             this.TerCursorHeightBar.TabIndex = 100;
-            this.TerCursorHeightBar.Value = 20;
+            this.TerCursorHeightBar.Value = 20F;
             this.TerCursorHeightBar.ValueChanged += new System.EventHandler(this.TerCursorHeightBar_ValueChanged);
             // 
             // PictureBox11
@@ -2417,12 +2418,12 @@ namespace WinPaletter
             this.TerOpacityBar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TerOpacityBar.Location = new System.Drawing.Point(195, 12);
             this.TerOpacityBar.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.TerOpacityBar.Maximum = 100;
-            this.TerOpacityBar.Minimum = 0;
+            this.TerOpacityBar.Maximum = 100F;
+            this.TerOpacityBar.Minimum = 0F;
             this.TerOpacityBar.Name = "TerOpacityBar";
             this.TerOpacityBar.Size = new System.Drawing.Size(311, 24);
             this.TerOpacityBar.TabIndex = 102;
-            this.TerOpacityBar.Value = 100;
+            this.TerOpacityBar.Value = 100F;
             this.TerOpacityBar.ValueChanged += new System.EventHandler(this.trackBarX1_ValueChanged_1);
             // 
             // groupBox17
@@ -2473,12 +2474,12 @@ namespace WinPaletter
             this.TerImageOpacity.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TerImageOpacity.Location = new System.Drawing.Point(195, 12);
             this.TerImageOpacity.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.TerImageOpacity.Maximum = 100;
-            this.TerImageOpacity.Minimum = 0;
+            this.TerImageOpacity.Maximum = 100F;
+            this.TerImageOpacity.Minimum = 0F;
             this.TerImageOpacity.Name = "TerImageOpacity";
             this.TerImageOpacity.Size = new System.Drawing.Size(311, 24);
             this.TerImageOpacity.TabIndex = 101;
-            this.TerImageOpacity.Value = 100;
+            this.TerImageOpacity.Value = 100F;
             this.TerImageOpacity.ValueChanged += new System.EventHandler(this.trackBarX1_ValueChanged);
             // 
             // groupBox16

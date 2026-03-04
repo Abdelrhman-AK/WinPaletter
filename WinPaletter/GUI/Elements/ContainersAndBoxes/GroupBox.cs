@@ -162,8 +162,8 @@ namespace WinPaletter.UI.WP
             Rectangle rect = new(0, 0, Width, Height);
 
             Region?.Dispose();
-
-            if (DesignMode || useSharpStyle)
+           
+            if (DesignMode || useSharpStyle || !Program.Style.RoundedCorners)
             {
                 Region = new Region(rect);
                 return;

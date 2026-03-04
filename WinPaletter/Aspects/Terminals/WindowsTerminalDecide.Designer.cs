@@ -106,8 +106,8 @@ namespace WinPaletter
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
             this.Button2.Image = null;
-            this.Button2.ImageGlyphEnabled = false;
             this.Button2.ImageGlyph = null;
+            this.Button2.ImageGlyphEnabled = false;
             this.Button2.Location = new System.Drawing.Point(236, 7);
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(80, 34);
@@ -125,8 +125,8 @@ namespace WinPaletter
             this.Button1.ForeColor = System.Drawing.Color.White;
             this.Button1.Image = null;
             this.Button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Button1.ImageGlyphEnabled = false;
             this.Button1.ImageGlyph = null;
+            this.Button1.ImageGlyphEnabled = false;
             this.Button1.Location = new System.Drawing.Point(322, 7);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(80, 34);
@@ -183,7 +183,7 @@ namespace WinPaletter
             this.AlertBox1.CenterText = false;
             this.AlertBox1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.AlertBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.AlertBox1.Image = global::WinPaletter.Assets.Notifications.Warning;
+            this.AlertBox1.Image = null;
             this.AlertBox1.Location = new System.Drawing.Point(12, 248);
             this.AlertBox1.Name = "AlertBox1";
             this.AlertBox1.Size = new System.Drawing.Size(385, 48);
@@ -202,6 +202,8 @@ namespace WinPaletter
             this.bottom_buttons.Name = "bottom_buttons";
             this.bottom_buttons.Size = new System.Drawing.Size(409, 48);
             this.bottom_buttons.TabIndex = 212;
+            this.bottom_buttons.UseDecorationPattern = false;
+            this.bottom_buttons.UseSharpStyle = false;
             // 
             // WindowsTerminalDecide
             // 
@@ -217,10 +219,7 @@ namespace WinPaletter
             this.Controls.Add(this.RadioImage1);
             this.Controls.Add(this.Panel1);
             this.Controls.Add(this.bottom_buttons);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "WindowsTerminalDecide";

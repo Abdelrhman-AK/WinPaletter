@@ -206,7 +206,7 @@ namespace WinPaletter.Tabs
             Form = TabPage?.Controls?.OfType<System.Windows.Forms.Form>().FirstOrDefault();
             Text = tabPage.Text;
             Rectangle = rectangle;
-            Image = new Icon(Form?.Icon ?? Forms.MainForm.Icon, 16, 16).ToBitmap();
+            Image = new Icon(Form?.Icon ?? Properties.Resources.Icon, 16, 16).ToBitmap();
         }
 
         #endregion
@@ -234,11 +234,11 @@ namespace WinPaletter.Tabs
             IconChanged?.Invoke(this, e);
             try
             {
-                Image = Form?.Icon?.ToBitmap() ?? Forms.MainForm.Icon.ToBitmap();
+                Image = Form?.Icon?.ToBitmap() ?? Properties.Resources.Icon.ToBitmap();
             }
             catch // If the form is disposed, the icon will throw an exception
             {
-                Image = Forms.MainForm.Icon.ToBitmap();
+                Image = Properties.Resources.Icon.ToBitmap();
             }
             tabsContainer?.Refresh();
         }

@@ -97,9 +97,9 @@ namespace WinPaletter
             this.button2.Image = null;
             this.button2.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Menu;
             this.button2.ImageGlyphEnabled = true;
-            this.button2.Location = new System.Drawing.Point(219, 30);
+            this.button2.Location = new System.Drawing.Point(206, 30);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(175, 24);
+            this.button2.Size = new System.Drawing.Size(188, 24);
             this.button2.TabIndex = 227;
             this.button2.Text = "Installed screen savers list";
             this.button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -212,7 +212,7 @@ namespace WinPaletter
             this.TextBox1.SelectedText = "";
             this.TextBox1.SelectionLength = 0;
             this.TextBox1.SelectionStart = 0;
-            this.TextBox1.Size = new System.Drawing.Size(177, 24);
+            this.TextBox1.Size = new System.Drawing.Size(164, 24);
             this.TextBox1.TabIndex = 218;
             this.TextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.TextBox1.UseSystemPasswordChar = false;
