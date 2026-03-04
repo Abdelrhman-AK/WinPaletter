@@ -1291,7 +1291,6 @@ namespace WinPaletter.GitHub
             if (_boundList.Items.Cast<ListViewItem>().Any(i => i != item && string.Equals(i.Text, newName, StringComparison.OrdinalIgnoreCase)))
             {
                 Program.ToolTip.Show(_boundTree, Program.Localization.Strings.GitHubStrings.Explorer_EntryExists, string.Empty, Properties.Resources.checker_disabled, item.Bounds.Location);
-                item.Remove();
                 e.CancelEdit = true;
                 return;
             }
