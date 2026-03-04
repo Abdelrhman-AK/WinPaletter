@@ -347,38 +347,38 @@ namespace WinPaletter
             // Button3
             // 
             this.Button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button3.CustomColor = System.Drawing.Color.Empty;
-            this.Button3.Flag = WinPaletter.UI.WP.Button.Flags.None;
+            this.Button3.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.Button3.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button3.ForeColor = System.Drawing.Color.White;
             this.Button3.Image = null;
-            this.Button3.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Button3.ImageGlyph = null;
-            this.Button3.ImageGlyphEnabled = false;
-            this.Button3.Location = new System.Drawing.Point(323, 74);
+            this.Button3.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button3.ImageGlyph")));
+            this.Button3.ImageGlyphEnabled = true;
+            this.Button3.Location = new System.Drawing.Point(282, 74);
             this.Button3.Name = "Button3";
-            this.Button3.Size = new System.Drawing.Size(272, 25);
+            this.Button3.Size = new System.Drawing.Size(272, 24);
             this.Button3.TabIndex = 144;
             this.Button3.Text = "Get path of the default Windows Wallpaper";
+            this.Button3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button3.UseVisualStyleBackColor = false;
             this.Button3.Click += new System.EventHandler(this.Button3_Click);
             // 
             // Button2
             // 
             this.Button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button2.CustomColor = System.Drawing.Color.Empty;
-            this.Button2.Flag = WinPaletter.UI.WP.Button.Flags.None;
+            this.Button2.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.Button2.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
             this.Button2.Image = null;
-            this.Button2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Button2.ImageGlyph = null;
-            this.Button2.ImageGlyphEnabled = false;
-            this.Button2.Location = new System.Drawing.Point(323, 105);
+            this.Button2.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button2.ImageGlyph")));
+            this.Button2.ImageGlyphEnabled = true;
+            this.Button2.Location = new System.Drawing.Point(71, 74);
             this.Button2.Name = "Button2";
-            this.Button2.Size = new System.Drawing.Size(272, 24);
+            this.Button2.Size = new System.Drawing.Size(205, 24);
             this.Button2.TabIndex = 143;
             this.Button2.Text = "Get path of current wallpaper";
+            this.Button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button2.UseVisualStyleBackColor = false;
             this.Button2.Click += new System.EventHandler(this.Button2_Click);
             // 
@@ -401,7 +401,7 @@ namespace WinPaletter
             this.Button1.Image = null;
             this.Button1.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Browse;
             this.Button1.ImageGlyphEnabled = true;
-            this.Button1.Location = new System.Drawing.Point(561, 44);
+            this.Button1.Location = new System.Drawing.Point(561, 74);
             this.Button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(34, 24);
@@ -423,7 +423,7 @@ namespace WinPaletter
             this.TextBox1.SelectedText = "";
             this.TextBox1.SelectionLength = 0;
             this.TextBox1.SelectionStart = 0;
-            this.TextBox1.Size = new System.Drawing.Size(440, 24);
+            this.TextBox1.Size = new System.Drawing.Size(481, 24);
             this.TextBox1.TabIndex = 141;
             this.TextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.TextBox1.UseSystemPasswordChar = false;
@@ -483,7 +483,7 @@ namespace WinPaletter
             this.LBar.AnimateChanges = false;
             this.LBar.BackColor = System.Drawing.Color.Transparent;
             this.LBar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LBar.Location = new System.Drawing.Point(168, 205);
+            this.LBar.Location = new System.Drawing.Point(168, 200);
             this.LBar.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.LBar.Mode = WinPaletter.UI.WP.ColorBar.ModesList.Light;
             this.LBar.Name = "LBar";
@@ -500,7 +500,7 @@ namespace WinPaletter
             this.SBar.AnimateChanges = false;
             this.SBar.BackColor = System.Drawing.Color.Transparent;
             this.SBar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SBar.Location = new System.Drawing.Point(168, 175);
+            this.SBar.Location = new System.Drawing.Point(168, 170);
             this.SBar.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.SBar.Mode = WinPaletter.UI.WP.ColorBar.ModesList.Saturation;
             this.SBar.Name = "SBar";
@@ -517,7 +517,7 @@ namespace WinPaletter
             this.HBar.AnimateChanges = false;
             this.HBar.BackColor = System.Drawing.Color.Transparent;
             this.HBar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.HBar.Location = new System.Drawing.Point(168, 145);
+            this.HBar.Location = new System.Drawing.Point(168, 140);
             this.HBar.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.HBar.Mode = WinPaletter.UI.WP.ColorBar.ModesList.Hue;
             this.HBar.Name = "HBar";
@@ -529,16 +529,16 @@ namespace WinPaletter
             // Button20
             // 
             this.Button20.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button20.CustomColor = System.Drawing.Color.Empty;
+            this.Button20.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.Button20.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button20.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button20.ForeColor = System.Drawing.Color.White;
-            this.Button20.Image = ((System.Drawing.Image)(resources.GetObject("Button20.Image")));
-            this.Button20.ImageGlyph = null;
-            this.Button20.ImageGlyphEnabled = false;
-            this.Button20.Location = new System.Drawing.Point(117, 74);
+            this.Button20.Image = null;
+            this.Button20.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Save;
+            this.Button20.ImageGlyphEnabled = true;
+            this.Button20.Location = new System.Drawing.Point(379, 104);
             this.Button20.Name = "Button20";
-            this.Button20.Size = new System.Drawing.Size(200, 56);
+            this.Button20.Size = new System.Drawing.Size(216, 24);
             this.Button20.TabIndex = 208;
             this.Button20.Text = "Save modified wallpaper as ...";
             this.Button20.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -555,12 +555,11 @@ namespace WinPaletter
             this.AlertBox3.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.AlertBox3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.AlertBox3.Image = null;
-            this.AlertBox3.Location = new System.Drawing.Point(13, 238);
+            this.AlertBox3.Location = new System.Drawing.Point(13, 233);
             this.AlertBox3.Name = "AlertBox3";
             this.AlertBox3.Size = new System.Drawing.Size(582, 43);
             this.AlertBox3.TabIndex = 207;
             this.AlertBox3.TabStop = false;
-            this.AlertBox3.Text = null;
             // 
             // Separator2
             // 
@@ -568,7 +567,7 @@ namespace WinPaletter
             this.Separator2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Separator2.BackColor = System.Drawing.Color.Transparent;
-            this.Separator2.Location = new System.Drawing.Point(13, 138);
+            this.Separator2.Location = new System.Drawing.Point(13, 133);
             this.Separator2.Name = "Separator2";
             this.Separator2.Size = new System.Drawing.Size(582, 1);
             this.Separator2.TabIndex = 158;
@@ -577,38 +576,38 @@ namespace WinPaletter
             // Button15
             // 
             this.Button15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button15.CustomColor = System.Drawing.Color.Empty;
-            this.Button15.Flag = WinPaletter.UI.WP.Button.Flags.None;
+            this.Button15.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.Button15.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button15.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button15.ForeColor = System.Drawing.Color.White;
             this.Button15.Image = null;
-            this.Button15.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Button15.ImageGlyph = null;
-            this.Button15.ImageGlyphEnabled = false;
-            this.Button15.Location = new System.Drawing.Point(323, 74);
+            this.Button15.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button15.ImageGlyph")));
+            this.Button15.ImageGlyphEnabled = true;
+            this.Button15.Location = new System.Drawing.Point(282, 74);
             this.Button15.Name = "Button15";
-            this.Button15.Size = new System.Drawing.Size(272, 25);
+            this.Button15.Size = new System.Drawing.Size(272, 24);
             this.Button15.TabIndex = 157;
             this.Button15.Text = "Get path of the default Windows Wallpaper";
+            this.Button15.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button15.UseVisualStyleBackColor = false;
             this.Button15.Click += new System.EventHandler(this.Button15_Click);
             // 
             // Button16
             // 
             this.Button16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button16.CustomColor = System.Drawing.Color.Empty;
-            this.Button16.Flag = WinPaletter.UI.WP.Button.Flags.None;
+            this.Button16.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.Button16.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button16.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button16.ForeColor = System.Drawing.Color.White;
             this.Button16.Image = null;
-            this.Button16.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Button16.ImageGlyph = null;
-            this.Button16.ImageGlyphEnabled = false;
-            this.Button16.Location = new System.Drawing.Point(323, 105);
+            this.Button16.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button16.ImageGlyph")));
+            this.Button16.ImageGlyphEnabled = true;
+            this.Button16.Location = new System.Drawing.Point(71, 74);
             this.Button16.Name = "Button16";
-            this.Button16.Size = new System.Drawing.Size(272, 25);
+            this.Button16.Size = new System.Drawing.Size(205, 24);
             this.Button16.TabIndex = 156;
             this.Button16.Text = "Get path of current wallpaper";
+            this.Button16.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button16.UseVisualStyleBackColor = false;
             this.Button16.Click += new System.EventHandler(this.Button16_Click);
             // 
@@ -622,7 +621,7 @@ namespace WinPaletter
             this.Button19.Image = null;
             this.Button19.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Browse;
             this.Button19.ImageGlyphEnabled = true;
-            this.Button19.Location = new System.Drawing.Point(561, 44);
+            this.Button19.Location = new System.Drawing.Point(561, 74);
             this.Button19.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button19.Name = "Button19";
             this.Button19.Size = new System.Drawing.Size(34, 24);
@@ -644,7 +643,7 @@ namespace WinPaletter
             this.TextBox3.SelectedText = "";
             this.TextBox3.SelectionLength = 0;
             this.TextBox3.SelectionStart = 0;
-            this.TextBox3.Size = new System.Drawing.Size(440, 24);
+            this.TextBox3.Size = new System.Drawing.Size(481, 24);
             this.TextBox3.TabIndex = 154;
             this.TextBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.TextBox3.UseSystemPasswordChar = false;
@@ -673,7 +672,7 @@ namespace WinPaletter
             // PictureBox9
             // 
             this.PictureBox9.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox9.Image")));
-            this.PictureBox9.Location = new System.Drawing.Point(13, 173);
+            this.PictureBox9.Location = new System.Drawing.Point(13, 168);
             this.PictureBox9.Name = "PictureBox9";
             this.PictureBox9.Size = new System.Drawing.Size(24, 24);
             this.PictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -682,7 +681,7 @@ namespace WinPaletter
             // 
             // Label17
             // 
-            this.Label17.Location = new System.Drawing.Point(43, 175);
+            this.Label17.Location = new System.Drawing.Point(43, 170);
             this.Label17.Name = "Label17";
             this.Label17.Size = new System.Drawing.Size(118, 24);
             this.Label17.TabIndex = 147;
@@ -692,7 +691,7 @@ namespace WinPaletter
             // PictureBox10
             // 
             this.PictureBox10.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox10.Image")));
-            this.PictureBox10.Location = new System.Drawing.Point(13, 203);
+            this.PictureBox10.Location = new System.Drawing.Point(13, 198);
             this.PictureBox10.Name = "PictureBox10";
             this.PictureBox10.Size = new System.Drawing.Size(24, 24);
             this.PictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -701,7 +700,7 @@ namespace WinPaletter
             // 
             // Label18
             // 
-            this.Label18.Location = new System.Drawing.Point(43, 205);
+            this.Label18.Location = new System.Drawing.Point(43, 200);
             this.Label18.Name = "Label18";
             this.Label18.Size = new System.Drawing.Size(118, 24);
             this.Label18.TabIndex = 145;
@@ -711,7 +710,7 @@ namespace WinPaletter
             // PictureBox11
             // 
             this.PictureBox11.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox11.Image")));
-            this.PictureBox11.Location = new System.Drawing.Point(13, 143);
+            this.PictureBox11.Location = new System.Drawing.Point(13, 138);
             this.PictureBox11.Name = "PictureBox11";
             this.PictureBox11.Size = new System.Drawing.Size(24, 24);
             this.PictureBox11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -720,7 +719,7 @@ namespace WinPaletter
             // 
             // Label20
             // 
-            this.Label20.Location = new System.Drawing.Point(43, 145);
+            this.Label20.Location = new System.Drawing.Point(43, 140);
             this.Label20.Name = "Label20";
             this.Label20.Size = new System.Drawing.Size(118, 24);
             this.Label20.TabIndex = 143;
@@ -735,12 +734,12 @@ namespace WinPaletter
             this.trackBarX1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.trackBarX1.Location = new System.Drawing.Point(217, 233);
             this.trackBarX1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.trackBarX1.Maximum = 36000000;
-            this.trackBarX1.Minimum = 10000;
+            this.trackBarX1.Maximum = 3.6E+07F;
+            this.trackBarX1.Minimum = 10000F;
             this.trackBarX1.Name = "trackBarX1";
             this.trackBarX1.Size = new System.Drawing.Size(370, 24);
             this.trackBarX1.TabIndex = 186;
-            this.trackBarX1.Value = 10000;
+            this.trackBarX1.Value = 10000F;
             // 
             // Button6
             // 
@@ -986,6 +985,8 @@ namespace WinPaletter
             this.previewContainer.Padding = new System.Windows.Forms.Padding(1);
             this.previewContainer.Size = new System.Drawing.Size(534, 303);
             this.previewContainer.TabIndex = 215;
+            this.previewContainer.UseDecorationPattern = false;
+            this.previewContainer.UseSharpStyle = false;
             // 
             // pnl_preview
             // 
@@ -1068,7 +1069,8 @@ namespace WinPaletter
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(608, 138);
             this.groupBox1.TabIndex = 219;
-            this.groupBox1.Text = "groupBox1";
+            this.groupBox1.UseDecorationPattern = false;
+            this.groupBox1.UseSharpStyle = false;
             // 
             // pictureBox12
             // 
@@ -1110,7 +1112,8 @@ namespace WinPaletter
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(608, 138);
             this.groupBox2.TabIndex = 220;
-            this.groupBox2.Text = "groupBox2";
+            this.groupBox2.UseDecorationPattern = false;
+            this.groupBox2.UseSharpStyle = false;
             // 
             // pictureBox13
             // 
@@ -1150,9 +1153,10 @@ namespace WinPaletter
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox3.Location = new System.Drawing.Point(0, 0);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(600, 140);
+            this.groupBox3.Size = new System.Drawing.Size(600, 106);
             this.groupBox3.TabIndex = 221;
-            this.groupBox3.Text = "groupBox3";
+            this.groupBox3.UseDecorationPattern = false;
+            this.groupBox3.UseSharpStyle = false;
             // 
             // pictureBox1
             // 
@@ -1227,7 +1231,8 @@ namespace WinPaletter
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(600, 115);
             this.groupBox4.TabIndex = 222;
-            this.groupBox4.Text = "groupBox4";
+            this.groupBox4.UseDecorationPattern = false;
+            this.groupBox4.UseSharpStyle = false;
             // 
             // pictureBox2
             // 
@@ -1289,9 +1294,10 @@ namespace WinPaletter
             this.groupBox5.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox5.Location = new System.Drawing.Point(0, 0);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(600, 290);
+            this.groupBox5.Size = new System.Drawing.Size(600, 285);
             this.groupBox5.TabIndex = 223;
-            this.groupBox5.Text = "groupBox5";
+            this.groupBox5.UseDecorationPattern = false;
+            this.groupBox5.UseSharpStyle = false;
             // 
             // pictureBox14
             // 
@@ -1355,7 +1361,8 @@ namespace WinPaletter
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(600, 295);
             this.groupBox6.TabIndex = 223;
-            this.groupBox6.Text = "groupBox6";
+            this.groupBox6.UseDecorationPattern = false;
+            this.groupBox6.UseSharpStyle = false;
             // 
             // pictureBox15
             // 

@@ -45,8 +45,6 @@ namespace WinPaletter
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox14 = new WinPaletter.UI.WP.GroupBox();
-            this.checkBox2 = new WinPaletter.UI.WP.CheckBox();
-            this.radioImage2 = new WinPaletter.UI.WP.RadioImage();
             this.tablessControl1 = new WinPaletter.UI.WP.TablessControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.groupBox19 = new WinPaletter.UI.WP.GroupBox();
@@ -62,6 +60,8 @@ namespace WinPaletter
             this.button6 = new WinPaletter.UI.WP.Button();
             this.TextBox1 = new WinPaletter.UI.WP.TextBox();
             this.Button4 = new WinPaletter.UI.WP.Button();
+            this.checkBox2 = new WinPaletter.UI.WP.CheckBox();
+            this.radioImage2 = new WinPaletter.UI.WP.RadioImage();
             this.RadioButton1 = new WinPaletter.UI.WP.RadioImage();
             this.Label2 = new System.Windows.Forms.Label();
             this.RadioButton2 = new WinPaletter.UI.WP.RadioImage();
@@ -204,9 +204,9 @@ namespace WinPaletter
             this.groupBox14.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox14.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox14.Controls.Add(this.tablessControl1);
             this.groupBox14.Controls.Add(this.checkBox2);
             this.groupBox14.Controls.Add(this.radioImage2);
-            this.groupBox14.Controls.Add(this.tablessControl1);
             this.groupBox14.Controls.Add(this.RadioButton1);
             this.groupBox14.Controls.Add(this.Label2);
             this.groupBox14.Controls.Add(this.RadioButton2);
@@ -217,37 +217,6 @@ namespace WinPaletter
             this.groupBox14.TabIndex = 174;
             this.groupBox14.UseDecorationPattern = false;
             this.groupBox14.UseSharpStyle = false;
-            // 
-            // checkBox2
-            // 
-            this.checkBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.checkBox2.Checked = false;
-            this.checkBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.checkBox2.ForeColor = System.Drawing.Color.White;
-            this.checkBox2.Location = new System.Drawing.Point(11, 133);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(470, 24);
-            this.checkBox2.TabIndex = 142;
-            this.checkBox2.Text = "Normalize colors using brightness, not color values";
-            this.checkBox2.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.checkBox2_CheckedChanged);
-            // 
-            // radioImage2
-            // 
-            this.radioImage2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.radioImage2.Checked = true;
-            this.radioImage2.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.radioImage2.ForeColor = System.Drawing.Color.White;
-            this.radioImage2.Image = ((System.Drawing.Image)(resources.GetObject("radioImage2.Image")));
-            this.radioImage2.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage2.Location = new System.Drawing.Point(114, 5);
-            this.radioImage2.Name = "radioImage2";
-            this.radioImage2.Size = new System.Drawing.Size(165, 38);
-            this.radioImage2.TabIndex = 144;
-            this.radioImage2.Text = "Current preferences";
-            this.radioImage2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.radioImage2.CheckedChanged += new System.EventHandler(this.radioImage2_CheckedChanged);
             // 
             // tablessControl1
             // 
@@ -394,17 +363,17 @@ namespace WinPaletter
             // button7
             // 
             this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button7.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(127)))), ((int)(((byte)(0)))));
+            this.button7.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.button7.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.button7.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button7.ForeColor = System.Drawing.Color.White;
             this.button7.Image = null;
             this.button7.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Add;
             this.button7.ImageGlyphEnabled = true;
-            this.button7.Location = new System.Drawing.Point(246, 42);
+            this.button7.Location = new System.Drawing.Point(232, 42);
             this.button7.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(206, 24);
+            this.button7.Size = new System.Drawing.Size(180, 24);
             this.button7.TabIndex = 144;
             this.button7.Text = "Use the applied wallpaper";
             this.button7.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -413,18 +382,19 @@ namespace WinPaletter
             // 
             // button6
             // 
-            this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button6.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(127)))), ((int)(((byte)(0)))));
+            this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button6.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.button6.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.button6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button6.ForeColor = System.Drawing.Color.White;
             this.button6.Image = null;
             this.button6.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Add;
             this.button6.ImageGlyphEnabled = true;
-            this.button6.Location = new System.Drawing.Point(9, 42);
+            this.button6.Location = new System.Drawing.Point(12, 42);
             this.button6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(229, 24);
+            this.button6.Size = new System.Drawing.Size(212, 24);
             this.button6.TabIndex = 143;
             this.button6.Text = "Use wallpaper from current theme";
             this.button6.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -445,7 +415,7 @@ namespace WinPaletter
             this.TextBox1.SelectedText = "";
             this.TextBox1.SelectionLength = 0;
             this.TextBox1.SelectionStart = 0;
-            this.TextBox1.Size = new System.Drawing.Size(399, 24);
+            this.TextBox1.Size = new System.Drawing.Size(442, 24);
             this.TextBox1.TabIndex = 137;
             this.TextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.TextBox1.UseSystemPasswordChar = false;
@@ -462,13 +432,44 @@ namespace WinPaletter
             this.Button4.Image = null;
             this.Button4.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Browse;
             this.Button4.ImageGlyphEnabled = true;
-            this.Button4.Location = new System.Drawing.Point(418, 12);
+            this.Button4.Location = new System.Drawing.Point(420, 42);
             this.Button4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button4.Name = "Button4";
             this.Button4.Size = new System.Drawing.Size(34, 24);
             this.Button4.TabIndex = 138;
             this.Button4.UseVisualStyleBackColor = false;
             this.Button4.Click += new System.EventHandler(this.Button4_Click);
+            // 
+            // checkBox2
+            // 
+            this.checkBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBox2.Checked = false;
+            this.checkBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.checkBox2.ForeColor = System.Drawing.Color.White;
+            this.checkBox2.Location = new System.Drawing.Point(11, 133);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(470, 24);
+            this.checkBox2.TabIndex = 142;
+            this.checkBox2.Text = "Normalize colors using brightness, not color values";
+            this.checkBox2.CheckedChanged += new WinPaletter.UI.WP.CheckBox.CheckedChangedEventHandler(this.checkBox2_CheckedChanged);
+            // 
+            // radioImage2
+            // 
+            this.radioImage2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioImage2.Checked = true;
+            this.radioImage2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.radioImage2.ForeColor = System.Drawing.Color.White;
+            this.radioImage2.Image = ((System.Drawing.Image)(resources.GetObject("radioImage2.Image")));
+            this.radioImage2.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radioImage2.Location = new System.Drawing.Point(114, 5);
+            this.radioImage2.Name = "radioImage2";
+            this.radioImage2.Size = new System.Drawing.Size(165, 38);
+            this.radioImage2.TabIndex = 144;
+            this.radioImage2.Text = "Current preferences";
+            this.radioImage2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radioImage2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.radioImage2.CheckedChanged += new System.EventHandler(this.radioImage2_CheckedChanged);
             // 
             // RadioButton1
             // 

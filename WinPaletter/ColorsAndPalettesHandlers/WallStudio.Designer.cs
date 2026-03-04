@@ -335,7 +335,7 @@
             this.groupBox6.BackColor = System.Drawing.Color.Transparent;
             this.groupBox6.Controls.Add(this.checkBox4);
             this.groupBox6.Controls.Add(this.pictureBox10);
-            this.groupBox6.Location = new System.Drawing.Point(8, 207);
+            this.groupBox6.Location = new System.Drawing.Point(8, 202);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(785, 34);
             this.groupBox6.TabIndex = 244;
@@ -383,7 +383,7 @@
             this.groupBox4.BackColor = System.Drawing.Color.Transparent;
             this.groupBox4.Controls.Add(this.checkBox3);
             this.groupBox4.Controls.Add(this.pictureBox8);
-            this.groupBox4.Location = new System.Drawing.Point(8, 479);
+            this.groupBox4.Location = new System.Drawing.Point(8, 432);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(785, 34);
             this.groupBox4.TabIndex = 242;
@@ -436,7 +436,7 @@
             this.groupBox3.Controls.Add(this.colorItem1);
             this.groupBox3.Controls.Add(this.checkBox2);
             this.groupBox3.Controls.Add(this.pictureBox2);
-            this.groupBox3.Location = new System.Drawing.Point(8, 393);
+            this.groupBox3.Location = new System.Drawing.Point(8, 346);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(785, 80);
             this.groupBox3.TabIndex = 240;
@@ -502,9 +502,9 @@
             this.groupBox2.Controls.Add(this.button3);
             this.groupBox2.Controls.Add(this.button6);
             this.groupBox2.Controls.Add(this.button4);
-            this.groupBox2.Location = new System.Drawing.Point(8, 247);
+            this.groupBox2.Location = new System.Drawing.Point(8, 242);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(785, 140);
+            this.groupBox2.Size = new System.Drawing.Size(785, 98);
             this.groupBox2.TabIndex = 239;
             this.groupBox2.UseDecorationPattern = false;
             this.groupBox2.UseSharpStyle = false;
@@ -515,9 +515,9 @@
             this.checkBox1.Checked = false;
             this.checkBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.checkBox1.ForeColor = System.Drawing.Color.White;
-            this.checkBox1.Location = new System.Drawing.Point(6, 108);
+            this.checkBox1.Location = new System.Drawing.Point(6, 66);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(722, 25);
+            this.checkBox1.Size = new System.Drawing.Size(772, 25);
             this.checkBox1.TabIndex = 238;
             this.checkBox1.Text = "Process it as a second palette";
             // 
@@ -554,7 +554,7 @@
             this.textBox2.SelectedText = "";
             this.textBox2.SelectionLength = 0;
             this.textBox2.SelectionStart = 0;
-            this.textBox2.Size = new System.Drawing.Size(483, 24);
+            this.textBox2.Size = new System.Drawing.Size(524, 24);
             this.textBox2.TabIndex = 233;
             this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.textBox2.UseSystemPasswordChar = false;
@@ -570,7 +570,7 @@
             this.button5.Image = null;
             this.button5.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Browse;
             this.button5.ImageGlyphEnabled = true;
-            this.button5.Location = new System.Drawing.Point(744, 6);
+            this.button5.Location = new System.Drawing.Point(744, 36);
             this.button5.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(34, 24);
@@ -581,57 +581,57 @@
             // button3
             // 
             this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button3.CustomColor = System.Drawing.Color.Empty;
+            this.button3.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.button3.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.button3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button3.ForeColor = System.Drawing.Color.White;
             this.button3.Image = null;
-            this.button3.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button3.ImageGlyph = null;
-            this.button3.ImageGlyphEnabled = false;
-            this.button3.Location = new System.Drawing.Point(304, 36);
+            this.button3.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button3.ImageGlyph")));
+            this.button3.ImageGlyphEnabled = true;
+            this.button3.Location = new System.Drawing.Point(254, 36);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(189, 30);
+            this.button3.Size = new System.Drawing.Size(198, 24);
             this.button3.TabIndex = 236;
             this.button3.Text = "Get path of current wallpaper";
+            this.button3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button3.UseVisualStyleBackColor = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button6
             // 
             this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button6.CustomColor = System.Drawing.Color.Empty;
+            this.button6.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.button6.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.button6.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button6.ForeColor = System.Drawing.Color.White;
             this.button6.Image = null;
-            this.button6.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button6.ImageGlyph = null;
-            this.button6.ImageGlyphEnabled = false;
-            this.button6.Location = new System.Drawing.Point(499, 72);
+            this.button6.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button6.ImageGlyph")));
+            this.button6.ImageGlyphEnabled = true;
+            this.button6.Location = new System.Drawing.Point(18, 36);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(279, 30);
+            this.button6.Size = new System.Drawing.Size(230, 24);
             this.button6.TabIndex = 237;
             this.button6.Text = "Get path of the default Lock Screen";
+            this.button6.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button6.UseVisualStyleBackColor = false;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // button4
             // 
             this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button4.CustomColor = System.Drawing.Color.Empty;
+            this.button4.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.button4.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.button4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button4.ForeColor = System.Drawing.Color.White;
             this.button4.Image = null;
-            this.button4.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button4.ImageGlyph = null;
-            this.button4.ImageGlyphEnabled = false;
-            this.button4.Location = new System.Drawing.Point(499, 36);
+            this.button4.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button4.ImageGlyph")));
+            this.button4.ImageGlyphEnabled = true;
+            this.button4.Location = new System.Drawing.Point(458, 36);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(279, 30);
+            this.button4.Size = new System.Drawing.Size(279, 24);
             this.button4.TabIndex = 235;
             this.button4.Text = "Get path of the default Windows Wallpaper";
+            this.button4.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button4.UseVisualStyleBackColor = false;
             this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
@@ -648,7 +648,7 @@
             this.groupBox1.Controls.Add(this.button8);
             this.groupBox1.Location = new System.Drawing.Point(8, 128);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(785, 73);
+            this.groupBox1.Size = new System.Drawing.Size(785, 68);
             this.groupBox1.TabIndex = 238;
             this.groupBox1.UseDecorationPattern = false;
             this.groupBox1.UseSharpStyle = false;
@@ -686,7 +686,7 @@
             this.textBox1.SelectedText = "";
             this.textBox1.SelectionLength = 0;
             this.textBox1.SelectionStart = 0;
-            this.textBox1.Size = new System.Drawing.Size(483, 24);
+            this.textBox1.Size = new System.Drawing.Size(524, 24);
             this.textBox1.TabIndex = 226;
             this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.textBox1.UseSystemPasswordChar = false;
@@ -703,7 +703,7 @@
             this.button10.Image = null;
             this.button10.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Browse;
             this.button10.ImageGlyphEnabled = true;
-            this.button10.Location = new System.Drawing.Point(744, 6);
+            this.button10.Location = new System.Drawing.Point(744, 36);
             this.button10.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(34, 24);
@@ -714,38 +714,38 @@
             // Button2
             // 
             this.Button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.Button2.CustomColor = System.Drawing.Color.Empty;
+            this.Button2.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.Button2.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.Button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Button2.ForeColor = System.Drawing.Color.White;
             this.Button2.Image = null;
-            this.Button2.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.Button2.ImageGlyph = null;
-            this.Button2.ImageGlyphEnabled = false;
-            this.Button2.Location = new System.Drawing.Point(304, 36);
+            this.Button2.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button2.ImageGlyph")));
+            this.Button2.ImageGlyphEnabled = true;
+            this.Button2.Location = new System.Drawing.Point(254, 36);
             this.Button2.Name = "Button2";
-            this.Button2.Size = new System.Drawing.Size(189, 30);
+            this.Button2.Size = new System.Drawing.Size(198, 24);
             this.Button2.TabIndex = 230;
             this.Button2.Text = "Get path of current wallpaper";
+            this.Button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.Button2.UseVisualStyleBackColor = false;
             this.Button2.Click += new System.EventHandler(this.Button2_Click_1);
             // 
             // button8
             // 
             this.button8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button8.CustomColor = System.Drawing.Color.Empty;
+            this.button8.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.button8.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.button8.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button8.ForeColor = System.Drawing.Color.White;
             this.button8.Image = null;
-            this.button8.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.button8.ImageGlyph = null;
-            this.button8.ImageGlyphEnabled = false;
-            this.button8.Location = new System.Drawing.Point(499, 36);
+            this.button8.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button8.ImageGlyph")));
+            this.button8.ImageGlyphEnabled = true;
+            this.button8.Location = new System.Drawing.Point(458, 36);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(279, 30);
+            this.button8.Size = new System.Drawing.Size(279, 24);
             this.button8.TabIndex = 229;
             this.button8.Text = "Get path of the default Windows Wallpaper";
+            this.button8.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button8.UseVisualStyleBackColor = false;
             this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
@@ -876,7 +876,6 @@
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(801, 208);
             this.groupBox5.TabIndex = 244;
-            this.groupBox5.Text = "groupBox5";
             this.groupBox5.UseDecorationPattern = false;
             this.groupBox5.UseSharpStyle = false;
             // 

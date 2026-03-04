@@ -1,4 +1,4 @@
-﻿using FluentTransitions;
+﻿ using FluentTransitions;
 using Microsoft.Win32;
 using Serilog.Events;
 using System;
@@ -339,36 +339,36 @@ namespace WinPaletter
                 Win32Exception win32Exception = new(win32Error);
                 if (win32Exception != null) { AddException("Win32 exception", win32Exception, TreeView1, win32Error); }
             }
-            // Loaded Assemblies (limited to top 20 to avoid overwhelming)
-            TreeNode assembliesNode = TreeView1.Nodes?.Add($"Loaded assemblies");
-            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
-            {
-                try
-                {
-                    var assemblyNode = assembliesNode?.Nodes?.Add(assembly.GetName().Name);
-                    assemblyNode?.Nodes?.Add($"Version: {assembly.GetName().Version}");
-                    assemblyNode?.Nodes?.Add($"Location: {assembly.Location ?? "[Dynamic]"}");
-                    assemblyNode?.Nodes?.Add($"Is Dynamic: {assembly.IsDynamic}");
-                    assemblyNode?.Nodes?.Add($"Is Fully Trusted: {assembly.IsFullyTrusted}");
+            //// Loaded Assemblies (limited to top 20 to avoid overwhelming)
+            //TreeNode assembliesNode = TreeView1.Nodes?.Add($"Loaded assemblies");
+            //foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+            //{
+            //    try
+            //    {
+            //        var assemblyNode = assembliesNode?.Nodes?.Add(assembly.GetName().Name);
+            //        assemblyNode?.Nodes?.Add($"Version: {assembly.GetName().Version}");
+            //        assemblyNode?.Nodes?.Add($"Location: {assembly.Location ?? "[Dynamic]"}");
+            //        assemblyNode?.Nodes?.Add($"Is Dynamic: {assembly.IsDynamic}");
+            //        assemblyNode?.Nodes?.Add($"Is Fully Trusted: {assembly.IsFullyTrusted}");
 
-                    // Get referenced assemblies (first 3)
-                    var referenced = assembly.GetReferencedAssemblies().Take(3);
-                    if (referenced.Any())
-                    {
-                        var refNode = assemblyNode?.Nodes?.Add("Referenced Assemblies (first 3)");
-                        foreach (var refAssembly in referenced)
-                        {
-                            refNode?.Nodes?.Add($"{refAssembly.Name} v{refAssembly.Version}");
-                        }
-                    }
-                }
-                catch
-                {
-                    // Ignore assemblies that can't be inspected
-                    assembliesNode?.Nodes?.Add($"[Unable to inspect: {assembly.FullName?.Split(',')[0] ?? "Unknown"}]");
-                }
-            }
-            assembliesNode?.Nodes?.Add($"Total Assemblies Loaded: {AppDomain.CurrentDomain.GetAssemblies().Length}");
+            //        // Get referenced assemblies (first 3)
+            //        var referenced = assembly.GetReferencedAssemblies().Take(3);
+            //        if (referenced.Any())
+            //        {
+            //            var refNode = assemblyNode?.Nodes?.Add("Referenced Assemblies (first 3)");
+            //            foreach (var refAssembly in referenced)
+            //            {
+            //                refNode?.Nodes?.Add($"{refAssembly.Name} v{refAssembly.Version}");
+            //            }
+            //        }
+            //    }
+            //    catch
+            //    {
+            //        // Ignore assemblies that can't be inspected
+            //        assembliesNode?.Nodes?.Add($"[Unable to inspect: {assembly.FullName?.Split(',')[0] ?? "Unknown"}]");
+            //    }
+            //}
+            //assembliesNode?.Nodes?.Add($"Total Assemblies Loaded: {AppDomain.CurrentDomain.GetAssemblies().Length}");
 
             // Process information
             TreeNode processNode = TreeView1.Nodes?.Add($"Process info");
@@ -447,7 +447,7 @@ namespace WinPaletter
             TreeView1.ExpandAll();
 
             n?.Collapse();
-            assembliesNode?.Collapse();
+            //assembliesNode?.Collapse();
 
             TreeView1.SelectedNode = TreeView1.Nodes[0];
 

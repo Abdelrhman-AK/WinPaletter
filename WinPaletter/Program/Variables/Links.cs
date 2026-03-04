@@ -148,6 +148,11 @@ namespace WinPaletter.GlobalVariables
             public static string GitHubMgr => $"{WikiURL}/GitHub-Manager";
 
             /// <summary>
+            /// Link to the WinPaletter GitHub Manager wiki.
+            /// </summary>
+            public static string GitHubMgr_Introduction => $"{WikiURL}/GitHub-Manager-Introduction";
+
+            /// <summary>
             /// Link to the WinPaletter Store basics wiki.
             /// </summary>
             public static string StoreBasics => $"{WikiURL}/WinPaletter-Store-basics";

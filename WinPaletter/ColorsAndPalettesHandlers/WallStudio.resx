@@ -390,6 +390,27 @@ With WallStudio, your wallpaper is more than your desktop's background - it's th
         O3M4TgAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="button3.ImageGlyph" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAGZJREFUOE/d
+        kDsKgDAQBXOSRDy8AVtLj2PjLUY2bBEfCltooQPTDMvmk9KbAIOpPQxQgUl7GGA2tYf50AIgAwuwirur
+        3WZzv6D4j7cTOzdXu82W0y2uCD/hjn8ssM+q2sMAo6n9UQ48VLsQSxIF4gAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="button6.ImageGlyph" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAGZJREFUOE/d
+        kDsKgDAQBXOSRDy8AVtLj2PjLUY2bBEfCltooQPTDMvmk9KbAIOpPQxQgUl7GGA2tYf50AIgAwuwirur
+        3WZzv6D4j7cTOzdXu82W0y2uCD/hjn8ssM+q2sMAo6n9UQ48VLsQSxIF4gAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="button4.ImageGlyph" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAGZJREFUOE/d
+        kDsKgDAQBXOSRDy8AVtLj2PjLUY2bBEfCltooQPTDMvmk9KbAIOpPQxQgUl7GGA2tYf50AIgAwuwirur
+        3WZzv6D4j7cTOzdXu82W0y2uCD/hjn8ssM+q2sMAo6n9UQ48VLsQSxIF4gAAAABJRU5ErkJggg==
+</value>
+  </data>
   <data name="pictureBox6.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAaxJREFUSEvt
@@ -401,6 +422,20 @@ With WallStudio, your wallpaper is more than your desktop's background - it's th
         +BuaJR8MO0E20GSXYNj6/kbUy1Mx50U2VC3cockeZAO6jQCabRL6nXH1gfIZD7KlctbLfgh5oMEqQm+T
         1AfKJm+RC+XTXjSsiWxAaxHUB4rNN8iV0kk3tBZ/5oGiCRfyQR7SLPrUBwrHr08Lx5zIhxKzW6Le/2TM
         FwSPrKbvM3gQAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="Button2.ImageGlyph" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAGZJREFUOE/d
+        kDsKgDAQBXOSRDy8AVtLj2PjLUY2bBEfCltooQPTDMvmk9KbAIOpPQxQgUl7GGA2tYf50AIgAwuwirur
+        3WZzv6D4j7cTOzdXu82W0y2uCD/hjn8ssM+q2sMAo6n9UQ48VLsQSxIF4gAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="button8.ImageGlyph" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAGZJREFUOE/d
+        kDsKgDAQBXOSRDy8AVtLj2PjLUY2bBEfCltooQPTDMvmk9KbAIOpPQxQgUl7GGA2tYf50AIgAwuwirur
+        3WZzv6D4j7cTOzdXu82W0y2uCD/hjn8ssM+q2sMAo6n9UQ48VLsQSxIF4gAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="banner1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

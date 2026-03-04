@@ -742,6 +742,7 @@ namespace WinPaletter
             this.button3.Size = new System.Drawing.Size(25, 21);
             this.button3.TabIndex = 239;
             this.button3.UseVisualStyleBackColor = false;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // label26
             // 
