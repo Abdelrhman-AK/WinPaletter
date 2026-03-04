@@ -154,7 +154,6 @@
             this.button4 = new WinPaletter.UI.WP.Button();
             this.button6 = new WinPaletter.UI.WP.Button();
             this.pin_button = new WinPaletter.UI.WP.Button();
-            this.button27 = new WinPaletter.UI.WP.Button();
             this.tablessControl1.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -1062,7 +1061,6 @@
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox3.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox3.Controls.Add(this.button27);
             this.groupBox3.Controls.Add(this.button9);
             this.groupBox3.Controls.Add(this.label8);
             this.groupBox3.Controls.Add(this.pictureBox3);
@@ -2250,23 +2248,6 @@
             this.pin_button.Visible = false;
             this.pin_button.Click += new System.EventHandler(this.pin_button_Click);
             // 
-            // button27
-            // 
-            this.button27.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.button27.CustomColor = System.Drawing.Color.Empty;
-            this.button27.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
-            this.button27.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.button27.Image = null;
-            this.button27.ImageGlyph = null;
-            this.button27.ImageGlyphEnabled = false;
-            this.button27.Location = new System.Drawing.Point(601, 10);
-            this.button27.Name = "button27";
-            this.button27.Size = new System.Drawing.Size(105, 34);
-            this.button27.TabIndex = 20;
-            this.button27.Text = "Fork";
-            this.button27.UseVisualStyleBackColor = true;
-            this.button27.Click += new System.EventHandler(this.button27_Click);
-            // 
             // GitHub_Mgr
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -2489,6 +2470,5 @@
         internal System.Windows.Forms.Label label5;
         internal System.Windows.Forms.Label label9;
         private UI.WP.Banner banner5;
-        private UI.WP.Button button27;
     }
 }
