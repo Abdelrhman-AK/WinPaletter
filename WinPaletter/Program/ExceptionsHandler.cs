@@ -46,7 +46,7 @@ namespace WinPaletter
                 ExceptionDispatchInfo.Capture(e.ExceptionObject as Exception).Throw();
 #else
             if (!Debugger.IsAttached)
-                Forms.BugReport.ThrowError(e.ExceptionObject as Exception, true, System.Runtime.InteropServices.Marshal.GetLastWin32Error());
+                Forms.BugReport.Throw(e.ExceptionObject as Exception, true, System.Runtime.InteropServices.Marshal.GetLastWin32Error());
             else
                 ExceptionDispatchInfo.Capture(e.ExceptionObject as Exception).Throw();
 #endif
