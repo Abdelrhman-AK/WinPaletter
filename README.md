@@ -85,15 +85,17 @@ WinPaletter is developed and maintained by [Abdelrhman-AK](https://github.com/Ab
 
 - [Patching UxTheme.dll to apply unsigned Visual Styles by SecureUxTheme, developed by namazso](https://github.com/namazso/SecureUxTheme)
 
-- [3D and flat degrees modification in 3D objects (Classic Colors) is inspired by Desktop Architect](https://en.wikipedia.org/wiki/Desktop_Architect)
+- [Logging WinPaletter events into JSON files by Serilog](https://github.com/serilog/serilog)
+
+- [3D and flat degrees modification in 3D objects (Classic Colors) is inspired by Desktop Architect](https://en.wikipedia.org/wiki/Desktop_Architect).
 
 - [Colors picking controls by Cyotek](https://github.com/cyotek/Cyotek.Windows.Forms.ColorPicker)
 
 - [Bitmaps to cursors conversion mechanism developed by Evan Olds](https://github.com/evanolds/AnimCur)
 
 - [Retrieving elements of Windows XP visual styles (*.msstyles) using the Advanced UxTheme wrapper](https://www.codeproject.com/Articles/18603/Advanced-UxTheme-wrapper)
-  
-- [Extracting elements from visual styles (*.msstyles) using nptr/msstyleEditor](https://github.com/nptr/msstyleEditor)
+
+- [Extracting elements from visual styles (*.msstyles) of Windows Vista and later using nptr/msstyleEditor (libmsstyle)](https://github.com/nptr/msstyleEditor)
 
 - [Patching PE files by Ressy, developed by Tyrrrz](https://github.com/Tyrrrz/Ressy)
 
@@ -105,10 +107,12 @@ WinPaletter is developed and maintained by [Abdelrhman-AK](https://github.com/Ab
 
 - [Animation and transition effects for controls by FluentTransitions, developed by Andreas Wäscher](https://github.com/awaescher/FluentTransitions)
 
-- [Animation for Controls by Pavel Torgashov](https://www.codeproject.com/Articles/548769/Animator-for-WinForms)
+- [Controls animations by Pavel Torgashov](https://www.codeproject.com/Articles/548769/Animator-for-WinForms)
 
 - [Modern dialogs design (messages boxes) by Ookii.Dialogs.WinForms](https://github.com/ookii-dialogs/ookii-dialogs-winforms)
-  
+
+- [FastCloner by lofcz (used inside theme manager core)](https://github.com/lofcz/FastCloner)
+
 - [Using JetBrainsMono as a monospaced font for WinPaletter](https://github.com/JetBrains/JetBrainsMono)
 
 - [These items are provided by Microsoft: Classic color schemes, Luna theme preview (Luna.msstyles) and Command Prompt and PowerShell raster fonts previews](https://www.microsoft.com)
