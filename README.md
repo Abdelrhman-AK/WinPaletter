@@ -9,18 +9,6 @@
 This return release concentrates on **cleaning up legacy issues** and providing a better-honed experience.
 While significant new features are not anticipated, the goal is to place the project in a stable, workable condition.
 
-| Area | Update Description | Progress |
-|---------------------------------|-----------------------------------------------------------|---------------------|
-| Bugs fixes | Fix reported and non reported bugs and issues | ⌛ In progress |
-| Wiki rewrite | Wiki will be improved and rewritten to make users can understand WinPaletter more after its massive UI refresh | ⌛ In progress |
-| Developer Support | Better in-code documentation and organized comments for developers | ⌛ In progress |
-| Simplified UI Components | Streamlined user interface for enhanced workflow | 🔴 Partially done |
-| Windows 8 Support | Adding support for Windows 8 build 9200 (and builds below Windows 8.1) | ✔️ Done |
-| Logging System | New "WinPaletter Log" for sophisticated user diagnostics | ✔️ Done |
-| System Restore Point | Automatically create a restore point before applying any theme | ✔️ Done |
-| Multi-user Improvements | More stable and predictable behavior in multi-user scenarios | ✔️ Done |
-| WinPaletter setup | A setup dialog will appear on first launch, allowing you to configure WinPaletter preferences to best suit your needs | ✔️ Done |
-
 > [!IMPORTANT]
 > Development during this comeback phase will be limited. The developer will be available only one or two days per week (or every two weeks), and not for the full day. As a result, progress will be slower compared to the more active development period prior to archiving.
 
