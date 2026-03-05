@@ -4,6 +4,9 @@
 
 ![Github All Releases](https://img.shields.io/github/downloads/Abdelrhman-AK/WinPaletter/total?style=for-the-badge&color=0078D4) ![GitHub Release](https://img.shields.io/github/v/release/Abdelrhman-AK/WinPaletter?color=05227A&style=for-the-badge) [![GitHub stars](https://img.shields.io/github/stars/Abdelrhman-AK/WinPaletter?style=for-the-badge&color=F4870A&labelColor=F4870A&logo=github&logoColor=white)](https://github.com/Abdelrhman-AK/WinPaletter/stargazers) [![GitHub issues](https://img.shields.io/github/issues/Abdelrhman-AK/WinPaletter?color=FF0000&style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/issues) [![GitHub forks](https://img.shields.io/github/forks/Abdelrhman-AK/WinPaletter?color=00AF00&style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/network) [![License: MIT AND CPOL](https://img.shields.io/badge/License-MIT%20AND%20CPOL-FF0C4F?style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/License.md)
 
+> [!WARNING]
+> ### **Do not use unofficial builds.** Some "cracked" versions appear on GitHub. WinPaletter is completely **free** and does **not require a paid license**. With GitHub integration for uploading and managing themes directly in the app, always use the **official build** for your safety.
+
 ## WinPaletter is back! Project Scope:
 
 This return release concentrates on **cleaning up legacy issues** and providing a better-honed experience.
