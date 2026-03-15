@@ -67,11 +67,12 @@ namespace WinPaletter
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.label6 = new System.Windows.Forms.Label();
             this.Button3 = new WinPaletter.UI.WP.Button();
-            this.PictureBox4 = new System.Windows.Forms.PictureBox();
             this.Button2 = new WinPaletter.UI.WP.Button();
-            this.label7 = new System.Windows.Forms.Label();
             this.textBox1 = new WinPaletter.UI.WP.TextBox();
             this.Button1 = new WinPaletter.UI.WP.Button();
+            this.groupBox1 = new WinPaletter.UI.WP.GroupBox();
+            this.groupBox4 = new WinPaletter.UI.WP.GroupBox();
+            this.groupBox5 = new WinPaletter.UI.WP.GroupBox();
             this.GroupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox6)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox22)).BeginInit();
@@ -85,7 +86,9 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox4)).BeginInit();
+            this.groupBox1.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // titlebarExtender1
@@ -98,31 +101,25 @@ namespace WinPaletter
             this.GroupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GroupBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.GroupBox3.Controls.Add(this.LogonUI_Lockscreen_Toggle);
+            this.GroupBox3.Controls.Add(this.groupBox5);
+            this.GroupBox3.Controls.Add(this.groupBox4);
+            this.GroupBox3.Controls.Add(this.groupBox1);
             this.GroupBox3.Controls.Add(this.PictureBox6);
-            this.GroupBox3.Controls.Add(this.LogonUI_Background_Toggle);
             this.GroupBox3.Controls.Add(this.Label13);
-            this.GroupBox3.Controls.Add(this.PictureBox22);
-            this.GroupBox3.Controls.Add(this.PictureBox15);
-            this.GroupBox3.Controls.Add(this.Label20);
-            this.GroupBox3.Controls.Add(this.Label16);
-            this.GroupBox3.Controls.Add(this.LogonUI_Acrylic_Toggle);
-            this.GroupBox3.Controls.Add(this.Label18);
-            this.GroupBox3.Controls.Add(this.PictureBox16);
             this.GroupBox3.Location = new System.Drawing.Point(7, 204);
             this.GroupBox3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.GroupBox3.Name = "GroupBox3";
-            this.GroupBox3.Size = new System.Drawing.Size(562, 130);
+            this.GroupBox3.Size = new System.Drawing.Size(562, 207);
             this.GroupBox3.TabIndex = 15;
             this.GroupBox3.UseDecorationPattern = false;
             this.GroupBox3.UseSharpStyle = false;
             // 
             // LogonUI_Lockscreen_Toggle
             // 
-            this.LogonUI_Lockscreen_Toggle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.LogonUI_Lockscreen_Toggle.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.LogonUI_Lockscreen_Toggle.Checked = false;
             this.LogonUI_Lockscreen_Toggle.DarkLight_Toggler = false;
-            this.LogonUI_Lockscreen_Toggle.Location = new System.Drawing.Point(515, 101);
+            this.LogonUI_Lockscreen_Toggle.Location = new System.Drawing.Point(497, 14);
             this.LogonUI_Lockscreen_Toggle.Name = "LogonUI_Lockscreen_Toggle";
             this.LogonUI_Lockscreen_Toggle.Size = new System.Drawing.Size(40, 20);
             this.LogonUI_Lockscreen_Toggle.TabIndex = 16;
@@ -132,7 +129,7 @@ namespace WinPaletter
             // 
             this.PictureBox6.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox6.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox6.Image")));
-            this.PictureBox6.Location = new System.Drawing.Point(3, 3);
+            this.PictureBox6.Location = new System.Drawing.Point(7, 7);
             this.PictureBox6.Name = "PictureBox6";
             this.PictureBox6.Size = new System.Drawing.Size(30, 30);
             this.PictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -141,10 +138,10 @@ namespace WinPaletter
             // 
             // LogonUI_Background_Toggle
             // 
-            this.LogonUI_Background_Toggle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.LogonUI_Background_Toggle.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.LogonUI_Background_Toggle.Checked = false;
             this.LogonUI_Background_Toggle.DarkLight_Toggler = false;
-            this.LogonUI_Background_Toggle.Location = new System.Drawing.Point(515, 71);
+            this.LogonUI_Background_Toggle.Location = new System.Drawing.Point(497, 14);
             this.LogonUI_Background_Toggle.Name = "LogonUI_Background_Toggle";
             this.LogonUI_Background_Toggle.Size = new System.Drawing.Size(40, 20);
             this.LogonUI_Background_Toggle.TabIndex = 16;
@@ -156,18 +153,19 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Label13.BackColor = System.Drawing.Color.Transparent;
             this.Label13.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label13.Location = new System.Drawing.Point(39, 3);
+            this.Label13.Location = new System.Drawing.Point(43, 7);
             this.Label13.Name = "Label13";
-            this.Label13.Size = new System.Drawing.Size(520, 30);
+            this.Label13.Size = new System.Drawing.Size(512, 30);
             this.Label13.TabIndex = 0;
             this.Label13.Text = "Preferences";
             this.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // PictureBox22
             // 
+            this.PictureBox22.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.PictureBox22.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox22.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox22.Image")));
-            this.PictureBox22.Location = new System.Drawing.Point(9, 99);
+            this.PictureBox22.Location = new System.Drawing.Point(11, 12);
             this.PictureBox22.Name = "PictureBox22";
             this.PictureBox22.Size = new System.Drawing.Size(24, 24);
             this.PictureBox22.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -176,9 +174,10 @@ namespace WinPaletter
             // 
             // PictureBox15
             // 
+            this.PictureBox15.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.PictureBox15.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox15.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox15.Image")));
-            this.PictureBox15.Location = new System.Drawing.Point(9, 39);
+            this.PictureBox15.Location = new System.Drawing.Point(11, 12);
             this.PictureBox15.Name = "PictureBox15";
             this.PictureBox15.Size = new System.Drawing.Size(24, 24);
             this.PictureBox15.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -187,36 +186,34 @@ namespace WinPaletter
             // 
             // Label20
             // 
-            this.Label20.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Label20.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.Label20.BackColor = System.Drawing.Color.Transparent;
             this.Label20.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label20.Location = new System.Drawing.Point(39, 99);
+            this.Label20.Location = new System.Drawing.Point(41, 7);
             this.Label20.Name = "Label20";
-            this.Label20.Size = new System.Drawing.Size(470, 24);
+            this.Label20.Size = new System.Drawing.Size(450, 34);
             this.Label20.TabIndex = 13;
             this.Label20.Text = "Make this screen always unlocked and show user login screen only";
             this.Label20.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Label16
             // 
-            this.Label16.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Label16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.Label16.BackColor = System.Drawing.Color.Transparent;
             this.Label16.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label16.Location = new System.Drawing.Point(39, 39);
+            this.Label16.Location = new System.Drawing.Point(41, 7);
             this.Label16.Name = "Label16";
-            this.Label16.Size = new System.Drawing.Size(470, 24);
+            this.Label16.Size = new System.Drawing.Size(450, 34);
             this.Label16.TabIndex = 13;
             this.Label16.Text = "Acrylic effect on user password and login";
             this.Label16.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // LogonUI_Acrylic_Toggle
             // 
-            this.LogonUI_Acrylic_Toggle.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.LogonUI_Acrylic_Toggle.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.LogonUI_Acrylic_Toggle.Checked = false;
             this.LogonUI_Acrylic_Toggle.DarkLight_Toggler = false;
-            this.LogonUI_Acrylic_Toggle.Location = new System.Drawing.Point(515, 41);
+            this.LogonUI_Acrylic_Toggle.Location = new System.Drawing.Point(497, 14);
             this.LogonUI_Acrylic_Toggle.Name = "LogonUI_Acrylic_Toggle";
             this.LogonUI_Acrylic_Toggle.Size = new System.Drawing.Size(40, 20);
             this.LogonUI_Acrylic_Toggle.TabIndex = 16;
@@ -224,22 +221,22 @@ namespace WinPaletter
             // 
             // Label18
             // 
-            this.Label18.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Label18.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.Label18.BackColor = System.Drawing.Color.Transparent;
             this.Label18.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label18.Location = new System.Drawing.Point(39, 69);
+            this.Label18.Location = new System.Drawing.Point(41, 7);
             this.Label18.Name = "Label18";
-            this.Label18.Size = new System.Drawing.Size(470, 24);
+            this.Label18.Size = new System.Drawing.Size(450, 34);
             this.Label18.TabIndex = 13;
             this.Label18.Text = "Show lock screen background";
             this.Label18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // PictureBox16
             // 
+            this.PictureBox16.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.PictureBox16.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox16.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox16.Image")));
-            this.PictureBox16.Location = new System.Drawing.Point(9, 69);
+            this.PictureBox16.Location = new System.Drawing.Point(11, 12);
             this.PictureBox16.Name = "PictureBox16";
             this.PictureBox16.Size = new System.Drawing.Size(24, 24);
             this.PictureBox16.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -404,9 +401,7 @@ namespace WinPaletter
             this.groupBox2.Controls.Add(this.pictureBox3);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.Button3);
-            this.groupBox2.Controls.Add(this.PictureBox4);
             this.groupBox2.Controls.Add(this.Button2);
-            this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.textBox1);
             this.groupBox2.Controls.Add(this.Button1);
             this.groupBox2.Location = new System.Drawing.Point(7, 58);
@@ -473,7 +468,7 @@ namespace WinPaletter
             this.label6.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.Location = new System.Drawing.Point(43, 7);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(490, 30);
+            this.label6.Size = new System.Drawing.Size(512, 30);
             this.label6.TabIndex = 162;
             this.label6.Text = "Change lock screen image (machine-wide change)";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -497,16 +492,6 @@ namespace WinPaletter
             this.Button3.UseVisualStyleBackColor = false;
             this.Button3.Click += new System.EventHandler(this.Button3_Click);
             // 
-            // PictureBox4
-            // 
-            this.PictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox4.Image")));
-            this.PictureBox4.Location = new System.Drawing.Point(13, 44);
-            this.PictureBox4.Name = "PictureBox4";
-            this.PictureBox4.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.PictureBox4.TabIndex = 140;
-            this.PictureBox4.TabStop = false;
-            // 
             // Button2
             // 
             this.Button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -526,21 +511,12 @@ namespace WinPaletter
             this.Button2.UseVisualStyleBackColor = false;
             this.Button2.Click += new System.EventHandler(this.Button2_Click);
             // 
-            // label7
-            // 
-            this.label7.Location = new System.Drawing.Point(43, 44);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(65, 24);
-            this.label7.TabIndex = 139;
-            this.label7.Text = "Image:";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // textBox1
             // 
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox1.ForeColor = System.Drawing.Color.White;
-            this.textBox1.Location = new System.Drawing.Point(114, 44);
+            this.textBox1.Location = new System.Drawing.Point(7, 44);
             this.textBox1.MaxLength = 32767;
             this.textBox1.Multiline = false;
             this.textBox1.Name = "textBox1";
@@ -549,7 +525,7 @@ namespace WinPaletter
             this.textBox1.SelectedText = "";
             this.textBox1.SelectionLength = 0;
             this.textBox1.SelectionStart = 0;
-            this.textBox1.Size = new System.Drawing.Size(441, 24);
+            this.textBox1.Size = new System.Drawing.Size(548, 24);
             this.textBox1.TabIndex = 141;
             this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.textBox1.UseSystemPasswordChar = false;
@@ -573,6 +549,51 @@ namespace WinPaletter
             this.Button1.TabIndex = 142;
             this.Button1.UseVisualStyleBackColor = false;
             this.Button1.Click += new System.EventHandler(this.Button1_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox1.Controls.Add(this.Label16);
+            this.groupBox1.Controls.Add(this.PictureBox15);
+            this.groupBox1.Controls.Add(this.LogonUI_Acrylic_Toggle);
+            this.groupBox1.Location = new System.Drawing.Point(7, 43);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(548, 48);
+            this.groupBox1.TabIndex = 22;
+            this.groupBox1.UseDecorationPattern = false;
+            this.groupBox1.UseSharpStyle = false;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox4.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox4.Controls.Add(this.PictureBox16);
+            this.groupBox4.Controls.Add(this.Label18);
+            this.groupBox4.Controls.Add(this.LogonUI_Background_Toggle);
+            this.groupBox4.Location = new System.Drawing.Point(7, 97);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(548, 48);
+            this.groupBox4.TabIndex = 23;
+            this.groupBox4.UseDecorationPattern = false;
+            this.groupBox4.UseSharpStyle = false;
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox5.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox5.Controls.Add(this.LogonUI_Lockscreen_Toggle);
+            this.groupBox5.Controls.Add(this.PictureBox22);
+            this.groupBox5.Controls.Add(this.Label20);
+            this.groupBox5.Location = new System.Drawing.Point(7, 151);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(548, 48);
+            this.groupBox5.TabIndex = 24;
+            this.groupBox5.UseDecorationPattern = false;
+            this.groupBox5.UseSharpStyle = false;
             // 
             // LogonUI
             // 
@@ -610,7 +631,9 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox4)).EndInit();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -643,12 +666,13 @@ namespace WinPaletter
         internal PictureBox pictureBox3;
         internal Label label6;
         internal UI.WP.Button Button3;
-        internal PictureBox PictureBox4;
         internal UI.WP.Button Button2;
-        internal Label label7;
         internal UI.WP.TextBox textBox1;
         internal UI.WP.Button Button1;
         internal UI.WP.Button button4;
         internal UI.WP.Button button5;
+        private UI.WP.GroupBox groupBox5;
+        private UI.WP.GroupBox groupBox4;
+        private UI.WP.GroupBox groupBox1;
     }
 }

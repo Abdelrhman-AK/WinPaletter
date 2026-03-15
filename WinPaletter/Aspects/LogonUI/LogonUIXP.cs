@@ -137,6 +137,7 @@ namespace WinPaletter
         public void LoadFromTM(Manager TM)
         {
             AspectEnabled = TM.LogonUIXP.Enabled;
+
             switch (TM.LogonUIXP.Mode)
             {
                 case Theme.Structures.LogonUIXP.Modes.Default:
@@ -158,7 +159,9 @@ namespace WinPaletter
             }
 
             color_pick.BackColor = TM.LogonUIXP.BackColor;
-            CheckBox1.Checked = TM.LogonUIXP.ShowMoreOptions;
+            toggle1.Checked = TM.LogonUIXP.ShowMoreOptions;
+            TextBox1.Text = TM.LogonUIXP.LogonUIEXEPath;
+
             UpdateWin2000Preview(TM.LogonUIXP.BackColor);
         }
 
@@ -172,7 +175,8 @@ namespace WinPaletter
                 TM.LogonUIXP.Mode = Theme.Structures.LogonUIXP.Modes.Win2000;
 
             TM.LogonUIXP.BackColor = color_pick.BackColor;
-            TM.LogonUIXP.ShowMoreOptions = CheckBox1.Checked;
+            TM.LogonUIXP.ShowMoreOptions = toggle1.Checked;
+            TM.LogonUIXP.LogonUIEXEPath = TextBox1.Text;
         }
 
         /// <summary>
@@ -225,17 +229,38 @@ namespace WinPaletter
 
         private void RadioImage2_CheckedChanged(object sender, EventArgs e)
         {
-            GroupBox1.Enabled = RadioImage2.Checked;
+            if ((sender as UI.WP.RadioImage).Checked)
+            {
+                if (IsShown) Program.Animator.HideSync(tablessControl1);
+                tablessControl1.SelectedIndex = 1;
+                if (IsShown) Program.Animator.ShowSync(tablessControl1);
+            }
         }
 
         private void RadioImage1_CheckedChanged(object sender, EventArgs e)
         {
-            GroupBox1.Enabled = !RadioImage1.Checked;
+            if ((sender as UI.WP.RadioImage).Checked)
+            {
+                if (IsShown) Program.Animator.HideSync(tablessControl1);
+                tablessControl1.SelectedIndex = 0;
+                if (IsShown) Program.Animator.ShowSync(tablessControl1);
+            }
         }
 
         private void color_pick_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
             UpdateWin2000Preview(e.ColorItem.BackColor);
+        }
+
+        private void Button7_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog dlg = new() { Filter = Program.Filters.EXE, Title = Program.Localization.Strings.Extensions.EXE })
+            {
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    TextBox1.Text = dlg.FileName;
+                }
+            }
         }
     }
 }

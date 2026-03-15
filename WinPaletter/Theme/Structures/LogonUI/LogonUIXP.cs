@@ -26,6 +26,11 @@ namespace WinPaletter.Theme.Structures
         public bool ShowMoreOptions { get; set; } = false;
 
         /// <summary>
+        /// Path of LogonUI.exe to be used instead of default Windows LogonUI.exe
+        /// </summary>
+        public string LogonUIEXEPath { get; set; } = "logonui.exe";
+
+        /// <summary>
         /// Enumeration for Windows XP LogonUI modes
         /// </summary>
         public enum Modes
@@ -49,52 +54,44 @@ namespace WinPaletter.Theme.Structures
         {
             Program.Log?.Write(LogEventLevel.Information, $"Loading Windows XP LogonUI screen preferences from registry.");
 
-            if (OS.WXP)
+            Enabled = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\WinXP", string.Empty, @default.Enabled);
+
+            switch (ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "LogonType", @default.Mode))
             {
-                Enabled = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\LogonUI\WinXP", string.Empty, @default.Enabled);
-
-                switch (ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "LogonType", @default.Mode))
-                {
-                    case Modes.Default:
-                        {
-                            Mode = Modes.Default;
-                            break;
-                        }
-
-                    case Modes.Win2000:
-                        {
-                            Mode = Modes.Win2000;
-                            break;
-                        }
-
-                    default:
-                        {
-                            Mode = Modes.Default;
-                            break;
-                        }
-                }
-
-                {
-                    object temp = ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "Background", "0 0 0");
-                    if (temp.ToString().Split(' ').Count() == 3)
+                case Modes.Default:
                     {
-                        BackColor = Color.FromArgb(255, int.Parse(temp.ToString().Split(' ')[0]), int.Parse(temp.ToString().Split(' ')[1]), int.Parse(temp.ToString().Split(' ')[2]));
+                        Mode = Modes.Default;
+                        break;
                     }
-                    else
-                    {
-                        BackColor = @default.BackColor;
-                    }
-                }
 
-                ShowMoreOptions = ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "ShowLogonOptions", @default.ShowMoreOptions);
+                case Modes.Win2000:
+                    {
+                        Mode = Modes.Win2000;
+                        break;
+                    }
+
+                default:
+                    {
+                        Mode = Modes.Default;
+                        break;
+                    }
             }
 
-            else
             {
-                Mode = @default.Mode;
-                BackColor = @default.BackColor;
-                ShowMoreOptions = @default.ShowMoreOptions;
+                object temp = ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "Background", "0 0 0");
+                if (temp.ToString().Split(' ').Count() == 3)
+                {
+                    BackColor = Color.FromArgb(255, int.Parse(temp.ToString().Split(' ')[0]), int.Parse(temp.ToString().Split(' ')[1]), int.Parse(temp.ToString().Split(' ')[2]));
+                }
+                else
+                {
+                    BackColor = @default.BackColor;
+                }
             }
+
+            ShowMoreOptions = ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "ShowLogonOptions", @default.ShowMoreOptions);
+
+            LogonUIEXEPath = ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "UIHOST", @default.LogonUIEXEPath);
         }
 
         /// <summary>
@@ -112,6 +109,8 @@ namespace WinPaletter.Theme.Structures
                 WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "LogonType", Mode == Modes.Default ? 1 : 0, RegistryValueKind.DWord);
                 WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "Background", BackColor.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
                 WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "ShowLogonOptions", ShowMoreOptions ? 1 : 0, RegistryValueKind.DWord);
+
+                WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon", "UIHOST", System.IO.File.Exists(LogonUIEXEPath) ? LogonUIEXEPath : "logonui.exe", RegistryValueKind.String);
             }
         }
 

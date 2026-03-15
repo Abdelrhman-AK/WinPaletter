@@ -137,9 +137,7 @@ namespace WinPaletter
 
         public void LoadFromTM(Manager TM)
         {
-            pictureBox1.Visible = true;
-            checkBox1.Visible = true;
-            checkBox1.Checked = TM.LogonUI81.NoLockScreen;
+            toggle1.Checked = !TM.LogonUI81.NoLockScreen;
 
             AspectEnabled = TM.LogonUI81.Enabled;
 
@@ -147,25 +145,25 @@ namespace WinPaletter
             {
                 case Theme.Structures.LogonUI81.Sources.Default:
                     {
-                        RadioButton1.Checked = true;
+                        sysdef_toggle.Checked = true;
                         break;
                     }
 
                 case Theme.Structures.LogonUI81.Sources.Wallpaper:
                     {
-                        RadioButton2.Checked = true;
+                        curwall_toggle.Checked = true;
                         break;
                     }
 
                 case Theme.Structures.LogonUI81.Sources.CustomImage:
                     {
-                        RadioButton4.Checked = true;
+                        image_toggle.Checked = true;
                         break;
                     }
 
                 case Theme.Structures.LogonUI81.Sources.SolidColor:
                     {
-                        RadioButton3.Checked = true;
+                        color_toggle.Checked = true;
                         break;
                     }
             }
@@ -173,9 +171,9 @@ namespace WinPaletter
             TextBox1.Text = TM.LogonUI81.ImagePath;
             color_pick.BackColor = TM.LogonUI81.Color;
             pnl_preview.BackColor = TM.LogonUI81.Color;
-            CheckBox8.Checked = TM.LogonUI81.Grayscale;
-            CheckBox7.Checked = TM.LogonUI81.Blur;
-            CheckBox6.Checked = TM.LogonUI81.Noise;
+            grayscale_toggle.Checked = TM.LogonUI81.Grayscale;
+            blur_toggle.Checked = TM.LogonUI81.Blur;
+            noise_toggle.Checked = TM.LogonUI81.Noise;
 
             ID = TM.LogonUI81.LockScreenSystemID;
 
@@ -227,15 +225,15 @@ namespace WinPaletter
         {
             TM.LogonUI81.Enabled = AspectEnabled;
 
-            TM.LogonUI81.NoLockScreen = checkBox1.Checked;
+            TM.LogonUI81.NoLockScreen = !toggle1.Checked;
 
-            if (RadioButton1.Checked)
+            if (sysdef_toggle.Checked)
                 TM.LogonUI81.Mode = Theme.Structures.LogonUI81.Sources.Default;
-            if (RadioButton2.Checked)
+            if (curwall_toggle.Checked)
                 TM.LogonUI81.Mode = Theme.Structures.LogonUI81.Sources.Wallpaper;
-            if (RadioButton3.Checked)
+            if (color_toggle.Checked)
                 TM.LogonUI81.Mode = Theme.Structures.LogonUI81.Sources.SolidColor;
-            if (RadioButton4.Checked)
+            if (image_toggle.Checked)
                 TM.LogonUI81.Mode = Theme.Structures.LogonUI81.Sources.CustomImage;
 
             TM.LogonUI81.LockScreenSystemID = img1.Checked ? 0 :
@@ -248,9 +246,9 @@ namespace WinPaletter
             TM.LogonUI81.ImagePath = TextBox1.Text;
             TM.LogonUI81.Color = color_pick.BackColor;
 
-            TM.LogonUI81.Grayscale = CheckBox8.Checked;
-            TM.LogonUI81.Blur = CheckBox7.Checked;
-            TM.LogonUI81.Noise = CheckBox6.Checked;
+            TM.LogonUI81.Grayscale = grayscale_toggle.Checked;
+            TM.LogonUI81.Blur = blur_toggle.Checked;
+            TM.LogonUI81.Noise = noise_toggle.Checked;
 
             TM.LogonUI81.Blur_Intensity = (int)trackBarX1.Value;
             TM.LogonUI81.Noise_Intensity = (int)trackBarX2.Value;
@@ -265,7 +263,7 @@ namespace WinPaletter
         {
             Bitmap bmpX = null;
 
-            if (RadioButton1.Checked && OS.W8x)
+            if (sysdef_toggle.Checked && OS.W8x)
             {
                 string SysLock;
                 if (ID != 1 & ID != 2)
@@ -280,17 +278,17 @@ namespace WinPaletter
                 bmpX = BitmapMgr.Load(SysLock);
             }
 
-            else if (RadioButton2.Checked)
+            else if (curwall_toggle.Checked)
             {
                 bmpX = Program.WallpaperMonitor.Get(Program.TM, Program.WindowStyle);
             }
 
-            else if (RadioButton3.Checked)
+            else if (color_toggle.Checked)
             {
                 bmpX = color_pick.BackColor.ToBitmap(Screen.PrimaryScreen.Bounds.Size);
             }
 
-            else if (RadioButton4.Checked & File.Exists(TextBox1.Text))
+            else if (image_toggle.Checked & File.Exists(TextBox1.Text))
             {
                 bmpX = BitmapMgr.Load(TextBox1.Text);
             }
@@ -322,11 +320,11 @@ namespace WinPaletter
         {
             Bitmap _bmp = bmp;
 
-            if (CheckBox8.Checked) _bmp = _bmp.Grayscale();
+            if (grayscale_toggle.Checked) _bmp = _bmp.Grayscale();
 
-            if (CheckBox7.Checked) _bmp = _bmp.Blur(trackBarX1.Value);
+            if (blur_toggle.Checked) _bmp = _bmp.Blur(trackBarX1.Value);
 
-            if (CheckBox6.Checked)
+            if (noise_toggle.Checked)
             {
                 switch (ComboBox1.SelectedIndex)
                 {
@@ -346,57 +344,15 @@ namespace WinPaletter
             return _bmp;
         }
 
-        private void RadioButton1_CheckedChanged(object sender, EventArgs e)
-        {
-            if (IsShown & RadioButton1.Checked)
-                pnl_preview.BackgroundImage = ReturnBK();
-        }
-
-        private void RadioButton2_CheckedChanged(object sender, EventArgs e)
-        {
-            if (IsShown & RadioButton2.Checked)
-                pnl_preview.BackgroundImage = ReturnBK();
-        }
-
-        private void RadioButton4_CheckedChanged(object sender, EventArgs e)
-        {
-            if (IsShown & RadioButton4.Checked)
-                pnl_preview.BackgroundImage = ReturnBK();
-        }
-
         private void TextBox1_TextChanged(object sender, EventArgs e)
         {
-            if (IsShown & RadioButton4.Checked & File.Exists(TextBox1.Text))
-                pnl_preview.BackgroundImage = ReturnBK();
-        }
-
-        private void RadioButton3_CheckedChanged(object sender, EventArgs e)
-        {
-            if (IsShown & RadioButton3.Checked)
-                pnl_preview.BackgroundImage = ReturnBK();
-        }
-
-        private void CheckBox8_CheckedChanged(object sender, EventArgs e)
-        {
-            if (IsShown)
-                pnl_preview.BackgroundImage = ReturnBK();
-        }
-
-        private void CheckBox7_CheckedChanged(object sender, EventArgs e)
-        {
-            if (IsShown)
-                pnl_preview.BackgroundImage = ReturnBK();
-        }
-
-        private void CheckBox6_CheckedChanged(object sender, EventArgs e)
-        {
-            if (IsShown)
+            if (IsShown & image_toggle.Checked & File.Exists(TextBox1.Text))
                 pnl_preview.BackgroundImage = ReturnBK();
         }
 
         private void ComboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (IsShown & CheckBox6.Checked)
+            if (IsShown & noise_toggle.Checked)
                 pnl_preview.BackgroundImage = ReturnBK();
         }
 
@@ -427,7 +383,7 @@ namespace WinPaletter
                 { pnl_preview, new string[] { nameof(pnl_preview.BackColor) } }
             };
 
-            if (RadioButton3.Checked)
+            if (color_toggle.Checked)
                 pnl_preview.BackgroundImage = null;
 
             Color C = Forms.ColorPickerDlg.Pick(CList);
@@ -446,12 +402,12 @@ namespace WinPaletter
 
         private void trackBarX1_ValueChanged(object sender, EventArgs e)
         {
-            if (IsShown && CheckBox7.Checked) pnl_preview.BackgroundImage = ReturnBK();
+            if (IsShown && blur_toggle.Checked) pnl_preview.BackgroundImage = ReturnBK();
         }
 
         private void trackBarX2_ValueChanged(object sender, EventArgs e)
         {
-            if (IsShown && CheckBox6.Checked) pnl_preview.BackgroundImage = ReturnBK();
+            if (IsShown && noise_toggle.Checked) pnl_preview.BackgroundImage = ReturnBK();
         }
 
         private void imgX_CheckedChanged(object sender, EventArgs e)
@@ -460,6 +416,26 @@ namespace WinPaletter
         }
 
         private void color_pick_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
+        {
+            pnl_preview.BackgroundImage = ReturnBK();
+        }
+
+        private void sysdef_toggle_CheckedChanged(object sender, EventArgs e)
+        {
+            if (sender is UI.WP.Toggle changedToggle && changedToggle.Checked)
+            {
+                UI.WP.Toggle[] toggles = { sysdef_toggle, curwall_toggle, color_toggle, image_toggle };
+
+                foreach (UI.WP.Toggle toggle in toggles)
+                {
+                    if (toggle != changedToggle) toggle.Checked = false;
+                }
+
+                pnl_preview.BackgroundImage = ReturnBK();
+            }
+        }
+
+        private void grayscale_toggle_CheckedChanged(object sender, EventArgs e)
         {
             pnl_preview.BackgroundImage = ReturnBK();
         }
