@@ -2,24 +2,15 @@
 
 # ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/GithubBannerIntro.jpg?raw=true)
 
-![Github All Releases](https://img.shields.io/github/downloads/Abdelrhman-AK/WinPaletter/total?color=0078D4&style=for-the-badge) ![GitHub Release](https://img.shields.io/github/v/release/Abdelrhman-AK/WinPaletter?color=05227A&style=for-the-badge) [![GitHub stars](https://img.shields.io/github/stars/Abdelrhman-AK/WinPaletter?color=F4870A&style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/stargazers) [![GitHub issues](https://img.shields.io/github/issues/Abdelrhman-AK/WinPaletter?color=FF0000&style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/issues) [![GitHub forks](https://img.shields.io/github/forks/Abdelrhman-AK/WinPaletter?color=00AF00&style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/network) [![License: MIT AND CPOL](https://img.shields.io/badge/License-MIT%20AND%20CPOL-FF0C4F?style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/License.md)
+![Github All Releases](https://img.shields.io/github/downloads/Abdelrhman-AK/WinPaletter/total?style=for-the-badge&color=0078D4) ![GitHub Release](https://img.shields.io/github/v/release/Abdelrhman-AK/WinPaletter?color=05227A&style=for-the-badge) [![GitHub stars](https://img.shields.io/github/stars/Abdelrhman-AK/WinPaletter?style=for-the-badge&color=F4870A&labelColor=F4870A&logo=github&logoColor=white)](https://github.com/Abdelrhman-AK/WinPaletter/stargazers) [![GitHub issues](https://img.shields.io/github/issues/Abdelrhman-AK/WinPaletter?color=FF0000&style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/issues) [![GitHub forks](https://img.shields.io/github/forks/Abdelrhman-AK/WinPaletter?color=00AF00&style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/network) [![License: MIT AND CPOL](https://img.shields.io/badge/License-MIT%20AND%20CPOL-FF0C4F?style=for-the-badge)](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/License.md)
+
+> [!WARNING]
+> ### **Do not use unofficial builds.** Some "cracked" versions appear on GitHub. WinPaletter is completely **free** and does **not require a paid license**. With GitHub integration for uploading and managing themes directly in the app, always use the **official build** for your safety.
 
 ## WinPaletter is back! Project Scope:
 
 This return release concentrates on **cleaning up legacy issues** and providing a better-honed experience.
 While significant new features are not anticipated, the goal is to place the project in a stable, workable condition.
-
-| Area | Update Description | Progress |
-|---------------------------------|-----------------------------------------------------------|---------------------|
-| Bugs fixes | Fix reported and non reported bugs and issues | ⌛ In progress |
-| Wiki rewrite | Wiki will be improved and rewritten to make users can understand WinPaletter more after its massive UI refresh | ⌛ In progress |
-| Developer Support | Better in-code documentation and organized comments for developers | ⌛ In progress |
-| Simplified UI Components | Streamlined user interface for enhanced workflow | 🔴 Partially done |
-| Windows 8 Support | Adding support for Windows 8 build 9200 (and builds below Windows 8.1) | ✔️ Done |
-| Logging System | New "WinPaletter Log" for sophisticated user diagnostics | ✔️ Done |
-| System Restore Point | Automatically create a restore point before applying any theme | ✔️ Done |
-| Multi-user Improvements | More stable and predictable behavior in multi-user scenarios | ✔️ Done |
-| WinPaletter setup | A setup dialog will appear on first launch, allowing you to configure WinPaletter preferences to best suit your needs | ✔️ Done |
 
 > [!IMPORTANT]
 > Development during this comeback phase will be limited. The developer will be available only one or two days per week (or every two weeks), and not for the full day. As a result, progress will be slower compared to the more active development period prior to archiving.
@@ -97,15 +88,17 @@ WinPaletter is developed and maintained by [Abdelrhman-AK](https://github.com/Ab
 
 - [Patching UxTheme.dll to apply unsigned Visual Styles by SecureUxTheme, developed by namazso](https://github.com/namazso/SecureUxTheme)
 
-- [3D and flat degrees modification in 3D objects (Classic Colors) is inspired by Desktop Architect](https://en.wikipedia.org/wiki/Desktop_Architect)
+- [Logging WinPaletter events into JSON files by Serilog](https://github.com/serilog/serilog)
+
+- [3D and flat degrees modification in 3D objects (Classic Colors) is inspired by Desktop Architect](https://en.wikipedia.org/wiki/Desktop_Architect).
 
 - [Colors picking controls by Cyotek](https://github.com/cyotek/Cyotek.Windows.Forms.ColorPicker)
 
 - [Bitmaps to cursors conversion mechanism developed by Evan Olds](https://github.com/evanolds/AnimCur)
 
 - [Retrieving elements of Windows XP visual styles (*.msstyles) using the Advanced UxTheme wrapper](https://www.codeproject.com/Articles/18603/Advanced-UxTheme-wrapper)
-  
-- [Extracting elements from visual styles (*.msstyles) using nptr/msstyleEditor](https://github.com/nptr/msstyleEditor)
+
+- [Extracting elements from visual styles (*.msstyles) of Windows Vista and later using nptr/msstyleEditor (libmsstyle)](https://github.com/nptr/msstyleEditor)
 
 - [Patching PE files by Ressy, developed by Tyrrrz](https://github.com/Tyrrrz/Ressy)
 
@@ -117,10 +110,12 @@ WinPaletter is developed and maintained by [Abdelrhman-AK](https://github.com/Ab
 
 - [Animation and transition effects for controls by FluentTransitions, developed by Andreas Wäscher](https://github.com/awaescher/FluentTransitions)
 
-- [Animation for Controls by Pavel Torgashov](https://www.codeproject.com/Articles/548769/Animator-for-WinForms)
+- [Controls animations by Pavel Torgashov](https://www.codeproject.com/Articles/548769/Animator-for-WinForms)
 
 - [Modern dialogs design (messages boxes) by Ookii.Dialogs.WinForms](https://github.com/ookii-dialogs/ookii-dialogs-winforms)
-  
+
+- [FastCloner by lofcz (used inside theme manager core)](https://github.com/lofcz/FastCloner)
+
 - [Using JetBrainsMono as a monospaced font for WinPaletter](https://github.com/JetBrains/JetBrainsMono)
 
 - [These items are provided by Microsoft: Classic color schemes, Luna theme preview (Luna.msstyles) and Command Prompt and PowerShell raster fonts previews](https://www.microsoft.com)

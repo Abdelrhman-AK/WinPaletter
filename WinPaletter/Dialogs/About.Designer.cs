@@ -320,7 +320,7 @@ namespace WinPaletter
             this.LinkLabel6.LinkColor = System.Drawing.Color.White;
             this.LinkLabel6.Location = new System.Drawing.Point(42, 603);
             this.LinkLabel6.Name = "LinkLabel6";
-            this.LinkLabel6.Size = new System.Drawing.Size(616, 24);
+            this.LinkLabel6.Size = new System.Drawing.Size(616, 35);
             this.LinkLabel6.TabIndex = 25;
             this.LinkLabel6.TabStop = true;
             this.LinkLabel6.Text = "These items are provided by Microsoft: Classic color schemes, Luna theme preview " +
@@ -592,6 +592,8 @@ namespace WinPaletter
             this.bottom_buttons.Name = "bottom_buttons";
             this.bottom_buttons.Size = new System.Drawing.Size(664, 48);
             this.bottom_buttons.TabIndex = 119;
+            this.bottom_buttons.UseDecorationPattern = false;
+            this.bottom_buttons.UseSharpStyle = false;
             // 
             // Button3
             // 
@@ -797,10 +799,7 @@ namespace WinPaletter
             this.Controls.Add(this.LinkLabel9);
             this.Controls.Add(this.PictureBox13);
             this.Controls.Add(this.LinkLabel13);
-            this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ForeColor = System.Drawing.Color.White;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "About";
