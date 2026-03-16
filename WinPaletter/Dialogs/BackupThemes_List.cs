@@ -82,7 +82,7 @@ namespace WinPaletter
             listView1.Groups.Add(group4);
             listView1.Groups.Add(group5);
 
-            IEnumerable<string> backups = Directory.EnumerateFiles(Program.Settings.BackupTheme.BackupPath, "*", SearchOption.AllDirectories);
+            IEnumerable<string> backups = Directory.EnumerateFiles(Program.Settings.BackupTheme.BackupPath, "*.wpth", SearchOption.AllDirectories);
             label3.Text = backups.Sum(fileInfo => new FileInfo(fileInfo).Length).ToStringFileSize();
             label4.Text = $"{backups.Count()} {Program.Localization.Strings.General.BackupsCount}";
 
