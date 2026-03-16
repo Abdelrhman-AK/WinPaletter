@@ -1072,14 +1072,15 @@
             // 
             this.alertBox5.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Success;
             this.alertBox5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.alertBox5.AutoSize = true;
             this.alertBox5.BackColor = System.Drawing.Color.Transparent;
             this.alertBox5.CenterText = true;
             this.alertBox5.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.alertBox5.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.alertBox5.Image = null;
-            this.alertBox5.Location = new System.Drawing.Point(563, 14);
+            this.alertBox5.Location = new System.Drawing.Point(582, 13);
             this.alertBox5.Name = "alertBox5";
-            this.alertBox5.Size = new System.Drawing.Size(110, 20);
+            this.alertBox5.Size = new System.Drawing.Size(91, 22);
             this.alertBox5.TabIndex = 10;
             this.alertBox5.TabStop = false;
             this.alertBox5.Text = "Recommended";
@@ -1135,7 +1136,7 @@
             this.tabPage7.Name = "tabPage7";
             this.tabPage7.Size = new System.Drawing.Size(751, 503);
             this.tabPage7.TabIndex = 6;
-            this.tabPage7.Text = "6";
+            this.tabPage7.Text = "5";
             // 
             // label8
             // 
@@ -1354,6 +1355,7 @@
             this.groupBox48.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox75)).EndInit();
             this.groupBox14.ResumeLayout(false);
+            this.groupBox14.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox7)).EndInit();
             this.tabPage7.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();

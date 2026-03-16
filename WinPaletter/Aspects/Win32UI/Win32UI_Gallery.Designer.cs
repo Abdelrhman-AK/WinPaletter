@@ -109,12 +109,15 @@
             this.ClientSize = new System.Drawing.Size(1049, 559);
             this.Controls.Add(this.schemes);
             this.Controls.Add(this.bottom_buttons);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Win32UI_Gallery";
             this.ShowIcon = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Classic Colors schemes gallery";
+            this.ShowIconAndCaptionText = false;
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            this.Text = "";
             this.Load += new System.EventHandler(this.Win32UI_Gallery_Load);
             this.bottom_buttons.ResumeLayout(false);
             this.ResumeLayout(false);

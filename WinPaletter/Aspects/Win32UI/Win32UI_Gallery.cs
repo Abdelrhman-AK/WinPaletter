@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using WinPaletter.Templates;
@@ -9,6 +11,14 @@ namespace WinPaletter
 {
     public partial class Win32UI_Gallery : UI.WP.Form
     {
+        // Keyed by scheme name. Persists for the process lifetime.
+        // Disposed only when the application exits or cache is explicitly invalidated.
+        private static readonly Dictionary<string, Bitmap> _bitmapCache = new(StringComparer.OrdinalIgnoreCase);
+
+        // Tracks the scheme string that was used to populate the cache.
+        // If Schemes.ClassicColors ever changes at runtime, the cache is rebuilt.
+        private static string _cachedSchemeSource = null;
+
         public Win32UI_Gallery()
         {
             InitializeComponent();
@@ -23,50 +33,104 @@ namespace WinPaletter
         {
             Cursor = Cursors.WaitCursor;
 
-            Control[] controlCollection = [];
-
-            using (RetroDesktopColors RDC = new())
+            // Clear existing controls without destroying cached bitmaps.
+            foreach (Control control in schemes.Controls.Cast<Control>().ToList())
             {
-                RDC.LoadMetrics(Program.TM);
-                RDC.Size = new(350, 300);
-                foreach (string item in Schemes.ClassicColors.Split('\n').Select(f => f.Split('|')[0]).ToArray())
-                {
-                    RDC.LoadFromWinThemeString(Schemes.ClassicColors, item);
+                if (control is RadioImage ri) ri.Image = null;
+                control.Dispose();
+            }
+            schemes.Controls.Clear();
 
-                    RadioImage radioImage = new()
-                    {
-                        TextImageRelation = TextImageRelation.ImageAboveText,
-                        Image = RDC.ToBitmap(true).Resize(160, 135),
-                        Size = new(250, 180),
-                        Text = item
-                    };
+            string[] schemeNames = [.. Schemes.ClassicColors.Split('\n').Select(f => f.Split('|')[0])];
 
-                    if (Forms.Win32UI.ComboBox1?.SelectedItem != null)
-                    {
-                        radioImage.Checked = Forms.Win32UI.ComboBox1.SelectedItem?.ToString().ToLower() == item?.ToLower();
-                    }
-
-                    controlCollection = (controlCollection ?? Enumerable.Empty<Control>()).Concat(new[] { radioImage }).ToArray();
-                }
-
-                schemes.Controls.AddRange(controlCollection);
+            // Invalidate cache if the source data changed since last load.
+            if (!string.Equals(_cachedSchemeSource, Schemes.ClassicColors, StringComparison.Ordinal))
+            {
+                InvalidateBitmapCache();
+                _cachedSchemeSource = Schemes.ClassicColors;
             }
 
+            string selectedItem = Forms.Win32UI.ComboBox1?.SelectedItem?.ToString() ?? string.Empty;
+
+            List<Control> controlList = new(schemeNames.Length);
+
+            // Only open RetroDesktopColors if there are cache misses.
+            string[] misses = [.. schemeNames.Where(name => !_bitmapCache.ContainsKey(name))];
+
+            if (misses.Length > 0)
+            {
+                using (RetroDesktopColors rdc = new())
+                {
+                    rdc.LoadMetrics(Program.TM);
+                    rdc.Size = new Size(350, 300);
+
+                    foreach (string schemeName in misses)
+                    {
+                        rdc.LoadFromWinThemeString(Schemes.ClassicColors, schemeName);
+
+                        Bitmap resized;
+                        using (Bitmap full = rdc.ToBitmap(true))
+                        {
+                            resized = full.Resize(160, 135);
+                        }
+
+                        _bitmapCache[schemeName] = resized;
+                    }
+                }
+            }
+
+            foreach (string schemeName in schemeNames)
+            {
+                RadioImage radioImage = new()
+                {
+                    TextImageRelation = TextImageRelation.ImageAboveText,
+                    Image = _bitmapCache[schemeName],
+                    Size = new Size(250, 180),
+                    Text = schemeName,
+                    Checked = !string.IsNullOrEmpty(selectedItem) && string.Equals(selectedItem, schemeName, StringComparison.OrdinalIgnoreCase)
+                };
+
+                controlList.Add(radioImage);
+            }
+
+            schemes.Controls.AddRange(controlList.ToArray());
             Cursor = Cursors.Default;
         }
 
-        public string PickATheme()
+        // Call this if scheme data changes at runtime and you need fresh renders.
+        public static void InvalidateBitmapCache()
         {
-            if (ShowDialog() == DialogResult.OK)
+            foreach (Bitmap bmp in _bitmapCache.Values)
             {
-                string result = schemes.Controls.Cast<Control>().FirstOrDefault(f => f is RadioImage radioImage && radioImage.Checked)?.Text;
-                schemes.Controls.Cast<Control>().Where(f => f is RadioImage).ToList().ForEach(f => f.Dispose());
+                bmp.Dispose();
+            }
+            _bitmapCache.Clear();
+            _cachedSchemeSource = null;
+        }
+
+        public string PickATheme(Size parentButtonSize, Point parentButtonLocation)
+        {
+            if (ShowDialog(parentButtonSize, parentButtonLocation) == DialogResult.OK)
+            {
+                string result = schemes.Controls.Cast<Control>().FirstOrDefault(f => f is RadioImage ri && ri.Checked)?.Text;
+
+                // Dispose controls but NOT their images — images are owned by the cache.
+                foreach (RadioImage control in schemes.Controls.OfType<RadioImage>())
+                {
+                    control.Image = null;
+                    control.Dispose();
+                }
+
                 return result;
             }
-            else
-            {
-                return string.Empty;
-            }
+
+            return string.Empty;
+        }
+
+        public DialogResult ShowDialog(Size parentButtonSize, Point parentButtonLocation)
+        {
+            Location = parentButtonLocation + new Size(parentButtonSize.Width - Width, parentButtonSize.Height);
+            return ShowDialog();
         }
 
         private void btn_cancel_Click(object sender, EventArgs e)
