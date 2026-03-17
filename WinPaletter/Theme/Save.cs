@@ -152,9 +152,9 @@ namespace WinPaletter.Theme
                         ThemeLog.AddNode(treeView, $"{Program.Localization.Strings.ThemeManager.Actions.SavingToggles}", "info");
                         AppTheme.SaveToggleState(tv);
                         Wallpaper.SaveToggleState(tv);
-                        Windows12.SaveToggleState("12", tv);
-                        Windows11.SaveToggleState("11", tv);
-                        Windows10.SaveToggleState("10", tv);
+                        Windows12.SaveToggleState(tv);
+                        Windows11.SaveToggleState(tv);
+                        Windows10.SaveToggleState(tv);
                         Windows81.SaveToggleState(tv);
                         Windows8.SaveToggleState(tv);
                         Windows7.SaveToggleState(tv);
@@ -220,7 +220,7 @@ namespace WinPaletter.Theme
                         // Apply Windows 12 execlusive features (Colors, lock screen and visual styles)
                         if (OS.W12)
                         {
-                            Execute(() => Windows12.Apply("12", tv), treeView,
+                            Execute(() => Windows12.Apply(tv), treeView,
                                 string.Format(Program.Localization.Strings.ThemeManager.Actions.Theme, Program.Localization.Strings.Windows.W12),
                                 string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W12)),
                                 Program.Localization.Strings.ThemeManager.Actions.Time,
@@ -240,7 +240,7 @@ namespace WinPaletter.Theme
                         // Apply Windows 11 execlusive features (Colors, lock screen and visual styles)
                         if (OS.W11)
                         {
-                            Execute(() => Windows11.Apply("11", tv), treeView,
+                            Execute(() => Windows11.Apply(tv), treeView,
                                 string.Format(Program.Localization.Strings.ThemeManager.Actions.Theme, Program.Localization.Strings.Windows.W11),
                                 string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W11)),
                                 Program.Localization.Strings.ThemeManager.Actions.Time,
@@ -260,7 +260,7 @@ namespace WinPaletter.Theme
                         // Apply Windows 10 execlusive features (Colors, lock screen and visual styles)
                         if (OS.W10)
                         {
-                            Execute(() => Windows10.Apply("10", tv), treeView,
+                            Execute(() => Windows10.Apply(tv), treeView,
                                 string.Format(Program.Localization.Strings.ThemeManager.Actions.Theme, Program.Localization.Strings.Windows.W10),
                                 string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W10)),
                                 Program.Localization.Strings.ThemeManager.Actions.Time,

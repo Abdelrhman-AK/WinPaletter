@@ -866,6 +866,9 @@
     <Compile Include="Theme\Structures\Others\Icons.cs" />
     <Compile Include="Theme\Structures\Others\Accessibility.cs" />
     <Compile Include="Theme\Structures\WindowsColors\VisualStyles.cs" />
+    <Compile Include="Theme\Structures\WindowsColors\Windows10x\Windows10.cs" />
+    <Compile Include="Theme\Structures\WindowsColors\Windows10x\Windows12.cs" />
+    <Compile Include="Theme\Structures\WindowsColors\Windows10x\Windows11.cs" />
     <Compile Include="Theme\Structures\WindowsColors\Windows8.cs" />
     <Compile Include="Theme\Support\Editions.cs" />
     <Compile Include="Theme\Support\Functions.cs" />
@@ -886,7 +889,7 @@
     <Compile Include="Theme\Structures\Wallpaper\Wallpaper.cs" />
     <Compile Include="Theme\Structures\Wallpaper\WallpaperTone.cs" />
     <Compile Include="Theme\Structures\WindowsColors\Win32UI.cs" />
-    <Compile Include="Theme\Structures\WindowsColors\Windows10x.cs" />
+    <Compile Include="Theme\Structures\WindowsColors\Windows10x\Windows10x.cs" />
     <Compile Include="Theme\Structures\WindowsColors\Windows7.cs" />
     <Compile Include="Theme\Structures\WindowsColors\Windows81.cs" />
     <Compile Include="Theme\Structures\WindowsColors\WindowsVista.cs" />

@@ -18,7 +18,7 @@ namespace WinPaletter.Theme
         /// <summary>
         /// Structure instance that contains data about Windows 12 colors and appearance, and it can be customized.
         /// </summary>
-        public Windows10x Windows12 { get; set; } = new();
+        public Windows12 Windows12 { get; set; } = new();
 
         /// <summary>
         /// Structure instance that contains data about Windows 12 LogonUI appearance, and it can be customized.
@@ -28,7 +28,7 @@ namespace WinPaletter.Theme
         /// <summary>
         /// Structure instance that contains data about Windows 11 colors and appearance, and it can be customized.
         /// </summary>
-        public Windows10x Windows11 { get; set; } = new();
+        public Windows11 Windows11 { get; set; } = new();
 
         /// <summary>
         /// Structure instance that contains data about Windows 11 LogonUI appearance, and it can be customized.
@@ -38,22 +38,7 @@ namespace WinPaletter.Theme
         /// <summary>
         /// Structure instance that contains data about Windows 10 colors and appearance, and it can be customized.
         /// </summary>
-        public Windows10x Windows10 = new()
-        {
-            Color_Index0 = Color.FromArgb(166, 216, 255),
-            Color_Index1 = Color.FromArgb(118, 185, 237),
-            Color_Index2 = Color.FromArgb(66, 156, 227),
-            Color_Index3 = Color.FromArgb(0, 120, 215),
-            Color_Index4 = Color.FromArgb(0, 90, 158),
-            Color_Index5 = Color.FromArgb(0, 66, 117),
-            Color_Index6 = Color.FromArgb(0, 38, 66),
-            Color_Index7 = Color.FromArgb(247, 99, 12),
-            Titlebar_Active = Color.FromArgb(0, 120, 215),
-            Titlebar_Inactive = Color.FromArgb(43, 43, 43),
-            StartMenu_Accent = Color.FromArgb(0, 90, 158),
-            WinMode_Light = false,
-        };
-
+        public Windows10 Windows10 { get; set; } = new();
         /// <summary>
         /// Structure instance that contains data about Windows 10 LogonUI appearance, and it can be customized.
         /// </summary>

@@ -56,9 +56,9 @@ namespace WinPaletter.Theme
 
                                 // Start loading the theme data from the registry
                                 Info.Load();
-                                Windows12.Load("12", @default.Windows12);
-                                Windows11.Load("11", @default.Windows11);
-                                Windows10.Load("10", @default.Windows10);
+                                Windows12.Load(@default.Windows12);
+                                Windows11.Load(@default.Windows11);
+                                Windows10.Load(@default.Windows10);
                                 Windows81.Load(@default.Windows81);
                                 Windows8.Load(@default.Windows8);
                                 Windows7.Load(@default.Windows7);

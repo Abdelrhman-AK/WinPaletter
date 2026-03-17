@@ -47,7 +47,12 @@ namespace WinPaletter
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { LoadFromTM(TMx); }
+            using (Manager TM_default = Default.FromOS(WindowStyle.W10))
+            using (Manager TMx = Program.TM.Clone())
+            {
+                TMx.Windows10 = TM_default.Windows10;
+                LoadFromTM(TMx);
+            }
         }
 
         private void LoadIntoCurrentTheme(object sender, EventArgs e)
@@ -76,7 +81,7 @@ namespace WinPaletter
             }
 
             ApplyToTM(Program.TM);
-            Program.TM.Windows10.Apply("10");
+            Program.TM.Windows10.Apply();
 
             if (VS_ReplaceColors.Checked) Program.TM.Win32.Apply();
             if (VS_ReplaceMetrics.Checked) Program.TM.MetricsFonts.Apply();
@@ -122,7 +127,7 @@ namespace WinPaletter
             // Copycat from Windows 11 colors
             using (Manager TMx = new(Manager.Source.Empty))
             {
-                TMx.Windows10 = Program.TM.Windows11.Clone();
+                TMx.Windows10 = Program.TM.Windows11.AsWindows10();
 
                 using (Theme.Manager TMx0 = TMx.Clone())
                 {
@@ -138,7 +143,7 @@ namespace WinPaletter
             // Copycat from Windows 12 colors
             using (Manager TMx = new(Manager.Source.Empty))
             {
-                TMx.Windows10 = Program.TM.Windows12.Clone();
+                TMx.Windows10 = Program.TM.Windows12.AsWindows10();
 
                 using (Theme.Manager TMx0 = TMx.Clone())
                 {

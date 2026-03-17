@@ -47,7 +47,12 @@ namespace WinPaletter
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { LoadFromTM(TMx); }
+            using (Manager TM_default = Default.FromOS(WindowStyle.W12))
+            using (Manager TMx = Program.TM.Clone())
+            {
+                TMx.Windows12 = TM_default.Windows12;
+                LoadFromTM(TMx);
+            }
         }
 
         private void LoadIntoCurrentTheme(object sender, EventArgs e)
@@ -76,7 +81,7 @@ namespace WinPaletter
             }
 
             ApplyToTM(Program.TM);
-            Program.TM.Windows12.Apply("12");
+            Program.TM.Windows12.Apply();
 
             if (VS_ReplaceColors.Checked) Program.TM.Win32.Apply();
             if (VS_ReplaceMetrics.Checked) Program.TM.MetricsFonts.Apply();
@@ -109,45 +114,45 @@ namespace WinPaletter
             LoadFromTM(Program.TM);
             ApplyDefaultTMValues();
 
-            ToolStripMenuItem item0 = new(string.Format(Program.Localization.Strings.General.CopycatFrom, Program.Localization.Strings.Windows.W10));
-            ToolStripMenuItem item1 = new(string.Format(Program.Localization.Strings.General.CopycatFrom, Program.Localization.Strings.Windows.W11));
-            item0.Click += Item0_Click;
-            item1.Click += Item1_Click;
-            easy_generator.Menu.Items.Add(item0);
-            easy_generator.Menu.Items.Add(item1);
+            //ToolStripMenuItem item0 = new(string.Format(Program.Localization.Strings.General.CopycatFrom, Program.Localization.Strings.Windows.W10));
+            //ToolStripMenuItem item1 = new(string.Format(Program.Localization.Strings.General.CopycatFrom, Program.Localization.Strings.Windows.W11));
+            //item0.Click += Item0_Click;
+            //item1.Click += Item1_Click;
+            //easy_generator.Menu.Items.Add(item0);
+            //easy_generator.Menu.Items.Add(item1);
         }
 
-        private void Item0_Click(object sender, EventArgs e)
-        {
-            // Copycat from Windows 10 colors
-            using (Manager TMx = new(Manager.Source.Empty))
-            {
-                TMx.Windows12 = Program.TM.Windows10.Clone();
+        //private void Item0_Click(object sender, EventArgs e)
+        //{
+        //    // Copycat from Windows 10 colors
+        //    using (Manager TMx = new(Manager.Source.Empty))
+        //    {
+        //        TMx.Windows12 = Program.TM.Windows10.AsWindows12();
 
-                using (Theme.Manager TMx0 = TMx.Clone())
-                {
-                    LoadFromTM(TMx0);
-                }
+        //        using (Theme.Manager TMx0 = TMx.Clone())
+        //        {
+        //            LoadFromTM(TMx0);
+        //        }
 
-                Program.ToolTip.Show(easy_generator, Program.Localization.Strings.General.Done, string.Empty, null, new Point(2, easy_generator.Height + 2));
-            }
-        }
+        //        Program.ToolTip.Show(easy_generator, Program.Localization.Strings.General.Done, string.Empty, null, new Point(2, easy_generator.Height + 2));
+        //    }
+        //}
 
-        private void Item1_Click(object sender, EventArgs e)
-        {
-            // Copycat from Windows 11 colors
-            using (Manager TMx = new(Manager.Source.Empty))
-            {
-                TMx.Windows12 = Program.TM.Windows11.Clone();
+        //private void Item1_Click(object sender, EventArgs e)
+        //{
+        //    // Copycat from Windows 11 colors
+        //    using (Manager TMx = new(Manager.Source.Empty))
+        //    {
+        //        TMx.Windows12 = Program.TM.Windows11.AsWindows12();
 
-                using (Theme.Manager TMx0 = TMx.Clone())
-                {
-                    LoadFromTM(TMx0);
-                }
+        //        using (Theme.Manager TMx0 = TMx.Clone())
+        //        {
+        //            LoadFromTM(TMx0);
+        //        }
 
-                Program.ToolTip.Show(easy_generator, Program.Localization.Strings.General.Done, string.Empty, null, new Point(2, easy_generator.Height + 2));
-            }
-        }
+        //        Program.ToolTip.Show(easy_generator, Program.Localization.Strings.General.Done, string.Empty, null, new Point(2, easy_generator.Height + 2));
+        //    }
+        //}
 
         /// <summary>
         /// Updates the preview of the desktop window with the current color settings.

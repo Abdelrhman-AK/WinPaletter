@@ -236,6 +236,8 @@
             this.GroupBox13.Name = "GroupBox13";
             this.GroupBox13.Size = new System.Drawing.Size(580, 441);
             this.GroupBox13.TabIndex = 120;
+            this.GroupBox13.UseDecorationPattern = false;
+            this.GroupBox13.UseSharpStyle = false;
             // 
             // groupBox21
             // 
@@ -250,6 +252,8 @@
             this.groupBox21.Name = "groupBox21";
             this.groupBox21.Size = new System.Drawing.Size(566, 40);
             this.groupBox21.TabIndex = 34;
+            this.groupBox21.UseDecorationPattern = false;
+            this.groupBox21.UseSharpStyle = false;
             // 
             // label18
             // 
@@ -319,6 +323,8 @@
             this.groupBox11.Name = "groupBox11";
             this.groupBox11.Size = new System.Drawing.Size(566, 40);
             this.groupBox11.TabIndex = 33;
+            this.groupBox11.UseDecorationPattern = false;
+            this.groupBox11.UseSharpStyle = false;
             // 
             // pic8
             // 
@@ -386,6 +392,8 @@
             this.groupBox20.Name = "groupBox20";
             this.groupBox20.Size = new System.Drawing.Size(566, 40);
             this.groupBox20.TabIndex = 32;
+            this.groupBox20.UseDecorationPattern = false;
+            this.groupBox20.UseSharpStyle = false;
             // 
             // pic7
             // 
@@ -453,6 +461,8 @@
             this.groupBox9.Name = "groupBox9";
             this.groupBox9.Size = new System.Drawing.Size(566, 40);
             this.groupBox9.TabIndex = 31;
+            this.groupBox9.UseDecorationPattern = false;
+            this.groupBox9.UseSharpStyle = false;
             // 
             // pic6
             // 
@@ -520,6 +530,8 @@
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.Size = new System.Drawing.Size(566, 40);
             this.groupBox10.TabIndex = 30;
+            this.groupBox10.UseDecorationPattern = false;
+            this.groupBox10.UseSharpStyle = false;
             // 
             // pic5
             // 
@@ -587,6 +599,8 @@
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(566, 40);
             this.groupBox8.TabIndex = 29;
+            this.groupBox8.UseDecorationPattern = false;
+            this.groupBox8.UseSharpStyle = false;
             // 
             // pic4
             // 
@@ -654,6 +668,8 @@
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(566, 40);
             this.groupBox7.TabIndex = 28;
+            this.groupBox7.UseDecorationPattern = false;
+            this.groupBox7.UseSharpStyle = false;
             // 
             // pic3
             // 
@@ -721,6 +737,8 @@
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(566, 40);
             this.groupBox6.TabIndex = 27;
+            this.groupBox6.UseDecorationPattern = false;
+            this.groupBox6.UseSharpStyle = false;
             // 
             // pic2
             // 
@@ -788,6 +806,8 @@
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(566, 40);
             this.groupBox5.TabIndex = 26;
+            this.groupBox5.UseDecorationPattern = false;
+            this.groupBox5.UseSharpStyle = false;
             // 
             // pic1
             // 
@@ -1093,6 +1113,8 @@
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(534, 392);
             this.groupBox2.TabIndex = 123;
+            this.groupBox2.UseDecorationPattern = false;
+            this.groupBox2.UseSharpStyle = false;
             // 
             // Button1
             // 
@@ -1233,6 +1255,8 @@
             this.groupBox12.Name = "groupBox12";
             this.groupBox12.Size = new System.Drawing.Size(582, 48);
             this.groupBox12.TabIndex = 29;
+            this.groupBox12.UseDecorationPattern = false;
+            this.groupBox12.UseSharpStyle = false;
             // 
             // label16
             // 
@@ -1303,6 +1327,8 @@
             this.groupBox23.Name = "groupBox23";
             this.groupBox23.Size = new System.Drawing.Size(582, 48);
             this.groupBox23.TabIndex = 28;
+            this.groupBox23.UseDecorationPattern = false;
+            this.groupBox23.UseSharpStyle = false;
             // 
             // label20
             // 
@@ -1383,6 +1409,8 @@
             this.groupBox14.Name = "groupBox14";
             this.groupBox14.Size = new System.Drawing.Size(582, 48);
             this.groupBox14.TabIndex = 22;
+            this.groupBox14.UseDecorationPattern = false;
+            this.groupBox14.UseSharpStyle = false;
             // 
             // label59
             // 
@@ -1431,6 +1459,8 @@
             this.groupBox19.Name = "groupBox19";
             this.groupBox19.Size = new System.Drawing.Size(582, 48);
             this.groupBox19.TabIndex = 25;
+            this.groupBox19.UseDecorationPattern = false;
+            this.groupBox19.UseSharpStyle = false;
             // 
             // label14
             // 
@@ -1467,6 +1497,8 @@
             this.groupBox18.Name = "groupBox18";
             this.groupBox18.Size = new System.Drawing.Size(582, 48);
             this.groupBox18.TabIndex = 24;
+            this.groupBox18.UseDecorationPattern = false;
+            this.groupBox18.UseSharpStyle = false;
             // 
             // label9
             // 
@@ -1502,6 +1534,8 @@
             this.groupBox17.Name = "groupBox17";
             this.groupBox17.Size = new System.Drawing.Size(582, 48);
             this.groupBox17.TabIndex = 23;
+            this.groupBox17.UseDecorationPattern = false;
+            this.groupBox17.UseSharpStyle = false;
             // 
             // label8
             // 
@@ -1553,6 +1587,8 @@
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(580, 111);
             this.groupBox1.TabIndex = 123;
+            this.groupBox1.UseDecorationPattern = false;
+            this.groupBox1.UseSharpStyle = false;
             // 
             // pictureBox13
             // 
@@ -1665,6 +1701,8 @@
             this.groupBox4.Padding = new System.Windows.Forms.Padding(1);
             this.groupBox4.Size = new System.Drawing.Size(582, 305);
             this.groupBox4.TabIndex = 231;
+            this.groupBox4.UseDecorationPattern = false;
+            this.groupBox4.UseSharpStyle = false;
             // 
             // alertBox3
             // 
@@ -1696,6 +1734,8 @@
             this.groupBox26.Name = "groupBox26";
             this.groupBox26.Size = new System.Drawing.Size(560, 76);
             this.groupBox26.TabIndex = 233;
+            this.groupBox26.UseDecorationPattern = false;
+            this.groupBox26.UseSharpStyle = false;
             // 
             // VS_ReplaceMetrics
             // 
@@ -1758,6 +1798,8 @@
             this.groupBox25.Name = "groupBox25";
             this.groupBox25.Size = new System.Drawing.Size(560, 76);
             this.groupBox25.TabIndex = 232;
+            this.groupBox25.UseDecorationPattern = false;
+            this.groupBox25.UseSharpStyle = false;
             // 
             // VS_ReplaceColors
             // 
@@ -1821,6 +1863,8 @@
             this.groupBox24.Name = "groupBox24";
             this.groupBox24.Size = new System.Drawing.Size(560, 48);
             this.groupBox24.TabIndex = 231;
+            this.groupBox24.UseDecorationPattern = false;
+            this.groupBox24.UseSharpStyle = false;
             // 
             // button21
             // 
@@ -1934,6 +1978,8 @@
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(582, 48);
             this.groupBox3.TabIndex = 230;
+            this.groupBox3.UseDecorationPattern = false;
+            this.groupBox3.UseSharpStyle = false;
             // 
             // label12
             // 
@@ -1984,6 +2030,8 @@
             this.groupBox22.Padding = new System.Windows.Forms.Padding(1);
             this.groupBox22.Size = new System.Drawing.Size(582, 150);
             this.groupBox22.TabIndex = 44;
+            this.groupBox22.UseDecorationPattern = false;
+            this.groupBox22.UseSharpStyle = false;
             // 
             // radioImage1
             // 
@@ -2029,6 +2077,7 @@
             // Win11Colors
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.CanGeneratePalette = true;
             this.ClientSize = new System.Drawing.Size(1262, 727);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.groupBox2);
