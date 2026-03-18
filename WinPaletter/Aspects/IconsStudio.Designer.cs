@@ -251,7 +251,8 @@
             this.groupBox9.Name = "groupBox9";
             this.groupBox9.Size = new System.Drawing.Size(248, 145);
             this.groupBox9.TabIndex = 242;
-            this.groupBox9.Text = "groupBox9";
+            this.groupBox9.UseDecorationPattern = false;
+            this.groupBox9.UseSharpStyle = false;
             // 
             // checkBox1
             // 
@@ -331,7 +332,8 @@
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(248, 60);
             this.groupBox8.TabIndex = 241;
-            this.groupBox8.Text = "groupBox8";
+            this.groupBox8.UseDecorationPattern = false;
+            this.groupBox8.UseSharpStyle = false;
             // 
             // label6
             // 
@@ -412,6 +414,8 @@
             this.previewContainer.Padding = new System.Windows.Forms.Padding(1);
             this.previewContainer.Size = new System.Drawing.Size(536, 305);
             this.previewContainer.TabIndex = 240;
+            this.previewContainer.UseDecorationPattern = false;
+            this.previewContainer.UseSharpStyle = false;
             // 
             // pnl_preview
             // 
@@ -521,7 +525,8 @@
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(248, 60);
             this.groupBox6.TabIndex = 239;
-            this.groupBox6.Text = "groupBox6";
+            this.groupBox6.UseDecorationPattern = false;
+            this.groupBox6.UseSharpStyle = false;
             // 
             // button9
             // 
@@ -604,7 +609,8 @@
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(248, 60);
             this.groupBox4.TabIndex = 227;
-            this.groupBox4.Text = "groupBox4";
+            this.groupBox4.UseDecorationPattern = false;
+            this.groupBox4.UseSharpStyle = false;
             // 
             // button5
             // 
@@ -687,7 +693,8 @@
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(248, 60);
             this.groupBox7.TabIndex = 238;
-            this.groupBox7.Text = "groupBox7";
+            this.groupBox7.UseDecorationPattern = false;
+            this.groupBox7.UseSharpStyle = false;
             // 
             // button11
             // 
@@ -770,7 +777,8 @@
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(248, 60);
             this.groupBox3.TabIndex = 226;
-            this.groupBox3.Text = "groupBox3";
+            this.groupBox3.UseDecorationPattern = false;
+            this.groupBox3.UseSharpStyle = false;
             // 
             // button3
             // 
@@ -853,7 +861,8 @@
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(248, 60);
             this.groupBox5.TabIndex = 225;
-            this.groupBox5.Text = "groupBox5";
+            this.groupBox5.UseDecorationPattern = false;
+            this.groupBox5.UseSharpStyle = false;
             // 
             // button7
             // 
@@ -1039,6 +1048,8 @@
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.Size = new System.Drawing.Size(796, 40);
             this.groupBox10.TabIndex = 6;
+            this.groupBox10.UseDecorationPattern = false;
+            this.groupBox10.UseSharpStyle = false;
             // 
             // button15
             // 
@@ -1074,8 +1085,7 @@
             // alertBox4
             // 
             this.alertBox4.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
-            this.alertBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.alertBox4.AutoSize = true;
             this.alertBox4.BackColor = System.Drawing.Color.Transparent;
             this.alertBox4.CenterText = false;
             this.alertBox4.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
@@ -1083,7 +1093,7 @@
             this.alertBox4.Image = null;
             this.alertBox4.Location = new System.Drawing.Point(6, 207);
             this.alertBox4.Name = "alertBox4";
-            this.alertBox4.Size = new System.Drawing.Size(790, 28);
+            this.alertBox4.Size = new System.Drawing.Size(423, 22);
             this.alertBox4.TabIndex = 245;
             this.alertBox4.TabStop = false;
             this.alertBox4.Text = "If you want to change icons for CD/DVD drives, manually patch imageres.dll.";
@@ -1104,7 +1114,8 @@
             this.groupBox13.Name = "groupBox13";
             this.groupBox13.Size = new System.Drawing.Size(790, 61);
             this.groupBox13.TabIndex = 244;
-            this.groupBox13.Text = "groupBox13";
+            this.groupBox13.UseDecorationPattern = false;
+            this.groupBox13.UseSharpStyle = false;
             // 
             // pictureBox7
             // 
@@ -1219,7 +1230,8 @@
             this.groupBox12.Name = "groupBox12";
             this.groupBox12.Size = new System.Drawing.Size(790, 61);
             this.groupBox12.TabIndex = 243;
-            this.groupBox12.Text = "groupBox12";
+            this.groupBox12.UseDecorationPattern = false;
+            this.groupBox12.UseSharpStyle = false;
             // 
             // pictureBox4
             // 
@@ -1334,7 +1346,8 @@
             this.groupBox11.Name = "groupBox11";
             this.groupBox11.Size = new System.Drawing.Size(790, 61);
             this.groupBox11.TabIndex = 242;
-            this.groupBox11.Text = "groupBox11";
+            this.groupBox11.UseDecorationPattern = false;
+            this.groupBox11.UseSharpStyle = false;
             // 
             // pictureBox3
             // 
@@ -1550,6 +1563,8 @@
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(796, 40);
             this.groupBox2.TabIndex = 5;
+            this.groupBox2.UseDecorationPattern = false;
+            this.groupBox2.UseSharpStyle = false;
             // 
             // button16
             // 
@@ -1656,7 +1671,7 @@
             this.SelectedImage.ReadOnly = true;
             this.SelectedImage.Width = 45;
             // 
-            // FileSystem
+            // Path
             // 
             this.Path.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Path.HeaderText = "New icon path";
@@ -1697,6 +1712,8 @@
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(796, 79);
             this.groupBox1.TabIndex = 4;
+            this.groupBox1.UseDecorationPattern = false;
+            this.groupBox1.UseSharpStyle = false;
             // 
             // button20
             // 
@@ -1800,6 +1817,7 @@
             // IconsStudio
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.CanGeneratePalette = true;
             this.ClientSize = new System.Drawing.Size(974, 673);
             this.Controls.Add(this.tabControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -1825,6 +1843,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.explorerData)).EndInit();
             this.groupBox10.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
+            this.tabPage5.PerformLayout();
             this.groupBox13.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();

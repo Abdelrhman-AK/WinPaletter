@@ -344,7 +344,7 @@ namespace WinPaletter
             TextBox2.Text = TM.MetricsFonts.FontSubstitute_MSShellDlg2;
             TextBox3.Text = TM.MetricsFonts.FontSubstitute_SegoeUI;
 
-            CheckBox1.Checked = TM.MetricsFonts.Fonts_SingleBitPP;
+            toggle1.Checked = TM.MetricsFonts.Fonts_SingleBitPP;
 
             trackBarX1.Value = TM.MetricsFonts.CaptionHeight;
             trackBarX2.Value = TM.MetricsFonts.CaptionWidth;
@@ -393,7 +393,7 @@ namespace WinPaletter
             TM.MetricsFonts.ScrollHeight = (int)trackBarX14.Value;
             TM.MetricsFonts.ScrollWidth = (int)trackBarX15.Value;
 
-            TM.MetricsFonts.Fonts_SingleBitPP = CheckBox1.Checked;
+            TM.MetricsFonts.Fonts_SingleBitPP = toggle1.Checked;
 
             TM.MetricsFonts.FontSubstitute_MSShellDlg = TextBox1.Text;
             TM.MetricsFonts.FontSubstitute_MSShellDlg2 = TextBox2.Text;
@@ -725,12 +725,6 @@ namespace WinPaletter
             }
         }
 
-        private void CheckBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            Program.Style.TextRenderingHint = CheckBox1.Checked ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
-            windowMetrics1.Refresh();
-        }
-
         private void EditorInvoker(object sender, EditorEventArgs e)
         {
             if (e.PropertyName == nameof(windowMetrics1.CaptionFont))
@@ -942,7 +936,7 @@ namespace WinPaletter
         {
             using (Manager TM = Default.FromOS(Program.WindowStyle))
             {
-                CheckBox1.Checked = TM.MetricsFonts.Fonts_SingleBitPP;
+                toggle1.Checked = TM.MetricsFonts.Fonts_SingleBitPP;
             }
         }
 
@@ -974,6 +968,12 @@ namespace WinPaletter
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (IsShown) LoadFromWinThemeString(Schemes.Metrics, comboBox1.SelectedItem.ToString());
+        }
+
+        private void toggle1_CheckedChanged(object sender, EventArgs e)
+        {
+            Program.Style.TextRenderingHint = toggle1.Checked ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
+            windowMetrics1.Refresh();
         }
     }
 }

@@ -86,7 +86,7 @@ namespace WinPaletter
             // titlebarExtender1
             // 
             this.titlebarExtender1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
-            this.titlebarExtender1.Size = new System.Drawing.Size(1009, 52);
+            this.titlebarExtender1.Size = new System.Drawing.Size(1019, 52);
             // 
             // AlertBox2
             // 
@@ -98,9 +98,9 @@ namespace WinPaletter
             this.AlertBox2.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.AlertBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.AlertBox2.Image = null;
-            this.AlertBox2.Location = new System.Drawing.Point(9, 308);
+            this.AlertBox2.Location = new System.Drawing.Point(9, 313);
             this.AlertBox2.Name = "AlertBox2";
-            this.AlertBox2.Size = new System.Drawing.Size(444, 28);
+            this.AlertBox2.Size = new System.Drawing.Size(454, 28);
             this.AlertBox2.TabIndex = 216;
             this.AlertBox2.TabStop = false;
             this.AlertBox2.Text = "Sometimes, you should logoff and logon to apply effects";
@@ -115,9 +115,9 @@ namespace WinPaletter
             this.AlertBox1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.AlertBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.AlertBox1.Image = null;
-            this.AlertBox1.Location = new System.Drawing.Point(9, 376);
+            this.AlertBox1.Location = new System.Drawing.Point(9, 381);
             this.AlertBox1.Name = "AlertBox1";
-            this.AlertBox1.Size = new System.Drawing.Size(444, 28);
+            this.AlertBox1.Size = new System.Drawing.Size(454, 28);
             this.AlertBox1.TabIndex = 215;
             this.AlertBox1.TabStop = false;
             this.AlertBox1.Text = "Applying in Windows 7 may require a device restart";
@@ -134,7 +134,7 @@ namespace WinPaletter
             this.GroupBox4.Location = new System.Drawing.Point(9, 194);
             this.GroupBox4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.GroupBox4.Name = "GroupBox4";
-            this.GroupBox4.Size = new System.Drawing.Size(444, 108);
+            this.GroupBox4.Size = new System.Drawing.Size(454, 113);
             this.GroupBox4.TabIndex = 213;
             this.GroupBox4.UseDecorationPattern = false;
             this.GroupBox4.UseSharpStyle = false;
@@ -152,7 +152,7 @@ namespace WinPaletter
             this.Trackbar1.Maximum = 100F;
             this.Trackbar1.Minimum = 0F;
             this.Trackbar1.Name = "Trackbar1";
-            this.Trackbar1.Size = new System.Drawing.Size(435, 24);
+            this.Trackbar1.Size = new System.Drawing.Size(445, 24);
             this.Trackbar1.TabIndex = 217;
             this.Trackbar1.Value = 100F;
             this.Trackbar1.ValueChanged += new System.EventHandler(this.trackBarX1_ValueChanged);
@@ -167,9 +167,9 @@ namespace WinPaletter
             this.EP_Alert.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.EP_Alert.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.EP_Alert.Image = null;
-            this.EP_Alert.Location = new System.Drawing.Point(4, 75);
+            this.EP_Alert.Location = new System.Drawing.Point(8, 75);
             this.EP_Alert.Name = "EP_Alert";
-            this.EP_Alert.Size = new System.Drawing.Size(436, 28);
+            this.EP_Alert.Size = new System.Drawing.Size(437, 28);
             this.EP_Alert.TabIndex = 214;
             this.EP_Alert.TabStop = false;
             this.EP_Alert.Text = "Opacity control can also be enabled in Windows 11 by using ExplorerPatcher.";
@@ -193,7 +193,7 @@ namespace WinPaletter
             this.Label4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label4.Location = new System.Drawing.Point(44, 8);
             this.Label4.Name = "Label4";
-            this.Label4.Size = new System.Drawing.Size(382, 30);
+            this.Label4.Size = new System.Drawing.Size(392, 30);
             this.Label4.TabIndex = 0;
             this.Label4.Text = "Opacity (for Windows 10)";
             this.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -210,7 +210,7 @@ namespace WinPaletter
             this.GroupBox3.Location = new System.Drawing.Point(9, 58);
             this.GroupBox3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.GroupBox3.Name = "GroupBox3";
-            this.GroupBox3.Size = new System.Drawing.Size(444, 130);
+            this.GroupBox3.Size = new System.Drawing.Size(454, 130);
             this.GroupBox3.TabIndex = 212;
             this.GroupBox3.UseDecorationPattern = false;
             this.GroupBox3.UseSharpStyle = false;
@@ -223,7 +223,7 @@ namespace WinPaletter
             this.RadioImage2.ForeColor = System.Drawing.Color.White;
             this.RadioImage2.Image = null;
             this.RadioImage2.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.RadioImage2.Location = new System.Drawing.Point(225, 48);
+            this.RadioImage2.Location = new System.Drawing.Point(230, 48);
             this.RadioImage2.Name = "RadioImage2";
             this.RadioImage2.Size = new System.Drawing.Size(90, 75);
             this.RadioImage2.TabIndex = 3;
@@ -240,7 +240,7 @@ namespace WinPaletter
             this.RadioImage1.ForeColor = System.Drawing.Color.White;
             this.RadioImage1.Image = null;
             this.RadioImage1.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.RadioImage1.Location = new System.Drawing.Point(129, 48);
+            this.RadioImage1.Location = new System.Drawing.Point(134, 48);
             this.RadioImage1.Name = "RadioImage1";
             this.RadioImage1.Size = new System.Drawing.Size(90, 75);
             this.RadioImage1.TabIndex = 2;
@@ -268,7 +268,7 @@ namespace WinPaletter
             this.Label3.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label3.Location = new System.Drawing.Point(44, 8);
             this.Label3.Name = "Label3";
-            this.Label3.Size = new System.Drawing.Size(395, 30);
+            this.Label3.Size = new System.Drawing.Size(405, 30);
             this.Label3.TabIndex = 0;
             this.Label3.Text = "Style";
             this.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -278,7 +278,7 @@ namespace WinPaletter
             this.previewContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.previewContainer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
             this.previewContainer.Controls.Add(this.tabs_preview_1);
-            this.previewContainer.Location = new System.Drawing.Point(460, 58);
+            this.previewContainer.Location = new System.Drawing.Point(470, 58);
             this.previewContainer.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.previewContainer.Name = "previewContainer";
             this.previewContainer.Padding = new System.Windows.Forms.Padding(1);
@@ -482,9 +482,9 @@ namespace WinPaletter
             this.alertBox3.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.alertBox3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.alertBox3.Image = null;
-            this.alertBox3.Location = new System.Drawing.Point(9, 342);
+            this.alertBox3.Location = new System.Drawing.Point(9, 347);
             this.alertBox3.Name = "alertBox3";
-            this.alertBox3.Size = new System.Drawing.Size(444, 28);
+            this.alertBox3.Size = new System.Drawing.Size(454, 28);
             this.alertBox3.TabIndex = 217;
             this.alertBox3.TabStop = false;
             this.alertBox3.Text = "Classic NT causes invisible switcher in Windows 11 24H2+";
@@ -495,7 +495,7 @@ namespace WinPaletter
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CanGeneratePalette = true;
-            this.ClientSize = new System.Drawing.Size(1009, 461);
+            this.ClientSize = new System.Drawing.Size(1019, 466);
             this.Controls.Add(this.alertBox3);
             this.Controls.Add(this.AlertBox2);
             this.Controls.Add(this.AlertBox1);

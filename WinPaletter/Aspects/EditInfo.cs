@@ -154,7 +154,7 @@ namespace WinPaletter
             TextBox4.Text = TM.Info.Author;
             TextBox5.Text = TM.Info.AuthorSocialMediaLink;
             TextBox6.Text = TM.Info.License;
-            CheckBox7.Checked = TM.Info.ExportResThemePack;
+            toggle1.Checked = TM.Info.ExportResThemePack;
 
             color1.BackColor = TM.Info.Color1;
             color2.BackColor = TM.Info.Color2;
@@ -178,7 +178,7 @@ namespace WinPaletter
             TM.Info.Author = TextBox4.Text;
             TM.Info.AuthorSocialMediaLink = TextBox5.Text;
             TM.Info.License = TextBox6.Text;
-            TM.Info.ExportResThemePack = CheckBox7.Checked;
+            TM.Info.ExportResThemePack = toggle1.Checked;
 
             TM.Info.Color1 = color1.BackColor;
             TM.Info.Color2 = color2.BackColor;
