@@ -150,6 +150,8 @@ namespace WinPaletter
             EP_ORB_10.Checked = Sets.ExplorerPatcher.TaskbarButton10;
             EP_ORB_11.Checked = !Sets.ExplorerPatcher.TaskbarButton10;
 
+            radioButton29.Checked = Sets.ThemeApplyingBehavior.WindowsColors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
+            radioButton28.Checked = Sets.ThemeApplyingBehavior.WindowsColors_HKU_DEFAULT_Prefs != Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
             RadioButton5.Checked = Sets.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
             RadioButton6.Checked = !(Sets.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite);
             RadioButton8.Checked = Sets.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
@@ -484,6 +486,11 @@ namespace WinPaletter
             Sets.BackupTheme.AutoBackupOnThemeLoad = toggle34.Checked;
             Sets.BackupTheme.AutoBackupOnExError = toggle39.Checked;
             Sets.BackupTheme.BackupPath = textBox4.Text;
+
+            if (radioButton29.Checked)
+                Sets.ThemeApplyingBehavior.WindowsColors_HKU_DEFAULT_Prefs = Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
+            else
+                Sets.ThemeApplyingBehavior.WindowsColors_HKU_DEFAULT_Prefs = Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
 
             if (RadioButton5.Checked)
                 Sets.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs = Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;

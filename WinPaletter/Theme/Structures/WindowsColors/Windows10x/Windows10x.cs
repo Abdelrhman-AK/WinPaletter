@@ -203,8 +203,9 @@ namespace WinPaletter.Theme.Structures
             // Load common registry values
             StartMenu_Accent = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", @default.StartMenu_Accent.Reverse()).Reverse();
 
-            Titlebar_Active = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", @default.Titlebar_Active.Reverse()).Reverse();
-            Titlebar_Active = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", @default.Titlebar_Active.Reverse()).Reverse();
+            Color dwmAccent = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", @default.Titlebar_Active.Reverse()).Reverse();
+            Titlebar_Active = dwmAccent != default ? dwmAccent : ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", @default.Titlebar_Active.Reverse()).Reverse();
+
             Titlebar_Inactive = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", @default.Titlebar_Inactive.Reverse()).Reverse();
 
             WinMode_Light = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", @default.WinMode_Light);
@@ -221,51 +222,104 @@ namespace WinPaletter.Theme.Structures
         /// <summary>
         /// Saves data into registry
         /// </summary>
+        /// <summary>
+        /// Saves data into registry
+        /// </summary>
         public void Apply(TreeView treeView = null)
         {
             Program.Log?.Write(LogEventLevel.Information, $"Saving Windows {_signature} colors and appearance preferences into registry.");
 
-            SaveToggleState(treeView);
-
-            if (Enabled && IsTargetOS())
+            using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
-                VisualStyles.Apply(_signature, treeView);
+                SaveToggleState(treeView);
 
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0);
-
-                int colorPrevelance = ApplyAccentOnTaskbar switch
+                if (Enabled && IsTargetOS())
                 {
-                    Windows10x.AccentTaskbarLevels.None => 0,
-                    Windows10x.AccentTaskbarLevels.Taskbar_Start_AC => 1,
-                    Windows10x.AccentTaskbarLevels.Taskbar => 2,
-                    _ => 0
-                };
-                WriteReg(treeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", colorPrevelance);
+                    VisualStyles.Apply(_signature, treeView);
 
-                WriteReg(treeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", ApplyAccentOnTitlebars ? 1 : 0);
+                    // Disable auto-colorization from wallpaper and clear its history flag
+                    WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0);
+                    WriteReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\History", "AutoColor", 0);
 
-                WriteReg(treeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", ColorBytes, RegistryValueKind.Binary);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", StartMenu_Accent.Reverse().ToArgb());
+                    int colorPrevelance = ApplyAccentOnTaskbar switch
+                    {
+                        Windows10x.AccentTaskbarLevels.None => 0,
+                        Windows10x.AccentTaskbarLevels.Taskbar_Start_AC => 1,
+                        Windows10x.AccentTaskbarLevels.Taskbar => 2,
+                        _ => 0
+                    };
 
-                WriteReg(treeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", Titlebar_Active.Reverse().ToArgb());
-                WriteReg(treeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", Titlebar_Active.Reverse().ToArgb());
-                WriteReg(treeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", Titlebar_Inactive.Reverse().ToArgb());
+                    #region HKEY_CURRENT_USER
 
-                if (!OS.W10)
-                {
-                    WriteReg(treeView, @$"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\SystemProtectedUserData\{User.SID}\AnyoneRead\Colors", "AccentColor", Titlebar_Active.Reverse().ToArgb());
-                    WriteReg(treeView, @$"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\SystemProtectedUserData\{User.SID}\AnyoneRead\Colors", "StartColor", StartMenu_Accent.Reverse().ToArgb());
+                    WriteReg(treeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", colorPrevelance);
+                    WriteReg(treeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", WinMode_Light ? 1 : 0);
+                    WriteReg(treeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", AppMode_Light ? 1 : 0);
+                    WriteReg(treeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", Transparency ? 1 : 0);
+
+                    WriteReg(treeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", ApplyAccentOnTitlebars ? 1 : 0);
+                    WriteReg(treeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", Titlebar_Active.Reverse().ToArgb());
+                    WriteReg(treeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", Titlebar_Inactive.Reverse().ToArgb());
+
+                    WriteReg(treeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", ColorBytes, RegistryValueKind.Binary);
+                    WriteReg(treeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", StartMenu_Accent.Reverse().ToArgb());
+                    WriteReg(treeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", Titlebar_Active.Reverse().ToArgb());
+
+                    #endregion
+
+                    #region HKEY_LOCAL_MACHINE SystemProtectedUserData
+
+                    string spdColorsPath = $@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\SystemProtectedUserData\{User.SID}\AnyoneRead\Colors";
+                    string spdThemePath = $@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\SystemProtectedUserData\{User.SID}\AnyoneRead\Theme";
+
+                    WriteReg(treeView, spdColorsPath, "AccentColor", Titlebar_Active.Reverse().ToArgb());
+                    WriteReg(treeView, spdColorsPath, "AccentColorInactive", Titlebar_Inactive.Reverse().ToArgb());
+                    WriteReg(treeView, spdColorsPath, "StartColor", StartMenu_Accent.Reverse().ToArgb());
+                    WriteReg(treeView, spdColorsPath, "ImmersiveColor", Titlebar_Active.Reverse().ToArgb());
+
+                    // Theme\Personalize mirrors under SystemProtectedUserData for UWP and logon screen reads
+                    WriteReg(treeView, spdThemePath, "SystemUsesLightTheme", WinMode_Light ? 1 : 0);
+                    WriteReg(treeView, spdThemePath, "AppsUseLightTheme", AppMode_Light ? 1 : 0);
+                    WriteReg(treeView, spdThemePath, "ColorPrevalence", colorPrevelance);
+                    WriteReg(treeView, spdThemePath, "EnableTransparency", Transparency ? 1 : 0);
+
+                    #endregion
+
+                    #region HKEY_USERS\.DEFAULT
+
+                    if (Program.Settings.ThemeApplyingBehavior.WindowsColors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+                    {
+                        // Mirror everything written to HKCU into HKU\.DEFAULT so DWM and the shell
+                        // load the correct values before the user hive is mounted on logon.
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "AutoColorization", 0);
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Software\Microsoft\Windows\CurrentVersion\Themes\History", "AutoColor", 0);
+
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "ColorPrevalence", colorPrevelance);
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", WinMode_Light ? 1 : 0);
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", AppMode_Light ? 1 : 0);
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", Transparency ? 1 : 0);
+
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", ApplyAccentOnTitlebars ? 1 : 0);
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", Titlebar_Active.Reverse().ToArgb());
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", Titlebar_Inactive.Reverse().ToArgb());
+
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentPalette", ColorBytes, RegistryValueKind.Binary);
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "StartColorMenu", StartMenu_Accent.Reverse().ToArgb());
+                        WriteReg(treeView, @"HKEY_USERS\.DEFAULT\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent", "AccentColorMenu", Titlebar_Active.Reverse().ToArgb());
+                    }
+
+                    #endregion
+
+                    // Apply version-specific settings
+                    ApplySpecific(treeView);
+
+                    // Patch the active .theme file so Windows replays our values on every logon instead of resetting them
+                    PatchActiveThemeFile(Program.TM.Win32);
+
+                    // Broadcast changes
+                    BroadcastChanges();
                 }
 
-                WriteReg(treeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "SystemUsesLightTheme", WinMode_Light ? 1 : 0);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", AppMode_Light ? 1 : 0);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize", "EnableTransparency", Transparency ? 1 : 0);
-
-                // Apply version-specific settings
-                ApplySpecific(treeView);
-
-                // Broadcast changes
-                BroadcastChanges();
+                wic?.Undo();
             }
         }
 
@@ -303,7 +357,7 @@ namespace WinPaletter.Theme.Structures
             ];
         }
 
-        private byte[] ColorBytes => 
+        private byte[] ColorBytes =>
             [
                 Color_Index0.R, Color_Index0.G, Color_Index0.B, 255,
                 Color_Index1.R, Color_Index1.G, Color_Index1.B, 255,
@@ -314,6 +368,94 @@ namespace WinPaletter.Theme.Structures
                 Color_Index6.R, Color_Index6.G, Color_Index6.B, 255,
                 Color_Index7.R, Color_Index7.G, Color_Index7.B, 255
             ];
+
+        /// <summary>
+        /// Patches the active Windows .theme file with the colors WinPaletter just wrote to the registry,
+        /// so Windows replays the correct values on every logon instead of resetting them.
+        /// Only keys officially read by Windows from .theme files are written.
+        /// </summary>
+        private void PatchActiveThemeFile(Win32UI win32UI)
+        {
+            try
+            {
+                string themeFilePath = ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "CurrentTheme", string.Empty);
+
+                if (string.IsNullOrEmpty(themeFilePath) || !System.IO.File.Exists(themeFilePath))
+                {
+                    Program.Log?.Write(LogEventLevel.Warning, "PatchActiveThemeFile: CurrentTheme registry value missing or file not found. Skipping .theme patch.");
+                    return;
+                }
+
+                Program.Log?.Write(LogEventLevel.Information, $"PatchActiveThemeFile: Patching theme file at '{themeFilePath}'.");
+
+                string userThemesFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Microsoft", "Windows", "Themes");
+                string tempPath = System.IO.Path.Combine(userThemesFolder, System.IO.Path.GetRandomFileName() + ".theme");
+
+                System.IO.Directory.CreateDirectory(userThemesFolder);
+                System.IO.File.Copy(themeFilePath, tempPath, overwrite: true);
+
+                Program.Log?.Write(LogEventLevel.Information, $"PatchActiveThemeFile: Working on temp copy at '{tempPath}'.");
+
+                uint colorizationColor = 0xC4000000u | ((uint)Titlebar_Active.R << 16) | ((uint)Titlebar_Active.G << 8) | Titlebar_Active.B;
+
+                using (INI ini = new(tempPath))
+                {
+                    ini.Write("Control Panel\\Colors", "ActiveTitle", win32UI.ActiveTitle.ToStringWin32());
+                    ini.Write("Control Panel\\Colors", "InactiveTitle", win32UI.InactiveTitle.ToStringWin32());
+                    ini.Write("Control Panel\\Colors", "Background", win32UI.Background.ToStringWin32());
+                    ini.Write("Control Panel\\Colors", "ActiveBorder", win32UI.ActiveBorder.ToStringWin32());
+                    ini.Write("Control Panel\\Colors", "InactiveBorder", win32UI.InactiveBorder.ToStringWin32());
+                    ini.Write("Control Panel\\Colors", "Menu", win32UI.Menu.ToStringWin32());
+                    ini.Write("Control Panel\\Colors", "Window", win32UI.Window.ToStringWin32());
+                    ini.Write("Control Panel\\Colors", "WindowFrame", win32UI.WindowFrame.ToStringWin32());
+                    ini.Write("Control Panel\\Colors", "MenuText", win32UI.MenuText.ToStringWin32());
+                    ini.Write("Control Panel\\Colors", "WindowText", win32UI.WindowText.ToStringWin32());
+                    ini.Write("Control Panel\\Colors", "TitleText", win32UI.TitleText.ToStringWin32());
+                    ini.Write("Control Panel\\Colors", "Scrollbar", win32UI.Scrollbar.ToStringWin32());
+                    ini.Write("Control Panel\\Colors", "ButtonFace", win32UI.ButtonFace.ToStringWin32());
+                    ini.Write("Control Panel\\Colors", "ButtonShadow", win32UI.ButtonShadow.ToStringWin32());
+                    ini.Write("Control Panel\\Colors", "ButtonHilight", win32UI.ButtonHilight.ToStringWin32());
+                    ini.Write("Control Panel\\Colors", "ButtonDkShadow", win32UI.ButtonDkShadow.ToStringWin32());
+                    ini.Write("Control Panel\\Colors", "ButtonLight", win32UI.ButtonLight.ToStringWin32());
+                    ini.Write("Control Panel\\Colors", "ButtonText", win32UI.ButtonText.ToStringWin32());
+                    ini.Write("Control Panel\\Colors", "GrayText", win32UI.GrayText.ToStringWin32());
+                    ini.Write("Control Panel\\Colors", "Hilight", win32UI.Hilight.ToStringWin32());
+                    ini.Write("Control Panel\\Colors", "HilightText", win32UI.HilightText.ToStringWin32());
+                    ini.Write("Control Panel\\Colors", "InactiveTitleText", win32UI.InactiveTitleText.ToStringWin32());
+                    ini.Write("Control Panel\\Colors", "InfoText", win32UI.InfoText.ToStringWin32());
+                    ini.Write("Control Panel\\Colors", "InfoWindow", win32UI.InfoWindow.ToStringWin32());
+                    ini.Write("Control Panel\\Colors", "AppWorkspace", win32UI.AppWorkspace.ToStringWin32());
+                    ini.Write("Control Panel\\Colors", "GradientActiveTitle", win32UI.GradientActiveTitle.ToStringWin32());
+                    ini.Write("Control Panel\\Colors", "GradientInactiveTitle", win32UI.GradientInactiveTitle.ToStringWin32());
+                    ini.Write("Control Panel\\Colors", "HotTrackingColor", win32UI.HotTrackingColor.ToStringWin32());
+                    ini.Write("Control Panel\\Colors", "MenuHilight", win32UI.MenuHilight.ToStringWin32());
+                    ini.Write("Control Panel\\Colors", "MenuBar", win32UI.MenuBar.ToStringWin32());
+                    ini.Write("Control Panel\\Colors", "Desktop", win32UI.Desktop.ToStringWin32());
+
+                    ini.Write("Personalize", "SystemUsesLightTheme", WinMode_Light ? "1" : "0");
+                    ini.Write("Personalize", "AppsUseLightTheme", AppMode_Light ? "1" : "0");
+                    ini.Write("Personalize", "EnableTransparency", Transparency ? "1" : "0");
+                    ini.Write("Personalize", "ColorPrevalence", ((int)ApplyAccentOnTaskbar).ToString());
+
+                    ini.Write("VisualStyles", "ColorizationColor", $"0X{colorizationColor:X8}");
+                    ini.Write("VisualStyles", "AutoColorization", "0");
+                    ini.Write("VisualStyles", "SystemMode", WinMode_Light ? "Light" : "Dark");
+                    ini.Write("VisualStyles", "AppMode", AppMode_Light ? "Light" : "Dark");
+                }
+
+                // Take ownership of the original before overwriting — handles system-owned
+                // and WindowsApps-owned theme files without needing a separate redirect path.
+                TakeOwnership(themeFilePath, AsAdministrator: true);
+
+                Move_File(tempPath, themeFilePath);
+
+                Program.Log?.Write(LogEventLevel.Information, "PatchActiveThemeFile: Theme file patched successfully.");
+            }
+            catch (Exception ex)
+            {
+                Program.Log?.Write(LogEventLevel.Error, $"PatchActiveThemeFile: Failed to patch theme file. Exception: {ex.Message}");
+            }
+        }
 
         private void BroadcastChanges()
         {

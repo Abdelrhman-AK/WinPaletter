@@ -247,6 +247,11 @@ namespace WinPaletter
                 public OverwriteOptions ClassicColors_HKU_DEFAULT_Prefs { get; set; } = Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
 
                 /// <summary>
+                /// <see cref="OverwriteOptions"/> to extend effects of Classic Colors settings to HKU\.DEFAULT registry key
+                /// </summary>
+                public OverwriteOptions WindowsColors_HKU_DEFAULT_Prefs { get; set; } = Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
+
+                /// <summary>
                 /// <see cref="OverwriteOptions"/> to extend effects of Classic Colors settings to HKEY_LOCAL_MACHINE registry key
                 /// </summary>
                 public OverwriteOptions ClassicColors_HKLM_Prefs { get; set; } = Structures.ThemeApplyingBehavior.OverwriteOptions.Erase;
@@ -354,6 +359,7 @@ namespace WinPaletter
                     CreateSystemRestore = ReadReg(REG_ThemeApplyingBehavior, "CreateSystemRestore", true);
                     AutoRestartExplorer = ReadReg(REG_ThemeApplyingBehavior, "AutoRestartExplorer", true);
                     ShowSaveConfirmation = ReadReg(REG_ThemeApplyingBehavior, "ShowSaveConfirmation", true);
+                    WindowsColors_HKU_DEFAULT_Prefs = ReadReg(REG_ThemeApplyingBehavior, nameof(WindowsColors_HKU_DEFAULT_Prefs), OverwriteOptions.Overwrite);
                     ClassicColors_HKU_DEFAULT_Prefs = ReadReg(REG_ThemeApplyingBehavior, "ClassicColors_HKU_DEFAULT_Prefs", OverwriteOptions.Overwrite);
                     ClassicColors_HKLM_Prefs = ReadReg(REG_ThemeApplyingBehavior, "ClassicColors_HKLM_Prefs", OverwriteOptions.Erase);
                     UPM_HKU_DEFAULT = ReadReg(REG_ThemeApplyingBehavior, "UPM_HKU_DEFAULT", false);
@@ -379,6 +385,7 @@ namespace WinPaletter
                     WriteReg(REG_ThemeApplyingBehavior, "CreateSystemRestore", CreateSystemRestore, RegistryValueKind.DWord);
                     WriteReg(REG_ThemeApplyingBehavior, "AutoRestartExplorer", AutoRestartExplorer, RegistryValueKind.DWord);
                     WriteReg(REG_ThemeApplyingBehavior, "ShowSaveConfirmation", ShowSaveConfirmation, RegistryValueKind.DWord);
+                    WriteReg(REG_ThemeApplyingBehavior, nameof(WindowsColors_HKU_DEFAULT_Prefs), WindowsColors_HKU_DEFAULT_Prefs, RegistryValueKind.DWord);
                     WriteReg(REG_ThemeApplyingBehavior, "ClassicColors_HKU_DEFAULT_Prefs", ClassicColors_HKU_DEFAULT_Prefs, RegistryValueKind.DWord);
                     WriteReg(REG_ThemeApplyingBehavior, "ClassicColors_HKLM_Prefs", ClassicColors_HKLM_Prefs, RegistryValueKind.DWord);
                     WriteReg(REG_ThemeApplyingBehavior, "UPM_HKU_DEFAULT", UPM_HKU_DEFAULT, RegistryValueKind.DWord);

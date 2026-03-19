@@ -180,7 +180,7 @@ namespace WinPaletter
             AspectEnabled = TM.ScreenSaver.Enabled;
             TextBox1.Text = TM.ScreenSaver.File;
             trackbarX1.Value = TM.ScreenSaver.TimeOut;
-            CheckBox1.Checked = TM.ScreenSaver.IsSecure;
+            toggle1.Checked = TM.ScreenSaver.IsSecure;
         }
 
         public void ApplyToTM(Manager TM)
@@ -188,7 +188,7 @@ namespace WinPaletter
             TM.ScreenSaver.Enabled = AspectEnabled;
             TM.ScreenSaver.File = TextBox1.Text;
             TM.ScreenSaver.TimeOut = (int)trackbarX1.Value;
-            TM.ScreenSaver.IsSecure = CheckBox1.Checked;
+            TM.ScreenSaver.IsSecure = toggle1.Checked;
         }
 
         public void GetFromClassicThemeFile(string File, Theme.Structures.ScreenSaver _DefaultScrSvr)

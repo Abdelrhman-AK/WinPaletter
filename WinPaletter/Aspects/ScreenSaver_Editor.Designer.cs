@@ -36,11 +36,9 @@ namespace WinPaletter
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ScreenSaver_Editor));
-            this.GroupBox1 = new WinPaletter.UI.WP.GroupBox();
             this.button2 = new WinPaletter.UI.WP.Button();
             this.trackbarX1 = new WinPaletter.UI.Controllers.TrackBarX();
             this.PictureBox4 = new System.Windows.Forms.PictureBox();
-            this.CheckBox1 = new WinPaletter.UI.WP.CheckBox();
             this.Button1 = new WinPaletter.UI.WP.Button();
             this.Label3 = new System.Windows.Forms.Label();
             this.PictureBox17 = new System.Windows.Forms.PictureBox();
@@ -53,11 +51,18 @@ namespace WinPaletter
             this.Button13 = new WinPaletter.UI.WP.Button();
             this.Button6 = new WinPaletter.UI.WP.Button();
             this.Button5 = new WinPaletter.UI.WP.Button();
-            this.GroupBox1.SuspendLayout();
+            this.groupBox29 = new WinPaletter.UI.WP.GroupBox();
+            this.groupBox30 = new WinPaletter.UI.WP.GroupBox();
+            this.toggle1 = new WinPaletter.UI.WP.Toggle();
+            this.label9 = new System.Windows.Forms.Label();
+            this.groupBox2 = new WinPaletter.UI.WP.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox17)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
             this.previewContainer.SuspendLayout();
+            this.groupBox29.SuspendLayout();
+            this.groupBox30.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // titlebarExtender1
@@ -65,39 +70,17 @@ namespace WinPaletter
             this.titlebarExtender1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(39)))), ((int)(((byte)(39)))), ((int)(((byte)(39)))));
             this.titlebarExtender1.Size = new System.Drawing.Size(1004, 52);
             // 
-            // GroupBox1
-            // 
-            this.GroupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.GroupBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(34)))), ((int)(((byte)(34)))), ((int)(((byte)(34)))));
-            this.GroupBox1.Controls.Add(this.button2);
-            this.GroupBox1.Controls.Add(this.trackbarX1);
-            this.GroupBox1.Controls.Add(this.PictureBox4);
-            this.GroupBox1.Controls.Add(this.CheckBox1);
-            this.GroupBox1.Controls.Add(this.Button1);
-            this.GroupBox1.Controls.Add(this.Label3);
-            this.GroupBox1.Controls.Add(this.PictureBox17);
-            this.GroupBox1.Controls.Add(this.PictureBox1);
-            this.GroupBox1.Controls.Add(this.TextBox1);
-            this.GroupBox1.Controls.Add(this.Label4);
-            this.GroupBox1.Location = new System.Drawing.Point(9, 58);
-            this.GroupBox1.Name = "GroupBox1";
-            this.GroupBox1.Size = new System.Drawing.Size(439, 150);
-            this.GroupBox1.TabIndex = 226;
-            this.GroupBox1.UseDecorationPattern = false;
-            this.GroupBox1.UseSharpStyle = false;
-            // 
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button2.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
-            this.button2.Flag = WinPaletter.UI.WP.Button.Flags.None;
+            this.button2.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
             this.button2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.button2.ForeColor = System.Drawing.Color.White;
             this.button2.Image = null;
             this.button2.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Menu;
             this.button2.ImageGlyphEnabled = true;
-            this.button2.Location = new System.Drawing.Point(206, 30);
+            this.button2.Location = new System.Drawing.Point(199, 43);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(188, 24);
             this.button2.TabIndex = 227;
@@ -108,43 +91,29 @@ namespace WinPaletter
             // 
             // trackbarX1
             // 
-            this.trackbarX1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.trackbarX1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.trackbarX1.AnimateChanges = true;
             this.trackbarX1.BackColor = System.Drawing.Color.Transparent;
             this.trackbarX1.DefaultValue = 600;
             this.trackbarX1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.trackbarX1.Location = new System.Drawing.Point(36, 85);
+            this.trackbarX1.Location = new System.Drawing.Point(181, 12);
             this.trackbarX1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.trackbarX1.Maximum = 3600F;
             this.trackbarX1.Minimum = 60F;
             this.trackbarX1.Name = "trackbarX1";
-            this.trackbarX1.Size = new System.Drawing.Size(399, 24);
+            this.trackbarX1.Size = new System.Drawing.Size(247, 24);
             this.trackbarX1.TabIndex = 226;
             this.trackbarX1.Value = 600F;
             // 
             // PictureBox4
             // 
             this.PictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox4.Image")));
-            this.PictureBox4.Location = new System.Drawing.Point(3, 3);
+            this.PictureBox4.Location = new System.Drawing.Point(11, 12);
             this.PictureBox4.Name = "PictureBox4";
             this.PictureBox4.Size = new System.Drawing.Size(24, 24);
             this.PictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.PictureBox4.TabIndex = 217;
             this.PictureBox4.TabStop = false;
-            // 
-            // CheckBox1
-            // 
-            this.CheckBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox1.Checked = false;
-            this.CheckBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.CheckBox1.ForeColor = System.Drawing.Color.White;
-            this.CheckBox1.Location = new System.Drawing.Point(36, 119);
-            this.CheckBox1.Name = "CheckBox1";
-            this.CheckBox1.Size = new System.Drawing.Size(399, 24);
-            this.CheckBox1.TabIndex = 223;
-            this.CheckBox1.Text = "On resume, password protect";
             // 
             // Button1
             // 
@@ -156,7 +125,7 @@ namespace WinPaletter
             this.Button1.Image = null;
             this.Button1.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Browse;
             this.Button1.ImageGlyphEnabled = true;
-            this.Button1.Location = new System.Drawing.Point(401, 30);
+            this.Button1.Location = new System.Drawing.Point(394, 43);
             this.Button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(34, 24);
@@ -166,12 +135,10 @@ namespace WinPaletter
             // 
             // Label3
             // 
-            this.Label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.Label3.BackColor = System.Drawing.Color.Transparent;
-            this.Label3.Location = new System.Drawing.Point(33, 3);
+            this.Label3.Location = new System.Drawing.Point(41, 12);
             this.Label3.Name = "Label3";
-            this.Label3.Size = new System.Drawing.Size(402, 24);
+            this.Label3.Size = new System.Drawing.Size(46, 24);
             this.Label3.TabIndex = 216;
             this.Label3.Text = "File:";
             this.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -180,7 +147,7 @@ namespace WinPaletter
             // 
             this.PictureBox17.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox17.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox17.Image")));
-            this.PictureBox17.Location = new System.Drawing.Point(3, 58);
+            this.PictureBox17.Location = new System.Drawing.Point(11, 12);
             this.PictureBox17.Name = "PictureBox17";
             this.PictureBox17.Size = new System.Drawing.Size(24, 24);
             this.PictureBox17.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -189,9 +156,10 @@ namespace WinPaletter
             // 
             // PictureBox1
             // 
+            this.PictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.PictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.PictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox1.Image")));
-            this.PictureBox1.Location = new System.Drawing.Point(6, 119);
+            this.PictureBox1.Location = new System.Drawing.Point(11, 12);
             this.PictureBox1.Name = "PictureBox1";
             this.PictureBox1.Size = new System.Drawing.Size(24, 24);
             this.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -203,7 +171,7 @@ namespace WinPaletter
             this.TextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TextBox1.ForeColor = System.Drawing.Color.White;
-            this.TextBox1.Location = new System.Drawing.Point(36, 30);
+            this.TextBox1.Location = new System.Drawing.Point(93, 12);
             this.TextBox1.MaxLength = 32767;
             this.TextBox1.Multiline = false;
             this.TextBox1.Name = "TextBox1";
@@ -212,7 +180,7 @@ namespace WinPaletter
             this.TextBox1.SelectedText = "";
             this.TextBox1.SelectionLength = 0;
             this.TextBox1.SelectionStart = 0;
-            this.TextBox1.Size = new System.Drawing.Size(164, 24);
+            this.TextBox1.Size = new System.Drawing.Size(335, 24);
             this.TextBox1.TabIndex = 218;
             this.TextBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.TextBox1.UseSystemPasswordChar = false;
@@ -221,13 +189,12 @@ namespace WinPaletter
             // 
             // Label4
             // 
-            this.Label4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Label4.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.Label4.BackColor = System.Drawing.Color.Transparent;
             this.Label4.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Label4.Location = new System.Drawing.Point(33, 58);
+            this.Label4.Location = new System.Drawing.Point(41, 12);
             this.Label4.Name = "Label4";
-            this.Label4.Size = new System.Drawing.Size(402, 24);
+            this.Label4.Size = new System.Drawing.Size(133, 24);
             this.Label4.TabIndex = 213;
             this.Label4.Text = "Timeout (in seconds):";
             this.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -331,6 +298,75 @@ namespace WinPaletter
             this.Button5.UseVisualStyleBackColor = false;
             this.Button5.Click += new System.EventHandler(this.Button5_Click);
             // 
+            // groupBox29
+            // 
+            this.groupBox29.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox29.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox29.Controls.Add(this.PictureBox17);
+            this.groupBox29.Controls.Add(this.trackbarX1);
+            this.groupBox29.Controls.Add(this.Label4);
+            this.groupBox29.Location = new System.Drawing.Point(7, 142);
+            this.groupBox29.Name = "groupBox29";
+            this.groupBox29.Size = new System.Drawing.Size(441, 48);
+            this.groupBox29.TabIndex = 227;
+            this.groupBox29.UseDecorationPattern = false;
+            this.groupBox29.UseSharpStyle = false;
+            // 
+            // groupBox30
+            // 
+            this.groupBox30.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox30.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox30.Controls.Add(this.toggle1);
+            this.groupBox30.Controls.Add(this.label9);
+            this.groupBox30.Controls.Add(this.PictureBox1);
+            this.groupBox30.Location = new System.Drawing.Point(7, 196);
+            this.groupBox30.Name = "groupBox30";
+            this.groupBox30.Size = new System.Drawing.Size(441, 48);
+            this.groupBox30.TabIndex = 228;
+            this.groupBox30.UseDecorationPattern = false;
+            this.groupBox30.UseSharpStyle = false;
+            // 
+            // toggle1
+            // 
+            this.toggle1.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.toggle1.Checked = false;
+            this.toggle1.DarkLight_Toggler = false;
+            this.toggle1.Location = new System.Drawing.Point(388, 14);
+            this.toggle1.Name = "toggle1";
+            this.toggle1.Size = new System.Drawing.Size(40, 20);
+            this.toggle1.TabIndex = 206;
+            this.toggle1.Text = "toggle1";
+            // 
+            // label9
+            // 
+            this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.label9.BackColor = System.Drawing.Color.Transparent;
+            this.label9.Location = new System.Drawing.Point(41, 12);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(341, 24);
+            this.label9.TabIndex = 205;
+            this.label9.Text = "On resume, password protect";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox2.Controls.Add(this.button2);
+            this.groupBox2.Controls.Add(this.PictureBox4);
+            this.groupBox2.Controls.Add(this.Button1);
+            this.groupBox2.Controls.Add(this.Label3);
+            this.groupBox2.Controls.Add(this.TextBox1);
+            this.groupBox2.Location = new System.Drawing.Point(7, 58);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(441, 78);
+            this.groupBox2.TabIndex = 229;
+            this.groupBox2.UseDecorationPattern = false;
+            this.groupBox2.UseSharpStyle = false;
+            // 
             // ScreenSaver_Editor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -338,7 +374,9 @@ namespace WinPaletter
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.CanGeneratePalette = true;
             this.ClientSize = new System.Drawing.Size(1004, 461);
-            this.Controls.Add(this.GroupBox1);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox29);
+            this.Controls.Add(this.groupBox30);
             this.Controls.Add(this.previewContainer);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -351,13 +389,17 @@ namespace WinPaletter
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ScreenSaver_Editor_FormClosing);
             this.Load += new System.EventHandler(this.ScreenSaver_Editor_Load);
             this.Controls.SetChildIndex(this.previewContainer, 0);
-            this.Controls.SetChildIndex(this.GroupBox1, 0);
             this.Controls.SetChildIndex(this.titlebarExtender1, 0);
-            this.GroupBox1.ResumeLayout(false);
+            this.Controls.SetChildIndex(this.groupBox30, 0);
+            this.Controls.SetChildIndex(this.groupBox29, 0);
+            this.Controls.SetChildIndex(this.groupBox2, 0);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox4)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox17)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).EndInit();
             this.previewContainer.ResumeLayout(false);
+            this.groupBox29.ResumeLayout(false);
+            this.groupBox30.ResumeLayout(false);
+            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -370,13 +412,16 @@ namespace WinPaletter
         internal PictureBox PictureBox4;
         internal Label Label3;
         internal PictureBox PictureBox1;
-        internal UI.WP.CheckBox CheckBox1;
         internal UI.WP.Button Button14;
         internal UI.WP.Button Button13;
         internal UI.WP.Button Button6;
         internal UI.WP.Button Button5;
-        internal UI.WP.GroupBox GroupBox1;
         private UI.Controllers.TrackBarX trackbarX1;
         internal UI.WP.Button button2;
+        private UI.WP.GroupBox groupBox29;
+        private UI.WP.GroupBox groupBox30;
+        private UI.WP.Toggle toggle1;
+        internal Label label9;
+        private UI.WP.GroupBox groupBox2;
     }
 }
