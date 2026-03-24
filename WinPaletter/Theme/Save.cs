@@ -699,16 +699,12 @@ namespace WinPaletter.Theme
                             Program.Localization.Strings.ThemeManager.Actions.Time);
                         }
 
-                        Program.Log?.Write(LogEventLevel.Information, "Broadcasting system message to notify about the setting change (User32.UpdatePerUserSystemParameters(1, true)).");
-                        User32.UpdatePerUserSystemParameters(1, true);
-
                         // Sometimes, this entry is set to 1 when manipulating preferences by User32.SystemParametersInfo
                         WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0);
 
                         // Update User Preference Mask for HKEY_USERS\.DEFAULT
                         // Always make it the last operation
                         if (Program.Settings.ThemeApplyingBehavior.UPM_HKU_DEFAULT) Win32.Broadcast_UPM_ToDefUsers(tv);
-                        Program.RefreshDWM(this);
 
                         //PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessages.WM_SYSCOLORCHANGE, UIntPtr.Zero, IntPtr.Zero);
                         //PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessages.WM_PALETTECHANGED, UIntPtr.Zero, IntPtr.Zero);
@@ -735,6 +731,15 @@ namespace WinPaletter.Theme
                         sw_all.Stop();
                         wic.Undo();
                     }
+
+                    // UpdatePerUserSystemParameters MUST run outside impersonation.
+                    // Running it under impersonation triggers CThemeService to replay the active .theme file for the impersonated session, overwriting all registry values
+                    // WinPaletter just wrote. Running it as the elevated process token causes CThemeService to reload the current session without triggering a .theme replay.
+                    Program.Log?.Write(LogEventLevel.Information, "Broadcasting system message to notify about the setting change (User32.UpdatePerUserSystemParameters(1, true)).");
+                    User32.UpdatePerUserSystemParameters(1, true);
+
+                    Program.RefreshDWM(this);
+
                     break;
 
                 case Source.File:

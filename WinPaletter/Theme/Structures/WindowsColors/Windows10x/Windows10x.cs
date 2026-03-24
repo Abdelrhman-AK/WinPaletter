@@ -82,6 +82,8 @@ namespace WinPaletter.Theme.Structures
 
         protected string _signature;
 
+        public bool Vault { get; set; } = false;
+
         protected Windows10xBase(string signature)
         {
             _signature = signature;
@@ -184,6 +186,7 @@ namespace WinPaletter.Theme.Structures
             Program.Log?.Write(LogEventLevel.Information, $"Loading Windows {_signature} colors and appearance preferences from registry.");
 
             Enabled = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows10x\{_signature}", string.Empty, @default.Enabled);
+            Vault = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows10x\{_signature}\Vault", string.Empty, @default.Enabled);
 
             VisualStyles.Load(_signature, @default.VisualStyles);
 
@@ -222,9 +225,6 @@ namespace WinPaletter.Theme.Structures
         /// <summary>
         /// Saves data into registry
         /// </summary>
-        /// <summary>
-        /// Saves data into registry
-        /// </summary>
         public void Apply(TreeView treeView = null)
         {
             Program.Log?.Write(LogEventLevel.Information, $"Saving Windows {_signature} colors and appearance preferences into registry.");
@@ -235,6 +235,31 @@ namespace WinPaletter.Theme.Structures
 
                 if (Enabled && IsTargetOS())
                 {
+                    WriteReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows10x\{_signature}\Vault", string.Empty, Vault, RegistryValueKind.DWord);
+
+                    if (Vault)
+                    {
+                        SaveVault(treeView);
+
+                        // Create logon and unlock tasks so Windows resets are countered on every logon and resume.
+                        // Unlock also fires on wake from sleep, covering the resume scenario without a separate task.
+                        string logonTask = $@"{System.Windows.Forms.Application.ProductName}\{_signature}_Logon_LoadVault";
+                        string unlockTask = $@"{System.Windows.Forms.Application.ProductName}\{_signature}_Unlock_LoadVault";
+
+                        Tasks.Create(Tasks.TaskType.Logon, logonTask, "--loadvault", treeView);
+                        Tasks.Create(Tasks.TaskType.Unlock, unlockTask, "--loadvault", treeView);
+                    }
+                    else
+                    {
+                        ClearVault();
+
+                        string logonTask = $@"{System.Windows.Forms.Application.ProductName}\{_signature}_Logon_LoadVault";
+                        string unlockTask = $@"{System.Windows.Forms.Application.ProductName}\{_signature}_Unlock_LoadVault";
+
+                        if (Tasks.Exists(logonTask)) Tasks.Delete(logonTask, treeView);
+                        if (Tasks.Exists(unlockTask)) Tasks.Delete(unlockTask, treeView);
+                    }
+
                     VisualStyles.Apply(_signature, treeView);
 
                     // Disable auto-colorization from wallpaper and clear its history flag
@@ -266,24 +291,6 @@ namespace WinPaletter.Theme.Structures
 
                     #endregion
 
-                    #region HKEY_LOCAL_MACHINE SystemProtectedUserData
-
-                    string spdColorsPath = $@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\SystemProtectedUserData\{User.SID}\AnyoneRead\Colors";
-                    string spdThemePath = $@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\SystemProtectedUserData\{User.SID}\AnyoneRead\Theme";
-
-                    WriteReg(treeView, spdColorsPath, "AccentColor", Titlebar_Active.Reverse().ToArgb());
-                    WriteReg(treeView, spdColorsPath, "AccentColorInactive", Titlebar_Inactive.Reverse().ToArgb());
-                    WriteReg(treeView, spdColorsPath, "StartColor", StartMenu_Accent.Reverse().ToArgb());
-                    WriteReg(treeView, spdColorsPath, "ImmersiveColor", Titlebar_Active.Reverse().ToArgb());
-
-                    // Theme\Personalize mirrors under SystemProtectedUserData for UWP and logon screen reads
-                    WriteReg(treeView, spdThemePath, "SystemUsesLightTheme", WinMode_Light ? 1 : 0);
-                    WriteReg(treeView, spdThemePath, "AppsUseLightTheme", AppMode_Light ? 1 : 0);
-                    WriteReg(treeView, spdThemePath, "ColorPrevalence", colorPrevelance);
-                    WriteReg(treeView, spdThemePath, "EnableTransparency", Transparency ? 1 : 0);
-
-                    #endregion
-
                     #region HKEY_USERS\.DEFAULT
 
                     if (Program.Settings.ThemeApplyingBehavior.WindowsColors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
@@ -312,14 +319,32 @@ namespace WinPaletter.Theme.Structures
                     // Apply version-specific settings
                     ApplySpecific(treeView);
 
+                    wic?.Undo();
+
+                    #region HKEY_LOCAL_MACHINE SystemProtectedUserData
+
+                    string spdColorsPath = $@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\SystemProtectedUserData\{User.SID}\AnyoneRead\Colors";
+                    string spdThemePath = $@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\SystemProtectedUserData\{User.SID}\AnyoneRead\Theme";
+
+                    WriteReg(treeView, spdColorsPath, "AccentColor", Titlebar_Active.Reverse().ToArgb());
+                    WriteReg(treeView, spdColorsPath, "AccentColorInactive", Titlebar_Inactive.Reverse().ToArgb());
+                    WriteReg(treeView, spdColorsPath, "StartColor", StartMenu_Accent.Reverse().ToArgb());
+                    WriteReg(treeView, spdColorsPath, "ImmersiveColor", Titlebar_Active.Reverse().ToArgb());
+
+                    // Theme\Personalize mirrors under SystemProtectedUserData for UWP and logon screen reads
+                    WriteReg(treeView, spdThemePath, "SystemUsesLightTheme", WinMode_Light ? 1 : 0);
+                    WriteReg(treeView, spdThemePath, "AppsUseLightTheme", AppMode_Light ? 1 : 0);
+                    WriteReg(treeView, spdThemePath, "ColorPrevalence", colorPrevelance);
+                    WriteReg(treeView, spdThemePath, "EnableTransparency", Transparency ? 1 : 0);
+
+                    #endregion
+
                     // Patch the active .theme file so Windows replays our values on every logon instead of resetting them
                     PatchActiveThemeFile(Program.TM.Win32);
 
                     // Broadcast changes
                     BroadcastChanges();
                 }
-
-                wic?.Undo();
             }
         }
 
@@ -459,11 +484,14 @@ namespace WinPaletter.Theme.Structures
 
         private void BroadcastChanges()
         {
+            // UpdatePerUserSystemParameters must NOT run under impersonation — it triggers CThemeService to replay the active .theme file for the impersonated session, overwriting the registry values WinPaletter just wrote.
+            // It must run as the elevated process token so CThemeService reloads the current session's settings without triggering a .theme replay.
+            Program.Log?.Write(LogEventLevel.Information, "Broadcasting system message to notify about the setting change (User32.UpdatePerUserSystemParameters(1, true)).");
+            User32.UpdatePerUserSystemParameters(1, true);
+
+            // WM_SETTINGCHANGE and ImmersiveColorSet notifications however must be sent under impersonation so the target user's shell receives them, not just the elevated admin process's window station.
             using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
-                Program.Log?.Write(LogEventLevel.Information, "Broadcasting system message to notify about the setting change (User32.UpdatePerUserSystemParameters(1, true)).");
-                User32.UpdatePerUserSystemParameters(1, true);
-
                 Program.Log?.Write(LogEventLevel.Information, "Broadcasting system message to notify about the setting change (User32.SendMessage).");
                 User32.SendMessage(IntPtr.Zero, User32.WindowsMessages.WM_SETTINGCHANGE, IntPtr.Zero, IntPtr.Zero);
                 User32.NotifySettingChanged("ImmersiveColorSet");
@@ -472,5 +500,127 @@ namespace WinPaletter.Theme.Structures
                 wic.Undo();
             }
         }
+
+        #region Vault
+
+        private string VaultRoot => $@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows10x\{_signature}\Vault";
+
+        // Translates a real registry path into its Vault equivalent by encoding the path as a subkey name.
+        private string ToVaultPath(string realPath) => $@"{VaultRoot}\{realPath.Replace('\\', '|')}";
+
+        /// <summary>
+        /// Mirrors all Apply() HKCU registry writes into the Vault so the Task Scheduler task
+        /// can restore them after Windows resets them on logon or resume.
+        /// </summary>
+        private void SaveVault(TreeView treeView = null)
+        {
+            try
+            {
+                int colorPrevelance = ApplyAccentOnTaskbar switch
+                {
+                    Windows10x.AccentTaskbarLevels.None => 0,
+                    Windows10x.AccentTaskbarLevels.Taskbar_Start_AC => 1,
+                    Windows10x.AccentTaskbarLevels.Taskbar => 2,
+                    _ => 0
+                };
+
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize"), "ColorPrevalence", colorPrevelance);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize"), "SystemUsesLightTheme", WinMode_Light ? 1 : 0);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize"), "AppsUseLightTheme", AppMode_Light ? 1 : 0);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize"), "EnableTransparency", Transparency ? 1 : 0);
+
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM"), "ColorPrevalence", ApplyAccentOnTitlebars ? 1 : 0);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM"), "AccentColor", Titlebar_Active.Reverse().ToArgb());
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM"), "AccentColorInactive", Titlebar_Inactive.Reverse().ToArgb());
+
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent"), "AccentPalette", ColorBytes, RegistryValueKind.Binary);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent"), "StartColorMenu", StartMenu_Accent.Reverse().ToArgb());
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent"), "AccentColorMenu", Titlebar_Active.Reverse().ToArgb());
+
+                Program.Log?.Write(LogEventLevel.Information, $"SaveVault: Saved for Windows {_signature}.");
+            }
+            catch (Exception ex)
+            {
+                Program.Log?.Write(LogEventLevel.Error, $"SaveVault failed for Windows {_signature}: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Loads all managed values from the Vault into the current instance properties.
+        /// Does not apply anything to the system — call Apply() separately.
+        /// </summary>
+        public void LoadVault()
+        {
+            try
+            {
+                string vaultRoot = $@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows10x\{_signature}\Vault";
+
+                if (!KeyExists(vaultRoot))
+                {
+                    Program.Log?.Write(LogEventLevel.Warning, $"LoadVault: Vault not found for Windows {_signature}. Has SaveVault() been called?");
+                    return;
+                }
+
+                int colorPrevelance = ReadReg(ToVaultPath(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize"), "ColorPrevalence", (int)ApplyAccentOnTaskbar);
+                ApplyAccentOnTaskbar = colorPrevelance switch
+                {
+                    1 => Windows10x.AccentTaskbarLevels.Taskbar_Start_AC,
+                    2 => Windows10x.AccentTaskbarLevels.Taskbar,
+                    _ => Windows10x.AccentTaskbarLevels.None
+                };
+
+                ApplyAccentOnTitlebars = ReadReg(ToVaultPath(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM"), "ColorPrevalence", ApplyAccentOnTitlebars ? 1 : 0) == 1;
+
+                Titlebar_Active = ReadReg(ToVaultPath(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM"), "AccentColor", Titlebar_Active.Reverse()).Reverse();
+                Titlebar_Inactive = ReadReg(ToVaultPath(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM"), "AccentColorInactive", Titlebar_Inactive.Reverse()).Reverse();
+                StartMenu_Accent = ReadReg(ToVaultPath(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent"), "StartColorMenu", StartMenu_Accent.Reverse()).Reverse();
+
+                WinMode_Light = ReadReg(ToVaultPath(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize"), "SystemUsesLightTheme", WinMode_Light);
+                AppMode_Light = ReadReg(ToVaultPath(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize"), "AppsUseLightTheme", AppMode_Light);
+                Transparency = ReadReg(ToVaultPath(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize"), "EnableTransparency", Transparency);
+
+                byte[] palette = ReadReg(ToVaultPath(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Accent"), "AccentPalette", (byte[])null);
+                if (palette is not null && palette.Length >= 32)
+                {
+                    Color_Index0 = Color.FromArgb(255, palette[0], palette[1], palette[2]);
+                    Color_Index1 = Color.FromArgb(255, palette[4], palette[5], palette[6]);
+                    Color_Index2 = Color.FromArgb(255, palette[8], palette[9], palette[10]);
+                    Color_Index3 = Color.FromArgb(255, palette[12], palette[13], palette[14]);
+                    Color_Index4 = Color.FromArgb(255, palette[16], palette[17], palette[18]);
+                    Color_Index5 = Color.FromArgb(255, palette[20], palette[21], palette[22]);
+                    Color_Index6 = Color.FromArgb(255, palette[24], palette[25], palette[26]);
+                    Color_Index7 = Color.FromArgb(255, palette[28], palette[29], palette[30]);
+                }
+
+                Program.Log?.Write(LogEventLevel.Information, $"LoadVault: Properties loaded for Windows {_signature}.");
+            }
+            catch (Exception ex)
+            {
+                Program.Log?.Write(LogEventLevel.Error, $"LoadVault failed for Windows {_signature}: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Clears the Vault for this Windows version signature
+        /// </summary>
+        public void ClearVault()
+        {
+            try
+            {
+                string vaultRoot = $@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows10x\{_signature}\Vault";
+
+                if (KeyExists(vaultRoot))
+                {
+                    DeleteKey(vaultRoot);
+                    Program.Log?.Write(LogEventLevel.Information, $"ClearVault: Cleared for Windows {_signature}.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Program.Log?.Write(LogEventLevel.Error, $"ClearVault failed for Windows {_signature}: {ex.Message}");
+            }
+        }
+
+        #endregion
     }
 }

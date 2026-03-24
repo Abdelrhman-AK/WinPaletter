@@ -84,6 +84,13 @@ namespace WinPaletter
             public IEnumerable<string> InputFiles { get; set; }
 
             /// <summary>
+            /// Load accent colors from the WinPaletter Vault and apply them to the registry silently.
+            /// Used by the Task Scheduler task to restore values Windows resets on logon or resume.
+            /// </summary>
+            [Option("loadvault", Required = false, HelpText = "Load accent colors from the WinPaletter Vault and apply them to the registry silently.")]
+            public bool LoadVault { get; set; }
+
+            /// <summary>
             /// Examples of how to use the command line arguments.
             /// </summary>
             [Usage(ApplicationAlias = "WinPaletter")]
@@ -283,6 +290,41 @@ namespace WinPaletter
                                 shouldExit = true;
                             }
                         }
+                    }
+
+                    if (o.LoadVault)
+                    {
+                        Log?.Write(LogEventLevel.Information, "Command line arguments loadvault requested.");
+
+                        MsgBox("loadvault");
+
+                        try
+                        {
+                            using (System.Security.Principal.WindowsImpersonationContext wic = User.Identity.Impersonate())
+                            {
+                                // LoadVault reads from HKCU of the target user and populates the instance properties.
+                                if (OS.W12) TM.Windows12.LoadVault();
+                                else if (OS.W11) TM.Windows11.LoadVault();
+                                else if (OS.W10) TM.Windows10.LoadVault();
+
+                                wic.Undo();
+                            }
+
+                            // Apply runs outside impersonation — same pattern as Windows10xBase<T>.Apply():
+                            // WriteReg calls for HKCU run under impersonation inside Apply() itself,
+                            // while TakeOwnership and PatchActiveThemeFile need the elevated token.
+                            if (OS.W12) TM.Windows12.Apply();
+                            else if (OS.W11) TM.Windows11.Apply();
+                            else if (OS.W10) TM.Windows10.Apply();
+
+                            Log?.Write(LogEventLevel.Information, "LoadVault: Vault applied successfully.");
+                        }
+                        catch (Exception ex)
+                        {
+                            Log?.Write(LogEventLevel.Error, $"LoadVault failed: {ex.Message}");
+                        }
+
+                        shouldExit = true;
                     }
                 });
 

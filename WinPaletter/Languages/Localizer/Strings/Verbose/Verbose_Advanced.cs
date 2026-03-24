@@ -38,8 +38,9 @@
                     public string LogonUIImgSaved { get; set; } = "Modified {0} image is saved as '{1}'";
                     public string LogonUIImgNUMSaved { get; set; } = "Modified LogonUI image number {1} is saved as '{0}'";
                     public string RenderingCursor { get; set; } = "Rendering cursor '{0}'";
-                    public string CursorRenderedInto { get; set; } = "Cursor is rendered as '{0}";
+                    public string CursorRenderedInto { get; set; } = "Cursor is rendered as '{0}'";
                     public string DelCursorWPFromReg { get; set; } = "Deleting registry value 'WinPaletter' from '{0}' to start cursors restoration";
+                    public string CreateTask { get; set; } = "Creating scheduled task '{0}'.";
                 }
             }
         }

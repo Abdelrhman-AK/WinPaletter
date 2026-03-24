@@ -523,11 +523,11 @@ namespace WinPaletter.Theme.Structures
                 // Delete tasks created by old WinPaletter versions (Sounds redirection method depends now on service, not task scheduler)
                 if (OS.W8x | OS.W10 | OS.W11 | OS.W12)
                 {
-                    Tasks.Delete(Tasks.TaskType.Shutdown, treeView);
-                    Tasks.Delete(Tasks.TaskType.Logoff, treeView);
-                    Tasks.Delete(Tasks.TaskType.Logon, treeView);
-                    Tasks.Delete(Tasks.TaskType.Unlock, treeView);
-                    Tasks.Delete(Tasks.TaskType.ChargerConnected, treeView);
+                    Tasks.Delete("Shutdown", treeView: treeView);
+                    Tasks.Delete("Logoff", treeView: treeView);
+                    Tasks.Delete("Logon", treeView: treeView);
+                    Tasks.Delete("Unlock", treeView: treeView);
+                    Tasks.Delete("ChargerConnected", treeView: treeView);
                 }
 
                 // Scopes for Windows sounds
