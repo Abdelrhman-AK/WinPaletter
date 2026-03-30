@@ -84,11 +84,25 @@ namespace WinPaletter
             public IEnumerable<string> InputFiles { get; set; }
 
             /// <summary>
-            /// Load accent colors from the WinPaletter Vault and apply them to the registry silently.
+            /// Load Windows 10x accent colors from the WinPaletter Vault and apply them to the registry silently.
             /// Used by the Task Scheduler task to restore values Windows resets on logon or resume.
             /// </summary>
-            [Option("loadvault", Required = false, HelpText = "Load accent colors from the WinPaletter Vault and apply them to the registry silently.")]
-            public bool LoadVault { get; set; }
+            [Option("loadvaultWin10x", Required = false, Hidden = true, HelpText = "Load Windows 10x accent colors from the WinPaletter Vault and apply them to the registry silently.")]
+            public bool LoadVault_Win10xColors { get; set; }
+
+            /// <summary>
+            /// Load Windows Classic Colors from the WinPaletter Vault and apply them to the registry silently.
+            /// Used by the Task Scheduler task to restore values Windows resets on logon or resume.
+            /// </summary>
+            [Option("loadvaultWin32UI", Required = false, Hidden = true, HelpText = "Load Windows Classic Colors from the WinPaletter Vault and apply them to the registry silently.")]
+            public bool LoadVault_Win32UI { get; set; }
+
+            /// <summary>
+            /// Load Windows Metrics & Fonts from the WinPaletter Vault and apply them to the registry silently.
+            /// Used by the Task Scheduler task to restore values Windows resets on logon or resume.
+            /// </summary>
+            [Option("loadvaultMetricsFonts", Required = false, Hidden = true, HelpText = "Load Windows Metrics & Fonts from the WinPaletter Vault and apply them to the registry silently.")]
+            public bool LoadVault_MetricsFonts { get; set; }
 
             /// <summary>
             /// Examples of how to use the command line arguments.
@@ -114,9 +128,9 @@ namespace WinPaletter
                 Parser.Default.ParseArguments<Options>(args)
                   .WithParsed(o =>
                   {
-                      if (o.Help || o.Version || o.Uninstall || o.Uninstall_Quiet || o.SOS)
+                      if (o.Help || o.Version || o.Uninstall || o.Uninstall_Quiet || o.SOS || o.LoadVault_Win10xColors || o.LoadVault_Win32UI || o.LoadVault_MetricsFonts)
                       {
-                          // Skip user login when help, version, uninstall, uninstall-quiet or SOS is requested. User login is then not needed.
+                          // Skip user login when help, version, uninstall, uninstall-quiet, SOS or load from vault is requested. User login is then not needed.
                           value = true;
                       }
                       else if (o.Apply != null && File.Exists(o.Apply))
@@ -292,11 +306,9 @@ namespace WinPaletter
                         }
                     }
 
-                    if (o.LoadVault)
+                    if (o.LoadVault_Win10xColors && Settings.ThemeApplyingBehavior.Vault && Settings.ThemeApplyingBehavior.Vault_SaveWin10xColors)
                     {
-                        Log?.Write(LogEventLevel.Information, "Command line arguments loadvault requested.");
-
-                        MsgBox("loadvault");
+                        Log?.Write(LogEventLevel.Information, "Command line arguments loadvault from Win10x requested.");
 
                         try
                         {
@@ -317,11 +329,62 @@ namespace WinPaletter
                             else if (OS.W11) TM.Windows11.Apply();
                             else if (OS.W10) TM.Windows10.Apply();
 
-                            Log?.Write(LogEventLevel.Information, "LoadVault: Vault applied successfully.");
+                            Log?.Write(LogEventLevel.Information, "LoadVault: Vault applied Win10x successfully.");
                         }
                         catch (Exception ex)
                         {
-                            Log?.Write(LogEventLevel.Error, $"LoadVault failed: {ex.Message}");
+                            Log?.Write(LogEventLevel.Error, $"LoadVault from Win10x failed: {ex.Message}");
+                        }
+
+                        shouldExit = true;
+                    }
+
+                    if (o.LoadVault_Win32UI && Settings.ThemeApplyingBehavior.Vault && Settings.ThemeApplyingBehavior.Vault_SaveWin32UIColors)
+                    {
+                        Log?.Write(LogEventLevel.Information, "Command line arguments loadvault from Win32UI requested.");
+
+                        try
+                        {
+                            using (System.Security.Principal.WindowsImpersonationContext wic = User.Identity.Impersonate())
+                            {
+                                // LoadVault reads from HKCU of the target user and populates the instance properties.
+                                TM.Win32.LoadVault();
+                                wic.Undo();
+                            }
+
+                            TM.Win32.Apply();
+
+                            Log?.Write(LogEventLevel.Information, "LoadVault: Vault applied Win32UI successfully.");
+                        }
+                        catch (Exception ex)
+                        {
+                            Log?.Write(LogEventLevel.Error, $"LoadVault from Win32UI failed: {ex.Message}");
+                        }
+
+                        shouldExit = true;
+                    }
+
+                    if (o.LoadVault_MetricsFonts && Settings.ThemeApplyingBehavior.Vault && Settings.ThemeApplyingBehavior.Vault_SaveMetricsFonts)
+                    {
+                        Log?.Write(LogEventLevel.Information, "Command line arguments loadvault from MetricsFonts requested.");
+
+                        try
+                        {
+                            using (System.Security.Principal.WindowsImpersonationContext wic = User.Identity.Impersonate())
+                            {
+                                // LoadVault reads from HKCU of the target user and populates the instance properties.
+                                TM.MetricsFonts.LoadVault();
+
+                                wic.Undo();
+                            }
+
+                            TM.MetricsFonts.Apply();
+
+                            Log?.Write(LogEventLevel.Information, "LoadVault: Vault applied MetricsFonts successfully.");
+                        }
+                        catch (Exception ex)
+                        {
+                            Log?.Write(LogEventLevel.Error, $"LoadVault from MetricsFonts failed: {ex.Message}");
                         }
 
                         shouldExit = true;

@@ -62,14 +62,25 @@ namespace WinPaletter
                         "<Enabled>true</Enabled>" +
                         "<Subscription>" +
                         "&lt;QueryList&gt;" +
+
+                        // Primary: real unlock event
                         "&lt;Query Id='0' Path='Security'&gt;" +
                         "&lt;Select Path='Security'&gt;" +
-                        "*[System[(EventID=4624)] and EventData[Data[@Name='LogonType']='7'] and EventData[Data[@Name='TargetUserSid']='" + User.SID + "']]" +
+                        "*[System[(EventID=4801)] and EventData[Data[@Name='TargetUserSid']='" + User.SID + "']]" +
                         "&lt;/Select&gt;" +
                         "&lt;/Query&gt;" +
+
+                        // Fallback: logon-based unlock behavior (legacy / broken audit cases)
+                        "&lt;Query Id='1' Path='Security'&gt;" +
+                        "&lt;Select Path='Security'&gt;" +
+                        "*[System[(EventID=4624)] and " +
+                        "EventData[Data[@Name='LogonType']='2'] and " +
+                        "EventData[Data[@Name='TargetUserSid']='" + User.SID + "']]" +
+                        "&lt;/Select&gt;" +
+                        "&lt;/Query&gt;" +
+
                         "&lt;/QueryList&gt;" +
                         "</Subscription>" +
-                        "<Delay>PT3S</Delay>" +
                         "</EventTrigger>";
 
                 case TaskType.Logoff:
@@ -149,6 +160,13 @@ namespace WinPaletter
             {
                 Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Tasks.Create: '{taskName}' already exists, skipping creation.");
                 return;
+            }
+
+            if (type == TaskType.Unlock)
+            {
+                Program.SendCommand("auditpol /set /subcategory:\"Other Logon/Logoff Events\" /success:enable /failure:enable");
+                Program.SendCommand("auditpol /set /subcategory:\"Logon\" /success:enable /failure:enable");
+                Program.SendCommand("gpupdate /force", false);
             }
 
             string exe = Application.ExecutablePath;

@@ -177,6 +177,13 @@ namespace WinPaletter
             RadioButton25.Checked = Sets.ThemeApplyingBehavior.PE_ModifyByDefault;
             RadioButton24.Checked = !Sets.ThemeApplyingBehavior.PE_ModifyByDefault;
             toggle12.Checked = Sets.ThemeApplyingBehavior.Show_WinEffects_Alert;
+            toggle45.Checked = Sets.ThemeApplyingBehavior.Vault;
+            toggle46.Checked = Sets.ThemeApplyingBehavior.Vault_SaveWin10xColors;
+            toggle47.Checked = Sets.ThemeApplyingBehavior.Vault_SaveWin32UIColors;
+            toggle48.Checked = Sets.ThemeApplyingBehavior.Vault_SaveMetricsFonts;
+            toggle51.Checked = Sets.ThemeApplyingBehavior.Vault_RestoreOnLogon;
+            toggle50.Checked = Sets.ThemeApplyingBehavior.Vault_RestoreOnUnlock;
+
             toggle29.Checked = Sets.NerdStats.DragAndDrop;
 
             UpdateStorageUI();
@@ -549,6 +556,13 @@ namespace WinPaletter
             Sets.ThemeApplyingBehavior.Ignore_PE_Modify_Alert = toggle16.Checked;
             Sets.ThemeApplyingBehavior.PE_ModifyByDefault = RadioButton25.Checked;
             Sets.ThemeApplyingBehavior.Show_WinEffects_Alert = toggle12.Checked;
+
+            Sets.ThemeApplyingBehavior.Vault = toggle45.Checked;
+            Sets.ThemeApplyingBehavior.Vault_SaveWin10xColors = toggle46.Checked;
+            Sets.ThemeApplyingBehavior.Vault_SaveWin32UIColors = toggle47.Checked;
+            Sets.ThemeApplyingBehavior.Vault_SaveMetricsFonts = toggle48.Checked;
+            Sets.ThemeApplyingBehavior.Vault_RestoreOnLogon = toggle51.Checked;
+            Sets.ThemeApplyingBehavior.Vault_RestoreOnUnlock = toggle50.Checked;
 
             Sets.Store.Mode = radioImage2.Checked ? Settings.Structures.Store.Modes.Online :
                     radioImage5.Checked ? Settings.Structures.Store.Modes.Offline : Settings.Structures.Store.Modes.Hybrid;

@@ -319,6 +319,36 @@ namespace WinPaletter
                 public bool PE_ModifyByDefault { get; set; } = true;
 
                 /// <summary>
+                /// Vault is a feature that fixes an issue that dismisses WinPaletter changes after a Windows restart or unlock.
+                /// </summary>
+                public bool Vault { get; set; } = false;
+
+                /// <summary>
+                /// A flag to save Windows 10x accent colors and preferences into vault.
+                /// </summary>
+                public bool Vault_SaveWin10xColors { get; set; } = false;
+
+                /// <summary>
+                /// A flag to save Windows Classic Colors into vault.
+                /// </summary>
+                public bool Vault_SaveWin32UIColors { get; set; } = false;
+
+                /// <summary>
+                /// A flag to save Windows Metrics & Fonts into vault.
+                /// </summary>
+                public bool Vault_SaveMetricsFonts { get; set; } = false;
+
+                /// <summary>
+                /// A flag to restore from vault with Windows Logon
+                /// </summary>
+                public bool Vault_RestoreOnLogon { get; set; } = false;
+
+                /// <summary>
+                /// A flag to restore from vault with Windows Unlock
+                /// </summary>
+                public bool Vault_RestoreOnUnlock { get; set; } = false;
+
+                /// <summary>
                 /// Hide alert when applying Windows Effects and also on changing its toggle state
                 /// </summary>
                 public bool Show_WinEffects_Alert { get; set; } = true;
@@ -375,6 +405,12 @@ namespace WinPaletter
                     Ignore_PE_Modify_Alert = ReadReg(REG_ThemeApplyingBehavior, "Ignore_PE_Modify_Alert", false);
                     Show_WinEffects_Alert = ReadReg(REG_ThemeApplyingBehavior, "Show_WinEffects_Alert", true);
                     PE_ModifyByDefault = ReadReg(REG_ThemeApplyingBehavior, "PE_ModifyByDefault", true);
+                    Vault = ReadReg(REG_ThemeApplyingBehavior, nameof(Vault), false);
+                    Vault_SaveWin10xColors = ReadReg(REG_ThemeApplyingBehavior, nameof(Vault_SaveWin10xColors), false);
+                    Vault_SaveWin32UIColors = ReadReg(REG_ThemeApplyingBehavior, nameof(Vault_SaveWin32UIColors), false);
+                    Vault_SaveMetricsFonts = ReadReg(REG_ThemeApplyingBehavior, nameof(Vault_SaveMetricsFonts), false);
+                    Vault_RestoreOnLogon = ReadReg(REG_ThemeApplyingBehavior, nameof(Vault_RestoreOnLogon), false);
+                    Vault_RestoreOnUnlock = ReadReg(REG_ThemeApplyingBehavior, nameof(Vault_RestoreOnUnlock), false);
                 }
 
                 /// <summary>
@@ -401,6 +437,23 @@ namespace WinPaletter
                     WriteReg(REG_ThemeApplyingBehavior, "Ignore_PE_Modify_Alert", Ignore_PE_Modify_Alert, RegistryValueKind.DWord);
                     WriteReg(REG_ThemeApplyingBehavior, "Show_WinEffects_Alert", Show_WinEffects_Alert, RegistryValueKind.DWord);
                     WriteReg(REG_ThemeApplyingBehavior, "PE_ModifyByDefault", PE_ModifyByDefault, RegistryValueKind.DWord);
+                    WriteReg(REG_ThemeApplyingBehavior, nameof(Vault), Vault, RegistryValueKind.DWord);
+                    WriteReg(REG_ThemeApplyingBehavior, nameof(Vault_SaveWin10xColors), Vault_SaveWin10xColors, RegistryValueKind.DWord);
+                    WriteReg(REG_ThemeApplyingBehavior, nameof(Vault_SaveWin32UIColors), Vault_SaveWin32UIColors, RegistryValueKind.DWord);
+                    WriteReg(REG_ThemeApplyingBehavior, nameof(Vault_SaveMetricsFonts), Vault_SaveMetricsFonts, RegistryValueKind.DWord);
+                    WriteReg(REG_ThemeApplyingBehavior, nameof(Vault_RestoreOnLogon), Vault_RestoreOnLogon, RegistryValueKind.DWord);
+                    WriteReg(REG_ThemeApplyingBehavior, nameof(Vault_RestoreOnUnlock), Vault_RestoreOnUnlock, RegistryValueKind.DWord);
+
+                    if (!Vault_SaveWin10xColors)
+                    {
+                        Program.TM.Windows12.ClearVault();
+                        Program.TM.Windows11.ClearVault();
+                        Program.TM.Windows10.ClearVault();
+                    }
+
+                    if (!Vault_SaveWin32UIColors) Program.TM.Win32.ClearVault();
+                    if (!Vault_SaveMetricsFonts) Program.TM.MetricsFonts.ClearVault();
+
                 }
             }
 

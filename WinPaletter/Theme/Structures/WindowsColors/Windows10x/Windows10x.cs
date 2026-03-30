@@ -82,8 +82,6 @@ namespace WinPaletter.Theme.Structures
 
         protected string _signature;
 
-        public bool Vault { get; set; } = false;
-
         protected Windows10xBase(string signature)
         {
             _signature = signature;
@@ -186,7 +184,6 @@ namespace WinPaletter.Theme.Structures
             Program.Log?.Write(LogEventLevel.Information, $"Loading Windows {_signature} colors and appearance preferences from registry.");
 
             Enabled = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows10x\{_signature}", string.Empty, @default.Enabled);
-            Vault = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows10x\{_signature}\Vault", string.Empty, @default.Enabled);
 
             VisualStyles.Load(_signature, @default.VisualStyles);
 
@@ -235,29 +232,18 @@ namespace WinPaletter.Theme.Structures
 
                 if (Enabled && IsTargetOS())
                 {
-                    WriteReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\Windows10x\{_signature}\Vault", string.Empty, Vault, RegistryValueKind.DWord);
-
-                    if (Vault)
+                    if (Program.Settings.ThemeApplyingBehavior.Vault && Program.Settings.ThemeApplyingBehavior.Vault_SaveWin10xColors)
                     {
                         SaveVault(treeView);
 
                         // Create logon and unlock tasks so Windows resets are countered on every logon and resume.
                         // Unlock also fires on wake from sleep, covering the resume scenario without a separate task.
-                        string logonTask = $@"{System.Windows.Forms.Application.ProductName}\{_signature}_Logon_LoadVault";
-                        string unlockTask = $@"{System.Windows.Forms.Application.ProductName}\{_signature}_Unlock_LoadVault";
-
-                        Tasks.Create(Tasks.TaskType.Logon, logonTask, "--loadvault", treeView);
-                        Tasks.Create(Tasks.TaskType.Unlock, unlockTask, "--loadvault", treeView);
+                        Tasks.Create(Tasks.TaskType.Logon, $"{_signature}_Logon_LoadVault", "--loadvaultWin10x", treeView);
+                        Tasks.Create(Tasks.TaskType.Unlock, $"{_signature}_Unlock_LoadVault", "--loadvaultWin10x", treeView);
                     }
                     else
                     {
-                        ClearVault();
-
-                        string logonTask = $@"{System.Windows.Forms.Application.ProductName}\{_signature}_Logon_LoadVault";
-                        string unlockTask = $@"{System.Windows.Forms.Application.ProductName}\{_signature}_Unlock_LoadVault";
-
-                        if (Tasks.Exists(logonTask)) Tasks.Delete(logonTask, treeView);
-                        if (Tasks.Exists(unlockTask)) Tasks.Delete(unlockTask, treeView);
+                        ClearVault(treeView);
                     }
 
                     VisualStyles.Apply(_signature, treeView);
@@ -339,9 +325,6 @@ namespace WinPaletter.Theme.Structures
 
                     #endregion
 
-                    // Patch the active .theme file so Windows replays our values on every logon instead of resetting them
-                    PatchActiveThemeFile(Program.TM.Win32);
-
                     // Broadcast changes
                     BroadcastChanges();
                 }
@@ -393,94 +376,6 @@ namespace WinPaletter.Theme.Structures
                 Color_Index6.R, Color_Index6.G, Color_Index6.B, 255,
                 Color_Index7.R, Color_Index7.G, Color_Index7.B, 255
             ];
-
-        /// <summary>
-        /// Patches the active Windows .theme file with the colors WinPaletter just wrote to the registry,
-        /// so Windows replays the correct values on every logon instead of resetting them.
-        /// Only keys officially read by Windows from .theme files are written.
-        /// </summary>
-        private void PatchActiveThemeFile(Win32UI win32UI)
-        {
-            try
-            {
-                string themeFilePath = ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "CurrentTheme", string.Empty);
-
-                if (string.IsNullOrEmpty(themeFilePath) || !System.IO.File.Exists(themeFilePath))
-                {
-                    Program.Log?.Write(LogEventLevel.Warning, "PatchActiveThemeFile: CurrentTheme registry value missing or file not found. Skipping .theme patch.");
-                    return;
-                }
-
-                Program.Log?.Write(LogEventLevel.Information, $"PatchActiveThemeFile: Patching theme file at '{themeFilePath}'.");
-
-                string userThemesFolder = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Microsoft", "Windows", "Themes");
-                string tempPath = System.IO.Path.Combine(userThemesFolder, System.IO.Path.GetRandomFileName() + ".theme");
-
-                System.IO.Directory.CreateDirectory(userThemesFolder);
-                System.IO.File.Copy(themeFilePath, tempPath, overwrite: true);
-
-                Program.Log?.Write(LogEventLevel.Information, $"PatchActiveThemeFile: Working on temp copy at '{tempPath}'.");
-
-                uint colorizationColor = 0xC4000000u | ((uint)Titlebar_Active.R << 16) | ((uint)Titlebar_Active.G << 8) | Titlebar_Active.B;
-
-                using (INI ini = new(tempPath))
-                {
-                    ini.Write("Control Panel\\Colors", "ActiveTitle", win32UI.ActiveTitle.ToStringWin32());
-                    ini.Write("Control Panel\\Colors", "InactiveTitle", win32UI.InactiveTitle.ToStringWin32());
-                    ini.Write("Control Panel\\Colors", "Background", win32UI.Background.ToStringWin32());
-                    ini.Write("Control Panel\\Colors", "ActiveBorder", win32UI.ActiveBorder.ToStringWin32());
-                    ini.Write("Control Panel\\Colors", "InactiveBorder", win32UI.InactiveBorder.ToStringWin32());
-                    ini.Write("Control Panel\\Colors", "Menu", win32UI.Menu.ToStringWin32());
-                    ini.Write("Control Panel\\Colors", "Window", win32UI.Window.ToStringWin32());
-                    ini.Write("Control Panel\\Colors", "WindowFrame", win32UI.WindowFrame.ToStringWin32());
-                    ini.Write("Control Panel\\Colors", "MenuText", win32UI.MenuText.ToStringWin32());
-                    ini.Write("Control Panel\\Colors", "WindowText", win32UI.WindowText.ToStringWin32());
-                    ini.Write("Control Panel\\Colors", "TitleText", win32UI.TitleText.ToStringWin32());
-                    ini.Write("Control Panel\\Colors", "Scrollbar", win32UI.Scrollbar.ToStringWin32());
-                    ini.Write("Control Panel\\Colors", "ButtonFace", win32UI.ButtonFace.ToStringWin32());
-                    ini.Write("Control Panel\\Colors", "ButtonShadow", win32UI.ButtonShadow.ToStringWin32());
-                    ini.Write("Control Panel\\Colors", "ButtonHilight", win32UI.ButtonHilight.ToStringWin32());
-                    ini.Write("Control Panel\\Colors", "ButtonDkShadow", win32UI.ButtonDkShadow.ToStringWin32());
-                    ini.Write("Control Panel\\Colors", "ButtonLight", win32UI.ButtonLight.ToStringWin32());
-                    ini.Write("Control Panel\\Colors", "ButtonText", win32UI.ButtonText.ToStringWin32());
-                    ini.Write("Control Panel\\Colors", "GrayText", win32UI.GrayText.ToStringWin32());
-                    ini.Write("Control Panel\\Colors", "Hilight", win32UI.Hilight.ToStringWin32());
-                    ini.Write("Control Panel\\Colors", "HilightText", win32UI.HilightText.ToStringWin32());
-                    ini.Write("Control Panel\\Colors", "InactiveTitleText", win32UI.InactiveTitleText.ToStringWin32());
-                    ini.Write("Control Panel\\Colors", "InfoText", win32UI.InfoText.ToStringWin32());
-                    ini.Write("Control Panel\\Colors", "InfoWindow", win32UI.InfoWindow.ToStringWin32());
-                    ini.Write("Control Panel\\Colors", "AppWorkspace", win32UI.AppWorkspace.ToStringWin32());
-                    ini.Write("Control Panel\\Colors", "GradientActiveTitle", win32UI.GradientActiveTitle.ToStringWin32());
-                    ini.Write("Control Panel\\Colors", "GradientInactiveTitle", win32UI.GradientInactiveTitle.ToStringWin32());
-                    ini.Write("Control Panel\\Colors", "HotTrackingColor", win32UI.HotTrackingColor.ToStringWin32());
-                    ini.Write("Control Panel\\Colors", "MenuHilight", win32UI.MenuHilight.ToStringWin32());
-                    ini.Write("Control Panel\\Colors", "MenuBar", win32UI.MenuBar.ToStringWin32());
-                    ini.Write("Control Panel\\Colors", "Desktop", win32UI.Desktop.ToStringWin32());
-
-                    ini.Write("Personalize", "SystemUsesLightTheme", WinMode_Light ? "1" : "0");
-                    ini.Write("Personalize", "AppsUseLightTheme", AppMode_Light ? "1" : "0");
-                    ini.Write("Personalize", "EnableTransparency", Transparency ? "1" : "0");
-                    ini.Write("Personalize", "ColorPrevalence", ((int)ApplyAccentOnTaskbar).ToString());
-
-                    ini.Write("VisualStyles", "ColorizationColor", $"0X{colorizationColor:X8}");
-                    ini.Write("VisualStyles", "AutoColorization", "0");
-                    ini.Write("VisualStyles", "SystemMode", WinMode_Light ? "Light" : "Dark");
-                    ini.Write("VisualStyles", "AppMode", AppMode_Light ? "Light" : "Dark");
-                }
-
-                // Take ownership of the original before overwriting — handles system-owned
-                // and WindowsApps-owned theme files without needing a separate redirect path.
-                TakeOwnership(themeFilePath, AsAdministrator: true);
-
-                Move_File(tempPath, themeFilePath);
-
-                Program.Log?.Write(LogEventLevel.Information, "PatchActiveThemeFile: Theme file patched successfully.");
-            }
-            catch (Exception ex)
-            {
-                Program.Log?.Write(LogEventLevel.Error, $"PatchActiveThemeFile: Failed to patch theme file. Exception: {ex.Message}");
-            }
-        }
 
         private void BroadcastChanges()
         {
@@ -596,14 +491,14 @@ namespace WinPaletter.Theme.Structures
             }
             catch (Exception ex)
             {
-                Program.Log?.Write(LogEventLevel.Error, $"LoadVault failed for Windows {_signature}: {ex.Message}");
+                Program.Log?.Write(LogEventLevel.Error, $"LoadVault failed for Windows {_signature}", ex);
             }
         }
 
         /// <summary>
         /// Clears the Vault for this Windows version signature
         /// </summary>
-        public void ClearVault()
+        public void ClearVault(TreeView treeView = null)
         {
             try
             {
@@ -614,6 +509,9 @@ namespace WinPaletter.Theme.Structures
                     DeleteKey(vaultRoot);
                     Program.Log?.Write(LogEventLevel.Information, $"ClearVault: Cleared for Windows {_signature}.");
                 }
+
+                if (Tasks.Exists($"{_signature}_Logon_LoadVault")) Tasks.Delete($"{_signature}_Logon_LoadVault", treeView);
+                if (Tasks.Exists($"{_signature}_Unlock_LoadVault")) Tasks.Delete($"{_signature}_Unlock_LoadVault", treeView);
             }
             catch (Exception ex)
             {

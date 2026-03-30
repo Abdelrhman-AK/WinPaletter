@@ -221,6 +221,20 @@ namespace WinPaletter.Theme.Structures
 
                 if (Enabled)
                 {
+                    if (Program.Settings.ThemeApplyingBehavior.Vault && Program.Settings.ThemeApplyingBehavior.Vault_SaveMetricsFonts)
+                    {
+                        SaveVault(treeView);
+
+                        // Create logon and unlock tasks so Windows resets are countered on every logon and resume.
+                        // Unlock also fires on wake from sleep, covering the resume scenario without a separate task.
+                        Tasks.Create(Tasks.TaskType.Logon, "MetricsFonts_Logon_LoadVault", "--loadvaultMetricsFonts", treeView);
+                        Tasks.Create(Tasks.TaskType.Unlock, "MetricsFonts_Unlock_LoadVault", "--loadvaultMetricsFonts", treeView);
+                    }
+                    else
+                    {
+                        ClearVault(treeView);
+                    }
+
                     #region Metrics/Fonts override by msstyles
 
                     // Get visual styles data from ThemeManager, used to override Metrics/Fonts
@@ -594,5 +608,155 @@ namespace WinPaletter.Theme.Structures
 
             return s.ToString();
         }
+
+        #region Vault
+
+        private string VaultRoot => $@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\MetricsFonts\Vault";
+
+        private string ToVaultPath(string realPath) => $@"{VaultRoot}\{realPath.Replace('\\', '|')}";
+
+        private static string FromVaultPath(string encodedPath) => encodedPath.Replace('|', '\\');
+
+        /// <summary>
+        /// Mirrors all Apply() registry writes into the Vault so the Task Scheduler task
+        /// can restore them after Windows resets them on logon or resume.
+        /// Font values are stored as LogFont byte arrays — same format Apply() writes to HKU\.DEFAULT.
+        /// </summary>
+        public void SaveVault(TreeView treeView = null)
+        {
+            try
+            {
+                GDI32.LogFont lfCaptionFont = new(); CaptionFont.ToLogFont(lfCaptionFont);
+                GDI32.LogFont lfIconFont = new(); IconFont.ToLogFont(lfIconFont);
+                GDI32.LogFont lfMenuFont = new(); MenuFont.ToLogFont(lfMenuFont);
+                GDI32.LogFont lfMessageFont = new(); MessageFont.ToLogFont(lfMessageFont);
+                GDI32.LogFont lfSMCaptionFont = new(); SmCaptionFont.ToLogFont(lfSMCaptionFont);
+                GDI32.LogFont lfStatusFont = new(); StatusFont.ToLogFont(lfStatusFont);
+
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics"), "CaptionFont", lfCaptionFont.ToBytes(), RegistryValueKind.Binary);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics"), "IconFont", lfIconFont.ToBytes(), RegistryValueKind.Binary);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics"), "MenuFont", lfMenuFont.ToBytes(), RegistryValueKind.Binary);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics"), "MessageFont", lfMessageFont.ToBytes(), RegistryValueKind.Binary);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics"), "SmCaptionFont", lfSMCaptionFont.ToBytes(), RegistryValueKind.Binary);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics"), "StatusFont", lfStatusFont.ToBytes(), RegistryValueKind.Binary);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics"), "BorderWidth", BorderWidth * -15, RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics"), "CaptionHeight", CaptionHeight * -15, RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics"), "CaptionWidth", CaptionWidth * -15, RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics"), "IconSpacing", IconSpacing * -15, RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics"), "IconVerticalSpacing", IconVerticalSpacing * -15, RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics"), "MenuHeight", MenuHeight * -15, RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics"), "MenuWidth", MenuWidth * -15, RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics"), "PaddedBorderWidth", PaddedBorderWidth * -15, RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics"), "ScrollHeight", ScrollHeight * -15, RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics"), "ScrollWidth", ScrollWidth * -15, RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics"), "SmCaptionHeight", SmCaptionHeight * -15, RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics"), "SmCaptionWidth", SmCaptionWidth * -15, RegistryValueKind.String);
+
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop"), "IconSize", DesktopIconSize, RegistryValueKind.String);
+
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Desktop"), "FontSmoothing", !Fonts_SingleBitPP ? 2 : 0);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Desktop"), "FontSmoothingType", !Fonts_SingleBitPP ? 2 : 1);
+
+                if (OS.WXP)
+                {
+                    WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics"), "Shell Icon Size", ShellIconSize, RegistryValueKind.String);
+                    WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics"), "Shell Small Icon Size", ShellSmallIconSize, RegistryValueKind.String);
+                }
+
+                Program.Log?.Write(LogEventLevel.Information, "SaveVault (MetricsFonts): Saved.");
+            }
+            catch (Exception ex)
+            {
+                Program.Log?.Write(LogEventLevel.Error, $"SaveVault (MetricsFonts) failed", ex);
+            }
+        }
+
+        /// <summary>
+        /// Loads all managed values from the Vault into the current instance properties.
+        /// Does not apply anything to the system — call Apply() separately if needed.
+        /// </summary>
+        public void LoadVault()
+        {
+            try
+            {
+                if (!KeyExists(VaultRoot))
+                {
+                    Program.Log?.Write(LogEventLevel.Warning, "LoadVault (MetricsFonts): Vault not found. Has SaveVault() been called?");
+                    return;
+                }
+
+                string wm = ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics");
+
+                BorderWidth = ReadReg(wm, "BorderWidth", BorderWidth * -15) / -15;
+                CaptionHeight = ReadReg(wm, "CaptionHeight", CaptionHeight * -15) / -15;
+                CaptionWidth = ReadReg(wm, "CaptionWidth", CaptionWidth * -15) / -15;
+                IconSpacing = ReadReg(wm, "IconSpacing", IconSpacing * -15) / -15;
+                IconVerticalSpacing = ReadReg(wm, "IconVerticalSpacing", IconVerticalSpacing * -15) / -15;
+                MenuHeight = ReadReg(wm, "MenuHeight", MenuHeight * -15) / -15;
+                MenuWidth = ReadReg(wm, "MenuWidth", MenuWidth * -15) / -15;
+                PaddedBorderWidth = ReadReg(wm, "PaddedBorderWidth", PaddedBorderWidth * -15) / -15;
+                ScrollHeight = ReadReg(wm, "ScrollHeight", ScrollHeight * -15) / -15;
+                ScrollWidth = ReadReg(wm, "ScrollWidth", ScrollWidth * -15) / -15;
+                SmCaptionHeight = ReadReg(wm, "SmCaptionHeight", SmCaptionHeight * -15) / -15;
+                SmCaptionWidth = ReadReg(wm, "SmCaptionWidth", SmCaptionWidth * -15) / -15;
+
+                if (OS.WXP)
+                {
+                    ShellIconSize = ReadReg(wm, "Shell Icon Size", ShellIconSize);
+                    ShellSmallIconSize = ReadReg(wm, "Shell Small Icon Size", ShellSmallIconSize);
+                }
+
+                DesktopIconSize = ReadReg(ToVaultPath(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop"), "IconSize", DesktopIconSize);
+
+                string desktop = ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Desktop");
+                Fonts_SingleBitPP = ReadReg(desktop, "FontSmoothingType", !Fonts_SingleBitPP ? 2 : 1) != 2;
+
+                // Fonts are stored as LogFont byte arrays
+                byte[] captionBytes = ReadReg(wm, "CaptionFont", (byte[])null);
+                byte[] iconBytes = ReadReg(wm, "IconFont", (byte[])null);
+                byte[] menuBytes = ReadReg(wm, "MenuFont", (byte[])null);
+                byte[] messageBytes = ReadReg(wm, "MessageFont", (byte[])null);
+                byte[] smCaptionBytes = ReadReg(wm, "SmCaptionFont", (byte[])null);
+                byte[] statusBytes = ReadReg(wm, "StatusFont", (byte[])null);
+
+                if (captionBytes is not null) { GDI32.LogFont lf = captionBytes.ToLogFont(); CaptionFont = Font.FromLogFont(lf); }
+                if (iconBytes is not null) { GDI32.LogFont lf = iconBytes.ToLogFont(); IconFont = Font.FromLogFont(lf); }
+                if (menuBytes is not null) { GDI32.LogFont lf = menuBytes.ToLogFont(); MenuFont = Font.FromLogFont(lf); }
+                if (messageBytes is not null) { GDI32.LogFont lf = messageBytes.ToLogFont(); MessageFont = Font.FromLogFont(lf); }
+                if (smCaptionBytes is not null) { GDI32.LogFont lf = smCaptionBytes.ToLogFont(); SmCaptionFont = Font.FromLogFont(lf); }
+                if (statusBytes is not null) { GDI32.LogFont lf = statusBytes.ToLogFont(); StatusFont = Font.FromLogFont(lf); }
+
+                Program.Log?.Write(LogEventLevel.Information, "LoadVault (MetricsFonts): Properties loaded.");
+            }
+            catch (Exception ex)
+            {
+                Program.Log?.Write(LogEventLevel.Error, $"LoadVault (MetricsFonts) failed: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Clears the MetricsFonts Vault
+        /// </summary>
+        public void ClearVault(TreeView treeView = null)
+        {
+            try
+            {
+                if (KeyExists(VaultRoot))
+                {
+                    DeleteKey(VaultRoot);
+                    Program.Log?.Write(LogEventLevel.Information, "ClearVault (MetricsFonts): Cleared.");
+                }
+
+
+                if (Tasks.Exists("MetricsFonts_Logon_LoadVault")) Tasks.Delete("MetricsFonts_Logon_LoadVault", treeView);
+                if (Tasks.Exists("MetricsFonts_Unlock_LoadVault")) Tasks.Delete("MetricsFonts_Unlock_LoadVault", treeView);
+            }
+            catch (Exception ex)
+            {
+                Program.Log?.Write(LogEventLevel.Error, $"ClearVault (MetricsFonts) failed: {ex.Message}");
+            }
+        }
+
+        #endregion
     }
 }

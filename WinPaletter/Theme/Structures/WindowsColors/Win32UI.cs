@@ -166,7 +166,7 @@ namespace WinPaletter.Theme.Structures
                     {
                         Program.Log?.Write(LogEventLevel.Information, $"Loading Windows classic colors (Win32) from registry.");
 
-                        Enabled = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\WindowsColorsThemes\ClassicColors", string.Empty, true);
+                        Enabled = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\ClassicColors", string.Empty, true);
 
                         // Set some flags like EnableTheming and EnableGradient
                         bool enableTheming = EnableTheming;
@@ -311,6 +311,20 @@ namespace WinPaletter.Theme.Structures
 
             if (Enabled)
             {
+                if (Program.Settings.ThemeApplyingBehavior.Vault && Program.Settings.ThemeApplyingBehavior.Vault_SaveWin32UIColors)
+                {
+                    SaveVault(treeView);
+
+                    // Create logon and unlock tasks so Windows resets are countered on every logon and resume.
+                    // Unlock also fires on wake from sleep, covering the resume scenario without a separate task.
+                    Tasks.Create(Tasks.TaskType.Logon, "Win32UI_Logon_LoadVault", "--loadvaultWin32UI", treeView);
+                    Tasks.Create(Tasks.TaskType.Unlock, "Win32UI_Unlock_LoadVault", "--loadvaultWin32UI", treeView);
+                }
+                else
+                {
+                    ClearVault(treeView);
+                }
+
                 #region Colors override by msstyles
 
                 // Get the visual style from the current theme, helps to override colors if this is enabled
@@ -714,7 +728,7 @@ namespace WinPaletter.Theme.Structures
         /// </summary>
         public void SaveToggleState(TreeView treeView = null)
         {
-            WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\WindowsColorsThemes\ClassicColors", string.Empty, Enabled);
+            WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\ClassicColors", string.Empty, Enabled);
         }
 
         /// <summary>
@@ -754,7 +768,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="icons">Icons structure to be included in the string</param>
         public string ToString(MetricsFonts metricsFonts = null, Icons icons = null)
         {
-            metricsFonts??= Program.TM.MetricsFonts;
+            metricsFonts ??= Program.TM.MetricsFonts;
             icons ??= Program.TM.Icons;
 
             StringBuilder s = new();
@@ -877,5 +891,145 @@ namespace WinPaletter.Theme.Structures
 
             return s.ToString();
         }
+
+        #region Vault
+
+        private string VaultRoot => $@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\ClassicColors\Vault";
+
+        private string ToVaultPath(string realPath) => $@"{VaultRoot}\{realPath.Replace('\\', '|')}";
+
+        private static string FromVaultPath(string encodedPath) => encodedPath.Replace('|', '\\');
+
+        /// <summary>
+        /// Mirrors all Apply() registry writes into the Vault so the Task Scheduler task
+        /// can restore them after Windows resets them on logon or resume.
+        /// Font values are stored as LogFont byte arrays — same format Apply() writes to HKU\.DEFAULT.
+        /// </summary>
+        public void SaveVault(TreeView treeView = null)
+        {
+            try
+            {
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "ActiveBorder", ActiveBorder.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "ActiveTitle", ActiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "AppWorkspace", AppWorkspace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "Background", Background.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "ButtonAlternateFace", ButtonAlternateFace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "ButtonDkShadow", ButtonDkShadow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "ButtonFace", ButtonFace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "ButtonHilight", ButtonHilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "ButtonLight", ButtonLight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "ButtonShadow", ButtonShadow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "ButtonText", ButtonText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "GradientActiveTitle", GradientActiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "GradientInactiveTitle", GradientInactiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "GrayText", GrayText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "HilightText", HilightText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "HotTrackingColor", HotTrackingColor.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "InactiveBorder", InactiveBorder.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "InactiveTitle", InactiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "InactiveTitleText", InactiveTitleText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "InfoText", InfoText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "InfoWindow", InfoWindow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "Menu", Menu.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "MenuBar", MenuBar.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "MenuText", MenuText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "Scrollbar", Scrollbar.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "TitleText", TitleText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "Window", Window.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "WindowFrame", WindowFrame.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "WindowText", WindowText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "Hilight", Hilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "MenuHilight", MenuHilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "Desktop", Desktop.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+
+
+                Program.Log?.Write(LogEventLevel.Information, "SaveVault (Win32UI): Saved.");
+            }
+            catch (Exception ex)
+            {
+                Program.Log?.Write(LogEventLevel.Error, $"SaveVault (Win32UI) failed", ex);
+            }
+        }
+
+        /// <summary>
+        /// Loads all managed values from the Vault into the current instance properties.
+        /// Does not apply anything to the system — call Apply() separately if needed.
+        /// </summary>
+        public void LoadVault()
+        {
+            try
+            {
+                if (!KeyExists(VaultRoot))
+                {
+                    Program.Log?.Write(LogEventLevel.Warning, "LoadVault (Win32UI): Vault not found. Has SaveVault() been called?");
+                    return;
+                }
+
+                string vp = ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors");
+
+                Desktop = ReadReg(vp, "Desktop", Desktop.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                ActiveBorder = ReadReg(vp, "ActiveBorder", ActiveBorder.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                ActiveTitle = ReadReg(vp, "ActiveTitle", ActiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                AppWorkspace = ReadReg(vp, "AppWorkspace", AppWorkspace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                Background = ReadReg(vp, "Background", Background.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                ButtonAlternateFace = ReadReg(vp, "ButtonAlternateFace", ButtonAlternateFace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                ButtonDkShadow = ReadReg(vp, "ButtonDkShadow", ButtonDkShadow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                ButtonFace = ReadReg(vp, "ButtonFace", ButtonFace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                ButtonHilight = ReadReg(vp, "ButtonHilight", ButtonHilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                ButtonLight = ReadReg(vp, "ButtonLight", ButtonLight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                ButtonShadow = ReadReg(vp, "ButtonShadow", ButtonShadow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                ButtonText = ReadReg(vp, "ButtonText", ButtonText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                GradientActiveTitle = ReadReg(vp, "GradientActiveTitle", GradientActiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                GradientInactiveTitle = ReadReg(vp, "GradientInactiveTitle", GradientInactiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                GrayText = ReadReg(vp, "GrayText", GrayText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                HilightText = ReadReg(vp, "HilightText", HilightText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                HotTrackingColor = ReadReg(vp, "HotTrackingColor", HotTrackingColor.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                InactiveBorder = ReadReg(vp, "InactiveBorder", InactiveBorder.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                InactiveTitle = ReadReg(vp, "InactiveTitle", InactiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                InactiveTitleText = ReadReg(vp, "InactiveTitleText", InactiveTitleText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                InfoText = ReadReg(vp, "InfoText", InfoText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                InfoWindow = ReadReg(vp, "InfoWindow", InfoWindow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                Menu = ReadReg(vp, "Menu", Menu.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                MenuBar = ReadReg(vp, "MenuBar", MenuBar.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                MenuText = ReadReg(vp, "MenuText", MenuText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                Scrollbar = ReadReg(vp, "Scrollbar", Scrollbar.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                TitleText = ReadReg(vp, "TitleText", TitleText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                Window = ReadReg(vp, "Window", Window.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                WindowFrame = ReadReg(vp, "WindowFrame", WindowFrame.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                WindowText = ReadReg(vp, "WindowText", WindowText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                Hilight = ReadReg(vp, "Hilight", Hilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                MenuHilight = ReadReg(vp, "MenuHilight", MenuHilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+
+                Program.Log?.Write(LogEventLevel.Information, "LoadVault (Win32UI): Properties loaded.");
+            }
+            catch (Exception ex)
+            {
+                Program.Log?.Write(LogEventLevel.Error, $"LoadVault (Win32UI) failed: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Clears the Win32UI Vault
+        /// </summary>
+        public void ClearVault(TreeView treeView = null)
+        {
+            try
+            {
+                if (KeyExists(VaultRoot))
+                {
+                    DeleteKey(VaultRoot);
+                    Program.Log?.Write(LogEventLevel.Information, "ClearVault (Win32UI): Cleared.");
+                }
+
+                if (Tasks.Exists("Win32UI_Logon_LoadVault")) Tasks.Delete("Win32UI_Logon_LoadVault", treeView);
+                if (Tasks.Exists("Win32UI_Unlock_LoadVault")) Tasks.Delete("Win32UI_Unlock_LoadVault", treeView);
+            }
+            catch (Exception ex)
+            {
+                Program.Log?.Write(LogEventLevel.Error, $"ClearVault (Win32UI) failed: {ex.Message}");
+            }
+        }
+
+        #endregion
     }
 }

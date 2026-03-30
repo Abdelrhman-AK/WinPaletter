@@ -91,7 +91,7 @@ namespace WinPaletter
                 if (shownOverAParent)
                 {
                     // Make the form have rounded corners if the operating system is Windows 11 or 12
-                    // It should be used as a fallback for the custom styling. Make both start by 'If' statement, not 'Else If'
+                    // It should be used as a fallback for the custom styling.
                     if (OS.W12 || OS.W11)
                     {
                         bool useRoundedCorners = Program.Settings.Appearance.ManagedByTheme && Program.Settings.Appearance.CustomColors && !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8x && !OS.W10;
@@ -100,7 +100,6 @@ namespace WinPaletter
                         DWMAPI.DwmSetWindowAttribute(Handle, DWMAPI.DWMWINDOWATTRIBUTE.WINDOW_CORNER_PREFERENCE, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
 
                         // Apply rectangular window corners if custom styling is enabled and rounded corners are disabled
-                        // Make both start by 'If' statement, not 'Else If'
                         if (useRoundedCorners && !Program.Settings.Appearance.RoundedCorners)
                         {
                             int argpvAttribute1 = (int)DWMAPI.FormCornersType.Rectangular;

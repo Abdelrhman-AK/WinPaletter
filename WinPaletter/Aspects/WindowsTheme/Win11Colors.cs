@@ -178,7 +178,6 @@ namespace WinPaletter
         public void LoadFromTM(Manager TM)
         {
             AspectEnabled = TM.Windows11.Enabled;
-            toggle2.Checked = TM.Windows11.Vault;
 
             winmode_light.Checked = TM.Windows11.WinMode_Light;
             winmode_dark.Checked = !TM.Windows11.WinMode_Light;
@@ -229,7 +228,6 @@ namespace WinPaletter
         public void ApplyToTM(Manager TM)
         {
             TM.Windows11.Enabled = AspectEnabled;
-            TM.Windows11.Vault = toggle2.Checked;
 
             TM.Windows11.WinMode_Light = winmode_light.Checked;
             TM.Windows11.AppMode_Light = appmode_light.Checked;

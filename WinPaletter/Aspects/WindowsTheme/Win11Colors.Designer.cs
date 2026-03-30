@@ -155,10 +155,6 @@
             this.radioImage1 = new WinPaletter.UI.WP.RadioImage();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.label21 = new System.Windows.Forms.Label();
-            this.groupBox15 = new WinPaletter.UI.WP.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.toggle2 = new WinPaletter.UI.WP.Toggle();
             this.GroupBox13.SuspendLayout();
             this.groupBox21.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic9)).BeginInit();
@@ -212,8 +208,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.groupBox22.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            this.groupBox15.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // titlebarExtender1
@@ -2080,59 +2074,11 @@
             this.label21.Text = "Presets";
             this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // groupBox15
-            // 
-            this.groupBox15.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox15.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox15.Controls.Add(this.label2);
-            this.groupBox15.Controls.Add(this.pictureBox1);
-            this.groupBox15.Controls.Add(this.toggle2);
-            this.groupBox15.Location = new System.Drawing.Point(722, 456);
-            this.groupBox15.Name = "groupBox15";
-            this.groupBox15.Size = new System.Drawing.Size(534, 48);
-            this.groupBox15.TabIndex = 232;
-            this.groupBox15.UseDecorationPattern = false;
-            this.groupBox15.UseSharpStyle = false;
-            // 
-            // label2
-            // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(41, 7);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(436, 34);
-            this.label2.TabIndex = 18;
-            this.label2.Text = "Vault";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(11, 12);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(24, 24);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pictureBox1.TabIndex = 5;
-            this.pictureBox1.TabStop = false;
-            // 
-            // toggle2
-            // 
-            this.toggle2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.toggle2.Checked = false;
-            this.toggle2.DarkLight_Toggler = false;
-            this.toggle2.Location = new System.Drawing.Point(483, 14);
-            this.toggle2.Name = "toggle2";
-            this.toggle2.Size = new System.Drawing.Size(40, 20);
-            this.toggle2.TabIndex = 16;
-            // 
             // Win11Colors
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.CanGeneratePalette = true;
             this.ClientSize = new System.Drawing.Size(1262, 727);
-            this.Controls.Add(this.groupBox15);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.groupBox2);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -2144,7 +2090,6 @@
             this.Controls.SetChildIndex(this.groupBox2, 0);
             this.Controls.SetChildIndex(this.titlebarExtender1, 0);
             this.Controls.SetChildIndex(this.tabControl1, 0);
-            this.Controls.SetChildIndex(this.groupBox15, 0);
             this.GroupBox13.ResumeLayout(false);
             this.groupBox21.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pic9)).EndInit();
@@ -2198,8 +2143,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             this.groupBox22.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            this.groupBox15.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2331,9 +2274,5 @@
         private UI.WP.Button button3;
         private UI.WP.Button button2;
         internal UI.WP.AlertBox alertBox2;
-        private UI.WP.GroupBox groupBox15;
-        internal System.Windows.Forms.Label label2;
-        internal System.Windows.Forms.PictureBox pictureBox1;
-        internal UI.WP.Toggle toggle2;
     }
 }
