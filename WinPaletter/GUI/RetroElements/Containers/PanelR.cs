@@ -18,6 +18,7 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public PanelR()
         {
+            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer, true);
             DoubleBuffered = true;
             Font = new("Microsoft Sans Serif", 8f);
             BackColor = Color.FromArgb(192, 192, 192);
@@ -45,7 +46,7 @@ namespace WinPaletter.UI.Retro
                 if (flat != value)
                 {
                     flat = value;
-                    Refresh();
+                    Invalidate();
                 }
             }
         }
@@ -61,7 +62,7 @@ namespace WinPaletter.UI.Retro
                 if (buttonHilight != value)
                 {
                     buttonHilight = value;
-                    Refresh();
+                    InvalidateBorders();
                 }
             }
         }
@@ -77,7 +78,7 @@ namespace WinPaletter.UI.Retro
                 if (buttonShadow != value)
                 {
                     buttonShadow = value;
-                    Refresh();
+                    InvalidateBorders();
                 }
             }
         }
@@ -93,7 +94,7 @@ namespace WinPaletter.UI.Retro
                 if (buttonDkShadow != value)
                 {
                     buttonDkShadow = value;
-                    Refresh();
+                    InvalidateBorders();
                 }
             }
         }
@@ -109,7 +110,7 @@ namespace WinPaletter.UI.Retro
                 if (buttonLight != value)
                 {
                     buttonLight = value;
-                    Refresh();
+                    InvalidateBorders();
                 }
             }
         }
@@ -122,15 +123,36 @@ namespace WinPaletter.UI.Retro
             get => style2;
             set
             {
-                if (style2 != value)
-                {
-                    style2 = value;
-                    Refresh();
-                }
+                if (style2 == value) return;
+                style2 = value;
+                Invalidate();
             }
         }
 
+        private void InvalidateBorders()
+        {
+            int w = Width;
+            int h = Height;
+
+            // Top
+            Invalidate(new Rectangle(0, 0, w, 2));
+
+            // Left
+            Invalidate(new Rectangle(0, 0, 2, h));
+
+            // Right
+            Invalidate(new Rectangle(w - 2, 0, 2, h));
+
+            // Bottom
+            Invalidate(new Rectangle(0, h - 2, w, 2));
+        }
+
         #endregion
+
+        protected override void OnPaintBackground(PaintEventArgs e)
+        {
+            // Prevent flicker
+        }
 
         /// <summary>
         /// Paints the panel.
@@ -141,55 +163,57 @@ namespace WinPaletter.UI.Retro
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.HighSpeed;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
-            Rectangle Rect = new(0, 0, Width - 1, Height - 1);
 
-            // Draw background
-            G.Clear(BackColor);
+            Rectangle rect = ClientRectangle;
+            rect.Width -= 1;
+            rect.Height -= 1;
 
-            // Draw border
-            if (!Flat)
+            // Background
+            using (SolidBrush b = new(BackColor)) G.FillRectangle(b, ClientRectangle);
+
+            if (Flat)
             {
-                if (!Style2)
-                {
-                    // Draw 3D borders with style 1
+                using Pen p = new(ButtonShadow);
+                G.DrawRectangle(p, rect);
+                return;
+            }
 
-                    using (Pen P0 = new(ButtonShadow))
-                    using (Pen P1 = new(ButtonHilight))
-                    {
-                        G.DrawLine(P0, new Point(Rect.X, Rect.Y), new Point(Rect.Width - 1, Rect.Y));
-                        G.DrawLine(P0, new Point(Rect.X, Rect.Y), new Point(Rect.X, Rect.Height - 1));
-                        G.DrawLine(P1, new Point(Rect.Width, Rect.X), new Point(Rect.Width, Rect.Height));
-                        G.DrawLine(P1, new Point(Rect.X, Rect.Height), new Point(Rect.Width, Rect.Height));
-                    }
-                }
-                else
-                {
-                    // Draw 3D borders with style 2
+            if (!Style2)
+            {
+                using Pen shadow = new(ButtonShadow);
+                using Pen hilight = new(ButtonHilight);
 
-                    using (Pen P0 = new(ButtonShadow))
-                    using (Pen P1 = new(ButtonDkShadow))
-                    using (Pen P2 = new(ButtonHilight))
-                    using (Pen P3 = new(ButtonLight))
-                    {
-                        G.DrawLine(P0, new Point(Rect.X, Rect.Y), new Point(Rect.Width, Rect.Y));
-                        G.DrawLine(P0, new Point(Rect.X, Rect.Y), new Point(Rect.X, Rect.Height));
-                        G.DrawLine(P1, new Point(Rect.X + 1, Rect.Y + 1), new Point(Rect.Width - 1, Rect.Y + 1));
-                        G.DrawLine(P1, new Point(Rect.X + 1, Rect.Y + 1), new Point(Rect.X + 1, Rect.Height - 1));
-                        G.DrawLine(P2, new Point(Rect.Width, Rect.Y + 1), new Point(Rect.Width, Rect.Height));
-                        G.DrawLine(P2, new Point(Rect.X + 1, Rect.Height), new Point(Rect.Width, Rect.Height));
-                        G.DrawLine(P3, new Point(Rect.Width - 1, Rect.Y + 2), new Point(Rect.Width - 1, Rect.Height - 1));
-                        G.DrawLine(P3, new Point(Rect.X + 2, Rect.Height - 1), new Point(Rect.Width - 1, Rect.Height - 1));
-                    }
-                }
+                // Top + Left
+                G.DrawLine(shadow, rect.Left, rect.Top, rect.Right - 1, rect.Top);
+                G.DrawLine(shadow, rect.Left, rect.Top, rect.Left, rect.Bottom - 1);
+
+                // Bottom + Right
+                G.DrawLine(hilight, rect.Right, rect.Top, rect.Right, rect.Bottom);
+                G.DrawLine(hilight, rect.Left, rect.Bottom, rect.Right, rect.Bottom);
             }
             else
             {
-                // Draw a flat border
+                using Pen shadow = new(ButtonShadow);
+                using Pen dk = new(ButtonDkShadow);
+                using Pen hi = new(ButtonHilight);
+                using Pen light = new(ButtonLight);
 
-                using (Pen P = new(ButtonShadow)) G.DrawRectangle(P, Rect);
+                // Outer
+                G.DrawLine(shadow, rect.Left, rect.Top, rect.Right, rect.Top);
+                G.DrawLine(shadow, rect.Left, rect.Top, rect.Left, rect.Bottom);
+
+                // Inner dark
+                G.DrawLine(dk, rect.Left + 1, rect.Top + 1, rect.Right - 1, rect.Top + 1);
+                G.DrawLine(dk, rect.Left + 1, rect.Top + 1, rect.Left + 1, rect.Bottom - 1);
+
+                // Outer highlight
+                G.DrawLine(hi, rect.Right, rect.Top + 1, rect.Right, rect.Bottom);
+                G.DrawLine(hi, rect.Left + 1, rect.Bottom, rect.Right, rect.Bottom);
+
+                // Inner light
+                G.DrawLine(light, rect.Right - 1, rect.Top + 2, rect.Right - 1, rect.Bottom - 1);
+                G.DrawLine(light, rect.Left + 2, rect.Bottom - 1, rect.Right - 1, rect.Bottom - 1);
             }
-
-
         }
     }
 }

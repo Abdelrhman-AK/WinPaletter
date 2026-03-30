@@ -8,10 +8,16 @@ using WinPaletter.Templates;
 namespace WinPaletter.UI.Retro
 {
     /// <summary>
-    /// A retro-styled panel siumulating the app workspace.
+    /// A retro-styled panel simulating the app workspace.
     /// </summary>
     public class AppWorkspaceR : Panel
     {
+        // Cached overlay color, recomputed only when BackColor changes.
+        private Color _overlayColor = Color.Transparent;
+
+        // Tracks whether the cursor is currently hovering over the panel.
+        private bool _cursorOnMe = false;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AppWorkspaceR"/> class.
         /// </summary>
@@ -21,93 +27,91 @@ namespace WinPaletter.UI.Retro
         }
 
         /// <summary>
-        /// Event handler for the editor invoker (Click to edit color).
+        /// Event raised when the user clicks the panel while color editing is active.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         public delegate void EditorInvokerEventHandler(object sender, EditorEventArgs e);
 
         /// <summary>
-        /// Event handler for the editor invoker (Click to edit color).
+        /// Event raised when the user clicks the panel while color editing is active.
         /// </summary>
         public event EditorInvokerEventHandler EditorInvoker;
 
         /// <summary>
-        /// Handles the MouseMove event.
+        /// Gets or sets a value indicating whether color editing interactions are enabled.
         /// </summary>
-        /// <param name="e"></param>
-        protected override void OnMouseMove(MouseEventArgs e)
-        {
-            // If editing colors is enabled, set the cursor on the panel to indicate that it is clickable.
-            if (EnableEditingColors)
-            {
-                CursorOnMe = true;
-                Refresh();
-            }
-
-            base.OnMouseMove(e);
-        }
-
-        /// <summary>
-        /// Handles the MouseLeave event.
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnMouseLeave(EventArgs e)
-        {
-            // If editing colors is enabled, reset cursor on the panel flag.
-            if (EnableEditingColors)
-            {
-                CursorOnMe = false;
-                Refresh();
-            }
-
-            base.OnMouseLeave(e);
-        }
-
-        /// <summary>
-        /// Handles the Click event.
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnClick(EventArgs e)
-        {
-            // If editing colors is enabled, invoke the editor.
-            if (!DesignMode && _ColorEdit) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.AppWorkspace)));
-
-            base.OnClick(e);
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the color editing is enabled.
-        /// </summary>
-
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Browsable(false)]
         public bool EnableEditingColors { get; set; } = false;
 
         /// <summary>
-        /// Gets or sets the flag indicating whether the cursor is on the panel or not.
+        /// Returns true when the panel is in an interactive color-edit hover state.
         /// </summary>
-        private bool CursorOnMe;
+        private bool IsColorEditActive => EnableEditingColors && _cursorOnMe;
 
         /// <summary>
-        /// Gets a value indicating whether the color editing is enabled and also the cursor is on the panel.
+        /// Recomputes the cached overlay color when BackColor changes.
         /// </summary>
-        private bool _ColorEdit => EnableEditingColors && CursorOnMe;
+        protected override void OnBackColorChanged(EventArgs e)
+        {
+            base.OnBackColorChanged(e);
+            _overlayColor = Color.FromArgb(100, BackColor.IsDark() ? Color.White : Color.Black);
+        }
 
         /// <summary>
-        /// Handles the Paint event.
+        /// Sets the hover state and invalidates only when the state actually changes.
         /// </summary>
-        /// <param name="e"></param>
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+
+            if (EnableEditingColors && !_cursorOnMe)
+            {
+                _cursorOnMe = true;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Clears the hover state and invalidates only when the state actually changes.
+        /// </summary>
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            base.OnMouseLeave(e);
+
+            if (EnableEditingColors && _cursorOnMe)
+            {
+                _cursorOnMe = false;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Invokes the editor when clicked in color-edit mode.
+        /// </summary>
+        protected override void OnClick(EventArgs e)
+        {
+            base.OnClick(e);
+
+            if (!DesignMode && IsColorEditActive)
+            {
+                EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.AppWorkspace)));
+            }
+        }
+
+        /// <summary>
+        /// Paints the hover overlay when color editing is active.
+        /// </summary>
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
 
-            // If editing colors is enabled, draw a semi-transparent overlay on the panel to indicate that it is clickable.
-            if (_ColorEdit)
+            if (!IsColorEditActive) return;
+
+            Rectangle rect = new(0, 0, Width - 1, Height - 1);
+
+            using (HatchBrush hb = new(HatchStyle.Percent25, _overlayColor, Color.Transparent))
             {
-                Rectangle rect = new(0, 0, Width - 1, Height - 1);
-                Color color = Color.FromArgb(100, BackColor.IsDark() ? Color.White : Color.Black);
-                using (HatchBrush hb = new(HatchStyle.Percent25, color, Color.Transparent)) { e.Graphics.FillRectangle(hb, rect); }
+                e.Graphics.FillRectangle(hb, rect);
             }
         }
     }
