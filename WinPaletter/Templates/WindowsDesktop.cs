@@ -1881,6 +1881,7 @@ namespace WinPaletter.Templates
                         if (button.Parent != null && button.Name.ToLower() != "closebtn" && button.Name.ToLower() != "maxbtn" && button.Name.ToLower() != "minbtn")
                             button.WindowFrame = value;
                     }
+                    foreach (ToolTipR tooltip in this.GetAllControls().OfType<ToolTipR>()) { tooltip.WindowFrame = value; }
                 }
             }
         }

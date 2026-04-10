@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
@@ -6,7 +7,6 @@ using System.Windows.Forms;
 
 namespace WinPaletter.UI.Retro
 {
-
     /// <summary>
     /// A magnified preview of a 3D panel with Windows 9x style.
     /// </summary>
@@ -18,18 +18,41 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Preview3D()
         {
-            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
-            DoubleBuffered = true;
+            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
         }
 
-        #region Properties
+        #region Private fields
 
-        private Color windowFrame = Color.Black;
-        private Color buttonShadow = Color.FromArgb(128, 128, 128);
-        private Color buttonDkShadow = Color.Black;
-        private Color buttonHilight = Color.White;
-        private Color buttonLight = Color.FromArgb(192, 192, 192);
-        private int lineSize = 6;
+        private Color _windowFrame = Color.Black;
+        private Color _buttonShadow = Color.FromArgb(128, 128, 128);
+        private Color _buttonDkShadow = Color.Black;
+        private Color _buttonHilight = Color.White;
+        private Color _buttonLight = Color.FromArgb(192, 192, 192);
+        private int _lineSize = 6;
+
+        // Cached brushes, rebuilt only when their source color changes.
+        private SolidBrush _brushDkShadow = new(Color.Black);
+        private SolidBrush _brushShadow = new(Color.FromArgb(128, 128, 128));
+        private SolidBrush _brushHilight = new(Color.White);
+        private SolidBrush _brushLight = new(Color.FromArgb(192, 192, 192));
+        private SolidBrush _brushBack = new(Color.Empty);
+        private SolidBrush _brushFore = new(Color.Empty);
+
+        // Cached geometry, rebuilt only when LineSize or control size changes.
+        private Rectangle _hilightTopRect;
+        private Rectangle _hilightLeftRect;
+        private Rectangle _lightTopRect;
+        private Rectangle _lightLeftRect;
+        private Rectangle _dkShadowRightRect;
+        private Rectangle _dkShadowBottomRect;
+        private Rectangle _shadowRightRect;
+        private Rectangle _shadowBottomRect;
+        private Rectangle _filling;
+        private RectangleF _accentRect;
+
+        #endregion
+
+        #region Properties
 
         /// <summary>
         /// BackColor property (button face color).
@@ -39,27 +62,39 @@ namespace WinPaletter.UI.Retro
             get => base.BackColor;
             set
             {
-                if (base.BackColor != value)
-                {
-                    base.BackColor = value;
-                    Invalidate();
-                }
+                if (base.BackColor == value) return;
+                base.BackColor = value;
+                ReplaceBrush(ref _brushBack, value);
+                Invalidate();
             }
         }
 
         /// <summary>
-        /// Color of border of a focused 3D button.
+        /// ForeColor property (accent fill color).
+        /// </summary>
+        public new Color ForeColor
+        {
+            get => base.ForeColor;
+            set
+            {
+                if (base.ForeColor == value) return;
+                base.ForeColor = value;
+                ReplaceBrush(ref _brushFore, value);
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Color of the border of a focused 3D button.
         /// </summary>
         public Color WindowFrame
         {
-            get => windowFrame;
+            get => _windowFrame;
             set
             {
-                if (windowFrame != value)
-                {
-                    windowFrame = value;
-                    Invalidate();
-                }
+                if (_windowFrame == value) return;
+                _windowFrame = value;
+                Invalidate();
             }
         }
 
@@ -68,14 +103,13 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color ButtonShadow
         {
-            get => buttonShadow;
+            get => _buttonShadow;
             set
             {
-                if (buttonShadow != value)
-                {
-                    buttonShadow = value;
-                    Invalidate();
-                }
+                if (_buttonShadow == value) return;
+                _buttonShadow = value;
+                ReplaceBrush(ref _brushShadow, value);
+                Invalidate();
             }
         }
 
@@ -84,14 +118,13 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color ButtonDkShadow
         {
-            get => buttonDkShadow;
+            get => _buttonDkShadow;
             set
             {
-                if (buttonDkShadow != value)
-                {
-                    buttonDkShadow = value;
-                    Invalidate();
-                }
+                if (_buttonDkShadow == value) return;
+                _buttonDkShadow = value;
+                ReplaceBrush(ref _brushDkShadow, value);
+                Invalidate();
             }
         }
 
@@ -100,14 +133,13 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color ButtonHilight
         {
-            get => buttonHilight;
+            get => _buttonHilight;
             set
             {
-                if (buttonHilight != value)
-                {
-                    buttonHilight = value;
-                    Invalidate();
-                }
+                if (_buttonHilight == value) return;
+                _buttonHilight = value;
+                ReplaceBrush(ref _brushHilight, value);
+                Invalidate();
             }
         }
 
@@ -116,89 +148,147 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public Color ButtonLight
         {
-            get => buttonLight;
+            get => _buttonLight;
             set
             {
-                if (buttonLight != value)
-                {
-                    buttonLight = value;
-                    Invalidate();
-                }
+                if (_buttonLight == value) return;
+                _buttonLight = value;
+                ReplaceBrush(ref _brushLight, value);
+                Invalidate();
             }
         }
 
         /// <summary>
-        /// Size of the lines of the 3D button.
+        /// Thickness in pixels of each border layer of the 3D button.
         /// </summary>
         public int LineSize
         {
-            get => lineSize;
+            get => _lineSize;
             set
             {
-                if (lineSize != value)
-                {
-                    lineSize = value;
-                    Invalidate();
-                }
+                if (_lineSize == value) return;
+                _lineSize = value;
+                RebuildGeometry();
+                Invalidate();
             }
         }
 
         #endregion
 
+        #region Geometry cache
+
+        /// <summary>
+        /// Recomputes all cached rectangles from the current <see cref="LineSize"/> and control bounds.
+        /// Called on resize and whenever <see cref="LineSize"/> changes.
+        /// </summary>
+        private void RebuildGeometry()
+        {
+            int s = _lineSize;
+
+            _hilightTopRect = new Rectangle(s, s, Width - s * 2, s);
+            _hilightLeftRect = new Rectangle(s, s, s, Height - s * 2);
+
+            _lightTopRect = new Rectangle(s * 2, s * 2, Width - s * 4, s);
+            _lightLeftRect = new Rectangle(s * 2, s * 2, s, Height - s * 4);
+
+            _dkShadowRightRect = new Rectangle(Width - s * 2, s, s, Height - s * 2);
+            _dkShadowBottomRect = new Rectangle(s, Height - s * 2, Width - s * 2, s);
+
+            _shadowRightRect = new Rectangle(Width - s * 3, s * 2, s, Height - s * 4);
+            _shadowBottomRect = new Rectangle(s * 2, Height - s * 3, Width - s * 4, s);
+
+            _filling = new Rectangle(
+                _lightLeftRect.Right,
+                _lightTopRect.Bottom,
+                _shadowRightRect.Left - _lightLeftRect.Right,
+                _shadowBottomRect.Top - _lightTopRect.Bottom
+            );
+
+            float tw = _filling.Width / 2f;
+            float th = s * 1.75f;
+            _accentRect = new RectangleF(
+                _filling.X + (_filling.Width - tw) / 2f,
+                _filling.Y + (_filling.Height - th) / 2f,
+                tw,
+                th
+            );
+        }
+
+        /// <summary>
+        /// Rebuilds geometry whenever the control is resized.
+        /// </summary>
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            RebuildGeometry();
+        }
+
+        #endregion
+
+        #region Brush helpers
+
+        /// <summary>
+        /// Disposes the existing brush and allocates a new one with the given color.
+        /// </summary>
+        private static void ReplaceBrush(ref SolidBrush brush, Color color)
+        {
+            brush?.Dispose();
+            brush = new SolidBrush(color);
+        }
+
+        #endregion
+
+        #region Paint
+
         /// <summary>
         /// Paints the control.
         /// </summary>
-        /// <param name="e"></param>
         protected override void OnPaint(PaintEventArgs e)
         {
-            Graphics G = e.Graphics;
+            Graphics g = e.Graphics;
+            g.SmoothingMode = SmoothingMode.HighSpeed;
+            g.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
 
-            G.SmoothingMode = SmoothingMode.HighSpeed;
-            G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
+            g.Clear(_windowFrame);
 
-            // ################################################################################# Customizer
-            SolidBrush BrushDkShadow = new(ButtonDkShadow);
-            SolidBrush BrushShadow = new(ButtonShadow);
-            SolidBrush BrushHilight = new(ButtonHilight);
-            SolidBrush BrushLight = new(ButtonLight);
+            g.FillRectangle(_brushHilight, _hilightTopRect);
+            g.FillRectangle(_brushHilight, _hilightLeftRect);
 
-            Rectangle HilightTopRect = new(LineSize, LineSize, Width - LineSize * 2, LineSize);
-            Rectangle HilightLeftRect = new(LineSize, LineSize, LineSize, Height - LineSize * 2);
+            g.FillRectangle(_brushLight, _lightTopRect);
+            g.FillRectangle(_brushLight, _lightLeftRect);
 
-            Rectangle LightTopRect = new(LineSize * 2, LineSize * 2, Width - LineSize * 4, LineSize);
-            Rectangle LightLeftRect = new(LineSize * 2, LineSize * 2, LineSize, Height - LineSize * 4);
+            g.FillRectangle(_brushDkShadow, _dkShadowRightRect);
+            g.FillRectangle(_brushDkShadow, _dkShadowBottomRect);
 
-            Rectangle DkShadowRightRect = new(Width - LineSize * 2, LineSize, LineSize, Height - LineSize * 2);
-            Rectangle DkShadowBottomRect = new(LineSize, Height - LineSize * 2, Width - LineSize * 2, LineSize);
+            g.FillRectangle(_brushShadow, _shadowRightRect);
+            g.FillRectangle(_brushShadow, _shadowBottomRect);
 
-            Rectangle ShadowRightRect = new(Width - LineSize * 3, LineSize * 2, LineSize, Height - LineSize * 4);
-            Rectangle ShadowBottomRect = new(LineSize * 2, Height - LineSize * 3, Width - LineSize * 4, LineSize);
-
-            Rectangle Filling = new(LightLeftRect.Right, LightTopRect.Bottom, ShadowRightRect.Left - LightLeftRect.Right, ShadowBottomRect.Top - LightTopRect.Bottom);
-
-            float tw = Filling.Width / 2f;
-            float th = LineSize * 1.75f;
-            RectangleF TextRect = new(Filling.X + (Filling.Width - tw) / 2f, Filling.Y + (Filling.Height - th) / 2f, tw, th);
-
-            // #################################################################################
-
-            G.Clear(WindowFrame);
-
-            G.FillRectangle(BrushHilight, HilightTopRect);
-            G.FillRectangle(BrushHilight, HilightLeftRect);
-
-            G.FillRectangle(BrushLight, LightTopRect);
-            G.FillRectangle(BrushLight, LightLeftRect);
-
-            G.FillRectangle(BrushDkShadow, DkShadowRightRect);
-            G.FillRectangle(BrushDkShadow, DkShadowBottomRect);
-
-            G.FillRectangle(BrushShadow, ShadowRightRect);
-            G.FillRectangle(BrushShadow, ShadowBottomRect);
-
-            G.FillRectangle(new SolidBrush(BackColor), Filling);
-
-            G.FillRectangle(new SolidBrush(ForeColor), TextRect);
+            g.FillRectangle(_brushBack, _filling);
+            g.FillRectangle(_brushFore, _accentRect);
         }
+
+        #endregion
+
+        #region Dispose
+
+        /// <summary>
+        /// Releases all cached GDI brushes when the control is disposed.
+        /// </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _brushDkShadow?.Dispose();
+                _brushShadow?.Dispose();
+                _brushHilight?.Dispose();
+                _brushLight?.Dispose();
+                _brushBack?.Dispose();
+                _brushFore?.Dispose();
+            }
+
+            base.Dispose(disposing);
+        }
+
+        #endregion
     }
 }

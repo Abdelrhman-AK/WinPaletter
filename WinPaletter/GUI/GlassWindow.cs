@@ -36,6 +36,9 @@ namespace WinPaletter
         const int WS_EX_LAYERED = 0x80000;
         const int WS_EX_TRANSPARENT = 0x20;
         const int WS_EX_NOACTIVATE = 0x08000000;
+        const uint SWP_NOSIZE = 0x0001;
+        const uint SWP_NOMOVE = 0x0002;
+        const uint SWP_NOACTIVATE = 0x0010;
 
         public void Show(Form parent)
         {
@@ -68,10 +71,6 @@ namespace WinPaletter
             // Ensure it’s directly above parent but not topmost globally
             User32.SetWindowPos(Handle, parent.Handle, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
         }
-
-        const uint SWP_NOSIZE = 0x0001;
-        const uint SWP_NOMOVE = 0x0002;
-        const uint SWP_NOACTIVATE = 0x0010;
 
         protected override void OnLoad(EventArgs e)
         {

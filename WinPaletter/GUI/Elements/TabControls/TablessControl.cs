@@ -62,31 +62,35 @@ namespace WinPaletter.UI.WP
         {
             if (!DesignMode)
             {
-                const int WM_ERASEBKGND = 0x14;
+                const int WM_ERASEBKGND = 0x0014;
+                const int WM_NCPAINT = 0x0085;
                 const int TCM_ADJUSTRECT = 0x1328;
-                const int TCM_SETPADDING = 0x132B;   // sets tab item padding
-                const int WM_PAINT = 0x0F;
+                const int TCM_SETPADDING = 0x132B;
+                const int WM_PAINT = 0x000F;
 
-                // Hide the tab strip area completely
                 if (m.Msg == TCM_ADJUSTRECT)
                 {
                     m.Result = (IntPtr)1;
                     return;
                 }
 
-                // Remove the up/down scroll buttons that Windows draws
-                // by forcing the tab strip to have zero height before it paints.
                 if (m.Msg == WM_PAINT)
                 {
                     User32.SendMessage(Handle, TCM_SETPADDING, IntPtr.Zero, MakeLParam(0, 1));
                 }
 
+                if (m.Msg == WM_NCPAINT)
+                {
+                    m.Result = (IntPtr)1;
+                    return;
+                }
+
                 if (m.Msg == WM_ERASEBKGND)
                 {
-                    using (var g = Graphics.FromHdc(m.WParam))
-                    using (var b = new SolidBrush(BackColor))
+                    Color fill = Parent?.BackColor ?? BackColor;
+                    using (Graphics g = Graphics.FromHdc(m.WParam))
+                    using (SolidBrush b = new SolidBrush(fill))
                         g.FillRectangle(b, ClientRectangle);
-
                     m.Result = (IntPtr)1;
                     return;
                 }

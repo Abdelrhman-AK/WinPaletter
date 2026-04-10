@@ -66,7 +66,6 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(933, 519);
             this.Controls.Add(this.titlebarExtender1);
-            this.DoubleBuffered = true;
             this.Name = "TabsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TabsForm";

@@ -135,6 +135,13 @@ namespace WinPaletter.UI.WP
 
             switch (m.Msg)
             {
+                case 0x0014: // WM_ERASEBKGND — never let DefWindowProc paint with DEFAULT_BRUSH
+                    using (var g = Graphics.FromHdc(m.WParam))
+                    using (var b = new SolidBrush(BackColor))
+                        g.FillRectangle(b, ClientRectangle);
+                    m.Result = (IntPtr)1;
+                    break;
+
                 // DWM/Aero borders and shadow
                 case DWMAPI.WM_NCPAINT:
                     ApplyDWMBorder();

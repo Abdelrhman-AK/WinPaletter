@@ -1,9 +1,7 @@
-﻿using Microsoft.Win32;
-using Serilog.Events;
+﻿using Serilog.Events;
 using System;
 using System.Globalization;
 using System.IO;
-using System.Net;
 using System.Security.Principal;
 using System.Threading;
 using System.Threading.Tasks;

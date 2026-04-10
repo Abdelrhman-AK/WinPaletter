@@ -834,13 +834,11 @@ namespace WinPaletter.Templates
 
         private void UpdateButtonFrames(Color value)
         {
-            var buttons = GetAllControlsOfType<ButtonR>()
-                .Where(b => b.Parent != null && !IsWindowControlButton(b));
+            var buttons = GetAllControlsOfType<ButtonR>().Where(b => b.Parent != null && !IsWindowControlButton(b));
+            var tooltips = GetAllControlsOfType<ToolTipR>().Where(b => b.Parent != null);
 
-            foreach (var button in buttons)
-            {
-                button.WindowFrame = value;
-            }
+            foreach (var button in buttons) button.WindowFrame = value;
+            foreach (var tooltip in tooltips) tooltip.WindowFrame = value;
         }
 
         private void UpdateActiveWindowBorders(Color value)

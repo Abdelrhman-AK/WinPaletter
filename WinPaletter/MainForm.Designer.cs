@@ -72,6 +72,7 @@ namespace WinPaletter
             this.Status_pnl.Name = "Status_pnl";
             this.Status_pnl.Size = new System.Drawing.Size(1172, 24);
             this.Status_pnl.TabIndex = 122;
+            this.Status_pnl.Visible = false;
             // 
             // Status_lbl
             // 
