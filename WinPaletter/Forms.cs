@@ -4,7 +4,6 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 using WinPaletter.Dialogs;
-using WinPaletter.GitHub;
 using WinPaletter.Tabs;
 
 namespace WinPaletter

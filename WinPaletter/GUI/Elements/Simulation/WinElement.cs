@@ -31,7 +31,7 @@ namespace WinPaletter.UI.Simulation
 
         #region Variables
 
-        private  bool IsInDesignMode
+        private bool IsInDesignMode
         {
             get
             {

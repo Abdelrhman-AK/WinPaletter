@@ -1,6 +1,5 @@
 ﻿using Serilog.Events;
 using System;
-using System.Windows.Forms;
 using WinPaletter;
 
 /// <summary>

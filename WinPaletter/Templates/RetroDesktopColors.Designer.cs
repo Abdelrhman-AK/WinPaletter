@@ -67,7 +67,6 @@
             this.ContextMenu.ButtonHilight = System.Drawing.Color.White;
             this.ContextMenu.ButtonLight = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.ContextMenu.ButtonShadow = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.ContextMenu.ColorBorder = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.ContextMenu.Flat = false;
             this.ContextMenu.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F);
             this.ContextMenu.ForeColor = System.Drawing.Color.Black;

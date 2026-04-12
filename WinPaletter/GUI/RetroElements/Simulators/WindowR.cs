@@ -5,14 +5,14 @@ using System.Drawing;
 using System.Drawing.Design;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
-using System.Linq;
 using System.Windows.Forms;
 using WinPaletter.Templates;
 
 namespace WinPaletter.UI.Retro
 {
     /// <summary>
-    /// A control that simulates a classic window with a title bar and caption box.
+    /// A control that simulates a classic Windows 9x window with a title bar,
+    /// control box, 3D border, and interactive color/metric editing.
     /// </summary>
     [Description("Retro window with Windows 9x style")]
     public class WindowR : Panel
@@ -22,811 +22,827 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public WindowR()
         {
-            // Default classic window font
-            Font = new("Microsoft Sans Serif", 8f);
-            titleHeight = PreviewHelpers.GetTitlebarTextHeight(Font);
+            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
 
-            // Initialize control box buttons
-            _CloseBtn = new() { Name = "CloseBtn", Text = "r", Font = new("Marlett", 7.8f), Size = new((int)BtnWidth, (int)BtnHeight), TextAlign = ContentAlignment.MiddleCenter };
-            _MinBtn = new() { Name = "MinBtn", Text = "1", Font = new("Marlett", 8f), Size = new((int)BtnWidth, (int)BtnHeight), TextAlign = ContentAlignment.MiddleCenter };
-            _MaxBtn = new() { Name = "MaxBtn", Text = "0", Font = new("Marlett", 8f), Size = new((int)BtnWidth, (int)BtnHeight), TextAlign = ContentAlignment.MiddleCenter };
-            BtnHeight = Metrics_CaptionHeight + titleHeight - 4;
-            BtnWidth = Metrics_CaptionWidth - 2;
-            DoubleBuffered = true;
+            Font = new("Microsoft Sans Serif", 8f);
             BackColor = SystemColors.ButtonFace;
             ForeColor = SystemColors.ControlText;
             BorderStyle = BorderStyle.None;
             Text = "New window";
 
-            // Add control box buttons to the control
-            Controls.AddRange([_CloseBtn, _MaxBtn, _MinBtn]);
-            _CloseBtn.Visible = _ControlBox;
-            _MinBtn.Visible = _ControlBox & _MinimizeBox;
-            _MaxBtn.Visible = _ControlBox & _MaximizeBox;
+            _titleHeight = PreviewHelpers.GetTitlebarTextHeight(Font);
 
-            // Adjust control box buttons sizes and locations
+            _closeBtn = new() { Name = "CloseBtn", Text = "r", TextAlign = ContentAlignment.MiddleCenter };
+            _minBtn = new() { Name = "MinBtn", Text = "1", TextAlign = ContentAlignment.MiddleCenter };
+            _maxBtn = new() { Name = "MaxBtn", Text = "0", TextAlign = ContentAlignment.MiddleCenter };
+
+            Controls.AddRange([_closeBtn, _maxBtn, _minBtn]);
+
+            _closeBtn?.Visible = _controlBox;
+            _minBtn?.Visible = _controlBox && _minimizeBox;
+            _maxBtn?.Visible = _controlBox && _maximizeBox;
+
             AdjustControlBoxFontsSizes();
             AdjustButtonSizes();
             AdjustLocations();
             AdjustPadding();
         }
 
-        #region Variables
+        #region Private fields
 
-        RectangleF Rect;
-        RectangleF Border;
-        RectangleF TitlebarRect;
-        RectangleF TitlebarTextRect;
-        RectangleF r0;
-        RectangleF r1;
+        // Title bar metrics.
+        private float _titleHeight;
 
-        private float titleHeight;
+        // Drag state for window movement.
+        private Point _dragStart = Point.Empty;
+        private Point _dragCurrent = Point.Empty;
 
-        private Point newPoint = new();
-        private Point oldPoint = new();
+        // Grip drag flags — one per draggable border zone.
+        private bool _dragging_captionHeight;
+        private bool _dragging_paddingLeft;
+        private bool _dragging_borderLeft;
+        private bool _dragging_paddingRight;
+        private bool _dragging_borderRight;
+        private bool _dragging_paddingBottom;
+        private bool _dragging_borderBottom;
 
-        private PointF[] btnShadowPoints0;
-        private PointF[] btnShadowPoints1;
-        private PointF[] btnDkShadowPoints0;
-        private PointF[] btnDkShadowPoints1;
-        private PointF[] btnHilightPoints0;
-        private PointF[] btnHilightPoints1;
-        private PointF[] btnLightPoints0;
-        private PointF[] btnLightPoints1;
+        // Hover state — color editing.
+        private bool _cursorOnColor1;
+        private bool _cursorOnColor2;
+        private bool _cursorOnTitleText;
+        private bool _cursorOnShadow;
+        private bool _cursorOnDkShadow;
+        private bool _cursorOnHilight;
+        private bool _cursorOnLight;
+        private bool _cursorOnBorder;
+        private bool _cursorOnFace;
 
-        readonly int GripSize = 6;
-        RectangleF editingRect;
-        RectangleF Grip_topLeft;
-        RectangleF Grip_topRight;
-        RectangleF Grip_bottomLeft;
-        RectangleF Grip_bottomRight;
-        RectangleF Grip_topCenter;
-        RectangleF Grip_bottomCenter;
-        RectangleF Grip_leftCenter;
-        RectangleF Grip_rightCenter;
+        // Hover state — metric editing.
+        private bool _cursorOnMetricsGrip;
 
-        bool isMoving_Grip_topCenter = false;
-        bool isMoving_Grip_padding_left = false;
-        bool isMoving_Grip_borderWidth_left = false;
-        bool isMoving_Grip_padding_right = false;
-        bool isMoving_Grip_borderWidth_right = false;
-        bool isMoving_Grip_padding_bottom = false;
-        bool isMoving_Grip_borderWidth_bottom = false;
+        // Cached geometry — rebuilt in AdjustPadding.
+        private RectangleF _rectOuter;         // full control (0,0,W-1,H-1)
+        private RectangleF _rectBorder;        // ColorBorder rect (2,2,W-5,H-5)
+        private RectangleF _titlebarRect;      // title bar area
+        private RectangleF _titlebarTextRect;  // tight title text bounds
+        private RectangleF _r0;                // left half of title bar (Color1)
+        private RectangleF _r1;                // right half of title bar (Color2)
+        private RectangleF _editingRect;       // metrics editing outline rect
+        private RectangleF _gripTopLeft, _gripTopRight;
+        private RectangleF _gripBottomLeft, _gripBottomRight;
+        private RectangleF _gripTopCenter, _gripBottomCenter;
+        private RectangleF _gripLeftCenter, _gripRightCenter;
+
+        // Border line segments for hit-test and overlay drawing.
+        private PointF[] _shadowSeg0, _shadowSeg1;
+        private PointF[] _dkShadowSeg0, _dkShadowSeg1;
+        private PointF[] _hilightSeg0, _hilightSeg1;
+        private PointF[] _lightSeg0, _lightSeg1;
+
+        // Cached pens — rebuilt only when the corresponding color changes.
+        private Pen _penShadow;
+        private Pen _penDkShadow;
+        private Pen _penHilight;
+        private Pen _penLight;
+        private Pen _penBorder;
+        private Pen _penFace;
+
+        private SolidBrush _brushColor1;
+        private SolidBrush _brushColor2;
+        private LinearGradientBrush _brushColorGr;
+
+        // Cached overlay color — recomputed when BackColor changes.
+        private Color _overlayColor;
+
+        // Grip square size in pixels.
+        private const int GripSize = 6;
+
+        // Cached border overlay color (same for all border segments).
+        private static readonly Color BorderOverlay = Color.FromArgb(200, 128, 0, 0);
 
         #endregion
 
-        #region ControlBox
+        #region Child controls
 
-        private readonly ButtonR _CloseBtn;
-        private readonly ButtonR _MinBtn;
-        private readonly ButtonR _MaxBtn;
+        private readonly ButtonR _closeBtn;
+        private readonly ButtonR _minBtn;
+        private readonly ButtonR _maxBtn;
 
-        private float BtnHeight;
-        private float BtnWidth;
+        private float _btnHeight;
+        private float _btnWidth;
 
         #endregion
 
         #region Properties
 
         /// <summary>
-        /// Gets or sets the text associated with this window (caption/title).
+        /// Gets or sets the window caption text.
         /// </summary>
         [Browsable(true)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         [EditorBrowsable(EditorBrowsableState.Always)]
         [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
         [Bindable(true)]
-        public override string Text { get; set; } = "New window";
+        public override string Text
+        {
+            get => base.Text;
+            set
+            {
+                if (base.Text == value) return;
+                base.Text = value;
+                AdjustPadding();
+                Invalidate();
+            }
+        }
 
         /// <summary>
-        /// Gets or sets the background color of the window.
+        /// Gets or sets the window background color (also applied to control box buttons).
         /// </summary>
         public override Color BackColor
         {
             get => base.BackColor;
             set
             {
-                if (base.BackColor != value)
-                {
-                    base.BackColor = value;
-                    _CloseBtn.BackColor = value;
-                    _MinBtn.BackColor = value;
-                    _MaxBtn.BackColor = value;
-                    Refresh();
-                }
+                if (base.BackColor == value) return;
+                base.BackColor = value;
+                _closeBtn?.BackColor = value;
+                _minBtn?.BackColor = value;
+                _maxBtn?.BackColor = value;
+                ReplacePen(ref _penFace, value);
+                _overlayColor = Color.FromArgb(100, value.IsDark() ? Color.White : Color.Black);
+                Invalidate();
             }
         }
 
         /// <summary>
-        /// Enables or disables the color gradient effect on the title bar.
+        /// Gets or sets a value indicating whether the title bar displays a color gradient.
         /// </summary>
         public bool ColorGradient
         {
             get => _colorGradient;
-            set
-            {
-                if (_colorGradient != value)
-                {
-                    _colorGradient = value;
-                    Refresh();
-                }
-            }
+            set { if (_colorGradient != value) { _colorGradient = value; Invalidate(); } }
         }
         private bool _colorGradient = true;
 
         /// <summary>
-        /// A flag that indicates whether the window is active or inactive.
+        /// Gets or sets a value indicating whether the window is active.
         /// </summary>
         public bool Active
         {
             get => _active;
-            set
-            {
-                if (_active != value)
-                {
-                    _active = value;
-                    Refresh();
-                }
-            }
+            set { if (_active != value) { _active = value; Invalidate(); } }
         }
         private bool _active = true;
 
         /// <summary>
-        /// Gets or sets border color of the window.
+        /// Gets or sets the border color strip between the 3D edge and the client area.
         /// </summary>
         public Color ColorBorder
         {
             get => _colorBorder;
             set
             {
-                if (_colorBorder != value)
-                {
-                    _colorBorder = value;
-                    Refresh();
-                }
+                if (_colorBorder == value) return;
+                _colorBorder = value;
+                ReplacePen(ref _penBorder, value);
+                Invalidate();
             }
         }
         private Color _colorBorder = SystemColors.ActiveBorder;
 
         /// <summary>
-        /// Gets or sets if the window is flat or not.
+        /// Gets or sets a value indicating whether the window border is flat (no 3D edge).
         /// </summary>
         public bool Flat
         {
             get => _flat;
-            set
-            {
-                if (_flat != value)
-                {
-                    _flat = value;
-                    Refresh();
-                }
-            }
+            set { if (_flat != value) { _flat = value; Invalidate(); } }
         }
         private bool _flat = false;
 
         /// <summary>
-        /// Gets or sets the color of the title bar.
+        /// Gets or sets the primary title bar color.
         /// </summary>
         public Color Color1
         {
-            get => _Color1;
+            get => _color1;
             set
             {
-                if (_Color1 != value)
+                if (_color1 != value)
                 {
-                    _Color1 = value;
-                    Refresh();
+                    _color1 = value;
+                    ReplaceBrush(ref _brushColor1, value);
+
+                    bool rtl = RightToLeft == RightToLeft.Yes;
+                    _brushColorGr?.Dispose();
+                    _brushColorGr = new(_titlebarRect, rtl ? _color2 : _color1, rtl ? _color1 : _color2, LinearGradientMode.Horizontal);
+
+                    Invalidate();
                 }
             }
         }
-        private Color _Color1 = SystemColors.ActiveCaption;
+        private Color _color1 = SystemColors.ActiveCaption;
 
         /// <summary>
-        /// Gets or sets the color of the title bar gradient.
+        /// Gets or sets the gradient end color of the title bar.
         /// </summary>
         public Color Color2
         {
-            get => _Color2;
+            get => _color2;
             set
             {
-                if (_Color2 != value)
+                if (_color2 != value)
                 {
-                    _Color2 = value;
-                    Refresh();
+                    _color2 = value;
+                    ReplaceBrush(ref _brushColor2, value);
+
+                    bool rtl = RightToLeft == RightToLeft.Yes;
+                    _brushColorGr?.Dispose();
+                    _brushColorGr = new(_titlebarRect, rtl ? _color2 : _color1, rtl ? _color1 : _color2, LinearGradientMode.Horizontal);
+
+                    Invalidate();
                 }
             }
         }
-        private Color _Color2 = SystemColors.GradientActiveCaption;
+        private Color _color2 = SystemColors.GradientActiveCaption;
 
         /// <summary>
-        /// Gets or sets the color of button shadow.
+        /// Gets or sets the button shadow color (also applied to control box buttons).
         /// </summary>
         public Color ButtonShadow
         {
-            get => _ButtonShadow;
+            get => _buttonShadow;
             set
             {
-                if (_ButtonShadow != value)
-                {
-                    _ButtonShadow = value;
-                    _CloseBtn.ButtonShadow = value;
-                    _MinBtn.ButtonShadow = value;
-                    _MaxBtn.ButtonShadow = value;
-                    Refresh();
-                }
+                if (_buttonShadow == value) return;
+                _buttonShadow = value;
+                _closeBtn?.ButtonShadow = value;
+                _minBtn?.ButtonShadow = value;
+                _maxBtn?.ButtonShadow = value;
+                ReplacePen(ref _penShadow, value);
+                Invalidate();
             }
         }
-        private Color _ButtonShadow = SystemColors.ButtonShadow;
+        private Color _buttonShadow = SystemColors.ButtonShadow;
 
         /// <summary>
-        /// Gets or sets the color of button dark shadow.
+        /// Gets or sets the button dark shadow color (also applied to control box buttons).
         /// </summary>
         public Color ButtonDkShadow
         {
-            get => _ButtonDkShadow;
+            get => _buttonDkShadow;
             set
             {
-                if (_ButtonDkShadow != value)
-                {
-                    _ButtonDkShadow = value;
-                    _CloseBtn.ButtonDkShadow = value;
-                    _MinBtn.ButtonDkShadow = value;
-                    _MaxBtn.ButtonDkShadow = value;
-                    Refresh();
-                }
+                if (_buttonDkShadow == value) return;
+                _buttonDkShadow = value;
+                _closeBtn?.ButtonDkShadow = value;
+                _minBtn?.ButtonDkShadow = value;
+                _maxBtn?.ButtonDkShadow = value;
+                ReplacePen(ref _penDkShadow, value);
+                Invalidate();
             }
         }
-        private Color _ButtonDkShadow = SystemColors.ControlDark;
+        private Color _buttonDkShadow = SystemColors.ControlDark;
 
         /// <summary>
-        /// Gets or sets the color of button hilight.
+        /// Gets or sets the button hilight color (also applied to control box buttons).
         /// </summary>
         public Color ButtonHilight
         {
-            get => _ButtonHilight;
+            get => _buttonHilight;
             set
             {
-                if (_ButtonHilight != value)
-                {
-                    _ButtonHilight = value;
-                    _CloseBtn.ButtonHilight = value;
-                    _MinBtn.ButtonHilight = value;
-                    _MaxBtn.ButtonHilight = value;
-                    Refresh();
-                }
+                if (_buttonHilight == value) return;
+                _buttonHilight = value;
+                _closeBtn?.ButtonHilight = value;
+                _minBtn?.ButtonHilight = value;
+                _maxBtn?.ButtonHilight = value;
+                ReplacePen(ref _penHilight, value);
+                Invalidate();
             }
         }
-        private Color _ButtonHilight = SystemColors.ButtonHighlight;
+        private Color _buttonHilight = SystemColors.ButtonHighlight;
 
         /// <summary>
-        /// Gets or sets the color of button light.
+        /// Gets or sets the button light color (also applied to control box buttons).
         /// </summary>
         public Color ButtonLight
         {
-            get => _ButtonLight;
+            get => _buttonLight;
             set
             {
-                if (_ButtonLight != value)
-                {
-                    _ButtonLight = value;
-                    _CloseBtn.ButtonLight = value;
-                    _MinBtn.ButtonLight = value;
-                    _MaxBtn.ButtonLight = value;
-                    Refresh();
-                }
+                if (_buttonLight == value) return;
+                _buttonLight = value;
+                _closeBtn?.ButtonLight = value;
+                _minBtn?.ButtonLight = value;
+                _maxBtn?.ButtonLight = value;
+                ReplacePen(ref _penLight, value);
+                Invalidate();
             }
         }
-        private Color _ButtonLight = SystemColors.ControlLight;
+        private Color _buttonLight = SystemColors.ControlLight;
 
         /// <summary>
-        /// Gets or sets the color of the title bar text.
+        /// Gets or sets the control box button text (glyph) color.
         /// </summary>
         public Color ButtonText
         {
-            get => _ButtonText;
+            get => _buttonText;
             set
             {
-                if (_ButtonText != value)
-                {
-                    _ButtonText = value;
-                    _CloseBtn.ForeColor = value;
-                    _MinBtn.ForeColor = value;
-                    _MaxBtn.ForeColor = value;
-                    Refresh();
-                }
+                if (_buttonText == value) return;
+                _buttonText = value;
+                _closeBtn?.ForeColor = value;
+                _minBtn?.ForeColor = value;
+                _maxBtn?.ForeColor = value;
+                Invalidate();
             }
         }
-        private Color _ButtonText = SystemColors.ControlText;
-
-
-        private readonly int min_Metrics_CaptionHeight = 16;
-        private readonly int max_Metrics_CaptionHeight = 50;
+        private Color _buttonText = SystemColors.ControlText;
 
         /// <summary>
-        /// Gets or sets the height of the caption (title) bar.
+        /// Gets or sets the caption bar height in pixels. Clamped to [16, 50].
         /// </summary>
         public int Metrics_CaptionHeight
         {
-            get => _Metrics_CaptionHeight;
-
+            get => _captionHeight;
             set
             {
-                if (value < min_Metrics_CaptionHeight) value = min_Metrics_CaptionHeight;
-                if (value > max_Metrics_CaptionHeight) value = max_Metrics_CaptionHeight;
-
-                if (value != _Metrics_CaptionHeight)
-                {
-                    _Metrics_CaptionHeight = value;
-                    AdjustButtonSizes();
-                    AdjustControlBoxFontsSizes();
-                    AdjustLocations();
-                    AdjustPadding();
-                    Refresh();
-
-                    if (!DesignMode && EnableEditingMetrics && isMoving_Grip_topCenter) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Metrics_CaptionHeight)));
-                }
+                value = Math.Max(16, Math.Min(50, value));
+                if (value == _captionHeight) return;
+                _captionHeight = value;
+                AdjustButtonSizes();
+                AdjustControlBoxFontsSizes();
+                AdjustLocations();
+                AdjustPadding();
+                Invalidate();
+                if (!DesignMode && EnableEditingMetrics && _dragging_captionHeight) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Metrics_CaptionHeight)));
             }
         }
-        private int _Metrics_CaptionHeight = SystemInformation.CaptionHeight;
-
-        private readonly int min_Metrics_CaptionWidth = 16;
-        private readonly int max_Metrics_CaptionWidth = 50;
+        private int _captionHeight = SystemInformation.CaptionHeight;
 
         /// <summary>
-        /// Gets or sets the width of the caption (title) bar buttons.
+        /// Gets or sets the caption button width in pixels. Clamped to [16, 50].
         /// </summary>
         public int Metrics_CaptionWidth
         {
-            get => _Metrics_CaptionWidth;
+            get => _captionWidth;
             set
             {
-                if (value < min_Metrics_CaptionWidth) value = min_Metrics_CaptionWidth;
-                if (value > max_Metrics_CaptionWidth) value = max_Metrics_CaptionWidth;
-                if (value != _Metrics_CaptionWidth)
-                {
-                    _Metrics_CaptionWidth = value;
-                    AdjustButtonSizes();
-                    AdjustLocations();
-                    AdjustControlBoxFontsSizes();
-                    Refresh();
-
-                    //if (!DesignMode && EnableEditingMetrics && isMoving_Grip_topCenter) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Metrics_CaptionHeight)));
-                }
+                value = Math.Max(16, Math.Min(50, value));
+                if (value == _captionWidth) return;
+                _captionWidth = value;
+                AdjustButtonSizes();
+                AdjustLocations();
+                AdjustControlBoxFontsSizes();
+                Invalidate();
             }
         }
-        private int _Metrics_CaptionWidth = 22;
-
-        private readonly int min_Metrics_BorderWidth = 0;
-        private readonly int max_Metrics_BorderWidth = 50;
+        private int _captionWidth = 22;
 
         /// <summary>
-        /// Gets or sets the width of the window border.
+        /// Gets or sets the window border width in pixels. Clamped to [0, 50].
         /// </summary>
         public int Metrics_BorderWidth
         {
-            get => _Metrics_BorderWidth;
+            get => _borderWidth;
             set
             {
-                if (value < min_Metrics_BorderWidth) value = min_Metrics_BorderWidth;
-                if (value > max_Metrics_BorderWidth) value = max_Metrics_BorderWidth;
-                if (value != _Metrics_BorderWidth)
-                {
-                    _Metrics_BorderWidth = value;
-                    AdjustLocations();
-                    AdjustPadding();
-                    Refresh();
-
-                    if (!DesignMode && EnableEditingMetrics && (isMoving_Grip_borderWidth_left || isMoving_Grip_borderWidth_right || isMoving_Grip_borderWidth_bottom))
-                        EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Metrics_BorderWidth)));
-                }
+                value = Math.Max(0, Math.Min(50, value));
+                if (value == _borderWidth) return;
+                _borderWidth = value;
+                AdjustLocations();
+                AdjustPadding();
+                Invalidate();
+                if (!DesignMode && EnableEditingMetrics && (_dragging_borderLeft || _dragging_borderRight || _dragging_borderBottom))
+                    EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Metrics_BorderWidth)));
             }
         }
-        private int _Metrics_BorderWidth = 1;
-
-
-        private readonly int min_Metrics_PaddedBorderWidth = 0;
-        private readonly int max_Metrics_PaddedBorderWidth = 50;
+        private int _borderWidth = 1;
 
         /// <summary>
-        /// Gets or sets the padded border width of the window border.
+        /// Gets or sets the padded border width in pixels. Clamped to [0, 50].
         /// </summary>
         public int Metrics_PaddedBorderWidth
         {
-            get => _Metrics_PaddedBorderWidth;
+            get => _paddedBorderWidth;
             set
             {
-                if (value < min_Metrics_PaddedBorderWidth) value = min_Metrics_PaddedBorderWidth;
-                if (value > max_Metrics_PaddedBorderWidth) value = max_Metrics_PaddedBorderWidth;
-
-                if (value != _Metrics_PaddedBorderWidth)
-                {
-                    _Metrics_PaddedBorderWidth = value;
-                    AdjustLocations();
-                    AdjustPadding();
-                    Refresh();
-
-                    if (!DesignMode && EnableEditingMetrics && (isMoving_Grip_padding_right || isMoving_Grip_padding_left || isMoving_Grip_padding_bottom))
-                        EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Metrics_PaddedBorderWidth)));
-                }
+                value = Math.Max(0, Math.Min(50, value));
+                if (value == _paddedBorderWidth) return;
+                _paddedBorderWidth = value;
+                AdjustLocations();
+                AdjustPadding();
+                Invalidate();
+                if (!DesignMode && EnableEditingMetrics && (_dragging_paddingLeft || _dragging_paddingRight || _dragging_paddingBottom))
+                    EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Metrics_PaddedBorderWidth)));
             }
         }
-        private int _Metrics_PaddedBorderWidth = 4;
+        private int _paddedBorderWidth = 4;
 
         /// <summary>
-        /// Gets or sets a value indicating whether the window has a control box.
+        /// Gets or sets a value indicating whether the control box is visible.
         /// </summary>
         public bool ControlBox
         {
-            get => _ControlBox;
+            get => _controlBox;
             set
             {
-                if (_ControlBox != value)
-                {
-                    _ControlBox = value;
-                    _CloseBtn.Visible = value;
-                    _MinBtn.Visible = value && _MinimizeBox;
-                    _MaxBtn.Visible = value && _MaximizeBox;
-                    AdjustLocations();
-                    Refresh();
-                }
+                if (_controlBox == value) return;
+                _controlBox = value;
+                _closeBtn?.Visible = value;
+                _minBtn?.Visible = value && _minimizeBox;
+                _maxBtn?.Visible = value && _maximizeBox;
+                AdjustLocations();
+                Invalidate();
             }
         }
-        private bool _ControlBox = true;
+        private bool _controlBox = true;
 
         /// <summary>
-        /// Shows or hides the minimize button in the control box.
+        /// Gets or sets a value indicating whether the minimize button is visible.
         /// </summary>
         public bool MinimizeBox
         {
-            get => _MinimizeBox;
+            get => _minimizeBox;
             set
             {
-                if (_MinimizeBox != value)
-                {
-                    _MinimizeBox = value;
-                    _MinBtn.Visible = _ControlBox && value;
-                    AdjustLocations();
-                    Refresh();
-                }
+                if (_minimizeBox == value) return;
+                _minimizeBox = value;
+                _minBtn?.Visible = _controlBox && value;
+                AdjustLocations();
+                Invalidate();
             }
         }
-        private bool _MinimizeBox = true;
+        private bool _minimizeBox = true;
 
         /// <summary>
-        /// Shows or hides the maximize button in the control box.
+        /// Gets or sets a value indicating whether the maximize button is visible.
         /// </summary>
         public bool MaximizeBox
         {
-            get => _MaximizeBox;
+            get => _maximizeBox;
             set
             {
-                if (_MaximizeBox != value)
-                {
-                    _MaximizeBox = value;
-                    _MaxBtn.Visible = _ControlBox && value;
-                    AdjustLocations();
-                    Refresh();
-                }
+                if (_maximizeBox == value) return;
+                _maximizeBox = value;
+                _maxBtn?.Visible = _controlBox && value;
+                AdjustLocations();
+                Invalidate();
             }
         }
-        private bool _MaximizeBox = true;
+        private bool _maximizeBox = true;
 
         /// <summary>
-        /// A flag that indicates whether the window colors can be edited by clicking on areas of the window.
+        /// Gets or sets a value indicating whether colors can be edited interactively by clicking.
         /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Browsable(false)]
         public bool EnableEditingColors { get; set; } = false;
 
         /// <summary>
-        /// A flag that indicates whether the window metrics can be edited by clicking and dragging on areas of the window.
+        /// Gets or sets a value indicating whether metrics can be edited by dragging grips.
         /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Browsable(false)]
         public bool EnableEditingMetrics { get; set; } = false;
 
+        // Computed edit-mode flags.
+        private bool IsEditColor1 => EnableEditingColors && _cursorOnColor1;
+        private bool IsEditColor2 => EnableEditingColors && _cursorOnColor2;
+        private bool IsEditTitleText => EnableEditingColors && _cursorOnTitleText;
+        private bool IsEditShadow => EnableEditingColors && _cursorOnShadow;
+        private bool IsEditDkShadow => EnableEditingColors && _cursorOnDkShadow;
+        private bool IsEditHilight => EnableEditingColors && _cursorOnHilight;
+        private bool IsEditLight => EnableEditingColors && _cursorOnLight;
+        private bool IsEditBorder => EnableEditingColors && _cursorOnBorder;
+        private bool IsEditFace => EnableEditingColors && _cursorOnFace;
+        private bool IsMetricsGrip => EnableEditingMetrics && _cursorOnMetricsGrip;
+        private bool IsMetricsCaptionFont => EnableEditingMetrics && _cursorOnTitleText;
+
         #endregion
 
-        #region Events/Overrides
+        #region Editor event
 
         /// <summary>
-        /// Occurs when the user clicks on a color area of the window.
+        /// Raised when the user clicks a color or metric region while editing is enabled.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         public delegate void EditorInvokerEventHandler(object sender, EditorEventArgs e);
 
         /// <summary>
-        /// Occurs when the user clicks on a color area of the window.
+        /// Raised when the user clicks a color or metric region while editing is enabled.
         /// </summary>
         public event EditorInvokerEventHandler EditorInvoker;
 
+        #endregion
+
+        #region Resource helpers
+
         /// <summary>
-        /// Raises the <see cref="Control.FontChanged"/> event.
+        /// Disposes the existing pen and allocates a replacement with the given color.
         /// </summary>
-        /// <param name="e"></param>
+        private static void ReplacePen(ref Pen pen, Color color)
+        {
+            pen?.Dispose();
+            pen = new(color);
+        }
+
+        /// <summary>
+        /// Disposes the existing solid brush and allocates a replacement with the given color.
+        /// </summary>
+        private static void ReplaceBrush(ref SolidBrush brush, Color color)
+        {
+            brush?.Dispose();
+            brush = new(color);
+        }
+
+        private static bool OnSegment(PointF[] seg, Point p)
+        {
+            PointF a = seg[0];
+            PointF b = seg[1];
+
+            // Horizontal line
+            if (a.Y == b.Y)
+                return p.Y == a.Y && p.X >= Math.Min(a.X, b.X) && p.X <= Math.Max(a.X, b.X);
+
+            // Vertical line
+            if (a.X == b.X)
+                return p.X == a.X && p.Y >= Math.Min(a.Y, b.Y) && p.Y <= Math.Max(a.Y, b.Y);
+
+            return false;
+        }
+
+        #endregion
+
+        #region Layout
+
+        /// <summary>
+        /// Resizes the control box buttons to match the current caption metrics.
+        /// </summary>
+        private void AdjustButtonSizes()
+        {
+            _btnHeight = Math.Max(_captionHeight + PreviewHelpers.GetTitlebarTextHeight(Font) - 4, 5f);
+            _btnWidth = Math.Max(_captionWidth - 2, 5f);
+
+            Size sz = new((int)_btnWidth, (int)_btnHeight);
+            _closeBtn?.Size = sz;
+            _minBtn?.Size = sz;
+            _maxBtn?.Size = sz;
+        }
+
+        /// <summary>
+        /// Repositions the control box buttons relative to the current border and padding metrics.
+        /// </summary>
+        private void AdjustLocations()
+        {
+            int top = _paddedBorderWidth + _borderWidth + 5;
+            int left = Width - (int)_btnWidth - _paddedBorderWidth - _borderWidth - 5;
+
+            _closeBtn?.Top = top;
+            _minBtn?.Top = top;
+            _maxBtn?.Top = top;
+            _closeBtn?.Left = left;
+
+            if (_minimizeBox && _maximizeBox)
+            {
+                _minBtn?.Left = _closeBtn.Left - 2 - (int)_btnWidth;
+                _maxBtn?.Left = _minBtn.Left - (int)_btnWidth;
+            }
+            else if (_maximizeBox)
+            {
+                _maxBtn?.Left = _closeBtn.Left - 2 - (int)_btnWidth;
+            }
+            else if (_minimizeBox)
+            {
+                _minBtn?.Left = _closeBtn.Left - 2 - (int)_btnWidth;
+            }
+        }
+
+        /// <summary>
+        /// Scales the Marlett font on the control box buttons to the current caption size.
+        /// </summary>
+        public void AdjustControlBoxFontsSizes()
+        {
+            float i0 = Math.Abs(Math.Min(_captionHeight, _captionWidth));
+            float iFx = i0 / Math.Abs(Math.Min(17f, 18f));
+            Font f = new("Marlett", 6.8f * iFx);
+            _closeBtn?.Font = f;
+            _minBtn?.Font = f;
+            _maxBtn?.Font = f;
+        }
+
+        /// <summary>
+        /// Recomputes all cached geometry — title bar rect, text rect, grip positions,
+        /// border segment endpoints — from the current metrics and control size.
+        /// </summary>
+        public void AdjustPadding()
+        {
+            float combined = _borderWidth + _paddedBorderWidth + 3f;
+            float topPad = 4f + _paddedBorderWidth + _borderWidth + _captionHeight + PreviewHelpers.GetTitlebarTextHeight(Font);
+
+            Padding = new((int)combined, (int)topPad, (int)combined, (int)combined);
+
+            _editingRect = new(Padding.Left, Padding.Top, Width - Padding.Left * 2 - 1, Height - Padding.Bottom - Padding.Top - 1);
+
+            float gs = GripSize * 0.5f;
+            _gripTopLeft = new(_editingRect.X - gs, _editingRect.Y - gs, GripSize, GripSize);
+            _gripTopRight = new(_editingRect.Right - gs, _editingRect.Y - gs, GripSize, GripSize);
+            _gripBottomLeft = new(_editingRect.X - gs, _editingRect.Bottom - gs, GripSize, GripSize);
+            _gripBottomRight = new(_editingRect.Right - gs, _editingRect.Bottom - gs, GripSize, GripSize);
+            _gripTopCenter = new(_editingRect.X + _editingRect.Width / 2f - gs, _editingRect.Y - gs, GripSize, GripSize);
+            _gripBottomCenter = new(_editingRect.X + _editingRect.Width / 2f - gs, _editingRect.Bottom - gs, GripSize, GripSize);
+            _gripLeftCenter = new(_editingRect.X - gs, _editingRect.Y + _editingRect.Height / 2f - gs, GripSize, GripSize);
+            _gripRightCenter = new(_editingRect.Right - gs, _editingRect.Y + _editingRect.Height / 2f - gs, GripSize, GripSize);
+
+            _titlebarRect = new(combined, combined, Width - combined * 2f, _captionHeight + _titleHeight);
+
+            SizeF textSz = Text.Measure(Font);
+            float ty = _titlebarRect.Y + (_titlebarRect.Height - textSz.Height) / 2f;
+            _titlebarTextRect = new(_titlebarRect.X, ty, textSz.Width, textSz.Height);
+
+            _r0 = new(_titlebarRect.X, _titlebarRect.Y, _titlebarRect.Width / 2f, _titlebarRect.Height - 1f);
+            _r1 = new(_titlebarRect.X + _titlebarRect.Width / 2f, _titlebarRect.Y, _titlebarRect.Width / 2f, _titlebarRect.Height - 1f);
+
+            float w = Width - 1f;
+            float h = Height - 1f;
+            _rectOuter = new(0, 0, w, h);
+            _rectBorder = new(2, 2, Width - 5f, Height - 5f);
+
+            // Raised 3D border segments (Win9x button appearance):
+            //   Light    outer top + left
+            //   Hilight  inner top + left
+            //   Shadow   inner bottom + right
+            //   DkShadow outer bottom + right
+            _lightSeg0 = [new(0, 0), new(w - 1f, 0)];
+            _lightSeg1 = [new(0, 0), new(0, h - 1f)];
+            _hilightSeg0 = [new(1, 1), new(w - 2f, 1)];
+            _hilightSeg1 = [new(1, 1), new(1, h - 2f)];
+            _shadowSeg0 = [new(w - 1f, 1), new(w - 1f, h - 1f)];
+            _shadowSeg1 = [new(1, h - 1f), new(w - 1f, h - 1f)];
+            _dkShadowSeg0 = [new(w, 0), new(w, h)];
+            _dkShadowSeg1 = [new(0, h), new(w, h)];
+        }
+
+        #endregion
+
+        #region Overrides — layout triggers
+
+        /// <summary>
+        /// Rebuilds title height and all layout when the font changes.
+        /// </summary>
         protected override void OnFontChanged(EventArgs e)
         {
-            // Get the proper titlebar text height based on the font, and adjust the control box buttons sizes and locations
-            titleHeight = PreviewHelpers.GetTitlebarTextHeight(Font);
+            base.OnFontChanged(e);
+            _titleHeight = PreviewHelpers.GetTitlebarTextHeight(Font);
             AdjustControlBoxFontsSizes();
             AdjustButtonSizes();
             AdjustLocations();
             AdjustPadding();
-
-            base.OnFontChanged(e);
         }
 
         /// <summary>
-        /// Raises the <see cref="Control.SizeChanged"/> event.
+        /// Rebuilds layout when the control is resized.
         /// </summary>
-        /// <param name="e"></param>
         protected override void OnSizeChanged(EventArgs e)
         {
-            // Adjust the control box buttons sizes and locations, and the window padding
+            base.OnSizeChanged(e);
             AdjustLocations();
             AdjustPadding();
-
-            base.OnSizeChanged(e);
         }
 
         /// <summary>
-        /// Raises the <see cref="Control.MouseDown"/> event.
+        /// Rebuilds the cached overlay color when BackColor changes.
         /// </summary>
-        /// <param name="e"></param>
+        protected override void OnBackColorChanged(EventArgs e)
+        {
+            base.OnBackColorChanged(e);
+            _overlayColor = Color.FromArgb(100, BackColor.IsDark() ? Color.White : Color.Black);
+        }
+
+        #endregion
+
+        #region Overrides — mouse interaction
+
+        /// <summary>
+        /// Begins window drag or metrics grip drag on mouse down.
+        /// </summary>
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            if (!DesignMode)
-            {
-                if (TitlebarRect.Contains(e.Location) && e.Button == MouseButtons.Left)
-                {
-                    oldPoint = MousePosition - new Size(Location);
-                    newPoint = oldPoint;
-                }
-            }
-
-            if (!DesignMode && _MetricsEdit_Grip)
-            {
-                if (Grip_topCenter.Contains(e.Location))
-                {
-                    isMoving_Grip_topCenter = true;
-                    isMoving_Grip_padding_left = false;
-                }
-                else if (Grip_leftCenter.Contains(e.Location))
-                {
-                    isMoving_Grip_topCenter = false;
-
-                    isMoving_Grip_padding_left = e.Button == MouseButtons.Right;
-                    isMoving_Grip_borderWidth_left = e.Button != MouseButtons.Right;
-                }
-                else if (Grip_rightCenter.Contains(e.Location))
-                {
-                    isMoving_Grip_topCenter = false;
-
-                    isMoving_Grip_padding_right = e.Button == MouseButtons.Right;
-                    isMoving_Grip_borderWidth_right = e.Button != MouseButtons.Right;
-                }
-                else if (Grip_bottomCenter.Contains(e.Location))
-                {
-                    isMoving_Grip_topCenter = false;
-
-                    isMoving_Grip_padding_bottom = e.Button == MouseButtons.Right;
-                    isMoving_Grip_borderWidth_bottom = e.Button != MouseButtons.Right;
-                }
-                else if (Grip_bottomLeft.Contains(e.Location))
-                {
-                    isMoving_Grip_topCenter = false;
-
-                    isMoving_Grip_padding_left = e.Button == MouseButtons.Right;
-                    isMoving_Grip_borderWidth_left = e.Button != MouseButtons.Right;
-
-                    isMoving_Grip_padding_bottom = e.Button == MouseButtons.Right;
-                    isMoving_Grip_borderWidth_bottom = e.Button != MouseButtons.Right;
-                }
-                else if (Grip_bottomRight.Contains(e.Location))
-                {
-                    isMoving_Grip_topCenter = false;
-
-                    isMoving_Grip_padding_right = e.Button == MouseButtons.Right;
-                    isMoving_Grip_borderWidth_right = e.Button != MouseButtons.Right;
-
-                    isMoving_Grip_padding_bottom = e.Button == MouseButtons.Right;
-                    isMoving_Grip_borderWidth_bottom = e.Button != MouseButtons.Right;
-                }
-                else if (Grip_topLeft.Contains(e.Location))
-                {
-                    isMoving_Grip_topCenter = true;
-
-                    isMoving_Grip_padding_left = e.Button == MouseButtons.Right;
-                    isMoving_Grip_borderWidth_left = e.Button != MouseButtons.Right;
-
-                    isMoving_Grip_padding_left = e.Button == MouseButtons.Right;
-                    isMoving_Grip_borderWidth_left = e.Button != MouseButtons.Right;
-                }
-                else if (Grip_topRight.Contains(e.Location))
-                {
-                    isMoving_Grip_topCenter = true;
-
-                    isMoving_Grip_padding_right = e.Button == MouseButtons.Right;
-                    isMoving_Grip_borderWidth_right = e.Button != MouseButtons.Right;
-
-                    isMoving_Grip_padding_right = e.Button == MouseButtons.Right;
-                    isMoving_Grip_borderWidth_right = e.Button != MouseButtons.Right;
-                }
-            }
-
             base.OnMouseDown(e);
+
+            if (DesignMode) return;
+
+            if (_titlebarRect.Contains(e.Location) && e.Button == MouseButtons.Left)
+            {
+                _dragStart = MousePosition - new Size(Location);
+                _dragCurrent = _dragStart;
+            }
+
+            if (!EnableEditingMetrics) return;
+
+            // Map grip zones to drag flags.
+            bool left = e.Button != MouseButtons.Right;
+            bool padding = e.Button == MouseButtons.Right;
+
+            ResetDragFlags();
+
+            if (_gripTopCenter.Contains(e.Location)) { _dragging_captionHeight = true; }
+            else if (_gripLeftCenter.Contains(e.Location)) { _dragging_paddingLeft = padding; _dragging_borderLeft = left; }
+            else if (_gripRightCenter.Contains(e.Location)) { _dragging_paddingRight = padding; _dragging_borderRight = left; }
+            else if (_gripBottomCenter.Contains(e.Location)) { _dragging_paddingBottom = padding; _dragging_borderBottom = left; }
+            else if (_gripBottomLeft.Contains(e.Location)) { _dragging_paddingLeft = padding; _dragging_borderLeft = left; _dragging_paddingBottom = padding; _dragging_borderBottom = left; }
+            else if (_gripBottomRight.Contains(e.Location)) { _dragging_paddingRight = padding; _dragging_borderRight = left; _dragging_paddingBottom = padding; _dragging_borderBottom = left; }
+            else if (_gripTopLeft.Contains(e.Location)) { _dragging_captionHeight = true; _dragging_paddingLeft = padding; _dragging_borderLeft = left; }
+            else if (_gripTopRight.Contains(e.Location)) { _dragging_captionHeight = true; _dragging_paddingRight = padding; _dragging_borderRight = left; }
         }
 
+        /// <summary>
+        /// Handles window dragging, color hover, and metric grip dragging.
+        /// </summary>
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            if (!DesignMode)
+            base.OnMouseMove(e);
+
+            if (DesignMode) return;
+
+            // Window drag.
+            if (e.Button == MouseButtons.Left && _titlebarRect.Contains(e.Location) && !_dragging_captionHeight)
             {
-                if (e.Button == MouseButtons.Left && TitlebarRect.Contains(e.Location) && !isMoving_Grip_topCenter)
-                {
-                    newPoint = MousePosition - new Size(oldPoint);
-                    Location = newPoint;
-                }
-
-                else if (EnableEditingColors)
-                {
-                    if (TitlebarTextRect.Contains(e.Location))
-                    {
-                        CursorOnTitlebarText = true;
-                        CursorOnTitlebarColor1 = false;
-                        CursorOnTitlebarColor2 = false;
-                        CursorOnShadow = false;
-                        CursorOnDkShadow = false;
-                        CursorOnHilight = false;
-                        CursorOnLight = false;
-                        CursorOnBorder = false;
-                        CursorOnFace = false;
-
-                    }
-                    else
-                    {
-                        CursorOnTitlebarText = false;
-                        CursorOnTitlebarColor1 = r0.Contains(e.Location);
-                        CursorOnTitlebarColor2 = r1.Contains(e.Location);
-
-                        CursorOnShadow = (!Flat && (btnShadowPoints0.Contains(e.Location) || btnShadowPoints1.Contains(e.Location)))
-                            || (Flat && Rect.BordersContains(e.Location));
-
-                        CursorOnDkShadow = btnDkShadowPoints0.Contains(e.Location) || btnDkShadowPoints1.Contains(e.Location);
-                        CursorOnHilight = btnHilightPoints0.Contains(e.Location) || btnHilightPoints1.Contains(e.Location);
-                        CursorOnLight = btnLightPoints0.Contains(e.Location) || btnLightPoints1.Contains(e.Location);
-                        CursorOnBorder = Border.BordersContains(e.Location);
-                        CursorOnFace = Border.Contains(e.Location) && !CursorOnBorder && !TitlebarRect.Contains(e.Location);
-                    }
-
-                    Refresh();
-                }
-
-                else if (EnableEditingMetrics)
-                {
-                    CursorOnTitlebarText = TitlebarTextRect.Contains(e.Location);
-
-                    if (isMoving_Grip_topCenter)
-                    {
-                        Metrics_CaptionHeight = e.Location.Y - (_Metrics_PaddedBorderWidth + _Metrics_BorderWidth + (int)(GripSize * 0.5));
-                    }
-
-                    if (isMoving_Grip_padding_left)
-                    {
-                        Metrics_PaddedBorderWidth = e.Location.X - (int)(GripSize * 0.5) - _Metrics_BorderWidth;
-                    }
-                    else if (isMoving_Grip_borderWidth_left)
-                    {
-                        Metrics_BorderWidth = e.Location.X - (int)(GripSize * 0.5) - _Metrics_PaddedBorderWidth;
-                    }
-                    else if (isMoving_Grip_padding_right)
-                    {
-                        Metrics_PaddedBorderWidth = Width - e.Location.X - (int)(GripSize * 0.5) - _Metrics_BorderWidth;
-                    }
-                    else if (isMoving_Grip_borderWidth_right)
-                    {
-                        Metrics_BorderWidth = Width - e.Location.X - (int)(GripSize * 0.5) - _Metrics_PaddedBorderWidth;
-                    }
-                    else if (isMoving_Grip_padding_bottom)
-                    {
-                        Metrics_PaddedBorderWidth = Height - e.Location.Y - (int)(GripSize * 0.5) - _Metrics_BorderWidth;
-                    }
-                    else if (isMoving_Grip_borderWidth_bottom)
-                    {
-                        Metrics_BorderWidth = Height - e.Location.Y - (int)(GripSize * 0.5) - _Metrics_PaddedBorderWidth;
-                    }
-
-                    else
-                    {
-                        CursorOnMetricsGrip = !TitlebarRect.Contains(e.Location);
-
-                        if (Grip_topLeft.Contains(e.Location)) Cursor = Cursors.SizeNWSE;
-                        else if (Grip_topRight.Contains(e.Location)) Cursor = Cursors.SizeNESW;
-                        else if (Grip_bottomLeft.Contains(e.Location)) Cursor = Cursors.SizeNESW;
-                        else if (Grip_bottomRight.Contains(e.Location)) Cursor = Cursors.SizeNWSE;
-                        else if (Grip_topCenter.Contains(e.Location)) Cursor = Cursors.SizeNS;
-                        else if (Grip_bottomCenter.Contains(e.Location)) Cursor = Cursors.SizeNS;
-                        else if (Grip_leftCenter.Contains(e.Location)) Cursor = Cursors.SizeWE;
-                        else if (Grip_rightCenter.Contains(e.Location)) Cursor = Cursors.SizeWE;
-                        else Cursor = Cursors.Default;
-
-                        Refresh();
-                    }
-                }
+                _dragCurrent = MousePosition - new Size(_dragStart);
+                Location = _dragCurrent;
+                return;
             }
 
-            base.OnMouseMove(e);
+            if (EnableEditingColors)
+            {
+                UpdateColorHover(e.Location);
+                Invalidate();
+                return;
+            }
+
+            if (EnableEditingMetrics)
+            {
+                UpdateMetricsDrag(e.Location);
+            }
         }
 
+        /// <summary>
+        /// Clears all drag flags on mouse up.
+        /// </summary>
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            isMoving_Grip_topCenter = false;
-            isMoving_Grip_padding_left = false;
-            isMoving_Grip_borderWidth_left = false;
-            isMoving_Grip_padding_right = false;
-            isMoving_Grip_borderWidth_right = false;
-            isMoving_Grip_padding_bottom = false;
-            isMoving_Grip_borderWidth_bottom = false;
-
             base.OnMouseUp(e);
+            ResetDragFlags();
         }
 
+        /// <summary>
+        /// Clears all hover and drag state on mouse leave.
+        /// </summary>
         protected override void OnMouseLeave(EventArgs e)
         {
-            if (!DesignMode && EnableEditingColors)
-            {
-                CursorOnTitlebarText = false;
-                CursorOnTitlebarColor1 = false;
-                CursorOnTitlebarColor2 = false;
-                CursorOnShadow = false;
-                CursorOnDkShadow = false;
-                CursorOnHilight = false;
-                CursorOnLight = false;
-                CursorOnBorder = false;
-                CursorOnFace = false;
-
-                Refresh();
-
-                Cursor = Cursors.Default;
-            }
-
-            if (!DesignMode && EnableEditingMetrics)
-            {
-                CursorOnMetricsGrip = false;
-                CursorOnTitlebarText = false;
-                isMoving_Grip_topCenter = false;
-                isMoving_Grip_padding_left = false;
-                isMoving_Grip_borderWidth_left = false;
-                isMoving_Grip_padding_right = false;
-                isMoving_Grip_borderWidth_right = false;
-                isMoving_Grip_padding_bottom = false;
-                isMoving_Grip_borderWidth_bottom = false;
-
-                Cursor = Cursors.Default;
-                Refresh();
-            }
-
             base.OnMouseLeave(e);
+
+            if (DesignMode) return;
+
+            if (EnableEditingColors)
+            {
+                ResetColorHover();
+                Invalidate();
+            }
+
+            if (EnableEditingMetrics)
+            {
+                _cursorOnMetricsGrip = false;
+                _cursorOnTitleText = false;
+                ResetDragFlags();
+                Invalidate();
+            }
+
+            Cursor = Cursors.Default;
         }
 
+        /// <summary>
+        /// Invokes the color editor or font dialog on click.
+        /// </summary>
         protected override void OnMouseClick(MouseEventArgs e)
         {
-            if (!DesignMode && oldPoint == newPoint && EnableEditingColors)
-            {
-                if (CursorOnTitlebarColor1) EditorInvoker?.Invoke(this, new EditorEventArgs(Active ? nameof(RetroDesktopColors.ActiveTitle) : nameof(RetroDesktopColors.InactiveTitle)));
-                else if (CursorOnTitlebarColor2) EditorInvoker?.Invoke(this, new EditorEventArgs(Active ? nameof(RetroDesktopColors.GradientActiveTitle) : nameof(RetroDesktopColors.GradientInactiveTitle)));
-                else if (CursorOnTitlebarColor2) EditorInvoker?.Invoke(this, new EditorEventArgs(Active ? nameof(RetroDesktopColors.GradientActiveTitle) : nameof(RetroDesktopColors.GradientInactiveTitle)));
-                else if (CursorOnTitlebarText) EditorInvoker?.Invoke(this, new EditorEventArgs(Active ? nameof(RetroDesktopColors.TitleText) : nameof(RetroDesktopColors.InactiveTitleText)));
-                else if (CursorOnShadow) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonShadow)));
-                else if (CursorOnDkShadow) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonDkShadow)));
-                else if (CursorOnHilight) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonHilight)));
-                else if (CursorOnLight) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonLight)));
-                else if (CursorOnBorder) EditorInvoker?.Invoke(this, new EditorEventArgs(Active ? nameof(RetroDesktopColors.ActiveBorder) : nameof(RetroDesktopColors.InactiveBorder)));
-                else if (CursorOnFace) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonFace)));
-            }
+            base.OnMouseClick(e);
 
-            else if (!DesignMode && _MetricsEdit_CaptionFont)
+            if (DesignMode) return;
+
+            if (_dragStart == _dragCurrent && EnableEditingColors)
+            {
+                if (IsEditColor1) EditorInvoker?.Invoke(this, new EditorEventArgs(_active ? nameof(RetroDesktopColors.ActiveTitle) : nameof(RetroDesktopColors.InactiveTitle)));
+                else if (IsEditColor2) EditorInvoker?.Invoke(this, new EditorEventArgs(_active ? nameof(RetroDesktopColors.GradientActiveTitle) : nameof(RetroDesktopColors.GradientInactiveTitle)));
+                else if (IsEditTitleText) EditorInvoker?.Invoke(this, new EditorEventArgs(_active ? nameof(RetroDesktopColors.TitleText) : nameof(RetroDesktopColors.InactiveTitleText)));
+                else if (IsEditShadow) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonShadow)));
+                else if (IsEditDkShadow) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonDkShadow)));
+                else if (IsEditHilight) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonHilight)));
+                else if (IsEditLight) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonLight)));
+                else if (IsEditBorder) EditorInvoker?.Invoke(this, new EditorEventArgs(_active ? nameof(RetroDesktopColors.ActiveBorder) : nameof(RetroDesktopColors.InactiveBorder)));
+                else if (IsEditFace) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonFace)));
+            }
+            else if (IsMetricsCaptionFont)
             {
                 using (FontDialog fd = new() { Font = Font })
                 {
@@ -837,135 +853,129 @@ namespace WinPaletter.UI.Retro
                     }
                 }
             }
-
-            base.OnMouseClick(e);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-
-            _CloseBtn?.Dispose();
-            _MinBtn?.Dispose();
-            _MaxBtn?.Dispose();
         }
 
         #endregion
 
-        #region Methods
+        #region Mouse helpers
 
-        private void AdjustButtonSizes()
+        /// <summary>
+        /// Updates all color-edit hover flags from the current cursor position.
+        /// Uses <see cref="OnSegment"/> for 1px border lines and rect containment for areas.
+        /// </summary>
+        private void UpdateColorHover(Point loc)
         {
-            BtnHeight = Math.Max(_Metrics_CaptionHeight + PreviewHelpers.GetTitlebarTextHeight(Font) - 4, 5);
-            BtnWidth = Math.Max(_Metrics_CaptionWidth - 2, 5);
+            _cursorOnTitleText = _titlebarTextRect.Contains(loc);
 
-            if (_CloseBtn != null) _CloseBtn.Size = new((int)BtnWidth, (int)BtnHeight);
-            if (_MinBtn != null) _MinBtn.Size = new((int)BtnWidth, (int)BtnHeight);
-            if (_MaxBtn != null) _MaxBtn.Size = new((int)BtnWidth, (int)BtnHeight);
-            Refresh();
-        }
-
-        private void AdjustLocations()
-        {
-            if (_CloseBtn != null) _CloseBtn.Top = Metrics_PaddedBorderWidth + Metrics_BorderWidth + 5;
-            if (_MinBtn != null) _MinBtn.Top = _CloseBtn.Top;
-            if (_MaxBtn != null) _MaxBtn.Top = _CloseBtn.Top;
-
-            if (_CloseBtn != null) _CloseBtn.Left = Width - _CloseBtn.Width - _Metrics_PaddedBorderWidth - _Metrics_BorderWidth - 5;
-
-            if (MinimizeBox & MaximizeBox)
+            if (_cursorOnTitleText)
             {
-                if (_MinBtn != null && _CloseBtn != null) _MinBtn.Left = _CloseBtn.Left - 2 - _MinBtn.Width;
-                if (_MaxBtn != null && _MinBtn != null) _MaxBtn.Left = _MinBtn.Left - _MaxBtn.Width;
+                _cursorOnColor1 = false;
+                _cursorOnColor2 = false;
+                _cursorOnShadow = false;
+                _cursorOnDkShadow = false;
+                _cursorOnHilight = false;
+                _cursorOnLight = false;
+                _cursorOnBorder = false;
+                _cursorOnFace = false;
+                return;
             }
 
-            else if (MaximizeBox)
+            _cursorOnColor1 = _r0.Contains(loc);
+            _cursorOnColor2 = _r1.Contains(loc);
+
+            if (_flat)
             {
-                if (_MaxBtn != null && _CloseBtn != null) _MaxBtn.Left = _CloseBtn.Left - 2 - _MaxBtn.Width;
+                _cursorOnShadow = _rectOuter.BordersContains(loc);
+                _cursorOnDkShadow = false;
+                _cursorOnHilight = false;
+                _cursorOnLight = false;
+            }
+            else
+            {
+                bool onDkShadow = OnSegment(_dkShadowSeg0, loc) || OnSegment(_dkShadowSeg1, loc);
+                bool onShadow = !onDkShadow && (OnSegment(_shadowSeg0, loc) || OnSegment(_shadowSeg1, loc));
+                bool onHilight = !onDkShadow && !onShadow && (OnSegment(_hilightSeg0, loc) || OnSegment(_hilightSeg1, loc));
+                bool onLight = !onDkShadow && !onShadow && !onHilight && (OnSegment(_lightSeg0, loc) || OnSegment(_lightSeg1, loc));
+
+                _cursorOnDkShadow = onDkShadow;
+                _cursorOnShadow = onShadow;
+                _cursorOnHilight = onHilight;
+                _cursorOnLight = onLight;
             }
 
-            else if (MinimizeBox)
+            _cursorOnBorder = _rectBorder.BordersContains(loc);
+            _cursorOnFace = _rectBorder.Contains(loc) && !_cursorOnBorder && !_titlebarRect.Contains(loc);
+        }
+
+        /// <summary>
+        /// Resets all color-edit hover flags to false.
+        /// </summary>
+        private void ResetColorHover()
+        {
+            _cursorOnColor1 = false;
+            _cursorOnColor2 = false;
+            _cursorOnTitleText = false;
+            _cursorOnShadow = false;
+            _cursorOnDkShadow = false;
+            _cursorOnHilight = false;
+            _cursorOnLight = false;
+            _cursorOnBorder = false;
+            _cursorOnFace = false;
+        }
+
+        /// <summary>
+        /// Handles metric grip dragging and cursor shape updates.
+        /// </summary>
+        private void UpdateMetricsDrag(Point loc)
+        {
+            if (_dragging_captionHeight)
             {
-                if (_MinBtn != null && _CloseBtn != null) _MinBtn.Left = _CloseBtn.Left - 2 - _MinBtn.Width;
+                Metrics_CaptionHeight = loc.Y - (_paddedBorderWidth + _borderWidth + (int)(GripSize * 0.5f));
+                return;
             }
 
+            if (_dragging_paddingLeft) { Metrics_PaddedBorderWidth = loc.X - (int)(GripSize * 0.5f) - _borderWidth; return; }
+            else if (_dragging_borderLeft) { Metrics_BorderWidth = loc.X - (int)(GripSize * 0.5f) - _paddedBorderWidth; return; }
+            else if (_dragging_paddingRight) { Metrics_PaddedBorderWidth = Width - loc.X - (int)(GripSize * 0.5f) - _borderWidth; return; }
+            else if (_dragging_borderRight) { Metrics_BorderWidth = Width - loc.X - (int)(GripSize * 0.5f) - _paddedBorderWidth; return; }
+            else if (_dragging_paddingBottom) { Metrics_PaddedBorderWidth = Height - loc.Y - (int)(GripSize * 0.5f) - _borderWidth; return; }
+            else if (_dragging_borderBottom) { Metrics_BorderWidth = Height - loc.Y - (int)(GripSize * 0.5f) - _paddedBorderWidth; return; }
+
+            // No drag active — update hover state and cursor shape.
+            _cursorOnTitleText = _titlebarTextRect.Contains(loc);
+            _cursorOnMetricsGrip = !_titlebarRect.Contains(loc);
+
+            if (_gripTopLeft.Contains(loc) || _gripBottomRight.Contains(loc)) Cursor = Cursors.SizeNWSE;
+            else if (_gripTopRight.Contains(loc) || _gripBottomLeft.Contains(loc)) Cursor = Cursors.SizeNESW;
+            else if (_gripTopCenter.Contains(loc) || _gripBottomCenter.Contains(loc)) Cursor = Cursors.SizeNS;
+            else if (_gripLeftCenter.Contains(loc) || _gripRightCenter.Contains(loc)) Cursor = Cursors.SizeWE;
+            else Cursor = Cursors.Default;
+
+            Invalidate();
         }
 
-        public void AdjustControlBoxFontsSizes()
+        /// <summary>
+        /// Resets all metric grip drag flags to false.
+        /// </summary>
+        private void ResetDragFlags()
         {
-            float i0, iFx;
-            i0 = Math.Abs(Math.Min(_Metrics_CaptionHeight, _Metrics_CaptionWidth));
-            iFx = i0 / Math.Abs(Math.Min(17, 18));
-            Font f = new("Marlett", (float)(6.8f * (float)iFx));
-            if (_CloseBtn != null) _CloseBtn.Font = f;
-            if (_MinBtn != null) _MinBtn.Font = f;
-            if (_MaxBtn != null) _MaxBtn.Font = f;
-        }
-
-        public void AdjustPadding()
-        {
-            float iP = 3 + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth;
-            float iT = 4 + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth + _Metrics_CaptionHeight + PreviewHelpers.GetTitlebarTextHeight(Font);
-            Padding _Padding = new((int)iP, (int)iT, (int)iP, (int)iP);
-            Padding = _Padding;
-
-            editingRect = new(Padding.Left, Padding.Top, Width - Padding.Left * 2 - 1, Height - Padding.Bottom - Padding.Top - 1);
-
-            Grip_topLeft = new(editingRect.X - (int)(0.5 * GripSize), editingRect.Y - (int)(0.5 * GripSize), GripSize, GripSize);
-            Grip_topRight = new(editingRect.X + editingRect.Width - (int)(0.5 * GripSize), editingRect.Y - (int)(0.5 * GripSize), GripSize, GripSize);
-            Grip_bottomLeft = new(editingRect.X - (int)(0.5 * GripSize), editingRect.Y + editingRect.Height - (int)(0.5 * GripSize), GripSize, GripSize);
-            Grip_bottomRight = new(editingRect.X + editingRect.Width - (int)(0.5 * GripSize), editingRect.Y + editingRect.Height - (int)(0.5 * GripSize), GripSize, GripSize);
-            Grip_topCenter = new(editingRect.X + editingRect.Width / 2 - (int)(0.5 * GripSize), editingRect.Y - (int)(0.5 * GripSize), GripSize, GripSize);
-            Grip_bottomCenter = new(editingRect.X + editingRect.Width / 2 - (int)(0.5 * GripSize), editingRect.Y + editingRect.Height - (int)(0.5 * GripSize), GripSize, GripSize);
-            Grip_leftCenter = new(editingRect.X - (int)(0.5 * GripSize), editingRect.Y + editingRect.Height / 2 - (int)(0.5 * GripSize), GripSize, GripSize);
-            Grip_rightCenter = new(editingRect.X + editingRect.Width - (int)(0.5 * GripSize), editingRect.Y + editingRect.Height / 2 - (int)(0.5 * GripSize), GripSize, GripSize);
-
-            float CompinedPadding = _Metrics_BorderWidth + _Metrics_PaddedBorderWidth + 3;
-            TitlebarRect = new(CompinedPadding, CompinedPadding, Width - CompinedPadding * 2, _Metrics_CaptionHeight + titleHeight);
-
-            SizeF textSize = Text.Measure(Font);
-            float y = TitlebarRect.Y + (TitlebarRect.Height - (int)textSize.Height) / 2;
-            TitlebarTextRect = new(TitlebarRect.X, y, (int)textSize.Width, (int)textSize.Height);
-
-            r0 = new(TitlebarRect.X, TitlebarRect.Y, TitlebarRect.Width / 2, TitlebarRect.Height - 1);
-            r1 = new(TitlebarRect.X + TitlebarRect.Width / 2, TitlebarRect.Y, TitlebarRect.Width / 2, TitlebarRect.Height - 1);
-
-            Rect = new(0, 0, Width - 1, Height - 1);
-            Border = new(2, 2, Width - 5, Height - 5);
-
-            btnShadowPoints0 = [new PointF(Rect.Width - 1, Rect.X + 1), new PointF(Rect.Width - 1, Rect.Height - 1)];
-            btnShadowPoints1 = [new PointF(Rect.X + 1, Rect.Height - 1), new PointF(Rect.Width - 1, Rect.Height - 1)];
-
-            btnDkShadowPoints0 = [new PointF(Rect.Width, Rect.X), new PointF(Rect.Width, Rect.Height)];
-            btnDkShadowPoints1 = [new PointF(Rect.X, Rect.Height), new PointF(Rect.Width, Rect.Height)];
-
-            btnHilightPoints0 = [new PointF(Rect.X + 1, Rect.Y + 1), new PointF(Rect.Width - 2, Rect.Y + 1)];
-            btnHilightPoints1 = [new PointF(Rect.X + 1, Rect.Y + 1), new PointF(Rect.X + 1, Rect.Height - 2)];
-
-            btnLightPoints0 = [new PointF(Rect.X, Rect.Y), new PointF(Rect.Width - 1, Rect.Y)];
-            btnLightPoints1 = [new PointF(Rect.X, Rect.Y), new PointF(Rect.X, Rect.Height - 1)];
+            _dragging_captionHeight = false;
+            _dragging_paddingLeft = false;
+            _dragging_borderLeft = false;
+            _dragging_paddingRight = false;
+            _dragging_borderRight = false;
+            _dragging_paddingBottom = false;
+            _dragging_borderBottom = false;
         }
 
         #endregion
 
-        #region Colors editor
+        #region Paint
 
-        private bool CursorOnTitlebarColor1, CursorOnTitlebarColor2, CursorOnTitlebarText, CursorOnShadow, CursorOnDkShadow, CursorOnHilight, CursorOnLight, CursorOnBorder, CursorOnFace;
-        private bool _ColorEdit_TitlebarColor1 => EnableEditingColors && CursorOnTitlebarColor1;
-        private bool _ColorEdit_TitlebarColor2 => EnableEditingColors && CursorOnTitlebarColor2;
-        private bool _ColorEdit_TitlebarText => EnableEditingColors && CursorOnTitlebarText;
-        private bool _ColorEdit_Shadow => EnableEditingColors && CursorOnShadow;
-        private bool _ColorEdit_DkShadow => EnableEditingColors && CursorOnDkShadow;
-        private bool _ColorEdit_Hilight => EnableEditingColors && CursorOnHilight;
-        private bool _ColorEdit_Light => EnableEditingColors && CursorOnLight;
-        private bool _ColorEdit_Border => EnableEditingColors && CursorOnBorder;
-        private bool _ColorEdit_Face => EnableEditingColors && CursorOnFace;
-
-        private bool CursorOnMetricsGrip;
-        private bool _MetricsEdit_Grip => EnableEditingMetrics && CursorOnMetricsGrip;
-        private bool _MetricsEdit_CaptionFont => EnableEditingMetrics && CursorOnTitlebarText;
-        #endregion
-
+        /// <summary>
+        /// Paints the complete window simulation: 3D border, color border, title bar,
+        /// caption text, and all active color-edit or metric-edit overlays.
+        /// </summary>
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics G = e.Graphics;
@@ -974,210 +984,191 @@ namespace WinPaletter.UI.Retro
 
             G.Clear(BackColor);
 
-            #region Editor
-
-            if (_ColorEdit_Face)
+            // 1. Face hover overlay.
+            if (IsEditFace)
             {
-                Color color = Color.FromArgb(100, BackColor.IsDark() ? Color.White : Color.Black);
-                using (HatchBrush hb = new(HatchStyle.Percent25, color, Color.Transparent)) { G.FillRectangle(hb, Rect); }
+                using (HatchBrush hb = new(HatchStyle.Percent25, _overlayColor, Color.Transparent))
+                {
+                    G.FillRectangle(hb, _rectOuter.X, _rectOuter.Y, _rectOuter.Width, _rectOuter.Height);
+                }
             }
 
-            #endregion
-
-            using (Pen btnShadow = new(ButtonShadow))
-            using (Pen btnHilight = new(ButtonHilight))
-            using (Pen btnLight = new(ButtonLight))
-            using (Pen btnDkShadow = new(ButtonDkShadow))
-            using (Pen btnFace = new(BackColor))
-            using (Pen clrBorder = new(ColorBorder))
+            // 2. 3D border.
+            if (!_flat)
             {
-                if (!Flat)
+                G.DrawLine(_penLight, _lightSeg0[0], _lightSeg0[1]);
+                G.DrawLine(_penLight, _lightSeg1[0], _lightSeg1[1]);
+                G.DrawLine(_penHilight, _hilightSeg0[0], _hilightSeg0[1]);
+                G.DrawLine(_penHilight, _hilightSeg1[0], _hilightSeg1[1]);
+                G.DrawLine(_penShadow, _shadowSeg0[0], _shadowSeg0[1]);
+                G.DrawLine(_penShadow, _shadowSeg1[0], _shadowSeg1[1]);
+                G.DrawLine(_penDkShadow, _dkShadowSeg0[0], _dkShadowSeg0[1]);
+                G.DrawLine(_penDkShadow, _dkShadowSeg1[0], _dkShadowSeg1[1]);
+
+                // 3D border segment overlays.
+                if (IsEditLight || IsEditHilight || IsEditShadow || IsEditDkShadow)
                 {
-                    G.DrawLine(btnShadow, new PointF(Rect.Width - 1, Rect.X + 1), new PointF(Rect.Width - 1, Rect.Height - 1));
-                    G.DrawLine(btnShadow, new PointF(Rect.X + 1, Rect.Height - 1), new PointF(Rect.Width - 1, Rect.Height - 1));
-
-                    G.DrawLine(btnHilight, new PointF(Rect.X + 1, Rect.Y + 1), new PointF(Rect.Width - 2, Rect.Y + 1));
-                    G.DrawLine(btnHilight, new PointF(Rect.X + 1, Rect.Y + 1), new PointF(Rect.X + 1, Rect.Height - 2));
-
-                    G.DrawLine(btnLight, new PointF(Rect.X, Rect.Y), new PointF(Rect.Width - 1, Rect.Y));
-                    G.DrawLine(btnLight, new PointF(Rect.X, Rect.Y), new PointF(Rect.X, Rect.Height - 1));
-
-                    G.DrawLine(btnDkShadow, new PointF(Rect.Width, Rect.X), new PointF(Rect.Width, Rect.Height));
-                    G.DrawLine(btnDkShadow, new PointF(Rect.X, Rect.Height), new PointF(Rect.Width, Rect.Height));
-
-                    G.DrawRectangle(btnFace, new Rectangle(2, 2, Width - 5, Height - 5));
-
-                    #region Editor
-
-                    if (_ColorEdit_Shadow)
+                    using (Pen p = new(BorderOverlay))
                     {
-                        Color color = Color.FromArgb(200, 128, 0, 0);
-                        using (Pen P = new(color))
-                        {
-                            G.DrawLine(P, btnShadowPoints0[0], btnShadowPoints0[1]);
-                            G.DrawLine(P, btnShadowPoints1[0], btnShadowPoints1[1]);
-                        }
+                        if (IsEditLight) { G.DrawLine(p, _lightSeg0[0], _lightSeg0[1]); G.DrawLine(p, _lightSeg1[0], _lightSeg1[1]); }
+                        if (IsEditHilight) { G.DrawLine(p, _hilightSeg0[0], _hilightSeg0[1]); G.DrawLine(p, _hilightSeg1[0], _hilightSeg1[1]); }
+                        if (IsEditShadow) { G.DrawLine(p, _shadowSeg0[0], _shadowSeg0[1]); G.DrawLine(p, _shadowSeg1[0], _shadowSeg1[1]); }
+                        if (IsEditDkShadow) { G.DrawLine(p, _dkShadowSeg0[0], _dkShadowSeg0[1]); G.DrawLine(p, _dkShadowSeg1[0], _dkShadowSeg1[1]); }
                     }
-
-                    if (_ColorEdit_DkShadow)
-                    {
-                        Color color = Color.FromArgb(200, 128, 0, 0);
-                        using (Pen P = new(color))
-                        {
-                            G.DrawLine(P, btnDkShadowPoints0[0], btnDkShadowPoints0[1]);
-                            G.DrawLine(P, btnDkShadowPoints1[0], btnDkShadowPoints1[1]);
-                        }
-                    }
-
-                    if (_ColorEdit_Hilight)
-                    {
-                        Color color = Color.FromArgb(200, 128, 0, 0);
-                        using (Pen P = new(color))
-                        {
-                            G.DrawLine(P, btnHilightPoints0[0], btnHilightPoints0[1]);
-                            G.DrawLine(P, btnHilightPoints1[0], btnHilightPoints1[1]);
-                        }
-                    }
-
-                    if (_ColorEdit_Light)
-                    {
-                        Color color = Color.FromArgb(200, 128, 0, 0);
-                        using (Pen P = new(color))
-                        {
-                            G.DrawLine(P, btnLightPoints0[0], btnLightPoints0[1]);
-                            G.DrawLine(P, btnLightPoints1[0], btnLightPoints1[1]);
-                        }
-                    }
-
-                    #endregion
-
-                }
-                else
-                {
-                    G.DrawRectangle(btnShadow, Rect.X, Rect.Y, Rect.Width, Rect.Height);
-
-                    #region Editor
-
-                    if (_ColorEdit_Shadow)
-                    {
-                        Color color = Color.FromArgb(200, 128, 0, 0);
-                        using (Pen P = new(color)) { G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height); }
-                    }
-
-                    #endregion
                 }
 
-                G.DrawRectangle(clrBorder, Border.X, Border.Y, Border.Width, Border.Height);
-
-                #region Editor
-
-                if (_ColorEdit_Border)
+                // Face-color strip between 3D edge and color border.
+                if (_penFace != null)
                 {
-                    Color color = Color.FromArgb(200, 128, 0, 0);
-                    using (Pen P = new(color)) { G.DrawRectangle(P, Border.X, Border.Y, Border.Width, Border.Height); }
+                    G.DrawRectangle(_penFace, _rectBorder.X, _rectBorder.Y, _rectBorder.Width, _rectBorder.Height);
                 }
+            }
+            else
+            {
+                G.DrawRectangle(_penShadow, _rectOuter.X, _rectOuter.Y, _rectOuter.Width, _rectOuter.Height);
 
-                #endregion
+                if (IsEditShadow)
+                {
+                    using (Pen p = new(BorderOverlay))
+                    {
+                        G.DrawRectangle(p, _rectOuter.X, _rectOuter.Y, _rectOuter.Width, _rectOuter.Height);
+                    }
+                }
             }
 
-            bool RTL = (int)RightToLeft == 1;
-
-            if (ColorGradient)
+            // 3. ColorBorder strip.
+            if (_penBorder != null)
             {
-                using (LinearGradientBrush gr = new(TitlebarRect, RTL ? Color2 : Color1, RTL ? Color1 : Color2, LinearGradientMode.Horizontal))
-                using (SolidBrush fixer = new(RTL ? Color2 : Color1))
+                G.DrawRectangle(_penBorder, _rectBorder.X, _rectBorder.Y, _rectBorder.Width, _rectBorder.Height);
+            }
+
+            if (IsEditBorder)
+            {
+                using (Pen p = new(BorderOverlay))
                 {
-                    RectangleF TRectFixer = new(TitlebarRect.X, TitlebarRect.Y, 1, TitlebarRect.Height);
+                    G.DrawRectangle(p, _rectBorder.X, _rectBorder.Y, _rectBorder.Width, _rectBorder.Height);
+                }
+            }
 
-                    G.FillRectangle(gr, TitlebarRect);
-                    G.FillRectangle(fixer, TRectFixer);
+            // 4. Title bar fill.
+            bool rtl = RightToLeft == RightToLeft.Yes;
 
-                    if (_ColorEdit_TitlebarColor1)
+            if (_colorGradient)
+            {
+                G.FillRectangle(_brushColorGr, _titlebarRect);
+                G.FillRectangle(rtl ? _brushColor2 : _brushColor1, new RectangleF(_titlebarRect.X, _titlebarRect.Y, 1f, _titlebarRect.Height));
+
+                if (IsEditColor1)
+                {
+                    Color ov = Color.FromArgb(128, _color1.IsDark() ? Color.White : Color.Black);
+                    using (HatchBrush hb = new(HatchStyle.Percent25, ov, Color.Transparent))
+                    using (Pen p = new(ov))
                     {
-                        Color color = Color.FromArgb(128, Color1.IsDark() ? Color.White : Color.Black);
-                        using (Pen P = new(color))
-                        using (HatchBrush hb = new(HatchStyle.Percent25, color, Color.Transparent))
-                        {
-                            G.FillRectangle(hb, r0);
-                            G.DrawRectangle(P, r0.X, r0.Y, r0.Width, r0.Height);
-                        }
+                        G.FillRectangle(hb, _r0);
+                        G.DrawRectangle(p, _r0.X, _r0.Y, _r0.Width, _r0.Height);
                     }
-
-                    else if (_ColorEdit_TitlebarColor2)
+                }
+                else if (IsEditColor2)
+                {
+                    Color ov = Color.FromArgb(128, _color1.IsDark() ? Color.White : Color.Black);
+                    using (HatchBrush hb = new(HatchStyle.Percent25, ov, Color.Transparent))
+                    using (Pen p = new(ov))
                     {
-                        Color color = Color.FromArgb(128, Color1.IsDark() ? Color.White : Color.Black);
-                        using (Pen P = new(color))
-                        using (HatchBrush hb = new(HatchStyle.Percent25, color, Color.Transparent))
-                        {
-                            G.FillRectangle(hb, r1);
-                            G.DrawRectangle(P, r1.X, r1.Y, r1.Width, r1.Height);
-                        }
+                        G.FillRectangle(hb, _r1);
+                        G.DrawRectangle(p, _r1.X, _r1.Y, _r1.Width, _r1.Height);
                     }
                 }
             }
             else
             {
-                using (SolidBrush br = new(Color1)) { G.FillRectangle(br, TitlebarRect); }
+                G.FillRectangle(_brushColor1, _titlebarRect);
 
-                if (_ColorEdit_TitlebarColor1 || _ColorEdit_TitlebarColor2)
+                if (IsEditColor1 || IsEditColor2)
                 {
-                    Color color = Color1.IsDark() ? Color.White : Color.Black;
-                    using (Pen P = new(color))
-                    using (HatchBrush hb = new(HatchStyle.Percent25, color, Color.Transparent))
+                    Color ov = Color.FromArgb(128, _color1.IsDark() ? Color.White : Color.Black);
+                    using (HatchBrush hb = new(HatchStyle.Percent25, ov, Color.Transparent))
+                    using (Pen p = new(ov))
                     {
-                        G.FillRectangle(hb, TitlebarRect);
-                        G.DrawRectangle(P, TitlebarRect.X, TitlebarRect.Y, TitlebarRect.Width, TitlebarRect.Height);
+                        G.FillRectangle(hb, _titlebarRect);
+                        G.DrawRectangle(p, _titlebarRect.X, _titlebarRect.Y, _titlebarRect.Width, _titlebarRect.Height);
                     }
                 }
             }
 
+            // 5. Title bar text and its hover overlay.
+            using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat(rtl))
             using (SolidBrush br = new(ForeColor))
-            using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat(RTL))
             {
-                if (_ColorEdit_TitlebarText || _MetricsEdit_CaptionFont)
+                if (IsEditTitleText || IsMetricsCaptionFont)
                 {
-                    Color color = Color.FromArgb(128, Color1.IsDark() ? Color.White : Color.Black);
-                    using (Pen P = new(color))
-                    using (HatchBrush hb = new(HatchStyle.Percent25, color, Color.Transparent))
+                    Color ov = Color.FromArgb(128, _color1.IsDark() ? Color.White : Color.Black);
+                    using (HatchBrush hb = new(HatchStyle.Percent25, ov, Color.Transparent))
+                    using (Pen p = new(ov))
                     {
-                        G.FillRectangle(hb, TitlebarTextRect);
-                        G.DrawRectangle(P, TitlebarTextRect.X, TitlebarTextRect.Y, TitlebarTextRect.Width, TitlebarTextRect.Height);
+                        G.FillRectangle(hb, _titlebarTextRect);
+                        G.DrawRectangle(p, _titlebarTextRect.X, _titlebarTextRect.Y, _titlebarTextRect.Width, _titlebarTextRect.Height);
                     }
                 }
 
-                G.DrawString(Text, Font, br, TitlebarRect, sf);
+                G.DrawString(Text, Font, br, _titlebarRect, sf);
             }
 
-            if (!DesignMode && _MetricsEdit_Grip)
+            // 6. Metrics grip overlay.
+            if (!DesignMode && IsMetricsGrip)
             {
-                using (Pen P = new(BackColor.Invert()) { DashStyle = DashStyle.Dot })
+                using (Pen p = new(BackColor.Invert()) { DashStyle = DashStyle.Dot })
                 {
-                    G.DrawRectangle(P, editingRect.X, editingRect.Y, editingRect.Width, editingRect.Height);
+                    G.DrawRectangle(p, _editingRect.X, _editingRect.Y, _editingRect.Width, _editingRect.Height);
                 }
 
-                using (Pen P = new(BackColor.Invert()) { DashStyle = DashStyle.Solid })
+                using (Pen p = new(BackColor.Invert()))
                 {
-                    G.FillRoundedRect(Brushes.White, Grip_topLeft, 1, true);
-                    G.FillRoundedRect(Brushes.White, Grip_topRight, 1, true);
-                    G.FillRoundedRect(Brushes.White, Grip_bottomLeft, 1, true);
-                    G.FillRoundedRect(Brushes.White, Grip_bottomRight, 1, true);
-                    G.FillRoundedRect(Brushes.White, Grip_topCenter, 1, true);
-                    G.FillRoundedRect(Brushes.White, Grip_bottomCenter, 1, true);
-                    G.FillRoundedRect(Brushes.White, Grip_leftCenter, 1, true);
-                    G.FillRoundedRect(Brushes.White, Grip_rightCenter, 1, true);
+                    void DrawGrip(RectangleF r)
+                    {
+                        G.FillRoundedRect(Brushes.White, r, 1, true);
+                        G.DrawRoundedRect(p, r, 1, true);
+                    }
 
-                    G.DrawRoundedRect(P, Grip_topLeft, 1, true);
-                    G.DrawRoundedRect(P, Grip_topRight, 1, true);
-                    G.DrawRoundedRect(P, Grip_bottomLeft, 1, true);
-                    G.DrawRoundedRect(P, Grip_bottomRight, 1, true);
-                    G.DrawRoundedRect(P, Grip_topCenter, 1, true);
-                    G.DrawRoundedRect(P, Grip_bottomCenter, 1, true);
-                    G.DrawRoundedRect(P, Grip_leftCenter, 1, true);
-                    G.DrawRoundedRect(P, Grip_rightCenter, 1, true);
+                    DrawGrip(_gripTopLeft);
+                    DrawGrip(_gripTopRight);
+                    DrawGrip(_gripBottomLeft);
+                    DrawGrip(_gripBottomRight);
+                    DrawGrip(_gripTopCenter);
+                    DrawGrip(_gripBottomCenter);
+                    DrawGrip(_gripLeftCenter);
+                    DrawGrip(_gripRightCenter);
                 }
             }
-
-
         }
+
+        #endregion
+
+        #region Dispose
+
+        /// <summary>
+        /// Releases all cached GDI resources and child controls.
+        /// </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _penShadow?.Dispose();
+                _penDkShadow?.Dispose();
+                _penHilight?.Dispose();
+                _penLight?.Dispose();
+                _penBorder?.Dispose();
+                _penFace?.Dispose();
+                _brushColor1?.Dispose();
+                _brushColor2?.Dispose();
+                _brushColorGr?.Dispose();
+                _closeBtn?.Dispose();
+                _minBtn?.Dispose();
+                _maxBtn?.Dispose();
+            }
+
+            base.Dispose(disposing);
+        }
+
+        #endregion
     }
 }

@@ -6,7 +6,6 @@ using System.Drawing.Design;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Windows.Forms;
-using System.Windows.Forms.Layout;
 
 namespace WinPaletter.UI.WP
 {

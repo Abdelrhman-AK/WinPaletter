@@ -1,6 +1,5 @@
 ﻿using Microsoft.Win32;
 using Serilog.Events;
-using System;
 using System.IO;
 using System.Windows.Forms;
 

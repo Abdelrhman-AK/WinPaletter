@@ -1,12 +1,10 @@
 ﻿using Devcorp.Controls.VisualStyles;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using WinPaletter.Assets;
 using WinPaletter.Properties;
 using WinPaletter.Theme;
 using WinPaletter.Theme.Structures;
@@ -1458,7 +1456,7 @@ namespace WinPaletter.Templates
                         if (window.Active) window.ColorBorder = value;
                     }
 
-                    foreach (ContextMenuR contextMenu in this.GetAllControls().OfType<ContextMenuR>()) { contextMenu.ColorBorder = value; }
+                    foreach (ContextMenuR contextMenu in this.GetAllControls().OfType<ContextMenuR>()) { contextMenu.ButtonShadow = value; }
                 }
             }
         }

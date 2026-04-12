@@ -864,7 +864,7 @@ namespace WinPaletter.Templates
             var contextMenus = GetAllControlsOfType<ContextMenuR>();
             foreach (var menu in contextMenus)
             {
-                menu.ColorBorder = value;
+                menu.ButtonShadow = value;
             }
         }
 
@@ -1166,7 +1166,7 @@ namespace WinPaletter.Templates
 
         private void AttachChildEditorEvents(Control parent)
         {
-            foreach (Control control in parent.Controls)
+            foreach (Control control in parent.GetAllControls())
             {
                 AttachEditorEvents(control);
             }

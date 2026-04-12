@@ -13,7 +13,6 @@ using System.Windows.Forms;
 using WinPaletter.Assets;
 using WinPaletter.NativeMethods;
 using WinPaletter.Properties;
-using WinPaletter.UI.AdvancedControls;
 using static WinPaletter.Settings.Structures.NerdStats;
 
 namespace WinPaletter.UI.Controllers

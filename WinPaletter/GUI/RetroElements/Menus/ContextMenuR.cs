@@ -1,8 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
-using System.ComponentModel.Design;
 using System.Drawing;
-using System.Drawing.Design;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Windows.Forms;
@@ -11,280 +9,269 @@ using WinPaletter.Templates;
 namespace WinPaletter.UI.Retro
 {
     /// <summary>
-    /// Retro context menu with Windows 9x style
+    /// A control that simulates a classic Windows 9x context menu with three items:
+    /// Normal, Selected, and Disabled. Supports interactive color editing.
     /// </summary>
     [Description("Retro context menu with Windows 9x style")]
     public class ContextMenuR : Panel
     {
         /// <summary>
-        /// Initialize new instance of <see cref="ContextMenuR"/>
+        /// Initializes a new instance of the <see cref="ContextMenuR"/> class.
         /// </summary>
         public ContextMenuR()
         {
-            Font = new("Microsoft Sans Serif", 8f);
-            DoubleBuffered = true;
-            BackColor = SystemColors.Control;
-            ForeColor = SystemColors.ControlText;
-            BorderStyle = BorderStyle.None;
-            Text = string.Empty;
+            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
 
-            PositionMenuItems();
+            Font = new("Microsoft Sans Serif", 8f);
+            BackColor = SystemColors.Menu;
+            ForeColor = SystemColors.MenuText;
+            BorderStyle = BorderStyle.None;
         }
 
-        #region Variables
+        #region Private fields
 
-        Rectangle Rect;
-        Rectangle Border;
+        // Localized item strings — evaluated on each access so locale changes apply immediately.
+        private string StrMenuItem => Program.Localization.Strings.Previewer.MenuItem;
+        private string StrSelection => Program.Localization.Strings.Previewer.Selection;
+        private string StrDisabledItem => Program.Localization.Strings.Previewer.DisabledItem;
 
-        private PointF[] btnShadowPoints0;
-        private PointF[] btnShadowPoints1;
-        private PointF[] btnDkShadowPoints0;
-        private PointF[] btnDkShadowPoints1;
-        private PointF[] btnHilightPoints0;
-        private PointF[] btnHilightPoints1;
-        private PointF[] btnLightPoints0;
-        private PointF[] btnLightPoints1;
+        // Cached geometry — rebuilt on resize or font change.
+        private Rectangle _rectOuter;    // full control bounds (W-1, H-1)
+        private Rectangle _rectBorder;   // ColorBorder rect  (2,2,W-5,H-5)
+        private Rectangle _item0;        // Normal item row
+        private Rectangle _item1;        // Selected item row
+        private Rectangle _item2;        // Disabled item row
+        private Rectangle _item0Text;    // Normal text hit-test bounds
+        private Rectangle _item1Text;    // Selected text hit-test bounds
+        private Rectangle _item2Text;    // Disabled text hit-test bounds
 
-        private string str_MenuItem => Program.Localization.Strings.Previewer.MenuItem;
-        private string str_Selection => Program.Localization.Strings.Previewer.Selection;
-        private string str_DisabledItem => Program.Localization.Strings.Previewer.DisabledItem;
+        // 3D border segment endpoints (raised Win9x appearance).
+        // Layout: Light (outer top+left) → Hilight (inner top+left)
+        //       → Shadow (inner bottom+right) → DkShadow (outer bottom+right)
+        private PointF[] _lightSeg0, _lightSeg1;
+        private PointF[] _hilightSeg0, _hilightSeg1;
+        private PointF[] _shadowSeg0, _shadowSeg1;
+        private PointF[] _dkShadowSeg0, _dkShadowSeg1;
 
-        SizeF item0Size;
-        SizeF item1Size;
-        SizeF item2Size;
+        // Cached pens — rebuilt only when their source color changes.
+        private Pen _penShadow;
+        private Pen _penDkShadow;
+        private Pen _penHilight;
+        private Pen _penLight;
+        private Pen _penMenuHilight;   // flat-mode selection border
 
-        Rectangle item0;
-        Rectangle item1;
-        Rectangle item2;
+        // Cached brushes — rebuilt only when their source color changes.
+        private SolidBrush _brushFore;
+        private SolidBrush _brushHilight;
+        private SolidBrush _brushHilightText;
+        private SolidBrush _brushGrayText;
 
-        Rectangle item0Text;
-        Rectangle item1Text;
-        Rectangle item2Text;
+        // Cached overlay blend color — recomputed only when BackColor changes.
+        private Color _overlayColor;
+
+        // Shared border segment highlight color.
+        private static readonly Color BorderOverlay = Color.FromArgb(200, 128, 0, 0);
+
+        // Hover state — one flag per hittable region.
+        private bool _cursorOnShadow;
+        private bool _cursorOnDkShadow;
+        private bool _cursorOnHilight;
+        private bool _cursorOnLight;
+        private bool _cursorOnColorBorder;
+        private bool _cursorOnFace;
+        private bool _cursorOnSelHilight;
+        private bool _cursorOnSelMenuHilight;
+        private bool _cursorOnSelText;
+        private bool _cursorOnItemText;
+        private bool _cursorOnGrayText;
+
+        // Computed edit-mode flags.
+        private bool IsEditShadow => EnableEditingColors && _cursorOnShadow;
+        private bool IsEditDkShadow => EnableEditingColors && _cursorOnDkShadow;
+        private bool IsEditHilight => EnableEditingColors && _cursorOnHilight;
+        private bool IsEditLight => EnableEditingColors && _cursorOnLight;
+        private bool IsEditColorBorder => EnableEditingColors && _cursorOnColorBorder;
+        private bool IsEditFace => EnableEditingColors && _cursorOnFace;
+        private bool IsEditSelHilight => EnableEditingColors && _cursorOnSelHilight;
+        private bool IsEditSelMenuHilight => EnableEditingColors && _cursorOnSelMenuHilight;
+        private bool IsEditSelText => EnableEditingColors && _cursorOnSelText;
+        private bool IsEditItemText => EnableEditingColors && _cursorOnItemText;
+        private bool IsEditGrayText => EnableEditingColors && _cursorOnGrayText;
+
         #endregion
 
         #region Properties
 
         /// <summary>
-        /// Text of the control
-        /// </summary>
-        [Browsable(true)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-        [EditorBrowsable(EditorBrowsableState.Always)]
-        [Editor(typeof(MultilineStringEditor), typeof(UITypeEditor))]
-        [Bindable(true)]
-        public override string Text { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Back color of the control
+        /// Gets or sets the menu background (face) color.
         /// </summary>
         public override Color BackColor
         {
             get => base.BackColor;
             set
             {
-                if (base.BackColor != value)
-                {
-                    base.BackColor = value;
-                    Refresh();
-                }
+                if (base.BackColor == value) return;
+                base.BackColor = value;
+                _overlayColor = Color.FromArgb(100, value.IsDark() ? Color.White : Color.Black);
+                Invalidate();
             }
         }
 
         /// <summary>
-        /// Fore color of the control
+        /// Gets or sets the normal menu item text color.
         /// </summary>
         public override Color ForeColor
         {
             get => base.ForeColor;
             set
             {
-                if (base.ForeColor != value)
-                {
-                    base.ForeColor = value;
-                    Refresh();
-                }
+                if (base.ForeColor == value) return;
+                base.ForeColor = value;
+                ReplaceBrush(ref _brushFore, value);
+                Invalidate();
             }
         }
 
-        private Color _colorBorder = SystemColors.ActiveBorder;
-
         /// <summary>
-        /// Border color of the context menu
-        /// </summary>
-        public Color ColorBorder
-        {
-            get => _colorBorder;
-            set
-            {
-                if (_colorBorder != value)
-                {
-                    _colorBorder = value;
-                    Refresh();
-                }
-            }
-        }
-
-
-        private bool _flat = false;
-
-        /// <summary>
-        /// Flat style of the context menu
+        /// Gets or sets a value indicating whether the menu renders in flat (XP-style) mode.
         /// </summary>
         public bool Flat
         {
             get => _flat;
-            set
-            {
-                if (_flat != value)
-                {
-                    _flat = value;
-                    Refresh();
-                }
-            }
+            set { if (_flat != value) { _flat = value; Invalidate(); } }
         }
-
-
-        private Color _ButtonShadow = SystemColors.ButtonShadow;
+        private bool _flat = false;
 
         /// <summary>
-        /// Button shadow color of the context menu
+        /// Gets or sets the button shadow color (inner bottom/right in non-flat mode).
         /// </summary>
         public Color ButtonShadow
         {
-            get => _ButtonShadow;
+            get => _buttonShadow;
             set
             {
-                _ButtonShadow = value;
-                Refresh();
+                if (_buttonShadow == value) return;
+                _buttonShadow = value;
+                ReplacePen(ref _penShadow, value);
+                Invalidate();
             }
         }
-
-
-        private Color _ButtonDkShadow = SystemColors.ControlDark;
+        private Color _buttonShadow = SystemColors.ButtonShadow;
 
         /// <summary>
-        /// Button dark shadow color of the context menu
+        /// Gets or sets the button dark shadow color (outer bottom/right in non-flat mode).
         /// </summary>
         public Color ButtonDkShadow
         {
-            get => _ButtonDkShadow;
+            get => _buttonDkShadow;
             set
             {
-                _ButtonDkShadow = value;
-                Refresh();
+                if (_buttonDkShadow == value) return;
+                _buttonDkShadow = value;
+                ReplacePen(ref _penDkShadow, value);
+                Invalidate();
             }
         }
-
-
-        private Color _ButtonHilight = SystemColors.ButtonHighlight;
+        private Color _buttonDkShadow = SystemColors.ControlDark;
 
         /// <summary>
-        /// Button hilight color of the context menu
+        /// Gets or sets the button hilight color (inner top/left in non-flat mode).
         /// </summary>
         public Color ButtonHilight
         {
-            get => _ButtonHilight;
+            get => _buttonHilight;
             set
             {
-                _ButtonHilight = value;
-                Refresh();
+                if (_buttonHilight == value) return;
+                _buttonHilight = value;
+                ReplacePen(ref _penHilight, value);
+                Invalidate();
             }
         }
-
-
-        private Color _ButtonLight = SystemColors.ControlLight;
+        private Color _buttonHilight = SystemColors.ButtonHighlight;
 
         /// <summary>
-        /// Button light color of the context menu
+        /// Gets or sets the button light color (outer top/left in non-flat mode).
         /// </summary>
         public Color ButtonLight
         {
-            get => _ButtonLight;
+            get => _buttonLight;
             set
             {
-                _ButtonLight = value;
-                Refresh();
+                if (_buttonLight == value) return;
+                _buttonLight = value;
+                ReplacePen(ref _penLight, value);
+                Invalidate();
             }
         }
-
-
-        private Color _hilight = SystemColors.Highlight;
+        private Color _buttonLight = SystemColors.ControlLight;
 
         /// <summary>
-        /// Hilight color of the context menu
+        /// Gets or sets the selection highlight fill color.
         /// </summary>
         public Color Hilight
         {
             get => _hilight;
             set
             {
-                if (_hilight != value)
-                {
-                    _hilight = value;
-                    Refresh();
-                }
+                if (_hilight == value) return;
+                _hilight = value;
+                ReplaceBrush(ref _brushHilight, value);
+                Invalidate();
             }
         }
-
-
-        private Color _hilightText = SystemColors.HighlightText;
+        private Color _hilight = SystemColors.Highlight;
 
         /// <summary>
-        /// Hilight text color of the context menu
+        /// Gets or sets the selected item text color.
         /// </summary>
         public Color HilightText
         {
             get => _hilightText;
             set
             {
-                if (_hilightText != value)
-                {
-                    _hilightText = value;
-                    Refresh();
-                }
+                if (_hilightText == value) return;
+                _hilightText = value;
+                ReplaceBrush(ref _brushHilightText, value);
+                Invalidate();
             }
         }
-
-
-        private Color _menuHilight = SystemColors.MenuHighlight;
+        private Color _hilightText = SystemColors.HighlightText;
 
         /// <summary>
-        /// Menu hilight color of the context menu
+        /// Gets or sets the selected item border color in flat mode.
         /// </summary>
         public Color MenuHilight
         {
             get => _menuHilight;
             set
             {
-                if (_menuHilight != value)
-                {
-                    _menuHilight = value;
-                    Refresh();
-                }
+                if (_menuHilight == value) return;
+                _menuHilight = value;
+                ReplacePen(ref _penMenuHilight, value);
+                Invalidate();
             }
         }
-
-
-        private Color _grayText = SystemColors.GrayText;
+        private Color _menuHilight = SystemColors.MenuHighlight;
 
         /// <summary>
-        /// Gray (Disabled) text color of the context menu
+        /// Gets or sets the disabled item text color.
         /// </summary>
         public Color GrayText
         {
             get => _grayText;
             set
             {
-                if (_grayText != value)
-                {
-                    _grayText = value;
-                    Refresh();
-                }
+                if (_grayText == value) return;
+                _grayText = value;
+                ReplaceBrush(ref _brushGrayText, value);
+                Invalidate();
             }
         }
+        private Color _grayText = SystemColors.GrayText;
 
         /// <summary>
-        /// Enable editing colors of the context menu by clicking on them
+        /// Gets or sets a value indicating whether colors can be edited interactively by clicking.
         /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Browsable(false)]
@@ -292,416 +279,390 @@ namespace WinPaletter.UI.Retro
 
         #endregion
 
-        #region Events/Overrides
+        #region Editor event
 
         /// <summary>
-        /// Event handler for the color editor invoker that is triggered when a color is clicked
+        /// Raised when the user clicks a color region while <see cref="EnableEditingColors"/> is true.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         public delegate void EditorInvokerEventHandler(object sender, EditorEventArgs e);
 
         /// <summary>
-        /// Event for the color editor invoker that is triggered when a color is clicked
+        /// Raised when the user clicks a color region while <see cref="EnableEditingColors"/> is true.
         /// </summary>
         public event EditorInvokerEventHandler EditorInvoker;
 
+        #endregion
+
+        #region Resource helpers
+
+        private static void ReplacePen(ref Pen pen, Color color)
+        {
+            pen?.Dispose();
+            pen = new Pen(color);
+        }
+
+        private static void ReplaceBrush(ref SolidBrush brush, Color color)
+        {
+            brush?.Dispose();
+            brush = new SolidBrush(color);
+        }
+
+        private static bool OnSegment(PointF[] seg, Point p)
+        {
+            PointF a = seg[0];
+            PointF b = seg[1];
+
+            // Horizontal line
+            if (a.Y == b.Y)
+                return p.Y == a.Y && p.X >= Math.Min(a.X, b.X) && p.X <= Math.Max(a.X, b.X);
+
+            // Vertical line
+            if (a.X == b.X)
+                return p.X == a.X && p.Y >= Math.Min(a.Y, b.Y) && p.Y <= Math.Max(a.Y, b.Y);
+
+            return false;
+        }
+
         /// <summary>
-        /// On font changed event
+        /// Draws a Percent25 hatch fill and a 1px outline over <paramref name="r"/>
+        /// using the given <paramref name="overlayColor"/>.
         /// </summary>
-        /// <param name="e"></param>
+        private static void DrawOverlay(Graphics g, Rectangle r, Color overlayColor)
+        {
+            using (HatchBrush hb = new(HatchStyle.Percent25, overlayColor, Color.Transparent))
+            using (Pen p = new(overlayColor))
+            {
+                g.FillRectangle(hb, r);
+                g.DrawRectangle(p, r);
+            }
+        }
+
+        #endregion
+
+        #region Geometry cache
+
+        /// <summary>
+        /// Recomputes all cached rectangles and border segment endpoints, then
+        /// self-sizes the control height to fit the three item rows exactly.
+        /// </summary>
+        private void RebuildGeometry()
+        {
+            SizeF s0 = StrMenuItem.Measure(Font);
+            SizeF s1 = StrSelection.Measure(Font);
+            SizeF s2 = StrDisabledItem.Measure(Font);
+
+            int rowH = (int)s0.Height + 4;
+
+            // Self-size height to fit exactly three rows plus the 2px 3D border on each side.
+            Height = rowH + (rowH + 1) + rowH + 2 + 2 + 2 + 2;
+
+            float w = Width - 1f;
+            float h = Height - 1f;
+
+            _rectOuter = new Rectangle(0, 0, (int)w, (int)h);
+            _rectBorder = new Rectangle(2, 2, Width - 5, Height - 5);
+
+            int ix = _rectBorder.X + 1;
+            int iw = _rectBorder.Width - 2;
+
+            _item0 = new Rectangle(ix, _rectBorder.Y + 1, iw, rowH);
+            _item1 = new Rectangle(ix, _item0.Bottom + 1, iw, rowH + 1);
+            _item2 = new Rectangle(ix, _item1.Bottom + 1, iw, rowH);
+
+            // 15px left indent leaves room for a menu icon gutter; text is vertically centered.
+            _item0Text = new Rectangle(_item0.X + 15, _item0.Y + (_item0.Height - (int)s0.Height) / 2, (int)s0.Width + 2, (int)s0.Height);
+            _item1Text = new Rectangle(_item1.X + 15, _item1.Y + (_item1.Height - (int)s1.Height) / 2, (int)s1.Width + 2, (int)s1.Height);
+            _item2Text = new Rectangle(_item2.X + 15, _item2.Y + (_item2.Height - (int)s2.Height) / 2, (int)s2.Width + 2, (int)s2.Height);
+
+            // Raised 3D border segments — outermost to innermost, top-left then bottom-right.
+            _lightSeg0 = [new(0, 0), new(w - 1f, 0)];  // outer top
+            _lightSeg1 = [new(0, 0), new(0, h - 1f)];  // outer left
+            _hilightSeg0 = [new(1, 1), new(w - 2f, 1)];  // inner top
+            _hilightSeg1 = [new(1, 1), new(1, h - 2f)];  // inner left
+            _shadowSeg0 = [new(w - 1f, 1), new(w - 1f, h - 1f)];  // inner right
+            _shadowSeg1 = [new(1, h - 1f), new(w - 1f, h - 1f)]; // inner bottom
+            _dkShadowSeg0 = [new(w, 0), new(w, h)];  // outer right
+            _dkShadowSeg1 = [new(0, h), new(w, h)];  // outer bottom
+        }
+
+        #endregion
+
+        #region Overrides — layout triggers
+
+        /// <summary>
+        /// Rebuilds geometry when the font changes.
+        /// </summary>
         protected override void OnFontChanged(EventArgs e)
         {
-            PositionMenuItems();
-
             base.OnFontChanged(e);
+            RebuildGeometry();
         }
 
         /// <summary>
-        /// On size changed event
+        /// Rebuilds geometry when the control is resized.
         /// </summary>
-        /// <param name="e"></param>
         protected override void OnSizeChanged(EventArgs e)
         {
-            // Set the rectangle and border of the context menu
-
-            Rect = new(0, 0, Width - 1, Height - 1);
-            Border = new(2, 2, Width - 5, Height - 5);
-
-            btnShadowPoints0 = [new Point(Rect.Width - 1, Rect.X + 1), new Point(Rect.Width - 1, Rect.Height - 1)];
-            btnShadowPoints1 = [new Point(Rect.X + 1, Rect.Height - 1), new Point(Rect.Width - 1, Rect.Height - 1)];
-
-            btnDkShadowPoints0 = [new Point(Rect.Width, Rect.X), new Point(Rect.Width, Rect.Height)];
-            btnDkShadowPoints1 = [new Point(Rect.X, Rect.Height), new Point(Rect.Width, Rect.Height)];
-
-            btnHilightPoints0 = [new Point(Rect.X + 1, Rect.Y + 1), new Point(Rect.Width - 2, Rect.Y + 1)];
-            btnHilightPoints1 = [new Point(Rect.X + 1, Rect.Y + 1), new Point(Rect.X + 1, Rect.Height - 2)];
-
-            btnLightPoints0 = [new Point(Rect.X, Rect.Y), new Point(Rect.Width - 1, Rect.Y)];
-            btnLightPoints1 = [new Point(Rect.X, Rect.Y), new Point(Rect.X, Rect.Height - 1)];
-
             base.OnSizeChanged(e);
+            RebuildGeometry();
         }
 
         /// <summary>
-        /// On mouse move event
+        /// Rebuilds the cached overlay blend color when BackColor changes.
         /// </summary>
-        /// <param name="e"></param>
+        protected override void OnBackColorChanged(EventArgs e)
+        {
+            base.OnBackColorChanged(e);
+            _overlayColor = Color.FromArgb(100, BackColor.IsDark() ? Color.White : Color.Black);
+        }
+
+        #endregion
+
+        #region Overrides — mouse interaction
+
+        /// <summary>
+        /// Updates hover state using segment proximity for 1px border lines and rect
+        /// containment for area zones. Invalidates only when any flag actually changes.
+        /// Priority: DkShadow → Shadow → Hilight → Light → ColorBorder →
+        ///           SelText → SelMenuHilight → SelHilight → ItemText → GrayText → Face.
+        /// </summary>
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            // Check if the mouse is on the context menu items and set flags according to mouse position
-            if (!DesignMode && EnableEditingColors)
+            base.OnMouseMove(e);
+
+            if (DesignMode || !EnableEditingColors) return;
+
+            bool onDkShadow, onShadow, onHilight, onLight, onColorBorder;
+
+            if (_flat)
             {
-                CursorOnShadow = (!Flat && (btnShadowPoints0.Contains(e.Location) || btnShadowPoints1.Contains(e.Location)))
-                              || (Flat && Rect.BordersContains(e.Location));
-
-                CursorOnDkShadow = btnDkShadowPoints0.Contains(e.Location) || btnDkShadowPoints1.Contains(e.Location);
-                CursorOnHilight = btnHilightPoints0.Contains(e.Location) || btnHilightPoints1.Contains(e.Location);
-                CursorOnLight = btnLightPoints0.Contains(e.Location) || btnLightPoints1.Contains(e.Location);
-
-                // Keep order of the following 3 lines as they are (NEVER CHANGE)
-                CursorOnSelectionText = item1Text.Contains(e.Location);
-                CursorOnSelectionMenuHilight = !CursorOnSelectionText && item1.BordersContains(e.Location) && Flat;
-                CursorOnSelectionHilight = !CursorOnSelectionText && item1.Contains(e.Location) && !CursorOnSelectionMenuHilight;
-
-                CursorOnItemText = item0Text.Contains(e.Location);
-                CursorOnGrayText = item2Text.Contains(e.Location);
-
-                CursorOnFace = Border.Contains(e.Location) && !CursorOnSelectionHilight && !CursorOnSelectionMenuHilight && !CursorOnSelectionText && !CursorOnItemText && !CursorOnGrayText;
-
-                Refresh();
+                // Flat mode: single shadow rect is the only border — no 3D layers, no ColorBorder strip.
+                onShadow = _rectOuter.BordersContains(e.Location);
+                onDkShadow = false;
+                onHilight = false;
+                onLight = false;
+                onColorBorder = false;
+            }
+            else
+            {
+                // Non-flat: four-layer 3D edge + ColorBorder strip inside it.
+                onDkShadow = OnSegment(_dkShadowSeg0, e.Location) || OnSegment(_dkShadowSeg1, e.Location);
+                onShadow = !onDkShadow && (OnSegment(_shadowSeg0, e.Location) || OnSegment(_shadowSeg1, e.Location));
+                onHilight = !onDkShadow && !onShadow && (OnSegment(_hilightSeg0, e.Location) || OnSegment(_hilightSeg1, e.Location));
+                onLight = !onDkShadow && !onShadow && !onHilight && (OnSegment(_lightSeg0, e.Location) || OnSegment(_lightSeg1, e.Location));
+                onColorBorder = !onDkShadow && !onShadow && !onHilight && !onLight && _rectBorder.BordersContains(e.Location);
             }
 
-            base.OnMouseMove(e);
+            // Selection item zone — priority order: text > menu-hilight border > fill.
+            bool onSelText = _item1Text.Contains(e.Location);
+            bool onSelMH = !onSelText && _flat && _item1.BordersContains(e.Location);
+            bool onSelH = !onSelText && !onSelMH && _item1.Contains(e.Location);
+
+            bool onItemText = !onSelText && !onSelH && _item0Text.Contains(e.Location);
+            bool onGrayText = !onSelText && !onSelH && _item2Text.Contains(e.Location);
+
+            bool onFace = !onDkShadow && !onShadow && !onHilight && !onLight && !onColorBorder && !onSelH && !onSelMH && !onSelText && !onItemText && !onGrayText && _rectBorder.Contains(e.Location);
+
+            if (onDkShadow != _cursorOnDkShadow || onShadow != _cursorOnShadow || onHilight != _cursorOnHilight || onLight != _cursorOnLight || onColorBorder != _cursorOnColorBorder || onFace != _cursorOnFace || onSelH != _cursorOnSelHilight || onSelMH != _cursorOnSelMenuHilight || onSelText != _cursorOnSelText || onItemText != _cursorOnItemText || onGrayText != _cursorOnGrayText)
+            {
+                _cursorOnDkShadow = onDkShadow;
+                _cursorOnShadow = onShadow;
+                _cursorOnHilight = onHilight;
+                _cursorOnLight = onLight;
+                _cursorOnColorBorder = onColorBorder;
+                _cursorOnFace = onFace;
+                _cursorOnSelHilight = onSelH;
+                _cursorOnSelMenuHilight = onSelMH;
+                _cursorOnSelText = onSelText;
+                _cursorOnItemText = onItemText;
+                _cursorOnGrayText = onGrayText;
+                Invalidate();
+            }
         }
 
         /// <summary>
-        /// On mouse leave event
+        /// Clears all hover state and invalidates only when any flag was set.
         /// </summary>
-        /// <param name="e"></param>
         protected override void OnMouseLeave(EventArgs e)
         {
-            // Reset flags when the mouse leaves the context menu
-            if (!DesignMode && EnableEditingColors)
-            {
-                CursorOnShadow = false;
-                CursorOnDkShadow = false;
-                CursorOnHilight = false;
-                CursorOnLight = false;
-                CursorOnFace = false;
-                CursorOnSelectionHilight = false;
-                CursorOnSelectionMenuHilight = false;
-                CursorOnSelectionText = false;
-                CursorOnItemText = false;
-                CursorOnGrayText = false;
-
-                Refresh();
-            }
-
             base.OnMouseLeave(e);
+
+            if (DesignMode || !EnableEditingColors) return;
+
+            if (_cursorOnDkShadow || _cursorOnShadow || _cursorOnHilight || _cursorOnLight || _cursorOnColorBorder || _cursorOnFace || _cursorOnSelHilight || _cursorOnSelMenuHilight || _cursorOnSelText || _cursorOnItemText || _cursorOnGrayText)
+            {
+                _cursorOnDkShadow = false;
+                _cursorOnShadow = false;
+                _cursorOnHilight = false;
+                _cursorOnLight = false;
+                _cursorOnColorBorder = false;
+                _cursorOnFace = false;
+                _cursorOnSelHilight = false;
+                _cursorOnSelMenuHilight = false;
+                _cursorOnSelText = false;
+                _cursorOnItemText = false;
+                _cursorOnGrayText = false;
+                Invalidate();
+            }
         }
 
         /// <summary>
-        /// On click event
+        /// Invokes the color editor for the topmost region under the cursor.
         /// </summary>
-        /// <param name="e"></param>
         protected override void OnClick(EventArgs e)
         {
-            // Invoke the color editor invoker when a color is clicked
-            if (!DesignMode && EnableEditingColors)
-            {
-                // Invoke editing shadow color
-                if (CursorOnShadow) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonShadow)));
-
-                // Invoke editing dark shadow color
-                if (CursorOnDkShadow) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonDkShadow)));
-
-                // Invoke editing hilight color
-                if (CursorOnHilight) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonHilight)));
-
-                // Invoke editing light color
-                if (CursorOnLight) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonLight)));
-
-                // Invoke editing face color
-                if (CursorOnFace) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonFace)));
-
-                // Invoke editing selection hilight color
-                if (CursorOnSelectionHilight) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.Hilight)));
-
-                // Invoke editing selection menu hilight color
-                if (CursorOnSelectionMenuHilight) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.MenuHilight)));
-
-                // Invoke editing hilight text color
-                if (CursorOnSelectionText) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.HilightText)));
-
-                // Invoke editing item text color
-                if (CursorOnItemText) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonText)));
-
-                // Invoke editing gray (disabled) text color
-                if (CursorOnGrayText) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.GrayText)));
-            }
-
             base.OnClick(e);
+
+            if (DesignMode || !EnableEditingColors) return;
+
+            if (IsEditDkShadow) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonDkShadow)));
+            else if (IsEditShadow) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonShadow)));
+            else if (IsEditHilight) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonHilight)));
+            else if (IsEditLight) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonLight)));
+            else if (IsEditColorBorder) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ActiveBorder)));
+            else if (IsEditSelText) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.HilightText)));
+            else if (IsEditSelMenuHilight) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.MenuHilight)));
+            else if (IsEditSelHilight) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.Hilight)));
+            else if (IsEditItemText) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonText)));
+            else if (IsEditGrayText) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.GrayText)));
+            else if (IsEditFace) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonFace)));
         }
 
         #endregion
 
-        #region Methods
+        #region Paint
 
         /// <summary>
-        /// Position menu items on the context menu by calculating their sizes
+        /// Paints the context menu: background, 3D border, ColorBorder strip,
+        /// selection highlight, item text, and all active color-edit overlays.
+        /// Draw order: background → face overlay → 3D border → ColorBorder strip
+        ///           → selection fill → overlays → text.
         /// </summary>
-        private void PositionMenuItems()
-        {
-            // Static rectangle and border of the context menu
-            Border = new(2, 2, Width - 5, Height - 5);
-
-            // GetTextAndImageRectangles the size of the menu items
-            item0Size = str_MenuItem.Measure(Font);
-            item1Size = str_Selection.Measure(Font);
-            item2Size = str_DisabledItem.Measure(Font);
-
-            // Set the rectangles of the menu items
-            item0 = new(Border.X + 1, Border.Y + 1, Border.Width - 2, (int)item0Size.Height + 4);
-            item1 = new(item0.X, item0.Y + item0.Height + 1, item0.Width, item0.Height + 1);
-            item2 = new(item0.X, item1.Y + item1.Height + 1, item0.Width, item0.Height);
-
-            // Set the rectangles of the menu item texts
-            item0Text = new(item0.X + 15, item0.Y + (item0.Height - (int)item0Size.Height) / 2, (int)item0Size.Width + 2, (int)item0Size.Height);
-            item1Text = new(item1.X + 15, item1.Y + (item1.Height - (int)item1Size.Height) / 2, (int)item1Size.Width + 2, (int)item1Size.Height);
-            item2Text = new(item2.X + 15, item2.Y + (item2.Height - (int)item2Size.Height) / 2, (int)item2Size.Width + 2, (int)item2Size.Height);
-
-            Height = item0.Height + item1.Height + item2.Height + 2 + 2 + 2 + 2; // 2 + 2 = Top + bottom borders of shadow/dkshadow/light/hilight
-        }
-
-        #endregion
-
-        #region Colors editor
-
-        private bool CursorOnShadow, CursorOnDkShadow, CursorOnHilight, CursorOnLight, CursorOnFace,
-            CursorOnSelectionHilight, CursorOnSelectionMenuHilight, CursorOnSelectionText, CursorOnItemText, CursorOnGrayText;
-
-        private bool _ColorEdit_Shadow => EnableEditingColors && CursorOnShadow;
-        private bool _ColorEdit_DkShadow => EnableEditingColors && CursorOnDkShadow;
-        private bool _ColorEdit_Hilight => EnableEditingColors && CursorOnHilight;
-        private bool _ColorEdit_Light => EnableEditingColors && CursorOnLight;
-        private bool _ColorEdit_Face => EnableEditingColors && CursorOnFace;
-        private bool _ColorEdit_SelectionHilight => EnableEditingColors && CursorOnSelectionHilight;
-        private bool _ColorEdit_SelectionMenuHilight => EnableEditingColors && CursorOnSelectionMenuHilight;
-        private bool _ColorEdit_SelectionText => EnableEditingColors && CursorOnSelectionText;
-        private bool _ColorEdit_ItemText => EnableEditingColors && CursorOnItemText;
-        private bool _ColorEdit_GrayText => EnableEditingColors && CursorOnGrayText;
-
-        #endregion
-
-        /// <summary>
-        /// On paint event
-        /// </summary>
-        /// <param name="e"></param>
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.HighSpeed;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
 
-            // Draw background color of the context menu
+            // 1. Background.
             G.Clear(BackColor);
 
-            #region Editor
-
-            // Draw a hatch brush on the face of the context menu when the color editor is enabled and the mouse is on the face
-            if (_ColorEdit_Face)
+            // 2. Face hover overlay — covers the inner content area only.
+            if (IsEditFace)
             {
-                Color color = Color.FromArgb(100, BackColor.IsDark() ? Color.White : Color.Black);
-                using (HatchBrush hb = new(HatchStyle.Percent25, color, Color.Transparent)) { G.FillRectangle(hb, Rect); }
+                using (HatchBrush hb = new(HatchStyle.Percent25, _overlayColor, Color.Transparent))
+                {
+                    G.FillRectangle(hb, _rectBorder);
+                }
             }
 
-            #endregion
-
-            // Draw the border of the context menu
-            using (Pen btnShadow = new(ButtonShadow))
-            using (Pen btnHilight = new(ButtonHilight))
-            using (Pen btnLight = new(ButtonLight))
-            using (Pen btnDkShadow = new(ButtonDkShadow))
-            using (Pen btnFace = new(BackColor))
+            // 3. Border — mutually exclusive: either flat (single rect) or 3D (four layers + ColorBorder strip).
+            if (_flat)
             {
-                if (!Flat)
+                // Flat mode: one-pixel shadow outline around the whole control.
+                if (_penShadow != null) G.DrawRectangle(_penShadow, _rectOuter);
+
+                if (IsEditShadow)
                 {
-                    // Draw 3D border of the context menu
-
-                    G.DrawLine(btnShadow, new Point(Rect.Width - 1, Rect.X + 1), new Point(Rect.Width - 1, Rect.Height - 1));
-                    G.DrawLine(btnShadow, new Point(Rect.X + 1, Rect.Height - 1), new Point(Rect.Width - 1, Rect.Height - 1));
-
-                    G.DrawLine(btnHilight, new Point(Rect.X + 1, Rect.Y + 1), new Point(Rect.Width - 2, Rect.Y + 1));
-                    G.DrawLine(btnHilight, new Point(Rect.X + 1, Rect.Y + 1), new Point(Rect.X + 1, Rect.Height - 2));
-
-                    G.DrawLine(btnLight, new Point(Rect.X, Rect.Y), new Point(Rect.Width - 1, Rect.Y));
-                    G.DrawLine(btnLight, new Point(Rect.X, Rect.Y), new Point(Rect.X, Rect.Height - 1));
-
-                    G.DrawLine(btnDkShadow, new Point(Rect.Width, Rect.X), new Point(Rect.Width, Rect.Height));
-                    G.DrawLine(btnDkShadow, new Point(Rect.X, Rect.Height), new Point(Rect.Width, Rect.Height));
-
-                    G.DrawRectangle(btnFace, new Rectangle(2, 2, Width - 5, Height - 5));
-
-                    #region Editor
-
-                    // Draw alternative lines on the shadow of the context menu when the color editor is enabled and the mouse is on the shadow
-                    if (_ColorEdit_Shadow)
+                    using (Pen p = new(BorderOverlay))
                     {
-                        Color color = Color.FromArgb(200, 128, 0, 0);
-                        using (Pen P = new(color))
-                        {
-                            G.DrawLine(P, btnShadowPoints0[0], btnShadowPoints0[1]);
-                            G.DrawLine(P, btnShadowPoints1[0], btnShadowPoints1[1]);
-                        }
+                        G.DrawRectangle(p, _rectOuter);
                     }
-
-                    // Draw alternative lines on the dark shadow of the context menu when the color editor is enabled and the mouse is on the dark shadow
-                    if (_ColorEdit_DkShadow)
-                    {
-                        Color color = Color.FromArgb(200, 128, 0, 0);
-                        using (Pen P = new(color))
-                        {
-                            G.DrawLine(P, btnDkShadowPoints0[0], btnDkShadowPoints0[1]);
-                            G.DrawLine(P, btnDkShadowPoints1[0], btnDkShadowPoints1[1]);
-                        }
-                    }
-
-                    // Draw alternative lines on the hilight of the context menu when the color editor is enabled and the mouse is on the hilight
-                    if (_ColorEdit_Hilight)
-                    {
-                        Color color = Color.FromArgb(200, 128, 0, 0);
-                        using (Pen P = new(color))
-                        {
-                            G.DrawLine(P, btnHilightPoints0[0], btnHilightPoints0[1]);
-                            G.DrawLine(P, btnHilightPoints1[0], btnHilightPoints1[1]);
-                        }
-                    }
-
-                    // Draw alternative lines on the light of the context menu when the color editor is enabled and the mouse is on the light
-                    if (_ColorEdit_Light)
-                    {
-                        Color color = Color.FromArgb(200, 128, 0, 0);
-                        using (Pen P = new(color))
-                        {
-                            G.DrawLine(P, btnLightPoints0[0], btnLightPoints0[1]);
-                            G.DrawLine(P, btnLightPoints1[0], btnLightPoints1[1]);
-                        }
-                    }
-
-                    #endregion
-
                 }
-                else
+            }
+            else
+            {
+                // 3D mode: four border layers drawn outermost to innermost.
+                // Draw order: Light (outer top+left) → Hilight (inner top+left)
+                //           → Shadow (inner bottom+right) → DkShadow (outer bottom+right).
+                if (_penLight != null) { G.DrawLine(_penLight, _lightSeg0[0], _lightSeg0[1]); G.DrawLine(_penLight, _lightSeg1[0], _lightSeg1[1]); }
+                if (_penHilight != null) { G.DrawLine(_penHilight, _hilightSeg0[0], _hilightSeg0[1]); G.DrawLine(_penHilight, _hilightSeg1[0], _hilightSeg1[1]); }
+                if (_penShadow != null) { G.DrawLine(_penShadow, _shadowSeg0[0], _shadowSeg0[1]); G.DrawLine(_penShadow, _shadowSeg1[0], _shadowSeg1[1]); }
+                if (_penDkShadow != null) { G.DrawLine(_penDkShadow, _dkShadowSeg0[0], _dkShadowSeg0[1]); G.DrawLine(_penDkShadow, _dkShadowSeg1[0], _dkShadowSeg1[1]); }
+
+                // 3D border segment hover overlays.
+                if (IsEditLight || IsEditHilight || IsEditShadow || IsEditDkShadow)
                 {
-                    // Draw flat border of the context menu
-
-                    G.DrawRectangle(btnShadow, Rect);
-
-                    #region Editor
-
-                    // Draw an alternative rectangle on the context menu when the color editor is enabled and the mouse is on the shadow
-                    if (_ColorEdit_Shadow)
+                    using (Pen p = new(BorderOverlay))
                     {
-                        Color color = Color.FromArgb(200, 128, 0, 0);
-                        using (Pen P = new(color)) { G.DrawRectangle(P, Rect); }
+                        if (IsEditLight) { G.DrawLine(p, _lightSeg0[0], _lightSeg0[1]); G.DrawLine(p, _lightSeg1[0], _lightSeg1[1]); }
+                        if (IsEditHilight) { G.DrawLine(p, _hilightSeg0[0], _hilightSeg0[1]); G.DrawLine(p, _hilightSeg1[0], _hilightSeg1[1]); }
+                        if (IsEditShadow) { G.DrawLine(p, _shadowSeg0[0], _shadowSeg0[1]); G.DrawLine(p, _shadowSeg1[0], _shadowSeg1[1]); }
+                        if (IsEditDkShadow) { G.DrawLine(p, _dkShadowSeg0[0], _dkShadowSeg0[1]); G.DrawLine(p, _dkShadowSeg1[0], _dkShadowSeg1[1]); }
                     }
-
-                    #endregion
                 }
-
             }
 
-            #region Items
+            // 4. Selection highlight fill — always drawn regardless of flat/3D mode.
+            if (_brushHilight != null) G.FillRectangle(_brushHilight, _item1);
 
-            // Draw the menu items of the context menu
+            // Flat mode adds a MenuHilight border around the selection rect.
+            if (_flat && _penMenuHilight != null) G.DrawRectangle(_penMenuHilight, _item1);
+
+            // 5. Selection highlight overlays.
+            if (IsEditSelHilight)
+            {
+                Color ov = Color.FromArgb(100, _hilight.IsDark() ? Color.White : Color.Black);
+                using (HatchBrush hb = new(HatchStyle.Percent25, ov, Color.Transparent))
+                using (Pen p = new(ov))
+                {
+                    G.FillRectangle(hb, _item1);
+                    G.DrawRectangle(p, _item1);
+                }
+            }
+
+            if (IsEditSelMenuHilight)
+            {
+                using (Pen p = new(BorderOverlay))
+                {
+                    G.DrawRectangle(p, _item1);
+                }
+            }
+
+            // 6. Text region overlays — drawn before text so labels render on top.
+            if (IsEditSelText)
+            {
+                Color ov = Color.FromArgb(100, _hilight.IsDark() ? Color.White : Color.Black);
+                DrawOverlay(G, _item1Text, ov);
+            }
+
+            if (IsEditItemText) DrawOverlay(G, _item0Text, _overlayColor);
+            if (IsEditGrayText) DrawOverlay(G, _item2Text, _overlayColor);
+
+            // 7. Item text.
             using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
-            using (SolidBrush item0Brush = new(ForeColor))
-            using (SolidBrush HilightBrush = new(Hilight))
-            using (Pen MenuHilightPen = new(MenuHilight))
-            using (SolidBrush item1Brush = new(HilightText))
-            using (SolidBrush item2Brush = new(GrayText))
             {
-                // Draw the menu items
-                if (!Flat)
-                {
-                    G.FillRectangle(HilightBrush, item1);
-                }
-                else
-                {
-                    // Draw flat menu items: its rectangle has 2 tones of colors (background and border)
-                    G.FillRectangle(HilightBrush, item1);
-                    G.DrawRectangle(MenuHilightPen, item1);
-                }
+                if (_brushFore != null) G.DrawString(StrMenuItem, Font, _brushFore, _item0Text, sf);
+                if (_brushHilightText != null) G.DrawString(StrSelection, Font, _brushHilightText, _item1Text, sf);
+                if (_brushGrayText != null) G.DrawString(StrDisabledItem, Font, _brushGrayText, _item2Text, sf);
+            }
+        }
 
-                #region Editor
+        #endregion
 
-                // Draw a hatch brush on the selection hilight of the context menu when the color editor is enabled and the mouse is on selection hilight
-                if (_ColorEdit_SelectionHilight)
-                {
-                    Color color = Color.FromArgb(100, Hilight.IsDark() ? Color.White : Color.Black);
-                    using (Pen P = new(color))
-                    using (HatchBrush hb = new(HatchStyle.Percent25, color, Color.Transparent))
-                    {
-                        G.FillRectangle(hb, item1);
-                        G.DrawRectangle(P, item1);
-                    }
-                }
+        #region Dispose
 
-                // Draw a rectangle on the selection menu hilight of the context menu when the color editor is enabled and the mouse is on selection menu hilight
-                if (_ColorEdit_SelectionMenuHilight)
-                {
-                    Color color = Color.FromArgb(200, 128, 0, 0);
-                    using (Pen P = new(color)) { G.DrawRectangle(P, item1); }
-                }
-
-                // Draw a hatch brush on the selection text of the context menu when the color editor is enabled and the mouse is on selection text
-                if (_ColorEdit_SelectionText)
-                {
-                    Color color = Color.FromArgb(100, Hilight.IsDark() ? Color.White : Color.Black);
-                    using (Pen P = new(color))
-                    using (HatchBrush hb = new(HatchStyle.Percent25, color, Color.Transparent))
-                    {
-                        G.FillRectangle(hb, item1Text);
-                        G.DrawRectangle(P, item1Text);
-                    }
-                }
-
-                // Draw a hatch brush on the item text of the context menu when the color editor is enabled and the mouse is on item text
-                if (_ColorEdit_ItemText)
-                {
-                    Color color = Color.FromArgb(100, BackColor.IsDark() ? Color.White : Color.Black);
-                    using (Pen P = new(color))
-                    using (HatchBrush hb = new(HatchStyle.Percent25, color, Color.Transparent))
-                    {
-                        G.FillRectangle(hb, item0Text);
-                        G.DrawRectangle(P, item0Text);
-                    }
-                }
-
-                // Draw a hatch brush on the gray text of the context menu when the color editor is enabled and the mouse is on gray text
-                if (_ColorEdit_GrayText)
-                {
-                    Color color = Color.FromArgb(100, BackColor.IsDark() ? Color.White : Color.Black);
-                    using (Pen P = new(color))
-                    using (HatchBrush hb = new(HatchStyle.Percent25, color, Color.Transparent))
-                    {
-                        G.FillRectangle(hb, item2Text);
-                        G.DrawRectangle(P, item2Text);
-                    }
-                }
-
-                #endregion
-
-                // Draw the text of the menu items
-                G.DrawString(str_MenuItem, Font, item0Brush, item0Text, sf);
-                G.DrawString(str_Selection, Font, item1Brush, item1Text, sf);
-                G.DrawString(str_DisabledItem, Font, item2Brush, item2Text, sf);
+        /// <summary>
+        /// Releases all cached GDI resources.
+        /// </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _penShadow?.Dispose();
+                _penDkShadow?.Dispose();
+                _penHilight?.Dispose();
+                _penLight?.Dispose();
+                _penMenuHilight?.Dispose();
+                _brushFore?.Dispose();
+                _brushHilight?.Dispose();
+                _brushHilightText?.Dispose();
+                _brushGrayText?.Dispose();
             }
 
-            #endregion
-
-
+            base.Dispose(disposing);
         }
+
+        #endregion
     }
 }

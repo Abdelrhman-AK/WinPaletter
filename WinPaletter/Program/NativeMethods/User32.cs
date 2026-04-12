@@ -335,7 +335,7 @@ namespace WinPaletter.NativeMethods
         /// <returns>A <see langword="long"/> representing the requested window attribute.</returns>
         public static long GetWindowLong(IntPtr hWnd, int nIndex)
         {
-            if (Environment.Is64BitProcess)  return GetWindowLongPtr64(hWnd, nIndex).ToInt64();
+            if (Environment.Is64BitProcess) return GetWindowLongPtr64(hWnd, nIndex).ToInt64();
             else return GetWindowLong32(hWnd, nIndex);
         }
 

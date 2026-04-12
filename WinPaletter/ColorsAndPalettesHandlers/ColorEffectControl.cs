@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using WinPaletter.UI.Controllers;
 using WinPaletter.UI.WP;
 
 namespace WinPaletter.UI.AdvancedControls

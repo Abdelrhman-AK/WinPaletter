@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
-using WinPaletter.UI.WP;
 
 namespace WinPaletter
 {

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WinPaletter.UI.WP;

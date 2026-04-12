@@ -1,11 +1,11 @@
-﻿using Ookii.Dialogs.WinForms;
+﻿using Microsoft.Win32;
+using Ookii.Dialogs.WinForms;
 using Serilog.Events;
 using System;
 using System.Linq;
 using System.Management;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
-using Microsoft.Win32;
 using static WinPaletter.NativeMethods.SrClient;
 
 namespace WinPaletter

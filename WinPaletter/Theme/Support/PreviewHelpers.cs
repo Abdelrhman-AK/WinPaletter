@@ -5,7 +5,6 @@ using System.Windows.Forms;
 using WinPaletter.Assets;
 using WinPaletter.Theme;
 using WinPaletter.Theme.Structures;
-using WinPaletter.TypesExtensions;
 using WinPaletter.UI.Retro;
 using WinPaletter.UI.Simulation;
 

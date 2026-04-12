@@ -387,13 +387,13 @@ namespace WinPaletter
                 {
                     if (Program.Settings.ThemeLog.ShowSkippedItemsOnDetailedVerbose)
                     {
-                        Program.Log?.WriteReg(LogEventLevel.Information, $"(EditReg skipped) `{Key_BeforeModification}` > `{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}`, existing value `{existingValue}` with value type `{RegType}`", WinPaletter.RegScope.Write);
+                        Program.Log?.WriteReg(LogEventLevel.Information, $"(EditReg skipped) '{Key_BeforeModification}' → '{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}', existing value '{existingValue}' with value type '{RegType}'", WinPaletter.RegScope.Write);
                     }
                     AddVerboseItem(treeView, true, Key_BeforeModification, ValueName, Value, RegType);
                     return;
                 }
 
-                Program.Log?.WriteReg(LogEventLevel.Information, $"(EditReg) `{Key_BeforeModification}` > `{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}`, new value `{Value}` with value type `{RegType}`", WinPaletter.RegScope.Write);
+                Program.Log?.WriteReg(LogEventLevel.Information, $"(EditReg) '{Key_BeforeModification}' → '{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}', new value '{Value}' with value type '{RegType}'", WinPaletter.RegScope.Write);
 
                 // Try direct write first
                 if (CanWriteDirect(scope))
@@ -615,7 +615,7 @@ namespace WinPaletter
                     }
 
                     if (!skipLogging)
-                        Program.Log?.WriteReg(LogEventLevel.Information, $"(GetReg) `{Key_BeforeModification}` > `{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}` returned `{(IfNullReturnDefaultValue && result == null ? DefaultValue : result)}`", WinPaletter.RegScope.Read);
+                        Program.Log?.WriteReg(LogEventLevel.Information, $"(GetReg) '{Key_BeforeModification}' → '{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}' returned '{(IfNullReturnDefaultValue && result == null ? DefaultValue : result)}'", WinPaletter.RegScope.Read);
 
                     return IfNullReturnDefaultValue && result == null ? DefaultValue : result;
                 }

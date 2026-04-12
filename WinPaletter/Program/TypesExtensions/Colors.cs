@@ -479,7 +479,7 @@ namespace WinPaletter.TypesExtensions
 
             float k = 1 - Math.Max(r, Math.Max(g, b));
 
-            if (Math.Abs(k - 1.0) < 0.00001)  return (0, 0, 0, 1);
+            if (Math.Abs(k - 1.0) < 0.00001) return (0, 0, 0, 1);
 
             float c = (1 - r - k) / (1 - k);
             float m = (1 - g - k) / (1 - k);

@@ -64,14 +64,14 @@ namespace WinPaletter
         {
             if (IsHandleCreated && IsShown)
             {
-                    Invoke(() =>
-                {
-                    label23.Text = obj;
-                    signin_btn.Visible = true;
-                    Program.Animator.HideSync(tablessControl1);
-                    tablessControl1.SelectedIndex = 4;
-                    Program.Animator.ShowSync(tablessControl1);
-                });
+                Invoke(() =>
+            {
+                label23.Text = obj;
+                signin_btn.Visible = true;
+                Program.Animator.HideSync(tablessControl1);
+                tablessControl1.SelectedIndex = 4;
+                Program.Animator.ShowSync(tablessControl1);
+            });
             }
         }
 

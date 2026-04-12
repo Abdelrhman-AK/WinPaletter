@@ -6,11 +6,8 @@ using System.ComponentModel.Design;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
-using System.Security.Policy;
 using System.Windows.Forms;
 using System.Windows.Forms.Design;
-using WinPaletter.UI.WP;
-using static Devcorp.Controls.VisualStyles.VisualStyleElement.ComboBox;
 
 namespace WinPaletter.UI.WP
 {

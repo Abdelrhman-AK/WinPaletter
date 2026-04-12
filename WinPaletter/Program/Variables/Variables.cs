@@ -1,11 +1,9 @@
-﻿using Serilog.Core;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Reflection;
 using System.Security.Principal;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 using WinPaletter.Theme;

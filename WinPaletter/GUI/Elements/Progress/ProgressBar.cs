@@ -1,10 +1,8 @@
 ﻿using FluentTransitions;
-using Newtonsoft.Json.Linq;
 using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;

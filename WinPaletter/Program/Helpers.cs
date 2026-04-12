@@ -846,7 +846,7 @@ namespace WinPaletter
                 Program.Log?.Write(LogEventLevel.Information, $"Pinging URL: {url}");
 
                 Stopwatch sw = new();
-                sw.Reset();  sw.Start();
+                sw.Reset(); sw.Start();
 
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
                 request.Timeout = Timeout;

@@ -3,7 +3,6 @@
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Security.Permissions;
 using System.Windows.Forms;
 
 namespace AnimatorNS
@@ -13,33 +12,33 @@ namespace AnimatorNS
     /// </summary>
     public class Controller
     {
-        protected Bitmap BgBmp 
-        { 
-            get 
-            { 
+        protected Bitmap BgBmp
+        {
+            get
+            {
                 if (DoubleBitmap == null) return null;
-                return (DoubleBitmap as IFakeControl)?.BgBmp; 
-            } 
-            set 
-            { 
+                return (DoubleBitmap as IFakeControl)?.BgBmp;
+            }
+            set
+            {
                 if (DoubleBitmap == null) return;
                 var fake = DoubleBitmap as IFakeControl;
-                if (fake != null) fake.BgBmp = value; 
-            } 
+                if (fake != null) fake.BgBmp = value;
+            }
         }
-        public Bitmap Frame 
-        { 
-            get 
-            { 
+        public Bitmap Frame
+        {
+            get
+            {
                 if (DoubleBitmap == null) return null;
-                return (DoubleBitmap as IFakeControl)?.Frame; 
-            } 
-            set 
-            { 
+                return (DoubleBitmap as IFakeControl)?.Frame;
+            }
+            set
+            {
                 if (DoubleBitmap == null) return;
                 var fake = DoubleBitmap as IFakeControl;
-                if (fake != null) fake.Frame = value; 
-            } 
+                if (fake != null) fake.Frame = value;
+            }
         }
         protected Bitmap ctrlBmp;
         public float CurrentTime { get; private set; }
@@ -87,7 +86,7 @@ namespace AnimatorNS
             {
                 Control db = DoubleBitmap;
                 DoubleBitmap = null; // Clear reference immediately to prevent re-entry
-                
+
                 try
                 {
                     // Check if we're on the UI thread

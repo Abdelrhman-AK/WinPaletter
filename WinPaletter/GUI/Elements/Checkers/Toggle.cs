@@ -5,7 +5,6 @@ using System.ComponentModel.Design;
 using System.Drawing;
 using System.Drawing.Design;
 using System.Drawing.Drawing2D;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.Properties;
 
@@ -103,7 +102,7 @@ namespace WinPaletter.UI.WP
             }
         }
 
-        protected override  void OnResize(EventArgs e)
+        protected override void OnResize(EventArgs e)
         {
             Height = 20;
             if (Width < 40) Width = 40;

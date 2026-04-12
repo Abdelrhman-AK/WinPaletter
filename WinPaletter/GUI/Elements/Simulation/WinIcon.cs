@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Drawing;
 using System.Drawing.Design;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.Templates;
@@ -70,7 +66,7 @@ namespace WinPaletter.UI.Simulation
                     _icon = value;
 
                     // Process icon for current IconSize
-                        _processedIcon = _icon.FromSize(_IconSize);
+                    _processedIcon = _icon.FromSize(_IconSize);
 
                     Invalidate();
                 }

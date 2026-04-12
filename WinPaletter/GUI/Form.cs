@@ -1,13 +1,10 @@
 ﻿using FluentTransitions;
-using Newtonsoft.Json.Linq;
 using System;
 using System.ComponentModel;
 using System.Drawing;
-using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
-using static WinPaletter.UI.Style.Config.Colors_Collection;
 
 namespace WinPaletter.UI.WP
 {

@@ -232,7 +232,7 @@ namespace WinPaletter.UI.WP
                 int wParamLow = (int)(wParamLong & 0xFFFF);
                 if (wParamLow == SB_THUMBTRACK) m.WParam = (IntPtr)((wParamLong & ~0xFFFFL) | SB_THUMBPOSITION);
 
-                if (_scrollTimer.Enabled)  _scrollTimer.Stop();
+                if (_scrollTimer.Enabled) _scrollTimer.Stop();
 
                 _targetV = VerticalScroll.Value;
                 _targetH = HorizontalScroll.Value;

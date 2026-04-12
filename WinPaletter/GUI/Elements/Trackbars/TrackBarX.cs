@@ -2,7 +2,6 @@
 using System;
 using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Printing;
 using System.Windows.Forms;
 
 namespace WinPaletter.UI.Controllers

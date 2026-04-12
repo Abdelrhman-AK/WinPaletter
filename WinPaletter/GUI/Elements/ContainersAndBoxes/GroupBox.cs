@@ -2,8 +2,6 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.IO;
-using System.Management.Instrumentation;
 using System.Windows.Forms;
 using static WinPaletter.TypesExtensions.GraphicsExtensions;
 
@@ -43,11 +41,11 @@ namespace WinPaletter.UI.WP
         public bool UseSharpStyle
         {
             get => useSharpStyle;
-            set 
-            { 
+            set
+            {
                 useSharpStyle = value;
                 UpdateRegion();
-                Invalidate(); 
+                Invalidate();
             }
         }
 
@@ -85,7 +83,7 @@ namespace WinPaletter.UI.WP
         {
             Config.PatternChanged -= OnGlobalStyleChanged;
 
-            base.OnHandleDestroyed(e); 
+            base.OnHandleDestroyed(e);
         }
 
         public void UpdatePattern(int? patternNO = null)
@@ -162,7 +160,7 @@ namespace WinPaletter.UI.WP
             Rectangle rect = new(0, 0, Width, Height);
 
             Region?.Dispose();
-           
+
             if (DesignMode || useSharpStyle || !Program.Style.RoundedCorners)
             {
                 Region = new Region(rect);

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
-using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -513,7 +512,7 @@ namespace WinPaletter.TypesExtensions
         public static Bitmap Resize(this Bitmap src, int targetWidth, int targetHeight)
         {
             if (src is null || !src.IsValid()) return null;
-            
+
             if (targetWidth <= 0 || targetHeight <= 0) throw new ArgumentOutOfRangeException(nameof(targetWidth), "Width and height must be greater than 0.");
 
             // Validate source bitmap dimensions

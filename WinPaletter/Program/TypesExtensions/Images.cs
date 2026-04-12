@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using static WinPaletter.TypesExtensions.BitmapExtensions;
 

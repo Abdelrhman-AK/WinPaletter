@@ -9,7 +9,8 @@ using System.Windows.Forms;
 namespace WinPaletter.UI.Retro
 {
     /// <summary>
-    /// TextBox with Windows 9x style
+    /// A control that wraps a standard <see cref="TextBox"/> and paints a Windows 9x
+    /// sunken 3D border around it. The inner TextBox handles all text input natively.
     /// </summary>
     [Description("Retro TextBox with Windows 9x style")]
     [DefaultEvent("TextChanged")]
@@ -20,191 +21,204 @@ namespace WinPaletter.UI.Retro
         /// </summary>
         public TextBoxR()
         {
-            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.ResizeRedraw | ControlStyles.OptimizedDoubleBuffer | ControlStyles.SupportsTransparentBackColor, true);
-            DoubleBuffered = true;
-            ForeColor = SystemColors.WindowText;
-            BackColor = SystemColors.Control;
-            Font = new("Microsoft Sans Serif", 8f);
+            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.ResizeRedraw | ControlStyles.SupportsTransparentBackColor, true);
 
-            // Initialize the masked TextBox
+            ForeColor = SystemColors.WindowText;
+            BackColor = SystemColors.Window;
+            Font = new Font("Microsoft Sans Serif", 8f);
+
+            // Inner TextBox — borderless, positioned inside the painted border.
             TB = new()
             {
                 Visible = true,
-                Font = new("Microsoft Sans Serif", 8f),
-                Text = Text,
-                ForeColor = SystemColors.ControlText,
-                MaxLength = _MaxLength,
-                Multiline = _Multiline,
-                ReadOnly = _ReadOnly,
-                UseSystemPasswordChar = _UseSystemPasswordChar,
+                Font = new Font("Microsoft Sans Serif", 8f),
+                ForeColor = SystemColors.WindowText,
+                BackColor = SystemColors.Window,
+                MaxLength = _maxLength,
+                Multiline = _multiline,
+                ReadOnly = _readOnly,
+                UseSystemPasswordChar = _useSystemPasswordChar,
                 BorderStyle = BorderStyle.None,
-                Location = new(1, 0),
-                Width = Width - 1,
                 Cursor = Cursors.IBeam
             };
 
-            // Set size of the masked TextBox based on the Multiline property correctly
-            if (_Multiline)
-            {
-                TB.Height = Height - 8;
-            }
-            else
-            {
-                Height = TB.Height + 8;
-            }
+            TB.TextChanged += OnInnerTextChanged;
+            TB.KeyDown += OnInnerKeyDown;
 
-            // Assign the events to the masked TextBox
-            TB.TextChanged += OnBaseTextChanged;
-            TB.KeyDown += OnBaseKeyDown;
+            UpdateInnerBounds();
         }
 
-        #region Variables
+        #region Inner TextBox
 
-        private TextBox _TB;
+        private TextBox _tb;
+
         /// <summary>
-        /// A masked <see cref="TextBox"/> used to input text
+        /// The borderless inner <see cref="TextBox"/> that handles text input.
+        /// Event subscriptions are managed through the setter to avoid leaks.
         /// </summary>
         private TextBox TB
         {
             [MethodImpl(MethodImplOptions.Synchronized)]
-            get => _TB;
+            get => _tb;
 
             [MethodImpl(MethodImplOptions.Synchronized)]
             set
             {
-                // Unsubscribe from the old TextBox events
-                if (_TB != null)
+                if (_tb != null)
                 {
-                    _TB.MouseDown -= TB_MouseDown;
-                    _TB.MouseEnter -= TB_MouseEnter;
-                    _TB.MouseLeave -= TB_MouseLeave;
-                    _TB.LostFocus -= TB_LostFocus;
+                    _tb.MouseDown -= TB_MouseDown;
+                    _tb.MouseEnter -= TB_MouseEnter;
+                    _tb.MouseLeave -= TB_MouseLeave;
+                    _tb.LostFocus -= TB_LostFocus;
                 }
 
-                _TB = value;
+                _tb = value;
 
-                // Subscribe to the new TextBox events
-                if (_TB != null)
+                if (_tb != null)
                 {
-                    _TB.MouseDown += TB_MouseDown;
-                    _TB.MouseEnter += TB_MouseEnter;
-                    _TB.MouseLeave += TB_MouseLeave;
-                    _TB.LostFocus += TB_LostFocus;
+                    _tb.MouseDown += TB_MouseDown;
+                    _tb.MouseEnter += TB_MouseEnter;
+                    _tb.MouseLeave += TB_MouseLeave;
+                    _tb.LostFocus += TB_LostFocus;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Repositions and resizes the inner TextBox to sit inside the 4px border padding.
+        /// In single-line mode the outer control height is driven by the inner TextBox height.
+        /// </summary>
+        private void UpdateInnerBounds()
+        {
+            if (TB == null) return;
+
+            TB.Location = new Point(4, 4);
+            TB.Width = Math.Max(0, Width - 8);
+
+            if (_multiline)
+            {
+                TB.Height = Math.Max(0, Height - 8);
+            }
+            else
+            {
+                Height = TB.Height + 10;
             }
         }
 
         #endregion
 
-        #region Properties
-        private HorizontalAlignment _TextAlign = HorizontalAlignment.Left;
+        #region Cached GDI resources
+
+        // Cached pens — rebuilt only when the corresponding color property changes.
+        private Pen _penShadow;
+        private Pen _penDkShadow;
+        private Pen _penHilight;
+        private Pen _penLight;
+
+        // Cached border segment endpoints — rebuilt on resize.
+        private PointF[] _dkShadowSeg0, _dkShadowSeg1;
+        private PointF[] _shadowSeg0, _shadowSeg1;
+        private PointF[] _hilightSeg0, _hilightSeg1;
+        private PointF[] _lightSeg0, _lightSeg1;
+
+        private static void ReplacePen(ref Pen pen, Color color)
+        {
+            pen?.Dispose();
+            pen = new Pen(color);
+        }
 
         /// <summary>
-        /// Gets or sets the text alignment of the text in the control
+        /// Recomputes all cached border segment endpoints from the current control size.
+        /// Win9x sunken border layout (outer→inner, top-left then bottom-right):
+        ///   DkShadow  outer top + left
+        ///   Shadow    inner top + left
+        ///   Hilight   inner bottom + right
+        ///   Light     outer bottom + right
+        /// </summary>
+        private void RebuildGeometry()
+        {
+            float w = Width - 1f;
+            float h = Height - 1f;
+
+            _dkShadowSeg0 = [new(0, 0), new(w, 0)];
+            _dkShadowSeg1 = [new(0, 0), new(0, h)];
+            _shadowSeg0 = [new(1, 1), new(w - 1f, 1)];
+            _shadowSeg1 = [new(1, 1), new(1, h - 1f)];
+            _hilightSeg0 = [new(w - 1f, 1), new(w - 1f, h - 1f)];
+            _hilightSeg1 = [new(1, h - 1f), new(w - 1f, h - 1f)];
+            _lightSeg0 = [new(w, 0), new(w, h)];
+            _lightSeg1 = [new(0, h), new(w, h)];
+        }
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets the text alignment inside the TextBox.
         /// </summary>
         [Category("Options")]
         public HorizontalAlignment TextAlign
         {
-            get => _TextAlign;
-            set
-            {
-                _TextAlign = value;
-                if (TB is not null)
-                {
-                    TB.TextAlign = value;
-                }
-            }
+            get => _textAlign;
+            set { _textAlign = value; TB?.TextAlign = value; }
         }
-
-        private int _MaxLength = 32767;
+        private HorizontalAlignment _textAlign = HorizontalAlignment.Left;
 
         /// <summary>
-        /// Gets or sets the maximum number of characters the user can type into the control
+        /// Gets or sets the maximum number of characters the user can enter.
         /// </summary>
         [Category("Options")]
         public int MaxLength
         {
-            get => _MaxLength;
-            set
-            {
-                _MaxLength = value;
-                if (TB is not null)
-                {
-                    TB.MaxLength = value;
-                }
-            }
+            get => _maxLength;
+            set { _maxLength = value; TB?.MaxLength = value; }
         }
-
-        private bool _ReadOnly;
+        private int _maxLength = 32767;
 
         /// <summary>
-        /// Gets or sets a value indicating whether the text in the control is read-only
+        /// Gets or sets a value indicating whether the text is read-only.
         /// </summary>
         [Category("Options")]
         public bool ReadOnly
         {
-            get => _ReadOnly;
-            set
-            {
-                _ReadOnly = value;
-                if (TB is not null)
-                {
-                    TB.ReadOnly = value;
-                }
-            }
+            get => _readOnly;
+            set { _readOnly = value; TB?.ReadOnly = value; }
         }
-
-        private bool _UseSystemPasswordChar;
+        private bool _readOnly = false;
 
         /// <summary>
-        /// Gets or sets a value indicating whether the text in the control should appear as the default password character
+        /// Gets or sets a value indicating whether text is displayed as the password character.
         /// </summary>
         [Category("Options")]
         public bool UseSystemPasswordChar
         {
-            get => _UseSystemPasswordChar;
-            set
-            {
-                _UseSystemPasswordChar = value;
-                if (TB is not null)
-                {
-                    TB.UseSystemPasswordChar = value;
-                }
-            }
+            get => _useSystemPasswordChar;
+            set { _useSystemPasswordChar = value; TB?.UseSystemPasswordChar = value; }
         }
-
-        private bool _Multiline;
+        private bool _useSystemPasswordChar = false;
 
         /// <summary>
-        /// Gets or sets a value indicating whether this is a multiline TextBox
+        /// Gets or sets a value indicating whether this is a multiline TextBox.
         /// </summary>
         [Category("Options")]
         public bool Multiline
         {
-            get => _Multiline;
+            get => _multiline;
             set
             {
-                _Multiline = value;
-                if (TB is not null)
+                _multiline = value;
+                if (TB != null)
                 {
                     TB.Multiline = value;
-
-                    // Set size of the masked TextBox based on the Multiline property correctly
-                    if (value)
-                    {
-                        TB.Height = Height - 8;
-                    }
-                    else
-                    {
-                        Height = TB.Height + 8;
-                    }
-
+                    UpdateInnerBounds();
                 }
             }
         }
+        private bool _multiline = false;
 
         /// <summary>
-        /// Gets or sets the text associated with this control
+        /// Gets or sets the text displayed in the TextBox.
         /// </summary>
         [Category("Options")]
         public override string Text
@@ -213,15 +227,12 @@ namespace WinPaletter.UI.Retro
             set
             {
                 base.Text = value;
-                if (TB is not null)
-                {
-                    TB.Text = value;
-                }
+                if (TB != null && TB.Text != value) TB.Text = value;
             }
         }
 
         /// <summary>
-        /// Gets or sets the font of the text displayed by the control
+        /// Gets or sets the font used by the TextBox.
         /// </summary>
         [Category("Options")]
         public override Font Font
@@ -230,142 +241,167 @@ namespace WinPaletter.UI.Retro
             set
             {
                 base.Font = value;
-                if (TB is not null)
+                if (TB != null)
                 {
-                    TB.Font = value;
-
-                    // Set location and size of the masked TextBox based on the font property correctly
-                    TB.Location = new(4, 4);
-                    TB.Width = Width - 8;
-                    if (!_Multiline)
-                    {
-                        Height = TB.Height + 10;
-                    }
-                }
-            }
-        }
-
-        private Color buttonShadow = SystemColors.ButtonShadow;
-        private Color buttonDkShadow = SystemColors.ControlDark;
-        private Color buttonHilight = SystemColors.ButtonHighlight;
-        private Color buttonLight = SystemColors.ControlLight;
-
-        /// <summary>
-        /// Gets or sets the color of the button shadow
-        /// </summary>
-        public Color ButtonShadow
-        {
-            get => buttonShadow;
-            set
-            {
-                if (buttonShadow != value)
-                {
-                    buttonShadow = value;
-                    Refresh();
+                    TB?.Font = value;
+                    UpdateInnerBounds();
                 }
             }
         }
 
         /// <summary>
-        /// Gets or sets the color of the button dark shadow
-        /// </summary>
-        public Color ButtonDkShadow
-        {
-            get => buttonDkShadow;
-            set
-            {
-                if (buttonDkShadow != value)
-                {
-                    buttonDkShadow = value;
-                    Refresh();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the color of the button hilight
-        /// </summary>
-        public Color ButtonHilight
-        {
-            get => buttonHilight;
-            set
-            {
-                if (buttonHilight != value)
-                {
-                    buttonHilight = value;
-                    Refresh();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the color of the button light
-        /// </summary>
-        public Color ButtonLight
-        {
-            get => buttonLight;
-            set
-            {
-                if (buttonLight != value)
-                {
-                    buttonLight = value;
-                    Refresh();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the background color of the control
+        /// Gets or sets the background color. Also applied to the inner TextBox.
         /// </summary>
         public new Color BackColor
         {
             get => base.BackColor;
             set
             {
-                if (base.BackColor != value)
-                {
-                    base.BackColor = value;
-                    Refresh();
-
-                    if (TB is not null)
-                    {
-                        TB.BackColor = value;
-                        TB.Refresh();
-                    }
-                }
+                if (base.BackColor == value) return;
+                base.BackColor = value;
+                TB?.BackColor = value;
+                Invalidate();
             }
+        }
+
+        /// <summary>
+        /// Gets or sets the foreground (text) color. Also applied to the inner TextBox.
+        /// </summary>
+        public new Color ForeColor
+        {
+            get => base.ForeColor;
+            set
+            {
+                if (base.ForeColor == value) return;
+                base.ForeColor = value;
+                TB?.ForeColor = value;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the inner top/left shadow color (second border layer).
+        /// </summary>
+        public Color ButtonShadow
+        {
+            get => _buttonShadow;
+            set
+            {
+                if (_buttonShadow == value) return;
+                _buttonShadow = value;
+                ReplacePen(ref _penShadow, value);
+                Invalidate();
+            }
+        }
+        private Color _buttonShadow = SystemColors.ButtonShadow;
+
+        /// <summary>
+        /// Gets or sets the outer top/left dark shadow color (outermost border layer).
+        /// </summary>
+        public Color ButtonDkShadow
+        {
+            get => _buttonDkShadow;
+            set
+            {
+                if (_buttonDkShadow == value) return;
+                _buttonDkShadow = value;
+                ReplacePen(ref _penDkShadow, value);
+                Invalidate();
+            }
+        }
+        private Color _buttonDkShadow = SystemColors.ControlDark;
+
+        /// <summary>
+        /// Gets or sets the inner bottom/right hilight color (second border layer).
+        /// </summary>
+        public Color ButtonHilight
+        {
+            get => _buttonHilight;
+            set
+            {
+                if (_buttonHilight == value) return;
+                _buttonHilight = value;
+                ReplacePen(ref _penHilight, value);
+                Invalidate();
+            }
+        }
+        private Color _buttonHilight = SystemColors.ButtonHighlight;
+
+        /// <summary>
+        /// Gets or sets the outer bottom/right light color (outermost border layer).
+        /// </summary>
+        public Color ButtonLight
+        {
+            get => _buttonLight;
+            set
+            {
+                if (_buttonLight == value) return;
+                _buttonLight = value;
+                ReplacePen(ref _penLight, value);
+                Invalidate();
+            }
+        }
+        private Color _buttonLight = SystemColors.ControlLight;
+
+        #endregion
+
+        #region Overrides — layout
+
+        /// <summary>
+        /// Adds the inner TextBox to the control's child collection when the handle is created.
+        /// </summary>
+        protected override void OnCreateControl()
+        {
+            base.OnCreateControl();
+            if (!Controls.Contains(TB)) Controls.Add(TB);
+        }
+
+        /// <summary>
+        /// Repositions the inner TextBox and rebuilds geometry when the control is resized.
+        /// </summary>
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            UpdateInnerBounds();
+            RebuildGeometry();
+        }
+
+        /// <summary>
+        /// Rebuilds geometry when the font changes.
+        /// </summary>
+        protected override void OnFontChanged(EventArgs e)
+        {
+            base.OnFontChanged(e);
+            RebuildGeometry();
         }
 
         #endregion
 
-        #region Events/Overrides
+        #region Overrides — focus and mouse
 
         /// <summary>
-        /// Void to handle the OnMouseDown event
+        /// Focuses the inner TextBox on mouse down.
         /// </summary>
-        /// <param name="e"></param>
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
+            TB?.Focus();
             Invalidate();
-            TB.Focus();
         }
 
         /// <summary>
-        /// Void to handle the OnMouseUp event
+        /// Focuses the inner TextBox on mouse up.
         /// </summary>
-        /// <param name="e"></param>
         protected override void OnMouseUp(MouseEventArgs e)
         {
             base.OnMouseUp(e);
-            TB.Focus();
+            TB?.Focus();
             Invalidate();
         }
 
         /// <summary>
-        /// Void to handle the OnMouseEnter event
+        /// Invalidates on mouse enter so the border can respond to hover if needed.
         /// </summary>
-        /// <param name="e"></param>
         protected override void OnMouseEnter(EventArgs e)
         {
             base.OnMouseEnter(e);
@@ -373,200 +409,97 @@ namespace WinPaletter.UI.Retro
         }
 
         /// <summary>
-        /// Void to handle the OnMouseLeave event
+        /// Invalidates on mouse leave.
         /// </summary>
-        /// <param name="e"></param>
         protected override void OnMouseLeave(EventArgs e)
         {
             base.OnMouseLeave(e);
             Invalidate();
         }
 
-        /// <summary>
-        /// Void to handle the OnCreateControl event
-        /// </summary>
-        protected override void OnCreateControl()
-        {
-            base.OnCreateControl();
+        private void TB_MouseDown(object sender, MouseEventArgs e) => Invalidate();
+        private void TB_MouseEnter(object sender, EventArgs e) => Invalidate();
+        private void TB_MouseLeave(object sender, EventArgs e) => Invalidate();
+        private void TB_LostFocus(object sender, EventArgs e) => Invalidate();
 
-            // Check if the TextBox is not already added to the control
-            if (!Controls.Contains(TB))
-            {
-                Controls.Add(TB);
-            }
+        #endregion
+
+        #region Overrides — text input
+
+        /// <summary>
+        /// Propagates the inner TextBox text to the outer control's Text property.
+        /// Guards against a set loop by checking for equality first.
+        /// </summary>
+        private void OnInnerTextChanged(object sender, EventArgs e)
+        {
+            if (base.Text != TB?.Text) base.Text = TB?.Text;
         }
 
         /// <summary>
-        /// Changes the text of the control when the masked TextBox text changes
+        /// Handles standard clipboard and undo keyboard shortcuts.
         /// </summary>
-        /// <param name="s"></param>
-        /// <param name="e"></param>
-        private void OnBaseTextChanged(object s, EventArgs e)
+        private void OnInnerKeyDown(object sender, KeyEventArgs e)
         {
-            Text = TB.Text;
-        }
+            if (!e.Control) return;
 
-        /// <summary>
-        /// Handles the KeyDown event for the masked TextBox
-        /// </summary>
-        /// <param name="s"></param>
-        /// <param name="e"></param>
-        private void OnBaseKeyDown(object s, KeyEventArgs e)
-        {
-            if (e.Control && e.KeyCode == Keys.A)
+            switch (e.KeyCode)
             {
-                // Ctrl + A: Select all text
-                TB.SelectAll();
-                e.SuppressKeyPress = true;
-            }
-            if (e.Control && e.KeyCode == Keys.C)
-            {
-                // Ctrl + C: Copy selected text
-                TB.Copy();
-                e.SuppressKeyPress = true;
-            }
-            if (e.Control && e.KeyCode == Keys.X)
-            {
-                // Ctrl + X: Cut selected text
-                TB.Cut();
-                e.SuppressKeyPress = true;
-            }
-            if (e.Control && e.KeyCode == Keys.V)
-            {
-                // Ctrl + V: Paste text
-                TB.Paste();
-                e.SuppressKeyPress = true;
-            }
-            if (e.Control && e.KeyCode == Keys.Z)
-            {
-                // Ctrl + Z: Undo
-                TB.Undo();
-                e.SuppressKeyPress = true;
+                case Keys.A: TB.SelectAll(); e.SuppressKeyPress = true; break;
+                case Keys.C: TB.Copy(); e.SuppressKeyPress = true; break;
+                case Keys.X: TB.Cut(); e.SuppressKeyPress = true; break;
+                case Keys.V: TB.Paste(); e.SuppressKeyPress = true; break;
+                case Keys.Z: TB.Undo(); e.SuppressKeyPress = true; break;
             }
 
             Invalidate();
-        }
-
-        /// <summary>
-        /// Void to handle the OnResize event to adjust the size and location of the masked TextBox
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnResize(EventArgs e)
-        {
-            TB.Location = new(4, 4);
-            TB.Width = Width - 8;
-
-            if (_Multiline)
-            {
-                TB.Height = Height - 8;
-            }
-            else
-            {
-                Height = TB.Height + 10;
-            }
-
-            base.OnResize(e);
-        }
-
-        /// <summary>
-        /// Void to handle the mouse down event for the masked TextBox
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void TB_MouseDown(object sender, MouseEventArgs e)
-        {
-            Invalidate();
-        }
-
-        /// <summary>
-        /// Void to handle the mouse enter event for the masked TextBox
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void TB_MouseEnter(object sender, EventArgs e)
-        {
-            Invalidate();
-        }
-
-        /// <summary>
-        /// Void to handle the mouse leave event for the masked TextBox
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void TB_MouseLeave(object sender, EventArgs e)
-        {
-            Invalidate();
-        }
-
-        /// <summary>
-        /// Void to handle the lost focus event for the masked TextBox
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void TB_LostFocus(object sender, EventArgs e)
-        {
-            Invalidate();
-        }
-
-        /// <summary>
-        /// Void to handle the dispose event
-        /// </summary>
-        /// <param name="disposing"></param>
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-
-            _TB?.Dispose();
         }
 
         #endregion
 
+        #region Paint
+
         /// <summary>
-        /// Void to handle the paint event
+        /// Paints the Win9x sunken 3D border directly onto the control surface.
+        /// The inner TextBox renders its own text — this method draws only the border.
         /// </summary>
-        /// <param name="e"></param>
         protected override void OnPaint(PaintEventArgs e)
         {
-            Bitmap B = new(Width, Height);
-            Graphics G = Graphics.FromImage(B);
-
+            Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.HighSpeed;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
 
-            TB.ForeColor = ForeColor;
-
-            Rectangle rect = new(0, 0, Width - 1, Height - 1);
-
-            // Draw the background
+            // Background — fills the area not covered by the inner TextBox.
             G.Clear(BackColor);
 
-            // Draw 3D borders
-            using (Pen penButtonShadow = new(ButtonShadow))
-            using (Pen penButtonDkShadow = new(ButtonDkShadow))
-            using (Pen penButtonLight = new(ButtonLight))
-            using (Pen penButtonHilight = new(ButtonHilight))
-            using (SolidBrush br = new(ForeColor))
+            // Win9x sunken border — outermost to innermost, top-left then bottom-right.
+            // DkShadow and Shadow on top+left give the pressed/inset appearance.
+            if (_penDkShadow != null) { G.DrawLine(_penDkShadow, _dkShadowSeg0[0], _dkShadowSeg0[1]); G.DrawLine(_penDkShadow, _dkShadowSeg1[0], _dkShadowSeg1[1]); }
+            if (_penShadow != null) { G.DrawLine(_penShadow, _shadowSeg0[0], _shadowSeg0[1]); G.DrawLine(_penShadow, _shadowSeg1[0], _shadowSeg1[1]); }
+            if (_penHilight != null) { G.DrawLine(_penHilight, _hilightSeg0[0], _hilightSeg0[1]); G.DrawLine(_penHilight, _hilightSeg1[0], _hilightSeg1[1]); }
+            if (_penLight != null) { G.DrawLine(_penLight, _lightSeg0[0], _lightSeg0[1]); G.DrawLine(_penLight, _lightSeg1[0], _lightSeg1[1]); }
+        }
+
+        #endregion
+
+        #region Dispose
+
+        /// <summary>
+        /// Releases all cached GDI resources and the inner TextBox.
+        /// </summary>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
             {
-                G.DrawLine(penButtonShadow, new Point(rect.X, rect.Y), new Point(rect.Width - 1, rect.Y));
-                G.DrawLine(penButtonShadow, new Point(rect.X, rect.Y), new Point(rect.X, rect.Height - 1));
-
-                G.DrawLine(penButtonDkShadow, new Point(rect.X, rect.Y) + (Size)new Point(1, 1), new Point(rect.Width - 2, rect.Y + 1));
-                G.DrawLine(penButtonDkShadow, new Point(rect.X, rect.Y) + (Size)new Point(1, 1), new Point(rect.X + 1, rect.Height - 2));
-
-                G.DrawLine(penButtonLight, new Point(rect.Width - 1, 1), new Point(rect.Width - 1, rect.Height - 1));
-                G.DrawLine(penButtonLight, new Point(1, rect.Height - 1), new Point(rect.Width - 1, rect.Height - 1));
-
-                G.DrawLine(penButtonHilight, new Point(rect.Width, rect.X), new Point(rect.Width, rect.Height));
-                G.DrawLine(penButtonHilight, new Point(rect.X, rect.Height), new Point(rect.Width, rect.Height));
-
-                G.DrawString(TB.Text, Font, br, new Point(2, 4));
+                _penShadow?.Dispose();
+                _penDkShadow?.Dispose();
+                _penHilight?.Dispose();
+                _penLight?.Dispose();
+                _tb?.Dispose();
             }
 
-            G.Dispose();
-            e.Graphics.DrawImageUnscaled(B, 0, 0);
-            B.Dispose();
-
-            base.OnPaint(e);
+            base.Dispose(disposing);
         }
+
+        #endregion
     }
 }

@@ -26,7 +26,7 @@ namespace WinPaletter
             CheckBox2.Checked = Program.Settings.Store.Search_AuthorsNames;
             CheckBox3.Checked = Program.Settings.Store.Search_Descriptions;
 
-             // Animate the form.
+            // Animate the form.
             Transition.With(this, nameof(Height), targetSize.Height).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration * 0.6));
         }
 

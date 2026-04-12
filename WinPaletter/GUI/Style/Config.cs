@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using Serilog.Sinks.File;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Windows.Forms;

@@ -1,8 +1,6 @@
-﻿using Cyotek.Windows.Forms;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using WinPaletter.UI.Controllers;
 
 namespace WinPaletter
 {

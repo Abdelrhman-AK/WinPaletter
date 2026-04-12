@@ -11,7 +11,6 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WinPaletter.Dialogs;
 using WinPaletter.Theme;
 using WinPaletter.UI.AdvancedControls;
 using WinPaletter.UI.Controllers;
@@ -65,7 +64,7 @@ namespace WinPaletter
             ComboBox1.Items.Clear();
             ComboBox1.Items.AddRange([.. Schemes.ClassicColors.Split('\n').Select(f => f.Split('|')[0])]);
             ColorEditor1.Font = Fonts.ConsoleMedium;
-            cts??= new();
+            cts ??= new();
         }
 
         private void ColorPickerDlg_FormClosed(object sender, FormClosedEventArgs e)

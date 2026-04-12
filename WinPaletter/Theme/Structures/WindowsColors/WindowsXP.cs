@@ -1,5 +1,4 @@
 ﻿using Serilog.Events;
-using System;
 using System.Windows.Forms;
 
 namespace WinPaletter.Theme.Structures

@@ -86,7 +86,7 @@
                 public string NewScheme { get; set; } = "New scheme";
                 public string NewTheme { get; set; } = "New theme";
                 public string ThemeName { get; set; } = "Theme name";
-                public string Name { get; set; } = "Name";  
+                public string Name { get; set; } = "Name";
                 public string FilePath { get; set; } = "File path";
                 public string CreationDateTime { get; set; } = "Creation date\\time";
                 public string BackupsCount { get; set; } = "backup(s)";

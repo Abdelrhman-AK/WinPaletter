@@ -1,12 +1,9 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Web;
-using static WinPaletter.NativeMethods.UxTheme;
 
 namespace WinPaletter.NativeMethods
 {

@@ -7,7 +7,6 @@ using System.Windows.Forms;
 using WinPaletter.GitHub;
 using WinPaletter.NativeMethods;
 using WinPaletter.Properties;
-using WinPaletter.TypesExtensions;
 using WinPaletter.UI.WP;
 
 namespace WinPaletter

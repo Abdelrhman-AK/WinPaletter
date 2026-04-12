@@ -839,7 +839,7 @@ namespace WinPaletter.Templates
                         if (window.Active) window.ColorBorder = value;
                     }
 
-                    foreach (ContextMenuR contextMenu in this.GetAllControls().OfType<ContextMenuR>()) { contextMenu.ColorBorder = value; }
+                    foreach (ContextMenuR contextMenu in this.GetAllControls().OfType<ContextMenuR>()) { contextMenu.ButtonShadow = value; }
                 }
             }
         }

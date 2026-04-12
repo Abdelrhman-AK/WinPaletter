@@ -1,7 +1,5 @@
 ﻿using Microsoft.Win32;
-using Newtonsoft.Json.Linq;
 using Serilog.Events;
-using System;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;

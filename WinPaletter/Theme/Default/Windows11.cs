@@ -1,5 +1,4 @@
 ﻿using System.Drawing;
-using System.Security;
 using WinPaletter.Theme.Structures;
 
 namespace WinPaletter.Theme

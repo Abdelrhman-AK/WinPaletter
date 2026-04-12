@@ -11,7 +11,7 @@
                 /// </summary>
                 public partial class Advanced_Cls
                 {
-                    public string RegAdd { get; set; } = "{0} > {1} = {2}, RegistryValueKind = {3}";
+                    public string RegAdd { get; set; } = "{0} → {1} = {2}, RegistryValueKind = {3}";
                     public string RegSkipped { get; set; } = "Skipped: {0}";
                     public string RegDelete { get; set; } = "Deleting: {0}";
                     public string DeleteTask { get; set; } = "Deleting task '{0}' from Task Scheduler";

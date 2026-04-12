@@ -1,6 +1,5 @@
 ﻿using Microsoft.Win32;
 using Serilog.Events;
-using System;
 using System.Windows.Forms;
 
 namespace WinPaletter.Theme.Structures

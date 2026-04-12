@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using WinPaletter.Theme;
 using WinPaletter.UI.Controllers;
-using WinPaletter.UI.WP;
 using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter

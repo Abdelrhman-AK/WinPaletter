@@ -253,13 +253,13 @@ namespace WinPaletter
 
             if (terminal is not null)
             {
-                foreach (Theme.Structures.WinTerminal.Types.Scheme scheme in terminal.Schemes.Where(x => !x.Name.Contains("Campbell"))) comboBox1.Items.Add($"{Program.Localization.Strings.Aspects.TerminalStable} > {scheme.Name}");
+                foreach (Theme.Structures.WinTerminal.Types.Scheme scheme in terminal.Schemes.Where(x => !x.Name.Contains("Campbell"))) comboBox1.Items.Add($"{Program.Localization.Strings.Aspects.TerminalStable} → {scheme.Name}");
                 comboBox1.SelectedIndex = -1;
             }
 
             if (terminalPreview is not null)
             {
-                foreach (Theme.Structures.WinTerminal.Types.Scheme scheme in terminalPreview.Schemes.Where(x => !x.Name.Contains("Campbell"))) comboBox1.Items.Add($"{Program.Localization.Strings.Aspects.TerminalPreview} > {scheme.Name}");
+                foreach (Theme.Structures.WinTerminal.Types.Scheme scheme in terminalPreview.Schemes.Where(x => !x.Name.Contains("Campbell"))) comboBox1.Items.Add($"{Program.Localization.Strings.Aspects.TerminalPreview} → {scheme.Name}");
                 comboBox1.SelectedIndex = -1;
             }
 

@@ -9,689 +9,545 @@ using WinPaletter.Templates;
 namespace WinPaletter.UI.Retro
 {
     /// <summary>
-    /// Retro ScrollBar with Windows 9x style
+    /// Retro ScrollBar with Windows 9x style.
     /// </summary>
     [Description("Retro ScrollBar with Windows 9x style")]
     public class ScrollBarR : Panel
     {
         /// <summary>
-        /// Initialize a new instance of <see cref="ScrollBarR"/>
+        /// Initializes a new instance of the <see cref="ScrollBarR"/> class.
         /// </summary>
         public ScrollBarR()
         {
-            DoubleBuffered = true;
+            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint, true);
+
             BackColor = Color.FromArgb(192, 192, 192);
             BorderStyle = BorderStyle.None;
 
-            // Add buttons; Up, Down, Scroll handle
-            Controls.Add(btnUp);
-            Controls.Add(btnDown);
-            Controls.Add(btnScroll);
+            Controls.Add(_btnUp);
+            Controls.Add(_btnDown);
+            Controls.Add(_btnScroll);
 
-            // Add event handlers
-            btnUp.Click += (s, e) => Value--;
-            btnDown.Click += (s, e) => Value++;
+            _btnUp.Click += (s, e) => Value--;
+            _btnDown.Click += (s, e) => Value++;
 
-            // Scroll handle events
-            btnScroll.MouseDown += BtnScroll_MouseDown;
-            btnScroll.MouseMove += BtnScroll_MouseMove;
-            btnScroll.MouseUp += BtnScroll_MouseUp;
+            _btnScroll.MouseDown += BtnScroll_MouseDown;
+            _btnScroll.MouseMove += BtnScroll_MouseMove;
+            _btnScroll.MouseUp += BtnScroll_MouseUp;
 
             AdjustLayout();
         }
 
-        #region Variables
+        #region Private fields
 
-        /// <summary>
-        /// If true, the mouse is scrolling the handle
-        /// </summary>
-        private bool invokeMouseScroll = false;
+        // Scroll handle drag state.
+        private bool _draggingScroll;
+        private int _dragOffset;
 
-        /// <summary>
-        /// Remaining part of the mouse position
-        /// </summary>
-        private int mouseScrollRemainingPart = 0;
+        // Metrics grip drag state.
+        private bool _draggingGrip;
+        private Point _gripAnchor = Point.Empty;
 
-        /// <summary>
-        /// If true, the mouse is on the sizing grip and moving it.
-        /// </summary>
-        bool isMoving_Grip = false;
-        Rectangle rect;
+        // Cached full-control rect for paint and hit-test.
+        private Rectangle _rectControl;
 
-        Point MP = Point.Empty;
+        // Hover state.
+        private bool _cursorOnFace;
+        private bool _cursorOnHilight;
+        private bool _cursorOnGrip;
+
+        #endregion
+
+        #region Child controls
+
+        private readonly ButtonR _btnUp = new() { Text = "t", Font = new Font("Marlett", 8.8f) };
+        private readonly ButtonR _btnDown = new() { Text = "u", Font = new Font("Marlett", 8.8f) };
+        private readonly ButtonR _btnScroll = new() { Text = string.Empty, Height = 50, UseItAsScrollbar = true };
+
         #endregion
 
         #region Properties
 
         /// <summary>
-        /// Color of the button hilight
+        /// Gets or sets the highlight color of the scrollbar checker pattern.
         /// </summary>
         public Color ButtonHilight
         {
-            get => _ButtonHilight;
+            get => _buttonHilight;
             set
             {
-                _ButtonHilight = value;
-                Refresh();
+                if (_buttonHilight == value) return;
+                _buttonHilight = value;
+                Invalidate();
             }
         }
-        private Color _ButtonHilight = SystemColors.ButtonHighlight;
+        private Color _buttonHilight = SystemColors.ButtonHighlight;
 
         /// <summary>
-        /// Value of the scroll bar
+        /// Gets or sets the current scroll position.
         /// </summary>
         public int Value
         {
             get => _value;
             set
             {
-                // Clamp the value
-                _value = Math.Max(minimum, Math.Min(maximum, value));
-                OnValueChanged(EventArgs.Empty);
+                int clamped = Math.Max(_minimum, Math.Min(_maximum, value));
+                if (clamped == _value) return;
+                _value = clamped;
+                AdjustLocationFromValue();
+                ValueChanged?.Invoke(this, EventArgs.Empty);
             }
         }
         private int _value = 0;
 
         /// <summary>
-        /// Maximum value of the scroll bar
+        /// Gets or sets the maximum scroll value.
         /// </summary>
         public int Maximum
         {
-            get => maximum;
+            get => _maximum;
             set
             {
-                maximum = value;
-                if (maximum < minimum)
-                    minimum = maximum;
-                Value = Math.Min(Value, maximum);
+                _maximum = value;
+                if (_maximum < _minimum) _minimum = _maximum;
+                Value = Math.Min(Value, _maximum);
             }
         }
-        private int maximum = 100;
+        private int _maximum = 100;
 
         /// <summary>
-        /// Minimum value of the scroll bar
+        /// Gets or sets the minimum scroll value.
         /// </summary>
         public int Minimum
         {
-            get => minimum;
+            get => _minimum;
             set
             {
-                minimum = value;
-                if (minimum > maximum)
-                    maximum = minimum;
-                Value = Math.Max(Value, minimum);
+                _minimum = value;
+                if (_minimum > _maximum) _maximum = _minimum;
+                Value = Math.Max(Value, _minimum);
             }
         }
-        private int minimum = 0;
+        private int _minimum = 0;
 
         /// <summary>
-        /// Orientation of the scroll bar
+        /// Gets or sets the orientation of the scrollbar.
         /// </summary>
         public Orientation Orientation
         {
-            get => orientation;
+            get => _orientation;
             set
             {
-                orientation = value;
-                // Swap the width and height
+                if (_orientation == value) return;
+                _orientation = value;
                 AdjustLayout();
             }
         }
-        private Orientation orientation = Orientation.Vertical;
+        private Orientation _orientation = Orientation.Vertical;
 
         /// <summary>
-        /// Width of the scroll bar
+        /// Gets or sets the width of the scrollbar. Clamped to [13, 50].
         /// </summary>
         public new int Width
         {
             get => base.Width;
             set
             {
-                // Set minimum and maximum width
-                if (value < 13) value = 13;
-                if (value > 50) value = 50;
-
-                if (value != base.Width)
-                {
-                    base.Width = value;
-
-                    // Adjust the layout
-                    AdjustLayout();
-
-                    // Adjust the location of scroll handle from the value
-                    AdjustLocationFromValue();
-                    Refresh();
-
-                    // If editing metrics is enabled and the grip is moving, invoke the editor
-                    if (EnableEditingMetrics && isMoving_Grip)
-                        EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(WindowMetrics.ScrollWidth)));
-                }
+                value = Math.Max(13, Math.Min(50, value));
+                if (value == base.Width) return;
+                base.Width = value;
+                AdjustLayout();
+                AdjustLocationFromValue();
+                Invalidate();
+                if (EnableEditingMetrics && _draggingGrip) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(WindowMetrics.ScrollWidth)));
             }
         }
 
         /// <summary>
-        /// Height of the scroll bar
+        /// Gets or sets the height of the scrollbar. Clamped to [13, 50].
         /// </summary>
         public new int Height
         {
             get => base.Height;
             set
             {
-                // Set minimum and maximum height
-                if (value < 13) value = 13;
-                if (value > 50) value = 50;
-
-                if (value != base.Height)
-                {
-                    base.Height = value;
-
-                    // Adjust the layout
-                    AdjustLayout();
-
-                    // Adjust the location of scroll handle from the value
-                    AdjustLocationFromValue();
-                    Refresh();
-
-                    // If editing metrics is enabled and the grip is moving, invoke the editor
-                    if (EnableEditingMetrics && isMoving_Grip)
-                        EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(WindowMetrics.ScrollHeight)));
-                }
+                value = Math.Max(13, Math.Min(50, value));
+                if (value == base.Height) return;
+                base.Height = value;
+                AdjustLayout();
+                AdjustLocationFromValue();
+                Invalidate();
+                if (EnableEditingMetrics && _draggingGrip) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(WindowMetrics.ScrollHeight)));
             }
         }
 
         /// <summary>
-        /// If true, the colors can be edited by clicking on the control
+        /// Gets or sets a value indicating whether colors can be edited interactively.
         /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Browsable(false)]
         public bool EnableEditingColors { get; set; } = false;
 
         /// <summary>
-        /// If true, the metrics can be edited by clicking on the control
+        /// Gets or sets a value indicating whether metrics can be edited interactively.
         /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Browsable(false)]
         public bool EnableEditingMetrics { get; set; } = false;
 
+        // Computed edit-mode flags.
+        private bool IsEditFace => EnableEditingColors && _cursorOnFace;
+        private bool IsEditHilight => EnableEditingColors && _cursorOnHilight;
+        private bool IsEditGrip => !DesignMode && EnableEditingMetrics && _cursorOnGrip;
+
         #endregion
 
-        #region Events/Overrides
+        #region Events
 
         /// <summary>
-        /// Event handler for the editor invoker after a click on the control
+        /// Raised when the user clicks a color or metric region while editing is enabled.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         public delegate void EditorInvokerEventHandler(object sender, EditorEventArgs e);
 
         /// <summary>
-        /// Event handler for the editor invoker after a click on the control
+        /// Raised when the user clicks a color or metric region while editing is enabled.
         /// </summary>
         public event EditorInvokerEventHandler EditorInvoker;
 
         /// <summary>
-        /// Event handler for the value changed
+        /// Raised when <see cref="Value"/> changes.
         /// </summary>
         public event EventHandler ValueChanged;
 
-        /// <summary>
-        /// Invokes the value changed event
-        /// </summary>
-        /// <param name="e"></param>
-        protected virtual void OnValueChanged(EventArgs e)
-        {
-            // Adjust the location of scroll handle from the value
-            AdjustLocationFromValue();
+        #endregion
 
-            // Invoke the event of value changed
-            ValueChanged?.Invoke(this, e);
-        }
+        #region Scroll handle drag
 
-        /// <summary>
-        /// Event handler for the scroll handle mouse move
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BtnScroll_MouseMove(object sender, MouseEventArgs e)
-        {
-            // If the mouse is scrolling the handle, adjust the value from the location
-            if (invokeMouseScroll)
-            {
-                // Get the mouse position
-                Point MP = PointToClient(MousePosition);
-
-                // Adjust the location of the scroll handle
-                if (orientation == Orientation.Vertical)
-                {
-                    // Adjust the top location of the scroll handle
-                    int y = MP.Y - mouseScrollRemainingPart;
-                    btnScroll.Top = Math.Min(btnDown.Top - btnScroll.Height, Math.Max(btnUp.Bottom, y));
-                }
-                else
-                {
-                    // Adjust the left location of the scroll handle
-                    int x = MP.X - mouseScrollRemainingPart;
-                    btnScroll.Left = Math.Min(btnDown.Left - btnScroll.Width, Math.Max(btnUp.Right, x));
-                }
-
-                // Adjust the value from the location of the scroll handle
-                AdjustValueFromLocation();
-            }
-        }
-
-        /// <summary>
-        /// Event handler for the scroll handle mouse down
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void BtnScroll_MouseDown(object sender, MouseEventArgs e)
         {
-            // If the left mouse button is clicked, invoke the mouse scroll
-            if (e.Button == MouseButtons.Left)
-            {
-                invokeMouseScroll = true;
-
-                // Get the remaining part of the mouse position
-                if (orientation == Orientation.Vertical)
-                {
-                    // Get the remaining part of the mouse position from the top
-                    mouseScrollRemainingPart = btnScroll.Height - e.Location.Y;
-                }
-                else
-                {
-                    // Get the remaining part of the mouse position from the left
-                    mouseScrollRemainingPart = btnScroll.Width - e.Location.X;
-                }
-            }
+            if (e.Button != MouseButtons.Left) return;
+            _draggingScroll = true;
+            _dragOffset = _orientation == Orientation.Vertical ? _btnScroll.Height - e.Location.Y : _btnScroll.Width - e.Location.X;
         }
 
-        /// <summary>
-        /// Event handler for the scroll handle mouse up
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        private void BtnScroll_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (!_draggingScroll) return;
+
+            Point mp = PointToClient(MousePosition);
+
+            if (_orientation == Orientation.Vertical)
+            {
+                int y = mp.Y - _dragOffset;
+                _btnScroll.Top = Math.Max(_btnUp.Bottom, Math.Min(_btnDown.Top - _btnScroll.Height, y));
+            }
+            else
+            {
+                int x = mp.X - _dragOffset;
+                _btnScroll.Left = Math.Max(_btnUp.Right, Math.Min(_btnDown.Left - _btnScroll.Width, x));
+            }
+
+            AdjustValueFromLocation();
+        }
+
         private void BtnScroll_MouseUp(object sender, MouseEventArgs e)
         {
-            // If the left mouse button is released, stop invoking the mouse scroll
-            invokeMouseScroll = false;
+            _draggingScroll = false;
         }
 
+        #endregion
+
+        #region Control overrides
+
         /// <summary>
-        /// Event handler for the resize
+        /// Rebuilds layout when the control is resized.
         /// </summary>
-        /// <param name="e"></param>
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-
-            // Adjust the layout according to the orientation and size
             AdjustLayout();
         }
 
         /// <summary>
-        /// Event handler for the dock changed
+        /// Rebuilds layout when the dock style changes.
         /// </summary>
-        /// <param name="e"></param>
         protected override void OnDockChanged(EventArgs e)
         {
             base.OnDockChanged(e);
-
-            // Adjust the layout according to the orientation and size
             AdjustLayout();
         }
 
         /// <summary>
-        /// Event handler for the mouse move
+        /// Handles grip dragging and hover-state updates.
         /// </summary>
-        /// <param name="e"></param>
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            if (!DesignMode)
-            {
-                // If the mouse is moving the grip and metrics editing is enabled, adjust the width or height
-
-                if (EnableEditingMetrics && isMoving_Grip)
-                {
-                    if (Dock == DockStyle.Left || Dock == DockStyle.Right)
-                    {
-                        // Adjust the width from the mouse position
-                        int delta = MousePosition.X - MP.X;
-                        Width -= delta;
-                        MP = MousePosition;
-                    }
-                    else
-                    {
-                        // Adjust the height from the mouse position
-                        int delta = MousePosition.Y - MP.Y;
-                        Height -= delta;
-                        MP = MousePosition;
-                    }
-
-                    // Set the grip is moving flag to true
-                    isMoving_Grip = true;
-                }
-
-                // If editing colors is enabled, set the flags according to the cursor position
-                if (EnableEditingColors)
-                {
-                    // Set the cursor on the face or hilight
-                    // If the cursor is on the face, set the cursor on the face flag to true
-                    // If the cursor is on the hilight, set the cursor on the hilight flag to true
-                    // A scrollbar has two parts; face and hilight. Both colors forms a figure of hatch style (50%).
-                    // Face color is the even rows and columns, hilight color is the odd rows and columns.
-                    CursorOnFace = e.Location.Y % 2 == 0 & e.Location.X % 2 == 0;
-                    CursorOnHilight = !CursorOnFace;
-
-                    Refresh();
-                }
-
-                else if (EnableEditingMetrics)
-                {
-                    // Set the cursor on the grip
-                    CursorOnMe = rect.Contains(e.Location);
-
-                    if (rect.BordersContains(e.Location) && (e.Location.Y == 0 || e.Location.Y == Height))
-                    {
-                        // Set cursor style to size NS if the cursor is on the top or bottom border
-                        Cursor = Cursors.SizeNS;
-                    }
-                    else if (rect.BordersContains(e.Location) && (e.Location.X == 0 || e.Location.X == Width))
-                    {
-                        // Set cursor style to size WE if the cursor is on the left or right border
-                        Cursor = Cursors.SizeWE;
-                    }
-                    else
-                    {
-                        // Set the default cursor
-                        Cursor = Cursors.Default;
-                    }
-
-                    Refresh();
-                }
-            }
-
-
             base.OnMouseMove(e);
-        }
 
-        /// <summary>
-        /// Event handler for the mouse down
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnMouseDown(MouseEventArgs e)
-        {
-            if (!DesignMode && EnableEditingMetrics)
+            if (DesignMode) return;
+
+            if (EnableEditingMetrics && _draggingGrip)
             {
-                // If the left mouse button is clicked and the cursor is on the grip, set the grip is moving flag to true
-                isMoving_Grip = rect.BordersContains(e.Location);
-                MP = MousePosition;
+                if (Dock == DockStyle.Left || Dock == DockStyle.Right)
+                {
+                    int delta = MousePosition.X - _gripAnchor.X;
+                    Width -= delta;
+                }
+                else
+                {
+                    int delta = MousePosition.Y - _gripAnchor.Y;
+                    Height -= delta;
+                }
+                _gripAnchor = MousePosition;
             }
 
-            base.OnMouseDown(e);
-        }
-
-        /// <summary>
-        /// Event handler for the mouse leave
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnMouseLeave(EventArgs e)
-        {
-            if (!DesignMode)
-            {
-                // Reset the flags
-                if (EnableEditingColors)
-                {
-                    CursorOnFace = false;
-                    CursorOnHilight = false;
-
-                    Refresh();
-                }
-
-                else if (EnableEditingMetrics)
-                {
-                    CursorOnMe = false;
-                    isMoving_Grip = false;
-
-                    Refresh();
-                }
-
-            }
-
-            base.OnMouseLeave(e);
-        }
-
-        /// <summary>
-        /// Event handler for the mouse up
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnMouseUp(MouseEventArgs e)
-        {
-            if (!DesignMode)
-            {
-                if (EnableEditingMetrics)
-                {
-                    // If the left mouse button is released, set the grip is moving flag to false
-                    isMoving_Grip = false;
-                    Refresh();
-                }
-            }
-
-            base.OnMouseUp(e);
-        }
-
-        /// <summary>
-        /// Event handler for the mouse click
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnMouseClick(MouseEventArgs e)
-        {
-            // If the left mouse button is clicked and editing colors is enabled, invoke the editor
             if (EnableEditingColors)
             {
-                if (e.Button == MouseButtons.Left)
+                bool onFace = e.Location.Y % 2 == 0 && e.Location.X % 2 == 0;
+                bool onHilight = !onFace;
+
+                if (onFace != _cursorOnFace || onHilight != _cursorOnHilight)
                 {
-                    if (CursorOnFace)
-                    {
-                        // Invoke the editor for the face color
-                        EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonFace)));
-                    }
-                    else if (CursorOnHilight)
-                    {
-                        // Invoke the editor for the hilight color
-                        EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonHilight)));
-                    }
+                    _cursorOnFace = onFace;
+                    _cursorOnHilight = onHilight;
+                    Invalidate();
                 }
             }
+            else if (EnableEditingMetrics)
+            {
+                bool onGrip = _rectControl.Contains(e.Location);
 
-            base.OnMouseClick(e);
+                if (onGrip != _cursorOnGrip)
+                {
+                    _cursorOnGrip = onGrip;
+                    Invalidate();
+                }
+
+                bool onTopBottom = _rectControl.BordersContains(e.Location) && (e.Location.Y == 0 || e.Location.Y == Height);
+                bool onLeftRight = _rectControl.BordersContains(e.Location) && (e.Location.X == 0 || e.Location.X == Width);
+
+                Cursor = onTopBottom ? Cursors.SizeNS : onLeftRight ? Cursors.SizeWE : Cursors.Default;
+            }
         }
 
         /// <summary>
-        /// Event handler for the mouse wheel
+        /// Begins grip drag on mouse down.
         /// </summary>
-        /// <param name="e"></param>
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            base.OnMouseDown(e);
+
+            if (!DesignMode && EnableEditingMetrics)
+            {
+                _draggingGrip = _rectControl.BordersContains(e.Location);
+                _gripAnchor = MousePosition;
+            }
+        }
+
+        /// <summary>
+        /// Clears hover and drag state on mouse leave.
+        /// </summary>
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            base.OnMouseLeave(e);
+
+            if (DesignMode) return;
+
+            if (EnableEditingColors)
+            {
+                _cursorOnFace = false;
+                _cursorOnHilight = false;
+                Invalidate();
+            }
+            else if (EnableEditingMetrics)
+            {
+                _cursorOnGrip = false;
+                _draggingGrip = false;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Ends grip drag on mouse up.
+        /// </summary>
+        protected override void OnMouseUp(MouseEventArgs e)
+        {
+            base.OnMouseUp(e);
+
+            if (!DesignMode && EnableEditingMetrics && _draggingGrip)
+            {
+                _draggingGrip = false;
+                Invalidate();
+            }
+        }
+
+        /// <summary>
+        /// Invokes the color editor for the region under the cursor.
+        /// </summary>
+        protected override void OnMouseClick(MouseEventArgs e)
+        {
+            base.OnMouseClick(e);
+
+            if (!EnableEditingColors || e.Button != MouseButtons.Left) return;
+
+            if (IsEditFace)
+                EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonFace)));
+            else if (IsEditHilight)
+                EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(RetroDesktopColors.ButtonHilight)));
+        }
+
+        /// <summary>
+        /// Scrolls by one step on mouse wheel.
+        /// </summary>
         protected override void OnMouseWheel(MouseEventArgs e)
         {
-            if (e.Delta > 0)
-            {
-                // If the mouse wheel is scrolled up, decrease the value
-                Value--;
-            }
-            else
-            {
-                // If the mouse wheel is scrolled down, increase the value
-                Value++;
-            }
             base.OnMouseWheel(e);
+            Value += e.Delta > 0 ? -1 : 1;
         }
 
         /// <summary>
-        /// Disposes the resources
+        /// Releases child control resources.
         /// </summary>
-        /// <param name="disposing"></param>
         protected override void Dispose(bool disposing)
         {
-            base.Dispose(disposing);
+            if (disposing)
+            {
+                _btnUp?.Dispose();
+                _btnDown?.Dispose();
+                _btnScroll?.Dispose();
+            }
 
-            btnUp?.Dispose();
-            btnDown?.Dispose();
-            btnScroll?.Dispose();
+            base.Dispose(disposing);
         }
 
         #endregion
 
-        #region Controls
+        #region Layout and value helpers
 
         /// <summary>
-        /// Button up for the scroll bar control
-        /// </summary>
-        private readonly ButtonR btnUp = new() { Text = "t", Font = new("Marlett", 8.8f) };
-
-        /// <summary>
-        /// Button down for the scroll bar control
-        /// </summary>
-        private readonly ButtonR btnDown = new() { Text = "u", Font = new("Marlett", 8.8f) };
-
-        /// <summary>
-        /// Scroll handle for the scroll bar control
-        /// </summary>
-        private readonly ButtonR btnScroll = new() { Text = string.Empty, Height = 50, UseItAsScrollbar = true };
-
-        #endregion
-
-        #region Methods
-
-        /// <summary>
-        /// Adjust the layout of the scroll bar according to the orientation and size
+        /// Repositions and sizes child controls to match the current orientation and dimensions.
         /// </summary>
         private void AdjustLayout()
         {
-            if (orientation == Orientation.Vertical)
+            if (_orientation == Orientation.Vertical)
             {
-                btnUp.Dock = DockStyle.Top;
-                btnDown.Dock = DockStyle.Bottom;
-                btnScroll.Width = Width;
-                btnScroll.Left = 0;
-                btnScroll.Height = Height / 4;
-                btnUp.Height = Width;
-                btnDown.Height = Width;
-                btnUp.Text = "t";
-                btnDown.Text = "u";
+                _btnUp.Dock = DockStyle.Top;
+                _btnDown.Dock = DockStyle.Bottom;
+                _btnUp.Height = base.Width;
+                _btnDown.Height = base.Width;
+                _btnUp.Text = "t";
+                _btnDown.Text = "u";
+                _btnScroll.Width = base.Width;
+                _btnScroll.Left = 0;
+                _btnScroll.Height = Math.Max(13, base.Height / 4);
             }
             else
             {
-                btnUp.Dock = DockStyle.Left;
-                btnDown.Dock = DockStyle.Right;
-                btnScroll.Height = Height;
-                btnScroll.Top = 0;
-                btnScroll.Width = Width / 4;
-                btnUp.Width = Height;
-                btnDown.Width = Height;
-                btnUp.Text = "3";
-                btnDown.Text = "4";
+                _btnUp.Dock = DockStyle.Left;
+                _btnDown.Dock = DockStyle.Right;
+                _btnUp.Width = base.Height;
+                _btnDown.Width = base.Height;
+                _btnUp.Text = "3";
+                _btnDown.Text = "4";
+                _btnScroll.Height = base.Height;
+                _btnScroll.Top = 0;
+                _btnScroll.Width = Math.Max(13, base.Width / 4);
             }
 
-            rect = new(0, 0, Width - 1, Height - 1);
+            _rectControl = new Rectangle(0, 0, base.Width - 1, base.Height - 1);
+            AdjustLocationFromValue();
         }
 
         /// <summary>
-        /// Adjust the location of the scroll handle from the value
+        /// Moves the scroll handle to the position that corresponds to <see cref="Value"/>.
         /// </summary>
         private void AdjustLocationFromValue()
         {
-            if (orientation == Orientation.Vertical)
+            if (_maximum == _minimum) return;
+
+            if (_orientation == Orientation.Vertical)
             {
-                int Length = btnDown.Top - btnUp.Bottom - btnScroll.Height;
-                int val = btnUp.Bottom + (int)(_value / (float)(maximum - minimum) * Length);
-                btnScroll.Top = Math.Min(btnDown.Top - btnScroll.Height, Math.Max(btnUp.Bottom, val));
+                int track = _btnDown.Top - _btnUp.Bottom - _btnScroll.Height;
+                int pos = _btnUp.Bottom + (int)(_value / (float)(_maximum - _minimum) * track);
+                _btnScroll.Top = Math.Max(_btnUp.Bottom, Math.Min(_btnDown.Top - _btnScroll.Height, pos));
             }
             else
             {
-                int Length = btnDown.Left - btnUp.Right - btnScroll.Width;
-                int val = btnUp.Right + (int)(_value / (float)(maximum - minimum) * Length);
-                btnScroll.Left = Math.Min(btnDown.Left - btnScroll.Width, Math.Max(btnUp.Right, val));
+                int track = _btnDown.Left - _btnUp.Right - _btnScroll.Width;
+                int pos = _btnUp.Right + (int)(_value / (float)(_maximum - _minimum) * track);
+                _btnScroll.Left = Math.Max(_btnUp.Right, Math.Min(_btnDown.Left - _btnScroll.Width, pos));
             }
         }
 
         /// <summary>
-        /// Adjust the value of the scroll bar from the location of the scroll handle
+        /// Updates <see cref="Value"/> from the current scroll handle position.
         /// </summary>
         private void AdjustValueFromLocation()
         {
-            if (orientation == Orientation.Vertical)
+            if (_orientation == Orientation.Vertical)
             {
-                int Length = btnDown.Top - btnUp.Bottom - btnScroll.Height;
-                Value = (int)((btnScroll.Top - btnUp.Bottom) / (float)Length * (maximum - minimum));
+                int track = _btnDown.Top - _btnUp.Bottom - _btnScroll.Height;
+                if (track <= 0) return;
+                Value = (int)((_btnScroll.Top - _btnUp.Bottom) / (float)track * (_maximum - _minimum));
             }
             else
             {
-                int Length = btnDown.Left - btnUp.Right - btnScroll.Width;
-                Value = (int)((btnScroll.Left - btnUp.Right) / (float)Length * (maximum - minimum));
+                int track = _btnDown.Left - _btnUp.Right - _btnScroll.Width;
+                if (track <= 0) return;
+                Value = (int)((_btnScroll.Left - _btnUp.Right) / (float)track * (_maximum - _minimum));
             }
         }
 
         #endregion
 
-        #region Colors editor
-
-        private bool CursorOnFace, CursorOnHilight, CursorOnMe;
-        private bool _ColorEdit_Hilight => EnableEditingColors && CursorOnHilight;
-        private bool _ColorEdit_Face => EnableEditingColors && CursorOnFace;
-        private bool _MetricsEdit_Grip => !DesignMode && EnableEditingMetrics && CursorOnMe;
-
-        #endregion
+        #region Paint
 
         /// <summary>
-        /// Paints the control
+        /// Paints the Win9x checker-pattern background and any active edit overlays.
         /// </summary>
-        /// <param name="e"></param>
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics G = e.Graphics;
             G.SmoothingMode = SmoothingMode.HighSpeed;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
-            Rectangle rect = new(0, 0, Width - 1, Height - 1);
 
-            // Draw the background
+            // 1. Flat background.
             G.Clear(BackColor);
 
-            // Draw the face and hilight
-            // A scrollbar has two parts; face and hilight. Both colors forms a figure of hatch style (50%).
-            // Face color is the even rows and columns, hilight color is the odd rows and columns.
-            using (HatchBrush b = new(HatchStyle.Percent50, ButtonHilight, BackColor)) { G.FillRectangle(b, rect); }
-
-            #region Editor
-
-            // Draw a hatch style on the face to indicate the face color can be edited
-            if (_ColorEdit_Face)
+            // 2. Win9x checker pattern: Percent50 hatch where foreground = hilight, background = face.
+            using (HatchBrush hb = new(HatchStyle.Percent50, _buttonHilight, BackColor))
             {
-                Color color = BackColor.Invert();
-                using (HatchBrush hb = new(HatchStyle.Percent50, color, Color.Transparent)) { G.FillRectangle(hb, rect); }
+                G.FillRectangle(hb, _rectControl);
             }
 
-            // Draw a hatch style on the hilight to indicate the hilight color can be edited
-            if (_ColorEdit_Hilight)
+            // 3. Face color-edit overlay (even pixels).
+            if (IsEditFace)
             {
-                Color color = ButtonHilight.Invert();
-                using (HatchBrush hb = new(HatchStyle.Percent50, Color.Transparent, color)) { G.FillRectangle(hb, rect); }
-            }
-
-            #endregion
-
-            #region Grip
-
-            // Draw the grip on the scrollbar to indicate the metrics can be edited
-            if (_MetricsEdit_Grip)
-            {
-                using (Pen P = new(BackColor.Invert()) { DashStyle = DashStyle.Dot })
+                using (HatchBrush hb = new(HatchStyle.Percent50, BackColor.Invert(), Color.Transparent))
                 {
-                    G.DrawRectangle(P, rect);
+                    G.FillRectangle(hb, _rectControl);
                 }
             }
 
-            #endregion
+            // 4. Hilight color-edit overlay (odd pixels).
+            if (IsEditHilight)
+            {
+                using (HatchBrush hb = new(HatchStyle.Percent50, Color.Transparent, _buttonHilight.Invert()))
+                {
+                    G.FillRectangle(hb, _rectControl);
+                }
+            }
 
-
+            // 5. Metrics grip outline.
+            if (IsEditGrip)
+            {
+                using (Pen p = new(BackColor.Invert()) { DashStyle = DashStyle.Dot })
+                {
+                    G.DrawRectangle(p, _rectControl);
+                }
+            }
         }
+
+        #endregion
     }
 }

@@ -55,7 +55,7 @@ namespace WinPaletter
             MainForm mainForm = Application.OpenForms.OfType<MainForm>().FirstOrDefault();
             if (mainForm is null || mainForm.IsDisposed) return;
 
-            ApplyStatusColor(mainForm, LogEventLevel.Information); 
+            ApplyStatusColor(mainForm, LogEventLevel.Information);
         }
 
         /// <summary>

@@ -6,7 +6,6 @@ using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WinPaletter.Theme.Structures;
 using WinPaletter.UI.WP;
 
 namespace WinPaletter

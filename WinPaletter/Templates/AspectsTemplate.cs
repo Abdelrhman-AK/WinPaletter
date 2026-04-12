@@ -15,7 +15,7 @@ namespace WinPaletter
     /// <summary>
     /// A template form for managing WinPaletter aspects editor
     /// </summary>
-    public partial class AspectsTemplate :UI.WP.Form
+    public partial class AspectsTemplate : UI.WP.Form
     {
         /// <summary>
         /// Creates a new instance of AspectsTemplate

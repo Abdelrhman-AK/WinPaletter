@@ -7,7 +7,6 @@ using System.Linq;
 using System.Windows.Forms;
 using WinPaletter.Assets;
 using WinPaletter.Theme;
-using static AnimatorNS.Flags;
 using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter
@@ -233,7 +232,7 @@ namespace WinPaletter
             tabs_preview_1.TabPages[2].BackgroundImage = LogonUI_Background_Toggle.Checked ? LogonUI_Acrylic_Toggle.Checked ? back_blurred : back_unblurred : null;
         }
 
-         Bitmap CaptureLockScreen()
+        Bitmap CaptureLockScreen()
         {
             Bitmap result;
 

@@ -1,14 +1,12 @@
 using FluentTransitions;
 using Octokit;
 using Ookii.Dialogs.WinForms;
-using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -296,7 +294,7 @@ namespace WinPaletter
 
                     if (newName.Equals("main", StringComparison.OrdinalIgnoreCase))
                     {
-                        MsgBox(string.Format(  Program.Localization.Strings.GitHubStrings.Branch_CannotDoOperation_Protected, "main"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MsgBox(string.Format(Program.Localization.Strings.GitHubStrings.Branch_CannotDoOperation_Protected, "main"), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         e.CancelEdit = true;
                         return;
                     }
@@ -803,7 +801,7 @@ Generated automatically by WinPaletter. Please review the changes before merging
                 {
                     await GetBranches();
                     await GitHub.FileSystem.SetBranch(GitHub.Repository.Branch.Name, treeView1, listView1, breadcrumbControl1);
-                    MsgBox(Program.Localization.Strings.Messages.SyncCompleted,MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MsgBox(Program.Localization.Strings.Messages.SyncCompleted, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                 {
@@ -1134,7 +1132,7 @@ Generated automatically by WinPaletter. Please review the changes before merging
             GitHubClient client = Program.GitHub.Client;
 
             GitHubCommit commit = await client.Repository.Commit.Get(repo.Id, branch.Commit.Sha);
-            CompareResult compare = await client.Repository.Commit.Compare( GitHub.Repository.OriginalOwner, GitHub.Repository.Name, upstreamBranch.Commit.Sha, branch.Commit.Sha);
+            CompareResult compare = await client.Repository.Commit.Compare(GitHub.Repository.OriginalOwner, GitHub.Repository.Name, upstreamBranch.Commit.Sha, branch.Commit.Sha);
 
             ListViewItem item = new() { Text = branch.Name, Tag = branch };
 
