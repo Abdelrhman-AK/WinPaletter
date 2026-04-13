@@ -78,7 +78,7 @@ namespace WinPaletter.UI.Retro
             set
             {
                 _windowFrame = value;
-                Invalidate();
+                Invalidate(_rectOuter.IsEmpty ? new Rectangle(0, 0, Width - 1, Height - 1) : _rectOuter);
             }
         }
 

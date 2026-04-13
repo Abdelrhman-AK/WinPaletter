@@ -36,15 +36,23 @@ namespace WinPaletter.UI.Retro
         private Color _overlayColor;
 
         // Cached pens — rebuilt only when the corresponding color property changes.
-        private Pen _penShadow;
-        private Pen _penDkShadow;
-        private Pen _penHilight;
-        private Pen _penLight;
+        private Pen _penShadow = new(SystemColors.ButtonShadow);
+        private Pen _penDkShadow = new(SystemColors.ControlDark);
+        private Pen _penHilight = new(SystemColors.ButtonHighlight);
+        private Pen _penLight = new(SystemColors.ControlLight);
 
         // Cached geometry — rebuilt on resize or text/font change.
         private Rectangle _rectControl;  // full control bounds (W-1, H-1)
         private Rectangle _rectFace;     // inner client area (inside the 2px border)
         private Rectangle _rectHitText;  // tight glyph bounds for caption hit-test
+
+        // Cached invalidation rectangles — rebuilt with geometry.
+        private Rectangle _invFace;
+        private Rectangle _invText;
+        private Rectangle _invDkShadow;
+        private Rectangle _invShadow;
+        private Rectangle _invHilight;
+        private Rectangle _invLight;
 
         // Border line segments — each PointF[2] is one line: [start, end].
         // Two segments per color (horizontal + vertical).
@@ -76,7 +84,7 @@ namespace WinPaletter.UI.Retro
                 if (_buttonShadow == value) return;
                 _buttonShadow = value;
                 ReplacePen(ref _penShadow, value);
-                Invalidate();
+                Invalidate(_invShadow.IsEmpty ? _rectControl : _invShadow);
             }
         }
         private Color _buttonShadow = SystemColors.ButtonShadow;
@@ -92,7 +100,7 @@ namespace WinPaletter.UI.Retro
                 if (_buttonDkShadow == value) return;
                 _buttonDkShadow = value;
                 ReplacePen(ref _penDkShadow, value);
-                Invalidate();
+                Invalidate(_invDkShadow.IsEmpty ? _rectControl : _invDkShadow);
             }
         }
         private Color _buttonDkShadow = SystemColors.ControlDark;
@@ -108,7 +116,7 @@ namespace WinPaletter.UI.Retro
                 if (_buttonHilight == value) return;
                 _buttonHilight = value;
                 ReplacePen(ref _penHilight, value);
-                Invalidate();
+                Invalidate(_invHilight.IsEmpty ? _rectControl : _invHilight);
             }
         }
         private Color _buttonHilight = SystemColors.ButtonHighlight;
@@ -124,7 +132,7 @@ namespace WinPaletter.UI.Retro
                 if (_buttonLight == value) return;
                 _buttonLight = value;
                 ReplacePen(ref _penLight, value);
-                Invalidate();
+                Invalidate(_invLight.IsEmpty ? _rectControl : _invLight);
             }
         }
         private Color _buttonLight = SystemColors.ControlLight;
@@ -139,7 +147,7 @@ namespace WinPaletter.UI.Retro
             {
                 if (base.BackColor == value) return;
                 base.BackColor = value;
-                Invalidate();
+                Invalidate(_invFace.IsEmpty ? _rectControl : _invFace);
             }
         }
 
@@ -204,6 +212,13 @@ namespace WinPaletter.UI.Retro
             _lightSeg1 = [new Point(0, h), new Point(w, h)];  // outer bottom
 
             RebuildTextRect();
+
+            _invFace = InflateSafe(_rectFace, 2);
+            _invText = InflateSafe(_rectHitText, 2);
+            _invDkShadow = InflateSafe(GetUnionLineRect(_dkShadowSeg0, _dkShadowSeg1), 2);
+            _invShadow = InflateSafe(GetUnionLineRect(_shadowSeg0, _shadowSeg1), 2);
+            _invHilight = InflateSafe(GetUnionLineRect(_hilightSeg0, _hilightSeg1), 2);
+            _invLight = InflateSafe(GetUnionLineRect(_lightSeg0, _lightSeg1), 2);
         }
 
         /// <summary>
@@ -225,6 +240,35 @@ namespace WinPaletter.UI.Retro
             }
 
             _rectHitText = new Rectangle(4, 4, (int)Math.Ceiling(measured.Width), (int)Math.Ceiling(measured.Height));
+        }
+
+        private static Rectangle InflateSafe(Rectangle r, int amount)
+        {
+            if (r.IsEmpty) return Rectangle.Empty;
+            return r.InflateReturn(amount);
+        }
+
+        private static Rectangle GetUnionLineRect(PointF[] seg0, PointF[] seg1)
+        {
+            Rectangle r0 = GetLineRect(seg0);
+            Rectangle r1 = GetLineRect(seg1);
+            if (r0.IsEmpty) return r1;
+            if (r1.IsEmpty) return r0;
+            return Rectangle.Union(r0, r1);
+        }
+
+        private static Rectangle GetLineRect(PointF[] seg)
+        {
+            if (seg is null || seg.Length < 2) return Rectangle.Empty;
+            int x1 = (int)seg[0].X;
+            int y1 = (int)seg[0].Y;
+            int x2 = (int)seg[1].X;
+            int y2 = (int)seg[1].Y;
+            int left = Math.Min(x1, x2);
+            int top = Math.Min(y1, y2);
+            int right = Math.Max(x1, x2);
+            int bottom = Math.Max(y1, y2);
+            return new Rectangle(left, top, (right - left) + 1, (bottom - top) + 1);
         }
 
         private static bool OnSegment(PointF[] seg, Point p)

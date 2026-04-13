@@ -43,6 +43,16 @@ namespace WinPaletter.UI.Retro
         private Rectangle _item2Text;   // Selected text hit-test bounds
         private Rectangle _grip;        // resize grip bounds
 
+        // Cached invalidation rectangles — rebuilt alongside geometry.
+        private Rectangle _invAll;
+        private Rectangle _invFace;
+        private Rectangle _invSelected;
+        private Rectangle _invSelectedBorder;
+        private Rectangle _invText0;
+        private Rectangle _invText1;
+        private Rectangle _invText2;
+        private Rectangle _invGrip;
+
         // Border segment endpoints for the selected item (non-flat mode).
         private PointF[] _shadowSeg0, _shadowSeg1;   // top, left
         private PointF[] _hilightSeg0, _hilightSeg1;  // right, bottom
@@ -114,7 +124,7 @@ namespace WinPaletter.UI.Retro
                 if (base.BackColor == value) return;
                 base.BackColor = value;
                 _overlayColor = Color.FromArgb(100, value.IsDark() ? Color.White : Color.Black);
-                Invalidate();
+                Invalidate(_invFace.IsEmpty ? _invAll : _invFace);
             }
         }
 
@@ -130,7 +140,7 @@ namespace WinPaletter.UI.Retro
                 base.ForeColor = value;
                 ReplaceBrush(ref _brushFore, value);
                 UpdateSelectedBrush();
-                Invalidate();
+                Invalidate(_invAll.IsEmpty ? _rect : _invAll);
             }
         }
 
@@ -145,7 +155,7 @@ namespace WinPaletter.UI.Retro
         public bool Flat
         {
             get => _flat;
-            set { if (_flat != value) { _flat = value; UpdateSelectedBrush(); Invalidate(); } }
+            set { if (_flat != value) { _flat = value; UpdateSelectedBrush(); Invalidate(_invAll.IsEmpty ? _rect : _invAll); } }
         }
         private bool _flat = false;
 
@@ -155,7 +165,7 @@ namespace WinPaletter.UI.Retro
         public Color MenuBar
         {
             get => _menuBar;
-            set { if (_menuBar != value) { _menuBar = value; Invalidate(); } }
+            set { if (_menuBar != value) { _menuBar = value; Invalidate(_invFace.IsEmpty ? _invAll : _invFace); } }
         }
         private Color _menuBar = SystemColors.MenuBar;
 
@@ -170,7 +180,7 @@ namespace WinPaletter.UI.Retro
                 if (_buttonHilight == value) return;
                 _buttonHilight = value;
                 ReplacePen(ref _penHilight, value);
-                Invalidate();
+                Invalidate(_invSelectedBorder.IsEmpty ? _invSelected : _invSelectedBorder);
             }
         }
         private Color _buttonHilight = SystemColors.ButtonHighlight;
@@ -186,7 +196,7 @@ namespace WinPaletter.UI.Retro
                 if (_buttonShadow == value) return;
                 _buttonShadow = value;
                 ReplacePen(ref _penShadow, value);
-                Invalidate();
+                Invalidate(_invSelectedBorder.IsEmpty ? _invSelected : _invSelectedBorder);
             }
         }
         private Color _buttonShadow = SystemColors.ButtonShadow;
@@ -202,7 +212,7 @@ namespace WinPaletter.UI.Retro
                 if (_hilight == value) return;
                 _hilight = value;
                 ReplaceBrush(ref _brushHilight, value);
-                Invalidate();
+                Invalidate(_invSelected.IsEmpty ? _invAll : _invSelected);
             }
         }
         private Color _hilight = SystemColors.Highlight;
@@ -218,7 +228,7 @@ namespace WinPaletter.UI.Retro
                 if (_hilightText == value) return;
                 _hilightText = value;
                 UpdateSelectedBrush();
-                Invalidate();
+                Invalidate(_invText2.IsEmpty ? _invSelected : _invText2);
             }
         }
         private Color _hilightText = SystemColors.HighlightText;
@@ -234,7 +244,7 @@ namespace WinPaletter.UI.Retro
                 if (_menuHilight == value) return;
                 _menuHilight = value;
                 ReplacePen(ref _penMenuHilight, value);
-                Invalidate();
+                Invalidate(_invSelectedBorder.IsEmpty ? _invSelected : _invSelectedBorder);
             }
         }
         private Color _menuHilight = SystemColors.MenuHighlight;
@@ -250,7 +260,7 @@ namespace WinPaletter.UI.Retro
                 if (_grayText == value) return;
                 _grayText = value;
                 ReplaceBrush(ref _brushDisabled, value);
-                Invalidate();
+                Invalidate(_invText1.IsEmpty ? _invAll : _invText1);
             }
         }
         private Color _grayText = SystemColors.GrayText;
@@ -267,7 +277,7 @@ namespace WinPaletter.UI.Retro
                 if (value == _menuHeight) return;
                 _menuHeight = value;
                 RebuildGeometry();
-                Invalidate();
+                Invalidate(_invAll.IsEmpty ? _rect : _invAll);
                 if (!DesignMode && EnableEditingMetrics && _draggingGrip)
                     EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(MenuHeight)));
             }
@@ -280,7 +290,7 @@ namespace WinPaletter.UI.Retro
         public bool PreviewSelectionItem
         {
             get => _previewSelectionItem;
-            set { if (_previewSelectionItem != value) { _previewSelectionItem = value; Invalidate(); } }
+            set { if (_previewSelectionItem != value) { _previewSelectionItem = value; Invalidate(_invAll.IsEmpty ? _rect : _invAll); } }
         }
         private bool _previewSelectionItem = true;
 
@@ -373,6 +383,15 @@ namespace WinPaletter.UI.Retro
             _hilightSeg1 = [new(_item2.Left, _item2.Bottom - 1), new(_item2.Right - 1, _item2.Bottom - 1)];
 
             _grip = new Rectangle(_rect.X + _rect.Width / 2 - GripSize / 2, _rect.Bottom - GripSize, GripSize, GripSize);
+
+            _invAll = InflateSafe(_rect, 2);
+            _invFace = _invAll;
+            _invSelected = InflateSafe(_item2, 2);
+            _invSelectedBorder = InflateSafe(_item2, 2);
+            _invText0 = InflateSafe(_item0Text, 2);
+            _invText1 = InflateSafe(_item1Text, 2);
+            _invText2 = InflateSafe(_item2Text, 2);
+            _invGrip = InflateSafe(_grip, 2);
         }
 
         /// <summary>
@@ -415,6 +434,12 @@ namespace WinPaletter.UI.Retro
         {
             base.OnBackColorChanged(e);
             _overlayColor = Color.FromArgb(100, BackColor.IsDark() ? Color.White : Color.Black);
+        }
+
+        private static Rectangle InflateSafe(Rectangle r, int amount)
+        {
+            if (r.IsEmpty) return Rectangle.Empty;
+            return r.InflateReturn(amount);
         }
 
         #endregion

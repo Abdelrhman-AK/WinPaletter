@@ -355,15 +355,21 @@ namespace WinPaletter.UI.Retro
 
             if (EnableEditingColors)
             {
-                _cursorOnFace = false;
-                _cursorOnHilight = false;
-                Invalidate();
+                if (_cursorOnFace || _cursorOnHilight)
+                {
+                    _cursorOnFace = false;
+                    _cursorOnHilight = false;
+                    Invalidate(_rectControl);
+                }
             }
             else if (EnableEditingMetrics)
             {
-                _cursorOnGrip = false;
-                _draggingGrip = false;
-                Invalidate();
+                if (_cursorOnGrip || _draggingGrip)
+                {
+                    _cursorOnGrip = false;
+                    _draggingGrip = false;
+                    Invalidate(_rectControl);
+                }
             }
         }
 

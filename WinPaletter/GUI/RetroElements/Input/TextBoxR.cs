@@ -121,6 +121,13 @@ namespace WinPaletter.UI.Retro
         private PointF[] _hilightSeg0, _hilightSeg1;
         private PointF[] _lightSeg0, _lightSeg1;
 
+        // Cached invalidation rectangles — rebuilt with geometry.
+        private Rectangle _invDkShadow;
+        private Rectangle _invShadow;
+        private Rectangle _invHilight;
+        private Rectangle _invLight;
+        private Rectangle _invBorderAll;
+
         private static void ReplacePen(ref Pen pen, Color color)
         {
             pen?.Dispose();
@@ -148,6 +155,16 @@ namespace WinPaletter.UI.Retro
             _hilightSeg1 = [new(1, h - 1f), new(w - 1f, h - 1f)];
             _lightSeg0 = [new(w, 0), new(w, h)];
             _lightSeg1 = [new(0, h), new(w, h)];
+
+            _invDkShadow = InflateSafe(GetUnionLineRect(_dkShadowSeg0, _dkShadowSeg1), 2);
+            _invShadow = InflateSafe(GetUnionLineRect(_shadowSeg0, _shadowSeg1), 2);
+            _invHilight = InflateSafe(GetUnionLineRect(_hilightSeg0, _hilightSeg1), 2);
+            _invLight = InflateSafe(GetUnionLineRect(_lightSeg0, _lightSeg1), 2);
+
+            _invBorderAll = _invDkShadow;
+            _invBorderAll = _invBorderAll.IsEmpty ? _invShadow : Rectangle.Union(_invBorderAll, _invShadow);
+            _invBorderAll = _invBorderAll.IsEmpty ? _invHilight : Rectangle.Union(_invBorderAll, _invHilight);
+            _invBorderAll = _invBorderAll.IsEmpty ? _invLight : Rectangle.Union(_invBorderAll, _invLight);
         }
 
         #endregion
@@ -290,7 +307,7 @@ namespace WinPaletter.UI.Retro
                 if (_buttonShadow == value) return;
                 _buttonShadow = value;
                 ReplacePen(ref _penShadow, value);
-                Invalidate();
+                Invalidate(_invShadow.IsEmpty ? new Rectangle(0, 0, Width - 1, Height - 1) : _invShadow);
             }
         }
         private Color _buttonShadow = SystemColors.ButtonShadow;
@@ -306,7 +323,7 @@ namespace WinPaletter.UI.Retro
                 if (_buttonDkShadow == value) return;
                 _buttonDkShadow = value;
                 ReplacePen(ref _penDkShadow, value);
-                Invalidate();
+                Invalidate(_invDkShadow.IsEmpty ? new Rectangle(0, 0, Width - 1, Height - 1) : _invDkShadow);
             }
         }
         private Color _buttonDkShadow = SystemColors.ControlDark;
@@ -322,7 +339,7 @@ namespace WinPaletter.UI.Retro
                 if (_buttonHilight == value) return;
                 _buttonHilight = value;
                 ReplacePen(ref _penHilight, value);
-                Invalidate();
+                Invalidate(_invHilight.IsEmpty ? new Rectangle(0, 0, Width - 1, Height - 1) : _invHilight);
             }
         }
         private Color _buttonHilight = SystemColors.ButtonHighlight;
@@ -338,10 +355,39 @@ namespace WinPaletter.UI.Retro
                 if (_buttonLight == value) return;
                 _buttonLight = value;
                 ReplacePen(ref _penLight, value);
-                Invalidate();
+                Invalidate(_invLight.IsEmpty ? new Rectangle(0, 0, Width - 1, Height - 1) : _invLight);
             }
         }
         private Color _buttonLight = SystemColors.ControlLight;
+
+        private static Rectangle InflateSafe(Rectangle r, int amount)
+        {
+            if (r.IsEmpty) return Rectangle.Empty;
+            return r.InflateReturn(amount);
+        }
+
+        private static Rectangle GetUnionLineRect(PointF[] seg0, PointF[] seg1)
+        {
+            Rectangle r0 = GetLineRect(seg0);
+            Rectangle r1 = GetLineRect(seg1);
+            if (r0.IsEmpty) return r1;
+            if (r1.IsEmpty) return r0;
+            return Rectangle.Union(r0, r1);
+        }
+
+        private static Rectangle GetLineRect(PointF[] seg)
+        {
+            if (seg is null || seg.Length < 2) return Rectangle.Empty;
+            int x1 = (int)seg[0].X;
+            int y1 = (int)seg[0].Y;
+            int x2 = (int)seg[1].X;
+            int y2 = (int)seg[1].Y;
+            int left = Math.Min(x1, x2);
+            int top = Math.Min(y1, y2);
+            int right = Math.Max(x1, x2);
+            int bottom = Math.Max(y1, y2);
+            return new Rectangle(left, top, (right - left) + 1, (bottom - top) + 1);
+        }
 
         #endregion
 
@@ -386,7 +432,7 @@ namespace WinPaletter.UI.Retro
         {
             base.OnMouseDown(e);
             TB?.Focus();
-            Invalidate();
+            InvalidateBorder();
         }
 
         /// <summary>
@@ -396,7 +442,7 @@ namespace WinPaletter.UI.Retro
         {
             base.OnMouseUp(e);
             TB?.Focus();
-            Invalidate();
+            InvalidateBorder();
         }
 
         /// <summary>
@@ -405,7 +451,7 @@ namespace WinPaletter.UI.Retro
         protected override void OnMouseEnter(EventArgs e)
         {
             base.OnMouseEnter(e);
-            Invalidate();
+            InvalidateBorder();
         }
 
         /// <summary>
@@ -414,13 +460,13 @@ namespace WinPaletter.UI.Retro
         protected override void OnMouseLeave(EventArgs e)
         {
             base.OnMouseLeave(e);
-            Invalidate();
+            InvalidateBorder();
         }
 
-        private void TB_MouseDown(object sender, MouseEventArgs e) => Invalidate();
-        private void TB_MouseEnter(object sender, EventArgs e) => Invalidate();
-        private void TB_MouseLeave(object sender, EventArgs e) => Invalidate();
-        private void TB_LostFocus(object sender, EventArgs e) => Invalidate();
+        private void TB_MouseDown(object sender, MouseEventArgs e) => InvalidateBorder();
+        private void TB_MouseEnter(object sender, EventArgs e) => InvalidateBorder();
+        private void TB_MouseLeave(object sender, EventArgs e) => InvalidateBorder();
+        private void TB_LostFocus(object sender, EventArgs e) => InvalidateBorder();
 
         #endregion
 
@@ -451,10 +497,17 @@ namespace WinPaletter.UI.Retro
                 case Keys.Z: TB.Undo(); e.SuppressKeyPress = true; break;
             }
 
-            Invalidate();
+            InvalidateBorder();
         }
 
         #endregion
+
+        private void InvalidateBorder()
+        {
+            Rectangle r = _invBorderAll;
+            if (r.IsEmpty) r = new Rectangle(0, 0, Width - 1, Height - 1);
+            Invalidate(r);
+        }
 
         #region Paint
 

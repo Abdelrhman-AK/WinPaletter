@@ -43,6 +43,15 @@ namespace WinPaletter.UI.Retro
         private Rectangle _rectDash;   // focus rect region (inset by 4px)
         private Rectangle _textRect;   // tight text hit-test bounds
 
+        // Cached invalidation regions — rebuilt alongside geometry.
+        private Rectangle _invWindowFrame;
+        private Rectangle _invShadow;
+        private Rectangle _invDkShadow;
+        private Rectangle _invHilight;
+        private Rectangle _invLight;
+        private Rectangle _invFace;
+        private Rectangle _invText;
+
         // Border segment endpoints — two segments per color layer.
         // SetPoints picks the correct set based on mode and state.
         private Point[] _hilightSeg0, _hilightSeg1;
@@ -127,7 +136,7 @@ namespace WinPaletter.UI.Retro
                 if (_windowFrame == value) return;
                 _windowFrame = value;
                 ReplacePen(ref _penWindowFrame, value);
-                Invalidate();
+                Invalidate(_invWindowFrame);
             }
         }
         private Color _windowFrame = SystemColors.WindowFrame;
@@ -143,7 +152,7 @@ namespace WinPaletter.UI.Retro
                 if (_buttonShadow == value) return;
                 _buttonShadow = value;
                 ReplacePen(ref _penShadow, value);
-                Invalidate();
+                Invalidate(_invShadow);
             }
         }
         private Color _buttonShadow = SystemColors.ButtonShadow;
@@ -159,7 +168,7 @@ namespace WinPaletter.UI.Retro
                 if (_buttonDkShadow == value) return;
                 _buttonDkShadow = value;
                 ReplacePen(ref _penDkShadow, value);
-                Invalidate();
+                Invalidate(_invDkShadow);
             }
         }
         private Color _buttonDkShadow = SystemColors.ControlDark;
@@ -175,7 +184,7 @@ namespace WinPaletter.UI.Retro
                 if (_buttonHilight == value) return;
                 _buttonHilight = value;
                 ReplacePen(ref _penHilight, value);
-                Invalidate();
+                Invalidate(_invHilight);
             }
         }
         private Color _buttonHilight = SystemColors.ButtonHighlight;
@@ -191,7 +200,7 @@ namespace WinPaletter.UI.Retro
                 if (_buttonLight == value) return;
                 _buttonLight = value;
                 ReplacePen(ref _penLight, value);
-                Invalidate();
+                Invalidate(_invLight);
             }
         }
         private Color _buttonLight = SystemColors.ControlLight;
@@ -208,7 +217,7 @@ namespace WinPaletter.UI.Retro
                 base.BackColor = value;
                 ReplacePen(ref _penBackColor, value);
                 _overlayColor = Color.FromArgb(100, value.IsDark() ? Color.White : Color.Black);
-                Invalidate();
+                Invalidate(_invFace);
             }
         }
 
@@ -405,6 +414,15 @@ namespace WinPaletter.UI.Retro
                 _shadowSeg0 = [new(2, Height - 3), new(Width - 3, Height - 3)];
                 _shadowSeg1 = [new(Width - 3, 2), new(Width - 3, Height - 3)];
             }
+
+            // Invalidation caches (pad a bit to include overlay strokes).
+            _invWindowFrame = InflateSafe(_rect, 2);
+            _invFace = InflateSafe(_rect, 0);
+            _invText = InflateSafe(_textRect, 2);
+            _invHilight = InflateSafe(GetUnionLineRect(_hilightSeg0, _hilightSeg1), 2);
+            _invLight = InflateSafe(GetUnionLineRect(_lightSeg0, _lightSeg1), 2);
+            _invShadow = InflateSafe(GetUnionLineRect(_shadowSeg0, _shadowSeg1), 2);
+            _invDkShadow = InflateSafe(GetUnionLineRect(_dkShadowSeg0, _dkShadowSeg1), 2);
         }
 
         #endregion
@@ -456,6 +474,20 @@ namespace WinPaletter.UI.Retro
         {
             _state = MouseState.None;
             _pressed = false;
+            RebuildGeometry();
+            Invalidate();
+        }
+
+        protected override void OnGotFocus(EventArgs e)
+        {
+            base.OnGotFocus(e);
+            RebuildGeometry();
+            Invalidate();
+        }
+
+        protected override void OnEnabledChanged(EventArgs e)
+        {
+            base.OnEnabledChanged(e);
             RebuildGeometry();
             Invalidate();
         }
@@ -549,6 +581,14 @@ namespace WinPaletter.UI.Retro
                 bool onLight0 = OnSegment(_lightSeg0, e.Location);
                 bool onLight1 = OnSegment(_lightSeg1, e.Location);
 
+                bool prevWindowFrame = _cursorOnWindowFrame;
+                bool prevShadow = _cursorOnShadow;
+                bool prevDkShadow = _cursorOnDkShadow;
+                bool prevHilight = _cursorOnHilight;
+                bool prevLight = _cursorOnLight;
+                bool prevText = _cursorOnText;
+                bool prevFace = _cursorOnFace;
+
                 if ((_state == MouseState.Over | _state == MouseState.None | !Enabled) && Focused)
                 {
                     _cursorOnWindowFrame = _rect.BordersContains(e.Location);
@@ -571,7 +611,16 @@ namespace WinPaletter.UI.Retro
                 _cursorOnText = _textRect.Contains(e.Location);
                 _cursorOnFace = _rect.Contains(e.Location) && !_cursorOnShadow && !_cursorOnDkShadow && !_cursorOnHilight && !_cursorOnLight && !_cursorOnText && !_cursorOnWindowFrame;
 
-                Invalidate();
+                if (prevWindowFrame != _cursorOnWindowFrame ||
+                    prevShadow != _cursorOnShadow ||
+                    prevDkShadow != _cursorOnDkShadow ||
+                    prevHilight != _cursorOnHilight ||
+                    prevLight != _cursorOnLight ||
+                    prevText != _cursorOnText ||
+                    prevFace != _cursorOnFace)
+                {
+                    Invalidate();
+                }
             }
 
             base.OnMouseMove(e);
@@ -805,6 +854,33 @@ namespace WinPaletter.UI.Retro
                     }
                 }
             }
+        }
+
+        private static Rectangle GetUnionLineRect(Point[] seg0, Point[] seg1)
+        {
+            Rectangle r0 = GetLineRect(seg0);
+            Rectangle r1 = GetLineRect(seg1);
+            if (r0.IsEmpty) return r1;
+            if (r1.IsEmpty) return r0;
+            return Rectangle.Union(r0, r1);
+        }
+
+        private static Rectangle GetLineRect(Point[] seg)
+        {
+            if (seg is null || seg.Length < 2) return Rectangle.Empty;
+            Point a = seg[0];
+            Point b = seg[1];
+            int left = Math.Min(a.X, b.X);
+            int top = Math.Min(a.Y, b.Y);
+            int right = Math.Max(a.X, b.X);
+            int bottom = Math.Max(a.Y, b.Y);
+            return new Rectangle(left, top, (right - left) + 1, (bottom - top) + 1);
+        }
+
+        private static Rectangle InflateSafe(Rectangle r, int amount)
+        {
+            if (r.IsEmpty) return Rectangle.Empty;
+            return r.InflateReturn(amount);
         }
 
         #endregion

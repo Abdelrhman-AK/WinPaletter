@@ -187,7 +187,7 @@ namespace WinPaletter.UI.Retro
             if (onText != _cursorOnText)
             {
                 _cursorOnText = onText;
-                Invalidate();
+                Invalidate(_rectHitText.IsEmpty ? new Rectangle(0, 0, Width - 1, Height - 1) : _rectHitText.InflateReturn(2));
             }
         }
 
@@ -201,7 +201,7 @@ namespace WinPaletter.UI.Retro
             if (!DesignMode && EnableEditingColors && _cursorOnText)
             {
                 _cursorOnText = false;
-                Invalidate();
+                Invalidate(_rectHitText.IsEmpty ? new Rectangle(0, 0, Width - 1, Height - 1) : _rectHitText.InflateReturn(2));
             }
         }
 

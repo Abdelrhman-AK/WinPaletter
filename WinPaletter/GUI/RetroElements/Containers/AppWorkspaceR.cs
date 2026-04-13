@@ -18,6 +18,9 @@ namespace WinPaletter.UI.Retro
         // Tracks whether the cursor is currently hovering over the panel.
         private bool _cursorOnMe = false;
 
+        // Cached full bounds for invalidation.
+        private Rectangle _invAll = Rectangle.Empty;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AppWorkspaceR"/> class.
         /// </summary>
@@ -55,6 +58,13 @@ namespace WinPaletter.UI.Retro
         {
             base.OnBackColorChanged(e);
             _overlayColor = Color.FromArgb(100, BackColor.IsDark() ? Color.White : Color.Black);
+            if (EnableEditingColors && _cursorOnMe) Invalidate(_invAll);
+        }
+
+        protected override void OnResize(EventArgs eventargs)
+        {
+            base.OnResize(eventargs);
+            _invAll = new Rectangle(0, 0, Width - 1, Height - 1);
         }
 
         /// <summary>
@@ -67,7 +77,7 @@ namespace WinPaletter.UI.Retro
             if (EnableEditingColors && !_cursorOnMe)
             {
                 _cursorOnMe = true;
-                Invalidate();
+                Invalidate(_invAll);
             }
         }
 
@@ -81,7 +91,7 @@ namespace WinPaletter.UI.Retro
             if (EnableEditingColors && _cursorOnMe)
             {
                 _cursorOnMe = false;
-                Invalidate();
+                Invalidate(_invAll);
             }
         }
 

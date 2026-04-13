@@ -99,6 +99,19 @@ namespace WinPaletter.UI.Retro
         private PointF[] _hilightSeg0, _hilightSeg1;
         private PointF[] _lightSeg0, _lightSeg1;
 
+        // Cached invalidation rectangles — rebuilt in AdjustPadding.
+        private Rectangle _invOuter;
+        private Rectangle _invBorderStrip;
+        private Rectangle _invTitlebar;
+        private Rectangle _invTitleText;
+        private Rectangle _invColor1;
+        private Rectangle _invColor2;
+        private Rectangle _invLight;
+        private Rectangle _invHilight;
+        private Rectangle _invShadow;
+        private Rectangle _invDkShadow;
+        private Rectangle _invFace;
+
         // Cached pens — rebuilt only when the corresponding color changes.
         private Pen _penShadow;
         private Pen _penDkShadow;
@@ -170,7 +183,7 @@ namespace WinPaletter.UI.Retro
                 _maxBtn?.BackColor = value;
                 ReplacePen(ref _penFace, value);
                 _overlayColor = Color.FromArgb(100, value.IsDark() ? Color.White : Color.Black);
-                Invalidate();
+                Invalidate(_invFace.IsEmpty ? _invOuter : _invFace);
             }
         }
 
@@ -180,7 +193,7 @@ namespace WinPaletter.UI.Retro
         public bool ColorGradient
         {
             get => _colorGradient;
-            set { if (_colorGradient != value) { _colorGradient = value; Invalidate(); } }
+            set { if (_colorGradient != value) { _colorGradient = value; Invalidate(_invTitlebar.IsEmpty ? _invOuter : _invTitlebar); } }
         }
         private bool _colorGradient = true;
 
@@ -190,7 +203,7 @@ namespace WinPaletter.UI.Retro
         public bool Active
         {
             get => _active;
-            set { if (_active != value) { _active = value; Invalidate(); } }
+            set { if (_active != value) { _active = value; Invalidate(_invTitlebar.IsEmpty ? _invOuter : _invTitlebar); } }
         }
         private bool _active = true;
 
@@ -205,7 +218,7 @@ namespace WinPaletter.UI.Retro
                 if (_colorBorder == value) return;
                 _colorBorder = value;
                 ReplacePen(ref _penBorder, value);
-                Invalidate();
+                Invalidate(_invBorderStrip.IsEmpty ? _invOuter : _invBorderStrip);
             }
         }
         private Color _colorBorder = SystemColors.ActiveBorder;
@@ -216,7 +229,7 @@ namespace WinPaletter.UI.Retro
         public bool Flat
         {
             get => _flat;
-            set { if (_flat != value) { _flat = value; Invalidate(); } }
+            set { if (_flat != value) { _flat = value; Invalidate(_invOuter); } }
         }
         private bool _flat = false;
 
@@ -237,7 +250,7 @@ namespace WinPaletter.UI.Retro
                     _brushColorGr?.Dispose();
                     _brushColorGr = new(_titlebarRect, rtl ? _color2 : _color1, rtl ? _color1 : _color2, LinearGradientMode.Horizontal);
 
-                    Invalidate();
+                    Invalidate(_invTitlebar.IsEmpty ? _invOuter : _invTitlebar);
                 }
             }
         }
@@ -260,7 +273,7 @@ namespace WinPaletter.UI.Retro
                     _brushColorGr?.Dispose();
                     _brushColorGr = new(_titlebarRect, rtl ? _color2 : _color1, rtl ? _color1 : _color2, LinearGradientMode.Horizontal);
 
-                    Invalidate();
+                    Invalidate(_invTitlebar.IsEmpty ? _invOuter : _invTitlebar);
                 }
             }
         }
@@ -280,7 +293,7 @@ namespace WinPaletter.UI.Retro
                 _minBtn?.ButtonShadow = value;
                 _maxBtn?.ButtonShadow = value;
                 ReplacePen(ref _penShadow, value);
-                Invalidate();
+                Invalidate(_flat ? _invOuter : (_invShadow.IsEmpty ? _invOuter : _invShadow));
             }
         }
         private Color _buttonShadow = SystemColors.ButtonShadow;
@@ -299,7 +312,7 @@ namespace WinPaletter.UI.Retro
                 _minBtn?.ButtonDkShadow = value;
                 _maxBtn?.ButtonDkShadow = value;
                 ReplacePen(ref _penDkShadow, value);
-                Invalidate();
+                Invalidate(_flat ? _invOuter : (_invDkShadow.IsEmpty ? _invOuter : _invDkShadow));
             }
         }
         private Color _buttonDkShadow = SystemColors.ControlDark;
@@ -318,7 +331,7 @@ namespace WinPaletter.UI.Retro
                 _minBtn?.ButtonHilight = value;
                 _maxBtn?.ButtonHilight = value;
                 ReplacePen(ref _penHilight, value);
-                Invalidate();
+                Invalidate(_flat ? _invOuter : (_invHilight.IsEmpty ? _invOuter : _invHilight));
             }
         }
         private Color _buttonHilight = SystemColors.ButtonHighlight;
@@ -337,7 +350,7 @@ namespace WinPaletter.UI.Retro
                 _minBtn?.ButtonLight = value;
                 _maxBtn?.ButtonLight = value;
                 ReplacePen(ref _penLight, value);
-                Invalidate();
+                Invalidate(_flat ? _invOuter : (_invLight.IsEmpty ? _invOuter : _invLight));
             }
         }
         private Color _buttonLight = SystemColors.ControlLight;
@@ -355,7 +368,7 @@ namespace WinPaletter.UI.Retro
                 _closeBtn?.ForeColor = value;
                 _minBtn?.ForeColor = value;
                 _maxBtn?.ForeColor = value;
-                Invalidate();
+                Invalidate(_invTitlebar.IsEmpty ? _invOuter : _invTitlebar);
             }
         }
         private Color _buttonText = SystemColors.ControlText;
@@ -375,7 +388,7 @@ namespace WinPaletter.UI.Retro
                 AdjustControlBoxFontsSizes();
                 AdjustLocations();
                 AdjustPadding();
-                Invalidate();
+                Invalidate(_invOuter);
                 if (!DesignMode && EnableEditingMetrics && _dragging_captionHeight) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Metrics_CaptionHeight)));
             }
         }
@@ -395,7 +408,7 @@ namespace WinPaletter.UI.Retro
                 AdjustButtonSizes();
                 AdjustLocations();
                 AdjustControlBoxFontsSizes();
-                Invalidate();
+                Invalidate(_invOuter);
             }
         }
         private int _captionWidth = 22;
@@ -413,7 +426,7 @@ namespace WinPaletter.UI.Retro
                 _borderWidth = value;
                 AdjustLocations();
                 AdjustPadding();
-                Invalidate();
+                Invalidate(_invOuter);
                 if (!DesignMode && EnableEditingMetrics && (_dragging_borderLeft || _dragging_borderRight || _dragging_borderBottom))
                     EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Metrics_BorderWidth)));
             }
@@ -433,7 +446,7 @@ namespace WinPaletter.UI.Retro
                 _paddedBorderWidth = value;
                 AdjustLocations();
                 AdjustPadding();
-                Invalidate();
+                Invalidate(_invOuter);
                 if (!DesignMode && EnableEditingMetrics && (_dragging_paddingLeft || _dragging_paddingRight || _dragging_paddingBottom))
                     EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Metrics_PaddedBorderWidth)));
             }
@@ -454,7 +467,7 @@ namespace WinPaletter.UI.Retro
                 _minBtn?.Visible = value && _minimizeBox;
                 _maxBtn?.Visible = value && _maximizeBox;
                 AdjustLocations();
-                Invalidate();
+                Invalidate(_invTitlebar.IsEmpty ? _invOuter : _invTitlebar);
             }
         }
         private bool _controlBox = true;
@@ -471,7 +484,7 @@ namespace WinPaletter.UI.Retro
                 _minimizeBox = value;
                 _minBtn?.Visible = _controlBox && value;
                 AdjustLocations();
-                Invalidate();
+                Invalidate(_invTitlebar.IsEmpty ? _invOuter : _invTitlebar);
             }
         }
         private bool _minimizeBox = true;
@@ -488,7 +501,7 @@ namespace WinPaletter.UI.Retro
                 _maximizeBox = value;
                 _maxBtn?.Visible = _controlBox && value;
                 AdjustLocations();
-                Invalidate();
+                Invalidate(_invTitlebar.IsEmpty ? _invOuter : _invTitlebar);
             }
         }
         private bool _maximizeBox = true;
@@ -681,6 +694,20 @@ namespace WinPaletter.UI.Retro
             _shadowSeg1 = [new(1, h - 1f), new(w - 1f, h - 1f)];
             _dkShadowSeg0 = [new(w, 0), new(w, h)];
             _dkShadowSeg1 = [new(0, h), new(w, h)];
+
+            // Invalidation caches (pad to cover hover overlays and 1px strokes).
+            _invOuter = InflateSafe(Rectangle.Ceiling(_rectOuter), 2);
+            _invFace = _invOuter;
+            _invBorderStrip = InflateSafe(Rectangle.Ceiling(_rectBorder), 2);
+            _invTitlebar = InflateSafe(Rectangle.Ceiling(_titlebarRect), 2);
+            _invTitleText = InflateSafe(Rectangle.Ceiling(_titlebarTextRect), 2);
+            _invColor1 = InflateSafe(Rectangle.Ceiling(_r0), 2);
+            _invColor2 = InflateSafe(Rectangle.Ceiling(_r1), 2);
+
+            _invLight = InflateSafe(GetUnionLineRect(_lightSeg0, _lightSeg1), 2);
+            _invHilight = InflateSafe(GetUnionLineRect(_hilightSeg0, _hilightSeg1), 2);
+            _invShadow = InflateSafe(GetUnionLineRect(_shadowSeg0, _shadowSeg1), 2);
+            _invDkShadow = InflateSafe(GetUnionLineRect(_dkShadowSeg0, _dkShadowSeg1), 2);
         }
 
         #endregion
@@ -775,14 +802,15 @@ namespace WinPaletter.UI.Retro
 
             if (EnableEditingColors)
             {
-                UpdateColorHover(e.Location);
-                Invalidate();
+                bool changed = UpdateColorHover(e.Location);
+                if (changed) Invalidate();
                 return;
             }
 
             if (EnableEditingMetrics)
             {
-                UpdateMetricsDrag(e.Location);
+                bool changed = UpdateMetricsDrag(e.Location);
+                if (changed) Invalidate();
             }
         }
 
@@ -863,8 +891,18 @@ namespace WinPaletter.UI.Retro
         /// Updates all color-edit hover flags from the current cursor position.
         /// Uses <see cref="OnSegment"/> for 1px border lines and rect containment for areas.
         /// </summary>
-        private void UpdateColorHover(Point loc)
+        private bool UpdateColorHover(Point loc)
         {
+            bool prevColor1 = _cursorOnColor1;
+            bool prevColor2 = _cursorOnColor2;
+            bool prevTitleText = _cursorOnTitleText;
+            bool prevShadow = _cursorOnShadow;
+            bool prevDkShadow = _cursorOnDkShadow;
+            bool prevHilight = _cursorOnHilight;
+            bool prevLight = _cursorOnLight;
+            bool prevBorder = _cursorOnBorder;
+            bool prevFace = _cursorOnFace;
+
             _cursorOnTitleText = _titlebarTextRect.Contains(loc);
 
             if (_cursorOnTitleText)
@@ -877,7 +915,7 @@ namespace WinPaletter.UI.Retro
                 _cursorOnLight = false;
                 _cursorOnBorder = false;
                 _cursorOnFace = false;
-                return;
+                return prevTitleText != _cursorOnTitleText;
             }
 
             _cursorOnColor1 = _r0.Contains(loc);
@@ -905,6 +943,16 @@ namespace WinPaletter.UI.Retro
 
             _cursorOnBorder = _rectBorder.BordersContains(loc);
             _cursorOnFace = _rectBorder.Contains(loc) && !_cursorOnBorder && !_titlebarRect.Contains(loc);
+
+            return prevColor1 != _cursorOnColor1 ||
+                   prevColor2 != _cursorOnColor2 ||
+                   prevTitleText != _cursorOnTitleText ||
+                   prevShadow != _cursorOnShadow ||
+                   prevDkShadow != _cursorOnDkShadow ||
+                   prevHilight != _cursorOnHilight ||
+                   prevLight != _cursorOnLight ||
+                   prevBorder != _cursorOnBorder ||
+                   prevFace != _cursorOnFace;
         }
 
         /// <summary>
@@ -926,22 +974,25 @@ namespace WinPaletter.UI.Retro
         /// <summary>
         /// Handles metric grip dragging and cursor shape updates.
         /// </summary>
-        private void UpdateMetricsDrag(Point loc)
+        private bool UpdateMetricsDrag(Point loc)
         {
             if (_dragging_captionHeight)
             {
                 Metrics_CaptionHeight = loc.Y - (_paddedBorderWidth + _borderWidth + (int)(GripSize * 0.5f));
-                return;
+                return false;
             }
 
-            if (_dragging_paddingLeft) { Metrics_PaddedBorderWidth = loc.X - (int)(GripSize * 0.5f) - _borderWidth; return; }
-            else if (_dragging_borderLeft) { Metrics_BorderWidth = loc.X - (int)(GripSize * 0.5f) - _paddedBorderWidth; return; }
-            else if (_dragging_paddingRight) { Metrics_PaddedBorderWidth = Width - loc.X - (int)(GripSize * 0.5f) - _borderWidth; return; }
-            else if (_dragging_borderRight) { Metrics_BorderWidth = Width - loc.X - (int)(GripSize * 0.5f) - _paddedBorderWidth; return; }
-            else if (_dragging_paddingBottom) { Metrics_PaddedBorderWidth = Height - loc.Y - (int)(GripSize * 0.5f) - _borderWidth; return; }
-            else if (_dragging_borderBottom) { Metrics_BorderWidth = Height - loc.Y - (int)(GripSize * 0.5f) - _paddedBorderWidth; return; }
+            if (_dragging_paddingLeft) { Metrics_PaddedBorderWidth = loc.X - (int)(GripSize * 0.5f) - _borderWidth; return false; }
+            else if (_dragging_borderLeft) { Metrics_BorderWidth = loc.X - (int)(GripSize * 0.5f) - _paddedBorderWidth; return false; }
+            else if (_dragging_paddingRight) { Metrics_PaddedBorderWidth = Width - loc.X - (int)(GripSize * 0.5f) - _borderWidth; return false; }
+            else if (_dragging_borderRight) { Metrics_BorderWidth = Width - loc.X - (int)(GripSize * 0.5f) - _paddedBorderWidth; return false; }
+            else if (_dragging_paddingBottom) { Metrics_PaddedBorderWidth = Height - loc.Y - (int)(GripSize * 0.5f) - _borderWidth; return false; }
+            else if (_dragging_borderBottom) { Metrics_BorderWidth = Height - loc.Y - (int)(GripSize * 0.5f) - _paddedBorderWidth; return false; }
 
             // No drag active — update hover state and cursor shape.
+            bool prevTitleText = _cursorOnTitleText;
+            bool prevGrip = _cursorOnMetricsGrip;
+
             _cursorOnTitleText = _titlebarTextRect.Contains(loc);
             _cursorOnMetricsGrip = !_titlebarRect.Contains(loc);
 
@@ -951,7 +1002,7 @@ namespace WinPaletter.UI.Retro
             else if (_gripLeftCenter.Contains(loc) || _gripRightCenter.Contains(loc)) Cursor = Cursors.SizeWE;
             else Cursor = Cursors.Default;
 
-            Invalidate();
+            return prevTitleText != _cursorOnTitleText || prevGrip != _cursorOnMetricsGrip;
         }
 
         /// <summary>
@@ -1142,6 +1193,35 @@ namespace WinPaletter.UI.Retro
         }
 
         #endregion
+
+        private static Rectangle InflateSafe(Rectangle r, int amount)
+        {
+            if (r.IsEmpty) return Rectangle.Empty;
+            return r.InflateReturn(amount);
+        }
+
+        private static Rectangle GetUnionLineRect(PointF[] seg0, PointF[] seg1)
+        {
+            Rectangle r0 = GetLineRect(seg0);
+            Rectangle r1 = GetLineRect(seg1);
+            if (r0.IsEmpty) return r1;
+            if (r1.IsEmpty) return r0;
+            return Rectangle.Union(r0, r1);
+        }
+
+        private static Rectangle GetLineRect(PointF[] seg)
+        {
+            if (seg is null || seg.Length < 2) return Rectangle.Empty;
+            int x1 = (int)seg[0].X;
+            int y1 = (int)seg[0].Y;
+            int x2 = (int)seg[1].X;
+            int y2 = (int)seg[1].Y;
+            int left = Math.Min(x1, x2);
+            int top = Math.Min(y1, y2);
+            int right = Math.Max(x1, x2);
+            int bottom = Math.Max(y1, y2);
+            return new Rectangle(left, top, (right - left) + 1, (bottom - top) + 1);
+        }
 
         #region Dispose
 

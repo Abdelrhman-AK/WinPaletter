@@ -45,6 +45,19 @@ namespace WinPaletter.UI.Retro
         private Rectangle _item1Text;    // Selected text hit-test bounds
         private Rectangle _item2Text;    // Disabled text hit-test bounds
 
+        // Cached invalidation rectangles — rebuilt with geometry.
+        private Rectangle _invAll;
+        private Rectangle _invOuter;
+        private Rectangle _invBorder;
+        private Rectangle _invSelection;
+        private Rectangle _invSelectionText;
+        private Rectangle _invItemText;
+        private Rectangle _invGrayText;
+        private Rectangle _invLight;
+        private Rectangle _invHilight;
+        private Rectangle _invShadow;
+        private Rectangle _invDkShadow;
+
         // 3D border segment endpoints (raised Win9x appearance).
         // Layout: Light (outer top+left) → Hilight (inner top+left)
         //       → Shadow (inner bottom+right) → DkShadow (outer bottom+right)
@@ -113,7 +126,7 @@ namespace WinPaletter.UI.Retro
                 if (base.BackColor == value) return;
                 base.BackColor = value;
                 _overlayColor = Color.FromArgb(100, value.IsDark() ? Color.White : Color.Black);
-                Invalidate();
+                Invalidate(_invBorder.IsEmpty ? _invAll : _invBorder);
             }
         }
 
@@ -128,7 +141,7 @@ namespace WinPaletter.UI.Retro
                 if (base.ForeColor == value) return;
                 base.ForeColor = value;
                 ReplaceBrush(ref _brushFore, value);
-                Invalidate();
+                Invalidate(_invItemText.IsEmpty ? _invAll : _invItemText);
             }
         }
 
@@ -138,7 +151,7 @@ namespace WinPaletter.UI.Retro
         public bool Flat
         {
             get => _flat;
-            set { if (_flat != value) { _flat = value; Invalidate(); } }
+            set { if (_flat != value) { _flat = value; Invalidate(_invAll.IsEmpty ? _invOuter : _invAll); } }
         }
         private bool _flat = false;
 
@@ -153,7 +166,7 @@ namespace WinPaletter.UI.Retro
                 if (_buttonShadow == value) return;
                 _buttonShadow = value;
                 ReplacePen(ref _penShadow, value);
-                Invalidate();
+                Invalidate(_flat ? _invOuter : (_invShadow.IsEmpty ? _invAll : _invShadow));
             }
         }
         private Color _buttonShadow = SystemColors.ButtonShadow;
@@ -169,7 +182,7 @@ namespace WinPaletter.UI.Retro
                 if (_buttonDkShadow == value) return;
                 _buttonDkShadow = value;
                 ReplacePen(ref _penDkShadow, value);
-                Invalidate();
+                Invalidate(_flat ? _invOuter : (_invDkShadow.IsEmpty ? _invAll : _invDkShadow));
             }
         }
         private Color _buttonDkShadow = SystemColors.ControlDark;
@@ -185,7 +198,7 @@ namespace WinPaletter.UI.Retro
                 if (_buttonHilight == value) return;
                 _buttonHilight = value;
                 ReplacePen(ref _penHilight, value);
-                Invalidate();
+                Invalidate(_flat ? _invOuter : (_invHilight.IsEmpty ? _invAll : _invHilight));
             }
         }
         private Color _buttonHilight = SystemColors.ButtonHighlight;
@@ -201,7 +214,7 @@ namespace WinPaletter.UI.Retro
                 if (_buttonLight == value) return;
                 _buttonLight = value;
                 ReplacePen(ref _penLight, value);
-                Invalidate();
+                Invalidate(_flat ? _invOuter : (_invLight.IsEmpty ? _invAll : _invLight));
             }
         }
         private Color _buttonLight = SystemColors.ControlLight;
@@ -217,7 +230,7 @@ namespace WinPaletter.UI.Retro
                 if (_hilight == value) return;
                 _hilight = value;
                 ReplaceBrush(ref _brushHilight, value);
-                Invalidate();
+                Invalidate(_invSelection.IsEmpty ? _invAll : _invSelection);
             }
         }
         private Color _hilight = SystemColors.Highlight;
@@ -233,7 +246,7 @@ namespace WinPaletter.UI.Retro
                 if (_hilightText == value) return;
                 _hilightText = value;
                 ReplaceBrush(ref _brushHilightText, value);
-                Invalidate();
+                Invalidate(_invSelectionText.IsEmpty ? _invSelection : _invSelectionText);
             }
         }
         private Color _hilightText = SystemColors.HighlightText;
@@ -249,7 +262,7 @@ namespace WinPaletter.UI.Retro
                 if (_menuHilight == value) return;
                 _menuHilight = value;
                 ReplacePen(ref _penMenuHilight, value);
-                Invalidate();
+                Invalidate(_invSelection.IsEmpty ? _invAll : _invSelection);
             }
         }
         private Color _menuHilight = SystemColors.MenuHighlight;
@@ -265,7 +278,7 @@ namespace WinPaletter.UI.Retro
                 if (_grayText == value) return;
                 _grayText = value;
                 ReplaceBrush(ref _brushGrayText, value);
-                Invalidate();
+                Invalidate(_invGrayText.IsEmpty ? _invAll : _invGrayText);
             }
         }
         private Color _grayText = SystemColors.GrayText;
@@ -383,6 +396,18 @@ namespace WinPaletter.UI.Retro
             _shadowSeg1 = [new(1, h - 1f), new(w - 1f, h - 1f)]; // inner bottom
             _dkShadowSeg0 = [new(w, 0), new(w, h)];  // outer right
             _dkShadowSeg1 = [new(0, h), new(w, h)];  // outer bottom
+
+            _invOuter = InflateSafe(_rectOuter, 2);
+            _invBorder = InflateSafe(_rectBorder, 2);
+            _invSelection = InflateSafe(_item1, 2);
+            _invSelectionText = InflateSafe(_item1Text, 2);
+            _invItemText = InflateSafe(_item0Text, 2);
+            _invGrayText = InflateSafe(_item2Text, 2);
+            _invLight = InflateSafe(GetUnionLineRect(_lightSeg0, _lightSeg1), 2);
+            _invHilight = InflateSafe(GetUnionLineRect(_hilightSeg0, _hilightSeg1), 2);
+            _invShadow = InflateSafe(GetUnionLineRect(_shadowSeg0, _shadowSeg1), 2);
+            _invDkShadow = InflateSafe(GetUnionLineRect(_dkShadowSeg0, _dkShadowSeg1), 2);
+            _invAll = _invOuter.IsEmpty ? _invBorder : _invOuter;
         }
 
         #endregion
@@ -414,6 +439,35 @@ namespace WinPaletter.UI.Retro
         {
             base.OnBackColorChanged(e);
             _overlayColor = Color.FromArgb(100, BackColor.IsDark() ? Color.White : Color.Black);
+        }
+
+        private static Rectangle InflateSafe(Rectangle r, int amount)
+        {
+            if (r.IsEmpty) return Rectangle.Empty;
+            return r.InflateReturn(amount);
+        }
+
+        private static Rectangle GetUnionLineRect(PointF[] seg0, PointF[] seg1)
+        {
+            Rectangle r0 = GetLineRect(seg0);
+            Rectangle r1 = GetLineRect(seg1);
+            if (r0.IsEmpty) return r1;
+            if (r1.IsEmpty) return r0;
+            return Rectangle.Union(r0, r1);
+        }
+
+        private static Rectangle GetLineRect(PointF[] seg)
+        {
+            if (seg is null || seg.Length < 2) return Rectangle.Empty;
+            int x1 = (int)seg[0].X;
+            int y1 = (int)seg[0].Y;
+            int x2 = (int)seg[1].X;
+            int y2 = (int)seg[1].Y;
+            int left = Math.Min(x1, x2);
+            int top = Math.Min(y1, y2);
+            int right = Math.Max(x1, x2);
+            int bottom = Math.Max(y1, y2);
+            return new Rectangle(left, top, (right - left) + 1, (bottom - top) + 1);
         }
 
         #endregion
