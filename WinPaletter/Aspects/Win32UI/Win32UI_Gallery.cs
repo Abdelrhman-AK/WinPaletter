@@ -14,6 +14,7 @@ namespace WinPaletter
         // Single static instance of RetroDesktopColors reused for all preview generation
         private static RetroDesktopColors _previewRenderer = null;
         private static readonly object _renderLock = new();
+        private readonly Dictionary<string, Bitmap> _previewCache = [];
 
         public Win32UI_Gallery()
         {
@@ -31,12 +32,12 @@ namespace WinPaletter
 
             try
             {
-                // Clear existing controls
-                foreach (Control control in schemes.Controls.Cast<Control>().ToList())
+                foreach (RadioImage control in schemes.Controls.OfType<RadioImage>())
                 {
-                    if (control is RadioImage ri) ri.Image = null;
+                    control.Image = null;
                     control.Dispose();
                 }
+
                 schemes.Controls.Clear();
 
                 string[] schemeNames = [.. Schemes.ClassicColors.Split('\n').Select(f => f.Split('|')[0])];
@@ -84,10 +85,12 @@ namespace WinPaletter
                 }
 
                 _previewRenderer?.Dispose();
-                _previewRenderer = new();
+                _previewRenderer = new()
+                {
+                    Size = new Size(350, 300)
+                };
+
                 _previewRenderer.LoadMetrics(Program.TM);
-                _previewRenderer.Size = new Size(350, 300);
-                _previewRenderer.Visible = false;
             }
         }
 
@@ -95,50 +98,31 @@ namespace WinPaletter
         {
             lock (_renderLock)
             {
-                if (_previewRenderer == null || _previewRenderer.IsDisposed)
-                {
-                    InitializePreviewRenderer();
-                }
+                if (_previewRenderer == null || _previewRenderer.IsDisposed) InitializePreviewRenderer();
 
-                // Load theme colors into the renderer
+                if (_previewCache.TryGetValue(schemeName, out Bitmap cached)) return cached;
+
                 _previewRenderer.LoadFromWinThemeString(Schemes.ClassicColors, schemeName);
 
-                // Generate bitmap
-                using (Bitmap full = _previewRenderer.ToBitmap(true))
-                {
-                    return full.Resize(160, 135);
-                }
-            }
-        }
+                using Bitmap full = _previewRenderer.ToBitmap(true);
+                Bitmap resized = full?.Resize(160, 135);
 
-        // Call this when the application is closing to clean up resources
-        public static void CleanupPreviewRenderer()
-        {
-            lock (_renderLock)
-            {
-                _previewRenderer?.Dispose();
-                _previewRenderer = null;
+                _previewCache[schemeName] = resized;
+                return resized;
             }
         }
 
         public string PickATheme(Size parentButtonSize, Point parentButtonLocation)
         {
-            if (ShowDialog(parentButtonSize, parentButtonLocation) == DialogResult.OK)
-            {
-                string result = schemes.Controls.Cast<Control>().FirstOrDefault(f => f is RadioImage ri && ri.Checked)?.Text;
+            DialogResult resultDialog = ShowDialog(parentButtonSize, parentButtonLocation);
 
-                // Dispose controls but NOT their images (images will be disposed when the form closes)
-                foreach (RadioImage control in schemes.Controls.OfType<RadioImage>())
-                {
-                    control.Image = null;
-                    control.Dispose();
-                }
+            if (resultDialog != DialogResult.OK) return string.Empty;
 
-                return result;
-            }
+            RadioImage selected = schemes.Controls.OfType<RadioImage>().FirstOrDefault(r => r.Checked);
 
-            return string.Empty;
+            return selected?.Text ?? string.Empty;
         }
+
 
         public DialogResult ShowDialog(Size parentButtonSize, Point parentButtonLocation)
         {
@@ -159,14 +143,11 @@ namespace WinPaletter
 
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
-            // Clean up images when form closes
-            foreach (RadioImage control in schemes.Controls.OfType<RadioImage>())
-            {
-                control.Image?.Dispose();
-                control.Image = null;
-            }
-
             base.OnFormClosed(e);
+
+            foreach (Bitmap bmp in _previewCache.Values) bmp.Dispose();
+
+            _previewCache.Clear();
         }
     }
 }

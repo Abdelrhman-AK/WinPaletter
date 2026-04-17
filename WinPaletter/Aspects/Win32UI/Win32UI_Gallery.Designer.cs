@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Win32UI_Gallery));
-            this.schemes = new System.Windows.Forms.FlowLayoutPanel();
+            this.schemes = new UI.WP.SmoothFlowLayoutPanel();
             this.bottom_buttons = new WinPaletter.UI.WP.GroupBox();
             this.btn_cancel = new WinPaletter.UI.WP.Button();
             this.btn_load_into_theme = new WinPaletter.UI.WP.Button();
@@ -129,6 +129,6 @@
         private UI.WP.GroupBox bottom_buttons;
         internal UI.WP.Button btn_cancel;
         internal UI.WP.Button btn_load_into_theme;
-        private System.Windows.Forms.FlowLayoutPanel schemes;
+        private UI.WP.SmoothFlowLayoutPanel schemes;
     }
 }

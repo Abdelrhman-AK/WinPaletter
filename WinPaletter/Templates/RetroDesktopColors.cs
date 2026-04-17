@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -17,18 +18,19 @@ namespace WinPaletter.Templates
     public partial class RetroDesktopColors : UserControl
     {
         // Cached control collections for faster access
-        private List<WindowR> _windows;
-        private List<ContextMenuR> _contextMenus;
-        private List<ButtonR> _buttons;
-        private List<MenuBarR> _menuBars;
-        private List<LabelR> _labels;
-        private List<ScrollBarR> _scrollBars;
-        private List<AppWorkspaceR> _appWorkspaces;
-        private List<WindowControlR> _windowControls;
-        private List<ToolTipR> _toolTips;
-        private List<PanelRaisedR> _panelRaised;
-        private List<TextBoxR> _textBoxes;
-        private List<PanelR> _panels;
+        private List<WindowR> _windows = [];
+        private List<ContextMenuR> _contextMenus = [];
+        private List<ButtonR> _buttons = [];
+        private List<MenuBarR> _menuBars = [];
+        private List<LabelR> _labels = [];
+        private List<ScrollBarR> _scrollBars = [];
+        private List<AppWorkspaceR> _appWorkspaces = [];
+        private List<WindowControlR> _windowControls = [];
+        private List<ToolTipR> _toolTips = [];
+        private List<PanelRaisedR> _panelRaised = [];
+        private List<TextBoxR> _textBoxes = [];
+        private List<PanelR> _panels = [];
+        private List<ButtonR> _nonWindowButtons = [];
 
         private bool _collectionsInitialized = false;
 
@@ -40,6 +42,7 @@ namespace WinPaletter.Templates
             DoubleBuffered = true;
 
             InitializeComponent();
+            InitializeControlCollections();
 
             if (!DesignMode)
             {
@@ -55,7 +58,6 @@ namespace WinPaletter.Templates
         private bool _enableTheming = false;
         private bool _enableGradient = true;
 
-        // Color fields grouped by logical categories for batch updates
         private Color _activeBorder;
         private Color _activeTitle;
         private Color _appWorkspace;
@@ -85,7 +87,6 @@ namespace WinPaletter.Templates
         private Color _windowText;
         private Color _hilight;
 
-        // Obsolete properties (kept for compatibility)
         public Color ButtonAlternateFace { get; set; }
         public Color HotTrackingColor { get; set; }
         public Color Scrollbar { get; set; }
@@ -104,11 +105,7 @@ namespace WinPaletter.Templates
 
                 if (DesignMode) return;
 
-                var controls = GetAllControlsOfType<Control>();
-                foreach (var control in controls)
-                {
-                    SetControlEditingColors(control, value);
-                }
+                SetEditingColors(value);
             }
         }
 
@@ -123,17 +120,8 @@ namespace WinPaletter.Templates
                 if (_enableTheming == value) return;
                 _enableTheming = value;
 
-                var contextMenus = GetAllControlsOfType<ContextMenuR>();
-                foreach (var menu in contextMenus)
-                {
-                    menu.Flat = value;
-                }
-
-                var menuBars = GetAllControlsOfType<MenuBarR>();
-                foreach (var menuBar in menuBars)
-                {
-                    menuBar.Flat = value;
-                }
+                foreach (ContextMenuR menu in GetContextMenus()) menu.Flat = value;
+                foreach (MenuBarR menuBar in GetMenuBars()) menuBar.Flat = value;
             }
         }
 
@@ -148,16 +136,12 @@ namespace WinPaletter.Templates
                 if (_enableGradient == value) return;
                 _enableGradient = value;
 
-                var windows = GetAllControlsOfType<WindowR>();
-                foreach (var window in windows)
-                {
-                    window.ColorGradient = value;
-                }
+                foreach (WindowR window in GetWindows()) window.ColorGradient = value;
             }
         }
 
-        // Border colors group
         #region Border Colors
+
         public Color ActiveBorder
         {
             get => _activeBorder;
@@ -165,8 +149,13 @@ namespace WinPaletter.Templates
             {
                 if (_activeBorder == value) return;
                 _activeBorder = value;
-                UpdateActiveWindowBorders(value);
-                UpdateContextMenuBorders(value);
+
+                foreach (WindowR window in GetWindows())
+                {
+                    if (window.Active) window.ColorBorder = value;
+                }
+
+                foreach (ContextMenuR menu in GetContextMenus()) menu.ButtonShadow = value;
             }
         }
 
@@ -177,7 +166,11 @@ namespace WinPaletter.Templates
             {
                 if (_inactiveBorder == value) return;
                 _inactiveBorder = value;
-                UpdateInactiveWindowBorders(value);
+
+                foreach (WindowR window in GetWindows())
+                {
+                    if (!window.Active) window.ColorBorder = value;
+                }
             }
         }
 
@@ -188,13 +181,16 @@ namespace WinPaletter.Templates
             {
                 if (_windowFrame == value) return;
                 _windowFrame = value;
-                UpdateButtonFrames(value);
+
+                foreach (ButtonR button in GetNonWindowButtons()) button.WindowFrame = value;
+                foreach (ToolTipR tooltip in GetToolTips()) tooltip.WindowFrame = value;
             }
         }
+
         #endregion
 
-        // Titlebar colors group
         #region Titlebar Colors
+
         public Color ActiveTitle
         {
             get => _activeTitle;
@@ -202,7 +198,11 @@ namespace WinPaletter.Templates
             {
                 if (_activeTitle == value) return;
                 _activeTitle = value;
-                UpdateActiveWindowMainColor(value);
+
+                foreach (WindowR window in GetWindows())
+                {
+                    if (window.Active) window.Color1 = value;
+                }
             }
         }
 
@@ -213,7 +213,11 @@ namespace WinPaletter.Templates
             {
                 if (_inactiveTitle == value) return;
                 _inactiveTitle = value;
-                UpdateInactiveWindowMainColor(value);
+
+                foreach (WindowR window in GetWindows())
+                {
+                    if (!window.Active) window.Color1 = value;
+                }
             }
         }
 
@@ -224,7 +228,11 @@ namespace WinPaletter.Templates
             {
                 if (_gradientActiveTitle == value) return;
                 _gradientActiveTitle = value;
-                UpdateActiveWindowGradientColor(value);
+
+                foreach (WindowR window in GetWindows())
+                {
+                    if (window.Active) window.Color2 = value;
+                }
             }
         }
 
@@ -235,7 +243,11 @@ namespace WinPaletter.Templates
             {
                 if (_gradientInactiveTitle == value) return;
                 _gradientInactiveTitle = value;
-                UpdateInactiveWindowGradientColor(value);
+
+                foreach (WindowR window in GetWindows())
+                {
+                    if (!window.Active) window.Color2 = value;
+                }
             }
         }
 
@@ -246,7 +258,11 @@ namespace WinPaletter.Templates
             {
                 if (_titleText == value) return;
                 _titleText = value;
-                UpdateActiveWindowText(value);
+
+                foreach (WindowR window in GetWindows())
+                {
+                    if (window.Active) window.ForeColor = value;
+                }
             }
         }
 
@@ -257,13 +273,18 @@ namespace WinPaletter.Templates
             {
                 if (_inactiveTitleText == value) return;
                 _inactiveTitleText = value;
-                UpdateInactiveWindowText(value);
+
+                foreach (WindowR window in GetWindows())
+                {
+                    if (!window.Active) window.ForeColor = value;
+                }
             }
         }
+
         #endregion
 
-        // Button colors group
         #region Button Colors
+
         public Color ButtonFace
         {
             get => _buttonFace;
@@ -271,7 +292,14 @@ namespace WinPaletter.Templates
             {
                 if (_buttonFace == value) return;
                 _buttonFace = value;
-                UpdateButtonFace(value);
+
+                foreach (ButtonR button in GetNonWindowButtons()) button.BackColor = value;
+                foreach (WindowR window in GetWindows()) window.BackColor = value;
+                foreach (ScrollBarR scrollBar in GetScrollBars()) scrollBar.BackColor = value;
+                foreach (ContextMenuR menu in GetContextMenus()) menu.BackColor = value;
+                foreach (MenuBarR menuBar in GetMenuBars()) menuBar.BackColor = value;
+
+                RetroShadow1.Invalidate();
             }
         }
 
@@ -282,7 +310,9 @@ namespace WinPaletter.Templates
             {
                 if (_buttonText == value) return;
                 _buttonText = value;
-                UpdateButtonText(value);
+
+                foreach (ButtonR button in GetNonWindowButtons()) button.ForeColor = value;
+                foreach (WindowR window in GetWindows()) window.ButtonText = value;
             }
         }
 
@@ -293,7 +323,15 @@ namespace WinPaletter.Templates
             {
                 if (_buttonShadow == value) return;
                 _buttonShadow = value;
-                UpdateButtonShadow(value);
+
+                foreach (ButtonR button in GetNonWindowButtons()) button.ButtonShadow = value;
+                foreach (WindowR window in GetWindows()) window.ButtonShadow = value;
+                foreach (PanelRaisedR panel in GetPanelsRaised()) panel.ButtonShadow = value;
+                foreach (TextBoxR textBox in GetTextBoxes()) textBox.ButtonShadow = value;
+                foreach (PanelR panel in GetPanels()) panel.ButtonShadow = value;
+                foreach (ContextMenuR menu in GetContextMenus()) menu.ButtonShadow = value;
+                foreach (MenuBarR menuBar in GetMenuBars()) menuBar.ButtonShadow = value;
+                foreach (WindowControlR control in GetWindowControls()) control.ButtonShadow = value;
             }
         }
 
@@ -304,7 +342,12 @@ namespace WinPaletter.Templates
             {
                 if (_buttonDkShadow == value) return;
                 _buttonDkShadow = value;
-                UpdateButtonDarkShadow(value);
+
+                foreach (ButtonR button in GetNonWindowButtons()) button.ButtonDkShadow = value;
+                foreach (WindowR window in GetWindows()) window.ButtonDkShadow = value;
+                foreach (TextBoxR textBox in GetTextBoxes()) textBox.ButtonDkShadow = value;
+                foreach (ContextMenuR menu in GetContextMenus()) menu.ButtonDkShadow = value;
+                foreach (WindowControlR control in GetWindowControls()) control.ButtonDkShadow = value;
             }
         }
 
@@ -315,7 +358,16 @@ namespace WinPaletter.Templates
             {
                 if (_buttonHilight == value) return;
                 _buttonHilight = value;
-                UpdateButtonHilight(value);
+
+                foreach (ButtonR button in GetNonWindowButtons()) button.ButtonHilight = value;
+                foreach (WindowR window in GetWindows()) window.ButtonHilight = value;
+                foreach (PanelRaisedR panel in GetPanelsRaised()) panel.ButtonHilight = value;
+                foreach (TextBoxR textBox in GetTextBoxes()) textBox.ButtonHilight = value;
+                foreach (ScrollBarR scrollBar in GetScrollBars()) scrollBar.ButtonHilight = value;
+                foreach (PanelR panel in GetPanels()) panel.ButtonHilight = value;
+                foreach (ContextMenuR menu in GetContextMenus()) menu.ButtonHilight = value;
+                foreach (MenuBarR menuBar in GetMenuBars()) menuBar.ButtonHilight = value;
+                foreach (WindowControlR control in GetWindowControls()) control.ButtonHilight = value;
             }
         }
 
@@ -326,13 +378,19 @@ namespace WinPaletter.Templates
             {
                 if (_buttonLight == value) return;
                 _buttonLight = value;
-                UpdateButtonLight(value);
+
+                foreach (ButtonR button in GetNonWindowButtons()) button.ButtonLight = value;
+                foreach (WindowR window in GetWindows()) window.ButtonLight = value;
+                foreach (TextBoxR textBox in GetTextBoxes()) textBox.ButtonLight = value;
+                foreach (ContextMenuR menu in GetContextMenus()) menu.ButtonLight = value;
+                foreach (WindowControlR control in GetWindowControls()) control.ButtonLight = value;
             }
         }
+
         #endregion
 
-        // Menu colors group
         #region Menu Colors
+
         public Color Menu
         {
             get => _menu;
@@ -340,7 +398,14 @@ namespace WinPaletter.Templates
             {
                 if (_menu == value) return;
                 _menu = value;
-                UpdateMenuBackground(value);
+
+                foreach (ContextMenuR menu in GetContextMenus()) menu.BackColor = value;
+
+                if (!_enableTheming)
+                {
+                    foreach (MenuBarR menuBar in GetMenuBars()) menuBar.BackColor = value;
+                    foreach (PanelR panel in GetPanels()) panel.BackColor = value;
+                }
             }
         }
 
@@ -352,11 +417,7 @@ namespace WinPaletter.Templates
                 if (_menuBar == value) return;
                 _menuBar = value;
 
-                var menuBars = GetAllControlsOfType<MenuBarR>();
-                foreach (var menuBar in menuBars)
-                {
-                    menuBar.MenuBar = value;
-                }
+                foreach (MenuBarR menuBar in GetMenuBars()) menuBar.MenuBar = value;
             }
         }
 
@@ -368,17 +429,8 @@ namespace WinPaletter.Templates
                 if (_menuText == value) return;
                 _menuText = value;
 
-                var contextMenus = GetAllControlsOfType<ContextMenuR>();
-                foreach (var menu in contextMenus)
-                {
-                    menu.ForeColor = value;
-                }
-
-                var menuBars = GetAllControlsOfType<MenuBarR>();
-                foreach (var menuBar in menuBars)
-                {
-                    menuBar.ForeColor = value;
-                }
+                foreach (ContextMenuR menu in GetContextMenus()) menu.ForeColor = value;
+                foreach (MenuBarR menuBar in GetMenuBars()) menuBar.ForeColor = value;
             }
         }
 
@@ -389,13 +441,22 @@ namespace WinPaletter.Templates
             {
                 if (_menuHilight == value) return;
                 _menuHilight = value;
-                UpdateMenuHilight(value);
+
+                foreach (ContextMenuR menu in GetContextMenus()) menu.MenuHilight = value;
+                foreach (MenuBarR menuBar in GetMenuBars()) menuBar.MenuHilight = value;
+
+                if (_enableTheming)
+                {
+                    foreach (PanelRaisedR panel in GetPanelsRaised()) panel.BackColor = value;
+                    foreach (PanelR panel in GetPanels()) panel.BackColor = value;
+                }
             }
         }
+
         #endregion
 
-        // Window/Text colors group
         #region Window and Text Colors
+
         public Color AppWorkspace
         {
             get => _appWorkspace;
@@ -404,11 +465,7 @@ namespace WinPaletter.Templates
                 if (_appWorkspace == value) return;
                 _appWorkspace = value;
 
-                var workspaces = GetAllControlsOfType<AppWorkspaceR>();
-                foreach (var workspace in workspaces)
-                {
-                    workspace.BackColor = value;
-                }
+                foreach (AppWorkspaceR workspace in GetAppWorkspaces()) workspace.BackColor = value;
             }
         }
 
@@ -431,17 +488,8 @@ namespace WinPaletter.Templates
                 if (_window == value) return;
                 _window = value;
 
-                var textBoxes = GetAllControlsOfType<TextBoxR>();
-                foreach (var textBox in textBoxes)
-                {
-                    textBox.BackColor = value;
-                }
-
-                var windowControls = GetAllControlsOfType<WindowControlR>();
-                foreach (var control in windowControls)
-                {
-                    control.BackColor = value;
-                }
+                foreach (TextBoxR textBox in GetTextBoxes()) textBox.BackColor = value;
+                foreach (WindowControlR control in GetWindowControls()) control.BackColor = value;
             }
         }
 
@@ -453,23 +501,9 @@ namespace WinPaletter.Templates
                 if (_windowText == value) return;
                 _windowText = value;
 
-                var textBoxes = GetAllControlsOfType<TextBoxR>();
-                foreach (var textBox in textBoxes)
-                {
-                    textBox.ForeColor = value;
-                }
-
-                var labels = GetAllControlsOfType<LabelR>();
-                foreach (var label in labels)
-                {
-                    label.ForeColor = value;
-                }
-
-                var windowControls = GetAllControlsOfType<WindowControlR>();
-                foreach (var control in windowControls)
-                {
-                    control.ForeColor = value;
-                }
+                foreach (TextBoxR textBox in GetTextBoxes()) textBox.ForeColor = value;
+                foreach (LabelR label in GetLabels()) label.ForeColor = value;
+                foreach (WindowControlR control in GetWindowControls()) control.ForeColor = value;
             }
         }
 
@@ -481,17 +515,8 @@ namespace WinPaletter.Templates
                 if (_grayText == value) return;
                 _grayText = value;
 
-                var contextMenus = GetAllControlsOfType<ContextMenuR>();
-                foreach (var menu in contextMenus)
-                {
-                    menu.GrayText = value;
-                }
-
-                var menuBars = GetAllControlsOfType<MenuBarR>();
-                foreach (var menuBar in menuBars)
-                {
-                    menuBar.GrayText = value;
-                }
+                foreach (ContextMenuR menu in GetContextMenus()) menu.GrayText = value;
+                foreach (MenuBarR menuBar in GetMenuBars()) menuBar.GrayText = value;
             }
         }
 
@@ -503,17 +528,8 @@ namespace WinPaletter.Templates
                 if (_hilightText == value) return;
                 _hilightText = value;
 
-                var contextMenus = GetAllControlsOfType<ContextMenuR>();
-                foreach (var menu in contextMenus)
-                {
-                    menu.HilightText = value;
-                }
-
-                var menuBars = GetAllControlsOfType<MenuBarR>();
-                foreach (var menuBar in menuBars)
-                {
-                    menuBar.HilightText = value;
-                }
+                foreach (ContextMenuR menu in GetContextMenus()) menu.HilightText = value;
+                foreach (MenuBarR menuBar in GetMenuBars()) menuBar.HilightText = value;
             }
         }
 
@@ -524,7 +540,14 @@ namespace WinPaletter.Templates
             {
                 if (_hilight == value) return;
                 _hilight = value;
-                UpdateHilight(value);
+
+                foreach (ContextMenuR menu in GetContextMenus()) menu.Hilight = value;
+                foreach (MenuBarR menuBar in GetMenuBars()) menuBar.Hilight = value;
+
+                if (_enableTheming)
+                {
+                    foreach (PanelRaisedR panel in GetPanelsRaised()) panel.ButtonShadow = value;
+                }
             }
         }
 
@@ -536,11 +559,7 @@ namespace WinPaletter.Templates
                 if (_infoText == value) return;
                 _infoText = value;
 
-                var toolTips = GetAllControlsOfType<ToolTipR>();
-                foreach (var tip in toolTips)
-                {
-                    tip.ForeColor = value;
-                }
+                foreach (ToolTipR tip in GetToolTips()) tip.ForeColor = value;
             }
         }
 
@@ -552,453 +571,11 @@ namespace WinPaletter.Templates
                 if (_infoWindow == value) return;
                 _infoWindow = value;
 
-                var toolTips = GetAllControlsOfType<ToolTipR>();
-                foreach (var tip in toolTips)
-                {
-                    tip.BackColor = value;
-                }
+                foreach (ToolTipR tip in GetToolTips()) tip.BackColor = value;
             }
         }
-        #endregion
 
         #endregion
-
-        #region Batch Update Methods
-
-        private void SetControlEditingColors(Control control, bool enable)
-        {
-            if (control is WindowR window)
-            {
-                window.EnableEditingColors = enable;
-                SetChildControlsEditingColors(window, enable);
-            }
-            else if (control is ContextMenuR menu) menu.EnableEditingColors = enable;
-            else if (control is ButtonR button) button.EnableEditingColors = enable;
-            else if (control is MenuBarR menuBar) menuBar.EnableEditingColors = enable;
-            else if (control is LabelR label) label.EnableEditingColors = enable;
-            else if (control is ScrollBarR scrollBar) scrollBar.EnableEditingColors = enable;
-            else if (control is AppWorkspaceR workspace) workspace.EnableEditingColors = enable;
-            else if (control is WindowControlR windowControl) windowControl.EnableEditingColors = enable;
-            else if (control is ToolTipR toolTip) toolTip.EnableEditingColors = enable;
-        }
-
-        private void SetChildControlsEditingColors(Control parent, bool enable)
-        {
-            foreach (Control control in parent.Controls)
-            {
-                SetControlEditingColors(control, enable);
-            }
-        }
-
-        private void UpdateButtonFace(Color value)
-        {
-            var buttons = GetAllControlsOfType<ButtonR>()
-                .Where(b => b.Parent != null && !IsWindowControlButton(b));
-
-            foreach (var button in buttons)
-            {
-                button.BackColor = value;
-            }
-
-            var windows = GetAllControlsOfType<WindowR>();
-            foreach (var window in windows)
-            {
-                window.BackColor = value;
-            }
-
-            var scrollBars = GetAllControlsOfType<ScrollBarR>();
-            foreach (var scrollBar in scrollBars)
-            {
-                scrollBar.BackColor = value;
-            }
-
-            var contextMenus = GetAllControlsOfType<ContextMenuR>();
-            foreach (var menu in contextMenus)
-            {
-                menu.BackColor = value;
-            }
-
-            var menuBars = GetAllControlsOfType<MenuBarR>();
-            foreach (var menuBar in menuBars)
-            {
-                menuBar.BackColor = value;
-            }
-
-            RetroShadow1.Refresh();
-        }
-
-        private bool IsWindowControlButton(ButtonR button)
-        {
-            string name = button.Name.ToLower();
-            return name == "closebtn" || name == "maxbtn" || name == "minbtn";
-        }
-
-        private void UpdateButtonShadow(Color value)
-        {
-            var buttons = GetAllControlsOfType<ButtonR>()
-                .Where(b => b.Parent != null && !IsWindowControlButton(b));
-
-            foreach (var button in buttons)
-            {
-                button.ButtonShadow = value;
-            }
-
-            var windows = GetAllControlsOfType<WindowR>();
-            foreach (var window in windows)
-            {
-                window.ButtonShadow = value;
-            }
-
-            var panelsRaised = GetAllControlsOfType<PanelRaisedR>();
-            foreach (var panel in panelsRaised)
-            {
-                panel.ButtonShadow = value;
-            }
-
-            var textBoxes = GetAllControlsOfType<TextBoxR>();
-            foreach (var textBox in textBoxes)
-            {
-                textBox.ButtonShadow = value;
-            }
-
-            var panels = GetAllControlsOfType<PanelR>();
-            foreach (var panel in panels)
-            {
-                panel.ButtonShadow = value;
-            }
-
-            var contextMenus = GetAllControlsOfType<ContextMenuR>();
-            foreach (var menu in contextMenus)
-            {
-                menu.ButtonShadow = value;
-            }
-
-            var menuBars = GetAllControlsOfType<MenuBarR>();
-            foreach (var menuBar in menuBars)
-            {
-                menuBar.ButtonShadow = value;
-            }
-
-            var windowControls = GetAllControlsOfType<WindowControlR>();
-            foreach (var control in windowControls)
-            {
-                control.ButtonShadow = value;
-            }
-        }
-
-        private void UpdateButtonDarkShadow(Color value)
-        {
-            var buttons = GetAllControlsOfType<ButtonR>()
-                .Where(b => b.Parent != null && !IsWindowControlButton(b));
-
-            foreach (var button in buttons)
-            {
-                button.ButtonDkShadow = value;
-            }
-
-            var windows = GetAllControlsOfType<WindowR>();
-            foreach (var window in windows)
-            {
-                window.ButtonDkShadow = value;
-            }
-
-            var textBoxes = GetAllControlsOfType<TextBoxR>();
-            foreach (var textBox in textBoxes)
-            {
-                textBox.ButtonDkShadow = value;
-            }
-
-            var contextMenus = GetAllControlsOfType<ContextMenuR>();
-            foreach (var menu in contextMenus)
-            {
-                menu.ButtonDkShadow = value;
-            }
-
-            var windowControls = GetAllControlsOfType<WindowControlR>();
-            foreach (var control in windowControls)
-            {
-                control.ButtonDkShadow = value;
-            }
-        }
-
-        private void UpdateButtonHilight(Color value)
-        {
-            var buttons = GetAllControlsOfType<ButtonR>()
-                .Where(b => b.Parent != null && !IsWindowControlButton(b));
-
-            foreach (var button in buttons)
-            {
-                button.ButtonHilight = value;
-            }
-
-            var windows = GetAllControlsOfType<WindowR>();
-            foreach (var window in windows)
-            {
-                window.ButtonHilight = value;
-            }
-
-            var panelsRaised = GetAllControlsOfType<PanelRaisedR>();
-            foreach (var panel in panelsRaised)
-            {
-                panel.ButtonHilight = value;
-            }
-
-            var textBoxes = GetAllControlsOfType<TextBoxR>();
-            foreach (var textBox in textBoxes)
-            {
-                textBox.ButtonHilight = value;
-            }
-
-            var scrollBars = GetAllControlsOfType<ScrollBarR>();
-            foreach (var scrollBar in scrollBars)
-            {
-                scrollBar.ButtonHilight = value;
-            }
-
-            var panels = GetAllControlsOfType<PanelR>();
-            foreach (var panel in panels)
-            {
-                panel.ButtonHilight = value;
-            }
-
-            var contextMenus = GetAllControlsOfType<ContextMenuR>();
-            foreach (var menu in contextMenus)
-            {
-                menu.ButtonHilight = value;
-            }
-
-            var menuBars = GetAllControlsOfType<MenuBarR>();
-            foreach (var menuBar in menuBars)
-            {
-                menuBar.ButtonHilight = value;
-            }
-
-            var windowControls = GetAllControlsOfType<WindowControlR>();
-            foreach (var control in windowControls)
-            {
-                control.ButtonHilight = value;
-            }
-        }
-
-        private void UpdateButtonLight(Color value)
-        {
-            var buttons = GetAllControlsOfType<ButtonR>()
-                .Where(b => b.Parent != null && !IsWindowControlButton(b));
-
-            foreach (var button in buttons)
-            {
-                button.ButtonLight = value;
-            }
-
-            var windows = GetAllControlsOfType<WindowR>();
-            foreach (var window in windows)
-            {
-                window.ButtonLight = value;
-            }
-
-            var textBoxes = GetAllControlsOfType<TextBoxR>();
-            foreach (var textBox in textBoxes)
-            {
-                textBox.ButtonLight = value;
-            }
-
-            var contextMenus = GetAllControlsOfType<ContextMenuR>();
-            foreach (var menu in contextMenus)
-            {
-                menu.ButtonLight = value;
-            }
-
-            var windowControls = GetAllControlsOfType<WindowControlR>();
-            foreach (var control in windowControls)
-            {
-                control.ButtonLight = value;
-            }
-        }
-
-        private void UpdateButtonText(Color value)
-        {
-            var buttons = GetAllControlsOfType<ButtonR>()
-                .Where(b => b.Parent != null && !IsWindowControlButton(b));
-
-            foreach (var button in buttons)
-            {
-                button.ForeColor = value;
-            }
-
-            var windows = GetAllControlsOfType<WindowR>();
-            foreach (var window in windows)
-            {
-                window.ButtonText = value;
-            }
-        }
-
-        private void UpdateButtonFrames(Color value)
-        {
-            var buttons = GetAllControlsOfType<ButtonR>().Where(b => b.Parent != null && !IsWindowControlButton(b));
-            var tooltips = GetAllControlsOfType<ToolTipR>().Where(b => b.Parent != null);
-
-            foreach (var button in buttons) button.WindowFrame = value;
-            foreach (var tooltip in tooltips) tooltip.WindowFrame = value;
-        }
-
-        private void UpdateActiveWindowBorders(Color value)
-        {
-            var windows = GetAllControlsOfType<WindowR>();
-            foreach (var window in windows.Where(w => w.Active))
-            {
-                window.ColorBorder = value;
-            }
-        }
-
-        private void UpdateInactiveWindowBorders(Color value)
-        {
-            var windows = GetAllControlsOfType<WindowR>();
-            foreach (var window in windows.Where(w => !w.Active))
-            {
-                window.ColorBorder = value;
-            }
-        }
-
-        private void UpdateContextMenuBorders(Color value)
-        {
-            var contextMenus = GetAllControlsOfType<ContextMenuR>();
-            foreach (var menu in contextMenus)
-            {
-                menu.ButtonShadow = value;
-            }
-        }
-
-        private void UpdateActiveWindowMainColor(Color value)
-        {
-            var windows = GetAllControlsOfType<WindowR>();
-            foreach (var window in windows.Where(w => w.Active))
-            {
-                window.Color1 = value;
-            }
-        }
-
-        private void UpdateInactiveWindowMainColor(Color value)
-        {
-            var windows = GetAllControlsOfType<WindowR>();
-            foreach (var window in windows.Where(w => !w.Active))
-            {
-                window.Color1 = value;
-            }
-        }
-
-        private void UpdateActiveWindowGradientColor(Color value)
-        {
-            var windows = GetAllControlsOfType<WindowR>();
-            foreach (var window in windows.Where(w => w.Active))
-            {
-                window.Color2 = value;
-            }
-        }
-
-        private void UpdateInactiveWindowGradientColor(Color value)
-        {
-            var windows = GetAllControlsOfType<WindowR>();
-            foreach (var window in windows.Where(w => !w.Active))
-            {
-                window.Color2 = value;
-            }
-        }
-
-        private void UpdateActiveWindowText(Color value)
-        {
-            var windows = GetAllControlsOfType<WindowR>();
-            foreach (var window in windows.Where(w => w.Active))
-            {
-                window.ForeColor = value;
-            }
-        }
-
-        private void UpdateInactiveWindowText(Color value)
-        {
-            var windows = GetAllControlsOfType<WindowR>();
-            foreach (var window in windows.Where(w => !w.Active))
-            {
-                window.ForeColor = value;
-            }
-        }
-
-        private void UpdateMenuBackground(Color value)
-        {
-            var contextMenus = GetAllControlsOfType<ContextMenuR>();
-            foreach (var menu in contextMenus)
-            {
-                menu.BackColor = value;
-            }
-
-            if (!_enableTheming)
-            {
-                var menuBars = GetAllControlsOfType<MenuBarR>();
-                foreach (var menuBar in menuBars)
-                {
-                    menuBar.BackColor = value;
-                }
-
-                var panels = GetAllControlsOfType<PanelR>();
-                foreach (var panel in panels)
-                {
-                    panel.BackColor = value;
-                }
-            }
-        }
-
-        private void UpdateMenuHilight(Color value)
-        {
-            var contextMenus = GetAllControlsOfType<ContextMenuR>();
-            foreach (var menu in contextMenus)
-            {
-                menu.MenuHilight = value;
-            }
-
-            var menuBars = GetAllControlsOfType<MenuBarR>();
-            foreach (var menuBar in menuBars)
-            {
-                menuBar.MenuHilight = value;
-            }
-
-            if (_enableTheming)
-            {
-                var panelsRaised = GetAllControlsOfType<PanelRaisedR>();
-                foreach (var panel in panelsRaised)
-                {
-                    panel.BackColor = value;
-                }
-
-                var panels = GetAllControlsOfType<PanelR>();
-                foreach (var panel in panels)
-                {
-                    panel.BackColor = value;
-                }
-            }
-        }
-
-        private void UpdateHilight(Color value)
-        {
-            var contextMenus = GetAllControlsOfType<ContextMenuR>();
-            foreach (var menu in contextMenus)
-            {
-                menu.Hilight = value;
-            }
-
-            var menuBars = GetAllControlsOfType<MenuBarR>();
-            foreach (var menuBar in menuBars)
-            {
-                menuBar.Hilight = value;
-            }
-
-            if (_enableTheming)
-            {
-                var panelsRaised = GetAllControlsOfType<PanelRaisedR>();
-                foreach (var panel in panelsRaised)
-                {
-                    panel.ButtonShadow = value;
-                }
-            }
-        }
 
         #endregion
 
@@ -1008,41 +585,39 @@ namespace WinPaletter.Templates
         {
             if (_collectionsInitialized || DesignMode) return;
 
-            _windows = new List<WindowR>();
-            _contextMenus = new List<ContextMenuR>();
-            _buttons = new List<ButtonR>();
-            _menuBars = new List<MenuBarR>();
-            _labels = new List<LabelR>();
-            _scrollBars = new List<ScrollBarR>();
-            _appWorkspaces = new List<AppWorkspaceR>();
-            _windowControls = new List<WindowControlR>();
-            _toolTips = new List<ToolTipR>();
-            _panelRaised = new List<PanelRaisedR>();
-            _textBoxes = new List<TextBoxR>();
-            _panels = new List<PanelR>();
+            _windows = [];
+            _contextMenus = [];
+            _buttons = [];
+            _menuBars = [];
+            _labels = [];
+            _scrollBars = [];
+            _appWorkspaces = [];
+            _windowControls = [];
+            _toolTips = [];
+            _panelRaised = [];
+            _textBoxes = [];
+            _panels = [];
+            _nonWindowButtons = [];
 
-            BuildControlCollections(this);
-            _collectionsInitialized = true;
-        }
-
-        private void BuildControlCollections(Control parent)
-        {
-            foreach (Control control in parent.Controls)
+            foreach (Control control in this.GetAllControls())
             {
                 AddToCollection(control);
-
-                if (control.HasChildren)
-                {
-                    BuildControlCollections(control);
-                }
+                control.DoubleBuffer();
             }
+
+            _collectionsInitialized = true;
         }
 
         private void AddToCollection(Control control)
         {
             if (control is WindowR window) _windows.Add(window);
             else if (control is ContextMenuR menu) _contextMenus.Add(menu);
-            else if (control is ButtonR button) _buttons.Add(button);
+            else if (control is ButtonR button)
+            {
+                _buttons.Add(button);
+                if (button.Parent != null && !IsWindowControlButton(button))
+                    _nonWindowButtons.Add(button);
+            }
             else if (control is MenuBarR menuBar) _menuBars.Add(menuBar);
             else if (control is LabelR label) _labels.Add(label);
             else if (control is ScrollBarR scrollBar) _scrollBars.Add(scrollBar);
@@ -1058,7 +633,11 @@ namespace WinPaletter.Templates
         {
             if (control is WindowR window) _windows?.Remove(window);
             else if (control is ContextMenuR menu) _contextMenus?.Remove(menu);
-            else if (control is ButtonR button) _buttons?.Remove(button);
+            else if (control is ButtonR button)
+            {
+                _buttons?.Remove(button);
+                _nonWindowButtons?.Remove(button);
+            }
             else if (control is MenuBarR menuBar) _menuBars?.Remove(menuBar);
             else if (control is LabelR label) _labels?.Remove(label);
             else if (control is ScrollBarR scrollBar) _scrollBars?.Remove(scrollBar);
@@ -1070,36 +649,31 @@ namespace WinPaletter.Templates
             else if (control is PanelR panel) _panels?.Remove(panel);
         }
 
-        private List<T> GetAllControlsOfType<T>() where T : Control
+        private bool IsWindowControlButton(ButtonR button)
         {
-            if (DesignMode)
-            {
-                return this.GetAllControls().OfType<T>().ToList();
-            }
-
-            InitializeControlCollections();
-
-            return typeof(T) switch
-            {
-                var t when t == typeof(WindowR) => _windows?.Cast<T>().ToList() ?? new List<T>(),
-                var t when t == typeof(ContextMenuR) => _contextMenus?.Cast<T>().ToList() ?? new List<T>(),
-                var t when t == typeof(ButtonR) => _buttons?.Cast<T>().ToList() ?? new List<T>(),
-                var t when t == typeof(MenuBarR) => _menuBars?.Cast<T>().ToList() ?? new List<T>(),
-                var t when t == typeof(LabelR) => _labels?.Cast<T>().ToList() ?? new List<T>(),
-                var t when t == typeof(ScrollBarR) => _scrollBars?.Cast<T>().ToList() ?? new List<T>(),
-                var t when t == typeof(AppWorkspaceR) => _appWorkspaces?.Cast<T>().ToList() ?? new List<T>(),
-                var t when t == typeof(WindowControlR) => _windowControls?.Cast<T>().ToList() ?? new List<T>(),
-                var t when t == typeof(ToolTipR) => _toolTips?.Cast<T>().ToList() ?? new List<T>(),
-                var t when t == typeof(PanelRaisedR) => _panelRaised?.Cast<T>().ToList() ?? new List<T>(),
-                var t when t == typeof(TextBoxR) => _textBoxes?.Cast<T>().ToList() ?? new List<T>(),
-                var t when t == typeof(PanelR) => _panels?.Cast<T>().ToList() ?? new List<T>(),
-                _ => this.GetAllControls().OfType<T>().ToList()
-            };
+            string name = button.Name.ToLower();
+            return name == "closebtn" || name == "maxbtn" || name == "minbtn";
         }
+
+        // Typed accessors — return the cached list directly (zero allocation).
+        // In design mode they fall back to a live scan.
+        private List<WindowR> GetWindows() => DesignMode ? [.. this.GetAllControls().OfType<WindowR>()] : _windows;
+        private List<ContextMenuR> GetContextMenus() => DesignMode ? [.. this.GetAllControls().OfType<ContextMenuR>()] : _contextMenus;
+        private List<ButtonR> GetButtons() => DesignMode ? [.. this.GetAllControls().OfType<ButtonR>()] : _buttons;
+        private List<ButtonR> GetNonWindowButtons() => DesignMode ? [.. this.GetAllControls().OfType<ButtonR>().Where(b => b.Parent != null && !IsWindowControlButton(b))] : _nonWindowButtons;
+        private List<MenuBarR> GetMenuBars() => DesignMode ? [.. this.GetAllControls().OfType<MenuBarR>()] : _menuBars;
+        private List<LabelR> GetLabels() => DesignMode ? [.. this.GetAllControls().OfType<LabelR>()] : _labels;
+        private List<ScrollBarR> GetScrollBars() => DesignMode ? [.. this.GetAllControls().OfType<ScrollBarR>()] : _scrollBars;
+        private List<AppWorkspaceR> GetAppWorkspaces() => DesignMode ? [.. this.GetAllControls().OfType<AppWorkspaceR>()] : _appWorkspaces;
+        private List<WindowControlR> GetWindowControls() => DesignMode ? [.. this.GetAllControls().OfType<WindowControlR>()] : _windowControls;
+        private List<ToolTipR> GetToolTips() => DesignMode ? [.. this.GetAllControls().OfType<ToolTipR>()] : _toolTips;
+        private List<PanelRaisedR> GetPanelsRaised() => DesignMode ? [.. this.GetAllControls().OfType<PanelRaisedR>()] : _panelRaised;
+        private List<TextBoxR> GetTextBoxes() => DesignMode ? [.. this.GetAllControls().OfType<TextBoxR>()] : _textBoxes;
+        private List<PanelR> GetPanels() => DesignMode ? [.. this.GetAllControls().OfType<PanelR>()] : _panels;
 
         #endregion
 
-        #region Events/Overrides
+        #region Events
 
         public delegate void EditorInvokerEventHandler(object sender, EditorEventArgs e);
         public event EditorInvokerEventHandler EditorInvoker;
@@ -1118,7 +692,10 @@ namespace WinPaletter.Templates
                     AddToCollection(e.Control);
                     if (e.Control.HasChildren)
                     {
-                        BuildControlCollections(e.Control);
+                        foreach (Control child in e.Control.GetAllControls())
+                        {
+                            AddToCollection(child);
+                        }
                     }
                 }
 
@@ -1135,7 +712,7 @@ namespace WinPaletter.Templates
                 RemoveFromCollection(e.Control);
                 if (e.Control.HasChildren)
                 {
-                    foreach (Control child in e.Control.Controls)
+                    foreach (Control child in e.Control.GetAllControls())
                     {
                         RemoveFromCollection(child);
                     }
@@ -1152,7 +729,10 @@ namespace WinPaletter.Templates
             if (control is WindowR window)
             {
                 window.EditorInvoker += EditorInvoked;
-                AttachChildEditorEvents(window);
+                foreach (Control child in window.GetAllControls())
+                {
+                    AttachEditorEvents(child);
+                }
             }
             else if (control is ContextMenuR menu) menu.EditorInvoker += EditorInvoked;
             else if (control is ButtonR button) button.EditorInvoker += EditorInvoked;
@@ -1164,20 +744,15 @@ namespace WinPaletter.Templates
             else if (control is ToolTipR toolTip) toolTip.EditorInvoker += EditorInvoked;
         }
 
-        private void AttachChildEditorEvents(Control parent)
-        {
-            foreach (Control control in parent.GetAllControls())
-            {
-                AttachEditorEvents(control);
-            }
-        }
-
         private void DetachEditorEvents(Control control)
         {
             if (control is WindowR window)
             {
                 window.EditorInvoker -= EditorInvoked;
-                DetachChildEditorEvents(window);
+                foreach (Control child in window.GetAllControls())
+                {
+                    DetachEditorEvents(child);
+                }
             }
             else if (control is ContextMenuR menu) menu.EditorInvoker -= EditorInvoked;
             else if (control is ButtonR button) button.EditorInvoker -= EditorInvoked;
@@ -1189,17 +764,22 @@ namespace WinPaletter.Templates
             else if (control is ToolTipR toolTip) toolTip.EditorInvoker -= EditorInvoked;
         }
 
-        private void DetachChildEditorEvents(Control parent)
-        {
-            foreach (Control control in parent.Controls)
-            {
-                DetachEditorEvents(control);
-            }
-        }
-
         #endregion
 
         #region Methods
+
+        private void SetEditingColors(bool value)
+        {
+            foreach (WindowR window in GetWindows()) window.EnableEditingColors = value;
+            foreach (ContextMenuR menu in GetContextMenus()) menu.EnableEditingColors = value;
+            foreach (ButtonR button in GetButtons()) button.EnableEditingColors = value;
+            foreach (MenuBarR menuBar in GetMenuBars()) menuBar.EnableEditingColors = value;
+            foreach (LabelR label in GetLabels()) label.EnableEditingColors = value;
+            foreach (ScrollBarR scrollBar in GetScrollBars()) scrollBar.EnableEditingColors = value;
+            foreach (AppWorkspaceR workspace in GetAppWorkspaces()) workspace.EnableEditingColors = value;
+            foreach (WindowControlR windowControl in GetWindowControls()) windowControl.EnableEditingColors = value;
+            foreach (ToolTipR toolTip in GetToolTips()) toolTip.EnableEditingColors = value;
+        }
 
         private void RetroDesktop_Load(object sender, EventArgs e)
         {
@@ -1207,11 +787,7 @@ namespace WinPaletter.Templates
             {
                 this.DoubleBuffer();
                 InitializeControlCollections();
-
-                foreach (Control c in this.GetAllControls())
-                {
-                    c.DoubleBuffer();
-                }
+                SetEditingColors(EnableEditingColors);
             }
         }
 
@@ -1236,53 +812,29 @@ namespace WinPaletter.Templates
             float iT = 4 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth + TM.MetricsFonts.CaptionHeight + GetTitlebarTextHeight(TM.MetricsFonts.CaptionFont);
             Padding _Padding = new((int)iP, (int)iT, (int)iP, (int)iP);
 
-            // Batch update fonts and metrics
-            var contextMenus = GetAllControlsOfType<ContextMenuR>();
-            foreach (var menu in contextMenus)
-            {
-                menu.Font = TM.MetricsFonts.MenuFont;
-            }
+            foreach (ContextMenuR menu in GetContextMenus()) menu.Font = TM.MetricsFonts.MenuFont;
+            foreach (LabelR label in GetLabels()) label.Font = TM.MetricsFonts.MessageFont;
+            foreach (ScrollBarR scrollBar in GetScrollBars()) scrollBar.Width = TM.MetricsFonts.ScrollWidth;
+            foreach (ToolTipR tip in GetToolTips()) tip.Font = TM.MetricsFonts.CaptionFont;
 
-            var labels = GetAllControlsOfType<LabelR>();
-            foreach (var label in labels)
-            {
-                label.Font = TM.MetricsFonts.MessageFont;
-            }
-
-            var scrollBars = GetAllControlsOfType<ScrollBarR>();
-            foreach (var scrollBar in scrollBars)
-            {
-                scrollBar.Width = TM.MetricsFonts.ScrollWidth;
-            }
-
-            var toolTips = GetAllControlsOfType<ToolTipR>();
-            foreach (var tip in toolTips)
-            {
-                tip.Font = TM.MetricsFonts.CaptionFont;
-            }
-
-            var menuBars = GetAllControlsOfType<MenuBarR>();
-            foreach (var menuBar in menuBars)
+            foreach (MenuBarR menuBar in GetMenuBars())
             {
                 menuBar.MenuHeight = TM.MetricsFonts.MenuHeight;
                 menuBar.Font = TM.MetricsFonts.MessageFont;
             }
 
-            var buttons = GetAllControlsOfType<ButtonR>();
-            foreach (var button in buttons)
+            foreach (ButtonR button in GetButtons())
             {
                 button.FocusRectWidth = (int)TM.WindowsEffects.FocusRectWidth;
                 button.FocusRectHeight = (int)TM.WindowsEffects.FocusRectHeight;
             }
 
-            var windows = GetAllControlsOfType<WindowR>();
-            foreach (var window in windows)
+            foreach (WindowR window in GetWindows())
             {
                 SetClassicWindowMetrics(TM, window);
                 window.Padding = _Padding;
             }
 
-            // Set correct sizes of windows according to the metrics
             WindowR3.Height = (int)(90 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth + GetTitlebarTextHeight(WindowR3.Font));
             WindowR2.Height = (int)(120 + TM.MetricsFonts.PaddedBorderWidth + TM.MetricsFonts.BorderWidth + GetTitlebarTextHeight(WindowR2.Font) + TM.MetricsFonts.MenuHeight);
 
@@ -1294,7 +846,7 @@ namespace WinPaletter.Templates
 
         private void CenterControls()
         {
-            var positions = new List<int>[4] { new(), new(), new(), new() };
+            List<int>[] positions = [[], [], [], []];
 
             foreach (Control control in Controls)
             {
@@ -1309,19 +861,9 @@ namespace WinPaletter.Templates
 
             if (positions[0].Count == 0) return;
 
-            Rectangle rectangle = new(
-                positions[1].Min(),
-                positions[0].Min(),
-                positions[3].Max() - positions[1].Min(),
-                positions[2].Max() - positions[0].Min()
-            );
+            Rectangle rectangle = new(positions[1].Min(), positions[0].Min(), positions[3].Max() - positions[1].Min(), positions[2].Max() - positions[0].Min());
 
-            Rectangle centerRect = new(
-                0 + (Width - rectangle.Width) / 2,
-                0 + (Height - rectangle.Height) / 2,
-                rectangle.Width,
-                rectangle.Height
-            );
+            Rectangle centerRect = new(0 + (Width - rectangle.Width) / 2, 0 + (Height - rectangle.Height) / 2, rectangle.Width, rectangle.Height);
 
             foreach (Control control in Controls)
             {
@@ -1333,21 +875,77 @@ namespace WinPaletter.Templates
             }
         }
 
-        public void LoadFromWinThemeString(string DB, string ThemeName)
+        public void LoadFromWinThemeString(string themeDatabase, string themeName)
         {
-            if (string.IsNullOrWhiteSpace(DB) || !DB.Contains("|") || string.IsNullOrWhiteSpace(ThemeName)) return;
+            // *********************************************************************
+            // LINQ is not used as it caused multiple GCs, and worsened performance.
+            // *********************************************************************
 
-            string selectedTheme = FindThemeInDatabase(DB, ThemeName);
-            if (string.IsNullOrEmpty(selectedTheme)) return;
+            if (string.IsNullOrEmpty(themeDatabase) || string.IsNullOrEmpty(themeName)) return;
+
+            string matchedThemeLine = null;
+
+            int totalLength = themeDatabase.Length;
+            int lineStartIndex = 0;
+
+            // 1. Find matching theme line
+            for (int i = 0; i <= totalLength; i++)
+            {
+                bool isEndOfLine = (i == totalLength || themeDatabase[i] == '\n');
+
+                if (!isEndOfLine) continue;
+
+                int lineLength = i - lineStartIndex;
+
+                if (lineLength > 0)
+                {
+                    // Extract one full line
+                    string line = themeDatabase.Substring(lineStartIndex, lineLength);
+
+                    int separatorIndex = line.IndexOf('|');
+
+                    if (separatorIndex > 0)
+                    {
+                        // Match theme name (case-insensitive)
+                        bool isTargetTheme = line.StartsWith(themeName, StringComparison.OrdinalIgnoreCase) && line.Length > themeName.Length && line[themeName.Length] == '|';
+
+                        if (isTargetTheme)
+                        {
+                            // Convert format: "key|value|value" -> "key\r\nvalue\r\nvalue"
+                            matchedThemeLine = line.Replace("|", "\r\n");
+                            break;
+                        }
+                    }
+                }
+
+                lineStartIndex = i + 1;
+            }
+
+            if (matchedThemeLine == null) return;
 
             Visible = false;
 
-            bool foundGradientActive = false;
-            bool foundGradientInactive = false;
+            bool hasGradientActive = false;
+            bool hasGradientInactive = false;
 
-            foreach (string item in selectedTheme.Split('\n'))
+            totalLength = matchedThemeLine.Length;
+            lineStartIndex = 0;
+
+            // 2. Parse theme key/value lines
+            for (int i = 0; i <= totalLength; i++)
             {
-                ParseThemeItem(item, ref foundGradientActive, ref foundGradientInactive);
+                bool isEndOfLine = (i == totalLength || matchedThemeLine[i] == '\n');
+
+                if (!isEndOfLine) continue;
+
+                int lineLength = i - lineStartIndex;
+
+                if (lineLength > 0)
+                {
+                    ParseThemeItemSpan(matchedThemeLine, lineStartIndex, lineLength, ref hasGradientActive, ref hasGradientInactive);
+                }
+
+                lineStartIndex = i + 1;
             }
 
             Refresh();
@@ -1355,149 +953,149 @@ namespace WinPaletter.Templates
             RetroShadow1.Refresh();
         }
 
-        private string FindThemeInDatabase(string db, string themeName)
+        private void ParseThemeItemSpan(string themeData, int lineStart, int lineLength, ref bool hasGradientActive, ref bool hasGradientInactive)
         {
-            foreach (string theme in db.Split('\n'))
+            // *********************************************************************
+            // LINQ is not used as it caused multiple GCs, and worsened performance.
+            // *********************************************************************
+
+            int lineEnd = lineStart + lineLength;
+            int equalsIndex = -1;
+
+            // 1. Find '=' separator (key = value)
+            for (int i = lineStart; i < lineEnd; i++)
             {
-                if ((theme.Split('|')[0].ToLower() ?? "") == (themeName.ToLower() ?? ""))
+                if (themeData[i] == '=')
                 {
-                    return theme.Replace("|", "\r\n");
+                    equalsIndex = i;
+                    break;
                 }
             }
-            return null;
-        }
 
-        private void ParseThemeItem(string item, ref bool foundGradientActive, ref bool foundGradientInactive)
-        {
-            string x = item.ToLower();
-            string[] parts = x.Split('=');
-            if (parts.Length < 2) return;
+            if (equalsIndex <= lineStart || equalsIndex >= lineEnd - 1) return;
 
-            string value = parts[1];
+            // 2. Extract key and value (no allocations)
+            ReadOnlySpan<char> keySpan = themeData.AsSpan(lineStart, equalsIndex - lineStart);
+            ReadOnlySpan<char> valueSpan = themeData.AsSpan(equalsIndex + 1, lineEnd - equalsIndex - 1);
 
-            switch (parts[0])
+            string value = valueSpan.ToString(); // conversion only where needed
+
+            // 3. Map keys to theme properties
+            if (keySpan.Equals("activetitle", StringComparison.OrdinalIgnoreCase))
             {
-                case "activetitle":
-                    ActiveTitle = value.ToColorFromWin32();
-                    if (!foundGradientActive)
-                        GradientActiveTitle = ActiveTitle;
-                    break;
-                case "gradientactivetitle":
-                    GradientActiveTitle = value.ToColorFromWin32();
-                    foundGradientActive = true;
-                    break;
-                case "inactivetitle":
-                    InactiveTitle = value.ToColorFromWin32();
-                    if (!foundGradientInactive)
-                        GradientInactiveTitle = InactiveTitle;
-                    break;
-                case "gradientinactivetitle":
-                    GradientInactiveTitle = value.ToColorFromWin32();
-                    foundGradientInactive = true;
-                    break;
-                case "background":
-                    Background = value.ToColorFromWin32();
-                    break;
-                case "hilight":
-                    Hilight = value.ToColorFromWin32();
-                    break;
-                case "hilighttext":
-                    HilightText = value.ToColorFromWin32();
-                    break;
-                case "titletext":
-                    TitleText = value.ToColorFromWin32();
-                    break;
-                case "window":
-                    Window = value.ToColorFromWin32();
-                    break;
-                case "windowtext":
-                    WindowText = value.ToColorFromWin32();
-                    break;
-                case "scrollbar":
-                    Scrollbar = value.ToColorFromWin32();
-                    break;
-                case "menu":
-                    Menu = value.ToColorFromWin32();
-                    break;
-                case "windowframe":
-                    WindowFrame = value.ToColorFromWin32();
-                    break;
-                case "menutext":
-                    MenuText = value.ToColorFromWin32();
-                    break;
-                case "activeborder":
-                    ActiveBorder = value.ToColorFromWin32();
-                    break;
-                case "inactiveborder":
-                    InactiveBorder = value.ToColorFromWin32();
-                    break;
-                case "appworkspace":
-                    AppWorkspace = value.ToColorFromWin32();
-                    break;
-                case "buttonface":
-                    ButtonFace = value.ToColorFromWin32();
-                    break;
-                case "buttonshadow":
-                    ButtonShadow = value.ToColorFromWin32();
-                    break;
-                case "graytext":
-                    GrayText = value.ToColorFromWin32();
-                    break;
-                case "buttontext":
-                    ButtonText = value.ToColorFromWin32();
-                    break;
-                case "inactivetitletext":
-                    InactiveTitleText = value.ToColorFromWin32();
-                    break;
-                case "buttonhilight":
-                    ButtonHilight = value.ToColorFromWin32();
-                    break;
-                case "buttondkshadow":
-                    ButtonDkShadow = value.ToColorFromWin32();
-                    break;
-                case "buttonlight":
-                    ButtonLight = value.ToColorFromWin32();
-                    break;
-                case "infotext":
-                    InfoText = value.ToColorFromWin32();
-                    break;
-                case "infowindow":
-                    InfoWindow = value.ToColorFromWin32();
-                    break;
-                case "hottrackingcolor":
-                    HotTrackingColor = value.ToColorFromWin32();
-                    break;
-                case "buttonalternateface":
-                    ButtonAlternateFace = value.ToColorFromWin32();
-                    break;
-                case "menubar":
-                    MenuBar = value.ToColorFromWin32();
-                    break;
-                case "menuhilight":
-                    MenuHilight = value.ToColorFromWin32();
-                    break;
-                case "desktop":
-                    Desktop = value.ToColorFromWin32();
-                    break;
+                ActiveTitle = value.ToColorFromWin32();
+
+                if (!hasGradientActive) GradientActiveTitle = ActiveTitle;
+
+                return;
             }
+
+            if (keySpan.Equals("gradientactivetitle", StringComparison.OrdinalIgnoreCase))
+            {
+                GradientActiveTitle = value.ToColorFromWin32();
+                hasGradientActive = true;
+                return;
+            }
+
+            if (keySpan.Equals("inactivetitle", StringComparison.OrdinalIgnoreCase))
+            {
+                InactiveTitle = value.ToColorFromWin32();
+
+                if (!hasGradientInactive) GradientInactiveTitle = InactiveTitle;
+
+                return;
+            }
+
+            if (keySpan.Equals("gradientinactivetitle", StringComparison.OrdinalIgnoreCase))
+            {
+                GradientInactiveTitle = value.ToColorFromWin32();
+                hasGradientInactive = true;
+                return;
+            }
+
+            // Standard Windows theme keys
+            if (keySpan.Equals("background", StringComparison.OrdinalIgnoreCase)) { Background = value.ToColorFromWin32(); return; }
+            if (keySpan.Equals("hilight", StringComparison.OrdinalIgnoreCase)) { Hilight = value.ToColorFromWin32(); return; }
+            if (keySpan.Equals("hilighttext", StringComparison.OrdinalIgnoreCase)) { HilightText = value.ToColorFromWin32(); return; }
+            if (keySpan.Equals("titletext", StringComparison.OrdinalIgnoreCase)) { TitleText = value.ToColorFromWin32(); return; }
+            if (keySpan.Equals("window", StringComparison.OrdinalIgnoreCase)) { Window = value.ToColorFromWin32(); return; }
+            if (keySpan.Equals("windowtext", StringComparison.OrdinalIgnoreCase)) { WindowText = value.ToColorFromWin32(); return; }
+            if (keySpan.Equals("scrollbar", StringComparison.OrdinalIgnoreCase)) { Scrollbar = value.ToColorFromWin32(); return; }
+            if (keySpan.Equals("menu", StringComparison.OrdinalIgnoreCase)) { Menu = value.ToColorFromWin32(); return; }
+            if (keySpan.Equals("windowframe", StringComparison.OrdinalIgnoreCase)) { WindowFrame = value.ToColorFromWin32(); return; }
+            if (keySpan.Equals("menutext", StringComparison.OrdinalIgnoreCase)) { MenuText = value.ToColorFromWin32(); return; }
+            if (keySpan.Equals("activeborder", StringComparison.OrdinalIgnoreCase)) { ActiveBorder = value.ToColorFromWin32(); return; }
+            if (keySpan.Equals("inactiveborder", StringComparison.OrdinalIgnoreCase)) { InactiveBorder = value.ToColorFromWin32(); return; }
+            if (keySpan.Equals("appworkspace", StringComparison.OrdinalIgnoreCase)) { AppWorkspace = value.ToColorFromWin32(); return; }
+            if (keySpan.Equals("buttonface", StringComparison.OrdinalIgnoreCase)) { ButtonFace = value.ToColorFromWin32(); return; }
+            if (keySpan.Equals("buttonshadow", StringComparison.OrdinalIgnoreCase)) { ButtonShadow = value.ToColorFromWin32(); return; }
+            if (keySpan.Equals("graytext", StringComparison.OrdinalIgnoreCase)) { GrayText = value.ToColorFromWin32(); return; }
+            if (keySpan.Equals("buttontext", StringComparison.OrdinalIgnoreCase)) { ButtonText = value.ToColorFromWin32(); return; }
+            if (keySpan.Equals("inactivetitletext", StringComparison.OrdinalIgnoreCase)) { InactiveTitleText = value.ToColorFromWin32(); return; }
+            if (keySpan.Equals("buttonhilight", StringComparison.OrdinalIgnoreCase)) { ButtonHilight = value.ToColorFromWin32(); return; }
+            if (keySpan.Equals("buttondkshadow", StringComparison.OrdinalIgnoreCase)) { ButtonDkShadow = value.ToColorFromWin32(); return; }
+            if (keySpan.Equals("buttonlight", StringComparison.OrdinalIgnoreCase)) { ButtonLight = value.ToColorFromWin32(); return; }
+            if (keySpan.Equals("infotext", StringComparison.OrdinalIgnoreCase)) { InfoText = value.ToColorFromWin32(); return; }
+            if (keySpan.Equals("infowindow", StringComparison.OrdinalIgnoreCase)) { InfoWindow = value.ToColorFromWin32(); return; }
+            if (keySpan.Equals("hottrackingcolor", StringComparison.OrdinalIgnoreCase)) { HotTrackingColor = value.ToColorFromWin32(); return; }
+            if (keySpan.Equals("buttonalternateface", StringComparison.OrdinalIgnoreCase)) { ButtonAlternateFace = value.ToColorFromWin32(); return; }
+            if (keySpan.Equals("menubar", StringComparison.OrdinalIgnoreCase)) { MenuBar = value.ToColorFromWin32(); return; }
+            if (keySpan.Equals("menuhilight", StringComparison.OrdinalIgnoreCase)) { MenuHilight = value.ToColorFromWin32(); return; }
+            if (keySpan.Equals("desktop", StringComparison.OrdinalIgnoreCase)) { Desktop = value.ToColorFromWin32(); return; }
         }
 
         public void LoadColors(Manager TM)
         {
             if (TM == null) return;
-            LoadColorsFromStructure(TM.Win32);
+
+            Visible = false;
+
+            Theme.Structures.Win32UI win32ui = TM.Win32;
+
+            EnableTheming = win32ui.EnableTheming;
+            EnableGradient = win32ui.EnableGradient;
+            ActiveBorder = win32ui.ActiveBorder;
+            ActiveTitle = win32ui.ActiveTitle;
+            AppWorkspace = win32ui.AppWorkspace;
+            Background = win32ui.Background;
+            ButtonAlternateFace = win32ui.ButtonAlternateFace;
+            ButtonDkShadow = win32ui.ButtonDkShadow;
+            ButtonFace = win32ui.ButtonFace;
+            ButtonHilight = win32ui.ButtonHilight;
+            ButtonLight = win32ui.ButtonLight;
+            ButtonShadow = win32ui.ButtonShadow;
+            ButtonText = win32ui.ButtonText;
+            GradientActiveTitle = win32ui.GradientActiveTitle;
+            GradientInactiveTitle = win32ui.GradientInactiveTitle;
+            GrayText = win32ui.GrayText;
+            HilightText = win32ui.HilightText;
+            HotTrackingColor = win32ui.HotTrackingColor;
+            InactiveBorder = win32ui.InactiveBorder;
+            InactiveTitle = win32ui.InactiveTitle;
+            InactiveTitleText = win32ui.InactiveTitleText;
+            InfoText = win32ui.InfoText;
+            InfoWindow = win32ui.InfoWindow;
+            Menu = win32ui.Menu;
+            MenuBar = win32ui.MenuBar;
+            MenuText = win32ui.MenuText;
+            MenuHilight = win32ui.MenuHilight;
+            Scrollbar = win32ui.Scrollbar;
+            TitleText = win32ui.TitleText;
+            Window = win32ui.Window;
+            WindowFrame = win32ui.WindowFrame;
+            WindowText = win32ui.WindowText;
+            Hilight = win32ui.Hilight;
+            Desktop = win32ui.Background;
+
+            Visible = true;
         }
 
         public void LoadColors(Theme.Structures.Win32UI win32ui)
         {
-            LoadColorsFromStructure(win32ui);
-        }
+            if (win32ui == null) return;
 
-        private void LoadColorsFromStructure(Theme.Structures.Win32UI win32ui)
-        {
             Visible = false;
 
-            // Batch assign all colors
             EnableTheming = win32ui.EnableTheming;
             EnableGradient = win32ui.EnableGradient;
             ActiveBorder = win32ui.ActiveBorder;
@@ -1542,7 +1140,6 @@ namespace WinPaletter.Templates
 
             Visible = false;
 
-            // Batch copy all properties
             EnableTheming = retroDesktopColors.EnableTheming;
             EnableGradient = retroDesktopColors.EnableGradient;
             ActiveBorder = retroDesktopColors.ActiveBorder;
@@ -1581,15 +1178,8 @@ namespace WinPaletter.Templates
             Visible = true;
         }
 
-        private void WindowR4_SizeChanged(object sender, EventArgs e)
-        {
-            UpdateToolTipPosition();
-        }
-
-        private void WindowR4_LocationChanged(object sender, EventArgs e)
-        {
-            UpdateToolTipPosition();
-        }
+        private void WindowR4_SizeChanged(object sender, EventArgs e) => UpdateToolTipPosition();
+        private void WindowR4_LocationChanged(object sender, EventArgs e) => UpdateToolTipPosition();
 
         private void UpdateToolTipPosition()
         {
@@ -1597,23 +1187,13 @@ namespace WinPaletter.Templates
             toolTipR1.Left = WindowR4.Right - WindowR4.Metrics_CaptionWidth - 2;
         }
 
-        private void WindowR2_SizeChanged(object sender, EventArgs e)
-        {
-            UpdateContextMenuPosition();
-        }
-
-        private void WindowR2_LocationChanged(object sender, EventArgs e)
-        {
-            UpdateContextMenuPosition();
-        }
+        private void WindowR2_SizeChanged(object sender, EventArgs e) => UpdateContextMenuPosition();
+        private void WindowR2_LocationChanged(object sender, EventArgs e) => UpdateContextMenuPosition();
 
         private void UpdateContextMenuPosition()
         {
             ContextMenu.Top = WindowR2.Top + menuBarR1.Top + menuBarR1.Height;
-            ContextMenu.Left = Math.Min(
-                WindowR2.Left + menuBarR1.Left + menuBarR1.SelectedItemLocation.X,
-                WindowR2.Right - WindowR2.Metrics_PaddedBorderWidth - WindowR2.Metrics_BorderWidth
-            );
+            ContextMenu.Left = Math.Min(WindowR2.Left + menuBarR1.Left + menuBarR1.SelectedItemLocation.X, WindowR2.Right - WindowR2.Metrics_PaddedBorderWidth - WindowR2.Metrics_BorderWidth);
         }
 
         private void ContextMenu_SizeChanged(object sender, EventArgs e)
@@ -1627,8 +1207,7 @@ namespace WinPaletter.Templates
 
         private void ContextMenu_LocationChanged(object sender, EventArgs e)
         {
-            if (!DesignMode)
-                RetroShadow1.Location = ContextMenu.Location + (Size)new Point(5, 5);
+            if (!DesignMode) RetroShadow1.Location = ContextMenu.Location + (Size)new Point(5, 5);
         }
 
         #endregion
@@ -1642,7 +1221,7 @@ namespace WinPaletter.Templates
             if (EnableEditingColors)
             {
                 _cursorMovingInBackground = true;
-                Refresh();
+                Invalidate();
             }
             base.OnMouseMove(e);
         }
@@ -1652,7 +1231,7 @@ namespace WinPaletter.Templates
             if (EnableEditingColors)
             {
                 _cursorMovingInBackground = false;
-                Refresh();
+                Invalidate();
             }
             base.OnMouseLeave(e);
         }
