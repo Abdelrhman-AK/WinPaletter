@@ -785,16 +785,16 @@ namespace WinPaletter
             retroDesktopColors1.TitleText = TitleText_pick.BackColor;
             retroDesktopColors1.ActiveBorder = ActiveBorder_pick.BackColor;
 
-            windowR2.ColorGradient = Toggle2.Checked;
-            windowR2.Color1 = InactiveTitle_pick.BackColor;
-            windowR2.Color2 = GInactivetitle_pick.BackColor;
-            windowR2.ForeColor = InactivetitleText_pick.BackColor;
-            windowR2.ColorBorder = InactiveBorder_pick.BackColor;
-            windowR2.BackColor = btnface_pick.BackColor;
-            windowR2.ButtonDkShadow = btndkshadow_pick.BackColor;
-            windowR2.ButtonHilight = btnhilight_pick.BackColor;
-            windowR2.ButtonLight = btnlight_pick.BackColor;
-            windowR2.ButtonShadow = btnshadow_pick.BackColor;
+            windowR1.ColorGradient = Toggle2.Checked;
+            windowR1.Color1 = activetitle_pick.BackColor;
+            windowR1.Color2 = GActivetitle_pick.BackColor;
+            windowR1.ForeColor = TitleText_pick.BackColor;
+            windowR1.ColorBorder = ActiveBorder_pick.BackColor;
+            windowR1.BackColor = btnface_pick.BackColor;
+            windowR1.ButtonDkShadow = btndkshadow_pick.BackColor;
+            windowR1.ButtonHilight = btnhilight_pick.BackColor;
+            windowR1.ButtonLight = btnlight_pick.BackColor;
+            windowR1.ButtonShadow = btnshadow_pick.BackColor;
 
             windowR2.ColorGradient = Toggle2.Checked;
             windowR2.Color1 = InactiveTitle_pick.BackColor;
@@ -1182,6 +1182,15 @@ namespace WinPaletter
                     Retro3DPreview1.ButtonHilight = hilight;
                     Retro3DPreview1.ButtonLight = light;
                     Retro3DPreview1.ButtonShadow = shadow;
+
+                    windowR1.ButtonDkShadow = dkShadow;
+                    windowR1.ButtonHilight = hilight;
+                    windowR1.ButtonLight = light;
+                    windowR1.ButtonShadow = shadow;
+                    windowR1.ButtonDkShadow = dkShadow;
+                    windowR1.ButtonHilight = hilight;
+                    windowR1.ButtonLight = light;
+                    windowR1.ButtonShadow = shadow;
 
                     windowR2.ButtonDkShadow = dkShadow;
                     windowR2.ButtonHilight = hilight;

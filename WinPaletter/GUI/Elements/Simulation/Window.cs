@@ -202,6 +202,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _active)
                 {
                     _active = value;
+                    ProcessBack();
                     Invalidate();
                 }
             }
@@ -322,6 +323,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _AccentColor_Enabled)
                 {
                     _AccentColor_Enabled = value;
+                    ProcessBack();
                     Invalidate();
                 }
             }
@@ -492,7 +494,7 @@ namespace WinPaletter.UI.Simulation
 
             if (AdaptedBack is null) return;
 
-            // W11 / W11Lite blur processing
+            // W11/W11Lite blur processing
             if (Preview == Preview_Enum.W11 || Preview == Preview_Enum.W11Lite)
             {
                 if (Active && !AccentColor_Enabled)
@@ -500,11 +502,11 @@ namespace WinPaletter.UI.Simulation
                     if (DarkMode)
                     {
                         using Bitmap b = AdaptedBack.Blur(15);
+
                         if (b is not null)
                         {
-                            using Bitmap bmpContrast = b.Contrast(-0.1f);
                             AdaptedBackBlurred?.Dispose();
-                            AdaptedBackBlurred = bmpContrast.AdjustHSL(null, 0.7f);
+                            AdaptedBackBlurred = b.Contrast(0.05f);
                         }
                     }
                     else

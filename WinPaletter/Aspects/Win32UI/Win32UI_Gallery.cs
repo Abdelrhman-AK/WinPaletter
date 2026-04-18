@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.Templates;
 using WinPaletter.Theme;
@@ -11,10 +13,21 @@ namespace WinPaletter
 {
     public partial class Win32UI_Gallery : UI.WP.Form
     {
-        // Single static instance of RetroDesktopColors reused for all preview generation
-        private static RetroDesktopColors _previewRenderer = null;
-        private static readonly object _renderLock = new();
-        private readonly Dictionary<string, Bitmap> _previewCache = [];
+        private static readonly Dictionary<string, Bitmap> _previewCache = [];
+        private static readonly object _cacheLock = new();
+
+        private static RetroDesktopColors _renderer = null;
+        private static readonly SemaphoreSlim _rendererSemaphore = new(1, 1);
+
+        // Static — survives form re-creation, matches the lifetime of the static cache/renderer.
+        // Without this, a new instance always sees Task.CompletedTask and never drains the
+        // prior instance's still-running background task before touching shared state.
+        private static CancellationTokenSource _loadCts = null;
+        private static Task _priorLoadTask = Task.CompletedTask;
+
+        // Tracks whether DisposeSubControls has already run for this instance, so that
+        // LoadGalleryAsync can always safely call it before Clear() even on mid-load reopen.
+        private bool _subControlsDisposed = false;
 
         public Win32UI_Gallery()
         {
@@ -23,106 +36,263 @@ namespace WinPaletter
 
         private void Win32UI_Gallery_Load(object sender, EventArgs e)
         {
-            LoadGallery();
+            Task previousTask = _priorLoadTask;
+            _priorLoadTask = LoadGalleryAsync(previousTask);
         }
 
-        private void LoadGallery()
+        private async Task LoadGalleryAsync(Task previousTask)
         {
+            // Cancel → drain → reset, in strict order.
+            // The prior task must be fully dead before the semaphore is reset or shared renderer state is touched.
+            _loadCts?.Cancel();
+
+            try { await previousTask.ConfigureAwait(false); }
+            catch (OperationCanceledException) { }
+            catch (Exception) { }
+
+            _loadCts?.Dispose();
+            ResetSemaphore();
+
+            _loadCts = new CancellationTokenSource();
+            CancellationToken token = _loadCts.Token;
+
             Cursor = Cursors.WaitCursor;
 
             try
             {
-                foreach (RadioImage control in schemes.Controls.OfType<RadioImage>())
-                {
-                    control.Image = null;
-                    control.Dispose();
-                }
+                token.ThrowIfCancellationRequested();
 
+                // Always dispose any lingering subcontrols before clearing — even if the prior session was closed mid-load and PickATheme never ran DisposeSubControls.
+                // Controls.Clear() without Dispose leaks GDI handles and causes the empty container on the third open.
+                EnsureSubControlsDisposed();
                 schemes.Controls.Clear();
 
                 string[] schemeNames = [.. Schemes.ClassicColors.Split('\n').Select(f => f.Split('|')[0])];
-
                 string selectedItem = Forms.Win32UI.ComboBox1?.SelectedItem?.ToString() ?? string.Empty;
 
-                // Initialize or reset the preview renderer
-                InitializePreviewRenderer();
-
-                List<Control> controlList = [with(schemeNames.Length)];
+                schemes.SuspendLayout();
 
                 foreach (string schemeName in schemeNames)
                 {
-                    // Generate preview bitmap for this scheme
-                    Bitmap preview = GeneratePreview(schemeName);
+                    token.ThrowIfCancellationRequested();
 
                     RadioImage radioImage = new()
                     {
                         TextImageRelation = TextImageRelation.ImageAboveText,
-                        Image = preview,
+                        Image = null,
                         Size = new Size(250, 180),
                         Text = schemeName,
                         Checked = !string.IsNullOrEmpty(selectedItem) && string.Equals(selectedItem, schemeName, StringComparison.OrdinalIgnoreCase)
                     };
 
-                    controlList.Add(radioImage);
+                    schemes.Controls.Add(radioImage);
                 }
 
-                schemes.Controls.AddRange([.. controlList]);
+                // Mark controls as live so EnsureSubControlsDisposed knows they need cleanup
+                _subControlsDisposed = false;
+
+                schemes.ResumeLayout(true);
+
+                List<string> uncached = [];
+                List<(string Name, Bitmap Bmp)> cached = [];
+
+                lock (_cacheLock)
+                {
+                    foreach (string name in schemeNames)
+                    {
+                        if (_previewCache.TryGetValue(name, out Bitmap bmp) && IsValidBitmap(bmp)) cached.Add((name, bmp));
+                        else
+                        {
+                            _previewCache.Remove(name);
+                            uncached.Add(name);
+                        }
+                    }
+                }
+
+                if (cached.Count > 0)
+                {
+                    schemes.SuspendLayout();
+
+                    foreach ((string name, Bitmap bmp) in cached)
+                    {
+                        token.ThrowIfCancellationRequested();
+                        ApplyPreview(name, bmp);
+                    }
+
+                    schemes.ResumeLayout(true);
+                }
+
+                if (uncached.Count > 0)
+                {
+                    token.ThrowIfCancellationRequested();
+                    await Task.Run(() => RenderUncachedAsync([.. uncached], token), token).ConfigureAwait(false);
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                // Normal — form closed or reload triggered
             }
             finally
             {
-                Cursor = Cursors.Default;
+                ResetCursor();
             }
         }
 
-        private void InitializePreviewRenderer()
+        // Disposes subcontrols exactly once per control population.
+        // Safe to call multiple times — idempotent via _subControlsDisposed flag.
+        private void EnsureSubControlsDisposed()
         {
-            lock (_renderLock)
+            if (_subControlsDisposed) return;
+
+            foreach (RadioImage control in schemes.Controls.OfType<RadioImage>().ToList())
             {
-                if (_previewRenderer != null && !_previewRenderer.IsDisposed)
+                control.Image = null;
+                control.Dispose();
+            }
+
+            _subControlsDisposed = true;
+        }
+
+        private static bool IsValidBitmap(Bitmap bmp)
+        {
+            if (bmp == null) return false;
+
+            try { _ = bmp.Width; return true; }
+            catch (ArgumentException) { return false; }
+        }
+
+        private void ResetCursor()
+        {
+            if (!IsDisposed && IsHandleCreated)
+            {
+                try { BeginInvoke(() => { if (!IsDisposed) Cursor = Cursors.Default; }); }
+                catch (ObjectDisposedException) { Cursor.Current = Cursors.Default; }
+            }
+            else
+            {
+                Cursor.Current = Cursors.Default;
+            }
+        }
+
+        private static void ResetSemaphore()
+        {
+            if (_rendererSemaphore.CurrentCount == 0)
+            {
+                try { _rendererSemaphore.Release(); }
+                catch (SemaphoreFullException) { }
+            }
+        }
+
+        private async Task RenderUncachedAsync(string[] schemeNames, CancellationToken token)
+        {
+            await _rendererSemaphore.WaitAsync(token).ConfigureAwait(false);
+
+            try
+            {
+                if (_renderer == null || _renderer.IsDisposed)
                 {
-                    // Reuse existing renderer
-                    return;
+                    _renderer?.Dispose();
+                    _renderer = new RetroDesktopColors { Size = new Size(350, 300) };
                 }
 
-                _previewRenderer?.Dispose();
-                _previewRenderer = new()
-                {
-                    Size = new Size(350, 300)
-                };
+                _renderer.LoadMetrics(Program.TM);
+            }
+            finally
+            {
+                _rendererSemaphore.Release();
+            }
 
-                _previewRenderer.LoadMetrics(Program.TM);
+            foreach (string schemeName in schemeNames)
+            {
+                token.ThrowIfCancellationRequested();
+
+                Bitmap preview = await GenerateAndCacheAsync(schemeName, token).ConfigureAwait(false);
+
+                if (preview == null) continue;
+
+                token.ThrowIfCancellationRequested();
+
+                string name = schemeName;
+                Bitmap bmp = preview;
+
+                if (IsDisposed) break;
+
+                try
+                {
+                    Invoke(() => ApplyPreview(name, bmp));
+                }
+                catch (ObjectDisposedException)
+                {
+                    break;
+                }
             }
         }
 
-        private Bitmap GeneratePreview(string schemeName)
+        private static async Task<Bitmap> GenerateAndCacheAsync(string schemeName, CancellationToken token)
         {
-            lock (_renderLock)
+            lock (_cacheLock)
             {
-                if (_previewRenderer == null || _previewRenderer.IsDisposed) InitializePreviewRenderer();
+                if (_previewCache.TryGetValue(schemeName, out Bitmap cached))
+                {
+                    if (IsValidBitmap(cached)) return cached;
+                    _previewCache.Remove(schemeName);
+                }
+            }
 
-                if (_previewCache.TryGetValue(schemeName, out Bitmap cached)) return cached;
+            await _rendererSemaphore.WaitAsync(token).ConfigureAwait(false);
 
-                _previewRenderer.LoadFromWinThemeString(Schemes.ClassicColors, schemeName);
+            try
+            {
+                lock (_cacheLock)
+                {
+                    if (_previewCache.TryGetValue(schemeName, out Bitmap existing) && IsValidBitmap(existing)) return existing;
+                }
 
-                using Bitmap full = _previewRenderer.ToBitmap(true);
+                _renderer.LoadFromWinThemeString(Schemes.ClassicColors, schemeName);
+
+                using Bitmap full = _renderer.ToBitmap(true);
                 Bitmap resized = full?.Resize(160, 135);
 
-                _previewCache[schemeName] = resized;
+                if (resized != null)
+                {
+                    lock (_cacheLock)
+                    {
+                        _previewCache[schemeName] = resized;
+                    }
+                }
+
                 return resized;
             }
+            finally
+            {
+                _rendererSemaphore.Release();
+            }
+        }
+
+        private void ApplyPreview(string schemeName, Bitmap preview)
+        {
+            if (IsDisposed) return;
+
+            RadioImage target = schemes.Controls.OfType<RadioImage>().FirstOrDefault(r => string.Equals(r.Text, schemeName, StringComparison.OrdinalIgnoreCase));
+
+            if (target == null || target.IsDisposed) return;
+
+            target.Image = preview;
+            target.Invalidate();
         }
 
         public string PickATheme(Size parentButtonSize, Point parentButtonLocation)
         {
-            DialogResult resultDialog = ShowDialog(parentButtonSize, parentButtonLocation);
-
-            if (resultDialog != DialogResult.OK) return string.Empty;
+            DialogResult result = ShowDialog(parentButtonSize, parentButtonLocation);
 
             RadioImage selected = schemes.Controls.OfType<RadioImage>().FirstOrDefault(r => r.Checked);
+            string selectedName = selected?.Text ?? string.Empty;
 
-            return selected?.Text ?? string.Empty;
+            // Dispose subcontrols while form is still hidden — idempotent, safe to call here
+            EnsureSubControlsDisposed();
+
+            return result == DialogResult.OK ? selectedName : string.Empty;
         }
-
 
         public DialogResult ShowDialog(Size parentButtonSize, Point parentButtonLocation)
         {
@@ -145,9 +315,38 @@ namespace WinPaletter
         {
             base.OnFormClosed(e);
 
-            foreach (Bitmap bmp in _previewCache.Values) bmp.Dispose();
+            _loadCts?.Cancel();
 
-            _previewCache.Clear();
+            Task snapshot = _priorLoadTask;
+
+            Task.Run(async () =>
+            {
+                try { await snapshot.ConfigureAwait(false); }
+                catch (OperationCanceledException) { }
+                catch (Exception) { }
+                finally
+                {
+                    _loadCts?.Dispose();
+                    _loadCts = null;
+                    ResetSemaphore();
+                }
+            });
+        }
+
+        public static void DisposeSharedResources()
+        {
+            _loadCts?.Cancel();
+            _loadCts?.Dispose();
+            _loadCts = null;
+
+            _renderer?.Dispose();
+            _renderer = null;
+
+            lock (_cacheLock)
+            {
+                foreach (Bitmap bmp in _previewCache.Values) bmp?.Dispose();
+                _previewCache.Clear();
+            }
         }
     }
 }
