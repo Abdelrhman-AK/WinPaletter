@@ -142,7 +142,7 @@ namespace WinPaletter
         {
             if (!nonAdmin || OS.WXP)
             {
-                using (WindowsImpersonationContext wic = User.Identity_Admin.Impersonate())
+                using (WindowsImpersonationContext wic = User.Identity_Admin?.Impersonate())
                 {
                     using (Process process = new()
                     {
@@ -163,7 +163,7 @@ namespace WinPaletter
                         Program.Log?.Write(LogEventLevel.Information, $"Command executed successfully: {command}");
                     }
 
-                    wic.Undo();
+                    wic?.Undo();
                 }
             }
             else
