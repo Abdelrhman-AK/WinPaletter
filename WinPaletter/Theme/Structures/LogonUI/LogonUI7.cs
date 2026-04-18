@@ -101,7 +101,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>
-        /// Apply Windows 7 LogonUI screen
+        /// Process Windows 7 LogonUI screen
         /// </summary>
         /// <param name="treeView">treeView used to show applying log</param>
         public void Apply(TreeView treeView = null)

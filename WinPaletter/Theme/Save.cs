@@ -169,14 +169,14 @@ namespace WinPaletter.Theme
                         LogonUIXP.SaveToggleState(tv);
                         MetricsFonts.SaveToggleState(tv);
                         Wallpaper.SaveToggleState(tv);
-                        WallpaperTone.SaveToggleState(WallpaperTone_W12, "Win12", tv);
-                        WallpaperTone.SaveToggleState(WallpaperTone_W11, "Win11", tv);
-                        WallpaperTone.SaveToggleState(WallpaperTone_W10, "Win10", tv);
-                        WallpaperTone.SaveToggleState(WallpaperTone_W81, "Win8.1", tv);
-                        WallpaperTone.SaveToggleState(WallpaperTone_W8, "Win8", tv);
-                        WallpaperTone.SaveToggleState(WallpaperTone_W7, "Win7", tv);
-                        WallpaperTone.SaveToggleState(WallpaperTone_WVista, "WinVista", tv);
-                        WallpaperTone.SaveToggleState(WallpaperTone_WXP, "WinXP", tv);
+                        WallpaperTone_W12.SaveToggleState(tv);
+                        WallpaperTone_W11.SaveToggleState(tv);
+                        WallpaperTone_W10.SaveToggleState(tv);
+                        WallpaperTone_W81.SaveToggleState(tv);
+                        WallpaperTone_W8.SaveToggleState(tv);
+                        WallpaperTone_W7.SaveToggleState(tv);
+                        WallpaperTone_WVista.SaveToggleState(tv);
+                        WallpaperTone_WXP.SaveToggleState(tv);
                         Cursors.SaveToggleState(tv);
                         WindowsEffects.SaveToggleState(tv);
                         AltTab.SaveToggleState(tv);
@@ -216,7 +216,7 @@ namespace WinPaletter.Theme
                             !Wallpaper.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Wallpaper),
                             string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, Program.Localization.Strings.Aspects.Wallpaper));
 
-                        // Apply Windows 12 execlusive features (Colors, lock screen and visual styles)
+                        // Process Windows 12 execlusive features (Colors, lock screen and visual styles)
                         if (OS.W12)
                         {
                             Execute(() => Windows12.Apply(tv), treeView,
@@ -227,7 +227,7 @@ namespace WinPaletter.Theme
                                 !Windows12.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
                                 string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W12)));
 
-                            Execute(() => LogonUI12.Apply("12", tv), treeView,
+                            Execute(() => LogonUI12.Apply(tv), treeView,
                                 string.Format(Program.Localization.Strings.ThemeManager.Actions.Applying_Feature_ForOS, Program.Localization.Strings.Windows.W12, Program.Localization.Strings.Aspects.LockScreen),
                                 string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, Program.Localization.Strings.Aspects.LockScreen),
                                 Program.Localization.Strings.ThemeManager.Actions.Time,
@@ -236,7 +236,7 @@ namespace WinPaletter.Theme
                                 string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, Program.Localization.Strings.Aspects.LockScreen));
                         }
 
-                        // Apply Windows 11 execlusive features (Colors, lock screen and visual styles)
+                        // Process Windows 11 execlusive features (Colors, lock screen and visual styles)
                         if (OS.W11)
                         {
                             Execute(() => Windows11.Apply(tv), treeView,
@@ -247,7 +247,7 @@ namespace WinPaletter.Theme
                                 !Windows11.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
                                 string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W11)));
 
-                            Execute(() => LogonUI11.Apply("11", tv), treeView,
+                            Execute(() => LogonUI11.Apply(tv), treeView,
                                 string.Format(Program.Localization.Strings.ThemeManager.Actions.Applying_Feature_ForOS, Program.Localization.Strings.Windows.W11, Program.Localization.Strings.Aspects.LockScreen),
                                 string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, Program.Localization.Strings.Aspects.LockScreen),
                                 Program.Localization.Strings.ThemeManager.Actions.Time,
@@ -256,7 +256,7 @@ namespace WinPaletter.Theme
                                 string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, Program.Localization.Strings.Aspects.LockScreen));
                         }
 
-                        // Apply Windows 10 execlusive features (Colors, lock screen and visual styles)
+                        // Process Windows 10 execlusive features (Colors, lock screen and visual styles)
                         if (OS.W10)
                         {
                             Execute(() => Windows10.Apply(tv), treeView,
@@ -267,7 +267,7 @@ namespace WinPaletter.Theme
                                 !Windows10.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
                                 string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W10)));
 
-                            Execute(() => LogonUI10.Apply("10", tv), treeView,
+                            Execute(() => LogonUI10.Apply(tv), treeView,
                                 string.Format(Program.Localization.Strings.ThemeManager.Actions.Applying_Feature_ForOS, Program.Localization.Strings.Windows.W10, Program.Localization.Strings.Aspects.LockScreen),
                                 string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, Program.Localization.Strings.Aspects.LockScreen),
                                 Program.Localization.Strings.ThemeManager.Actions.Time,
@@ -276,7 +276,7 @@ namespace WinPaletter.Theme
                                 string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, Program.Localization.Strings.Aspects.LockScreen));
                         }
 
-                        // Apply Windows 8.1 execlusive features (Colors, lock screen and visual styles)
+                        // Process Windows 8.1 execlusive features (Colors, lock screen and visual styles)
                         if (OS.W81)
                         {
                             Execute(() => Windows81.Apply(this, tv), treeView,
@@ -296,7 +296,7 @@ namespace WinPaletter.Theme
                                 string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, Program.Localization.Strings.Aspects.LockScreen));
                         }
 
-                        // Apply Windows 8 execlusive features (Colors, lock screen and visual styles)
+                        // Process Windows 8 execlusive features (Colors, lock screen and visual styles)
                         if (OS.W8)
                         {
                             Execute(() => Windows8.Apply(this, tv), treeView,
@@ -307,7 +307,7 @@ namespace WinPaletter.Theme
                                 !Windows8.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.WinColors),
                                 string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W8)));
 
-                            //Execute(() => LogonUI8.Apply(treeView), treeView,
+                            //Execute(() => LogonUI8.Process(treeView), treeView,
                             //    string.Format(Program.Lang.Strings.ThemeManager.Actions.Applying_Feature_ForOS, Program.Lang.Strings.Windows.W8, Program.Lang.Strings.Aspects.LockScreen),
                             //    string.Format(Program.Lang.Strings.ThemeManager.Errors.Error, Program.Lang.Strings.Aspects.LockScreen),
                             //    Program.Lang.Strings.ThemeManager.Actions.Time,
@@ -316,7 +316,7 @@ namespace WinPaletter.Theme
                             //    string.Format(Program.Lang.Strings.ThemeManager.Skip.Main, Program.Lang.Strings.Aspects.LockScreen));
                         }
 
-                        // Apply Windows 7 execlusive features (Colors, themes, LogonUI screen and visual styles)
+                        // Process Windows 7 execlusive features (Colors, themes, LogonUI screen and visual styles)
                         if (OS.W7)
                         {
                             Execute(() => Windows7.Apply(this, tv), treeView,
@@ -336,7 +336,7 @@ namespace WinPaletter.Theme
                                 string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, Program.Localization.Strings.Aspects.LogonUI));
                         }
 
-                        // Apply Windows Vista execlusive features (Colors, themes, and visual styles)
+                        // Process Windows Vista execlusive features (Colors, themes, and visual styles)
                         if (OS.WVista)
                         {
                             Execute(() => { WindowsVista.Apply(tv); }, treeView, string.Format(Program.Localization.Strings.ThemeManager.Actions.Theme, Program.Localization.Strings.Windows.WVista), string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.WVista)),
@@ -346,7 +346,7 @@ namespace WinPaletter.Theme
                             string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.WVista)));
                         }
 
-                        // Apply Windows XP execlusive features (Themes, LogonUI screen and visual styles)
+                        // Process Windows XP execlusive features (Themes, LogonUI screen and visual styles)
                         if (OS.WXP)
                         {
                             Execute(() => WindowsXP.Apply(tv), treeView,
@@ -414,40 +414,40 @@ namespace WinPaletter.Theme
                         // WallpaperTone
                         Execute(() =>
                         {
-                            WallpaperTone.Save_To_Registry(WallpaperTone_W12, "Win12", tv);
-                            WallpaperTone.Save_To_Registry(WallpaperTone_W11, "Win11", tv);
-                            WallpaperTone.Save_To_Registry(WallpaperTone_W10, "Win10", tv);
-                            WallpaperTone.Save_To_Registry(WallpaperTone_W81, "Win8.1", tv);
-                            WallpaperTone.Save_To_Registry(WallpaperTone_W8, "Win8", tv);
-                            WallpaperTone.Save_To_Registry(WallpaperTone_W7, "Win7", tv);
-                            WallpaperTone.Save_To_Registry(WallpaperTone_WVista, "WinVista", tv);
-                            WallpaperTone.Save_To_Registry(WallpaperTone_WXP, "WinXP", tv);
+                            WallpaperTone_W12.Save(tv);
+                            WallpaperTone_W11.Save(tv);
+                            WallpaperTone_W10.Save(tv);
+                            WallpaperTone_W81.Save(tv);
+                            WallpaperTone_W8.Save(tv);
+                            WallpaperTone_W7.Save(tv);
+                            WallpaperTone_WVista.Save(tv);
+                            WallpaperTone_WXP.Save(tv);
 
                             if (Wallpaper.Enabled)
                             {
                                 if (OS.W12 & WallpaperTone_W12.Enabled)
-                                    WallpaperTone_W12.Apply(tv);
+                                    WallpaperTone_W12.Process(tv);
 
                                 if (OS.W11 & WallpaperTone_W11.Enabled)
-                                    WallpaperTone_W11.Apply(tv);
+                                    WallpaperTone_W11.Process(tv);
 
                                 if (OS.W10 & WallpaperTone_W10.Enabled)
-                                    WallpaperTone_W10.Apply(tv);
+                                    WallpaperTone_W10.Process(tv);
 
                                 if (OS.W81 & WallpaperTone_W81.Enabled)
-                                    WallpaperTone_W81.Apply(tv);
+                                    WallpaperTone_W81.Process(tv);
 
                                 if (OS.W8 & WallpaperTone_W8.Enabled)
-                                    WallpaperTone_W8.Apply(tv);
+                                    WallpaperTone_W8.Process(tv);
 
                                 if (OS.W7 & WallpaperTone_W7.Enabled)
-                                    WallpaperTone_W7.Apply(tv);
+                                    WallpaperTone_W7.Process(tv);
 
                                 if (OS.WVista & WallpaperTone_WVista.Enabled)
-                                    WallpaperTone_WVista.Apply(tv);
+                                    WallpaperTone_WVista.Process(tv);
 
                                 if (OS.WXP & WallpaperTone_WXP.Enabled)
-                                    WallpaperTone_WXP.Apply(tv);
+                                    WallpaperTone_WXP.Process(tv);
                             }
 
                         }, treeView,
@@ -460,7 +460,7 @@ namespace WinPaletter.Theme
 
                         #region Consoles
 
-                        Execute(() => Apply_CommandPrompt(tv), treeView,
+                        Execute(() => CommandPrompt.Save("Command Prompt", Program.Settings.ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite, tv), treeView,
                             string.Format(Program.Localization.Strings.ThemeManager.Actions.Applying_Feature, Program.Localization.Strings.Aspects.CommandPrompt),
                             string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, Program.Localization.Strings.Aspects.CommandPrompt),
                             Program.Localization.Strings.ThemeManager.Actions.Time,
@@ -468,7 +468,7 @@ namespace WinPaletter.Theme
                             !CommandPrompt.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Consoles),
                             string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, Program.Localization.Strings.Aspects.CommandPrompt));
 
-                        Execute(() => Apply_PowerShell86(tv), treeView,
+                        Execute(() => PowerShellx86.Save("PowerShell x86", Program.Settings.ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite, tv), treeView,
                             string.Format(Program.Localization.Strings.ThemeManager.Actions.Applying_Feature, Program.Localization.Strings.Aspects.PowerShellx86),
                             string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, Program.Localization.Strings.Aspects.PowerShellx86),
                             Program.Localization.Strings.ThemeManager.Actions.Time,
@@ -476,7 +476,7 @@ namespace WinPaletter.Theme
                             !PowerShellx86.Enabled || (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Consoles),
                             string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, Program.Localization.Strings.Aspects.PowerShellx86));
 
-                        Execute(() => Apply_PowerShell64(tv), treeView,
+                        Execute(() => PowerShellx64.Save("PowerShell x64", Program.Settings.ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite, tv), treeView,
                             string.Format(Program.Localization.Strings.ThemeManager.Actions.Applying_Feature, Program.Localization.Strings.Aspects.PowerShellx64),
                             string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, Program.Localization.Strings.Aspects.PowerShellx64),
                             Program.Localization.Strings.ThemeManager.Actions.Time,

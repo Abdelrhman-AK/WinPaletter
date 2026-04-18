@@ -362,7 +362,7 @@ namespace WinPaletter.Tabs
 
             TitlebarTypes type = TitlebarType;
 
-            // Apply only if changed
+            // Process only if changed
             bool needsRedraw = _firstBackdropUpdate || _lastBackdropType == null || type != _lastBackdropType || p != _lastBackdropPadding || _lastFocused != _formFocused;
             _firstBackdropUpdate = false;
 

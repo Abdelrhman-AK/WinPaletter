@@ -397,7 +397,7 @@ namespace WinPaletter.Theme.Structures
                 {
                     WinEffects WE = Clone();
 
-                    // Apply WinEffects in a new thread to prevent freezing the UI
+                    // Process WinEffects in a new thread to prevent freezing the UI
                     await Task.Run(() =>
                     {
                         Program.Log?.Write(LogEventLevel.Information, $"Using User32.SystemParametersInfo to apply Windows Effects settings asynchronously to avoid bugs of crashing WinPaletter and active apps.");

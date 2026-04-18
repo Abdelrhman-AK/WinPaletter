@@ -849,7 +849,8 @@
     <Compile Include="GUI\Form.Designer.cs">
       <DependentUpon>Form.cs</DependentUpon>
     </Compile>
-    <Compile Include="Theme\Default\Schemes.cs" />
+    <Compile Include="Theme\Default\ClassicColorsSchemes.cs" />
+    <Compile Include="Theme\Default\MetricsSchemes.cs" />
     <Compile Include="Theme\Default\Windows10.cs" />
     <Compile Include="Theme\Default\Windows12.cs" />
     <Compile Include="Theme\Default\Windows11.cs" />
@@ -872,7 +873,6 @@
     <Compile Include="Theme\Support\Editions.cs" />
     <Compile Include="Theme\Support\Functions.cs" />
     <Compile Include="Theme\Support\JSON_Helpers.cs" />
-    <Compile Include="Theme\Support\Apply.cs" />
     <Compile Include="Theme\Properties.cs" />
     <Compile Include="Theme\Structures\Others\AltTab.cs" />
     <Compile Include="Theme\Structures\WinPaletter\AppTheme.cs" />

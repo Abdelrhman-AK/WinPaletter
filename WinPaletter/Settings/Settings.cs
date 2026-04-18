@@ -296,11 +296,6 @@ namespace WinPaletter
                 public OverwriteOptions Desktop_HKU_DEFAULT { get; set; } = Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
 
                 /// <summary>
-                /// Override user preferences in Command Prompt settings
-                /// </summary>
-                public bool CMD_OverrideUserPreferences { get; set; } = true;
-
-                /// <summary>
                 /// Restore <c>imageres.dll</c> health (integrity) after restoring default startup theme sound, by launching a <c>sfc</c> scan on it.
                 /// </summary>
                 public bool SFC_on_restoring_StartupSound { get; set; } = false;
@@ -398,7 +393,6 @@ namespace WinPaletter
                     PS86_HKU_DEFAULT_Prefs = ReadReg(REG_ThemeApplyingBehavior, "PS86_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange);
                     PS64_HKU_DEFAULT_Prefs = ReadReg(REG_ThemeApplyingBehavior, "PS64_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange);
                     Desktop_HKU_DEFAULT = ReadReg(REG_ThemeApplyingBehavior, "Desktop_HKU_DEFAULT", OverwriteOptions.DontChange);
-                    CMD_OverrideUserPreferences = ReadReg(REG_ThemeApplyingBehavior, "CMD_OverrideUserPreferences", true);
                     ResetCursorsToAero = ReadReg(REG_ThemeApplyingBehavior, "ResetCursorsToAero", OS.WXP);
                     SFC_on_restoring_StartupSound = ReadReg(REG_ThemeApplyingBehavior, "SFC_on_restoring_StartupSound", false);
                     Ignore_PE_Modify_Alert = ReadReg(REG_ThemeApplyingBehavior, "Ignore_PE_Modify_Alert", false);
@@ -431,7 +425,6 @@ namespace WinPaletter
                     WriteReg(REG_ThemeApplyingBehavior, "PS64_HKU_DEFAULT_Prefs", PS64_HKU_DEFAULT_Prefs, RegistryValueKind.DWord);
                     WriteReg(REG_ThemeApplyingBehavior, "Desktop_HKU_DEFAULT", Desktop_HKU_DEFAULT, RegistryValueKind.DWord);
                     WriteReg(REG_ThemeApplyingBehavior, "ResetCursorsToAero", ResetCursorsToAero, RegistryValueKind.DWord);
-                    WriteReg(REG_ThemeApplyingBehavior, "CMD_OverrideUserPreferences", CMD_OverrideUserPreferences, RegistryValueKind.DWord);
                     WriteReg(REG_ThemeApplyingBehavior, "SFC_on_restoring_StartupSound", SFC_on_restoring_StartupSound, RegistryValueKind.DWord);
                     WriteReg(REG_ThemeApplyingBehavior, "Ignore_PE_Modify_Alert", Ignore_PE_Modify_Alert, RegistryValueKind.DWord);
                     WriteReg(REG_ThemeApplyingBehavior, "Show_WinEffects_Alert", Show_WinEffects_Alert, RegistryValueKind.DWord);

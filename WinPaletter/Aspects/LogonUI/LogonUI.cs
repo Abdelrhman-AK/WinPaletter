@@ -17,14 +17,6 @@ namespace WinPaletter
         Bitmap back_blurred = null;
         float previewWidthFactor, previewHeightFactor;
 
-        /// <summary>
-        /// Represents the LogonUI structure for version 10.x of the theme.
-        /// </summary>
-        /// <remarks>This field provides access to the LogonUI configuration specific to version 10.x of
-        /// the theme. It is used to define and manage the appearance and behavior of the logon user
-        /// interface.</remarks>
-        public Theme.Structures.LogonUI10x LogonUI10x;
-
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
         {
             Process.Start(Links.Wiki.LogonUI_10x);
@@ -88,7 +80,15 @@ namespace WinPaletter
 
         private void LoadIntoCurrentTheme(object sender, EventArgs e)
         {
-            ApplyToTM(LogonUI10x);
+            if (Program.WindowStyle == PreviewHelpers.WindowStyle.W12)
+                ApplyToTM(Program.TM.LogonUI12);
+            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W11)
+                ApplyToTM(Program.TM.LogonUI11);
+            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W10)
+                ApplyToTM(Program.TM.LogonUI10);
+            else
+                ApplyToTM(Program.TM.LogonUI11);
+
             Close();
         }
 
@@ -102,7 +102,14 @@ namespace WinPaletter
 
             Cursor = Cursors.WaitCursor;
 
-            ApplyToTM(LogonUI10x);
+            if (Program.WindowStyle == PreviewHelpers.WindowStyle.W12)
+                ApplyToTM(Program.TM.LogonUI12);
+            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W11)
+                ApplyToTM(Program.TM.LogonUI11);
+            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W10)
+                ApplyToTM(Program.TM.LogonUI10);
+            else
+                ApplyToTM(Program.TM.LogonUI11);
 
             if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
             {
@@ -115,25 +122,25 @@ namespace WinPaletter
 
             if (Program.WindowStyle == PreviewHelpers.WindowStyle.W12)
             {
-                LogonUI10x.Apply("12");
+                Program.TM.LogonUI12.Apply();
                 ApplyToTM(Program.TM.LogonUI12);
                 ApplyToTM(Program.TM_Original.LogonUI12);
             }
             else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W11)
             {
-                LogonUI10x.Apply("11");
+                Program.TM.LogonUI11.Apply();
                 ApplyToTM(Program.TM.LogonUI11);
                 ApplyToTM(Program.TM_Original.LogonUI11);
             }
             else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W10)
             {
-                LogonUI10x.Apply("10");
+                Program.TM.LogonUI10.Apply();
                 ApplyToTM(Program.TM.LogonUI10);
                 ApplyToTM(Program.TM_Original.LogonUI10);
             }
             else
             {
-                LogonUI10x.Apply("11");
+                Program.TM.LogonUI11.Apply();
                 ApplyToTM(Program.TM.LogonUI11);
                 ApplyToTM(Program.TM_Original.LogonUI11);
             }
@@ -143,10 +150,21 @@ namespace WinPaletter
 
         private void LogonUI_Load(object sender, EventArgs e)
         {
+            bool enabled;
+
+            if (Program.WindowStyle == PreviewHelpers.WindowStyle.W12)
+                enabled = Program.TM.LogonUI12.Enabled;
+            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W11)
+                enabled = Program.TM.LogonUI11.Enabled;
+            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W10)
+                enabled = Program.TM.LogonUI10.Enabled;
+            else
+                enabled = Program.TM.LogonUI11.Enabled;
+
             DesignerData data = new(this)
             {
                 AspectName = Program.Localization.Strings.Aspects.LockScreen,
-                Enabled = LogonUI10x.Enabled,
+                Enabled = enabled,
                 Import_theme = false,
                 Import_msstyles = false,
                 GeneratePalette = false,
@@ -181,7 +199,14 @@ namespace WinPaletter
             previewWidthFactor = tabs_preview_1.Width / 1920f;
             previewHeightFactor = tabs_preview_1.Height / 1080f;
 
-            LoadFromTM(LogonUI10x);
+            if (Program.WindowStyle == PreviewHelpers.WindowStyle.W12)
+                LoadFromTM(Program.TM.LogonUI12);
+            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W11)
+                LoadFromTM(Program.TM.LogonUI11);
+            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W10)
+                LoadFromTM(Program.TM.LogonUI10);
+            else
+                LoadFromTM(Program.TM.LogonUI11);
 
             for (int i = 0; i <= tabs_preview_1.TabCount - 1; i++) { tabs_preview_1.TabPages[i].BackColor = Color.Black; }
 

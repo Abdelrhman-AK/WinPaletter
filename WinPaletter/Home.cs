@@ -519,14 +519,6 @@ namespace WinPaletter
             if (Program.WindowStyle == WindowStyle.W12 || Program.WindowStyle == WindowStyle.W11 || Program.WindowStyle == WindowStyle.W10)
             {
                 Forms.MainForm.BackgroundImage = (sender as Card).Image;
-
-                if (Program.WindowStyle == WindowStyle.W12)
-                    Forms.LogonUI.LogonUI10x = Program.TM.LogonUI12; // Use the LogonUI12 from the theme manager
-                else if (Program.WindowStyle == WindowStyle.W11)
-                    Forms.LogonUI.LogonUI10x = Program.TM.LogonUI11; // Use the LogonUI11 from the theme manager
-                else if (Program.WindowStyle == WindowStyle.W10)
-                    Forms.LogonUI.LogonUI10x = Program.TM.LogonUI10; // Use the LogonUI10 from the theme manager
-
                 Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.LogonUI);
             }
             else if (Program.WindowStyle == WindowStyle.W81 || Program.WindowStyle == WindowStyle.W8)

@@ -619,7 +619,7 @@ namespace WinPaletter.UI.Style
             // Don't make whole window dark, as it makes some controls invisible (like the expanded details box and labels)
             NativeMethods.Helpers.SetHWNDDarkMode(hWnd, Program.Style.DarkMode, false);
 
-            //// Apply the modern style to the child controls of the dialog
+            //// Process the modern style to the child controls of the dialog
             //foreach (IntPtr ChildHwnd in User32.GetChildWindowHandles(hWnd))
             //{
             //    NativeMethods.Helpers.SetHWNDDarkMode(ChildHwnd, Program.Style.DarkMode);

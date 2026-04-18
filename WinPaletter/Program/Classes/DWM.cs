@@ -371,7 +371,7 @@ namespace WinPaletter
             var color = Color.FromArgb(5, 5, 5);
             uint colorRef = (uint)((color.R) | (color.G << 8) | (color.B << 16));
 
-            // Apply transparency
+            // Process transparency
             User32.SetLayeredWindowAttributes(hwnd, colorRef, alpha, LWA_ALPHA);
         }
 

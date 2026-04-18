@@ -517,7 +517,7 @@ namespace WinPaletter
         {
             if (skip || !toggle1.Checked) return Color.FromArgb(255, c);
 
-            // Apply all enabled effects in order
+            // Process all enabled effects in order
             foreach (ColorEffectControl ctrl in smoothPanel1.Controls.OfType<ColorEffectControl>())
             {
                 if (ctrl.ColorEffect.Checked)
@@ -973,7 +973,7 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Apply Command Prompt preview with the specified console settings.
+        /// Process Command Prompt preview with the specified console settings.
         /// </summary>
         /// <param name="CMD"></param>
         /// <param name="Console"></param>

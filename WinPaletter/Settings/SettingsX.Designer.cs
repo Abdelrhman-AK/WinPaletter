@@ -153,6 +153,7 @@ namespace WinPaletter
             this.PictureBox7 = new System.Windows.Forms.PictureBox();
             this.AlertBox3 = new WinPaletter.UI.WP.AlertBox();
             this.tabPage26 = new System.Windows.Forms.TabPage();
+            this.alertBox25 = new WinPaletter.UI.WP.AlertBox();
             this.groupBox74 = new WinPaletter.UI.WP.GroupBox();
             this.groupBox76 = new WinPaletter.UI.WP.GroupBox();
             this.label55 = new System.Windows.Forms.Label();
@@ -216,10 +217,6 @@ namespace WinPaletter
             this.PictureBox55 = new System.Windows.Forms.PictureBox();
             this.Label39 = new System.Windows.Forms.Label();
             this.TabPage10 = new System.Windows.Forms.TabPage();
-            this.groupBox26 = new WinPaletter.UI.WP.GroupBox();
-            this.label47 = new System.Windows.Forms.Label();
-            this.toggle14 = new WinPaletter.UI.WP.Toggle();
-            this.PictureBox34 = new System.Windows.Forms.PictureBox();
             this.groupBox25 = new WinPaletter.UI.WP.GroupBox();
             this.alertBox23 = new WinPaletter.UI.WP.AlertBox();
             this.label44 = new System.Windows.Forms.Label();
@@ -567,7 +564,6 @@ namespace WinPaletter
             this.Button12 = new WinPaletter.UI.WP.Button();
             this.Button1 = new WinPaletter.UI.WP.Button();
             this.Button2 = new WinPaletter.UI.WP.Button();
-            this.alertBox25 = new WinPaletter.UI.WP.AlertBox();
             this.titlebarExtender1.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.TabControl1.SuspendLayout();
@@ -646,8 +642,6 @@ namespace WinPaletter
             this.Panel6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox55)).BeginInit();
             this.TabPage10.SuspendLayout();
-            this.groupBox26.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox34)).BeginInit();
             this.groupBox25.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox59)).BeginInit();
             this.Panel9.SuspendLayout();
@@ -2395,6 +2389,23 @@ namespace WinPaletter
             this.tabPage26.TabIndex = 7;
             this.tabPage26.Text = "Vault";
             // 
+            // alertBox25
+            // 
+            this.alertBox25.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
+            this.alertBox25.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.alertBox25.BackColor = System.Drawing.Color.Transparent;
+            this.alertBox25.CenterText = false;
+            this.alertBox25.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.alertBox25.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.alertBox25.Image = null;
+            this.alertBox25.Location = new System.Drawing.Point(3, 441);
+            this.alertBox25.Name = "alertBox25";
+            this.alertBox25.Size = new System.Drawing.Size(806, 64);
+            this.alertBox25.TabIndex = 58;
+            this.alertBox25.TabStop = false;
+            this.alertBox25.Text = resources.GetString("alertBox25.Text");
+            // 
             // groupBox74
             // 
             this.groupBox74.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -3160,7 +3171,6 @@ namespace WinPaletter
             // TabPage10
             // 
             this.TabPage10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.TabPage10.Controls.Add(this.groupBox26);
             this.TabPage10.Controls.Add(this.groupBox25);
             this.TabPage10.Controls.Add(this.groupBox24);
             this.TabPage10.Location = new System.Drawing.Point(4, 34);
@@ -3168,53 +3178,6 @@ namespace WinPaletter
             this.TabPage10.Size = new System.Drawing.Size(809, 493);
             this.TabPage10.TabIndex = 4;
             this.TabPage10.Text = "Consoles";
-            // 
-            // groupBox26
-            // 
-            this.groupBox26.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox26.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox26.Controls.Add(this.label47);
-            this.groupBox26.Controls.Add(this.toggle14);
-            this.groupBox26.Controls.Add(this.PictureBox34);
-            this.groupBox26.Location = new System.Drawing.Point(3, 3);
-            this.groupBox26.Name = "groupBox26";
-            this.groupBox26.Size = new System.Drawing.Size(803, 48);
-            this.groupBox26.TabIndex = 200;
-            this.groupBox26.UseDecorationPattern = false;
-            this.groupBox26.UseSharpStyle = false;
-            // 
-            // label47
-            // 
-            this.label47.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label47.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label47.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label47.Location = new System.Drawing.Point(41, 7);
-            this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(705, 34);
-            this.label47.TabIndex = 18;
-            this.label47.Text = "Override manually edited custom user preferences in Command Prompt";
-            this.label47.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // toggle14
-            // 
-            this.toggle14.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.toggle14.Checked = false;
-            this.toggle14.DarkLight_Toggler = false;
-            this.toggle14.Location = new System.Drawing.Point(752, 14);
-            this.toggle14.Name = "toggle14";
-            this.toggle14.Size = new System.Drawing.Size(40, 20);
-            this.toggle14.TabIndex = 0;
-            // 
-            // PictureBox34
-            // 
-            this.PictureBox34.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox34.Image")));
-            this.PictureBox34.Location = new System.Drawing.Point(11, 12);
-            this.PictureBox34.Name = "PictureBox34";
-            this.PictureBox34.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox34.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.PictureBox34.TabIndex = 196;
-            this.PictureBox34.TabStop = false;
             // 
             // groupBox25
             // 
@@ -3228,7 +3191,7 @@ namespace WinPaletter
             this.groupBox25.Controls.Add(this.Panel9);
             this.groupBox25.Controls.Add(this.Panel10);
             this.groupBox25.Controls.Add(this.Label48);
-            this.groupBox25.Location = new System.Drawing.Point(3, 172);
+            this.groupBox25.Location = new System.Drawing.Point(3, 120);
             this.groupBox25.Name = "groupBox25";
             this.groupBox25.Size = new System.Drawing.Size(803, 185);
             this.groupBox25.TabIndex = 199;
@@ -3376,7 +3339,7 @@ namespace WinPaletter
             this.groupBox24.Controls.Add(this.PictureBox52);
             this.groupBox24.Controls.Add(this.Panel8);
             this.groupBox24.Controls.Add(this.Label35);
-            this.groupBox24.Location = new System.Drawing.Point(3, 55);
+            this.groupBox24.Location = new System.Drawing.Point(3, 3);
             this.groupBox24.Name = "groupBox24";
             this.groupBox24.Size = new System.Drawing.Size(803, 113);
             this.groupBox24.TabIndex = 198;
@@ -7889,23 +7852,6 @@ namespace WinPaletter
             this.Button2.UseVisualStyleBackColor = false;
             this.Button2.Click += new System.EventHandler(this.Button2_Click);
             // 
-            // alertBox25
-            // 
-            this.alertBox25.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
-            this.alertBox25.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.alertBox25.BackColor = System.Drawing.Color.Transparent;
-            this.alertBox25.CenterText = false;
-            this.alertBox25.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.alertBox25.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.alertBox25.Image = null;
-            this.alertBox25.Location = new System.Drawing.Point(3, 441);
-            this.alertBox25.Name = "alertBox25";
-            this.alertBox25.Size = new System.Drawing.Size(806, 64);
-            this.alertBox25.TabIndex = 58;
-            this.alertBox25.TabStop = false;
-            this.alertBox25.Text = resources.GetString("alertBox25.Text");
-            // 
             // SettingsX
             // 
             this.AllowDrop = true;
@@ -8010,8 +7956,6 @@ namespace WinPaletter
             this.Panel6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox55)).EndInit();
             this.TabPage10.ResumeLayout(false);
-            this.groupBox26.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.PictureBox34)).EndInit();
             this.groupBox25.ResumeLayout(false);
             this.groupBox25.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox59)).EndInit();
@@ -8214,7 +8158,6 @@ namespace WinPaletter
         internal UI.WP.Button Button9;
         internal UI.WP.Button Button16;
         internal UI.WP.Button Button10;
-        internal PictureBox PictureBox34;
         internal UI.WP.TextBox TextBox3;
         internal PictureBox PictureBox37;
         internal TabPage TabPage8;
@@ -8399,9 +8342,6 @@ namespace WinPaletter
         private UI.WP.Toggle toggle13;
         private UI.WP.GroupBox groupBox24;
         internal Label label74;
-        private UI.WP.GroupBox groupBox26;
-        internal Label label47;
-        private UI.WP.Toggle toggle14;
         private UI.WP.GroupBox groupBox25;
         internal Label label44;
         private UI.WP.GroupBox groupBox27;

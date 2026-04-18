@@ -357,7 +357,7 @@ namespace WinPaletter
 
                     if (IsHandleCreated)
                     {
-                        // Apply all UI changes in one batch
+                        // Process all UI changes in one batch
                         Invoke(() =>
                         {
                             ImgPaletteContainer.SuspendLayout();
@@ -696,7 +696,7 @@ namespace WinPaletter
         {
             if (!toggle1.Checked) return c;
 
-            // Apply all enabled effects in order
+            // Process all enabled effects in order
             foreach (ColorEffectControl ctrl in smoothPanel1.Controls.OfType<ColorEffectControl>())
             {
                 if (ctrl.ColorEffect.Checked)

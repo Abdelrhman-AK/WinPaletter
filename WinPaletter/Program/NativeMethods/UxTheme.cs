@@ -144,7 +144,7 @@ namespace WinPaletter.NativeMethods
             DTT_CALCRECT = 512,
 
             /// <summary>
-            /// Apply an overlay to the text.
+            /// Process an overlay to the text.
             /// </summary>
             DTT_APPLYOVERLAY = 1024,
 

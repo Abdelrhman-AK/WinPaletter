@@ -437,7 +437,7 @@ namespace WinPaletter.UI.Style
             }
 
             /// <summary>
-            /// Apply the specified method to the color with the specified factor
+            /// Process the specified method to the color with the specified factor
             /// </summary>
             public enum Method
             {
@@ -458,7 +458,7 @@ namespace WinPaletter.UI.Style
             }
 
             /// <summary>
-            /// Apply the specified method to the color with the specified factor
+            /// Process the specified method to the color with the specified factor
             /// </summary>
             /// <param name="color"></param>
             /// <param name="method"></param>

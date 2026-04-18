@@ -32,10 +32,12 @@ namespace WinPaletter.Theme.Structures
         /// <summary>Lightness</summary>
         public int L { get; set; } = 50;
 
+        private string osSignature;
+
         /// <summary>
         /// Creates a new WallpaperTone structure with default values
         /// </summary>
-        public WallpaperTone() { }
+        public WallpaperTone(string OSSignature) { osSignature = OSSignature; }
 
         /// <summary>
         /// Loads WallpaperTone data from registry
@@ -44,19 +46,19 @@ namespace WinPaletter.Theme.Structures
         /// Registry subkey in 'HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone' from which data will be got.
         /// <br><b>This is to load different data, as WinPaletter loads and saves data of multiple WallpaperTone object, each object is made for each version of Windows</b></br>
         /// </param>
-        public void Load(string SubKey)
+        public void Load()
         {
-            Program.Log?.Write(LogEventLevel.Information, $"Loading WinPaletter Wallpaper Tone from registry, targeting {SubKey}");
+            Program.Log?.Write(LogEventLevel.Information, $"Loading WinPaletter Wallpaper Tone from registry, targeting {osSignature}");
 
-            string wallpaper = SubKey.ToLower() != "winxp" ? $@"{SysPaths.Windows}\Web\Wallpaper\Windows\img0.jpg" : $@"{SysPaths.Windows}\Web\Wallpaper\Bliss.bmp";
+            string wallpaper = osSignature.ToLower() != "winxp" ? $@"{SysPaths.Windows}\Web\Wallpaper\Windows\img0.jpg" : $@"{SysPaths.Windows}\Web\Wallpaper\Bliss.bmp";
 
             if (!File.Exists(wallpaper)) wallpaper = ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", wallpaper);
 
-            Enabled = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "Enabled", false);
-            Image = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "Image", wallpaper);
-            H = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "H", 0);
-            S = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "S", 50);
-            L = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "L", 50);
+            Enabled = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{osSignature}", "Enabled", false);
+            Image = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{osSignature}", "Image", wallpaper);
+            H = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{osSignature}", "H", 0);
+            S = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{osSignature}", "S", 50);
+            L = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{osSignature}", "L", 50);
         }
 
         /// <summary>
@@ -68,14 +70,14 @@ namespace WinPaletter.Theme.Structures
         /// <br><b>This is to save different data, as WinPaletter loads and saves data of multiple WallpaperTone object, each object is made for each version of Windows</b></br>
         /// </param>
         /// <param name="treeView">treeView used as theme log</param>
-        public static void Save_To_Registry(WallpaperTone WT, string SubKey, TreeView treeView = null)
+        public void Save(TreeView treeView = null)
         {
-            SaveToggleState(WT, SubKey, treeView);
+            SaveToggleState(treeView);
 
-            WriteReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "Image", WT.Image, RegistryValueKind.String);
-            WriteReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "H", WT.H);
-            WriteReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "S", WT.S);
-            WriteReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "L", WT.L);
+            WriteReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{osSignature}", "Image", Image, RegistryValueKind.String);
+            WriteReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{osSignature}", "H", H);
+            WriteReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{osSignature}", "S", S);
+            WriteReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{osSignature}", "L", L);
         }
 
         /// <summary>
@@ -84,9 +86,9 @@ namespace WinPaletter.Theme.Structures
         /// <param name="WT"></param>
         /// <param name="SubKey"></param>
         /// <param name="treeView"></param>
-        public static void SaveToggleState(WallpaperTone WT, string SubKey, TreeView treeView = null)
+        public void SaveToggleState(TreeView treeView = null)
         {
-            WriteReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{SubKey}", "Enabled", WT.Enabled);
+            WriteReg(treeView, $@"HKEY_CURRENT_USER\Software\WinPaletter\WallpaperTone\{osSignature}", "Enabled", Enabled);
         }
 
         /// <summary>
@@ -94,7 +96,7 @@ namespace WinPaletter.Theme.Structures
         /// </summary>
         /// <param name="treeView">treeView used as theme log</param>
         /// <exception cref="IOException"></exception>
-        public void Apply(TreeView treeView = null)
+        public void Process(TreeView treeView = null)
         {
             if (!File.Exists(Image))
             {
@@ -125,7 +127,7 @@ namespace WinPaletter.Theme.Structures
                 wall?.Save(path, ImageFormat.Bmp);
             }
 
-            // Apply the processed image
+            // Process the image
             SystemParametersInfo(treeView, SPI.SPI_SETDESKWALLPAPER, 0, path, SPIF.SPIF_UPDATEINIFILE);
             WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "Wallpaper", path, RegistryValueKind.String);
             WriteReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", (int)Wallpaper.WallpaperTypes.Picture);

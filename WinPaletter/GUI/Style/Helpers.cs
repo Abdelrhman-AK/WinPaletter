@@ -170,7 +170,7 @@ namespace WinPaletter.UI.Style
 
             if (Form is null)
             {
-                // Apply the style to all open forms
+                // Process the style to all open forms
                 foreach (System.Windows.Forms.Form form in Application.OpenForms)
                 {
                     if (form != Forms.GlassWindow)
@@ -209,7 +209,7 @@ namespace WinPaletter.UI.Style
                 }
             }
 
-            // Apply the style to the specified form
+            // Process the style to the specified form
             else
             {
                 Form.BackColor = BackColor;

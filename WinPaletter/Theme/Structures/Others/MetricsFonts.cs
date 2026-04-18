@@ -337,7 +337,7 @@ namespace WinPaletter.Theme.Structures
 
                     MetricsFonts MF = Clone();
 
-                    // Apply Metrics/Fonts in a new thread to avoid UI freeze when applying changes
+                    // Process Metrics/Fonts in a new thread to avoid UI freeze when applying changes
                     await Task.Run(() =>
                     {
                         Program.Log?.Write(LogEventLevel.Information, $"Using User32.SystemParametersInfo to apply Metrics and Fonts settings asynchronously to avoid bugs of crashing WinPaletter and active apps.");
@@ -376,7 +376,7 @@ namespace WinPaletter.Theme.Structures
                         SystemParametersInfo(treeView, SPI.SPI_SETICONMETRICS, Marshal.SizeOf(ICO), ref ICO, SPIF.SPIF_WRITEANDNOTIFY);
                     }).ConfigureAwait(false);
 
-                    // Apply Shell Icon Size and Shell Small Icon Size only on Windows XP
+                    // Process Shell Icon Size and Shell Small Icon Size only on Windows XP
                     if (OS.WXP)
                     {
                         WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", ShellIconSize, RegistryValueKind.String);
@@ -385,7 +385,7 @@ namespace WinPaletter.Theme.Structures
 
                     WriteReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\Shell\Bags\1\Desktop", "IconSize", DesktopIconSize, RegistryValueKind.String);
 
-                    // Apply metrics on HKEY_USERS\.DEFAULT (New users and default user) if it is set to overwrite in WinPaletter settings
+                    // Process metrics on HKEY_USERS\.DEFAULT (New users and default user) if it is set to overwrite in WinPaletter settings
                     if (Program.Settings.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                     {
                         Program.Log?.Write(LogEventLevel.Information, $"Applying Metrics and Fonts settings to HKEY_USERS\\.DEFAULT registry key.");
@@ -415,7 +415,7 @@ namespace WinPaletter.Theme.Structures
                         WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Desktop", "FontSmoothingType", !Fonts_SingleBitPP ? 2 : 1);
                     }
 
-                    // Apply font substitutes
+                    // Process font substitutes
 
                     Program.Log?.Write(LogEventLevel.Information, $"Applying font substitutes to HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\FontSubstitutes registry key.");
 
@@ -455,7 +455,7 @@ namespace WinPaletter.Theme.Structures
                         WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semilight Italic (TrueType)", string.Empty, RegistryValueKind.String);
                     }
 
-                    // Apply SegoeUI font substitutes
+                    // Process SegoeUI font substitutes
                     WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "Segoe UI", FontSubstitute_SegoeUI, RegistryValueKind.String);
 
                     // Restore DPI
@@ -617,9 +617,9 @@ namespace WinPaletter.Theme.Structures
         private static string FromVaultPath(string encodedPath) => encodedPath.Replace('|', '\\');
 
         /// <summary>
-        /// Mirrors all Apply() registry writes into the Vault so the Task Scheduler task
+        /// Mirrors all Process() registry writes into the Vault so the Task Scheduler task
         /// can restore them after Windows resets them on logon or resume.
-        /// Font values are stored as LogFont byte arrays — same format Apply() writes to HKU\.DEFAULT.
+        /// Font values are stored as LogFont byte arrays — same format Process() writes to HKU\.DEFAULT.
         /// </summary>
         public void SaveVault(TreeView treeView = null)
         {
@@ -672,7 +672,7 @@ namespace WinPaletter.Theme.Structures
 
         /// <summary>
         /// Loads all managed values from the Vault into the current instance properties.
-        /// Does not apply anything to the system — call Apply() separately if needed.
+        /// Does not apply anything to the system — call Process() separately if needed.
         /// </summary>
         public void LoadVault()
         {

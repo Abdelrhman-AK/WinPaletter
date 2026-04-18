@@ -206,7 +206,7 @@ namespace WinPaletter.TypesExtensions
         {
             if (control == null) return;
 
-            // Apply double buffering to current control
+            // Process double buffering to current control
             DoubleBufferedProp?.SetValue(control, true, null);
 
             // Recursively apply to children

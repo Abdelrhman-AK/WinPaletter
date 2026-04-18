@@ -164,25 +164,25 @@ namespace WinPaletter
             {
                 case Edition.CMD:
                     {
-                        Program.TM.Apply_CommandPrompt();
+                        Program.TM.CommandPrompt.Save("Command Prompt", Program.Settings.ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite);
                         break;
                     }
 
                 case Edition.PowerShellx86:
                     {
-                        Program.TM.Apply_PowerShell86();
+                        Program.TM.PowerShellx86.Save("PowerShell x86", Program.Settings.ThemeApplyingBehavior.PS86_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite);
                         break;
                     }
 
                 case Edition.PowerShellx64:
                     {
-                        Program.TM.Apply_PowerShell64();
+                        Program.TM.PowerShellx64.Save("PowerShell x64", Program.Settings.ThemeApplyingBehavior.PS64_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite);
                         break;
                     }
 
                 default:
                     {
-                        Program.TM.Apply_CommandPrompt();
+                        Program.TM.CommandPrompt.Save("Command Prompt", Program.Settings.ThemeApplyingBehavior.CMD_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite);
                         break;
                     }
 

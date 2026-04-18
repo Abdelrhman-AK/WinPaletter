@@ -602,7 +602,7 @@ namespace WinPaletter.Theme.Structures
                     }
                 }
 
-                // Apply the colors to the default user if overriden in WinPaletter settings
+                // Process the colors to the default user if overriden in WinPaletter settings
                 if (Program.Settings.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                 {
                     Program.Log?.Write(LogEventLevel.Information, $"Applying classic colors to the default user registry (HKEY_USERS\\.DEFAULT) as it is enabled in WinPaletter settings.");
@@ -901,9 +901,9 @@ namespace WinPaletter.Theme.Structures
         private static string FromVaultPath(string encodedPath) => encodedPath.Replace('|', '\\');
 
         /// <summary>
-        /// Mirrors all Apply() registry writes into the Vault so the Task Scheduler task
+        /// Mirrors all Process() registry writes into the Vault so the Task Scheduler task
         /// can restore them after Windows resets them on logon or resume.
-        /// Font values are stored as LogFont byte arrays — same format Apply() writes to HKU\.DEFAULT.
+        /// Font values are stored as LogFont byte arrays — same format Process() writes to HKU\.DEFAULT.
         /// </summary>
         public void SaveVault(TreeView treeView = null)
         {
@@ -953,7 +953,7 @@ namespace WinPaletter.Theme.Structures
 
         /// <summary>
         /// Loads all managed values from the Vault into the current instance properties.
-        /// Does not apply anything to the system — call Apply() separately if needed.
+        /// Does not apply anything to the system — call Process() separately if needed.
         /// </summary>
         public void LoadVault()
         {

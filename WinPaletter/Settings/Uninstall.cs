@@ -330,7 +330,7 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Apply correct metrics and fonts to fix issue of wrong metrics and fonts with a high DPI.
+        /// Process correct metrics and fonts to fix issue of wrong metrics and fonts with a high DPI.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

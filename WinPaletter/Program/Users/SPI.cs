@@ -812,7 +812,7 @@ namespace WinPaletter.NativeMethods
             /// <summary>
             /// <b>Determines whether the snap-to-default-button feature is enabled.</b>
             /// <br></br>
-            /// <br></br> • If enabled, the mouse cursor automatically moves to the default button, such as OK or Apply, of a dialog box.
+            /// <br></br> • If enabled, the mouse cursor automatically moves to the default button, such as OK or Process, of a dialog box.
             /// <br></br> • The <b><c>pvParam</c></b> parameter must point to a <b><c>bool</c></b> variable that receives <b><c>true</c></b> if the feature is on, or <b><c>false</c></b> if it is off.
             /// <br></br>
             /// <br></br> • <i> (!) Windows 95: Not supported.</i>
@@ -822,7 +822,7 @@ namespace WinPaletter.NativeMethods
             /// <summary>
             /// <b>Enables or disables the snap-to-default-button feature.</b>
             /// <br></br>
-            /// <br></br> • If enabled, the mouse cursor automatically moves to the default button, such as OK or Apply, of a dialog box.
+            /// <br></br> • If enabled, the mouse cursor automatically moves to the default button, such as OK or Process, of a dialog box.
             /// <br></br> • Set the <b><c>uiParam</c></b> parameter to <b><c>true</c></b> to enable the feature, or <b><c>false</c></b> to disable it.
             /// <br></br> • Applications should use the ShowWindow function when displaying a dialog box so the dialog manager can position the mouse cursor.
             /// <br></br>

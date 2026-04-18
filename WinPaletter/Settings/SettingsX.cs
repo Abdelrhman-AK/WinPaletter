@@ -95,7 +95,6 @@ namespace WinPaletter
             toggle22.Checked = Sets.WindowsTerminals.Path_Deflection;
             TextBox1.Text = Sets.WindowsTerminals.Terminal_Stable_Path;
             TextBox2.Text = Sets.WindowsTerminals.Terminal_Preview_Path;
-            toggle14.Checked = Sets.ThemeApplyingBehavior.CMD_OverrideUserPreferences;
             ComboBox3.SelectedIndex = (int)Sets.NerdStats.Type;
             toggle25.Checked = Sets.NerdStats.Enabled;
             CheckBox11.Checked = Sets.NerdStats.ShowHexHash;
@@ -454,7 +453,6 @@ namespace WinPaletter
             Sets.WindowsTerminals.Path_Deflection = toggle22.Checked;
             Sets.WindowsTerminals.Terminal_Stable_Path = TextBox1.Text;
             Sets.WindowsTerminals.Terminal_Preview_Path = TextBox2.Text;
-            Sets.ThemeApplyingBehavior.CMD_OverrideUserPreferences = toggle14.Checked;
 
             if (VL0.Checked)
                 Sets.ThemeLog.VerboseLevel = Settings.Structures.ThemeLog.VerboseLevels.None;

@@ -110,7 +110,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>
-        /// Apply Windows 8.1 LogonUI screen
+        /// Process Windows 8.1 LogonUI screen
         /// </summary>
         /// <param name="treeView">treeView used to show applying log</param>
         public void Apply(TreeView treeView = null)

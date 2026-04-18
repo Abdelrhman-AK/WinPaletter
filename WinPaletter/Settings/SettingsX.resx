@@ -125,7 +125,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAB2
-        YQAAAk1TRnQBSQFMAgEBEAEAAYgBBQGIAQUBFAEAARQBAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAFQ
+        YQAAAk1TRnQBSQFMAgEBEAEAAZABBQGQAQUBFAEAARQBAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAFQ
         AwABZAMAAQEBAAEgBgABff8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A
         /wD/AP8A/wD/ACkAAwQBBQMfASwDLQFEAysBQgMgAS0EAnQAAwUBBgM8AWYDRAF3A0QBdwNEAXcDRAF3
         A0QBdwNEAXcDRAF3A0QBdwNEAXcDRAF3A0QBdwNEAXcDPAFmAwUBBhwAAwIBAwMNAREDDQERAw0BEQMN
@@ -200,8 +200,8 @@
         AdECawFaAfIB7QG5AS8B/wHtAbkBLwH/A2IB4QMmAThwAAMuAUYDSAGEA0kBiANJAYgDSQGIA0kBiANJ
         AYgDSQGIA0kBiANJAYgDSAGEAy0BRWwAAlUBUwGqAksBSgGLAwwBEANJAYUCZgFfAeUB7QG3AS4B/wHt
         AbgBLgH/Ae0BuAEvAf8B7QG5AS8B/wJlAV4B4gNGAX4DCQEM/wARAAMYASEMAAQBAx4BKgMrAUEDKwFB
-        Ax0BKQQB/wD/AP8A/wA4AAMwAUsCWgFYAbcCZQFeAd0CbAFhAesBZwFjAUgB9gGOAWsBMgH7AY4BaQEx
-        AfsBhgF+ASsB/AGVAYABVAH+AdIBoQE6Af8BmgKAAf4BewFoAVMB+QGDASsBfgH8Ab4BQAGcAf0DZwHq
+        Ax0BKQQB/wD/AP8A/wA4AAMwAUsCWgFYAbcCZQFeAd0CbAFhAesBZQFjAUgB9gGNAWkBMgH7AY0BZwEx
+        AfsBgwF+ASsB/AGTAYABVQH+AdIBoQE6Af8BmAKAAf4BeQFoAVMB+QGAASsBfgH8Ab4BQAGcAf0DZwHq
         AzABSmAAAxMBGQMYASEDGAEhAx8BLAMjATIDIwEyAyMBMgMjATIDIwEyAyMBMgMjATIDIwEyAx8BLAMY
         ASEDGAEhAxMBGRAAAxoBJAJAAT8BbgJEAUMBdwJEAUMBdwJEAUMBdwJEAUMBdwJEAUMBdwJEAUMBdwJE
         AUMBdwJEAUMBdwJEAUMBdwJEAUMBdwJEAUMBdwJEAUMBdwJAAT8BbgIaARkBIxAAAkcBRgGAAmEBXQHP
@@ -313,7 +313,7 @@
         AeMB/wEAAZ8B4wH/AQABnwHjAf8BTgJPAZcEAjAAAyUBNwJjAUgB9gHyAaIBKAH/AfIBoQEnAf8B8gGh
         AScB/wHyAaABJgH/AfEBoAEmAf8B8QGfASUB/wHxAZ8BJQH/AfEBnwElAf8B8AGeASQB/wHwAZ4BJAH/
         AfABnQEjAf8B7wGdASMB/wHvAZwBIgH/Ae8BnAEiAf8CYwFIAfYDJAE1GAADOAFbAVkBVwFZAbkDYgHu
-        A2IB7gNiAe4DYgHuA2IB7gNiAe4BhAFBAW0B+QGkAVsBgAH+AcsBWgGlAf8DcAHxAzABSlwABAEDGAEh
+        A2IB7gNiAe4DYgHuA2IB7gNiAe4BgwFBAWsB+QGiAVwBgAH+AcsBWgGlAf8DcAHxAzABSlwABAEDGAEh
         AxkBIgMZASIDGQEiAw8BEzwAAxoBJAJCAUEBcgNJAYgDSQGIA0kBiANJAYgDSQGIA0kBiANJAYgDSQGI
         A0kBiANJAYgDSQGIA0kBiAJCAUEBcgMaASP/AP8A/wD/AHAAAwIBAwMHBAkBCwMJAQsDCQELAwkBCwMJ
         AQsDCQELAwkBCwMJAQsDCQELAwkBCwMJAQsDCQELAwkBCwMJAQsDCAEKAwMBBBAAAw8BEwMtAUQCMQEw
@@ -624,46 +624,6 @@
         VHyGNBw39RRVgF54CU0ud4nfVmTm9XXTkQFRMap/QX19iwbrqCQWYClwLRqWEA0WIRXSvt1U+N7bLTwd
         UTN/f9zwkEXFvB5U8q7bp/xcOTNR15lba4LKq6NmWi4cGpxApcZp51ZzHFai88BdsU3Pf+UXzIL4kH0M
         gQgAAAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="banner5.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACMAAAAjCAYAAAAe2bNZAAAABGdBTUEAALGPC/xhBQAAA4lJREFUWEft
-        lk9o01Acx+tUBAX/oyKi4kU8+G+pinrZ0o3MicfdvGnTuaUiCJvLLi9dYtU1U0TFIv7Z0oFM9CIingSX
-        tinuLogIgt3WtUk6pYp/8MlrN11/TZdEevCwD3wJ/f1570ven9TjWWCBGnE4gdZSo8J5bxxFqbhwzTuK
-        GmCNExpe4iU+xRykY8YHWtGPwLwt3leho5Qq5ChVwHNVHxeG2kZGFsP6ahy7jpfRSv4ZrZiYjhlEBd9w
-        thHWVWX3aHgNpQpT0MhfhS7AHiuoKF5KK/kntJLHc8xgOqY7N0TFQ2crDZQp48GoDvb1ShG2VxzoKI5B
-        jMQ+PaaVaWxhBtOxXKFJydove70q3LYwUKZDmrSRl2QfL8pfeVHGRfVFSk8p0tyofGZLRqqawXQs+xHO
-        XYFXFa7AyYF+7nnRv6Ln4o11vDRwnpfk7qLEgbe8KL9HKLK+abCwn1amP9mYGYJzV3AggY5YGPgjrxp6
-        DnsI3ZcurUIounz2N63k6+mhad3KTGMs9wAhXLHUllAqugNNzCjvVft2wvpqNA2a+2klnyszM6zfc2yk
-        CEZ13nioi1KFidmlIW+kPtm3C5ba0TBs7qMVM0uM+GLGTQ/Gi2CNMzCqI0ed7BGYcoNv0NjjU4xA2wh2
-        fEdZwkv9x7vQ5c0w7gZeuraRlyIMjLuiV5TPlo6tnEbo+kqYd0qPGOniRbkA464gF1mPKP/iRfkNQldX
-        w7xTeEnu5UX5O4y7hgxCBoNxN/w3Zi6Ew2t4MfKOlwZ+9fTJfph3BS/KX8iaw7hTyGVI9hzZe2QPwrwr
-        yClAqH8DjLuBnEZyKmHcNePsieUYVX6l7XiJ8BLttL7l9ZnMDqgx1lgF622Z6mjdpHOMYXQyEszNx0gb
-        XpzyZ7WUfwprbGZGk1hjJ3AyME70PRlIn4B986JzzEOdY7DOMT/MILMX5qsxxhpbU/4snscM1tj0XdhX
-        Fb2DaZkxUlKQGcUej6PvSrJ9YrudmWQgfR/2WYKDx5bpHPO2zAzHYINrOQlrraipGaOT6YZGZjRpnmuw
-        vYlrZsbsbN2mc0zBwsjscl2FPZCamdE7Wx5VGCjXT7OjeR/sm0tNzOSCzEGLySuU45insHcu5B5J+bPf
-        5jOTaE+HYV8ZWa55cy7I3NK5lqiNTsFeiHZ6qjXlz9zW2Ey0pMmiEoHxaKJ9PKwF9X/+S7LAArP8BnII
-        lZZGG8zVAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="alertBox25.Text" xml:space="preserve">
-    <value>Vault is a fallback mechanism in WinPaletter that re-applies the user’s selected Windows accent and personalization settings when session-change events incorrectly reset them to defaults. It ensures the chosen visual preferences are restored consistently after logon or unlock. Enable it only if you notice your applied accents reverting back to default during session changes.</value>
-  </data>
-  <data name="pictureBox83.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAntJREFUSEvt
-        1MtOGlEcBnBfTKxDoQxYraBchnGGYZjhOohglZtwYBxG5CJKURemGzd9iKbpsvv2KZouumgTd1+TU2HQ
-        RAOpiy78km9zTjK/5H/OmYWF5/wXaZ1eus3BxW9zcIFZ2x1dYXh1jWZniES+jFLzGMbJ+e3++S/z9NI1
-        AYzeiBj9ERJaDvHMNtR0FkpKo40lM5ATadpoPAVJTdKWSYsC+/UW/FIaQVlDOJbFlqphp1hDoULaE0Dv
-        DIneHcLj8YBlWbhcLjidTjgcDtjtdjAMg+XlZSwtLcFms2FxcRGJTI4C2m5lAnCxLHg1h3A0DknVhhOg
-        0T4ljeOzJwO4iApRyVgAMU9I/WgwN1A3B3cAX0hEUsshJCoQlJQFVI0eqbb6E2DV5cJH+woEh/NR4OAW
-        OOycUWB9w48DvQ1RSYKXExZQ1nukfNijwDrrxhf7a/xk1iA7Xj0KjEf0/voDBTb9ARjdM0QTGjhpCig2
-        OqTY7FDg08u/H3+o35k1+Gwv7oxoDAiCgFb/HdTMDoKiagF7pE32SHsm4AezOgHGI5oGzP4ISjqHgKBY
-        wG7NJLu1IwqssSw+/+OIImoKm/wUkK8ZZOegNfchj0c0fcjV5hE4SYWPly0gV9XJduVw7ms6HtH9a7rq
-        5+HlJQvIlnWilfS5gYce2spGGF5uCsgUGyS933gywOPj8CYoWkBqj5Dk2zq4iIKQGENQkBHYitL6eQmb
-        4QjtBifCFxJoC2VCgUJVtwBZQ0hKISRnEFaz1s8unidutVC7UQs1zNqS0adASe+CT+QRzZagWPs3SqHG
-        ToBxGI/3m531Bu6vzxq7Zz3IuL1f768/59H8Aa7D+CJEYgVeAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="banner1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -1078,6 +1038,27 @@
         cU1Uj9dSxVLBll03Mj876tOlLd4ABg8tzb3qvCMAAAAASUVORK5CYII=
 </value>
   </data>
+  <data name="banner5.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACMAAAAjCAYAAAAe2bNZAAAABGdBTUEAALGPC/xhBQAAA4lJREFUWEft
+        lk9o01Acx+tUBAX/oyKi4kU8+G+pinrZ0o3MicfdvGnTuaUiCJvLLi9dYtU1U0TFIv7Z0oFM9CIingSX
+        tinuLogIgt3WtUk6pYp/8MlrN11/TZdEevCwD3wJ/f1570ven9TjWWCBGnE4gdZSo8J5bxxFqbhwzTuK
+        GmCNExpe4iU+xRykY8YHWtGPwLwt3leho5Qq5ChVwHNVHxeG2kZGFsP6ahy7jpfRSv4ZrZiYjhlEBd9w
+        thHWVWX3aHgNpQpT0MhfhS7AHiuoKF5KK/kntJLHc8xgOqY7N0TFQ2crDZQp48GoDvb1ShG2VxzoKI5B
+        jMQ+PaaVaWxhBtOxXKFJydove70q3LYwUKZDmrSRl2QfL8pfeVHGRfVFSk8p0tyofGZLRqqawXQs+xHO
+        XYFXFa7AyYF+7nnRv6Ln4o11vDRwnpfk7qLEgbe8KL9HKLK+abCwn1amP9mYGYJzV3AggY5YGPgjrxp6
+        DnsI3ZcurUIounz2N63k6+mhad3KTGMs9wAhXLHUllAqugNNzCjvVft2wvpqNA2a+2klnyszM6zfc2yk
+        CEZ13nioi1KFidmlIW+kPtm3C5ba0TBs7qMVM0uM+GLGTQ/Gi2CNMzCqI0ed7BGYcoNv0NjjU4xA2wh2
+        fEdZwkv9x7vQ5c0w7gZeuraRlyIMjLuiV5TPlo6tnEbo+kqYd0qPGOniRbkA464gF1mPKP/iRfkNQldX
+        w7xTeEnu5UX5O4y7hgxCBoNxN/w3Zi6Ew2t4MfKOlwZ+9fTJfph3BS/KX8iaw7hTyGVI9hzZe2QPwrwr
+        yClAqH8DjLuBnEZyKmHcNePsieUYVX6l7XiJ8BLttL7l9ZnMDqgx1lgF622Z6mjdpHOMYXQyEszNx0gb
+        XpzyZ7WUfwprbGZGk1hjJ3AyME70PRlIn4B986JzzEOdY7DOMT/MILMX5qsxxhpbU/4snscM1tj0XdhX
+        Fb2DaZkxUlKQGcUej6PvSrJ9YrudmWQgfR/2WYKDx5bpHPO2zAzHYINrOQlrraipGaOT6YZGZjRpnmuw
+        vYlrZsbsbN2mc0zBwsjscl2FPZCamdE7Wx5VGCjXT7OjeR/sm0tNzOSCzEGLySuU45insHcu5B5J+bPf
+        5jOTaE+HYV8ZWa55cy7I3NK5lqiNTsFeiHZ6qjXlz9zW2Ey0pMmiEoHxaKJ9PKwF9X/+S7LAArP8BnII
+        lZZGG8zVAAAAAElFTkSuQmCC
+</value>
+  </data>
   <data name="pictureBox63.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAqBJREFUOE+1
@@ -1158,6 +1139,9 @@
         14PELJ7ddHP+V/oJoUU7Rq4jGKkAAAAASUVORK5CYII=
 </value>
   </data>
+  <data name="alertBox25.Text" xml:space="preserve">
+    <value>Vault is a fallback mechanism in WinPaletter that re-applies the user’s selected Windows accent and personalization settings when session-change events incorrectly reset them to defaults. It ensures the chosen visual preferences are restored consistently after logon or unlock. Enable it only if you notice your applied accents reverting back to default during session changes.</value>
+  </data>
   <data name="pictureBox88.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAi9JREFUSEvV
@@ -1229,7 +1213,7 @@
   <data name="pictureBox85.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        wQAADsEBuJFr7QAABD1JREFUSEvNlGtMU2ccxssWozGAQJVyKbeWtkABZXXj0hWEqlzKuOtGzbrFjM1l
+        wAAADsABataJCQAABD1JREFUSEvNlGtMU2ccxssWozGAQJVyKbeWtkABZXXj0hWEqlzKuOtGzbrFjM1l
         iS4uZnHZ3Mw2nUuWmGzZBxiMVaICho0J4tTACu05RSBDkMtIjWaySazQFkhpaXuepcdZ7eE2P22/5Pn0
         f9/fc943bw6L9X8EYPk4tPEFIOPrnbq4PichGlzU8RusRGwWc+0S5PISdnZ+sTJzd5FKKleopPJ8lTQ7
         X5WWna+SSOWqt5QZVS5tgo4iE2A+vR/3jxyEvVsAO8mDlYzG0AVuNWtDgJLF8mMz3TQ5BSV1WbnFyNxd
@@ -1256,6 +1240,22 @@
         kkEKwkAMRXObrvRUxYXgQimTATddej2dzCEsegalDDLkxwju8+Btfj/5tJQo+AuuC7G8XJPsKdedybV3
         PNuxZW0uM6VyNjnqgkU0BkwRjYH2nwu7TmVL6TqYXDvi2Q7XEyW5uPJt00a+PPuY5YhnO/iq6PqJVjFH
         XbCIxoApojFALE9TVtZDE3PlA88GP3kDaZTBf8sKSRUAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="pictureBox83.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAntJREFUSEvt
+        1MtOGlEcBnBfTKxDoQxYraBchnGGYZjhOohglZtwYBxG5CJKURemGzd9iKbpsvv2KZouumgTd1+TU2HQ
+        RAOpiy78km9zTjK/5H/OmYWF5/wXaZ1eus3BxW9zcIFZ2x1dYXh1jWZniES+jFLzGMbJ+e3++S/z9NI1
+        AYzeiBj9ERJaDvHMNtR0FkpKo40lM5ATadpoPAVJTdKWSYsC+/UW/FIaQVlDOJbFlqphp1hDoULaE0Dv
+        DIneHcLj8YBlWbhcLjidTjgcDtjtdjAMg+XlZSwtLcFms2FxcRGJTI4C2m5lAnCxLHg1h3A0DknVhhOg
+        0T4ljeOzJwO4iApRyVgAMU9I/WgwN1A3B3cAX0hEUsshJCoQlJQFVI0eqbb6E2DV5cJH+woEh/NR4OAW
+        OOycUWB9w48DvQ1RSYKXExZQ1nukfNijwDrrxhf7a/xk1iA7Xj0KjEf0/voDBTb9ARjdM0QTGjhpCig2
+        OqTY7FDg08u/H3+o35k1+Gwv7oxoDAiCgFb/HdTMDoKiagF7pE32SHsm4AezOgHGI5oGzP4ISjqHgKBY
+        wG7NJLu1IwqssSw+/+OIImoKm/wUkK8ZZOegNfchj0c0fcjV5hE4SYWPly0gV9XJduVw7ms6HtH9a7rq
+        5+HlJQvIlnWilfS5gYce2spGGF5uCsgUGyS933gywOPj8CYoWkBqj5Dk2zq4iIKQGENQkBHYitL6eQmb
+        4QjtBifCFxJoC2VCgUJVtwBZQ0hKISRnEFaz1s8unidutVC7UQs1zNqS0adASe+CT+QRzZagWPs3SqHG
+        ToBxGI/3m531Bu6vzxq7Zz3IuL1f768/59H8Aa7D+CJEYgVeAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="pictureBox82.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -1324,17 +1324,6 @@
         kO1imgohKJqvPRtC7vaadVFz9LRUHz319AZaKskr7g0+ccdocRKct6+RcK6yYo+gimnaTlFhB6kIYv2C
         HK4/Lofqju/cYCc9GeZ5J8pee4B3VJRKFaZBhemwLhDZ/InMwZrGrarqRjdY98z06eG6/R8fOvLv/Xb/
         E/0FmFbHC13Wv+IAAAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="PictureBox34.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAVJJREFUSEu1
-        jc1OwkAUhUkkQVFRkZI+gAbW0gdwq3uXGn2TJoj4E1RQUlmygrg1lKXdt+4tZai+Ao2Ju2PGBFNvsJn+
-        eJIvmdy593ypVNyoSMud977ceevxN/2Ola2Wk5E1V5cfXHyjuTqf0b1I4UVFzdWLmgtCfAkvkNpMl9oT
-        zIfFk0h37KRwP0EQUts9pnehU2gydbPF4IfP6F7k5JtMzTcZCH8LFBP7FQsfFQsQoTz0jI1bBj/5m2CB
-        SkuCKOuesX49xi8aTrKCtcYYfhIVlHTPyF05ICQoGHjG6qUDP7mLkILSYGqsnI8gTN0OL1iujyBKaMH2
-        09TIntkQphZBsHRqQ5RsNYJgsfoKQT4zNXuP9v5knoDP6F7k/JtAMXFEiymKiUN6J5yDRyxULHRpqY8u
-        36F3oRIgiV8+yxxJcuWz7D4jrZjo77ygx9/0P2y+AEq6046RE/+XAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="PictureBox59.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

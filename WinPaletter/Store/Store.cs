@@ -77,7 +77,7 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Apply Command Prompt preview with the specified console settings.
+        /// Process Command Prompt preview with the specified console settings.
         /// </summary>
         /// <param name="CMD"></param>
         /// <param name="Console"></param>
@@ -1428,7 +1428,7 @@ namespace WinPaletter
             toggle_winPaletterTheme.Checked = selectedItem.TM.AppTheme.Enabled;
         }
 
-        // Apply the theme of the selected store item
+        // Process the theme of the selected store item
         private void Apply_Theme()
         {
             Manager TMx = new(Manager.Source.File, selectedItem.FileName, false, true);

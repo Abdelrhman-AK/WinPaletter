@@ -172,7 +172,7 @@ namespace WinPaletter.Theme.Structures
         protected abstract void LoadSpecific(Windows10xBase<T> @default);
 
         /// <summary>
-        /// Apply version-specific settings to registry
+        /// Process version-specific settings to registry
         /// </summary>
         protected abstract void ApplySpecific(TreeView treeView = null);
 
@@ -302,7 +302,7 @@ namespace WinPaletter.Theme.Structures
 
                     #endregion
 
-                    // Apply version-specific settings
+                    // Process version-specific settings
                     ApplySpecific(treeView);
 
                     wic?.Undo();
@@ -404,7 +404,7 @@ namespace WinPaletter.Theme.Structures
         private string ToVaultPath(string realPath) => $@"{VaultRoot}\{realPath.Replace('\\', '|')}";
 
         /// <summary>
-        /// Mirrors all Apply() HKCU registry writes into the Vault so the Task Scheduler task
+        /// Mirrors all Process() HKCU registry writes into the Vault so the Task Scheduler task
         /// can restore them after Windows resets them on logon or resume.
         /// </summary>
         private void SaveVault(TreeView treeView = null)
@@ -442,7 +442,7 @@ namespace WinPaletter.Theme.Structures
 
         /// <summary>
         /// Loads all managed values from the Vault into the current instance properties.
-        /// Does not apply anything to the system — call Apply() separately.
+        /// Does not apply anything to the system — call Process() separately.
         /// </summary>
         public void LoadVault()
         {

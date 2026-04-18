@@ -238,7 +238,7 @@ namespace WinPaletter.Theme.Structures
                 if (!Cursor_IBeam.UseFromFile || (Cursor_IBeam.UseFromFile && !File.Exists(Cursor_IBeam.File))) RenderCursor(Paths.CursorType.IBeam, this, tv);
                 if (!Cursor_Cross.UseFromFile || (Cursor_Cross.UseFromFile && !File.Exists(Cursor_Cross.File))) RenderCursor(Paths.CursorType.Cross, this, tv);
 
-                // Apply cursors to system
+                // Process cursors to system
                 SetCursorsToSystem(this, "HKEY_CURRENT_USER", ReportProgress_Detailed ? treeView : null);
 
                 if (Program.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
@@ -577,7 +577,7 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>
-        /// Apply rendered WinPaletter cursors to registry and broadcast registry change to system
+        /// Process rendered WinPaletter cursors to registry and broadcast registry change to system
         /// </summary>
         /// <param name="cursors">WinPaletter Cursors instance</param>
         /// <param name="scopeReg">It can be HKEY_CURRENT_USER or HKEY_USERS\...</param>

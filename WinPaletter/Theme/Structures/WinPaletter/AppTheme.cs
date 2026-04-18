@@ -84,7 +84,7 @@ namespace WinPaletter.Theme.Structures
             WriteReg(treeView, Settings.Structures.REG_Appearance, "DisabledColor", DisabledColor.ToArgb());
             WriteReg(treeView, Settings.Structures.REG_Appearance, "DisabledBackColor", DisabledBackColor.ToArgb());
 
-            // Apply settings to program settings
+            // Process settings to program settings
             Program.Log?.Write(LogEventLevel.Information, $"Applying WinPaletter application theme (appearance) settings to program settings.");
 
             Program.Settings.Appearance.CustomColors = Enabled;

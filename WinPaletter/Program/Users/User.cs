@@ -1019,7 +1019,7 @@ namespace WinPaletter
                     // Add the rule to the security settings
                     directorySecurity.AddAccessRule(rule);
 
-                    // Apply the new security settings to the directory
+                    // Process the new security settings to the directory
                     directoryInfo.SetAccessControl(directorySecurity);
 
                     // Undo impersonation after finishing operations on user profile

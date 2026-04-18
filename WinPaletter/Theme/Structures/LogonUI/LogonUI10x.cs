@@ -31,21 +31,23 @@ namespace WinPaletter.Theme.Structures
         /// path to an image file as a string.</remarks>
         public string ImageFile { get; set; } = string.Empty;
 
+        private string osSignature;
+
         /// <summary>
         /// Creates a new Windows 10/11 LogonUI data structure with default values
         /// </summary>
-        public LogonUI10x() { }
+        public LogonUI10x(string OSSignature) { osSignature = OSSignature; }
 
         /// <summary>
         /// Loads Windows 10/11 LogonUI data from registry
         /// </summary>
         /// <param name="default">Default Windows 10/11 LogonUI data structure</param>
         /// <param name="edition">Windows edition (e.g., "Windows10x")</param>
-        public void Load(string edition, LogonUI10x @default)
+        public void Load(LogonUI10x @default)
         {
             Program.Log?.Write(LogEventLevel.Information, $"Loading Windows lock screen preferences from registry.");
 
-            Enabled = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\LogonUI\{edition}", string.Empty, @default.Enabled);
+            Enabled = ReadReg($@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\LogonUI\{osSignature}", string.Empty, @default.Enabled);
 
             DisableAcrylicBackgroundOnLogon = ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableAcrylicBackgroundOnLogon", @default.DisableAcrylicBackgroundOnLogon);
             DisableLogonBackgroundImage = ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\System", "DisableLogonBackgroundImage", @default.DisableLogonBackgroundImage);
@@ -59,11 +61,11 @@ namespace WinPaletter.Theme.Structures
         /// </summary>
         /// <param name="treeView">treeView used as a theme log</param>
         /// <param name="edition">Windows edition (e.g., "Windows10x")</param>
-        public void Apply(string edition, TreeView treeView = null)
+        public void Apply(TreeView treeView = null)
         {
             Program.Log?.Write(LogEventLevel.Information, $"Saving Wiindows lock screen data into registry.");
 
-            SaveToggleState(edition, treeView);
+            SaveToggleState(osSignature, treeView);
 
             if (Enabled)
             {

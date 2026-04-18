@@ -346,7 +346,7 @@ namespace WinPaletter.UI.WP
             // Update fixed height
             _fixedTextBoxHeight = CalculateTextBoxHeight();
 
-            // Apply configuration
+            // Process configuration
             UpdateTextBoxConfiguration();
         }
 

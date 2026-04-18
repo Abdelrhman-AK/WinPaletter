@@ -176,7 +176,7 @@ namespace WinPaletter.GitHub
                         return parent != null && parent.Equals(normalizedPath, StringComparison.OrdinalIgnoreCase);
                     });
 
-                // Apply filtering
+                // Process filtering
                 entries = filter switch
                 {
                     EntryFilter.FilesOnly => entries.Where(e => e.Type == EntryType.File),
@@ -184,7 +184,7 @@ namespace WinPaletter.GitHub
                     _ => entries
                 };
 
-                // Apply sorting
+                // Process sorting
                 List<Entry> result = [.. entries];
                 switch (sort)
                 {

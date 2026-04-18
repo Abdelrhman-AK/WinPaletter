@@ -63,9 +63,9 @@ namespace WinPaletter.Theme
                                 Windows7.Load(@default.Windows7);
                                 WindowsVista.Load(@default.WindowsVista);
                                 WindowsXP.Load(@default.WindowsXP);
-                                LogonUI12.Load("12", @default.LogonUI12);
-                                LogonUI11.Load("11", @default.LogonUI11);
-                                LogonUI10.Load("10", @default.LogonUI10);
+                                LogonUI12.Load(@default.LogonUI12);
+                                LogonUI11.Load(@default.LogonUI11);
+                                LogonUI10.Load(@default.LogonUI10);
                                 LogonUI81.Load(@default.LogonUI81);
                                 LogonUI7.Load(@default.LogonUI7);
                                 LogonUIXP.Load(@default.LogonUIXP);
@@ -79,25 +79,25 @@ namespace WinPaletter.Theme
                                 Sounds.Load(@default.Sounds);
                                 AppTheme.Load(@default.AppTheme);
                                 Icons.Load(@default.Icons);
-                                WallpaperTone_W12.Load("Win12");
-                                WallpaperTone_W11.Load("Win11");
-                                WallpaperTone_W10.Load("Win10");
-                                WallpaperTone_W81.Load("Win8.1");
-                                WallpaperTone_W8.Load("Win8");
-                                WallpaperTone_W7.Load("Win7");
-                                WallpaperTone_WVista.Load("WinVista");
-                                WallpaperTone_WXP.Load("WinXP");
+                                WallpaperTone_W12.Load();
+                                WallpaperTone_W11.Load();
+                                WallpaperTone_W10.Load();
+                                WallpaperTone_W81.Load();
+                                WallpaperTone_W8.Load();
+                                WallpaperTone_W7.Load();
+                                WallpaperTone_WVista.Load();
+                                WallpaperTone_WXP.Load();
                                 Wallpaper.Load(@default.Wallpaper);
 
                                 Program.Log?.Write(LogEventLevel.Information, $"Targeting Console: Command Prompt");
-                                CommandPrompt.Load(string.Empty, "Terminal_CMD_Enabled", @default.CommandPrompt);
+                                CommandPrompt.Load(@default.CommandPrompt);
 
                                 Program.Log?.Write(LogEventLevel.Information, $"Targeting Console: PowerShell x86");
                                 if (Directory.Exists(SysPaths.PS86_dir))
                                 {
                                     try { Registry.CurrentUser.CreateSubKey($@"Console\{SysPaths.PS86_reg}", true).Close(); }
                                     catch { }
-                                    PowerShellx86.Load(SysPaths.PS86_reg, "Terminal_PS_32_Enabled", @default.PowerShellx86);
+                                    PowerShellx86.Load(@default.PowerShellx86);
                                 }
                                 else { PowerShellx86 = @default.PowerShellx86; }
 
@@ -106,7 +106,7 @@ namespace WinPaletter.Theme
                                 {
                                     try { Registry.CurrentUser.CreateSubKey($@"Console\{SysPaths.PS64_reg}", true).Close(); }
                                     catch { }
-                                    PowerShellx64.Load(SysPaths.PS64_reg, "Terminal_PS_64_Enabled", @default.PowerShellx64);
+                                    PowerShellx64.Load(@default.PowerShellx64);
                                 }
                                 else { PowerShellx64 = @default.PowerShellx64; }
 

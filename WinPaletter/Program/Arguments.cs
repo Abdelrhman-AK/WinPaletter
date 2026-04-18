@@ -42,7 +42,7 @@ namespace WinPaletter
             public bool Setup { get; set; }
 
             /// <summary>
-            /// Apply a WinPaletter theme file.
+            /// Process a WinPaletter theme file.
             /// </summary>
             [Option('a', "apply", Required = false, HelpText = "Apply a WinPaletter theme file.")]
             public string Apply { get; set; }
@@ -322,8 +322,8 @@ namespace WinPaletter
                                 wic.Undo();
                             }
 
-                            // Apply runs outside impersonation — same pattern as Windows10xBase<T>.Apply():
-                            // WriteReg calls for HKCU run under impersonation inside Apply() itself,
+                            // Process runs outside impersonation — same pattern as Windows10xBase<T>.Process():
+                            // WriteReg calls for HKCU run under impersonation inside Process() itself,
                             // while TakeOwnership and PatchActiveThemeFile need the elevated token.
                             if (OS.W12) TM.Windows12.Apply();
                             else if (OS.W11) TM.Windows11.Apply();

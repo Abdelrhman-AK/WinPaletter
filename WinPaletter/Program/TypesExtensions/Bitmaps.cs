@@ -263,7 +263,7 @@ namespace WinPaletter.TypesExtensions
                     // Draw original bitmap
                     g.DrawImage(source, new Rectangle(0, 0, source.Width, source.Height));
 
-                    // Apply noise overlay
+                    // Process noise overlay
                     if (noiseMode == NoiseMode.Acrylic)
                     {
                         using (Bitmap noise = (Bitmap)Resources.Noise.Clone())

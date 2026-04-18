@@ -123,7 +123,7 @@ namespace WinPaletter.NativeMethods
                 int argpvAttribute = (int)DWMAPI.FormCornersType.Default;
                 DWMAPI.DwmSetWindowAttribute(hWnd, DWMAPI.DWMWINDOWATTRIBUTE.WINDOW_CORNER_PREFERENCE, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
 
-                // Apply rectangular window corners if custom styling is enabled and rounded corners are disabled
+                // Process rectangular window corners if custom styling is enabled and rounded corners are disabled
                 // Make both start by 'If' statement, not 'Else If'
                 if (useRoundedCorners && !Program.Settings.Appearance.RoundedCorners)
                 {

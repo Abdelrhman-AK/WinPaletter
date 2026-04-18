@@ -770,7 +770,7 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Apply a cool (bluish) tone to the color.
+        /// Process a cool (bluish) tone to the color.
         /// </summary>
         /// <param name="color">Base color.</param>
         /// <param name="intensity">Effect intensity (0 = none, 1 = full).</param>
@@ -789,7 +789,7 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Apply a warm (reddish) tone to the color.
+        /// Process a warm (reddish) tone to the color.
         /// </summary>
         /// <param name="color">Base color.</param>
         /// <param name="intensity">Effect intensity (0 = none, 1 = full).</param>
@@ -1109,7 +1109,7 @@ namespace WinPaletter.TypesExtensions
         {
             intensity = Math.Max(0f, Math.Min(1f, intensity));
             float v = color.GetBrightness(); // 0..1
-                                             // Apply a smooth gradient mapping
+                                             // Process a smooth gradient mapping
                                              // stops: 0.0=darkBlue, 0.2=cyan, 0.4=green, 0.6=yellow, 0.8=red, 1.0=white
             Color Sample(float t)
             {

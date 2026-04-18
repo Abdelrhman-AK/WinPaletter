@@ -383,7 +383,7 @@ namespace WinPaletter
 
                 Program.Log?.Write(LogEventLevel.Information, $"Rescaling wallpaper preview to {wallpaper.Width}x{wallpaper.Height} and adjusting its style");
 
-                // Apply the wallpaper style
+                // Process the wallpaper style
                 Bitmap result = wallpaperStyle switch
                 {
                     Theme.Structures.Wallpaper.WallpaperStyles.Fill => wallpaper.FillInSize(targetSize),

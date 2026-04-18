@@ -297,7 +297,7 @@ namespace WinPaletter.UI.WP
                 p = p.Parent;
             }
 
-            // Apply result
+            // Process result
             if (shouldAnimate)
             {
                 if (!Timer.Enabled)

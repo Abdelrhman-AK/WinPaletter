@@ -22,7 +22,7 @@ namespace WinPaletter.Theme
         /// <summary>
         /// Structure instance that contains data about Windows 12 LogonUI appearance, and it can be customized.
         /// </summary>
-        public LogonUI10x LogonUI12 { get; set; } = new();
+        public LogonUI10x LogonUI12 { get; set; } = new("12");
 
         /// <summary>
         /// Structure instance that contains data about Windows 11 colors and appearance, and it can be customized.
@@ -32,7 +32,7 @@ namespace WinPaletter.Theme
         /// <summary>
         /// Structure instance that contains data about Windows 11 LogonUI appearance, and it can be customized.
         /// </summary>
-        public LogonUI10x LogonUI11 { get; set; } = new();
+        public LogonUI10x LogonUI11 { get; set; } = new("11");
 
         /// <summary>
         /// Structure instance that contains data about Windows 10 colors and appearance, and it can be customized.
@@ -41,7 +41,7 @@ namespace WinPaletter.Theme
         /// <summary>
         /// Structure instance that contains data about Windows 10 LogonUI appearance, and it can be customized.
         /// </summary>
-        public LogonUI10x LogonUI10 { get; set; } = new();
+        public LogonUI10x LogonUI10 { get; set; } = new("10");
 
         /// <summary>
         /// Structure instance that contains data about Windows 8.1 colors and appearance, and it can be customized.
@@ -103,56 +103,56 @@ namespace WinPaletter.Theme
         /// <br></br>This property targets Windows 12 (to avoid overlapping).
         /// <br></br><br></br><br>- Wallpaper Tone is a feature by WinPaletter. It modifies images' HSL filter to alter wallpaper colors.</br>
         /// </summary>
-        public WallpaperTone WallpaperTone_W12 { get; set; } = new();
+        public WallpaperTone WallpaperTone_W12 { get; set; } = new("Win12");
 
         /// <summary>
         /// Structure instance that contains data about Wallpaper Tone, and it can be customized.
         /// <br></br>This property targets Windows 11 (to avoid overlapping).
         /// <br></br><br></br><br>- Wallpaper Tone is a feature by WinPaletter. It modifies images' HSL filter to alter wallpaper colors.</br>
         /// </summary>
-        public WallpaperTone WallpaperTone_W11 { get; set; } = new();
+        public WallpaperTone WallpaperTone_W11 { get; set; } = new("Win11");
 
         /// <summary>
         /// Structure instance that contains data about Wallpaper Tone, and it can be customized.
         /// <br></br>This property targets Windows 10 (to avoid overlapping).
         /// <br></br><br></br><br>- Wallpaper Tone is a feature by WinPaletter. It modifies images' HSL filter to alter wallpaper colors.</br>
         /// </summary>
-        public WallpaperTone WallpaperTone_W10 { get; set; } = new();
+        public WallpaperTone WallpaperTone_W10 { get; set; } = new("Win10");
 
         /// <summary>
         /// Structure instance that contains data about Wallpaper Tone, and it can be customized.
         /// <br></br>This property targets Windows 8.1 (to avoid overlapping).
         /// <br></br><br></br><br>- Wallpaper Tone is a feature by WinPaletter. It modifies images' HSL filter to alter wallpaper colors.</br>
         /// </summary>
-        public WallpaperTone WallpaperTone_W81 { get; set; } = new();
+        public WallpaperTone WallpaperTone_W81 { get; set; } = new("Win8.1");
 
         /// <summary>
         /// Structure instance that contains data about Wallpaper Tone, and it can be customized.
         /// <br></br>This property targets Windows 8 (to avoid overlapping).
         /// <br></br><br></br><br>- Wallpaper Tone is a feature by WinPaletter. It modifies images' HSL filter to alter wallpaper colors.</br>
         /// </summary>
-        public WallpaperTone WallpaperTone_W8 { get; set; } = new();
+        public WallpaperTone WallpaperTone_W8 { get; set; } = new("Win8");
 
         /// <summary>
         /// Structure instance that contains data about Wallpaper Tone, and it can be customized.
         /// <br></br>This property targets Windows 7 (to avoid overlapping).
         /// <br></br><br></br><br>- Wallpaper Tone is a feature by WinPaletter. It modifies images' HSL filter to alter wallpaper colors.</br>
         /// </summary>
-        public WallpaperTone WallpaperTone_W7 { get; set; } = new();
+        public WallpaperTone WallpaperTone_W7 { get; set; } = new("Win7");
 
         /// <summary>
         /// Structure instance that contains data about Wallpaper Tone, and it can be customized.
         /// <br></br>This property targets Windows Vista (to avoid overlapping).
         /// <br></br><br></br><br>- Wallpaper Tone is a feature by WinPaletter. It modifies images' HSL filter to alter wallpaper colors.</br>
         /// </summary>
-        public WallpaperTone WallpaperTone_WVista { get; set; } = new();
+        public WallpaperTone WallpaperTone_WVista { get; set; } = new("WinVista");
 
         /// <summary>
         /// Structure instance that contains data about Wallpaper Tone, and it can be customized.
         /// <br></br>This property targets Windows XP (to avoid overlapping).
         /// <br></br><br></br><br>- Wallpaper Tone is a feature by WinPaletter. It modifies images' HSL filter to alter wallpaper colors.</br>
         /// </summary>
-        public WallpaperTone WallpaperTone_WXP = new() { Image = $"{SysPaths.Windows}\\Web\\Wallpaper\\Bliss.bmp" };
+        public WallpaperTone WallpaperTone_WXP = new("WinXP") { Image = $"{SysPaths.Windows}\\Web\\Wallpaper\\Bliss.bmp" };
 
         /// <summary>
         /// Structure instance that contains data about WinPaletter cursors, and it can be customized.
@@ -192,17 +192,17 @@ namespace WinPaletter.Theme
         /// <summary>
         /// Structure instance that contains data about Command Prompt, and it can be customized.
         /// </summary>
-        public Console CommandPrompt { get; set; } = new();
+        public Console CommandPrompt { get; set; } = new("Terminal_CMD_Enabled", [string.Empty, "%SystemRoot%_System32_cmd.exe"]);
 
         /// <summary>
         /// Structure instance that contains data about PowerShell x86, and it can be customized.
         /// </summary>
-        public Console PowerShellx86 { get; set; } = new() { PopupForeground = 15, PopupBackground = 3, ScreenColorsForeground = 6, ScreenColorsBackground = 5 };
+        public Console PowerShellx86 { get; set; } = new("Terminal_PS_32_Enabled", [SysPaths.PS86_reg]) { PopupForeground = 15, PopupBackground = 3, ScreenColorsForeground = 6, ScreenColorsBackground = 5 };
 
         /// <summary>
         /// Structure instance that contains data about PowerShell x64, and it can be customized.
         /// </summary>
-        public Console PowerShellx64 { get; set; } = new() { PopupForeground = 15, PopupBackground = 3, ScreenColorsForeground = 6, ScreenColorsBackground = 5 };
+        public Console PowerShellx64 { get; set; } = new("Terminal_PS_64_Enabled", [SysPaths.PS64_reg]) { PopupForeground = 15, PopupBackground = 3, ScreenColorsForeground = 6, ScreenColorsBackground = 5 };
 
         /// <summary>
         /// class that contains data about Windows Terminal Stable, and it can be customized.

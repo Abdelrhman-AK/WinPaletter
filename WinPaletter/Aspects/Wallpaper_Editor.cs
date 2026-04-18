@@ -24,7 +24,8 @@ namespace WinPaletter
         /// </summary>
         /// <remarks>This field holds an instance of <see cref="Theme.Structures.WallpaperTone"/>  that
         /// defines the tone settings for the wallpaper in the current theme.</remarks>
-        public Theme.Structures.WallpaperTone WT = new();
+        public Theme.Structures.WallpaperTone WT;
+
         private Bitmap img, img_filled, img_tile;
         private Bitmap img_untouched, img_tinted, img_tinted_filled, img_tinted_tile;
         private string img_path = string.Empty;
@@ -34,6 +35,22 @@ namespace WinPaletter
         private readonly List<string> ImgLs2 = [];
 
         float previewWidthFactor, previewHeightFactor;
+
+        private string osSignature
+        {
+            get
+            {
+                if (Program.WindowStyle == WindowStyle.W12) return "Win12";
+                else if (Program.WindowStyle == WindowStyle.W11) return "Win11";
+                else if (Program.WindowStyle == WindowStyle.W10) return "Win10";
+                else if (Program.WindowStyle == WindowStyle.W81) return "Win8.1";
+                else if (Program.WindowStyle == WindowStyle.W8) return "Win8";
+                else if (Program.WindowStyle == WindowStyle.W7) return "Win7";
+                else if (Program.WindowStyle == WindowStyle.WVista) return "Vista";
+                else if (Program.WindowStyle == WindowStyle.WXP) return "WinXP";
+                else return "Win11";
+            }
+        }
 
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
         {
@@ -121,7 +138,7 @@ namespace WinPaletter
             Program.TM.Wallpaper.Apply(source_wallpapertone.Checked);
             Program.TM.Win32.Apply();
 
-            if (source_wallpapertone.Checked) { WT.Apply(); }
+            if (source_wallpapertone.Checked) { WT.Process(); }
 
             Cursor = Cursors.Default;
         }
@@ -151,6 +168,8 @@ namespace WinPaletter
             previewHeightFactor = pnl_preview.Height / 1080f;
 
             LoadData(data);
+
+            WT = new(osSignature);
 
             LoadFromTM(Program.TM);
             index = 0;
@@ -387,7 +406,7 @@ namespace WinPaletter
 
         public void ApplyWT()
         {
-            WT = new()
+            WT = new(osSignature)
             {
                 Enabled = source_wallpapertone.Checked,
                 Image = TextBox3.Text,

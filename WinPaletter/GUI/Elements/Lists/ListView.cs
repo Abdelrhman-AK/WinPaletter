@@ -146,7 +146,7 @@ namespace WinPaletter.UI.WP
             headerHandle = User32.SendMessage(Handle, LVM_GETHEADER, IntPtr.Zero, IntPtr.Zero);
             if (headerHandle != IntPtr.Zero)
             {
-                // Apply modern Explorer theme for smoother rendering
+                // Process modern Explorer theme for smoother rendering
                 SetControlTheme(Handle, CtrlTheme.DarkExplorer);
 
                 // Enable double-buffering at the window level to avoid flicker
