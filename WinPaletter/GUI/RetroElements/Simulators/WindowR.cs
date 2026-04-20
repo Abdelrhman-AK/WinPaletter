@@ -1107,7 +1107,6 @@ namespace WinPaletter.UI.Retro
             if (_colorGradient)
             {
                 G.FillRectangle(_brushColorGr, _titlebarRect);
-                G.FillRectangle(rtl ? _brushColor2 : _brushColor1, new RectangleF(_titlebarRect.X, _titlebarRect.Y, 1f, _titlebarRect.Height));
 
                 if (IsEditColor1)
                 {

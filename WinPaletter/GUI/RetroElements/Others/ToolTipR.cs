@@ -32,7 +32,7 @@ namespace WinPaletter.UI.Retro
         // Vertical pad: 0px above and below text.
         private const int BorderThickness = 1;
         private const int TextPadLeft = 2;
-        private const int TextPadRight = 2;
+        private const int TextPadRight = 4;
         private const int TextPadV = 0;
 
         // Cached geometry — rebuilt on resize or text/font change.
@@ -102,7 +102,7 @@ namespace WinPaletter.UI.Retro
 
         // Tight StringFormat for measuring only — GenericTypographic removes all
         // GDI+ internal string padding so the measured size matches DrawText output.
-        private static readonly StringFormat MeasureFormat = new StringFormat(StringFormat.GenericTypographic)
+        private static readonly StringFormat MeasureFormat = new(StringFormat.GenericTypographic)
         {
             FormatFlags = StringFormatFlags.NoWrap | StringFormatFlags.MeasureTrailingSpaces
         };

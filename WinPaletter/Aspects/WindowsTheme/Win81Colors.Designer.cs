@@ -193,7 +193,6 @@
             this.windowsDesktop1.Metrics_CaptionWidth = 22;
             this.windowsDesktop1.Metrics_PaddedBorderWidth = 4;
             this.windowsDesktop1.Name = "windowsDesktop1";
-            this.windowsDesktop1.Preview = WinPaletter.UI.Simulation.Window.Preview_Enum.W8;
             this.windowsDesktop1.resVS = null;
             this.windowsDesktop1.Shadow = true;
             this.windowsDesktop1.Size = new System.Drawing.Size(528, 297);
@@ -217,6 +216,7 @@
             this.windowsDesktop1.Window = System.Drawing.Color.Empty;
             this.windowsDesktop1.WindowFrame = System.Drawing.Color.Empty;
             this.windowsDesktop1.WindowStyle = WinPaletter.PreviewHelpers.WindowStyle.W81;
+            this.windowsDesktop1.Preview = WinPaletter.UI.Simulation.Window.Preview_Enum.W8;
             this.windowsDesktop1.WindowText = System.Drawing.Color.Empty;
             this.windowsDesktop1.WinVista = false;
             this.windowsDesktop1.EditorInvoker += new WinPaletter.Templates.WindowsDesktop.EditorInvokerEventHandler(this.windowsDesktop1_EditorInvoker);

@@ -249,6 +249,64 @@ namespace WinPaletter
                         break;
                     }
 
+                case WindowStyle.W8:
+                    {
+                        if (Program.TM.Windows8.VisualStyles.VisualStylesType == Theme.Structures.VisualStyles.DefaultVisualStyles.AeroLite)
+                        {
+                            WinElement1.Style = WinElement.Styles.AltTab8AeroLite;
+                            WinElement1.Background = Program.TM.Win32.Window;
+                            WinElement1.Background2 = Program.TM.Win32.Hilight;
+                            WinElement1.LinkColor = Program.TM.Win32.ButtonText;
+                            WinElement1.ForeColor = Program.TM.Win32.WindowText;
+                        }
+                        else
+                        {
+                            WinElement1.Style = WinElement.Styles.AltTab8Aero;
+
+                            Color background;
+
+                            Color[] accents =
+                            [
+                                Color.FromArgb(37, 37, 37),
+                                Color.FromArgb(37, 37, 37),
+                                Color.FromArgb(37, 37, 37),
+                                Color.FromArgb(37, 37, 37),
+                                Color.FromArgb(46, 23, 0),
+                                Color.FromArgb(78, 0, 0),
+                                Color.FromArgb(78, 0, 56),
+                                Color.FromArgb(45, 0, 78),
+                                Color.FromArgb(31, 0, 104),
+                                Color.FromArgb(0, 30, 78),
+                                Color.FromArgb(0, 77, 96),
+                                Color.FromArgb(0, 74, 0),
+                                Color.FromArgb(21, 153, 42),
+                                Color.FromArgb(229, 108, 25),
+                                Color.FromArgb(184, 27, 27),
+                                Color.FromArgb(184, 27, 108),
+                                Color.FromArgb(105, 27, 184),
+                                Color.FromArgb(27, 88, 184),
+                                Color.FromArgb(86, 156, 227),
+                                Color.FromArgb(0, 170, 170),
+                                Color.FromArgb(131, 186, 31),
+                                Color.FromArgb(211, 157, 9),
+                                Color.FromArgb(224, 100, 183),
+                                Color.FromArgb(105, 105, 105),
+                                Color.FromArgb(105, 105, 105)
+                            ];
+
+                            int id = Program.TM.Windows8.ColorSet_Version3;
+                            if (id >= 0 && id < accents.Length)
+                            {
+                                background = accents[id];
+
+                                WinElement1.Background = background;
+                                WinElement1.Background2 = background;
+                            }
+                        }
+
+                        break;
+                    }
+
                 case WindowStyle.W7:
                     {
                         if (Program.TM.Windows7.VisualStyles.VisualStylesType == Theme.Structures.VisualStyles.DefaultVisualStyles.AeroOpaque)

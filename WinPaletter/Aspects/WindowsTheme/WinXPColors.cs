@@ -398,11 +398,13 @@ namespace WinPaletter
                 {
                     using (VisualStyleFile vs = new(theme))
                     {
+                        if (vs is null) return;
+
                         VS_ColorsList.Items.Clear();
 
                         try
                         {
-                            foreach (VisualStyleScheme x in vs.ColorSchemes) VS_ColorsList.Items.Add(x.Name);
+                            if (vs?.ColorSchemes is not null) foreach(VisualStyleScheme x in vs?.ColorSchemes) VS_ColorsList.Items.Add(x.Name);
                         }
                         catch { } // Couldn't load visual styles File, so no scheme will be added
 
@@ -412,7 +414,7 @@ namespace WinPaletter
 
                         try
                         {
-                            foreach (VisualStyleSize x in vs.Sizes) VS_SizesList.Items.Add(x.Size);
+                            if (vs?.Sizes is not null) foreach (VisualStyleSize x in vs?.Sizes) VS_SizesList.Items.Add(x.Size);
                         }
                         catch { } // Couldn't load visual styles File, so no scheme will be added
 
