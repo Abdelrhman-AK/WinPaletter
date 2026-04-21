@@ -6,7 +6,6 @@ using System.Drawing.Design;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Drawing.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.Assets;
 using WinPaletter.Properties;
@@ -21,7 +20,7 @@ namespace WinPaletter.UI.Simulation
         public Window()
         {
             AdjustPadding();
-            Font = new("Segoe UI", 9f);
+            Font = new Font("Segoe UI", 9f);
             DoubleBuffered = true;
             SetStyle(ControlStyles.SupportsTransparentBackColor | ControlStyles.OptimizedDoubleBuffer, true);
             BackColor = Color.Transparent;
@@ -29,29 +28,21 @@ namespace WinPaletter.UI.Simulation
 
         #region Variables
 
+        // Checks design mode through multiple channels because DesignMode alone is unreliable when the control is hosted inside another designer-hosted control.
         private bool IsInDesignMode
         {
             get
             {
-                // First check at control level
-                if (DesignMode)
-                    return true;
+                if (DesignMode) return true;
+                if (LicenseManager.UsageMode == LicenseUsageMode.Designtime) return true;
 
-                // Check at license context level
-                if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
-                    return true;
-
-                // Check through the site
                 ISite site = Site;
-                if (site != null && site.DesignMode)
-                    return true;
+                if (site != null && site.DesignMode) return true;
 
-                // Check parent chain
                 Control parent = Parent;
                 while (parent != null)
                 {
-                    if (parent.Site != null && parent.Site.DesignMode)
-                        return true;
+                    if (parent.Site != null && parent.Site.DesignMode) return true;
                     parent = parent.Parent;
                 }
 
@@ -59,10 +50,17 @@ namespace WinPaletter.UI.Simulation
             }
         }
 
+        // Cached bitmaps derived from the parent/wallpaper background.
+        // AdaptedBack is a cropped copy of the source; AdaptedBackBlurred is the post-processed version used for
+        // acrylic/Aero rendering. Both are managed here and disposed when no longer needed.
         private Bitmap AdaptedBack, AdaptedBackBlurred;
         private Bitmap Noise7 = Win7Preview.AeroGlass;
 
+        // Extra space around the outer window rect to allow the drop shadow to bleed without clipping.
         private readonly int FreeMargin = 8;
+
+        private static readonly Font marlett_7_7 = new("Marlett", 7.7f, FontStyle.Bold);
+        private static readonly Font marlett_6_35 = new("Marlett", 6.35f, FontStyle.Regular);
 
         public VisualStylesRes resVS;
 
@@ -80,8 +78,13 @@ namespace WinPaletter.UI.Simulation
             WXP
         }
 
+        // Grip handle size in pixels for the metrics editor overlay.
         readonly int GripSize = 6;
+
+        // The dashed rectangle drawn around the full client area when the metrics editor is active.
         RectangleF editingRect;
+
+        // Corner and edge drag handles for the metrics editor.
         RectangleF Grip_topLeft;
         RectangleF Grip_topRight;
         RectangleF Grip_bottomLeft;
@@ -91,6 +94,7 @@ namespace WinPaletter.UI.Simulation
         RectangleF Grip_leftCenter;
         RectangleF Grip_rightCenter;
 
+        // Tracks which grip is currently being dragged so OnMouseMove knows which metric to update.
         bool isMoving_Grip_topCenter = false;
         bool isMoving_Grip_padding_left = false;
         bool isMoving_Grip_borderWidth_left = false;
@@ -117,7 +121,6 @@ namespace WinPaletter.UI.Simulation
             }
         }
 
-
         private int _radius = 5;
         public int Radius
         {
@@ -131,7 +134,6 @@ namespace WinPaletter.UI.Simulation
                 }
             }
         }
-
 
         private Color _accentColor_Active = Color.FromArgb(0, 120, 212);
         public Color AccentColor_Active
@@ -147,7 +149,6 @@ namespace WinPaletter.UI.Simulation
             }
         }
 
-
         private Color _accentColor_Inactive = Color.FromArgb(32, 32, 32);
         public Color AccentColor_Inactive
         {
@@ -161,7 +162,6 @@ namespace WinPaletter.UI.Simulation
                 }
             }
         }
-
 
         private Color _accentColor2_Active = Color.FromArgb(0, 120, 212);
         public Color AccentColor2_Active
@@ -177,7 +177,6 @@ namespace WinPaletter.UI.Simulation
             }
         }
 
-
         private Color _accentColor2_Inactive = Color.FromArgb(32, 32, 32);
         public Color AccentColor2_Inactive
         {
@@ -191,7 +190,6 @@ namespace WinPaletter.UI.Simulation
                 }
             }
         }
-
 
         private bool _active = true;
         public bool Active
@@ -208,7 +206,6 @@ namespace WinPaletter.UI.Simulation
             }
         }
 
-
         private Preview_Enum _preview = Preview_Enum.W11;
         public Preview_Enum Preview
         {
@@ -222,7 +219,6 @@ namespace WinPaletter.UI.Simulation
                 }
             }
         }
-
 
         private int _win7Alpha = 100;
         public int Win7Alpha
@@ -238,7 +234,6 @@ namespace WinPaletter.UI.Simulation
             }
         }
 
-
         private int _win7ColorBal = 100;
         public int Win7ColorBal
         {
@@ -252,7 +247,6 @@ namespace WinPaletter.UI.Simulation
                 }
             }
         }
-
 
         private int _win7GlowBal = 100;
         public int Win7GlowBal
@@ -268,7 +262,6 @@ namespace WinPaletter.UI.Simulation
             }
         }
 
-
         private bool _toolWindow = false;
         public bool ToolWindow
         {
@@ -282,7 +275,6 @@ namespace WinPaletter.UI.Simulation
                 }
             }
         }
-
 
         private bool _winVista = false;
         public bool WinVista
@@ -298,7 +290,6 @@ namespace WinPaletter.UI.Simulation
             }
         }
 
-
         private bool _DarkMode = true;
         public bool DarkMode
         {
@@ -312,7 +303,6 @@ namespace WinPaletter.UI.Simulation
                 }
             }
         }
-
 
         private bool _AccentColor_Enabled = true;
         public bool AccentColor_Enabled
@@ -328,7 +318,6 @@ namespace WinPaletter.UI.Simulation
                 }
             }
         }
-
 
         private float _Win7Noise = 1f;
         public float Win7Noise
@@ -350,7 +339,6 @@ namespace WinPaletter.UI.Simulation
             }
         }
 
-
         private readonly int min_Metrics_CaptionHeight = 16;
         private readonly int max_Metrics_CaptionHeight = 50;
 
@@ -370,11 +358,11 @@ namespace WinPaletter.UI.Simulation
                     Invalidate();
                     MetricsChanged?.Invoke();
 
-                    if (!DesignMode && EnableEditingMetrics && isMoving_Grip_topCenter) EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Metrics_CaptionHeight)));
+                    if (!DesignMode && EnableEditingMetrics && isMoving_Grip_topCenter)
+                        EditorInvoker?.Invoke(this, new(nameof(Metrics_CaptionHeight)));
                 }
             }
         }
-
 
         private readonly int min_Metrics_BorderWidth = 0;
         private readonly int max_Metrics_BorderWidth = 50;
@@ -396,11 +384,10 @@ namespace WinPaletter.UI.Simulation
                     MetricsChanged?.Invoke();
 
                     if (!DesignMode && EnableEditingMetrics && (isMoving_Grip_borderWidth_left || isMoving_Grip_borderWidth_right || isMoving_Grip_borderWidth_bottom))
-                        EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Metrics_BorderWidth)));
+                        EditorInvoker?.Invoke(this, new(nameof(Metrics_BorderWidth)));
                 }
             }
         }
-
 
         private readonly int min_Metrics_PaddedBorderWidth = 0;
         private readonly int max_Metrics_PaddedBorderWidth = 50;
@@ -422,11 +409,10 @@ namespace WinPaletter.UI.Simulation
                     MetricsChanged?.Invoke();
 
                     if (!DesignMode && EnableEditingMetrics && (isMoving_Grip_padding_right || isMoving_Grip_padding_left || isMoving_Grip_padding_bottom))
-                        EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Metrics_PaddedBorderWidth)));
+                        EditorInvoker?.Invoke(this, new(nameof(Metrics_PaddedBorderWidth)));
                 }
             }
         }
-
 
         [Browsable(true)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
@@ -437,16 +423,14 @@ namespace WinPaletter.UI.Simulation
 
         #endregion
 
-        #region Events/Overrides
+        #region Events / Overrides
 
         public event MetricsChangedEventHandler MetricsChanged;
-
         public delegate void MetricsChangedEventHandler();
 
         protected override void OnBackgroundImageChanged(EventArgs e)
         {
             if (!DesignMode) ProcessBack();
-
             base.OnBackgroundImageChanged(e);
         }
 
@@ -454,36 +438,32 @@ namespace WinPaletter.UI.Simulation
         {
             Title_x_Height = TitleScheme.Measure(Font).Height;
             Title_9_Height = TitleScheme.Measure(new Font(Font.Name, 9f, Font.Style)).Height;
-
             AdjustPadding();
-
             base.OnFontChanged(e);
         }
 
         protected override void OnSizeChanged(EventArgs e)
         {
             AdjustPadding();
-
             base.OnSizeChanged(e);
         }
 
+        // Regenerates the blurred/adapted background bitmaps used for W11 acrylic and W7 Aero glass.
+        // Called whenever Active or AccentColor_Enabled changes, or the BackgroundImage is replaced.
         public void ProcessBack()
         {
             if (IsInDesignMode) return;
-
             if (Preview != Preview_Enum.W11 && Preview != Preview_Enum.W11Lite && Preview != Preview_Enum.W7Aero) return;
 
             Bitmap source = null;
 
-            // Try parent background first
             if (Parent?.BackgroundImage is Bitmap parentBmp)
                 source = parentBmp;
             else
                 source = Program.WallpaperMonitor.Get(Program.TM, Program.WindowStyle);
 
-            if (source is not null)
+            if (source != null)
             {
-                // Only clone the rectangle we need
                 Rectangle srcRect = new(0, 0, source.Width, source.Height);
                 if (srcRect.Contains_ButNotExceed(Bounds))
                 {
@@ -492,21 +472,21 @@ namespace WinPaletter.UI.Simulation
                 }
             }
 
-            if (AdaptedBack is null) return;
+            if (AdaptedBack == null) return;
 
-            // W11/W11Lite blur processing
             if (Preview == Preview_Enum.W11 || Preview == Preview_Enum.W11Lite)
             {
                 if (Active && !AccentColor_Enabled)
                 {
                     if (DarkMode)
                     {
-                        using Bitmap b = AdaptedBack.Blur(15);
-
-                        if (b is not null)
+                        using (Bitmap b = AdaptedBack.Blur(15))
                         {
-                            AdaptedBackBlurred?.Dispose();
-                            AdaptedBackBlurred = b.Contrast(0.05f);
+                            if (b != null)
+                            {
+                                AdaptedBackBlurred?.Dispose();
+                                AdaptedBackBlurred = b.Contrast(0.05f);
+                            }
                         }
                     }
                     else
@@ -516,7 +496,6 @@ namespace WinPaletter.UI.Simulation
                     }
                 }
             }
-            // W7 Aero blur
             else if (Preview == Preview_Enum.W7Aero)
             {
                 AdaptedBackBlurred?.Dispose();
@@ -528,7 +507,6 @@ namespace WinPaletter.UI.Simulation
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
-
             Noise7?.Dispose();
             AdaptedBack?.Dispose();
             AdaptedBackBlurred?.Dispose();
@@ -539,27 +517,30 @@ namespace WinPaletter.UI.Simulation
 
         #region Methods
 
+        // Recalculates the WinForms Padding to match the simulated window border metrics, and repositions all editor grip handles relative to the new client rect.
         public void AdjustPadding()
         {
             Padding = new((int)(ClientRect.Left + 1f), (int)(ClientRect.Top + 1f), (int)(ClientRect.Left + 1f), (int)(ClientRect.Left + 1f));
 
             editingRect = new(Padding.Left, Padding.Top, Width - Padding.Left * 2 - 1, Height - Padding.Bottom - Padding.Top - 1);
 
-            Grip_topLeft = new(editingRect.X - (int)(0.5 * GripSize), editingRect.Y - (int)(0.5 * GripSize), GripSize, GripSize);
-            Grip_topRight = new(editingRect.X + editingRect.Width - (int)(0.5 * GripSize), editingRect.Y - (int)(0.5 * GripSize), GripSize, GripSize);
-            Grip_bottomLeft = new(editingRect.X - (int)(0.5 * GripSize), editingRect.Y + editingRect.Height - (int)(0.5 * GripSize), GripSize, GripSize);
-            Grip_bottomRight = new(editingRect.X + editingRect.Width - (int)(0.5 * GripSize), editingRect.Y + editingRect.Height - (int)(0.5 * GripSize), GripSize, GripSize);
-            Grip_topCenter = new(editingRect.X + editingRect.Width / 2 - (int)(0.5 * GripSize), editingRect.Y - (int)(0.5 * GripSize), GripSize, GripSize);
-            Grip_bottomCenter = new(editingRect.X + editingRect.Width / 2 - (int)(0.5 * GripSize), editingRect.Y + editingRect.Height - (int)(0.5 * GripSize), GripSize, GripSize);
-            Grip_leftCenter = new(editingRect.X - (int)(0.5 * GripSize), editingRect.Y + editingRect.Height / 2 - (int)(0.5 * GripSize), GripSize, GripSize);
-            Grip_rightCenter = new(editingRect.X + editingRect.Width - (int)(0.5 * GripSize), editingRect.Y + editingRect.Height / 2 - (int)(0.5 * GripSize), GripSize, GripSize);
+            float halfGrip = (int)(0.5 * GripSize);
+
+            Grip_topLeft = new(editingRect.X - halfGrip, editingRect.Y - halfGrip, GripSize, GripSize);
+            Grip_topRight = new(editingRect.X + editingRect.Width - halfGrip, editingRect.Y - halfGrip, GripSize, GripSize);
+            Grip_bottomLeft = new(editingRect.X - halfGrip, editingRect.Y + editingRect.Height - halfGrip, GripSize, GripSize);
+            Grip_bottomRight = new(editingRect.X + editingRect.Width - halfGrip, editingRect.Y + editingRect.Height - halfGrip, GripSize, GripSize);
+            Grip_topCenter = new(editingRect.X + editingRect.Width / 2 - halfGrip, editingRect.Y - halfGrip, GripSize, GripSize);
+            Grip_bottomCenter = new(editingRect.X + editingRect.Width / 2 - halfGrip, editingRect.Y + editingRect.Height - halfGrip, GripSize, GripSize);
+            Grip_leftCenter = new(editingRect.X - halfGrip, editingRect.Y + editingRect.Height / 2 - halfGrip, GripSize, GripSize);
+            Grip_rightCenter = new(editingRect.X + editingRect.Width - halfGrip, editingRect.Y + editingRect.Height / 2 - halfGrip, GripSize, GripSize);
         }
 
+        // Fills a rectangle that is only rounded on the top two corners (used for the titlebar shape in W11/W10 so the bottom edge meets the client area flush).
         public void FillSemiRect(Graphics G, Brush Brush, RectangleF Rectangle, int Radius = -1)
         {
             if (Radius == -1) Radius = 6;
-
-            if (G is null) return;
+            if (G == null) return;
 
             G.SmoothingMode = SmoothingMode.AntiAlias;
 
@@ -569,6 +550,7 @@ namespace WinPaletter.UI.Simulation
             }
         }
 
+        // Constructs a GraphicsPath for a rectangle with rounded top-left and top-right corners only.
         public GraphicsPath RoundedSemiRectangle(RectangleF r, int radius)
         {
             GraphicsPath path = new();
@@ -576,117 +558,112 @@ namespace WinPaletter.UI.Simulation
 
             path.AddLine(r.Left + d, r.Top, r.Right - d, r.Top);
             path.AddArc(Rectangle.FromLTRB((int)(r.Right - d), (int)r.Top, (int)r.Right, (int)(r.Top + d)), -90, 90f);
-
             path.AddLine(r.Right, r.Top, r.Right, r.Bottom);
-
             path.AddLine(r.Right, r.Bottom, r.Left, r.Bottom);
-
             path.AddLine(r.Left, r.Bottom - d, r.Left, r.Top + d);
             path.AddArc(Rectangle.FromLTRB((int)r.Left, (int)r.Top, (int)(r.Left + d), (int)(r.Top + d)), 180f, 90f);
-
             path.CloseFigure();
+
             return path;
         }
 
         #endregion
 
-        #region Geometry/Design
+        #region Geometry / Design
+
+        // Sample string used only for measuring caption font metrics; never displayed.
         private string TitleScheme => "ABCabc0123xYz.#";
 
         private float Title_x_Height, Title_9_Height;
+
+        // Outer border thickness (in pixels) that accounts for OS-specific border conventions.
         private int SideSize
         {
             get
             {
-                if (Preview == Preview_Enum.W11 || Preview == Preview_Enum.W10 || Preview == Preview_Enum.W11Lite) // there is no Preview == Preview_Enum.W10Lite as it looks like W8.1Lite
-                {
+                if (Preview == Preview_Enum.W11 || Preview == Preview_Enum.W10 || Preview == Preview_Enum.W11Lite)
                     return 1;
-                }
 
-                else if (Preview == Preview_Enum.WXP)
-                {
+                if (Preview == Preview_Enum.WXP)
                     return Math.Max(4, _Metrics_BorderWidth);
-                }
 
-                else
-                {
-                    return _Metrics_BorderWidth + _Metrics_PaddedBorderWidth;
-                }
+                return _Metrics_BorderWidth + _Metrics_PaddedBorderWidth;
             }
         }
+
         private int IconSize => _Metrics_CaptionHeight <= 17 ? 12 : 14;
+
+        // Extra vertical space above the caption text driven by font metrics.
         private float TitleHeight => Math.Max(0, Title_x_Height - Title_9_Height - 5);
+
         private float CloseBtn_W => TitleHeight + _Metrics_CaptionHeight - 4;
 
         private RectangleF CloseButtonRect;
+
+        // The full control bounds (0,0 to Width-1, Height-1).
         private RectangleF RectAll => new(0, 0, Width - 1, Height - 1);
+
+        // Window frame rect inset by FreeMargin to leave room for the shadow.
         private RectangleF Rect => new(RectAll.X + FreeMargin, RectAll.Y + FreeMargin, RectAll.Width - (FreeMargin * 2), RectAll.Height - (FreeMargin * 2));
+
+        // Rect inset by 1px on every side, used for the inner border stroke.
         private RectangleF RectBorder => new(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2);
+
+        // Full titlebar area including the top border and padded border pixels.
         private RectangleF TitlebarRect => new(Rect.X, Rect.Y, Rect.Width, TitleHeight + _Metrics_BorderWidth + _Metrics_CaptionHeight + _Metrics_PaddedBorderWidth + 3);
+
         private RectangleF IconRect
         {
             get
             {
                 if (Preview == Preview_Enum.W11 || Preview == Preview_Enum.W10 || Preview == Preview_Enum.W11Lite || Preview == Preview_Enum.W10Lite)
-                {
                     return new(TitlebarRect.X + 4 + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth, Rect.Y + (TitlebarRect.Height - IconSize) / 2f, IconSize, IconSize);
-                }
 
-                else if (Preview == Preview_Enum.W8 | Preview == Preview_Enum.W8Lite)
-                {
+                if (Preview == Preview_Enum.W8 | Preview == Preview_Enum.W8Lite)
                     return new(TitlebarRect.X + 6 + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth, Rect.Y + (TitlebarRect.Height - IconSize) / 2f, IconSize, IconSize);
-                }
 
-                else if (Preview == Preview_Enum.W7Basic)
-                {
+                if (Preview == Preview_Enum.W7Basic)
                     return new(TitlebarRect.X + 4 + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth, CloseButtonRect.Y + (CloseButtonRect.Height - IconSize) / 2f, IconSize, IconSize);
-                }
 
-                else if (Preview == Preview_Enum.WXP)
-                {
+                if (Preview == Preview_Enum.WXP)
                     return new(Rect.X + SideSize + 4, TitlebarRect.Y + (TitlebarRect.Height - 14) / 2, 14, 14);
-                }
 
-                else
-                {
-                    return new(TitlebarRect.X + 4 + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth, Rect.Y + (TitlebarRect.Height - IconSize) / 2f, IconSize, IconSize);
-                }
+                return new(TitlebarRect.X + 4 + _Metrics_PaddedBorderWidth + _Metrics_BorderWidth, Rect.Y + (TitlebarRect.Height - IconSize) / 2f, IconSize, IconSize);
             }
         }
+
         private RectangleF LabelRect
         {
             get
             {
-                RectangleF resultRect;
-
                 if (Preview == Preview_Enum.W8 || Preview == Preview_Enum.W8Lite)
-                {
-                    resultRect = new(Rect.X, Rect.Y + 2, TitlebarRect.Width - 1, TitlebarRect.Height - 3);
-                }
-                else if (Preview == Preview_Enum.W7Aero || Preview == Preview_Enum.W7Opaque)
+                    return new(Rect.X, Rect.Y + 2, TitlebarRect.Width - 1, TitlebarRect.Height - 3);
+
+                if (Preview == Preview_Enum.W7Aero || Preview == Preview_Enum.W7Opaque)
                 {
                     float offsetX = !ToolWindow ? IconRect.Right + 2 : IconRect.X - 2;
-                    resultRect = new(offsetX, TitlebarRect.Y, TitlebarRect.Width - (IconRect.Right + 4), TitlebarRect.Height);
-                }
-                else if (Preview == Preview_Enum.W7Basic)
-                {
-                    float offsetX = !ToolWindow ? IconRect.Right + 3 : IconRect.X;
-                    resultRect = new(offsetX, CloseButtonRect.Y, TitlebarRect.Width - (IconRect.Right + 4), CloseButtonRect.Height);
-                }
-                else if (Preview == Preview_Enum.WXP)
-                {
-                    float offsetX = Rect.X + SideSize + (ToolWindow ? 3 : 21);
-                    resultRect = new(offsetX, TitlebarRect.Bottom - 2 - CloseBtn_W, Rect.Width - CloseBtn_W - SideSize * 2, CloseBtn_W);
-                }
-                else
-                {
-                    float offsetX = !ToolWindow ? IconRect.Right + 4 : IconRect.X;
-                    resultRect = new(offsetX, TitlebarRect.Y, TitlebarRect.Width - (IconRect.Right + 4), TitlebarRect.Height);
+                    return new(offsetX, TitlebarRect.Y, TitlebarRect.Width - (IconRect.Right + 4), TitlebarRect.Height);
                 }
 
-                return resultRect;
+                if (Preview == Preview_Enum.W7Basic)
+                {
+                    float offsetX = !ToolWindow ? IconRect.Right + 3 : IconRect.X;
+                    return new(offsetX, CloseButtonRect.Y, TitlebarRect.Width - (IconRect.Right + 4), CloseButtonRect.Height);
+                }
+
+                if (Preview == Preview_Enum.WXP)
+                {
+                    float offsetX = Rect.X + SideSize + (ToolWindow ? 3 : 21);
+                    return new(offsetX, TitlebarRect.Bottom - 2 - CloseBtn_W, Rect.Width - CloseBtn_W - SideSize * 2, CloseBtn_W);
+                }
+
+                {
+                    float offsetX = !ToolWindow ? IconRect.Right + 4 : IconRect.X;
+                    return new(offsetX, TitlebarRect.Y, TitlebarRect.Width - (IconRect.Right + 4), TitlebarRect.Height);
+                }
             }
         }
+
         private RectangleF ClientRect => new(Rect.X + SideSize + 1, Rect.Y + TitlebarRect.Height + 1, Rect.Width - SideSize * 2 - 2, Rect.Height - (SideSize + TitlebarRect.Height) - 2);
         private RectangleF ClientBorderRect => new(ClientRect.X - 1, ClientRect.Y - 1, ClientRect.Width + 2, ClientRect.Height + 2);
         private RectangleF GlassSide1 => new(Rect.X + 1, ClientBorderRect.Y, SideSize, ClientBorderRect.Height * 0.5f);
@@ -695,22 +672,31 @@ namespace WinPaletter.UI.Simulation
         private RectangleF RightEdge_XP => new(ClientRect.Right + 1, ClientRect.Y, SideSize, ClientRect.Height + SideSize);
         private RectangleF ButtomEdge_XP => new(LeftEdge_XP.Left, LeftEdge_XP.Bottom - SideSize + 1, RightEdge_XP.Right - LeftEdge_XP.Left, SideSize + 1);
 
+        // W7 Basic titlebar gradient colors.
         Color Titlebar_Backcolor1 => Active ? Color.FromArgb(152, 180, 208) : Color.FromArgb(191, 205, 219);
         Color Titlebar_Backcolor2 => Active ? Color.FromArgb(186, 210, 234) : Color.FromArgb(215, 228, 242);
         Color Titlebar_OuterBorder => Active ? Color.FromArgb(52, 52, 52) : Color.FromArgb(76, 76, 76);
         Color Titlebar_InnerBorder => Active ? Color.FromArgb(255, 255, 255) : Color.FromArgb(226, 230, 239);
         Color Titlebar_Turquoise => Active ? Color.FromArgb(40, 207, 228) : Color.FromArgb(226, 230, 239);
         Color OuterBorder => Active ? Color.FromArgb(0, 0, 0) : Color.FromArgb(76, 76, 76);
+
+        // W7 Basic close button gradient colors.
         Color CloseUpperAccent1 => Active ? Color.FromArgb(233, 169, 156) : Color.FromArgb(189, 203, 218);
         Color CloseUpperAccent2 => Active ? Color.FromArgb(223, 149, 135) : default;
         Color CloseLowerAccent1 => Active ? Color.FromArgb(184, 67, 44) : default;
         Color CloseLowerAccent2 => Active ? Color.FromArgb(210, 127, 110) : Color.FromArgb(205, 219, 234);
         Color CloseOuterBorder => Active ? Color.FromArgb(67, 20, 34) : Color.FromArgb(131, 142, 168);
         Color CloseInnerBorder => Active ? Color.FromArgb(100, 255, 255, 255) : Color.FromArgb(209, 219, 229);
-        Color InactiveWindows8 => !(Preview == Preview_Enum.W8Lite) ? Color.FromArgb(235, 235, 235) : Color.FromArgb((int)(Win7ColorBal / 100f * 255f), AccentColor_Active.CB(0.8f));
+
+        // W8/8.1 window frame color; inactive state uses the accent at 80% brightness.
+        Color InactiveWindows8 => !(Preview == Preview_Enum.W8Lite)
+            ? Color.FromArgb(235, 235, 235)
+            : Color.FromArgb((int)(Win7ColorBal / 100f * 255f), AccentColor_Active.CB(0.8f));
+
         Color Windows8Color => Active ? Color.FromArgb((int)(Win7ColorBal / 100d * 255d), AccentColor_Active) : InactiveWindows8;
         Color WindowsXPColor => Program.TM.Win32.ButtonFace;
         Color ClientAreaColor => !DesignMode ? Program.TM.Win32.ButtonFace : Color.White;
+
         Color CaptionColor
         {
             get
@@ -718,37 +704,20 @@ namespace WinPaletter.UI.Simulation
                 if (Preview == Preview_Enum.W11 || Preview == Preview_Enum.W10 || Preview == Preview_Enum.W11Lite)
                 {
                     if (AccentColor_Enabled)
-                    {
-                        if (Active)
-                        {
-                            return AccentColor_Active.IsDark() ? Color.White : Color.Black;
-                        }
-                        else
-                        {
-                            return AccentColor_Inactive.IsDark() ? Color.FromArgb(115, 115, 115) : Color.Black;
-                        }
-                    }
+                        return Active
+                            ? (AccentColor_Active.IsDark() ? Color.White : Color.Black)
+                            : (AccentColor_Inactive.IsDark() ? Color.FromArgb(115, 115, 115) : Color.Black);
 
-                    else
-                    {
-                        return Active ? (DarkMode ? Color.White : Color.Black) : Color.FromArgb(115, 115, 115);
-                    }
+                    return Active ? (DarkMode ? Color.White : Color.Black) : Color.FromArgb(115, 115, 115);
                 }
 
-                else if (Preview == Preview_Enum.W10Lite || Preview == Preview_Enum.W8)
-                {
+                if (Preview == Preview_Enum.W10Lite || Preview == Preview_Enum.W8)
                     return Color.Black;
-                }
 
-                else if (Preview == Preview_Enum.W7Basic)
-                {
+                if (Preview == Preview_Enum.W7Basic)
                     return Active ? Color.Black : Color.FromArgb(76, 76, 76);
-                }
 
-                else
-                {
-                    return ForeColor;
-                }
+                return ForeColor;
             }
         }
 
@@ -757,21 +726,11 @@ namespace WinPaletter.UI.Simulation
             get
             {
                 if (AccentColor_Enabled)
-                {
-                    if (Active)
-                    {
-                        return AccentColor_Active.IsDark() ? Win10Preview.Win10x_Close_Dark : Win10Preview.Win10x_Close_Light;
-                    }
-                    else
-                    {
-                        return AccentColor_Inactive.IsDark() ? Win10Preview.Win10x_Close_Dark : Win10Preview.Win10x_Close_Light;
-                    }
-                }
+                    return Active
+                        ? (AccentColor_Active.IsDark() ? Win10Preview.Win10x_Close_Dark : Win10Preview.Win10x_Close_Light)
+                        : (AccentColor_Inactive.IsDark() ? Win10Preview.Win10x_Close_Dark : Win10Preview.Win10x_Close_Light);
 
-                else
-                {
-                    return DarkMode ? Win10Preview.Win10x_Close_Dark : Win10Preview.Win10x_Close_Light;
-                }
+                return DarkMode ? Win10Preview.Win10x_Close_Dark : Win10Preview.Win10x_Close_Light;
             }
         }
 
@@ -786,7 +745,6 @@ namespace WinPaletter.UI.Simulation
         private bool _MetricsEdit_Grip => EnableEditingMetrics && CursorOnMetricsGrip && !CursorOverTitlebar;
         private bool _MetricsEdit_CaptionFont => EnableEditingMetrics && CursorOverTitlebar;
 
-
         public delegate void EditorInvokerEventHandler(object sender, EditorEventArgs e);
         public event EditorInvokerEventHandler EditorInvoker;
 
@@ -794,24 +752,21 @@ namespace WinPaletter.UI.Simulation
         [Browsable(false)]
         public bool EnableEditingColors { get; set; } = false;
 
-
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Browsable(false)]
         public bool EnableEditingMetrics { get; set; } = false;
 
-        protected override async void OnMouseMove(MouseEventArgs e)
+        protected override void OnMouseMove(MouseEventArgs e)
         {
             if (!DesignMode && EnableEditingColors)
             {
-                CursorOverTitlebar = (Preview == Preview_Enum.W11 || Preview == Preview_Enum.W10 || Preview == Preview_Enum.W11Lite || Preview == Preview_Enum.W10Lite) &&
-                    TitlebarRect.Contains(e.Location) && !isMoving_Grip_topCenter;
+                CursorOverTitlebar = (Preview == Preview_Enum.W11 || Preview == Preview_Enum.W10 || Preview == Preview_Enum.W11Lite || Preview == Preview_Enum.W10Lite)
+                    && TitlebarRect.Contains(e.Location) && !isMoving_Grip_topCenter;
 
-                CursorOverWindowAccent = (Preview == Preview_Enum.W8 || Preview == Preview_Enum.W8Lite || Preview == Preview_Enum.W7Aero || Preview == Preview_Enum.W7Opaque) &&
-                  Active && Rect.Contains(e.Location) && !ClientRect.Contains(e.Location);
+                CursorOverWindowAccent = (Preview == Preview_Enum.W8 || Preview == Preview_Enum.W8Lite || Preview == Preview_Enum.W7Aero || Preview == Preview_Enum.W7Opaque)
+                    && Active && Rect.Contains(e.Location) && !ClientRect.Contains(e.Location);
 
-                await Task.Delay(10);
-                /* Don't make it controlled by conditions, they may be false and graphics won't be updated.
-                   For high performance, we need to update graphics only in specified rectangle. */
+                // Partial invalidate for performance: only repaint the titlebar band.
                 Invalidate(new Rectangle((int)TitlebarRect.X, (int)TitlebarRect.Y, (int)(TitlebarRect.Width + 1f), (int)(TitlebarRect.Height + 1f)));
             }
 
@@ -821,7 +776,7 @@ namespace WinPaletter.UI.Simulation
                 {
                     Metrics_CaptionHeight = e.Location.Y - (_Metrics_PaddedBorderWidth + _Metrics_BorderWidth) - GripSize * 2;
                 }
-                if (isMoving_Grip_padding_left)
+                else if (isMoving_Grip_padding_left)
                 {
                     Metrics_PaddedBorderWidth = e.Location.X - (int)(GripSize * 0.5) - _Metrics_BorderWidth;
                 }
@@ -845,7 +800,6 @@ namespace WinPaletter.UI.Simulation
                 {
                     Metrics_BorderWidth = Height - e.Location.Y - (int)(GripSize * 0.5) - _Metrics_PaddedBorderWidth;
                 }
-
                 else
                 {
                     CursorOnMetricsGrip = true;
@@ -861,7 +815,6 @@ namespace WinPaletter.UI.Simulation
                     else if (Grip_rightCenter.Contains(e.Location)) Cursor = Cursors.SizeWE;
                     else Cursor = Cursors.Default;
 
-                    await Task.Delay(10);
                     Invalidate();
                 }
             }
@@ -869,14 +822,13 @@ namespace WinPaletter.UI.Simulation
             base.OnMouseMove(e);
         }
 
-        protected override async void OnMouseLeave(EventArgs e)
+        protected override void OnMouseLeave(EventArgs e)
         {
             if (!DesignMode && EnableEditingColors)
             {
                 CursorOverTitlebar = false;
                 CursorOverWindowAccent = false;
 
-                await Task.Delay(10);
                 Invalidate(new Rectangle((int)TitlebarRect.X, (int)TitlebarRect.Y, (int)(TitlebarRect.Width + 1f), (int)(TitlebarRect.Height + 1f)));
             }
             else if (!DesignMode && EnableEditingMetrics)
@@ -890,10 +842,8 @@ namespace WinPaletter.UI.Simulation
                 isMoving_Grip_padding_bottom = false;
                 isMoving_Grip_borderWidth_bottom = false;
                 CursorOverTitlebar = false;
-
                 Cursor = Cursors.Default;
 
-                await Task.Delay(10);
                 Invalidate();
             }
 
@@ -906,37 +856,27 @@ namespace WinPaletter.UI.Simulation
             {
                 if (CursorOverTitlebar)
                 {
-                    if (e.Button != MouseButtons.Right)
-                    {
-                        EditorInvoker?.Invoke(this, new EditorEventArgs(Active ? nameof(WindowsDesktop.TitlebarColor_Active) : nameof(WindowsDesktop.TitlebarColor_Inactive)));
-                    }
-                    else
-                    {
-                        EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(WindowsDesktop.DarkMode_App)));
-                    }
+                    EditorInvoker?.Invoke(this, new(
+                        e.Button != MouseButtons.Right
+                            ? (Active ? nameof(WindowsDesktop.TitlebarColor_Active) : nameof(WindowsDesktop.TitlebarColor_Inactive))
+                            : nameof(WindowsDesktop.DarkMode_App)));
                 }
-
                 else if (CursorOverWindowAccent)
                 {
-                    if (e.Button != MouseButtons.Right)
-                    {
-                        EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(WindowsDesktop.TitlebarColor_Active)));
-                    }
-                    else
-                    {
-                        EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(WindowsDesktop.AfterGlowColor_Active)));
-                    }
+                    EditorInvoker?.Invoke(this, new(
+                        e.Button != MouseButtons.Right
+                            ? nameof(WindowsDesktop.TitlebarColor_Active)
+                            : nameof(WindowsDesktop.AfterGlowColor_Active)));
                 }
             }
-
             else if (!DesignMode && _MetricsEdit_CaptionFont)
             {
-                using (FontDialog fd = new() { Font = Font })
+                using (FontDialog fd = new FontDialog { Font = Font })
                 {
                     if (fd.ShowDialog() == DialogResult.OK)
                     {
                         Font = fd.Font;
-                        EditorInvoker?.Invoke(this, new EditorEventArgs(nameof(Font)));
+                        EditorInvoker?.Invoke(this, new(nameof(Font)));
                     }
                 }
             }
@@ -953,7 +893,6 @@ namespace WinPaletter.UI.Simulation
             isMoving_Grip_borderWidth_right = false;
             isMoving_Grip_padding_bottom = false;
             isMoving_Grip_borderWidth_bottom = false;
-
             base.OnMouseUp(e);
         }
 
@@ -969,61 +908,46 @@ namespace WinPaletter.UI.Simulation
                 else if (Grip_leftCenter.Contains(e.Location))
                 {
                     isMoving_Grip_topCenter = false;
-
                     isMoving_Grip_padding_left = e.Button == MouseButtons.Right;
                     isMoving_Grip_borderWidth_left = e.Button != MouseButtons.Right;
                 }
                 else if (Grip_rightCenter.Contains(e.Location))
                 {
                     isMoving_Grip_topCenter = false;
-
                     isMoving_Grip_padding_right = e.Button == MouseButtons.Right;
                     isMoving_Grip_borderWidth_right = e.Button != MouseButtons.Right;
                 }
                 else if (Grip_bottomCenter.Contains(e.Location))
                 {
                     isMoving_Grip_topCenter = false;
-
                     isMoving_Grip_padding_bottom = e.Button == MouseButtons.Right;
                     isMoving_Grip_borderWidth_bottom = e.Button != MouseButtons.Right;
                 }
                 else if (Grip_bottomLeft.Contains(e.Location))
                 {
                     isMoving_Grip_topCenter = false;
-
                     isMoving_Grip_padding_left = e.Button == MouseButtons.Right;
                     isMoving_Grip_borderWidth_left = e.Button != MouseButtons.Right;
-
                     isMoving_Grip_padding_bottom = e.Button == MouseButtons.Right;
                     isMoving_Grip_borderWidth_bottom = e.Button != MouseButtons.Right;
                 }
                 else if (Grip_bottomRight.Contains(e.Location))
                 {
                     isMoving_Grip_topCenter = false;
-
                     isMoving_Grip_padding_right = e.Button == MouseButtons.Right;
                     isMoving_Grip_borderWidth_right = e.Button != MouseButtons.Right;
-
                     isMoving_Grip_padding_bottom = e.Button == MouseButtons.Right;
                     isMoving_Grip_borderWidth_bottom = e.Button != MouseButtons.Right;
                 }
                 else if (Grip_topLeft.Contains(e.Location))
                 {
                     isMoving_Grip_topCenter = true;
-
-                    isMoving_Grip_padding_left = e.Button == MouseButtons.Right;
-                    isMoving_Grip_borderWidth_left = e.Button != MouseButtons.Right;
-
                     isMoving_Grip_padding_left = e.Button == MouseButtons.Right;
                     isMoving_Grip_borderWidth_left = e.Button != MouseButtons.Right;
                 }
                 else if (Grip_topRight.Contains(e.Location))
                 {
                     isMoving_Grip_topCenter = true;
-
-                    isMoving_Grip_padding_right = e.Button == MouseButtons.Right;
-                    isMoving_Grip_borderWidth_right = e.Button != MouseButtons.Right;
-
                     isMoving_Grip_padding_right = e.Button == MouseButtons.Right;
                     isMoving_Grip_borderWidth_right = e.Button != MouseButtons.Right;
                 }
@@ -1034,9 +958,9 @@ namespace WinPaletter.UI.Simulation
 
         #endregion
 
+        // Intentionally empty: transparent background is achieved by not painting anything here.
         protected override void OnPaintBackground(PaintEventArgs pevent)
         {
-            //Leave it empty to make control background transparent
             base.OnPaintBackground(pevent);
         }
 
@@ -1046,812 +970,810 @@ namespace WinPaletter.UI.Simulation
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
 
-            //Draw window itself
-            if (Preview == Preview_Enum.W11 || Preview == Preview_Enum.W11Lite)
+            switch (Preview)
             {
-                if (Shadow & Active & !DesignMode) { G.DrawGlow(Rect, Color.FromArgb(150, 0, 0, 0), 5, 15); }
+                case Preview_Enum.W11:
+                case Preview_Enum.W11Lite:
+                    PaintW11(G);
+                    break;
 
-                if (!AccentColor_Enabled && Active)
-                {
-                    G.SetClip(TitlebarRect);
-                    G.DrawRoundImage(AdaptedBackBlurred, Rect, Radius, true);
-                    G.ResetClip();
-                }
+                case Preview_Enum.W10:
+                case Preview_Enum.W10Lite:
+                    PaintW10(G);
+                    break;
 
-                G.ExcludeClip(new Rectangle((int)TitlebarRect.X, (int)TitlebarRect.Y, (int)TitlebarRect.Width, (int)TitlebarRect.Height));
+                case Preview_Enum.W8:
+                case Preview_Enum.W8Lite:
+                    PaintW8(G);
+                    break;
 
-                if (DarkMode) { using (SolidBrush br = new(Color.FromArgb(20, 20, 20))) { G.FillRoundedRect(br, Rect, Radius, true); } }
+                case Preview_Enum.W7Aero:
+                case Preview_Enum.W7Opaque:
+                    PaintW7Aero(G);
+                    break;
 
-                else { using (SolidBrush br = new(Color.FromArgb(240, 240, 240))) { G.FillRoundedRect(br, Rect, Radius, true); } }
+                case Preview_Enum.W7Basic:
+                    PaintW7Basic(G);
+                    break;
 
-                G.ResetClip();
-
-                if (AccentColor_Enabled)
-                {
-                    if (Active) { using (Pen P = new(Color.FromArgb(200, AccentColor_Active))) { G.DrawRoundedRect(P, Rect, Radius, true); } }
-
-                    else { using (Pen P = new(Color.FromArgb(200, AccentColor_Inactive))) { G.DrawRoundedRect(P, Rect, Radius, true); } }
-                }
-
-                else if (DarkMode) { using (Pen P = new(Color.FromArgb(200, 100, 100, 100))) { G.DrawRoundedRect(P, Rect, Radius, true); } }
-
-                else { using (Pen P = new(Color.FromArgb(200, 220, 220, 220))) { G.DrawRoundedRect(P, Rect, Radius, true); } }
-
-                if (AccentColor_Enabled)
-                {
-                    if (Active)
-                    {
-                        using (SolidBrush br = new(Color.FromArgb(255, AccentColor_Active))) { FillSemiRect(G, br, TitlebarRect, Radius); }
-
-                        using (Pen P = new(Color.FromArgb(255, AccentColor_Active)))
-                        {
-                            G.DrawLine(P, new PointF(TitlebarRect.X + 1, TitlebarRect.Y + TitlebarRect.Height), new PointF(TitlebarRect.X + TitlebarRect.Width - 1, TitlebarRect.Y + TitlebarRect.Height));
-                        }
-                    }
-                    else
-                    {
-                        using (SolidBrush br = new(Color.FromArgb(255, AccentColor_Inactive))) { FillSemiRect(G, br, TitlebarRect, Radius); }
-
-                        using (Pen P = new(Color.FromArgb(255, AccentColor_Inactive)))
-                        {
-                            G.DrawLine(P, new PointF(TitlebarRect.X + 1, TitlebarRect.Y + TitlebarRect.Height), new PointF(TitlebarRect.X + TitlebarRect.Width - 1, TitlebarRect.Y + TitlebarRect.Height));
-                        }
-                    }
-                }
-
-                else
-                {
-                    int a = Active ? DarkMode ? 180 : 245 : 255;
-
-                    if (DarkMode) { using (SolidBrush br = new(Color.FromArgb(a, 32, 32, 32))) { FillSemiRect(G, br, TitlebarRect, Radius); } }
-
-                    else { using (SolidBrush br = new(Color.FromArgb(a, 245, 245, 245))) { FillSemiRect(G, br, TitlebarRect, Radius); } }
-                }
-
-                #region Editor
-
-                if (!DesignMode && EnableEditingColors && CursorOverTitlebar)
-                {
-                    Color color0 = Color.FromArgb(80, 255, 255, 255);
-                    Color color1 = Color.FromArgb(80, 0, 0, 0);
-                    using (Pen P = new(color0))
-                    using (HatchBrush hb = new(HatchStyle.Percent25, color0, color1))
-                    {
-                        G.FillRoundedRect(hb, TitlebarRect, Radius, true);
-                        G.DrawRoundedRect(P, TitlebarRect, Radius, true);
-                    }
-                }
-
-                #endregion
-
-                //Close button
-                if (!ToolWindow)
-                {
-                    if (Preview == Preview_Enum.W11Lite)
-                    {
-                        G.SetClip(Rect.Round(Radius));
-
-                        using (SolidBrush br = new(Color.FromArgb(195, 90, 80)))
-                        {
-                            RectangleF close_Lite = new(TitlebarRect.Right - CloseBtn_W * 2, TitlebarRect.Y, CloseBtn_W * 2, TitlebarRect.Height);
-                            if (Active) G.FillRectangle(br, close_Lite);
-
-                            using (Pen P = new(DarkMode ? Color.FromArgb(51, 51, 51) : Color.FromArgb(0, 0, 0)))
-                            {
-                                G.DrawLine(P, close_Lite.X, close_Lite.Y + 1, close_Lite.X, close_Lite.Y + close_Lite.Height);
-                                G.DrawLine(P, close_Lite.X, close_Lite.Y + close_Lite.Height, close_Lite.X + close_Lite.Width - 1, close_Lite.Y + close_Lite.Height);
-                            }
-
-                            using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
-                            {
-                                using (SolidBrush br_close = new(Color.Black))
-                                {
-                                    G.DrawString("r", new Font("Marlett", 7.7f, FontStyle.Bold), br_close, new RectangleF(close_Lite.X + 1, close_Lite.Y + 1, close_Lite.Width, close_Lite.Height), sf);
-                                }
-                            }
-                        }
-
-                        G.ResetClip();
-                    }
-                    else
-                    {
-                        using (Bitmap closeImg = new(CloseButtonImage))
-                        {
-                            CloseButtonRect = new(TitlebarRect.Right - closeImg.Width * 2f, TitlebarRect.Top + (TitlebarRect.Height - closeImg.Height) / 2f, closeImg.Width, closeImg.Height);
-
-                            G.DrawImage(closeImg, CloseButtonRect);
-                        }
-                    }
-                }
-
-                else
-                {
-                    CloseButtonRect = new(TitlebarRect.Right - 2 - (TitlebarRect.Height - 12), Rect.Y + 6, TitlebarRect.Height - 12, TitlebarRect.Height - 12);
-
-                    using (SolidBrush br = new(Color.FromArgb(199, 80, 80)))
-                    {
-                        G.FillRectangle(br, CloseButtonRect);
-                    }
-
-                    if (CloseButtonRect.Width >= 12)
-                    {
-                        if (CloseButtonRect.Width % 2 == 0)
-                        {
-                            CloseButtonRect.X += 1;
-                            CloseButtonRect.Y += 1;
-                        }
-                    }
-                    else
-                    {
-                        CloseButtonRect.X += 1;
-                    }
-
-                    using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
-                    {
-                        using (SolidBrush br = new(Preview == Preview_Enum.W11Lite ? Color.Black : Color.White))
-                        {
-                            G.DrawString("r", new Font("Marlett", 6.35f, FontStyle.Regular), br, new RectangleF(CloseButtonRect.X + 1, CloseButtonRect.Y + 1, CloseButtonRect.Width, CloseButtonRect.Height), sf);
-                        }
-                    }
-                }
-
-                //Window title
-                using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
-                {
-                    using (SolidBrush br = new(CaptionColor))
-                    {
-                        G.DrawString(Text, Font, br, LabelRect, sf);
-                    }
-                }
+                case Preview_Enum.WXP:
+                    PaintWXP(G);
+                    break;
             }
 
-            else if (Preview == Preview_Enum.W10 || Preview == Preview_Enum.W10Lite)
-            {
-                if (Shadow & Active & !DesignMode) { G.DrawGlow(Rect, Color.FromArgb(150, 0, 0, 0), 5, 15); }
+            // Window icon is drawn on top of every style except tool windows.
+            if (!ToolWindow) G.DrawImage(Active ? Resources.SampleApp_Small_Active : Resources.SampleApp_Small_Inactive, IconRect);
 
-                if (DarkMode) { using (SolidBrush br = new(Color.FromArgb(20, 20, 20))) { G.FillRectangle(br, Rect); } }
+            // Metrics editor overlay: dashed bounding rect + drag handles.
+            if (!DesignMode && _MetricsEdit_Grip) PaintMetricsGrips(G);
 
-                else { using (SolidBrush br = new(Color.FromArgb(240, 240, 240))) { G.FillRectangle(br, Rect); } }
-
-                if (Preview == Preview_Enum.W10)
-                {
-                    if (AccentColor_Enabled)
-                    {
-                        if (Active) { using (SolidBrush br = new(Color.FromArgb(255, AccentColor_Active))) { G.FillRectangle(br, TitlebarRect); } }
-
-                        else { using (SolidBrush br = new(Color.FromArgb(255, AccentColor_Inactive))) { G.FillRectangle(br, TitlebarRect); } }
-                    }
-
-                    else if (Active)
-                    {
-                        if (DarkMode) { G.FillRectangle(Brushes.Black, TitlebarRect); }
-
-                        else { G.FillRectangle(Brushes.White, TitlebarRect); }
-                    }
-
-                    else if (DarkMode) { using (SolidBrush br = new(Color.FromArgb(43, 43, 43))) { G.FillRectangle(br, TitlebarRect); } }
-
-                    else { G.FillRectangle(Brushes.White, TitlebarRect); }
-                }
-                else
-                {
-                    G.ExcludeClip(new Rectangle((int)ClientRect.X, (int)ClientRect.Y, (int)ClientRect.Width, (int)ClientRect.Height));
-                    using (SolidBrush br = new(AccentColor_Active)) { G.FillRectangle(br, Rect); }
-                    G.ResetClip();
-                }
-
-                if (AccentColor_Enabled)
-                {
-                    if (Active) { using (Pen P = new(Color.FromArgb(200, AccentColor_Active))) { G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height); } }
-
-                    else { using (Pen P = new(Color.FromArgb(200, AccentColor_Inactive))) { G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height); } }
-                }
-
-                else if (DarkMode) { using (Pen P = new(Color.FromArgb(125, 100, 100, 100))) { G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height); } }
-
-                else { using (Pen P = new(Color.FromArgb(125, 220, 220, 220))) { G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height); } }
-
-                #region Editor
-
-                if (!DesignMode && EnableEditingColors && CursorOverTitlebar)
-                {
-                    Color color0 = Color.FromArgb(80, 255, 255, 255);
-                    Color color1 = Color.FromArgb(80, 0, 0, 0);
-                    using (Pen P = new(color0))
-                    using (HatchBrush hb = new(HatchStyle.Percent25, color0, color1))
-                    {
-                        G.FillRectangle(hb, TitlebarRect);
-                        G.DrawRectangle(P, TitlebarRect.X, TitlebarRect.Y, TitlebarRect.Width, TitlebarRect.Height);
-                    }
-                }
-
-                #endregion
-
-                //Close button
-                if (!ToolWindow)
-                {
-                    if (Preview == Preview_Enum.W10Lite)
-                    {
-                        using (SolidBrush br = new(Color.FromArgb(195, 90, 80)))
-                        {
-                            RectangleF close_Lite = new(ClientRect.Right - CloseBtn_W * 2, TitlebarRect.Y, CloseBtn_W * 2, TitlebarRect.Height);
-                            if (Active) G.FillRectangle(br, close_Lite);
-
-                            using (Pen P = new(DarkMode ? Color.FromArgb(51, 51, 51) : Color.FromArgb(0, 0, 0)))
-                            {
-                                G.DrawLine(P, close_Lite.X, close_Lite.Y + 1, close_Lite.X, close_Lite.Y + close_Lite.Height);
-                                G.DrawLine(P, close_Lite.X, close_Lite.Y + close_Lite.Height, close_Lite.X + close_Lite.Width - 1, close_Lite.Y + close_Lite.Height);
-                            }
-
-                            using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
-                            {
-                                using (SolidBrush br_close = new(Color.Black))
-                                {
-                                    G.DrawString("r", new Font("Marlett", 7.7f, FontStyle.Bold), br_close, new RectangleF(close_Lite.X + 1, close_Lite.Y + 1, close_Lite.Width, close_Lite.Height), sf);
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        using (Bitmap closeImg = new(CloseButtonImage))
-                        {
-                            CloseButtonRect = new(TitlebarRect.Right - closeImg.Width * 2, TitlebarRect.Top + (TitlebarRect.Height - closeImg.Height) / 2, closeImg.Width, closeImg.Height);
-
-                            G.DrawImage(closeImg, CloseButtonRect);
-                        }
-                    }
-                }
-
-                else
-                {
-                    CloseButtonRect = new(TitlebarRect.Right - 2 - (TitlebarRect.Height - 12), Rect.Y + 6, TitlebarRect.Height - 12, TitlebarRect.Height - 12);
-
-                    using (SolidBrush br = new(Color.FromArgb(199, 80, 80)))
-                    {
-                        G.FillRectangle(br, CloseButtonRect);
-                    }
-
-                    if (CloseButtonRect.Width >= 12)
-                    {
-                        if (CloseButtonRect.Width % 2 == 0)
-                        {
-                            CloseButtonRect.X += 1;
-                            CloseButtonRect.Y += 1;
-                        }
-                    }
-                    else
-                    {
-                        CloseButtonRect.X += 1;
-                    }
-
-                    using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
-                    {
-                        using (SolidBrush br = new(Preview == Preview_Enum.W10Lite ? Color.Black : Color.White))
-                        {
-                            G.DrawString("r", new Font("Marlett", 6.35f, FontStyle.Regular), br, new RectangleF(CloseButtonRect.X + 1f, CloseButtonRect.Y + 1f, CloseButtonRect.Width, CloseButtonRect.Height), sf);
-                        }
-                    }
-                }
-
-                //Window title
-                using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
-                {
-                    using (SolidBrush br = new(CaptionColor))
-                    {
-                        G.DrawString(Text, Font, br, LabelRect, sf);
-                    }
-                }
-            }
-
-            else if (Preview == Preview_Enum.W8 | Preview == Preview_Enum.W8Lite)
-            {
-                {
-                    float CloseRectH = Metrics_CaptionHeight + TitleHeight - 2 + (Preview == Preview_Enum.W8Lite ? 1 : 0);
-
-                    float CloseRectW = (!ToolWindow ? CloseRectH * 3 / 2f : CloseRectH) + (Preview == Preview_Enum.W8Lite ? 2 : 0);
-
-                    if (!ToolWindow)
-                    {
-                        if (!(Preview == Preview_Enum.W8Lite)) { CloseButtonRect = new(ClientRect.Right - CloseRectW + 1, Rect.Y + 1, CloseRectW, CloseRectH); }
-
-                        else { CloseButtonRect = new(ClientRect.Right - CloseRectW + 2, Rect.Y, CloseRectW, CloseRectH); }
-                    }
-
-                    else { CloseButtonRect = new(ClientRect.Right - CloseRectW + 1, Rect.Y + 1, CloseRectW, CloseRectH); }
-
-                    Color BorderColor = Color.FromArgb(217, 217, 217);
-
-                    using (SolidBrush br = new(BorderColor)) { G.FillRectangle(br, Rect); }
-                    using (SolidBrush br = new(Windows8Color)) { G.FillRectangle(br, Rect); }
-
-                    #region Editor
-
-                    if (!DesignMode && EnableEditingColors && CursorOverWindowAccent)
-                    {
-                        Color color0 = Color.FromArgb(80, 255, 255, 255);
-                        Color color1 = Color.FromArgb(80, 0, 0, 0);
-                        using (Pen P = new(color0))
-                        using (HatchBrush hb = new(HatchStyle.Percent25, color0, color1))
-                        {
-                            G.FillRectangle(hb, Rect);
-                            G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height);
-                        }
-                    }
-
-                    #endregion
-
-                    using (SolidBrush br = new(ClientAreaColor)) { G.FillRectangle(br, ClientRect); }
-
-                    Bitmap CloseBtn;
-
-                    if (!ToolWindow)
-                    {
-                        if (CloseButtonRect.Height >= 27) { CloseBtn = Win81Preview.Close_3; }
-
-                        else if (CloseButtonRect.Height >= 24) { CloseBtn = Win81Preview.Close_2; }
-
-                        else if (CloseButtonRect.Height >= 21) { CloseBtn = Win81Preview.Close_1; }
-
-                        else { CloseBtn = Win81Preview.Close_0; }
-                    }
-
-                    else { CloseBtn = Win81Preview.Close_ToolWindow; }
-
-                    if (!(Preview == Preview_Enum.W8Lite))
-                    {
-                        using (Pen P = new(Color.FromArgb(170, BorderColor.CB(-0.2f)))) { G.DrawRectangle(P, ClientRect.X, ClientRect.Y, ClientRect.Width, ClientRect.Height); }
-
-                        using (Pen P = new(Color.FromArgb((int)(Win7ColorBal / 100f * 255f), Windows8Color.CB(-0.2f)))) { G.DrawRectangle(P, ClientRect.X, ClientRect.Y, ClientRect.Width, ClientRect.Height); }
-
-                        G.SmoothingMode = SmoothingMode.HighSpeed;
-                        using (SolidBrush br = new(Active ? Color.FromArgb(199, 80, 80) : Color.FromArgb(188, 188, 188))) { G.FillRectangle(br, CloseButtonRect); }
-                        G.SmoothingMode = SmoothingMode.AntiAlias;
-
-                        G.DrawImage(CloseBtn, new Rectangle((int)(CloseButtonRect.X + (CloseButtonRect.Width - CloseBtn.Width) / 2f), (int)(CloseButtonRect.Y + (CloseButtonRect.Height - CloseBtn.Height) / 2f), CloseBtn.Width, CloseBtn.Height));
-
-                        using (Pen P = new(Color.FromArgb(200, BorderColor.CB(-0.3f)))) { G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height); }
-
-                        using (Pen P = new(Color.FromArgb((int)(Win7ColorBal / 100f * 255f), Windows8Color.CB(-0.3f)))) { G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height); }
-
-                        //Window title
-                        using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
-                        {
-                            using (SolidBrush br = new(CaptionColor))
-                            {
-                                G.DrawString(Text, Font, br, LabelRect, sf);
-                            }
-                        }
-                    }
-
-                    else
-                    {
-                        CloseBtn = CloseBtn.ReplaceColor(Color.FromArgb(255, 255, 255), Color.Black);
-
-                        using (Pen P = new(Color.FromArgb((int)(Win7ColorBal / 100f * 255f), Windows8Color).LightLight()))
-                        {
-                            G.DrawLine(P, new PointF(ClientRect.X, ClientRect.Y), new PointF(ClientRect.X + ClientRect.Width, ClientRect.Y));
-                        }
-
-                        using (Pen P = new(Color.FromArgb((int)(Win7ColorBal / 100f * 255f), Windows8Color).LightLight()))
-                        {
-                            G.DrawLine(P, new PointF(ClientRect.X, ClientRect.Y + ClientRect.Height), new PointF(ClientRect.X + ClientRect.Width, ClientRect.Y + ClientRect.Height));
-                        }
-
-                        using (SolidBrush br = new(Active ? Color.FromArgb(195, 90, 80) : Color.Transparent)) { G.FillRectangle(br, CloseButtonRect); }
-
-                        G.SmoothingMode = SmoothingMode.HighSpeed;
-                        using (Pen P = new(Active ? Color.FromArgb(92, 58, 55) : Color.FromArgb(93, 96, 102))) { G.DrawRectangle(P, CloseButtonRect.X, CloseButtonRect.Y, CloseButtonRect.Width, CloseButtonRect.Height); }
-                        G.SmoothingMode = SmoothingMode.AntiAlias;
-
-                        G.DrawImage(CloseBtn, new RectangleF(CloseButtonRect.X + (CloseButtonRect.Width - CloseBtn.Width) / 2f, CloseButtonRect.Y + (CloseButtonRect.Height - CloseBtn.Height) / 2f, CloseBtn.Width, CloseBtn.Height));
-
-                        using (Pen P = new(Color.FromArgb(47, 48, 51))) { G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height); }
-
-                        //Window title
-                        using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
-                        {
-                            using (SolidBrush br = new(CaptionColor))
-                            {
-                                G.DrawString(Text, Font, br, LabelRect, sf);
-                            }
-                        }
-                    }
-                }
-            }
-
-            else if (Preview == Preview_Enum.W7Aero | Preview == Preview_Enum.W7Opaque | Preview == Preview_Enum.W7Basic)
-            {
-                if (Preview != Preview_Enum.W7Basic)
-                {
-                    #region Aero
-                    if (Shadow & Active & !DesignMode) { G.DrawGlow(Rect, Color.FromArgb(150, 0, 0, 0), 5, 15); }
-
-                    int Radius = 5;
-
-                    //Background aero effect
-                    if (Preview != Preview_Enum.W7Opaque)
-                    {
-                        float alpha = Active ? 1f - Win7Alpha / 100f : 0.25f;   // ColorBalance
-                        float ColBal = Win7ColorBal / 100f;   // ColorBalance
-                        float GlowBal = Win7GlowBal / 100f;   // AfterGlowBalance
-
-                        Color Color1 = Active ? AccentColor_Active : Color.FromArgb(128, AccentColor_Inactive);
-                        Color Color2 = Active ? AccentColor2_Active : Color.Transparent;
-                        G.ExcludeClip(Rectangle.Round(ClientBorderRect));
-                        G.DrawAeroEffect(Rect, AdaptedBackBlurred, Color1, ColBal, Color2, GlowBal, alpha, Radius, !ToolWindow);
-                        G.ResetClip();
-                    }
-
-                    else if (!ToolWindow)
-                    {
-                        using (SolidBrush br = new(Color.White)) { G.FillRoundedRect(br, Rect, Radius, true); }
-
-                        using (SolidBrush br = new(Color.FromArgb((int)(255f * Win7ColorBal / 100f), Active ? AccentColor_Active : AccentColor_Active.Light())))
-                        {
-                            G.FillRoundedRect(br, Rect, Radius, true);
-                        }
-                    }
-
-                    else
-                    {
-                        using (SolidBrush br = new(Color.White)) { G.FillRectangle(br, Rect); }
-
-                        using (SolidBrush br = new(Color.FromArgb((int)(255f * Win7ColorBal / 100f), Active ? AccentColor_Active : AccentColor_Active.Light())))
-                        {
-                            G.FillRectangle(br, Rect);
-                        }
-                    }
-
-                    //Right and left glow panels
-                    if (Active)
-                    {
-                        G.DrawImage(Win7Preview.WindowSides, GlassSide1);
-                        G.DrawImage(Win7Preview.WindowSides, GlassSide2);
-
-                        float TitleTopW = Rect.Width * 0.6f;
-                        float TitleTopH = Rect.Height * 0.6f;
-
-                        G.SetClip(RectBorder);
-                        G.DrawImage(Win7Preview.TitleTopL, new RectangleF(Rect.X + (ToolWindow ? -1 : 1), Rect.Y, TitleTopW, TitleTopH));
-                        G.DrawImage(Win7Preview.TitleTopR, new RectangleF(Rect.X + Rect.Width - TitleTopW + 1, Rect.Y, TitleTopW, TitleTopH));
-                        G.ResetClip();
-                    }
-
-                    //Window borders
-                    if (!ToolWindow)
-                    {
-                        if (Noise7 != null)
-                            G.DrawRoundImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect, Radius, true);
-
-                        using (Pen P = new(Color.FromArgb(Active ? 130 : 100, 25, 25, 25))) { G.DrawRoundedRect(P, Rect, Radius, true); }
-
-                        using (Pen P = new(Color.FromArgb(100, 255, 255, 255))) { G.DrawRoundedRect(P, RectBorder, Radius, true); }
-
-                        using (Pen P = new(Color.FromArgb((int)(255f - 255 * Win7Alpha / 300f), base.BackColor.Light(0.2f)))) { G.DrawRoundedRect(P, ClientBorderRect, 1, true); }
-
-                        #region Editor
-
-                        if (!DesignMode && EnableEditingColors && CursorOverWindowAccent)
-                        {
-                            Color color0 = Color.FromArgb(80, 255, 255, 255);
-                            Color color1 = Color.FromArgb(80, 0, 0, 0);
-                            using (Pen P = new(color0))
-                            using (HatchBrush hb = new(HatchStyle.Percent25, color0, color1))
-                            {
-                                G.FillRoundedRect(hb, Rect, Radius, true);
-                                G.DrawRoundedRect(P, Rect, Radius, true);
-                            }
-                        }
-
-                        #endregion
-
-                        using (SolidBrush br = new(ClientAreaColor)) { G.FillRoundedRect(br, ClientBorderRect, 1, true); }
-
-                        using (Pen P = new(Color.FromArgb((int)(255f - 255 * Win7Alpha / 300f), base.BackColor.Dark(0.2f)))) { G.DrawRoundedRect(P, ClientRect, 1, true); }
-                    }
-
-                    else
-                    {
-                        if (Noise7 != null)
-                            G.DrawImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect);
-
-                        using (Pen P = new(Color.FromArgb(Active ? 130 : 100, 25, 25, 25))) { G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height); }
-
-                        using (Pen P = new(Color.FromArgb(100, 255, 255, 255))) { G.DrawRectangle(P, RectBorder.X, RectBorder.Y, RectBorder.Width, RectBorder.Height); }
-
-                        using (Pen P = new(Color.FromArgb((int)(255f - 255 * Win7Alpha / 300f), base.BackColor.Light(0.2f)))) { G.DrawRectangle(P, ClientBorderRect.X, ClientBorderRect.Y, ClientBorderRect.Width, ClientBorderRect.Height); }
-
-                        #region Editor
-
-                        if (!DesignMode && EnableEditingColors && CursorOverWindowAccent)
-                        {
-                            Color color0 = Color.FromArgb(80, 255, 255, 255);
-                            Color color1 = Color.FromArgb(80, 0, 0, 0);
-                            using (Pen P = new(color0))
-                            using (HatchBrush hb = new(HatchStyle.Percent25, color0, color1))
-                            {
-                                G.FillRoundedRect(hb, Rect, Radius, true);
-                                G.DrawRoundedRect(P, Rect, Radius, true);
-                            }
-                        }
-
-                        #endregion
-
-                        using (SolidBrush br = new(ClientAreaColor)) { G.FillRectangle(br, ClientBorderRect); }
-
-                        using (Pen P = new(Color.FromArgb((int)(255f - 255 * Win7Alpha / 300f), base.BackColor.Dark(0.2f)))) { G.DrawRectangle(P, ClientRect.X, ClientRect.Y, ClientRect.Width, ClientRect.Height); }
-                    }
-
-                    //Close button
-                    if (!ToolWindow)
-                    {
-                        Bitmap closeBtn;
-
-                        if (Active)
-                        {
-                            if (!WinVista) { closeBtn = Win7Preview.Close_Active; }
-
-                            else { closeBtn = WinVistaPreview.Close_Active; }
-                        }
-                        else if (!WinVista) { closeBtn = Win7Preview.Close_inactive; }
-
-                        else { closeBtn = WinVistaPreview.Close_Inactive; }
-
-                        CloseButtonRect = new(Rect.X + Rect.Width - closeBtn.Width - 5, Rect.Y + 1, closeBtn.Width, closeBtn.Height);
-
-                        G.DrawImage(closeBtn, CloseButtonRect);
-                    }
-
-                    else
-                    {
-                        int Btn_Height = Math.Max(10, _Metrics_CaptionHeight - 5);
-                        int Btn_Width = Btn_Height;
-
-                        CloseButtonRect = new(ClientBorderRect.Right - Btn_Width - 3, Rect.Y + (TitlebarRect.Height - Btn_Height) / 2f, Btn_Width, Btn_Height);
-
-                        if (Active)
-                        {
-                            float Factor = 0.5f;
-
-                            float UH = Factor * CloseButtonRect.Height;
-                            float LH = CloseButtonRect.Height - UH;
-                            float Interlapping = UH / CloseButtonRect.Height * 10f;
-
-                            RectangleF CloseRectUpperHalf = new(CloseButtonRect.X, CloseButtonRect.Y, CloseButtonRect.Width, UH + Interlapping);
-                            LinearGradientBrush CloseUpperPath = new(CloseRectUpperHalf, Color.FromArgb(50, CloseUpperAccent1), CloseUpperAccent2, LinearGradientMode.Vertical);
-
-                            RectangleF CloseRectLowerHalf = new(CloseButtonRect.X, CloseRectUpperHalf.Bottom - Interlapping, CloseButtonRect.Width, LH);
-                            LinearGradientBrush CloseLowerPath = new(CloseRectLowerHalf, CloseLowerAccent1, Color.FromArgb(50, CloseLowerAccent2), LinearGradientMode.Vertical);
-
-                            G.FillRoundedRect(CloseUpperPath, CloseRectUpperHalf, 1, true);
-                            G.FillRoundedRect(CloseLowerPath, CloseRectLowerHalf, 1, true);
-                        }
-                        else
-                        {
-                            LinearGradientBrush ClosePath = new(CloseButtonRect, Color.FromArgb(50, CloseUpperAccent1), Color.FromArgb(50, CloseLowerAccent2), LinearGradientMode.Vertical);
-                            G.FillRectangle(ClosePath, CloseButtonRect);
-                        }
-
-                        Bitmap CloseBtn;
-
-                        CloseBtn = Win7Preview.Close_Basic_ToolWindow;
-
-                        int xW = CloseButtonRect.Width % 2 == 0 ? CloseBtn.Width + 1 : CloseBtn.Width;
-                        int xH = CloseButtonRect.Height % 2 == 0 ? CloseBtn.Height + 1 : CloseBtn.Height;
-
-                        RectangleF closerenderrect = new(CloseButtonRect.X + (CloseButtonRect.Width - xW) / 2f, CloseButtonRect.Y + (CloseButtonRect.Height - xH) / 2f, xW, xH);
-
-                        G.DrawImage(CloseBtn, closerenderrect);
-
-                        using (Pen P = new(CloseOuterBorder)) { G.DrawRoundedRect(P, CloseButtonRect, 1, true); }
-
-                        using (Pen P = new(Color.FromArgb(50, CloseInnerBorder))) { G.DrawRectangle(P, CloseButtonRect.X + 1, CloseButtonRect.Y + 1, CloseButtonRect.Width - 2, CloseButtonRect.Height - 2); }
-
-                    }
-
-                    //Window title
-                    int alpha_caption = Active ? 100 : 50;
-                    using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
-                    {
-                        G.DrawGlowString(1, Text, Font, CaptionColor, Color.FromArgb(alpha_caption, Color.White), RectAll, LabelRect, sf);
-                    }
-                    #endregion
-                }
-
-                else
-                {
-                    #region Basic
-                    RectangleF UpperPart = new(Rect.X, Rect.Y, Rect.Width + 1, TitlebarRect.Height + 4);
-                    RectangleF UpperPart_Modified = new(UpperPart.X + UpperPart.Width * 0.75f, UpperPart.Y, UpperPart.Width * 0.75f, UpperPart.Height);
-
-                    G.SetClip(UpperPart);
-
-                    LinearGradientBrush pth_back = new(UpperPart, Titlebar_Backcolor1, Titlebar_Backcolor2, LinearGradientMode.Vertical);
-                    LinearGradientBrush pth_line = new(UpperPart, Titlebar_InnerBorder, Titlebar_Turquoise, LinearGradientMode.Vertical);
-
-                    // ### Render Titlebar
-                    if (!ToolWindow)
-                    {
-                        G.FillRoundedRect(pth_back, Rect, Radius, true);
-                        using (Pen P = new(Titlebar_OuterBorder)) { G.DrawRoundedRect(P, Rect, Radius, true); }
-                        using (Pen P = new(Titlebar_InnerBorder)) { G.DrawRoundedRect(P, new RectangleF(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2), Radius, true); }
-                        G.SetClip(UpperPart_Modified);
-                        using (Pen P = new(pth_line)) { G.DrawRoundedRect(P, new RectangleF(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2), Radius, true); }
-                    }
-                    else
-                    {
-                        G.FillRectangle(pth_back, Rect);
-                        using (Pen P = new(Titlebar_OuterBorder)) { G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height); }
-                        using (Pen P = new(Titlebar_InnerBorder)) { G.DrawRectangle(P, Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2); }
-                        G.SetClip(UpperPart_Modified);
-                        using (Pen P = new(pth_line)) { G.DrawRectangle(P, Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2); }
-                    }
-
-                    G.ResetClip();
-                    G.ExcludeClip(new Rectangle((int)UpperPart.X, (int)UpperPart.Y, (int)UpperPart.Width, (int)UpperPart.Height));
-
-                    using (SolidBrush br = new(Titlebar_Backcolor2)) { G.FillRectangle(br, Rect); }
-                    using (Pen P = new(Titlebar_Turquoise)) { G.DrawRectangle(P, Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2); }
-                    using (Pen P = new(OuterBorder)) { G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height); }
-                    using (Pen P = new(Titlebar_InnerBorder)) { G.DrawLine(P, new PointF(Rect.X + 1, Rect.Y), new PointF(Rect.X + 1, Rect.Y + Rect.Height - 2)); }
-
-                    if (Active)
-                    {
-                        G.DrawImage(Win7Preview.WindowSides, GlassSide1);
-                        G.DrawImage(Win7Preview.WindowSides, GlassSide2);
-                    }
-
-                    G.ResetClip();
-
-                    G.FillRectangle(Brushes.White, ClientBorderRect);
-                    using (Pen P = new(Color.FromArgb(186, 210, 234))) { G.DrawRectangle(P, ClientBorderRect.X, ClientBorderRect.Y, ClientBorderRect.Width, ClientBorderRect.Height); }
-                    if (!WinVista) { using (Pen P = new(Color.FromArgb(130, 135, 144))) { G.DrawRectangle(P, ClientRect.X, ClientRect.Y, ClientRect.Width, ClientRect.Height); } }
-
-                    //Render close button
-                    int Btn_Height = Math.Max(10, _Metrics_CaptionHeight - 5);
-                    float Btn_Width;
-                    Btn_Width = !ToolWindow ? 31f / 17f * Btn_Height : Btn_Height;
-                    CloseButtonRect = new(ClientBorderRect.Right - Btn_Width - 3, ClientBorderRect.Top - Btn_Height - 3, Btn_Width, Btn_Height);
-
-                    if (Active)
-                    {
-                        float Factor = 0.45f;
-                        if (ToolWindow)
-                            Factor = 0.2f;
-
-                        float UH = Factor * CloseButtonRect.Height;
-                        float LH = CloseButtonRect.Height - UH;
-                        float Interlapping = UH / CloseButtonRect.Height * 10f;
-
-                        RectangleF CloseRectUpperHalf = new(CloseButtonRect.X, CloseButtonRect.Y, CloseButtonRect.Width, UH + Interlapping);
-                        RectangleF CloseRectLowerHalf = new(CloseButtonRect.X, CloseRectUpperHalf.Bottom - Interlapping, CloseButtonRect.Width, LH);
-
-                        LinearGradientBrush CloseUpperPath = new(CloseRectUpperHalf, CloseUpperAccent1, CloseUpperAccent2, LinearGradientMode.Vertical);
-                        LinearGradientBrush CloseLowerPath = new(CloseRectLowerHalf, CloseLowerAccent1, CloseLowerAccent2, LinearGradientMode.Vertical);
-
-                        G.FillRoundedRect(CloseUpperPath, CloseRectUpperHalf, 1, true);
-                        G.FillRoundedRect(CloseLowerPath, CloseRectLowerHalf, 1, true);
-                    }
-
-                    else
-                    {
-                        LinearGradientBrush ClosePath = new(CloseButtonRect, CloseUpperAccent1, CloseLowerAccent2, LinearGradientMode.Vertical);
-                        G.FillRectangle(ClosePath, CloseButtonRect);
-                    }
-
-                    Bitmap CloseBtn;
-
-                    if (!ToolWindow)
-                    {
-                        if (CloseButtonRect.Height >= 22) { CloseBtn = Win7Preview.Close_Basic_2; }
-                        else if (CloseButtonRect.Height >= 18) { CloseBtn = Win7Preview.Close_Basic_1; }
-                        else { CloseBtn = Win7Preview.Close_Basic_0; }
-                    }
-
-                    else { CloseBtn = Win7Preview.Close_Basic_ToolWindow; }
-
-                    G.DrawImage(CloseBtn, new PointF(CloseButtonRect.X + (CloseButtonRect.Width - CloseBtn.Width) / 2f + 1f, CloseButtonRect.Y + (CloseButtonRect.Height - CloseBtn.Height) / 2f));
-
-                    using (Pen P = new(CloseOuterBorder)) { G.DrawRoundedRect(P, CloseButtonRect, 1, true); }
-
-                    using (Pen P = new(CloseInnerBorder)) { G.DrawRoundedRect(P, new RectangleF(CloseButtonRect.X + 1, CloseButtonRect.Y + 1, CloseButtonRect.Width - 2, CloseButtonRect.Height - 2), 1, true); }
-
-                    //Window title
-                    using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
-                    {
-                        using (SolidBrush br = new(CaptionColor))
-                        {
-                            G.DrawString(Text, Font, br, LabelRect, sf);
-                        }
-                    }
-                    #endregion
-                }
-            }
-
-            else if (Preview == Preview_Enum.WXP)
-            {
-                SmoothingMode sm = G.SmoothingMode;
-                G.SmoothingMode = SmoothingMode.HighSpeed;
-
-                using (SolidBrush br = new(WindowsXPColor)) { G.FillRectangle(br, ClientBorderRect); }
-
-                resVS?.Draw(G, TitlebarRect, VisualStylesRes.Element.Titlebar, Active, ToolWindow);
-
-                CloseButtonRect = new(ClientRect.Right - CloseBtn_W - RightEdge_XP.Width + 4, Rect.Y + TitlebarRect.Height - CloseBtn_W - 3, CloseBtn_W, CloseBtn_W);
-
-                resVS?.Draw(G, LeftEdge_XP, VisualStylesRes.Element.LeftEdge, Active, ToolWindow);
-                resVS?.Draw(G, RightEdge_XP, VisualStylesRes.Element.RightEdge, Active, ToolWindow);
-                resVS?.Draw(G, ButtomEdge_XP, VisualStylesRes.Element.BottomEdge, Active, ToolWindow);
-                resVS?.Draw(G, CloseButtonRect, VisualStylesRes.Element.CloseButton, Active, ToolWindow);
-
-                G.SmoothingMode = sm;
-
-                //Window title
-                using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
-                {
-                    using (SolidBrush br = new(Color.Black))
-                    {
-                        G.DrawString(Text, Font, br, new RectangleF(LabelRect.X + 1, LabelRect.Y, LabelRect.Width, LabelRect.Height), sf);
-                    }
-
-                    using (SolidBrush br = new(CaptionColor)) { G.DrawString(Text, Font, br, LabelRect, sf); }
-                }
-            }
-
-            //Draw window icon
-            if (!ToolWindow)
-                G.DrawImage(Active ? Resources.SampleApp_Small_Active : Resources.SampleApp_Small_Inactive, IconRect);
-
-            // Editor
-            if (!DesignMode && _MetricsEdit_Grip)
-            {
-                using (Pen P = new(Color.Gray) { DashStyle = DashStyle.Dot })
-                {
-                    G.DrawRectangle(P, editingRect.X, editingRect.Y, editingRect.Width, editingRect.Height);
-                }
-
-                using (Pen P = new(Color.Gray) { DashStyle = DashStyle.Solid })
-                {
-                    G.FillRoundedRect(Brushes.White, Grip_topLeft, 1, true);
-                    G.FillRoundedRect(Brushes.White, Grip_topRight, 1, true);
-                    G.FillRoundedRect(Brushes.White, Grip_bottomLeft, 1, true);
-                    G.FillRoundedRect(Brushes.White, Grip_bottomRight, 1, true);
-                    G.FillRoundedRect(Brushes.White, Grip_topCenter, 1, true);
-                    G.FillRoundedRect(Brushes.White, Grip_bottomCenter, 1, true);
-                    G.FillRoundedRect(Brushes.White, Grip_leftCenter, 1, true);
-                    G.FillRoundedRect(Brushes.White, Grip_rightCenter, 1, true);
-
-                    G.DrawRoundedRect(P, Grip_topLeft, 1, true);
-                    G.DrawRoundedRect(P, Grip_topRight, 1, true);
-                    G.DrawRoundedRect(P, Grip_bottomLeft, 1, true);
-                    G.DrawRoundedRect(P, Grip_bottomRight, 1, true);
-                    G.DrawRoundedRect(P, Grip_topCenter, 1, true);
-                    G.DrawRoundedRect(P, Grip_bottomCenter, 1, true);
-                    G.DrawRoundedRect(P, Grip_leftCenter, 1, true);
-                    G.DrawRoundedRect(P, Grip_rightCenter, 1, true);
-                }
-            }
-
-            #region Editor
-
-            if (!DesignMode && EnableEditingMetrics && CursorOverTitlebar)
-            {
-                Color color0 = Color.FromArgb(80, 255, 255, 255);
-                Color color1 = Color.FromArgb(80, 0, 0, 0);
-                using (Pen P = new(color0))
-                using (HatchBrush hb = new(HatchStyle.Percent25, color0, color1))
-                {
-                    G.FillRoundedRect(hb, TitlebarRect, Radius, true);
-                    G.DrawRoundedRect(P, TitlebarRect, Radius, true);
-                }
-            }
-
-            #endregion
+            // Titlebar hover highlight used by the metrics font editor.
+            if (!DesignMode && EnableEditingMetrics && CursorOverTitlebar) PaintTitlebarEditorOverlay(G);
 
             base.OnPaint(e);
-
-
         }
+
+        #region Paint sub-methods
+
+        // Windows 11 (rounded corners, optional acrylic background).
+        private void PaintW11(Graphics G)
+        {
+            if (Shadow && Active && !DesignMode)
+                G.DrawGlow(Rect, Color.FromArgb(150, 0, 0, 0), 5, 15);
+
+            // Acrylic background: blurred wallpaper visible only in the titlebar region.
+            if (!AccentColor_Enabled && Active)
+            {
+                G.SetClip(TitlebarRect);
+                G.DrawRoundImage(AdaptedBackBlurred, Rect, Radius, true);
+                G.ResetClip();
+            }
+
+            // Fill client area (everything below the titlebar).
+            G.ExcludeClip(new Rectangle((int)TitlebarRect.X, (int)TitlebarRect.Y, (int)TitlebarRect.Width, (int)TitlebarRect.Height));
+            if (DarkMode)
+            {
+                using (SolidBrush br = new(Color.FromArgb(20, 20, 20)))
+                    G.FillRoundedRect(br, Rect, Radius, true);
+            }
+            else
+            {
+                using (SolidBrush br = new(Color.FromArgb(240, 240, 240)))
+                    G.FillRoundedRect(br, Rect, Radius, true);
+            }
+            G.ResetClip();
+
+            // Outer border.
+            if (AccentColor_Enabled)
+            {
+                Color borderColor = Active ? Color.FromArgb(200, AccentColor_Active) : Color.FromArgb(200, AccentColor_Inactive);
+                using (Pen P = new(borderColor))
+                    G.DrawRoundedRect(P, Rect, Radius, true);
+            }
+            else if (DarkMode)
+            {
+                using (Pen P = new(Color.FromArgb(200, 100, 100, 100)))
+                    G.DrawRoundedRect(P, Rect, Radius, true);
+            }
+            else
+            {
+                using (Pen P = new(Color.FromArgb(200, 220, 220, 220)))
+                    G.DrawRoundedRect(P, Rect, Radius, true);
+            }
+
+            // Titlebar fill.
+            if (AccentColor_Enabled)
+            {
+                Color titleFill = Active ? Color.FromArgb(255, AccentColor_Active) : Color.FromArgb(255, AccentColor_Inactive);
+                using (SolidBrush br = new(titleFill))
+                    FillSemiRect(G, br, TitlebarRect, Radius);
+
+                using (Pen P = new(titleFill))
+                    G.DrawLine(P, new PointF(TitlebarRect.X + 1, TitlebarRect.Y + TitlebarRect.Height), new PointF(TitlebarRect.X + TitlebarRect.Width - 1, TitlebarRect.Y + TitlebarRect.Height));
+            }
+            else
+            {
+                int a = Active ? (DarkMode ? 180 : 245) : 255;
+                Color fillColor = DarkMode ? Color.FromArgb(a, 32, 32, 32) : Color.FromArgb(a, 245, 245, 245);
+                using (SolidBrush br = new(fillColor))
+                    FillSemiRect(G, br, TitlebarRect, Radius);
+            }
+
+            // Titlebar color editor hover overlay.
+            if (!DesignMode && EnableEditingColors && CursorOverTitlebar)
+                PaintColorEditorOverlay_Rounded(G, TitlebarRect);
+
+            // Close button.
+            PaintCloseButton_W11(G);
+
+            // Caption text.
+            PaintCaptionText(G, LabelRect, ContentAlignment.MiddleLeft);
+        }
+
+        // Windows 10 (flat titlebar, no rounding).
+        private void PaintW10(Graphics G)
+        {
+            if (Shadow && Active && !DesignMode)
+                G.DrawGlow(Rect, Color.FromArgb(150, 0, 0, 0), 5, 15);
+
+            // Base window fill.
+            Color windowFill = DarkMode ? Color.FromArgb(20, 20, 20) : Color.FromArgb(240, 240, 240);
+            using (SolidBrush br = new(windowFill))
+                G.FillRectangle(br, Rect);
+
+            // Titlebar fill (W10 has two sub-modes: full titlebar vs. accent-only frame).
+            if (Preview == Preview_Enum.W10)
+            {
+                if (AccentColor_Enabled)
+                {
+                    Color titleFill = Active ? Color.FromArgb(255, AccentColor_Active) : Color.FromArgb(255, AccentColor_Inactive);
+                    using (SolidBrush br = new(titleFill))
+                        G.FillRectangle(br, TitlebarRect);
+                }
+                else if (Active)
+                {
+                    G.FillRectangle(DarkMode ? Brushes.Black : Brushes.White, TitlebarRect);
+                }
+                else if (DarkMode)
+                {
+                    using (SolidBrush br = new(Color.FromArgb(43, 43, 43)))
+                        G.FillRectangle(br, TitlebarRect);
+                }
+                else
+                {
+                    G.FillRectangle(Brushes.White, TitlebarRect);
+                }
+            }
+            else
+            {
+                // W10Lite: accent wraps the full frame, client area punched out.
+                G.ExcludeClip(new Rectangle((int)ClientRect.X, (int)ClientRect.Y, (int)ClientRect.Width, (int)ClientRect.Height));
+                using (SolidBrush br = new(AccentColor_Active))
+                    G.FillRectangle(br, Rect);
+                G.ResetClip();
+            }
+
+            // Outer border.
+            if (AccentColor_Enabled)
+            {
+                Color borderColor = Active ? Color.FromArgb(200, AccentColor_Active) : Color.FromArgb(200, AccentColor_Inactive);
+                using (Pen P = new(borderColor))
+                    G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height);
+            }
+            else if (DarkMode)
+            {
+                using (Pen P = new(Color.FromArgb(125, 100, 100, 100)))
+                    G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height);
+            }
+            else
+            {
+                using (Pen P = new(Color.FromArgb(125, 220, 220, 220)))
+                    G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height);
+            }
+
+            // Titlebar color editor hover overlay.
+            if (!DesignMode && EnableEditingColors && CursorOverTitlebar)
+                PaintColorEditorOverlay_Flat(G, TitlebarRect);
+
+            // Close button.
+            PaintCloseButton_W10(G);
+
+            // Caption text.
+            PaintCaptionText(G, LabelRect, ContentAlignment.MiddleLeft);
+        }
+
+        // Windows 8/8.1 (flat, accent-colored frame).
+        private void PaintW8(Graphics G)
+        {
+            float closeH = _Metrics_CaptionHeight + TitleHeight - 2 + (Preview == Preview_Enum.W8Lite ? 1 : 0);
+            float closeW = (!ToolWindow ? closeH * 3 / 2f : closeH) + (Preview == Preview_Enum.W8Lite ? 2 : 0);
+
+            if (!ToolWindow)
+            {
+                CloseButtonRect = Preview != Preview_Enum.W8Lite
+                    ? new RectangleF(ClientRect.Right - closeW + 1, Rect.Y + 1, closeW, closeH)
+                    : new RectangleF(ClientRect.Right - closeW + 2, Rect.Y, closeW, closeH);
+            }
+            else
+            {
+                CloseButtonRect = new(ClientRect.Right - closeW + 1, Rect.Y + 1, closeW, closeH);
+            }
+
+            Color borderColor = Color.FromArgb(217, 217, 217);
+
+            using (SolidBrush br = new(borderColor)) G.FillRectangle(br, Rect);
+            using (SolidBrush br = new(Windows8Color)) G.FillRectangle(br, Rect);
+
+            // Accent color editor hover overlay.
+            if (!DesignMode && EnableEditingColors && CursorOverWindowAccent)
+                PaintColorEditorOverlay_Flat(G, Rect);
+
+            using (SolidBrush br = new(ClientAreaColor))
+                G.FillRectangle(br, ClientRect);
+
+            // Select the close button bitmap by caption height.
+            Bitmap closeBtn;
+            if (!ToolWindow)
+            {
+                if (CloseButtonRect.Height >= 27) closeBtn = Win81Preview.Close_3;
+                else if (CloseButtonRect.Height >= 24) closeBtn = Win81Preview.Close_2;
+                else if (CloseButtonRect.Height >= 21) closeBtn = Win81Preview.Close_1;
+                else closeBtn = Win81Preview.Close_0;
+            }
+            else
+            {
+                closeBtn = Win81Preview.Close_ToolWindow;
+            }
+
+            if (Preview != Preview_Enum.W8Lite)
+            {
+                PaintW8Full(G, borderColor, closeBtn);
+            }
+            else
+            {
+                PaintW8Lite(G, closeBtn);
+            }
+        }
+
+        private void PaintW8Full(Graphics G, Color borderColor, Bitmap closeBtn)
+        {
+            using (Pen P = new(Color.FromArgb(170, borderColor.CB(-0.2f))))
+                G.DrawRectangle(P, ClientRect.X, ClientRect.Y, ClientRect.Width, ClientRect.Height);
+
+            using (Pen P = new(Color.FromArgb((int)(Win7ColorBal / 100f * 255f), Windows8Color.CB(-0.2f))))
+                G.DrawRectangle(P, ClientRect.X, ClientRect.Y, ClientRect.Width, ClientRect.Height);
+
+            G.SmoothingMode = SmoothingMode.HighSpeed;
+            using (SolidBrush br = new(Active ? Color.FromArgb(199, 80, 80) : Color.FromArgb(188, 188, 188)))
+                G.FillRectangle(br, CloseButtonRect);
+            G.SmoothingMode = SmoothingMode.AntiAlias;
+
+            G.DrawImage(closeBtn, new Rectangle(
+                (int)(CloseButtonRect.X + (CloseButtonRect.Width - closeBtn.Width) / 2f),
+                (int)(CloseButtonRect.Y + (CloseButtonRect.Height - closeBtn.Height) / 2f),
+                closeBtn.Width, closeBtn.Height));
+
+            using (Pen P = new(Color.FromArgb(200, borderColor.CB(-0.3f))))
+                G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height);
+
+            using (Pen P = new(Color.FromArgb((int)(Win7ColorBal / 100f * 255f), Windows8Color.CB(-0.3f))))
+                G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height);
+
+            PaintCaptionText(G, LabelRect, ContentAlignment.MiddleCenter);
+        }
+
+        private void PaintW8Lite(Graphics G, Bitmap closeBtn)
+        {
+            closeBtn = closeBtn.ReplaceColor(Color.FromArgb(255, 255, 255), Color.Black);
+
+            Color lineColor = Color.FromArgb((int)(Win7ColorBal / 100f * 255f), Windows8Color).LightLight();
+            using (Pen P = new(lineColor))
+            {
+                G.DrawLine(P, new PointF(ClientRect.X, ClientRect.Y), new PointF(ClientRect.X + ClientRect.Width, ClientRect.Y));
+                G.DrawLine(P, new PointF(ClientRect.X, ClientRect.Y + ClientRect.Height), new PointF(ClientRect.X + ClientRect.Width, ClientRect.Y + ClientRect.Height));
+            }
+
+            using (SolidBrush br = new(Active ? Color.FromArgb(195, 90, 80) : Color.Transparent))
+                G.FillRectangle(br, CloseButtonRect);
+
+            G.SmoothingMode = SmoothingMode.HighSpeed;
+            using (Pen P = new(Active ? Color.FromArgb(92, 58, 55) : Color.FromArgb(93, 96, 102)))
+                G.DrawRectangle(P, CloseButtonRect.X, CloseButtonRect.Y, CloseButtonRect.Width, CloseButtonRect.Height);
+            G.SmoothingMode = SmoothingMode.AntiAlias;
+
+            G.DrawImage(closeBtn, new RectangleF(
+                CloseButtonRect.X + (CloseButtonRect.Width - closeBtn.Width) / 2f,
+                CloseButtonRect.Y + (CloseButtonRect.Height - closeBtn.Height) / 2f,
+                closeBtn.Width, closeBtn.Height));
+
+            using (Pen P = new(Color.FromArgb(47, 48, 51)))
+                G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height);
+
+            PaintCaptionText(G, LabelRect, ContentAlignment.MiddleCenter);
+        }
+
+        // Windows 7 Aero/Opaque glass effect.
+        private void PaintW7Aero(Graphics G)
+        {
+            if (Shadow && Active && !DesignMode)
+                G.DrawGlow(Rect, Color.FromArgb(150, 0, 0, 0), 5, 15);
+
+            int aeroRadius = 5;
+
+            if (Preview != Preview_Enum.W7Opaque)
+            {
+                float alpha = Active ? 1f - Win7Alpha / 100f : 0.25f;
+                float colBal = Win7ColorBal / 100f;
+                float glowBal = Win7GlowBal / 100f;
+
+                Color color1 = Active ? AccentColor_Active : Color.FromArgb(128, AccentColor_Inactive);
+                Color color2 = Active ? AccentColor2_Active : Color.Transparent;
+
+                G.ExcludeClip(Rectangle.Round(ClientBorderRect));
+                G.DrawAeroEffect(Rect, AdaptedBackBlurred, color1, colBal, color2, glowBal, alpha, aeroRadius, !ToolWindow);
+                G.ResetClip();
+            }
+            else if (!ToolWindow)
+            {
+                using (SolidBrush br = new(Color.White))
+                    G.FillRoundedRect(br, Rect, aeroRadius, true);
+
+                using (SolidBrush br = new(Color.FromArgb((int)(255f * Win7ColorBal / 100f), Active ? AccentColor_Active : AccentColor_Active.Light())))
+                    G.FillRoundedRect(br, Rect, aeroRadius, true);
+            }
+            else
+            {
+                using (SolidBrush br = new(Color.White))
+                    G.FillRectangle(br, Rect);
+
+                using (SolidBrush br = new(Color.FromArgb((int)(255f * Win7ColorBal / 100f), Active ? AccentColor_Active : AccentColor_Active.Light())))
+                    G.FillRectangle(br, Rect);
+            }
+
+            // Shine panels on left and right glass edges.
+            if (Active)
+            {
+                G.DrawImage(Win7Preview.WindowSides, GlassSide1);
+                G.DrawImage(Win7Preview.WindowSides, GlassSide2);
+
+                float titleTopW = Rect.Width * 0.6f;
+                float titleTopH = Rect.Height * 0.6f;
+
+                G.SetClip(RectBorder);
+                G.DrawImage(Win7Preview.TitleTopL, new RectangleF(Rect.X + (ToolWindow ? -1 : 1), Rect.Y, titleTopW, titleTopH));
+                G.DrawImage(Win7Preview.TitleTopR, new RectangleF(Rect.X + Rect.Width - titleTopW + 1, Rect.Y, titleTopW, titleTopH));
+                G.ResetClip();
+            }
+
+            // Window frame borders.
+            if (!ToolWindow)
+            {
+                if (Noise7 != null)
+                    G.DrawRoundImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect, aeroRadius, true);
+
+                using (Pen P = new(Color.FromArgb(Active ? 130 : 100, 25, 25, 25)))
+                    G.DrawRoundedRect(P, Rect, aeroRadius, true);
+
+                using (Pen P = new(Color.FromArgb(100, 255, 255, 255)))
+                    G.DrawRoundedRect(P, RectBorder, aeroRadius, true);
+
+                using (Pen P = new(Color.FromArgb((int)(255f - 255 * Win7Alpha / 300f), base.BackColor.Light(0.2f))))
+                    G.DrawRoundedRect(P, ClientBorderRect, 1, true);
+
+                if (!DesignMode && EnableEditingColors && CursorOverWindowAccent)
+                    PaintColorEditorOverlay_Rounded(G, Rect);
+
+                using (SolidBrush br = new(ClientAreaColor))
+                    G.FillRoundedRect(br, ClientBorderRect, 1, true);
+
+                using (Pen P = new(Color.FromArgb((int)(255f - 255 * Win7Alpha / 300f), base.BackColor.Dark(0.2f))))
+                    G.DrawRoundedRect(P, ClientRect, 1, true);
+            }
+            else
+            {
+                if (Noise7 != null)
+                    G.DrawImage(Noise7.Clone(Bounds, PixelFormat.Format32bppArgb), Rect);
+
+                using (Pen P = new(Color.FromArgb(Active ? 130 : 100, 25, 25, 25)))
+                    G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height);
+
+                using (Pen P = new(Color.FromArgb(100, 255, 255, 255)))
+                    G.DrawRectangle(P, RectBorder.X, RectBorder.Y, RectBorder.Width, RectBorder.Height);
+
+                using (Pen P = new(Color.FromArgb((int)(255f - 255 * Win7Alpha / 300f), base.BackColor.Light(0.2f))))
+                    G.DrawRectangle(P, ClientBorderRect.X, ClientBorderRect.Y, ClientBorderRect.Width, ClientBorderRect.Height);
+
+                if (!DesignMode && EnableEditingColors && CursorOverWindowAccent)
+                    PaintColorEditorOverlay_Rounded(G, Rect);
+
+                using (SolidBrush br = new(ClientAreaColor))
+                    G.FillRectangle(br, ClientBorderRect);
+
+                using (Pen P = new(Color.FromArgb((int)(255f - 255 * Win7Alpha / 300f), base.BackColor.Dark(0.2f))))
+                    G.DrawRectangle(P, ClientRect.X, ClientRect.Y, ClientRect.Width, ClientRect.Height);
+            }
+
+            // Close button (full-size Aero button or compact tool-window button).
+            PaintCloseButton_W7Aero(G);
+
+            // Glow caption text.
+            int captionAlpha = Active ? 100 : 50;
+            using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
+                G.DrawGlowString(1, Text, Font, CaptionColor, Color.FromArgb(captionAlpha, Color.White), RectAll, LabelRect, sf);
+        }
+
+        // Windows 7 Basic (no glass, gradient titlebar).
+        private void PaintW7Basic(Graphics G)
+        {
+            RectangleF upperPart = new(Rect.X, Rect.Y, Rect.Width + 1, TitlebarRect.Height + 4);
+            RectangleF upperPart_Modified = new(upperPart.X + upperPart.Width * 0.75f, upperPart.Y, upperPart.Width * 0.75f, upperPart.Height);
+
+            G.SetClip(upperPart);
+
+            using (LinearGradientBrush backBrush = new(upperPart, Titlebar_Backcolor1, Titlebar_Backcolor2, LinearGradientMode.Vertical))
+            using (LinearGradientBrush lineBrush = new(upperPart, Titlebar_InnerBorder, Titlebar_Turquoise, LinearGradientMode.Vertical))
+            {
+                if (!ToolWindow)
+                {
+                    G.FillRoundedRect(backBrush, Rect, _radius, true);
+                    using (Pen P = new(Titlebar_OuterBorder)) G.DrawRoundedRect(P, Rect, _radius, true);
+                    using (Pen P = new(Titlebar_InnerBorder)) G.DrawRoundedRect(P, new RectangleF(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2), _radius, true);
+                    G.SetClip(upperPart_Modified);
+                    using (Pen P = new(lineBrush)) G.DrawRoundedRect(P, new RectangleF(Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2), _radius, true);
+                }
+                else
+                {
+                    G.FillRectangle(backBrush, Rect);
+                    using (Pen P = new(Titlebar_OuterBorder)) G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height);
+                    using (Pen P = new(Titlebar_InnerBorder)) G.DrawRectangle(P, Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2);
+                    G.SetClip(upperPart_Modified);
+                    using (Pen P = new(lineBrush)) G.DrawRectangle(P, Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2);
+                }
+            }
+
+            G.ResetClip();
+            G.ExcludeClip(new Rectangle((int)upperPart.X, (int)upperPart.Y, (int)upperPart.Width, (int)upperPart.Height));
+
+            using (SolidBrush br = new(Titlebar_Backcolor2)) G.FillRectangle(br, Rect);
+            using (Pen P = new(Titlebar_Turquoise)) G.DrawRectangle(P, Rect.X + 1, Rect.Y + 1, Rect.Width - 2, Rect.Height - 2);
+            using (Pen P = new(OuterBorder)) G.DrawRectangle(P, Rect.X, Rect.Y, Rect.Width, Rect.Height);
+            using (Pen P = new(Titlebar_InnerBorder)) G.DrawLine(P, new PointF(Rect.X + 1, Rect.Y), new PointF(Rect.X + 1, Rect.Y + Rect.Height - 2));
+
+            if (Active)
+            {
+                G.DrawImage(Win7Preview.WindowSides, GlassSide1);
+                G.DrawImage(Win7Preview.WindowSides, GlassSide2);
+            }
+
+            G.ResetClip();
+
+            G.FillRectangle(Brushes.White, ClientBorderRect);
+            using (Pen P = new(Color.FromArgb(186, 210, 234))) G.DrawRectangle(P, ClientBorderRect.X, ClientBorderRect.Y, ClientBorderRect.Width, ClientBorderRect.Height);
+            if (!WinVista)
+            {
+                using (Pen P = new(Color.FromArgb(130, 135, 144)))
+                    G.DrawRectangle(P, ClientRect.X, ClientRect.Y, ClientRect.Width, ClientRect.Height);
+            }
+
+            // Close button.
+            PaintCloseButton_W7Basic(G);
+
+            // Caption text.
+            PaintCaptionText(G, LabelRect, ContentAlignment.MiddleLeft);
+        }
+
+        // Windows XP (uses VisualStylesRes to draw the native-looking chrome).
+        private void PaintWXP(Graphics G)
+        {
+            SmoothingMode prevMode = G.SmoothingMode;
+            G.SmoothingMode = SmoothingMode.HighSpeed;
+
+            using (SolidBrush br = new(WindowsXPColor))
+                G.FillRectangle(br, ClientBorderRect);
+
+            resVS?.Draw(G, TitlebarRect, VisualStylesRes.Element.Titlebar, Active, ToolWindow);
+
+            CloseButtonRect = new(ClientRect.Right - CloseBtn_W - RightEdge_XP.Width + 4, Rect.Y + TitlebarRect.Height - CloseBtn_W - 3, CloseBtn_W, CloseBtn_W);
+
+            resVS?.Draw(G, LeftEdge_XP, VisualStylesRes.Element.LeftEdge, Active, ToolWindow);
+            resVS?.Draw(G, RightEdge_XP, VisualStylesRes.Element.RightEdge, Active, ToolWindow);
+            resVS?.Draw(G, ButtomEdge_XP, VisualStylesRes.Element.BottomEdge, Active, ToolWindow);
+            resVS?.Draw(G, CloseButtonRect, VisualStylesRes.Element.CloseButton, Active, ToolWindow);
+
+            G.SmoothingMode = prevMode;
+
+            // XP caption drawn twice: dark shadow offset by 1px, then the actual color on top.
+            using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
+            {
+                using (SolidBrush shadowBrush = new(Color.Black))
+                    G.DrawString(Text, Font, shadowBrush, new RectangleF(LabelRect.X + 1, LabelRect.Y, LabelRect.Width, LabelRect.Height), sf);
+
+                using (SolidBrush br = new(CaptionColor))
+                    G.DrawString(Text, Font, br, LabelRect, sf);
+            }
+        }
+
+        // Draws the W11 close button — differs between normal and lite sub-modes and tool windows.
+        private void PaintCloseButton_W11(Graphics G)
+        {
+            if (!ToolWindow)
+            {
+                if (Preview == Preview_Enum.W11Lite)
+                {
+                    G.SetClip(Rect.Round(Radius));
+
+                    RectangleF closeLite = new(TitlebarRect.Right - CloseBtn_W * 2, TitlebarRect.Y, CloseBtn_W * 2, TitlebarRect.Height);
+
+                    using (SolidBrush br = new(Color.FromArgb(195, 90, 80)))
+                    {
+                        if (Active) G.FillRectangle(br, closeLite);
+                    }
+
+                    using (Pen P = new(DarkMode ? Color.FromArgb(51, 51, 51) : Color.FromArgb(0, 0, 0)))
+                    {
+                        G.DrawLine(P, closeLite.X, closeLite.Y + 1, closeLite.X, closeLite.Y + closeLite.Height);
+                        G.DrawLine(P, closeLite.X, closeLite.Y + closeLite.Height, closeLite.X + closeLite.Width - 1, closeLite.Y + closeLite.Height);
+                    }
+
+                    using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
+                    using (SolidBrush br = new(Color.Black))
+                        G.DrawString("r", marlett_7_7, br, new RectangleF(closeLite.X + 1, closeLite.Y + 1, closeLite.Width, closeLite.Height), sf);
+
+                    G.ResetClip();
+                }
+                else
+                {
+                    using (Bitmap closeImg = new(CloseButtonImage))
+                    {
+                        CloseButtonRect = new(TitlebarRect.Right - closeImg.Width * 2f, TitlebarRect.Top + (TitlebarRect.Height - closeImg.Height) / 2f, closeImg.Width, closeImg.Height);
+                        G.DrawImage(closeImg, CloseButtonRect);
+                    }
+                }
+            }
+            else
+            {
+                PaintCloseButton_ToolWindow(G, true);
+            }
+        }
+
+        // Draws the W10 close button.
+        private void PaintCloseButton_W10(Graphics G)
+        {
+            if (!ToolWindow)
+            {
+                if (Preview == Preview_Enum.W10Lite)
+                {
+                    RectangleF closeLite = new(ClientRect.Right - CloseBtn_W * 2, TitlebarRect.Y, CloseBtn_W * 2, TitlebarRect.Height);
+
+                    using (SolidBrush br = new(Color.FromArgb(195, 90, 80)))
+                    {
+                        if (Active) G.FillRectangle(br, closeLite);
+                    }
+
+                    using (Pen P = new(DarkMode ? Color.FromArgb(51, 51, 51) : Color.FromArgb(0, 0, 0)))
+                    {
+                        G.DrawLine(P, closeLite.X, closeLite.Y + 1, closeLite.X, closeLite.Y + closeLite.Height);
+                        G.DrawLine(P, closeLite.X, closeLite.Y + closeLite.Height, closeLite.X + closeLite.Width - 1, closeLite.Y + closeLite.Height);
+                    }
+
+                    using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
+                    using (SolidBrush br = new(Color.Black))
+                        G.DrawString("r", marlett_7_7, br, new RectangleF(closeLite.X + 1, closeLite.Y + 1, closeLite.Width, closeLite.Height), sf);
+                }
+                else
+                {
+                    using (Bitmap closeImg = new(CloseButtonImage))
+                    {
+                        CloseButtonRect = new(TitlebarRect.Right - closeImg.Width * 2, TitlebarRect.Top + (TitlebarRect.Height - closeImg.Height) / 2, closeImg.Width, closeImg.Height);
+                        G.DrawImage(closeImg, CloseButtonRect);
+                    }
+                }
+            }
+            else
+            {
+                PaintCloseButton_ToolWindow(G, false);
+            }
+        }
+
+        // Draws the W7 Aero close button (full-size bitmap or compact gradient for tool windows).
+        private void PaintCloseButton_W7Aero(Graphics G)
+        {
+            if (!ToolWindow)
+            {
+                Bitmap closeBtn = Active
+                    ? (!WinVista ? Win7Preview.Close_Active : WinVistaPreview.Close_Active)
+                    : (!WinVista ? Win7Preview.Close_inactive : WinVistaPreview.Close_Inactive);
+
+                CloseButtonRect = new(Rect.X + Rect.Width - closeBtn.Width - 5, Rect.Y + 1, closeBtn.Width, closeBtn.Height);
+                G.DrawImage(closeBtn, CloseButtonRect);
+            }
+            else
+            {
+                int btnH = Math.Max(10, _Metrics_CaptionHeight - 5);
+                int btnW = btnH;
+
+                CloseButtonRect = new(ClientBorderRect.Right - btnW - 3, Rect.Y + (TitlebarRect.Height - btnH) / 2f, btnW, btnH);
+
+                if (Active)
+                {
+                    float factor = 0.5f;
+                    float upperH = factor * CloseButtonRect.Height;
+                    float lowerH = CloseButtonRect.Height - upperH;
+                    float interlapping = upperH / CloseButtonRect.Height * 10f;
+
+                    RectangleF upperRect = new(CloseButtonRect.X, CloseButtonRect.Y, CloseButtonRect.Width, upperH + interlapping);
+                    RectangleF lowerRect = new(CloseButtonRect.X, upperRect.Bottom - interlapping, CloseButtonRect.Width, lowerH);
+
+                    using (LinearGradientBrush upperBrush = new(upperRect, Color.FromArgb(50, CloseUpperAccent1), CloseUpperAccent2, LinearGradientMode.Vertical))
+                    using (LinearGradientBrush lowerBrush = new(lowerRect, CloseLowerAccent1, Color.FromArgb(50, CloseLowerAccent2), LinearGradientMode.Vertical))
+                    {
+                        G.FillRoundedRect(upperBrush, upperRect, 1, true);
+                        G.FillRoundedRect(lowerBrush, lowerRect, 1, true);
+                    }
+                }
+                else
+                {
+                    using (LinearGradientBrush br = new(CloseButtonRect, Color.FromArgb(50, CloseUpperAccent1), Color.FromArgb(50, CloseLowerAccent2), LinearGradientMode.Vertical))
+                        G.FillRectangle(br, CloseButtonRect);
+                }
+
+                Bitmap closeBtn = Win7Preview.Close_Basic_ToolWindow;
+
+                int xW = CloseButtonRect.Width % 2 == 0 ? closeBtn.Width + 1 : closeBtn.Width;
+                int xH = CloseButtonRect.Height % 2 == 0 ? closeBtn.Height + 1 : closeBtn.Height;
+
+                RectangleF renderRect = new(
+                    CloseButtonRect.X + (CloseButtonRect.Width - xW) / 2f,
+                    CloseButtonRect.Y + (CloseButtonRect.Height - xH) / 2f,
+                    xW, xH);
+
+                G.DrawImage(closeBtn, renderRect);
+
+                using (Pen P = new(CloseOuterBorder)) G.DrawRoundedRect(P, CloseButtonRect, 1, true);
+                using (Pen P = new(Color.FromArgb(50, CloseInnerBorder))) G.DrawRectangle(P, CloseButtonRect.X + 1, CloseButtonRect.Y + 1, CloseButtonRect.Width - 2, CloseButtonRect.Height - 2);
+            }
+        }
+
+        // Draws the W7 Basic close button (gradient rectangle + X bitmap).
+        private void PaintCloseButton_W7Basic(Graphics G)
+        {
+            int btnH = Math.Max(10, _Metrics_CaptionHeight - 5);
+            float btnW = !ToolWindow ? 31f / 17f * btnH : btnH;
+
+            CloseButtonRect = new(ClientBorderRect.Right - btnW - 3, ClientBorderRect.Top - btnH - 3, btnW, btnH);
+
+            if (Active)
+            {
+                float factor = ToolWindow ? 0.2f : 0.45f;
+                float upperH = factor * CloseButtonRect.Height;
+                float lowerH = CloseButtonRect.Height - upperH;
+                float interlapping = upperH / CloseButtonRect.Height * 10f;
+
+                RectangleF upperRect = new(CloseButtonRect.X, CloseButtonRect.Y, CloseButtonRect.Width, upperH + interlapping);
+                RectangleF lowerRect = new(CloseButtonRect.X, upperRect.Bottom - interlapping, CloseButtonRect.Width, lowerH);
+
+                using (LinearGradientBrush upperBrush = new(upperRect, CloseUpperAccent1, CloseUpperAccent2, LinearGradientMode.Vertical))
+                using (LinearGradientBrush lowerBrush = new(lowerRect, CloseLowerAccent1, CloseLowerAccent2, LinearGradientMode.Vertical))
+                {
+                    G.FillRoundedRect(upperBrush, upperRect, 1, true);
+                    G.FillRoundedRect(lowerBrush, lowerRect, 1, true);
+                }
+            }
+            else
+            {
+                using (LinearGradientBrush br = new(CloseButtonRect, CloseUpperAccent1, CloseLowerAccent2, LinearGradientMode.Vertical))
+                    G.FillRectangle(br, CloseButtonRect);
+            }
+
+            Bitmap closeBtn;
+            if (!ToolWindow)
+            {
+                if (CloseButtonRect.Height >= 22) closeBtn = Win7Preview.Close_Basic_2;
+                else if (CloseButtonRect.Height >= 18) closeBtn = Win7Preview.Close_Basic_1;
+                else closeBtn = Win7Preview.Close_Basic_0;
+            }
+            else
+            {
+                closeBtn = Win7Preview.Close_Basic_ToolWindow;
+            }
+
+            G.DrawImage(closeBtn, new PointF(
+                CloseButtonRect.X + (CloseButtonRect.Width - closeBtn.Width) / 2f + 1f,
+                CloseButtonRect.Y + (CloseButtonRect.Height - closeBtn.Height) / 2f));
+
+            using (Pen P = new(CloseOuterBorder)) G.DrawRoundedRect(P, CloseButtonRect, 1, true);
+            using (Pen P = new(CloseInnerBorder)) G.DrawRoundedRect(P, new RectangleF(CloseButtonRect.X + 1, CloseButtonRect.Y + 1, CloseButtonRect.Width - 2, CloseButtonRect.Height - 2), 1, true);
+        }
+
+        // Draws the small tool-window close button shared between W11 and W10 styles.
+        // isRounded controls whether the background uses FillRectangle (flat) or a rounded fill.
+        private void PaintCloseButton_ToolWindow(Graphics G, bool isRounded)
+        {
+            CloseButtonRect = new(TitlebarRect.Right - 2 - (TitlebarRect.Height - 12), Rect.Y + 6, TitlebarRect.Height - 12, TitlebarRect.Height - 12);
+
+            using (SolidBrush br = new(Color.FromArgb(199, 80, 80)))
+                G.FillRectangle(br, CloseButtonRect);
+
+            // Offset so the X glyph sits in the optical center after accounting for even/odd size.
+            if (CloseButtonRect.Width >= 12)
+            {
+                if (CloseButtonRect.Width % 2 == 0)
+                {
+                    CloseButtonRect.X += 1;
+                    CloseButtonRect.Y += 1;
+                }
+            }
+            else
+            {
+                CloseButtonRect.X += 1;
+            }
+
+            bool isLite = Preview == Preview_Enum.W11Lite || Preview == Preview_Enum.W10Lite;
+            using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
+            using (SolidBrush br = new(isLite ? Color.Black : Color.White))
+                G.DrawString("r", marlett_6_35, br, new RectangleF(CloseButtonRect.X + 1, CloseButtonRect.Y + 1, CloseButtonRect.Width, CloseButtonRect.Height), sf);
+        }
+
+        // Draws the caption text at the given position and alignment.
+        private void PaintCaptionText(Graphics G, RectangleF rect, ContentAlignment alignment)
+        {
+            using (StringFormat sf = alignment.ToStringFormat())
+            using (SolidBrush br = new(CaptionColor))
+                G.DrawString(Text, Font, br, rect, sf);
+        }
+
+        // Hatch overlay drawn over any area that can be clicked to open a color picker.
+        // Used on flat rects (W10, W8 frame).
+        private void PaintColorEditorOverlay_Flat(Graphics G, RectangleF area)
+        {
+            Color light = Color.FromArgb(80, 255, 255, 255);
+            Color dark = Color.FromArgb(80, 0, 0, 0);
+
+            using (Pen P = new(light))
+            using (HatchBrush hb = new(HatchStyle.Percent25, light, dark))
+            {
+                G.FillRectangle(hb, area);
+                G.DrawRectangle(P, area.X, area.Y, area.Width, area.Height);
+            }
+        }
+
+        // Hatch overlay drawn over rounded-rect areas (W11 titlebar, W7 Aero frame).
+        private void PaintColorEditorOverlay_Rounded(Graphics G, RectangleF area)
+        {
+            Color light = Color.FromArgb(80, 255, 255, 255);
+            Color dark = Color.FromArgb(80, 0, 0, 0);
+
+            using (Pen P = new(light))
+            using (HatchBrush hb = new(HatchStyle.Percent25, light, dark))
+            {
+                G.FillRoundedRect(hb, area, Radius, true);
+                G.DrawRoundedRect(P, area, Radius, true);
+            }
+        }
+
+        // Dashed bounding rect + white square handles drawn when the metrics editor is active.
+        private void PaintMetricsGrips(Graphics G)
+        {
+            using (Pen dottedPen = new(Color.Gray) { DashStyle = DashStyle.Dot })
+                G.DrawRectangle(dottedPen, editingRect.X, editingRect.Y, editingRect.Width, editingRect.Height);
+
+            using (Pen solidPen = new(Color.Gray) { DashStyle = DashStyle.Solid })
+            {
+                G.FillRoundedRect(Brushes.White, Grip_topLeft, 1, true);
+                G.FillRoundedRect(Brushes.White, Grip_topRight, 1, true);
+                G.FillRoundedRect(Brushes.White, Grip_bottomLeft, 1, true);
+                G.FillRoundedRect(Brushes.White, Grip_bottomRight, 1, true);
+                G.FillRoundedRect(Brushes.White, Grip_topCenter, 1, true);
+                G.FillRoundedRect(Brushes.White, Grip_bottomCenter, 1, true);
+                G.FillRoundedRect(Brushes.White, Grip_leftCenter, 1, true);
+                G.FillRoundedRect(Brushes.White, Grip_rightCenter, 1, true);
+
+                G.DrawRoundedRect(solidPen, Grip_topLeft, 1, true);
+                G.DrawRoundedRect(solidPen, Grip_topRight, 1, true);
+                G.DrawRoundedRect(solidPen, Grip_bottomLeft, 1, true);
+                G.DrawRoundedRect(solidPen, Grip_bottomRight, 1, true);
+                G.DrawRoundedRect(solidPen, Grip_topCenter, 1, true);
+                G.DrawRoundedRect(solidPen, Grip_bottomCenter, 1, true);
+                G.DrawRoundedRect(solidPen, Grip_leftCenter, 1, true);
+                G.DrawRoundedRect(solidPen, Grip_rightCenter, 1, true);
+            }
+        }
+
+        // Hatch overlay drawn over the titlebar when the metrics font editor is active
+        // (hovering the titlebar opens a font dialog on click).
+        private void PaintTitlebarEditorOverlay(Graphics G)
+        {
+            Color light = Color.FromArgb(80, 255, 255, 255);
+            Color dark = Color.FromArgb(80, 0, 0, 0);
+
+            using (Pen P = new(light))
+            using (HatchBrush hb = new(HatchStyle.Percent25, light, dark))
+            {
+                G.FillRoundedRect(hb, TitlebarRect, Radius, true);
+                G.DrawRoundedRect(P, TitlebarRect, Radius, true);
+            }
+        }
+
+        #endregion
     }
 }

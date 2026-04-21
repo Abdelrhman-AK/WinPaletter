@@ -278,11 +278,8 @@ namespace WinPaletter
 
         private void ColorizationColorBalance_bar_ValueChanged(object sender, EventArgs e)
         {
-            if (IsShown)
-            {
-                windowsDesktop1.Win7ColorBal = (int)(ColorizationColorBalance_bar.Value / 255f * 100f);
-                windowsDesktop1.Win7Alpha = 100 - (int)(ColorizationColorBalance_bar.Value / 255f * 100f);
-            }
+            windowsDesktop1.Win7ColorBal = (int)(ColorizationColorBalance_bar.Value / 255f * 100f);
+            windowsDesktop1.Win7Alpha = 100 - (int)(ColorizationColorBalance_bar.Value / 255f * 100f);
         }
 
         private void windowsDesktop1_EditorInvoker(object sender, EditorEventArgs e)
