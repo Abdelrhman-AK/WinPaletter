@@ -183,7 +183,7 @@ namespace WinPaletter.Tabs
                 if (_hoverAlpha != value)
                 {
                     _hoverAlpha = value;
-                    tabsContainer.Invalidate();
+                    tabsContainer.Invalidate(_rectangle.InflateReturn(1, 0));
                 }
             }
         }
@@ -240,7 +240,7 @@ namespace WinPaletter.Tabs
             {
                 Image = Properties.Resources.Icon.ToBitmap();
             }
-            tabsContainer?.Refresh();
+            tabsContainer?.Invalidate(_rectangle);
         }
 
         #endregion
@@ -344,7 +344,7 @@ namespace WinPaletter.Tabs
         {
             Shown = true;
             tabsContainer.OnFormShown(_form, new(this));
-            tabsContainer.Invalidate();
+            tabsContainer.Invalidate(_rectangle);
             if (Forms.MainForm is not null) Forms.MainForm.BackgroundImage = null;
         }
 
@@ -358,7 +358,7 @@ namespace WinPaletter.Tabs
             Text = _form.Text;
             if (TabPage is not null) TabPage.Text = _form.Text;
             if (_form is not null) tabsContainer?.OnFormTextChanged(_form, new(this));
-            tabsContainer?.Invalidate(Rectangle);
+            tabsContainer?.Invalidate(_rectangle);
         }
 
         /// <summary>

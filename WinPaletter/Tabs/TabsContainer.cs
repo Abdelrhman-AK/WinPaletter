@@ -16,7 +16,7 @@ namespace WinPaletter.Tabs
     /// <summary>
     /// Tabs container control that can handle multiple TabPages with forms inside them. For better appearance, use it with TabControl of <see cref="UI.WP.TablessControl"/> and forms having <see cref="TitlebarExtender"/>.
     /// </summary>
-    public class TabsContainer : Control
+    public class TabsContainer : TitlebarExtender
     {
         /// <summary>
         /// Initialize TabsContainer
@@ -24,7 +24,6 @@ namespace WinPaletter.Tabs
         public TabsContainer()
         {
             SetStyle(ControlStyles.SupportsTransparentBackColor | ControlStyles.UserPaint | ControlStyles.ContainerControl | ControlStyles.OptimizedDoubleBuffer, true);
-            BackColor = Color.Transparent;
             DoubleBuffered = true;
             AllowDrop = true;
 
@@ -342,6 +341,7 @@ namespace WinPaletter.Tabs
             isMovingToLast = false;
             isMovingToFirst = false;
             isMovingTab = false;
+            Invalidate();
         }
 
         private TabData GetTabAtMousePosition(MouseEventArgs e)
@@ -1172,7 +1172,6 @@ namespace WinPaletter.Tabs
 
             parentLevel = this.Level();
         }
-
 
         #endregion
 

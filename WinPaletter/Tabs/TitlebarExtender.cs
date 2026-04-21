@@ -19,7 +19,9 @@ namespace WinPaletter.Tabs
         /// </summary>
         public TitlebarExtender()
         {
-            SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.UserPaint | ControlStyles.ResizeRedraw, true);
+            SetStyle(ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
+            UpdateStyles();
+
             DoubleBuffered = true;
 
             BackColor = Color.Black;
@@ -208,6 +210,9 @@ namespace WinPaletter.Tabs
             _firstBackdropUpdate = true;   // force redraw
             UpdateBackDrop();
             ((System.Windows.Forms.Form)sender).Load -= Form_Load; // unsubscribe, only need once
+
+            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            UpdateStyles();
         }
 
         private void OnSystemSettingsUpdated(object sender, UserPreferenceChangedEventArgs e)
@@ -307,7 +312,7 @@ namespace WinPaletter.Tabs
         /// <param name="e"></param>
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            oldPoint = MousePosition - (Size)FindForm()?.Location;
+            if (this is not TabsContainer) oldPoint = MousePosition - (Size)FindForm()?.Location;
 
             base.OnMouseDown(e);
         }
@@ -318,7 +323,7 @@ namespace WinPaletter.Tabs
         /// <param name="e"></param>
         protected override void OnMouseMove(MouseEventArgs e)
         {
-            if (Flag == Flags.System && FindForm() != null && e.Button == MouseButtons.Left)
+            if (this is not TabsContainer && Flag == Flags.System && FindForm() != null && e.Button == MouseButtons.Left)
             {
                 newPoint = MousePosition - (Size)oldPoint;
                 FindForm().Location = newPoint;
