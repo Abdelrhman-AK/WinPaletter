@@ -370,7 +370,9 @@
     <Compile Include="Assets\WinLogos.Designer.cs" />
     <Compile Include="Assets\WinVistaPreview.Designer.cs" />
     <Compile Include="Tabs\ControlBoxBitmaps.cs" />
-    <Compile Include="Tabs\TitlebarControlHost.cs" />
+    <Compile Include="Tabs\ControlBoxButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ColorsAndPalettesHandlers\ColorEffectMiniControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
