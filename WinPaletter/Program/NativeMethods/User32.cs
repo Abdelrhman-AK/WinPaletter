@@ -18,6 +18,19 @@ namespace WinPaletter.NativeMethods
     public partial class User32
     {
         /// <summary>
+        /// Retrieves the dimensions of the bounding rectangle of the specified window.
+        /// </summary>
+        /// <remarks>The coordinates returned are relative to the screen. If the window is minimized, the
+        /// coordinates may not represent the visible area. To get the client area, use the GetClientRect
+        /// function.</remarks>
+        /// <param name="hWnd">A handle to the window whose coordinates are to be retrieved.</param>
+        /// <param name="lpRect">When this method returns, contains a RECT structure that receives the screen coordinates of the upper-left
+        /// and lower-right corners of the window.</param>
+        /// <returns>true if the function succeeds; otherwise, false.</returns>
+        [DllImport("user32.dll")]
+        public static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
+
+        /// <summary>
         /// Set position of a window in Z order
         /// </summary>
         /// <param name="hWnd"></param>
@@ -89,21 +102,85 @@ namespace WinPaletter.NativeMethods
         [DllImport("user32.dll")]
         public static extern bool AnimateWindow(IntPtr hWnd, int time, AnimateWindowFlags flags);
 
+        /// <summary>
+        /// Updates the specified window or windows by invalidating the client area, causing the operating system to
+        /// send a paint message and optionally updating the window immediately.
+        /// </summary>
+        /// <remarks>This method is a platform invoke (P/Invoke) signature for the native RedrawWindow
+        /// function in user32.dll. Use this method to force a window or region to be redrawn, which can be useful when
+        /// custom painting or when the window's appearance must be refreshed. For more information about valid flag
+        /// values and usage scenarios, see the RedrawWindow function documentation on learn.microsoft.com.</remarks>
+        /// <param name="hWnd">A handle to the window to be updated. If this parameter is <see langword="IntPtr.Zero"/>, the update applies
+        /// to all windows in the system.</param>
+        /// <param name="lprcUpdate">A pointer to a RECT structure that contains the coordinates of the update region in logical coordinates. If
+        /// this parameter is <see langword="IntPtr.Zero"/>, the entire client area is considered for updating.</param>
+        /// <param name="hrgnUpdate">A handle to a region that defines the area to be updated. If this parameter is <see
+        /// langword="IntPtr.Zero"/>, no region is used.</param>
+        /// <param name="flags">A set of flags that control the update operation. These flags specify options such as whether to erase the
+        /// background, whether to send a paint message, and whether to update child windows.</param>
+        /// <returns>true if the function succeeds; otherwise, false.</returns>
         [DllImport("user32.dll")]
         public static extern bool RedrawWindow(IntPtr hWnd, IntPtr lprcUpdate, IntPtr hrgnUpdate, uint flags);
 
         /// <summary>
-        /// Destroys an icon and frees any memory the icon occupied.
+        /// Draws a frame control, such as a button, check box, or scroll bar, in the specified rectangle on a device
+        /// context.
         /// </summary>
+        /// <remarks>This method is a wrapper for the native DrawFrameControl function in user32.dll. The
+        /// caller is responsible for ensuring that the device context and rectangle are valid. For information about
+        /// valid values for uType and uState, see the Windows API documentation for DrawFrameControl.</remarks>
+        /// <param name="hdc">A handle to the device context on which to draw the frame control.</param>
+        /// <param name="lprc">A reference to a RECT structure that specifies the bounding rectangle, in logical units, for the frame
+        /// control.</param>
+        /// <param name="uType">The type of frame control to draw. This parameter must be one of the predefined control type values.</param>
+        /// <param name="uState">The state of the frame control to draw. This parameter must be a combination of state values appropriate for
+        /// the specified control type.</param>
+        /// <returns>true if the function succeeds; otherwise, false.</returns>
+        [DllImport("user32.dll")]
+        public static extern bool DrawFrameControl(IntPtr hdc, ref RECT lprc, uint uType, uint uState);
+
+        /// <summary>
+        /// Destroys an icon and frees any associated system resources.
+        /// </summary>
+        /// <remarks>After calling this method, the icon handle is no longer valid and should not be used.
+        /// Failing to destroy unused icons can result in resource leaks.</remarks>
+        /// <param name="hIcon">A handle to the icon to be destroyed. This handle must have been obtained from a previous call to a function
+        /// that creates or loads icons.</param>
+        /// <returns>true if the function succeeds; otherwise, false.</returns>
         [DllImport("user32.dll", EntryPoint = "DestroyIcon")]
         public static extern bool DestroyIcon(IntPtr hIcon);
 
         /// <summary>
-        /// Sets the colors of the specified display elements.
+        /// Changes the display colors for one or more display elements in the Windows user interface.
         /// </summary>
+        /// <remarks>This method is a P/Invoke signature for the native SetSysColors function in
+        /// user32.dll. Changes made by this function affect the system's color settings and may impact all
+        /// applications. Callers should ensure that the arrays provided are not null and have at least cElements
+        /// elements. This function may require appropriate privileges to execute successfully.</remarks>
+        /// <param name="cElements">The number of display elements to change. This value must match the lengths of the lpaElements and
+        /// lpaRgbValues arrays.</param>
+        /// <param name="lpaElements">An array of integers specifying the display elements to change. Each value corresponds to a system color
+        /// index (such as COLOR_WINDOW or COLOR_MENU).</param>
+        /// <param name="lpaRgbValues">An array of unsigned integers specifying the new RGB color values for the corresponding elements in
+        /// lpaElements. Each value is a COLORREF value representing a color.</param>
+        /// <returns>true if the function succeeds; otherwise, false.</returns>
         [DllImport("user32.dll")]
         public static extern bool SetSysColors(int cElements, int[] lpaElements, uint[] lpaRgbValues);
 
+        /// <summary>
+        /// Retrieves a handle to a window whose class name and window name match the specified strings, searching among
+        /// child windows of a specified parent window.
+        /// </summary>
+        /// <remarks>This method is a wrapper for the native FindWindowEx function in user32.dll. The
+        /// search is case-sensitive. If both className and windowTitle are null, the function returns the first child
+        /// window. This method does not search descendant windows; it searches only direct child windows.</remarks>
+        /// <param name="parent">A handle to the parent window whose child windows are to be searched. Use IntPtr.Zero to search all
+        /// top-level windows.</param>
+        /// <param name="childAfter">A handle to a child window. The search begins with the next child window in Z order. Use IntPtr.Zero to
+        /// start the search with the first child window of the parent.</param>
+        /// <param name="className">The class name of the window to search for. This parameter can be null to match any class name.</param>
+        /// <param name="windowTitle">The window name (title) to search for. This parameter can be null to match any window name.</param>
+        /// <returns>A handle to the window that matches the specified criteria if found; otherwise, IntPtr.Zero.</returns>
         [DllImport("user32.dll")]
         public static extern IntPtr FindWindowEx(IntPtr parent, IntPtr childAfter, string className, string windowTitle);
 
@@ -855,6 +932,22 @@ namespace WinPaletter.NativeMethods
         public const uint WDA_MONITOR = 0x00000001;
         public const uint WDA_EXCLUDEFROMCAPTURE = 0x00000011;
         public const int EM_SETSEL = 0x00B1;
+
+        /// <summary>
+        /// Contains information that an application uses to calculate the size, position, and valid client area of a
+        /// window during processing of the WM_NCCALCSIZE message.
+        /// </summary>
+        /// <remarks>This structure is typically used in custom window frame scenarios to determine how
+        /// the client area should be adjusted when the window is resized or its non-client area changes. It is
+        /// primarily relevant when handling the WM_NCCALCSIZE message in window procedure implementations.</remarks>
+        [StructLayout(LayoutKind.Sequential)]
+        public struct NCCALCSIZE_PARAMS
+        {
+            public RECT rgrc0;  // proposed → new client rect (in/out)
+            public RECT rgrc1;  // previous window rect
+            public RECT rgrc2;  // previous client rect
+            public IntPtr lppos;
+        }
 
         /// <summary>
         /// Structure that contains information about the high contrast accessibility feature.

@@ -36,6 +36,7 @@
             this.tabsContainer1.AllowDrop = true;
             this.tabsContainer1.BackColor = System.Drawing.Color.Transparent;
             this.tabsContainer1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tabsContainer1.Flag = WinPaletter.Tabs.TitlebarExtender.Flags.System;
             this.tabsContainer1.Location = new System.Drawing.Point(0, 0);
             this.tabsContainer1.Name = "tabsContainer1";
             this.tabsContainer1.SelectedIndex = 0;
@@ -43,6 +44,7 @@
             this.tabsContainer1.Size = new System.Drawing.Size(933, 34);
             this.tabsContainer1.TabControl = null;
             this.tabsContainer1.TabIndex = 120;
+            this.tabsContainer1.TabLocation = new System.Drawing.Rectangle(0, 0, 0, 0);
             // 
             // TabsForm
             // 
@@ -50,6 +52,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(933, 519);
+            this.ControlBox = false;
             this.Controls.Add(this.tabsContainer1);
             this.Name = "TabsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

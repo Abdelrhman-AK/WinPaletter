@@ -313,6 +313,203 @@ namespace WinPaletter.NativeMethods
         public static extern int GetDeviceCaps(IntPtr hDC, int nIndex);
 
         /// <summary>
+        /// Creates a memory device context (DC) compatible with the specified device context.
+        /// </summary>
+        /// <remarks>The returned device context must be deleted with DeleteDC when it is no longer needed
+        /// to avoid resource leaks. The compatible DC can be used for off-screen drawing or as a target for bitmaps
+        /// compatible with the original device context.</remarks>
+        /// <param name="hdc">A handle to an existing device context. If this parameter is IntPtr.Zero, the function creates a memory DC
+        /// compatible with the application's current screen.</param>
+        /// <returns>A handle to the compatible memory device context. Returns IntPtr.Zero if the function fails.</returns>
+        [DllImport("gdi32.dll")]
+        public static extern IntPtr CreateCompatibleDC(IntPtr hdc);
+
+        /// <summary>
+        /// Deletes the specified device context (DC).
+        /// </summary>
+        /// <remarks>After a device context is deleted, the handle is no longer valid and should not be
+        /// used in subsequent GDI operations. Attempting to delete a device context that was not created by a
+        /// compatible creation function may result in undefined behavior.</remarks>
+        /// <param name="hdc">A handle to the device context to be deleted. This handle must have been created by a previous call to a
+        /// device context creation function such as CreateCompatibleDC or CreateDC.</param>
+        /// <returns>true if the device context is successfully deleted; otherwise, false.</returns>
+        [DllImport("gdi32.dll")]
+        public static extern bool DeleteDC(IntPtr hdc);
+
+        /// <summary>
+        /// Selects an object into the specified device context. The new object replaces the previous object of the same
+        /// type.
+        /// </summary>
+        /// <remarks>The caller is responsible for restoring the original object by selecting it back into
+        /// the device context after use. Selecting a bitmap into a device context that is currently selected with a
+        /// different bitmap can cause memory leaks. This function is not thread safe; ensure proper synchronization
+        /// when accessing device contexts from multiple threads.</remarks>
+        /// <param name="hdc">A handle to the device context into which the object is to be selected.</param>
+        /// <param name="h">A handle to the graphics object to be selected. This can be a pen, brush, font, bitmap, or region.</param>
+        /// <returns>If the function succeeds, the return value is a handle to the object being replaced. If the function fails,
+        /// the return value is zero or HGDI_ERROR, depending on the object type.</returns>
+        [DllImport("gdi32.dll")]
+        public static extern IntPtr SelectObject(IntPtr hdc, IntPtr h);
+
+        /// <summary>
+        /// Deletes a logical GDI object, releasing all system resources associated with it.
+        /// </summary>
+        /// <remarks>After a GDI object is deleted, its handle becomes invalid and must not be used in
+        /// subsequent GDI calls. Attempting to delete an object that is still selected into a device context can cause
+        /// undefined behavior.</remarks>
+        /// <param name="ho">A handle to the GDI object to be deleted. This handle must have been created by a GDI function and must not
+        /// be used after deletion.</param>
+        /// <returns>true if the object was deleted successfully; otherwise, false.</returns>
+        [DllImport("gdi32.dll")]
+        public static extern bool DeleteObject(IntPtr ho);
+
+        /// <summary>
+        /// Creates a device-independent bitmap (DIB) that applications can write to directly and selects it into a
+        /// device context.
+        /// </summary>
+        /// <remarks>The DIB created by this function can be selected into a device context for drawing
+        /// operations. The caller is responsible for releasing the bitmap handle by calling DeleteObject when it is no
+        /// longer needed. This function enables direct access to the bitmap's pixel data, which can improve performance
+        /// for image manipulation tasks.</remarks>
+        /// <param name="hdc">A handle to a device context. If this parameter is not NULL, the function uses the device context's color
+        /// format to initialize the DIB.</param>
+        /// <param name="pbmi">A reference to a BITMAPINFO structure that specifies the dimensions and color format of the DIB.</param>
+        /// <param name="usage">The type of data contained in the color table. This parameter must be either DIB_RGB_COLORS or
+        /// DIB_PAL_COLORS.</param>
+        /// <param name="ppvBits">When the function returns, contains a pointer to the location of the DIB's bit values. This allows direct
+        /// access to the bitmap's pixel data.</param>
+        /// <param name="hSection">A handle to a file mapping object that the function will use to create the DIB. This parameter can be
+        /// IntPtr.Zero if no file mapping is used.</param>
+        /// <param name="offset">The offset, in bytes, from the beginning of the file mapping object referenced by hSection. This value is
+        /// ignored if hSection is IntPtr.Zero.</param>
+        /// <returns>A handle to the created device-independent bitmap (DIB) if successful; otherwise, IntPtr.Zero.</returns>
+        [DllImport("gdi32.dll")]
+        public static extern IntPtr CreateDIBSection(IntPtr hdc, ref BITMAPINFO pbmi, uint usage, out IntPtr ppvBits, IntPtr hSection, uint offset);
+
+        /// <summary>
+        /// Performs a bit-block transfer of color data from a source device context to a destination device context.
+        /// </summary>
+        /// <remarks>This method is a P/Invoke signature for the native BitBlt function in gdi32.dll. The
+        /// device contexts must be compatible, and the caller is responsible for managing device context handles and
+        /// ensuring proper cleanup. Some raster operations may require the source and destination device contexts to
+        /// have the same color format. This method is not thread-safe.</remarks>
+        /// <param name="hdcDest">A handle to the destination device context where the image will be drawn.</param>
+        /// <param name="x">The x-coordinate, in logical units, of the upper-left corner of the destination rectangle.</param>
+        /// <param name="y">The y-coordinate, in logical units, of the upper-left corner of the destination rectangle.</param>
+        /// <param name="cx">The width, in logical units, of the rectangle to be transferred.</param>
+        /// <param name="cy">The height, in logical units, of the rectangle to be transferred.</param>
+        /// <param name="hdcSrc">A handle to the source device context from which the image will be copied.</param>
+        /// <param name="x1">The x-coordinate, in logical units, of the upper-left corner of the source rectangle.</param>
+        /// <param name="y1">The y-coordinate, in logical units, of the upper-left corner of the source rectangle.</param>
+        /// <param name="rop">A raster-operation code that defines how the color data is combined between the source and destination.</param>
+        /// <returns>true if the operation succeeds; otherwise, false.</returns>
+        [DllImport("gdi32.dll")]
+        public static extern bool BitBlt(IntPtr hdcDest, int x, int y, int cx, int cy, IntPtr hdcSrc, int x1, int y1, uint rop);
+
+        /// <summary>
+        /// Defines the core header information for a device-independent bitmap (DIB).
+        /// </summary>
+        /// <remarks>The BITMAPINFOHEADER structure specifies dimensions, color format, and compression
+        /// details for a bitmap image. It is commonly used when working with Windows GDI functions that require bitmap
+        /// metadata, such as creating or reading bitmap files. The values in this structure must be set according to
+        /// the bitmap's characteristics to ensure correct interpretation by consuming APIs. A negative value for the
+        /// biHeight field indicates a top-down DIB, where the first scan line is the top row of the image.</remarks>
+        [StructLayout(LayoutKind.Sequential)]
+        public struct BITMAPINFOHEADER
+        {
+            /// <summary>
+            /// Specifies the size, in bytes, of the structure.
+            /// </summary>
+            public uint biSize;
+
+            /// <summary>
+            /// Gets or sets the width of the bitmap, in pixels.
+            /// </summary>
+            public int biWidth;
+
+            /// <summary>
+            /// Specifies the height of the bitmap, in pixels.
+            /// </summary>
+            /// <remarks>If the value is negative, the bitmap is a top-down DIB with the origin at the
+            /// upper-left corner. If the value is positive, the bitmap is a bottom-up DIB with the origin at the
+            /// lower-left corner.</remarks>
+            public int biHeight;
+
+            /// <summary>
+            /// Gets or sets the number of color planes for the bitmap image. This value is typically set to 1.
+            /// </summary>
+            /// <remarks>This property is primarily used for compatibility with certain bitmap file
+            /// formats. For most modern bitmap images, the value should be 1.</remarks>
+            public short biPlanes;
+
+            /// <summary>
+            /// Gets or sets the number of bits per pixel used to represent the color of a single pixel.
+            /// </summary>
+            /// <remarks>This value determines the color depth of the image. Common values include 1, 4, 8, 16, 24, and 32, corresponding to monochrome, 16-color, 256-color, high color, true color, and deep
+            /// color formats, respectively.</remarks>
+            public short biBitCount;
+
+            /// <summary>
+            /// Specifies the compression method used for the bitmap data.
+            /// </summary>
+            /// <remarks>The value corresponds to a predefined constant indicating the compression
+            /// type, such as BI_RGB for no compression or BI_RLE8 for run-length encoding. Refer to the documentation
+            /// for valid values and their meanings.</remarks>
+            public uint biCompression;
+
+            /// <summary>
+            /// Gets or sets the size of the image, in bytes.
+            /// </summary>
+            /// <remarks>This value typically represents the size of the pixel data in the image,
+            /// excluding any file headers or metadata. For uncompressed images, it may be set to zero if the size can
+            /// be calculated from other fields.</remarks>
+            public uint biSizeImage;
+
+            /// <summary>
+            /// Specifies the horizontal resolution of the image, in pixels per meter.
+            /// </summary>
+            /// <remarks>This value is typically used in bitmap file headers to indicate the intended
+            /// display resolution. It may not affect image rendering on all platforms.</remarks>
+            public int biXPelsPerMeter;
+
+            /// <summary>
+            /// Specifies the vertical resolution, in pixels per meter, of the image.
+            /// </summary>
+            /// <remarks>This value is typically used to indicate the intended display resolution for
+            /// the image. A value of zero indicates that the resolution is unspecified.</remarks>
+            public int biYPelsPerMeter;
+
+            /// <summary>
+            /// Specifies the number of color indexes in the color table that are actually used by the bitmap.
+            /// </summary>
+            /// <remarks>If this value is zero, all colors are required. This field is primarily used
+            /// for optimizing the size of the color table in certain bitmap formats.</remarks>
+            public uint biClrUsed;
+
+            /// <summary>
+            /// Specifies the number of color indexes that are considered important for displaying the bitmap.
+            /// Applications can use this value to optimize color usage when rendering the image.
+            /// </summary>
+            /// <remarks>If this value is zero, all colors are considered important. This field is primarily used for certain bitmap formats and may be ignored by some applications.</remarks>
+            public uint biClrImportant;
+        }
+
+        /// <summary>
+        /// Defines the structure that contains information about a DIB (device-independent bitmap), including
+        /// dimensions, color format, and other properties required for bitmap operations.
+        /// </summary>
+        /// <remarks>The BITMAPINFO structure is commonly used with Windows API functions that create or
+        /// manipulate device-independent bitmaps. The bmiHeader field specifies the core bitmap information, while the
+        /// color table is only present for certain bit depths. For 32-bpp bitmaps using BI_RGB compression, a color
+        /// table is not required.</remarks>
+        [StructLayout(LayoutKind.Sequential)]
+        public struct BITMAPINFO
+        {
+            public BITMAPINFOHEADER bmiHeader;
+            // No colour table needed for BI_RGB 32-bpp.
+        }
+
+        /// <summary>
         /// Enumerates device capabilities.
         /// </summary>
         public enum DeviceCap

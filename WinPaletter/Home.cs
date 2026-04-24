@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using WinPaletter.Assets;
 using WinPaletter.NativeMethods;
 using WinPaletter.Properties;
+using WinPaletter.Tabs;
 using WinPaletter.Theme;
 using WinPaletter.UI.WP;
 using static WinPaletter.PreviewHelpers;

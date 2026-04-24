@@ -172,6 +172,48 @@ namespace WinPaletter.NativeMethods
         #region Structures
 
         /// <summary>
+        /// Represents a method that determines whether Desktop Window Manager (DWM) composition is currently enabled.
+        /// </summary>
+        /// <remarks>This delegate is typically used to call the native DwmIsCompositionEnabled function
+        /// in Windows. The caller should check the return value to determine whether the operation succeeded before
+        /// using the value in <paramref name="pfEnabled"/>.</remarks>
+        /// <param name="pfEnabled">When this method returns, contains a value that is set to <see langword="true"/> if DWM composition is
+        /// enabled; otherwise, <see langword="false"/>. This parameter is passed uninitialized.</param>
+        /// <returns>An integer value indicating the result of the operation. A value of 0 typically indicates success;
+        /// otherwise, an error code is returned.</returns>
+        public delegate int FnDwmIsCompositionEnabled(out bool pfEnabled);
+
+        /// <summary>
+        /// Represents a callback that processes a window message using the Desktop Window Manager (DWM) default window
+        /// procedure.
+        /// </summary>
+        /// <remarks>This delegate is typically used to forward window messages to the DWM for default
+        /// processing. The caller should check the return value to determine whether the message was handled by
+        /// DWM.</remarks>
+        /// <param name="hwnd">A handle to the window receiving the message.</param>
+        /// <param name="msg">The message identifier specifying which message is being processed.</param>
+        /// <param name="wParam">Additional message-specific information. The exact meaning depends on the value of the msg parameter.</param>
+        /// <param name="lParam">Additional message-specific information. The exact meaning depends on the value of the msg parameter.</param>
+        /// <param name="plResult">When this method returns, contains the result of message processing if the message was handled. This
+        /// parameter is passed uninitialized.</param>
+        /// <returns>An integer value indicating whether the message was processed. Returns a nonzero value if the message was
+        /// handled; otherwise, zero.</returns>
+        public delegate int FnDwmDefWindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, out IntPtr plResult);
+
+        /// <summary>
+        /// Represents a method that retrieves the current Desktop Window Manager (DWM) colorization color and opacity setting.
+        /// </summary>
+        /// <remarks>This delegate is intended for use with native interop to the DwmGetColorizationColor
+        /// function in the Windows API. The caller should ensure that the method is called on a supported version of
+        /// Windows where DWM is available.</remarks>
+        /// <param name="pcrColorization">When this method returns, contains the ARGB value of the current DWM colorization color.</param>
+        /// <param name="pfOpaqueBlend">When this method returns, contains a value indicating whether the colorization is opaque. Contains <see
+        /// langword="true"/> if the colorization is opaque; otherwise, <see langword="false"/>.</param>
+        /// <returns>An integer value indicating the result of the operation. Typically, zero indicates success.</returns>
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+        public delegate int FnDwmGetColorizationColor(out uint pcrColorization, out bool pfOpaqueBlend);
+
+        /// <summary>
         /// Struct that specifies Desktop Window Manager (DWM) blur behind settings.
         /// </summary>
         /// <remarks>

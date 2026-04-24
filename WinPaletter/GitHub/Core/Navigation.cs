@@ -1895,7 +1895,7 @@ namespace WinPaletter.GitHub
                     _boundbreadcrumbControl.Value = 0;
                     _boundbreadcrumbControl.StartMarquee();
 
-                    // Add initial placeholder items that does not exist on bound list
+                    // Add initial _placeholder items that does not exist on bound list
                     List<ListViewItem> placeholderItems = [];
                     foreach (ListViewItem item in items)
                     {

@@ -8,26 +8,8 @@ namespace WinPaletter.Tabs
     /// </summary>
     public partial class TabsForm : UI.WP.Form
     {
-        //protected override void WndProc(ref Message m)
-        //{
-        //    base.WndProc(ref m);
-
-        //    // Handle the WM_NCCALCSIZE message to adjust the client area
-        //    if (m.Msg == 0x83 /*WM_NCCALCSIZE*/)
-        //    {
-        //        if (m.WParam.ToInt32() == 1 /*TRUE*/)
-        //        {
-        //            // Get the current non-client area rectangle
-        //            NativeMethods.DWMAPI.MARGINS rect = (NativeMethods.DWMAPI.MARGINS)m.GetLParam(typeof(NativeMethods.DWMAPI.MARGINS));
-
-        //            // Adjust the rectangle to make room for the custom control in the title bar
-        //            rect.topHeight -= titlebarExtender1.Height - 6;
-
-        //            // Update the non-client area rectangle
-        //            System.Runtime.InteropServices.Marshal.StructureToPtr(rect, m.LParam, true);
-        //        }
-        //    }
-        //}
+        private TitlebarControlHost _host;
+        private Control _placeholder;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TabsForm"/> class.
@@ -37,9 +19,22 @@ namespace WinPaletter.Tabs
             InitializeComponent();
         }
 
-        private void titlebarExtender1_DoubleClick(object sender, EventArgs e)
+        protected override void OnLoad(EventArgs e)
         {
-            WindowState = WindowState == FormWindowState.Maximized ? FormWindowState.Normal : FormWindowState.Maximized;
+            _host = new(this);
+            _placeholder = new();
+
+            _host.SetControl(_placeholder, 1);
+
+            base.OnLoad(e);
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+
+            _host?.Dispose();
+            _placeholder?.Dispose();
         }
     }
 }

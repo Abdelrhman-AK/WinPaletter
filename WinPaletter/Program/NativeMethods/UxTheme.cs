@@ -40,6 +40,124 @@ namespace WinPaletter.NativeMethods
         public static extern int SetPreferredAppMode(PreferredAppMode preferredAppMode);
 
         /// <summary>
+        /// Represents a method that opens a theme data handle for a specified window and class list.
+        /// </summary>
+        /// <remarks>The returned handle should be closed using the appropriate method when it is no
+        /// longer needed to avoid resource leaks.</remarks>
+        /// <param name="hwnd">A handle to the window for which theme data is to be opened.</param>
+        /// <param name="pszClassList">The class name or a semicolon-separated list of class names that identify the parts and states to retrieve
+        /// theme data for. Cannot be null.</param>
+        /// <returns>An IntPtr that represents a handle to the theme data. Returns IntPtr.Zero if the operation fails.</returns>
+        public delegate IntPtr FnOpenThemeData(IntPtr hwnd, [MarshalAs(UnmanagedType.LPWStr)] string pszClassList);
+
+        /// <summary>
+        /// Represents a method that closes a theme data handle and releases associated resources.
+        /// </summary>
+        /// <remarks>This delegate is commonly used when working with Windows visual styles to ensure that
+        /// theme data handles are properly released. Failing to close theme data handles may result in resource
+        /// leaks.</remarks>
+        /// <param name="hTheme">A handle to the theme data to be closed. This handle must have been obtained from a previous theme-related
+        /// operation and must not be zero.</param>
+        /// <returns>An integer value indicating the result of the operation. Typically, zero indicates success; a nonzero value
+        /// indicates failure.</returns>
+        public delegate int FnCloseThemeData(IntPtr hTheme);
+
+        /// <summary>
+        /// Represents a method that draws the background image defined by the visual style for a specified control part
+        /// and state.
+        /// </summary>
+        /// <remarks>This delegate is typically used to interoperate with native UxTheme APIs for custom
+        /// drawing of themed controls. The caller is responsible for ensuring that the provided handles and structures
+        /// are valid and remain valid for the duration of the call.</remarks>
+        /// <param name="hTheme">A handle to the theme data for the control. This must be obtained from a call to the appropriate theme API.</param>
+        /// <param name="hdc">A handle to the device context on which the background is drawn.</param>
+        /// <param name="iPartId">The identifier of the part of the control to draw. The value is specific to the control's visual style.</param>
+        /// <param name="iStateId">The identifier of the state of the part to draw. The value is specific to the control's visual style.</param>
+        /// <param name="pRect">A reference to a RECT structure that specifies the bounds of the area to be drawn.</param>
+        /// <param name="pClipRect">A pointer to a RECT structure that specifies the clipping rectangle, or IntPtr.Zero to indicate no clipping.</param>
+        /// <returns>An integer value indicating success or failure. Returns zero if successful; otherwise, returns a nonzero
+        /// error code.</returns>
+        public delegate int FnDrawThemeBackground(IntPtr hTheme, IntPtr hdc, int iPartId, int iStateId, ref UxTheme.RECT pRect, IntPtr pClipRect);
+
+        /// <summary>
+        /// Represents a method that determines whether a visual theme is currently active.
+        /// </summary>
+        /// <remarks>The exact meaning of the return value may depend on the implementation. This delegate
+        /// is commonly used to abstract theme detection logic in UI frameworks.</remarks>
+        /// <returns>An integer value indicating the theme status. Typically, a nonzero value indicates that a theme is active;
+        /// zero indicates that no theme is active.</returns>
+        public delegate int FnIsThemeActive();
+
+        /// <summary>
+        /// Represents a method that retrieves the size of a visual style part for a specified theme, state, and drawing
+        /// context.
+        /// </summary>
+        /// <remarks>This delegate is typically used to interoperate with native Windows visual styles
+        /// APIs. The caller is responsible for ensuring that all handles and pointers are valid and that the output
+        /// parameter is properly initialized.</remarks>
+        /// <param name="hTheme">A handle to the theme data for the current visual style.</param>
+        /// <param name="hdc">A handle to the device context used for drawing. This can be IntPtr.Zero if not required.</param>
+        /// <param name="iPartId">The identifier of the part within the theme whose size is to be retrieved.</param>
+        /// <param name="iStateId">The identifier of the state of the part for which the size is requested.</param>
+        /// <param name="pRect">A pointer to a RECT structure that defines the area to be used for drawing, or IntPtr.Zero to use the
+        /// default size.</param>
+        /// <param name="eSize">An integer specifying the type of size to retrieve. Typically corresponds to a THEMESIZE value such as
+        /// TS_TRUE (2).</param>
+        /// <param name="psz">When this method returns, contains the size of the specified theme part.</param>
+        /// <returns>An integer value indicating the result of the operation. Returns zero if successful; otherwise, returns a
+        /// nonzero error code.</returns>
+        public delegate int FnGetThemePartSize(IntPtr hTheme, IntPtr hdc, int iPartId, int iStateId, IntPtr pRect, int eSize, out SIZE psz);
+
+        /// <summary>
+        /// Retrieves the file name, color scheme, and size name of the current visual style theme.
+        /// </summary>
+        /// <remarks>This delegate is typically used to call native Windows APIs for theme information.
+        /// All output buffers must be preallocated by the caller and sized according to the corresponding maximum
+        /// character parameters. The method does not allocate memory for the output buffers.</remarks>
+        /// <param name="pszThemeFileName">A StringBuilder that receives the file name of the current theme. The buffer must be large enough to contain
+        /// the file name, including the terminating null character.</param>
+        /// <param name="dwMaxNameChars">The maximum number of characters, including the terminating null character, that can be copied into
+        /// pszThemeFileName.</param>
+        /// <param name="pszColorBuff">A StringBuilder that receives the color scheme name of the current theme. The buffer must be large enough to
+        /// contain the color name, including the terminating null character.</param>
+        /// <param name="dwMaxColorChars">The maximum number of characters, including the terminating null character, that can be copied into
+        /// pszColorBuff.</param>
+        /// <param name="pszSizeBuff">A StringBuilder that receives the size name of the current theme. The buffer must be large enough to contain
+        /// the size name, including the terminating null character.</param>
+        /// <param name="cchMaxSizeChars">The maximum number of characters, including the terminating null character, that can be copied into
+        /// pszSizeBuff.</param>
+        /// <returns>An integer value indicating the result of the operation. Returns zero if successful; otherwise, returns a
+        /// nonzero error code.</returns>
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+        public delegate int FnGetCurrentThemeName(System.Text.StringBuilder pszThemeFileName, int dwMaxNameChars, System.Text.StringBuilder pszColorBuff, int dwMaxColorChars, System.Text.StringBuilder pszSizeBuff, int cchMaxSizeChars);
+
+        /// <summary>
+        /// Represents a callback method that retrieves a color value for a specified theme part and property.
+        /// </summary>
+        /// <remarks>This delegate is typically used to interoperate with native Windows theming APIs. The
+        /// caller must ensure that the theme handle is valid and that the property identifiers correspond to supported
+        /// theme parts and states.</remarks>
+        /// <param name="hTheme">A handle to the theme data from which to retrieve the color.</param>
+        /// <param name="iPartId">The identifier of the part within the theme to query.</param>
+        /// <param name="iStateId">The identifier of the state of the part to query.</param>
+        /// <param name="iPropId">The identifier of the color property to retrieve.</param>
+        /// <param name="pColor">When this method returns, contains the ARGB color value associated with the specified theme part and
+        /// property.</param>
+        /// <returns>An integer value indicating the result of the operation. Returns 0 if successful; otherwise, returns a
+        /// nonzero error code.</returns>
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+        public delegate int FnGetThemeColor(IntPtr hTheme, int iPartId, int iStateId, int iPropId, out int pColor);
+
+        /// <summary>
+        /// Represents the width and height of a rectangle, typically in pixels.
+        /// </summary>
+        /// <remarks>The SIZE structure is commonly used in graphics programming to specify dimensions for
+        /// drawing operations, window sizing, or layout calculations. The cx field specifies the width, and the cy
+        /// field specifies the height.</remarks>
+        [StructLayout(LayoutKind.Sequential)]
+        public struct SIZE { public int cx, cy; }
+
+        /// <summary>
         /// The Preferred Application Mode (Dark, Light, System Default)
         /// </summary>
         public enum PreferredAppMode

@@ -84,68 +84,63 @@ namespace WinPaletter.TypesExtensions
             }
         }
 
+        public enum BlurType
+        {
+            Gaussian,
+            Box
+        }
+
         /// <summary>
-        /// Applies a Gaussian blur effect to the specified bitmap image, with cancellation support.
+        /// Applies a blur effect to the specified bitmap image, with cancellation support.
         /// </summary>
-        /// <remarks>
-        /// The method normalizes the input bitmap to a 32bpp ARGB format for processing and
-        /// converts it back to the original pixel format if necessary. The Gaussian blur is applied using a separable
-        /// kernel for improved performance. The opacity parameter allows blending the blurred result with the original
-        /// image. Cancellation can be requested via the provided <paramref name="cancellationToken"/>.
-        /// </remarks>
-        /// <param name="bitmap">The source <see cref="Bitmap"/> to which the Gaussian blur will be applied. Cannot be <see langword="null"/>.</param>
-        /// <param name="blurPower">The intensity of the blur effect. Must be greater than 0. Higher values result in a stronger blur. Defaults to 2.0f.</param>
-        /// <param name="opacity">The opacity of the blur effect, where <see langword="0.0f"/> represents fully transparent and <see langword="1.0f"/> represents fully opaque. Values outside the range [0.0f, 1.0f] will be clamped. Defaults to 1.0f.</param>
-        /// <param name="cancellationToken">The token that can be used to request cancellation of the operation.</param>
-        /// <returns>A new <see cref="Bitmap"/> instance with the Gaussian blur applied. Returns <see langword="null"/> if the input <paramref name="bitmap"/> is <see langword="null"/> or has zero width or height.</returns>
-        /// <exception cref="OperationCanceledException">Thrown if the operation is canceled via <paramref name="cancellationToken"/>.</exception>
-        public static Bitmap Blur(this Bitmap bitmap, float blurPower = 2.0f, float opacity = 1.0f, CancellationToken cancellationToken = default)
+        /// <param name="bitmap">The source <see cref="Bitmap"/> to blur. Cannot be <see langword="null"/>.</param>
+        /// <param name="blurPower">
+        /// Controls blur intensity. For <see cref="BlurType.Gaussian"/>, this is the sigma value of the Gaussian kernel.
+        /// For <see cref="BlurType.Box"/>, this is the kernel radius in pixels. Must be greater than 0. Defaults to 2.0f.
+        /// </param>
+        /// <param name="blurType">The blur algorithm to use. Defaults to <see cref="BlurType.Gaussian"/>.</param>
+        /// <param name="opacity">
+        /// Blending factor between the original and blurred image. <see langword="0.0f"/> = fully original,
+        /// <see langword="1.0f"/> = fully blurred. Values outside [0.0f, 1.0f] are clamped. Defaults to 1.0f.
+        /// </param>
+        /// <param name="cancellationToken">Token to request cancellation of the operation.</param>
+        /// <returns>
+        /// A new <see cref="Bitmap"/> with the blur applied, or <see langword="null"/> if the input is
+        /// <see langword="null"/>, cancelled, or has zero dimensions.
+        /// </returns>
+        public static Bitmap Blur(this Bitmap bitmap, float blurPower = 2.0f, BlurType blurType = BlurType.Gaussian, float opacity = 1.0f, CancellationToken cancellationToken = default)
         {
             if (bitmap == null || bitmap.Width == 0 || bitmap.Height == 0) return null;
 
-            // Clamp opacity manually
             if (opacity < 0f) opacity = 0f;
             else if (opacity > 1f) opacity = 1f;
 
-            // Clone the original bitmap to avoid "object is being used elsewhere"
-            using (Bitmap src = bitmap.Clone(new Rectangle(0, 0, bitmap.Width, bitmap.Height), PixelFormat.Format32bppArgb))
+            using (Bitmap src = bitmap.Clone(new(0, 0, bitmap.Width, bitmap.Height), PixelFormat.Format32bppArgb))
             {
                 int width = src.Width;
                 int height = src.Height;
 
-                using (Bitmap blurred = new(width, height, PixelFormat.Format32bppArgb))
+                float[] kernel = BuildKernel(blurPower, blurType, out int radius);
+
+                using (Bitmap result = new(width, height, PixelFormat.Format32bppArgb))
                 {
-                    // Gaussian kernel
-                    float sigma = Math.Max(0.1f, blurPower);
-                    int radius = (int)Math.Ceiling(3f * sigma);
-                    int kSize = 2 * radius + 1;
+                    BitmapData srcData = src.LockBits(new(0, 0, width, height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+                    BitmapData dstData = result.LockBits(new(0, 0, width, height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
 
-                    float[] kernel = new float[kSize];
-                    float kSum = 0f;
-                    for (int i = -radius; i <= radius; i++)
-                    {
-                        float v = (float)Math.Exp(-(i * i) / (2f * sigma * sigma));
-                        kernel[i + radius] = v;
-                        kSum += v;
-                    }
-                    for (int i = 0; i < kSize; i++) kernel[i] /= kSum;
-
-                    // Lock bits
-                    var srcData = src.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadOnly, src.PixelFormat);
-                    var dstData = blurred.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.WriteOnly, blurred.PixelFormat);
-
-                    int bytesPerPixel = 4;
                     int stride = srcData.Stride;
                     int bufSize = stride * height;
 
                     byte[] srcBuffer = new byte[bufSize];
                     byte[] tmpBuffer = new byte[bufSize];
-                    byte[] finalBuffer = new byte[bufSize];
+                    byte[] dstBuffer = new byte[bufSize];
 
                     Marshal.Copy(srcData.Scan0, srcBuffer, 0, bufSize);
                     src.UnlockBits(srcData);
 
-                    // Horizontal pass
+                    bool blendOpacity = opacity < 1f;
+                    float invOpacity = 1f - opacity;
+
+                    // Horizontal pass: srcBuffer -> tmpBuffer
                     for (int y = 0; y < height; y++)
                     {
                         if (cancellationToken.IsCancellationRequested) return null;
@@ -153,77 +148,114 @@ namespace WinPaletter.TypesExtensions
                         int row = y * stride;
                         for (int x = 0; x < width; x++)
                         {
-                            float b = 0f, g = 0f, r = 0f, a = 0f, wsum = 0f;
+                            float b = 0f, g = 0f, r = 0f, a = 0f;
+
                             for (int k = -radius; k <= radius; k++)
                             {
                                 int px = x + k;
                                 if (px < 0) px = 0;
                                 else if (px >= width) px = width - 1;
 
-                                int idx = row + px * bytesPerPixel;
                                 float w = kernel[k + radius];
-                                b += srcBuffer[idx + 0] * w;
-                                g += srcBuffer[idx + 1] * w;
-                                r += srcBuffer[idx + 2] * w;
-                                a += srcBuffer[idx + 3] * w;
-                                wsum += w;
+                                int srcIdx = row + px * 4;
+                                b += srcBuffer[srcIdx] * w;
+                                g += srcBuffer[srcIdx + 1] * w;
+                                r += srcBuffer[srcIdx + 2] * w;
+                                a += srcBuffer[srcIdx + 3] * w;
                             }
-                            int outIdx = row + x * bytesPerPixel;
-                            tmpBuffer[outIdx + 0] = (byte)(b / wsum);
-                            tmpBuffer[outIdx + 1] = (byte)(g / wsum);
-                            tmpBuffer[outIdx + 2] = (byte)(r / wsum);
-                            tmpBuffer[outIdx + 3] = (byte)(a / wsum);
+
+                            int baseIdx = row + x * 4;
+                            tmpBuffer[baseIdx] = (byte)b;
+                            tmpBuffer[baseIdx + 1] = (byte)g;
+                            tmpBuffer[baseIdx + 2] = (byte)r;
+                            tmpBuffer[baseIdx + 3] = (byte)a;
                         }
                     }
 
-                    // Vertical pass
+                    // Vertical pass: tmpBuffer -> dstBuffer
                     for (int x = 0; x < width; x++)
                     {
                         if (cancellationToken.IsCancellationRequested) return null;
 
-                        int colOffset = x * bytesPerPixel;
+                        int colOffset = x * 4;
                         for (int y = 0; y < height; y++)
                         {
-                            float b = 0f, g = 0f, r = 0f, a = 0f, wsum = 0f;
+                            float b = 0f, g = 0f, r = 0f, a = 0f;
+
                             for (int k = -radius; k <= radius; k++)
                             {
                                 int py = y + k;
                                 if (py < 0) py = 0;
                                 else if (py >= height) py = height - 1;
 
-                                int idx = py * stride + colOffset;
                                 float w = kernel[k + radius];
-                                b += tmpBuffer[idx + 0] * w;
-                                g += tmpBuffer[idx + 1] * w;
-                                r += tmpBuffer[idx + 2] * w;
-                                a += tmpBuffer[idx + 3] * w;
-                                wsum += w;
+                                int srcIdx = py * stride + colOffset;
+                                b += tmpBuffer[srcIdx] * w;
+                                g += tmpBuffer[srcIdx + 1] * w;
+                                r += tmpBuffer[srcIdx + 2] * w;
+                                a += tmpBuffer[srcIdx + 3] * w;
                             }
 
                             int outIdx = y * stride + colOffset;
-                            if (opacity < 1f)
+                            if (blendOpacity)
                             {
-                                finalBuffer[outIdx + 0] = (byte)(srcBuffer[outIdx + 0] * (1f - opacity) + (b / wsum) * opacity);
-                                finalBuffer[outIdx + 1] = (byte)(srcBuffer[outIdx + 1] * (1f - opacity) + (g / wsum) * opacity);
-                                finalBuffer[outIdx + 2] = (byte)(srcBuffer[outIdx + 2] * (1f - opacity) + (r / wsum) * opacity);
-                                finalBuffer[outIdx + 3] = (byte)(srcBuffer[outIdx + 3] * (1f - opacity) + (a / wsum) * opacity);
+                                dstBuffer[outIdx] = (byte)(srcBuffer[outIdx] * invOpacity + b * opacity);
+                                dstBuffer[outIdx + 1] = (byte)(srcBuffer[outIdx + 1] * invOpacity + g * opacity);
+                                dstBuffer[outIdx + 2] = (byte)(srcBuffer[outIdx + 2] * invOpacity + r * opacity);
+                                dstBuffer[outIdx + 3] = (byte)(srcBuffer[outIdx + 3] * invOpacity + a * opacity);
                             }
                             else
                             {
-                                finalBuffer[outIdx + 0] = (byte)(b / wsum);
-                                finalBuffer[outIdx + 1] = (byte)(g / wsum);
-                                finalBuffer[outIdx + 2] = (byte)(r / wsum);
-                                finalBuffer[outIdx + 3] = (byte)(a / wsum);
+                                dstBuffer[outIdx] = (byte)b;
+                                dstBuffer[outIdx + 1] = (byte)g;
+                                dstBuffer[outIdx + 2] = (byte)r;
+                                dstBuffer[outIdx + 3] = (byte)a;
                             }
                         }
                     }
 
-                    // Copy final buffer
-                    Marshal.Copy(finalBuffer, 0, dstData.Scan0, bufSize);
-                    blurred.UnlockBits(dstData);
+                    Marshal.Copy(dstBuffer, 0, dstData.Scan0, bufSize);
+                    result.UnlockBits(dstData);
 
-                    return (Bitmap)blurred.Clone();
+                    return result.Clone() as Bitmap;
                 }
+            }
+        }
+
+        private static float[] BuildKernel(float blurPower, BlurType blurType, out int radius)
+        {
+            switch (blurType)
+            {
+                case BlurType.Gaussian:
+                    {
+                        float sigma = Math.Max(0.1f, blurPower);
+                        radius = (int)Math.Ceiling(3f * sigma);
+                        int kSize = 2 * radius + 1;
+                        float[] kernel = new float[kSize];
+                        float kSum = 0f;
+                        for (int i = 0; i < kSize; i++)
+                        {
+                            int off = i - radius;
+                            float v = (float)Math.Exp(-(off * off) / (2f * sigma * sigma));
+                            kernel[i] = v;
+                            kSum += v;
+                        }
+                        for (int i = 0; i < kSize; i++) kernel[i] /= kSum;
+                        return kernel;
+                    }
+
+                case BlurType.Box:
+                    {
+                        radius = Math.Max(1, (int)Math.Round(blurPower));
+                        int kSize = 2 * radius + 1;
+                        float[] kernel = new float[kSize];
+                        float w = 1f / kSize;
+                        for (int i = 0; i < kSize; i++) kernel[i] = w;
+                        return kernel;
+                    }
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(blurType), blurType, null);
             }
         }
 
@@ -302,6 +334,27 @@ namespace WinPaletter.TypesExtensions
             /// Acrylic noise effect of Windows 10 and later
             /// </summary>
             Acrylic
+        }
+
+        /// <summary>
+        /// Splits a bitmap into <paramref name="count"/> equal-height vertical slices.
+        /// Frame 0 is the topmost slice (Normal), 1 is Hot, 2 is Pressed, 3 is Disabled.
+        /// </summary>
+        public static List<Bitmap> Split(this Bitmap source, int count)
+        {
+            List<Bitmap> frames = [with(count)];
+
+            if (source is null || count <= 0) return frames;
+
+            int frameHeight = source.Height / count;
+
+            for (int i = 0; i < count; i++)
+            {
+                Rectangle slice = new(0, i * frameHeight, source.Width, frameHeight);
+                frames.Add(source.Clone(slice, PixelFormat.Format32bppArgb));
+            }
+
+            return frames;
         }
 
         /// <summary>

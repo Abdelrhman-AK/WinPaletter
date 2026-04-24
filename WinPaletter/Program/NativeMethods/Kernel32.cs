@@ -11,6 +11,19 @@ namespace WinPaletter.NativeMethods
     public class Kernel32
     {
         /// <summary>
+        /// Retrieves the address of an exported function or variable from the specified dynamic-link library (DLL).
+        /// </summary>
+        /// <remarks>This method is typically used for advanced interop scenarios where direct access to
+        /// unmanaged functions is required. The caller is responsible for ensuring that the module handle remains valid
+        /// for the duration of use. This method does not perform any marshaling or type safety checks.</remarks>
+        /// <param name="hModule">A handle to the DLL module that contains the function or variable. The module must have been loaded by a
+        /// previous call to LoadLibrary or a similar function.</param>
+        /// <param name="lpProcName">The name of the function or variable to retrieve, or the function's ordinal value as a string.</param>
+        /// <returns>An IntPtr representing the address of the exported function or variable if found; otherwise, IntPtr.Zero.</returns>
+        [DllImport("kernel32.dll")]
+        public static extern IntPtr GetProcAddress(IntPtr hModule, string lpProcName);
+
+        /// <summary>
         /// Disables File system redirection for the calling thread.
         /// </summary>
         /// <param name="ptr">A pointer to a value that receives the address of the Wow64 redirection information.</param>
