@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Linq.Expressions;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WinPaletter.UI.WP;
@@ -165,7 +168,7 @@ namespace WinPaletter.TypesExtensions
             // Base blurred background
             G.DrawImage(backgroundBlurred, rect);
 
-            // --- Colorization overlay (tint) ---
+            // Colorization overlay (tint)
             if (colorBalance > 0f)
             {
                 int tintAlpha = (int)(alpha * colorBalance * 255);
@@ -175,7 +178,7 @@ namespace WinPaletter.TypesExtensions
                 }
             }
 
-            // --- Subtle darkening layer (DWM adds faint shadow) ---
+            // Subtle darkening layer (DWM adds faint shadow)
             if (alpha > 0f)
             {
                 int shadowAlpha = (int)(alpha * 60); // ~24% opacity
@@ -185,7 +188,7 @@ namespace WinPaletter.TypesExtensions
                 }
             }
 
-            // --- Glow overlay (soft highlight, usually near text or edges) ---
+            // Glow overlay (soft highlight, usually near text or edges)
             if (glowBalance > 0f)
             {
                 int glowAlpha = (int)(alpha * glowBalance * 180); // softer intensity
@@ -195,7 +198,7 @@ namespace WinPaletter.TypesExtensions
                 }
             }
 
-            // --- White highlight (faint top-light effect, optional) ---
+            // White highlight (faint top-light effect, optional)
             int whiteAlpha = (int)((1f - alpha) * 40); // subtle top-glass shine
             if (whiteAlpha > 0)
             {
@@ -246,21 +249,24 @@ namespace WinPaletter.TypesExtensions
         /// or the radius is zero, the path will represent a standard rectangle.</returns>
         public static GraphicsPath Round(this RectangleF rectangle, int radius = -1, RoundedCorners corners = RoundedCorners.All)
         {
-            GraphicsPath path = new();
+            GraphicsPath path = new()
+            {
+                // Reset to default FillMode which is more efficient
+                FillMode = FillMode.Winding
+            };
 
             float width = rectangle.Width;
             float height = rectangle.Height;
 
-            if (width <= 0f || height <= 0f)
-                return path;
+            if (width <= 0f || height <= 0f) return path;
 
-            if (radius < 0)
-                radius = Program.Style.Radius;
+            if (radius < 0) radius = Program.Style.Radius;
 
             float r = Math.Min(radius, Math.Min(width, height) / 2f);
             if (r <= 0f || corners == RoundedCorners.None)
             {
                 path.AddRectangle(rectangle);
+                path.CloseFigure(); // Ensure path is closed
                 return path;
             }
 
@@ -276,9 +282,9 @@ namespace WinPaletter.TypesExtensions
             bool br = corners.HasFlag(RoundedCorners.BottomRight);
             bool bl = corners.HasFlag(RoundedCorners.BottomLeft);
 
-            // True capsule detection (based on half of diameter)
-            bool verticalCapsule = width <= d / 2;
-            bool horizontalCapsule = height <= d / 2;
+            // True capsule detection
+            bool verticalCapsule = width <= r;
+            bool horizontalCapsule = height <= r;
 
             path.StartFigure();
 
@@ -321,41 +327,36 @@ namespace WinPaletter.TypesExtensions
             }
 
             // Normal case — continuous perimeter drawing
-
-            // Top-left corner
+            // Top edge
             if (tl)
                 path.AddArc(left, top, d, d, 180, 90);
             else
                 path.AddLine(left, top + r, left, top);
 
-            // Top edge
             path.AddLine(tl ? left + r : left, top, tr ? right - r : right, top);
 
-            // Top-right corner
+            // Right edge
             if (tr)
                 path.AddArc(right - d, top, d, d, 270, 90);
             else
                 path.AddLine(right, top, right, top + r);
 
-            // Right edge
             path.AddLine(right, tr ? top + r : top, right, br ? bottom - r : bottom);
 
-            // Bottom-right corner
+            // Bottom edge
             if (br)
                 path.AddArc(right - d, bottom - d, d, d, 0, 90);
             else
                 path.AddLine(right, bottom, right - r, bottom);
 
-            // Bottom edge
             path.AddLine(br ? right - r : right, bottom, bl ? left + r : left, bottom);
 
-            // Bottom-left corner
+            // Left edge
             if (bl)
                 path.AddArc(left, bottom - d, d, d, 90, 90);
             else
                 path.AddLine(left, bottom, left, bottom - r);
 
-            // Left edge
             path.AddLine(left, bl ? bottom - r : bottom, left, tl ? top + r : top);
 
             path.CloseFigure();
@@ -365,15 +366,6 @@ namespace WinPaletter.TypesExtensions
         /// <summary>
         /// Fills a rectangle with rounded corners using the specified brush.
         /// </summary>
-        /// <remarks>This method provides a convenient way to fill a rectangle with rounded corners. The radius determines
-        /// the curvature of the corners,  and the <paramref name="forcedRoundCorner"/> parameter ensures rounded corners are
-        /// applied even in edge cases.</remarks>
-        /// <param name="G">The <see cref="Graphics"/> object used to draw the filled rounded rectangle.</param>
-        /// <param name="brush">The <see cref="Brush"/> used to fill the rectangle.</param>
-        /// <param name="rectangle">The <see cref="Rectangle"/> that defines the bounds of the rounded rectangle.</param>
-        /// <param name="radius">The radius of the corners. If set to -1, a default radius is used. Must be non-negative or -1.</param>
-        /// <param name="forcedRoundCorner">A value indicating whether to force the corners to be rounded, even if the radius is zero or the rectangle is too
-        /// small.</param>
         public static void FillRoundedRect(this Graphics G, Brush brush, Rectangle rectangle, int radius = -1, bool forcedRoundCorner = false, RoundedCorners corners = RoundedCorners.All)
         {
             FillRoundedRect(G, brush, new RectangleF(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height), radius, forcedRoundCorner, corners);
@@ -382,50 +374,26 @@ namespace WinPaletter.TypesExtensions
         /// <summary>
         /// Fills a rectangle with rounded corners or a standard rectangle, depending on the specified parameters.
         /// </summary>
-        /// <remarks>If rounded corners are enabled in <c>Program.Style.RoundedCorners</c> or <paramref
-        /// name="forcedRoundCorner"/> is <see langword="true"/>,  the method fills the rectangle with rounded corners using the
-        /// specified or default radius. Otherwise, it fills a standard rectangle.</remarks>
-        /// <param name="G">The <see cref="Graphics"/> object used to draw the filled shape. Cannot be <see langword="null"/>.</param>
-        /// <param name="brush">The <see cref="Brush"/> used to fill the rectangle. Must be a valid, non-<see langword="null"/> brush.</param>
-        /// <param name="rectangle">The <see cref="RectangleF"/> structure that defines the bounds of the rectangle to fill. Must have positive width
-        /// and height.</param>
-        /// <param name="radius">The radius of the rounded corners. If set to -1, the default radius from <c>Program.Style.Radius</c> is used. 
-        /// Ignored if rounded corners are not enabled and <paramref name="forcedRoundCorner"/> is <see langword="false"/>.</param>
-        /// <param name="forcedRoundCorner">A value indicating whether to force the use of rounded corners, even if rounded corners are disabled in
-        /// <c>Program.Style.RoundedCorners</c>.</param>
         public static void FillRoundedRect(this Graphics G, Brush brush, RectangleF rectangle, int radius = -1, bool forcedRoundCorner = false, RoundedCorners corners = RoundedCorners.All)
         {
-            if (G is null || !brush.IsValid() || rectangle.IsEmpty || rectangle.Width <= 0 || rectangle.Height <= 0) return;
+            if (G == null || !IsValid(brush) || rectangle.IsEmpty || rectangle.Width <= 0 || rectangle.Height <= 0) return;
 
             if (radius == -1) radius = Program.Style.Radius;
 
             if ((Program.Style.RoundedCorners || forcedRoundCorner) && radius > 0)
             {
-                using (GraphicsPath path = rectangle.Round(radius, corners))
-                {
-                    G?.FillPath(brush, path);
-                }
+                using GraphicsPath path = rectangle.Round(radius, corners);
+                G.FillPath(brush, path);
             }
             else
             {
-                G?.FillRectangle(brush, rectangle);
+                G.FillRectangle(brush, rectangle);
             }
         }
 
         /// <summary>
         /// Draws an image within a specified rectangle, optionally applying rounded corners.
         /// </summary>
-        /// <remarks>If rounded corners are applied, the method uses anti-aliasing and high-quality rendering settings to
-        /// ensure smooth edges. If rounded corners are not applied, the image is drawn directly within the specified
-        /// rectangle.</remarks>
-        /// <param name="G">The <see cref="Graphics"/> object used to draw the image. Cannot be <see langword="null"/>.</param>
-        /// <param name="image">The <see cref="Image"/> to be drawn. Cannot be <see langword="null"/>.</param>
-        /// <param name="rectangle">The <see cref="Rectangle"/> that defines the bounds in which the image will be drawn. Must have positive width and
-        /// height.</param>
-        /// <param name="radius">The radius of the rounded corners, in pixels. If set to -1, a default radius is used.  Ignored if rounded corners
-        /// are not applied.</param>
-        /// <param name="forcedRoundCorner">A value indicating whether rounded corners should be applied regardless of the global style settings. If <see
-        /// langword="true"/>, rounded corners are applied if <paramref name="radius"/> is greater than 0.</param>
         public static void DrawRoundImage(this Graphics G, Image image, RectangleF rectangle, int radius = -1, bool forcedRoundCorner = false)
         {
             if (G == null || image == null || rectangle.IsEmpty || rectangle.Width <= 0 || rectangle.Height <= 0) return;
@@ -434,59 +402,39 @@ namespace WinPaletter.TypesExtensions
 
             bool useRounded = (Program.Style.RoundedCorners || forcedRoundCorner) && radius > 0;
 
-            if (useRounded)
-            {
-                using GraphicsPath path = rectangle.Round(radius);
-
-                // Save old quality settings
-                SmoothingMode oldSmoothing = G.SmoothingMode;
-                CompositingQuality oldCompositing = G.CompositingQuality;
-                InterpolationMode oldInterpolation = G.InterpolationMode;
-                PixelOffsetMode oldPixelOffset = G.PixelOffsetMode;
-
-                // Save state for clipping
-                GraphicsState state = G.Save();
-
-                try
-                {
-                    G.SmoothingMode = SmoothingMode.AntiAlias;
-                    G.CompositingQuality = CompositingQuality.HighQuality;
-                    G.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                    G.PixelOffsetMode = PixelOffsetMode.HighQuality;
-
-                    G.SetClip(path, CombineMode.Replace);
-                    G.DrawImage(image, rectangle);
-                }
-                finally
-                {
-                    G.ResetClip();
-
-                    // Always restore state and quality settings
-                    G.Restore(state);
-                    G.SmoothingMode = oldSmoothing;
-                    G.CompositingQuality = oldCompositing;
-                    G.InterpolationMode = oldInterpolation;
-                    G.PixelOffsetMode = oldPixelOffset;
-                }
-            }
-            else
+            if (!useRounded)
             {
                 G.DrawImage(image, rectangle);
+                return;
+            }
+
+            using GraphicsPath path = rectangle.Round(radius);
+
+            SmoothingMode oldSmoothing = G.SmoothingMode;
+            PixelOffsetMode oldPixelOffset = G.PixelOffsetMode;
+            Region oldClip = G.Clip; // Save current clip region
+
+            try
+            {
+                G.SmoothingMode = SmoothingMode.AntiAlias;
+                G.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                G.SetClip(path, CombineMode.Intersect); // Use Intersect to preserve existing clips
+                G.DrawImage(image, rectangle);
+            }
+            finally
+            {
+                // Restore original settings
+                G.Clip = oldClip; // Restore previous clip
+                oldClip?.Dispose(); // Dispose old clip
+                G.SmoothingMode = oldSmoothing;
+                G.PixelOffsetMode = oldPixelOffset;
             }
         }
 
         /// <summary>
         /// Draws a rectangle with rounded corners on the specified <see cref="Graphics"/> surface.
         /// </summary>
-        /// <remarks>This method provides a convenient way to draw a rounded rectangle by specifying its bounds and corner
-        /// radius. If the radius is too large for the rectangle's dimensions, the corners may not appear fully
-        /// rounded.</remarks>
-        /// <param name="G">The <see cref="Graphics"/> object on which to draw the rounded rectangle.</param>
-        /// <param name="pen">The <see cref="Pen"/> used to outline the rectangle.</param>
-        /// <param name="rectangle">The <see cref="Rectangle"/> structure that defines the bounds of the rectangle.</param>
-        /// <param name="radius">The radius of the rounded corners. If set to -1, a default radius is used.  Must be a non-negative value or -1.</param>
-        /// <param name="forcedRoundCorner">A value indicating whether to force the corners to be rounded, even if the radius is zero or smaller than the
-        /// rectangle's dimensions.</param>
         public static void DrawRoundedRect(this Graphics G, Pen pen, Rectangle rectangle, int radius = -1, bool forcedRoundCorner = false, RoundedCorners corners = RoundedCorners.All)
         {
             DrawRoundedRect(G, pen, new RectangleF(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height), radius, forcedRoundCorner, corners);
@@ -495,53 +443,29 @@ namespace WinPaletter.TypesExtensions
         /// <summary>
         /// Draws a rectangle with optional rounded corners on the specified <see cref="Graphics"/> surface.
         /// </summary>
-        /// <remarks>If the radius is greater than 0 and rounded corners are enabled (either globally or via <paramref
-        /// name="forcedRoundCorner"/>), the rectangle is drawn with rounded corners. Otherwise, a standard rectangle with sharp
-        /// corners is drawn.</remarks>
-        /// <param name="G">The <see cref="Graphics"/> object on which to draw the rectangle. Cannot be <see langword="null"/>.</param>
-        /// <param name="pen">The <see cref="Pen"/> used to draw the rectangle. Must be a valid, non-null pen.</param>
-        /// <param name="rectangle">The <see cref="RectangleF"/> structure that defines the bounds of the rectangle to draw. Must have positive width
-        /// and height.</param>
-        /// <param name="radius">The radius of the rounded corners, in pixels. If set to -1, a default radius is used. A value of 0 or less results
-        /// in a rectangle with sharp corners.</param>
-        /// <param name="forcedRoundCorner">A <see langword="bool"/> value indicating whether to force rounded corners, even if the global style does not
-        /// specify rounded corners.</param>
         public static void DrawRoundedRect(this Graphics G, Pen pen, RectangleF rectangle, int radius = -1, bool forcedRoundCorner = false, RoundedCorners corners = RoundedCorners.All)
         {
-            if (G is null || !pen.IsValid() || rectangle.IsEmpty || rectangle.Width <= 0 || rectangle.Height <= 0) return;
+            if (G == null || !IsValid(pen) || rectangle.IsEmpty || rectangle.Width <= 0 || rectangle.Height <= 0) return;
 
             if (radius == -1) radius = Program.Style.Radius;
 
-            if ((Program.Style.RoundedCorners | forcedRoundCorner) & radius > 0)
+            if ((Program.Style.RoundedCorners || forcedRoundCorner) && radius > 0)
             {
-                using (GraphicsPath path = rectangle.Round(radius, corners))
-                {
-                    G?.DrawPath(pen, path);
-                }
+                using GraphicsPath path = rectangle.Round(radius, corners);
+                G.DrawPath(pen, path);
             }
             else
             {
-                G?.DrawRectangle(pen, rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+                G.DrawRectangle(pen, rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
             }
         }
 
         /// <summary>
         /// Draws a rounded rectangle with an optional beveled edge effect.
         /// </summary>
-        /// <remarks>This method draws a rectangle with rounded corners if enabled, and optionally applies a beveled edge
-        /// effect along the top or bottom edge. The bevel color is derived from the base color of the <paramref name="pen"/>
-        /// and adjusted based on the current style's dark mode setting.</remarks>
-        /// <param name="G">The <see cref="Graphics"/> object used to draw the rectangle. Cannot be <see langword="null"/>.</param>
-        /// <param name="pen">The <see cref="Pen"/> used to draw the rectangle. Must be valid and non-<see langword="null"/>.</param>
-        /// <param name="rectangleF">The <see cref="RectangleF"/> that defines the bounds of the rounded rectangle. Must have positive width and height.</param>
-        /// <param name="radius">The radius of the rounded corners. If set to -1, the default radius from the current style is used.  The radius is
-        /// clamped to half the width or height of the rectangle to prevent overlapping arcs.</param>
-        /// <param name="forcedRoundCorner">A value indicating whether rounded corners should be forced, even if the current style does not enable them.</param>
-        /// <param name="reverseBevel">A value indicating whether the bevel effect should be reversed. If <see langword="true"/>, the bevel is drawn on the
-        /// opposite edge.</param>
         public static void DrawRoundedRectBeveled(this Graphics G, Pen pen, RectangleF rectangleF, float radius = -1, bool forcedRoundCorner = false, bool reverseBevel = false, RoundedCorners corners = RoundedCorners.All)
         {
-            if (G is null || !pen.IsValid() || rectangleF.IsEmpty || rectangleF.Width <= 0 || rectangleF.Height <= 0) return;
+            if (G == null || !IsValid(pen) || rectangleF.IsEmpty || rectangleF.Width <= 0 || rectangleF.Height <= 0)  return;
 
             bool dark = Program.Style.DarkMode;
             bool useRoundedCorners = Program.Style.RoundedCorners || forcedRoundCorner;
@@ -555,73 +479,58 @@ namespace WinPaletter.TypesExtensions
 
             bool drawTop = dark ^ reverseBevel;
 
-            // Create a path for rounded rectangle
-            using GraphicsPath path = useRoundedCorners ? rectangleF.Round((int)radius, corners) : new GraphicsPath() { };
-            if (!useRoundedCorners)
-            {
-                path.AddRectangle(rectangleF);
-                radius = 0f;
-            }
-
             // Draw the main rounded rectangle
-            G.DrawPath(pen, path);
-
-            if (path != null && path.PointCount > 0 && pen is not null)
+            if (useRoundedCorners && radius > 0)
             {
-                // Draw the bevel effect along top or bottom edge
-                float bevelY = drawTop ? rectangleF.Top : rectangleF.Bottom;
-                float halfRadius = radius / 2f;
-                float x1 = rectangleF.Left + radius;
-                float x2 = rectangleF.Right - radius;
+                using GraphicsPath path = rectangleF.Round((int)radius, corners);
+                G.DrawPath(pen, path);
 
-                using LinearGradientBrush bevelBrush = new(new RectangleF(rectangleF.Left, bevelY - 1, rectangleF.Width, 2), bevelColor, Color.Transparent, 90f)
-                {
-                    InterpolationColors = new ColorBlend(3)
-                    {
-                        Colors = [Color.Transparent, bevelColor, Color.Transparent],
-                        Positions = [0f, 0.5f, 1f]
-                    }
-                };
+                // Draw bevel
+                DrawBevel(G, pen, rectangleF, radius, bevelColor, drawTop);
+            }
+            else
+            {
+                G.DrawRectangle(pen, rectangleF.X, rectangleF.Y, rectangleF.Width, rectangleF.Height);
 
-                using Pen bevelPen = new(bevelBrush, pen.Width)
-                {
-                    DashStyle = pen.DashStyle,
-                    DashOffset = pen.DashOffset
-                };
-
-                G.DrawLine(bevelPen, x1, bevelY, x2, bevelY);
+                // Draw bevel for non-rounded rectangle
+                DrawBevel(G, pen, rectangleF, 0, bevelColor, drawTop);
             }
         }
 
-        /// <summary>
-        /// Draws a rounded rectangle with beveled corners onto the specified <see cref="Graphics"/> surface.
-        /// </summary>
-        /// <remarks>This method draws a rounded rectangle with optional beveled corners. The appearance
-        /// of the corners can be customized using the <paramref name="radius"/>, <paramref name="forcedRoundCorner"/>,
-        /// and <paramref name="reverseBevel"/> parameters.</remarks>
-        /// <param name="G">The <see cref="Graphics"/> object on which the rounded rectangle will be drawn.</param>
-        /// <param name="pen">The <see cref="Pen"/> used to outline the rounded rectangle.</param>
-        /// <param name="rectangle">The <see cref="Rectangle"/> that defines the bounds of the rounded rectangle.</param>
-        /// <param name="radius">The radius of the rounded corners. If set to a negative value, a default radius is used.</param>
-        /// <param name="forcedRoundCorner">A value indicating whether the corners should always be rounded, even if the radius is zero or negative.</param>
-        /// <param name="reverseBevel">A value indicating whether the bevel effect should be reversed, creating an inverted appearance.</param>
+        private static void DrawBevel(Graphics G, Pen pen, RectangleF rect, float radius, Color bevelColor, bool drawTop)
+        {
+            float bevelY = drawTop ? rect.Top : rect.Bottom;
+            float x1 = rect.Left + radius;
+            float x2 = rect.Right - radius;
+
+            if (x1 >= x2) return; // Don't draw if rectangle is too narrow
+
+            // Pre-calculate brush rectangle
+            RectangleF bevelRect = new(rect.Left, bevelY - 1, rect.Width, 2);
+
+            using LinearGradientBrush bevelBrush = new(bevelRect, bevelColor, Color.Transparent, 90f)
+            {
+                InterpolationColors = new ColorBlend(3)
+                {
+                    Colors = [Color.Transparent, bevelColor, Color.Transparent],
+                    Positions = [0f, 0.5f, 1f]
+                }
+            };
+
+            using Pen bevelPen = new(bevelBrush, pen.Width)
+            {
+                DashStyle = pen.DashStyle,
+                DashOffset = pen.DashOffset
+            };
+
+            G.DrawLine(bevelPen, x1, bevelY, x2, bevelY);
+        }
+
         public static void DrawRoundedRectBeveled(this Graphics G, Pen pen, Rectangle rectangle, float radius = -1, bool forcedRoundCorner = false, bool reverseBevel = false, RoundedCorners corners = RoundedCorners.All)
         {
             DrawRoundedRectBeveled(G, pen, new RectangleF(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height), radius, forcedRoundCorner, reverseBevel, corners);
         }
 
-        /// <summary>
-        /// Draws a beveled rectangle with rounded corners in reverse bevel style.
-        /// </summary>
-        /// <remarks>This method draws a rectangle with rounded corners and a reverse bevel effect. The reverse bevel
-        /// style creates an inverted appearance compared to a standard beveled rectangle. The method delegates the drawing to
-        /// an internal implementation with the reverse bevel flag enabled.</remarks>
-        /// <param name="G">The <see cref="Graphics"/> object used to draw the rectangle.</param>
-        /// <param name="pen">The <see cref="Pen"/> used to outline the rectangle.</param>
-        /// <param name="rectangle">The <see cref="Rectangle"/> that defines the bounds of the rectangle to be drawn.</param>
-        /// <param name="radius">The radius of the rounded corners. If set to -1, a default radius is used. Must be non-negative or -1.</param>
-        /// <param name="forcedRoundCorner">A value indicating whether to force the corners to be rounded, even if the radius is zero or the rectangle is too
-        /// small.</param>
         public static void DrawRoundedRectBeveledReverse(this Graphics G, Pen pen, Rectangle rectangle, int radius = -1, bool forcedRoundCorner = false, RoundedCorners corners = RoundedCorners.All)
         {
             DrawRoundedRectBeveled(G, pen, rectangle, radius, forcedRoundCorner, true, corners);
@@ -774,112 +683,55 @@ namespace WinPaletter.TypesExtensions
             return new Rectangle(rect.X - dx, rect.Y - dy, rect.Width + dx * 2, rect.Height + dy * 2);
         }
 
-        /// <summary>
-        /// Determines whether the specified <see cref="Brush"/> instance is valid and not disposed.
-        /// </summary>
-        /// <remarks>
-        /// This method checks whether the <paramref name="brush"/> is a valid, usable instance by
-        /// verifying that it is not <see langword="null"/> and that accessing its properties does not throw exceptions
-        /// typically associated with disposed or invalid objects. If the <paramref name="brush"/> is disposed or invalid,
-        /// the method returns <see langword="false"/>.
-        /// </remarks>
-        /// <param name="brush">The <see cref="Brush"/> instance to validate.</param>
-        /// <returns><see langword="true"/> if the <paramref name="brush"/> is not <see langword="null"/> and has not been
-        /// disposed; otherwise, <see langword="false"/>.</returns>
+        private static readonly Func<Brush, IntPtr> GetBrushHandle = CreateBrushGetter();
+        private static readonly Func<Pen, IntPtr> GetPenHandle = CreatePenGetter();
+
+        private static Func<Brush, IntPtr> CreateBrushGetter()
+        {
+            PropertyInfo pi = typeof(Brush).GetProperty("NativeBrush", BindingFlags.Instance | BindingFlags.NonPublic);
+
+            ParameterExpression p = Expression.Parameter(typeof(Brush));
+            UnaryExpression cast = Expression.Convert(Expression.Property(p, pi), typeof(IntPtr));
+
+            return Expression.Lambda<Func<Brush, IntPtr>>(cast, p).Compile();
+        }
+
+        private static Func<Pen, IntPtr> CreatePenGetter()
+        {
+            PropertyInfo pi = typeof(Pen).GetProperty("NativePen", BindingFlags.Instance | BindingFlags.NonPublic);
+
+            ParameterExpression p = Expression.Parameter(typeof(Pen));
+            UnaryExpression cast = Expression.Convert(Expression.Property(p, pi), typeof(IntPtr));
+
+            return Expression.Lambda<Func<Pen, IntPtr>>(cast, p).Compile();
+        }
+
         public static bool IsValid(this Brush brush)
         {
             if (brush == null) return false;
 
             try
             {
-                switch (brush)
-                {
-                    case SolidBrush sb:
-                        _ = sb.Color; // throws if disposed
-                        break;
-
-                    case LinearGradientBrush lgb:
-                        _ = lgb.Rectangle; // throws if disposed
-                        break;
-
-                    case TextureBrush tb:
-                        _ = tb.Image;
-                        if (tb.Image == null || tb.Image.Width <= 0 || tb.Image.Height <= 0) return false;
-                        break;
-
-                    case HatchBrush hb:
-                        _ = hb.HatchStyle;
-                        _ = hb.ForegroundColor;
-                        _ = hb.BackgroundColor;
-                        break;
-
-                    case PathGradientBrush pgb:
-                        _ = pgb.CenterPoint;
-                        _ = pgb.SurroundColors;
-                        if (pgb.SurroundColors == null || pgb.SurroundColors.Length == 0) return false;
-                        break;
-
-                    default:
-                        // Allow unknown brushes (custom/derived), assume valid
-                        _ = brush;
-                        break;
-                }
+                return GetBrushHandle(brush) != IntPtr.Zero;
             }
-            catch (ObjectDisposedException) { return false; }
-            catch (ArgumentException) { return false; }
-            catch (ExternalException) { return false; }
-
-            return true;
+            catch
+            {
+                return false;
+            }
         }
 
-        /// <summary>
-        /// Determines whether the specified <see cref="Pen"/> instance is valid and not disposed.
-        /// </summary>
-        /// <remarks>
-        /// This method checks whether the <paramref name="pen"/> is a valid, usable instance by
-        /// verifying that it is not <see langword="null"/> and that accessing its properties does not throw exceptions
-        /// typically associated with disposed or invalid objects. If the <paramref name="pen"/> is disposed or invalid,
-        /// the method returns <see langword="false"/>.
-        /// </remarks>
-        /// <param name="pen">The <see cref="Pen"/> instance to validate.</param>
-        /// <returns><see langword="true"/> if the <paramref name="pen"/> is not <see langword="null"/> and has not been
-        /// disposed; otherwise, <see langword="false"/>.</returns>
         public static bool IsValid(this Pen pen)
         {
             if (pen == null) return false;
 
             try
             {
-                _ = pen.Width;
-                _ = pen.Alignment;
-
-                // Only validate SolidBrush strictly; allow LinearGradientBrush, TextureBrush, etc.
-                if (pen.Brush != null)
-                {
-                    Type brushType = pen.Brush.GetType();
-                    if (brushType == typeof(SolidBrush))
-                    {
-                        // Use existing Brush.IsValid() for SolidBrush
-                        if (!pen.Brush.IsValid()) return false;
-                    }
-                }
-
-                // Validate custom dash pattern
-                if (pen.DashStyle == System.Drawing.Drawing2D.DashStyle.Custom)
-                {
-                    float[] pattern = pen.DashPattern;
-                    if (pattern == null || pattern.Length == 0) return false;
-                    foreach (float value in pattern)
-                    {
-                        if (value <= 0 || float.IsNaN(value) || float.IsInfinity(value)) return false;
-                    }
-                }
+                return GetPenHandle(pen) != IntPtr.Zero;
             }
-            catch (ObjectDisposedException) { return false; }
-            catch (ArgumentException) { return false; }
-            catch (ExternalException) { return false; }
-
-            return true;
+            catch
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -951,15 +803,7 @@ namespace WinPaletter.TypesExtensions
         /// <param name="relation"></param>
         /// <param name="imageRect"></param>
         /// <param name="textRect"></param>
-        public static void GetTextAndImageRectangles(
-          RectangleF bounds,
-          SizeF imageSize,
-          SizeF textSize,
-          ContentAlignment imageAlign,
-          ContentAlignment textAlign,
-          TextImageRelation relation,
-          out RectangleF imageRect,
-          out RectangleF textRect)
+        public static void GetTextAndImageRectangles(RectangleF bounds, SizeF imageSize, SizeF textSize, ContentAlignment imageAlign, ContentAlignment textAlign, TextImageRelation relation,  out RectangleF imageRect, out RectangleF textRect)
         {
             imageRect = RectangleF.Empty;
             textRect = RectangleF.Empty;

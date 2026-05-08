@@ -12558,14 +12558,15 @@ namespace WinPaletter
             this.AlertBox3.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
             this.AlertBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.AlertBox3.AutoSize = true;
             this.AlertBox3.BackColor = System.Drawing.Color.Transparent;
             this.AlertBox3.CenterText = false;
             this.AlertBox3.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.AlertBox3.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.AlertBox3.Image = null;
-            this.AlertBox3.Location = new System.Drawing.Point(4, 151);
+            this.AlertBox3.Location = new System.Drawing.Point(4, 147);
             this.AlertBox3.Name = "AlertBox3";
-            this.AlertBox3.Size = new System.Drawing.Size(702, 24);
+            this.AlertBox3.Size = new System.Drawing.Size(438, 22);
             this.AlertBox3.TabIndex = 131;
             this.AlertBox3.TabStop = false;
             this.AlertBox3.Text = "This application is installed by default in Windows XP and it has sounds entries." +
@@ -13338,6 +13339,7 @@ namespace WinPaletter
             this.panel79.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox69)).EndInit();
             this.TabPage12.ResumeLayout(false);
+            this.TabPage12.PerformLayout();
             this.panel86.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox81)).EndInit();
             this.panel85.ResumeLayout(false);

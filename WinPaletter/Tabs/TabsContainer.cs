@@ -28,36 +28,6 @@ namespace WinPaletter.Tabs
             AllowDrop = true;
 
             InitializeContextMenu();
-
-            Controls.Add(btn_help);
-            Controls.Add(btn_min);
-            Controls.Add(btn_max);
-            Controls.Add(btn_close);
-
-            btn_close.Click += (s, e) =>
-            {
-                if (FindForm() != null) FindForm().Close();
-            };
-
-            btn_help.Click += (s, e) =>
-            {
-                IntPtr intPtr = SelectedTabData?.Form?.Handle ?? IntPtr.Zero;
-                if (intPtr != IntPtr.Zero)
-                {
-                    User32.SendMessage(intPtr, 0x0112 /*WM_SYSCOMMAND*/, 0xF180 /*SC_CONTEXTHELP*/, 0);
-                }
-            };
-
-            btn_min.Click += (s, e) =>
-            {
-                if (FindForm() != null) FindForm().WindowState = FormWindowState.Minimized;
-            };
-
-            btn_max.Click += (s, e) =>
-            {
-                if (FindForm() != null) FindForm().WindowState = FindForm().WindowState == FormWindowState.Maximized ? FormWindowState.Normal : FormWindowState.Maximized;
-                btn_max.Button = FindForm().WindowState == FormWindowState.Maximized ? ControlBoxBitmaps.CaptionButton.Restore : ControlBoxBitmaps.CaptionButton.Maximize;
-            };
         }
 
         #region Variables
@@ -770,15 +740,6 @@ namespace WinPaletter.Tabs
 
         #endregion
 
-        #region ControlBox buttons
-
-        readonly UI.WP.ControlBoxButton btn_close = new() { Button = ControlBoxBitmaps.CaptionButton.Close, Dock = DockStyle.Right, Width = 47 };
-        readonly UI.WP.ControlBoxButton btn_max = new() { Button = ControlBoxBitmaps.CaptionButton.Maximize, Dock = DockStyle.Right, Width = 47 };
-        readonly UI.WP.ControlBoxButton btn_min = new() { Button = ControlBoxBitmaps.CaptionButton.Minimize, Dock = DockStyle.Right, Width = 47 };
-        readonly UI.WP.ControlBoxButton btn_help = new() { Button = ControlBoxBitmaps.CaptionButton.Help, Dock = DockStyle.Right, Width = 37 };
-
-        #endregion
-
         #region Properties
 
         /// <summary>
@@ -1298,7 +1259,7 @@ namespace WinPaletter.Tabs
             {
                 Rectangle rect = new(0, 0, Width - 1, Height - 1);
                 SizeF betaSize = Program.Localization.Strings.General.Beta.ToUpper().Measure(Fonts.ConsoleMedium) + new SizeF(2, 2);
-                Rectangle betaRect = new(btn_help.Left - (int)betaSize.Width - 5, rect.Y + (int)((rect.Height - betaSize.Height) / 2), (int)betaSize.Width, (int)betaSize.Height);
+                Rectangle betaRect = new(Width - (int)betaSize.Width - 5, rect.Y + (int)((rect.Height - betaSize.Height) / 2), (int)betaSize.Width, (int)betaSize.Height);
                 G.FillRoundedRect(scheme_secondary.Brushes.Back_Checked, betaRect);
                 G.DrawRoundedRectBeveled(scheme_secondary.Pens.Line_Checked, betaRect);
                 using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())

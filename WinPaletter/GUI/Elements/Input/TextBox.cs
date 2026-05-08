@@ -44,6 +44,8 @@ namespace WinPaletter.UI.WP
 
             BackColor = Color.Transparent;
             DoubleBuffered = true;
+
+            Config.DarkModeChanged += DarkModeChanged;
         }
 
         #region Variables
@@ -72,6 +74,7 @@ namespace WinPaletter.UI.WP
                     tb.TextChanged -= OnBaseTextChanged;
                     tb.KeyDown -= OnBaseKeyDown;
                     tb.KeyPress -= OnKeyPress;
+                    tb.HandleCreated -= Tb_HandleCreated;
                 }
 
                 tb = value;
@@ -86,9 +89,11 @@ namespace WinPaletter.UI.WP
                     tb.TextChanged += OnBaseTextChanged;
                     tb.KeyDown += OnBaseKeyDown;
                     tb.KeyPress += OnKeyPress;
+                    tb.HandleCreated += Tb_HandleCreated;
                 }
             }
         }
+
         private System.Windows.Forms.TextBox tb;
 
 
@@ -286,6 +291,11 @@ namespace WinPaletter.UI.WP
 
         #region Events/Overrides
 
+        private void DarkModeChanged()
+        {
+            if (tb.IsHandleCreated) SetControlTheme(tb.Handle, Program.Style.DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Explorer);
+        }
+
         /// <summary>
         /// Calculates the proper height for the inner TextBox based on current font
         /// </summary>
@@ -473,6 +483,11 @@ namespace WinPaletter.UI.WP
         {
             if (CanAnimate) { Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
             else { alpha = 0; }
+        }
+
+        private void Tb_HandleCreated(object sender, EventArgs e)
+        {
+            DarkModeChanged();
         }
 
         protected override void OnForeColorChanged(EventArgs e)

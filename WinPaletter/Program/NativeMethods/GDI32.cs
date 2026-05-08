@@ -364,6 +364,41 @@ namespace WinPaletter.NativeMethods
         public static extern bool DeleteObject(IntPtr ho);
 
         /// <summary>
+        /// Creates a logical brush with a solid color for use in GDI drawing operations.
+        /// </summary>
+        /// <remarks>The caller is responsible for releasing the brush by calling DeleteObject when it is
+        /// no longer needed to avoid resource leaks.</remarks>
+        /// <param name="crColor">The color value of the brush, specified as a COLORREF value. The low-order byte contains the red component,
+        /// the next byte contains the green component, and the third byte contains the blue component.</param>
+        /// <returns>A handle to the created logical brush. Returns IntPtr.Zero if the function fails.</returns>
+        [DllImport("gdi32.dll", SetLastError = true)]
+        public static extern IntPtr CreateSolidBrush(int crColor);
+
+        /// <summary>
+        /// Sets the background color for the specified device context.
+        /// </summary>
+        /// <remarks>The background color is used with text, hatched brushes, and other drawing operations
+        /// that use the device context. If the function fails, the return value is CLR_INVALID. Use
+        /// Marshal.GetLastWin32Error to obtain error information.</remarks>
+        /// <param name="hdc">A handle to the device context whose background color is to be set.</param>
+        /// <param name="crColor">The new background color value. This parameter must be a COLORREF value.</param>
+        /// <returns>The previous background color as a COLORREF value if successful; otherwise, CLR_INVALID.</returns>
+        [DllImport("gdi32.dll", SetLastError = true)]
+        public static extern int SetBkColor(IntPtr hdc, int crColor);
+
+        /// <summary>
+        /// Sets the text color for the specified device context.
+        /// </summary>
+        /// <remarks>If the function fails, the return value is –1. To get extended error information,
+        /// call GetLastError. This function affects text drawn after the call; previously drawn text is not
+        /// affected.</remarks>
+        /// <param name="hdc">A handle to the device context whose text color is to be set.</param>
+        /// <param name="crColor">The new text color, specified as a COLORREF value. The color value must be in 0x00bbggrr format.</param>
+        /// <returns>The previous text color as a COLORREF value if successful; otherwise, –1 to indicate failure.</returns>
+        [DllImport("gdi32.dll", SetLastError = true)]
+        public static extern int SetTextColor(IntPtr hdc, int crColor);
+
+        /// <summary>
         /// Creates a device-independent bitmap (DIB) that applications can write to directly and selects it into a
         /// device context.
         /// </summary>

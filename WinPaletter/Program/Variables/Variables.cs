@@ -33,7 +33,7 @@ namespace WinPaletter
         /// <remarks>The log file is stored in the directory specified by <see cref="SysPaths.LogsDir"/> and is named using
         /// the format "WinPaletter_Log_yyyyMMdd_HHmmss.json", where the timestamp reflects the moment the application
         /// initialized this field.</remarks>
-        public static string LogFile => $"{SysPaths.LogsDir}\\WinPaletter_Log_{DateTime.Now:yyyyMMdd_HHmmss}.json";
+        public static string LogFile { get; } = $"{SysPaths.LogsDir}\\WinPaletter_Log_{DateTime.Now:yyyyMMdd_HHmmss}.json";
 
         /// <summary>
         /// Class represents colors for WinPaletter Controls (Styles)

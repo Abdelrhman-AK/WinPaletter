@@ -114,7 +114,7 @@ namespace WinPaletter.NativeMethods
             bool useRoundedCorners = Program.Settings.Appearance.ManagedByTheme && Program.Settings.Appearance.CustomColors && !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8x && !OS.W10;
             int attributeValue = darkMode ? 1 : 0;
             int backdropType = OS.W10 ? 3 : 2;
-            int mica = darkMode ? 2 : 4;
+            int mica = darkMode ? (int)DWMAPI.DWM_SYSTEMBACKDROP_TYPE.DWMSBT_MAINWINDOW : (int)DWMAPI.DWM_SYSTEMBACKDROP_TYPE.DWMSBT_TABBEDWINDOW;
 
             // Make the form have rounded corners if the operating system is Windows 11 or 12
             // It should be used as a fallback for the custom styling. Make both start by 'If' statement, not 'Else If'

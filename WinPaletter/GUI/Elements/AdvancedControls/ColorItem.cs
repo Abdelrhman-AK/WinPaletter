@@ -49,7 +49,7 @@ namespace WinPaletter.UI.Controllers
         ToolStripMenuItem copy_AsKnownName = new();
         ToolStripMenuItem copy_AsCSS = new();
 
-        private static Font genericMonospacedFont = new(FontFamily.GenericMonospace.Name, 8.5f, FontStyle.Regular);
+        private static Font genericMonospacedFont = new(Fonts.FallbackConsoleFont, 8.5f, FontStyle.Regular);
 
         public ColorItem()
         {

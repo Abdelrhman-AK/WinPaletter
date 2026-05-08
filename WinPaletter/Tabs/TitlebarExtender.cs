@@ -183,10 +183,16 @@ namespace WinPaletter.Tabs
                     form.Deactivate += Form_Deactivate;
                     form.Load += Form_Load;
                     SystemEvents.UserPreferenceChanged += OnSystemSettingsUpdated;
+                    Config.DarkModeChanged += Config_DarkModeChanged;
                 }
 
                 UpdateBackDrop();
             }
+        }
+
+        private void Config_DarkModeChanged()
+        {
+            UpdateStyles();
         }
 
         /// <summary>
@@ -200,6 +206,7 @@ namespace WinPaletter.Tabs
                 FindForm()?.Activated -= Form_Activated;
                 FindForm()?.Deactivate -= Form_Deactivate;
                 SystemEvents.UserPreferenceChanged -= OnSystemSettingsUpdated;
+                Config.DarkModeChanged -= Config_DarkModeChanged;
             }
 
             base.OnHandleDestroyed(e);
@@ -375,7 +382,7 @@ namespace WinPaletter.Tabs
             {
                 case TitlebarTypes.DWM:
                     BackColor = Color.Black;
-                    if (needsRedraw && p != Padding.Empty) form.DropEffect(p);
+                    if (needsRedraw && p != Padding.Empty) form.DropEffect(p, FormStyle: Program.Style.DarkMode ? DWM.DWMStyles.Mica : DWM.DWMStyles.Tabbed);
                     break;
                 case TitlebarTypes.DWM_Aero:
                     BackColor = Color.Black;

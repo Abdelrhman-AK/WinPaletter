@@ -8,20 +8,22 @@ namespace WinPaletter.GlobalVariables
     /// </summary>
     public static class Fonts
     {
+        public static string FallbackConsoleFont { get; } = Exists("Cascadia Mono") ? "Cascadia Mono" : Exists("Consolas") ? "Consolas" : "Lucida Console";
+
         /// <summary>
         /// Monospaced font for console-like text
         /// </summary>
-        public static Font Console { get; set; } = new("Lucida Console", 7.5f);
+        public static Font Console { get; set; } = new(FallbackConsoleFont, 7.5f);
 
         /// <summary>
         /// Monospaced font for console-like text (medium)
         /// </summary>
-        public static Font ConsoleMedium { get; set; } = new("Lucida Console", 9f);
+        public static Font ConsoleMedium { get; set; } = new(FallbackConsoleFont, 9f);
 
         /// <summary>
         /// Monospaced font for console-like text (large)
         /// </summary>
-        public static Font ConsoleLarge { get; set; } = new("Lucida Console", 10f);
+        public static Font ConsoleLarge { get; set; } = new(FallbackConsoleFont, 10f);
 
         /// <summary>
         /// Main font for application titles

@@ -473,7 +473,6 @@ namespace WinPaletter.UI.WP
                     }
                 }
 
-                // Sometimes, Noise is used anywhere else and will throw an error
                 try
                 {
                     if (Noise.IsValid()) G.FillRectangle(Noise, Rect);

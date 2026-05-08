@@ -52,7 +52,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
             this.ClientSize = new System.Drawing.Size(933, 519);
-            this.ControlBox = false;
             this.Controls.Add(this.tabsContainer1);
             this.Name = "TabsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

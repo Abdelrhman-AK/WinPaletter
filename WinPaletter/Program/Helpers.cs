@@ -330,6 +330,10 @@ namespace WinPaletter
             {
                 Program.Log?.Write(LogEventLevel.Information, $"Loading JetBrains Mono font from memory.");
 
+                Fonts.Console?.Dispose();
+                Fonts.ConsoleMedium?.Dispose();
+                Fonts.ConsoleLarge?.Dispose();
+
                 using (MemoryStream ms = new(Resources.JetBrainsMono))
                 using (ZipArchive zip = new(ms))
                 using (MemoryStream _as = new())
@@ -347,9 +351,13 @@ namespace WinPaletter
             {
                 Program.Log?.Write(LogEventLevel.Warning, $"Failed to load JetBrains Mono font from memory, falling back to Lucida Console.");
 
-                Fonts.Console = new("Lucida Console", 7.5f);
-                Fonts.ConsoleMedium = new("Lucida Console", 9f);
-                Fonts.ConsoleLarge = new("Lucida Console", 10f);
+                Fonts.Console?.Dispose();
+                Fonts.ConsoleMedium?.Dispose();
+                Fonts.ConsoleLarge?.Dispose();
+
+                Fonts.Console = new(Fonts.FallbackConsoleFont, 7.5f);
+                Fonts.ConsoleMedium = new(Fonts.FallbackConsoleFont, 9f);
+                Fonts.ConsoleLarge = new(Fonts.FallbackConsoleFont, 10f);
             }
         }
 

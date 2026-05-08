@@ -1274,11 +1274,11 @@ namespace WinPaletter
         {
             if (Directory.Exists(SysPaths.LogsDir))
             {
-                foreach (string file in Directory.GetFiles(SysPaths.LogsDir))
+                foreach (string file in Directory.EnumerateFiles(SysPaths.LogsDir))
                 {
                     try
                     {
-                        if (file != Program.LogFile && File.Exists(file))
+                        if (!Path.GetFullPath(file).Equals(Program.LogFile, StringComparison.OrdinalIgnoreCase) && File.Exists(file))
                         {
                             File.Delete(file);
                         }

@@ -369,10 +369,6 @@
     <Compile Include="Assets\Win81Preview.Designer.cs" />
     <Compile Include="Assets\WinLogos.Designer.cs" />
     <Compile Include="Assets\WinVistaPreview.Designer.cs" />
-    <Compile Include="Tabs\ControlBoxBitmaps.cs" />
-    <Compile Include="Tabs\ControlBoxButton.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="ColorsAndPalettesHandlers\ColorEffectMiniControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -473,8 +469,19 @@
     <Compile Include="GUI\Elements\ContainersAndBoxes\SmoothPanels.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="GUI\Style\ControlProperty.cs" />
+    <Compile Include="ColorsAndPalettesHandlers\ControlProperty.cs" />
+    <Compile Include="GUI\Style\Config.cs" />
     <Compile Include="GUI\Style\Dialogs\IconPicker.cs" />
+    <Compile Include="GUI\Style\SchemeEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GUI\Style\Structures.cs" />
+    <Compile Include="GUI\Style\TestControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Style\TestControl.Designer.cs">
+      <DependentUpon>TestControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Home.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -611,9 +618,6 @@
     <Compile Include="GUI\RetroElements\Simulators\WindowControlR.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="GUI\SchemeEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Languages\Localizer\Strings\General\Backup.cs" />
     <Compile Include="Program\Assemblies\libmsstyle\Animation.cs" />
     <Compile Include="Program\Assemblies\libmsstyle\CubicBezierTimingFunction.cs" />
@@ -654,12 +658,6 @@
     </Compile>
     <Compile Include="GUI\Elements\Progress\ProgressBar.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\Style\TestControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="GUI\Style\TestControl.Designer.cs">
-      <DependentUpon>TestControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Languages\Localizer\Strings\Features\Features.cs" />
     <Compile Include="Languages\Localizer\Strings\General\Previewer.cs" />
@@ -792,7 +790,6 @@
     <Compile Include="GUI\Style\Dialogs\InputBox.cs" />
     <Compile Include="GUI\Style\Dialogs\MsgBox.cs" />
     <Compile Include="GUI\Style\Helpers.cs" />
-    <Compile Include="GUI\Style\Structures.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1109,7 +1106,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="GUI\Style\VisualStylesRes.cs" />
-    <Compile Include="GUI\Style\Config.cs" />
     <Compile Include="Languages\Lang_Add_Snippet.Designer.cs">
       <DependentUpon>Lang_Add_Snippet.cs</DependentUpon>
     </Compile>

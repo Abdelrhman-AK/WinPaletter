@@ -252,7 +252,16 @@ namespace WinPaletter.UI.Style
 
             if (!skip)
             {
-                if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8x) SetControlTheme(ctrl.Handle, DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default);
+                if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8x)
+                {
+                    SetControlTheme(ctrl.Handle, DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default);
+
+                    User32.EnumChildWindows(ctrl.Handle, (child, _) =>
+                    {
+                        SetControlTheme(child, Program.Style.DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Explorer);
+                        return true;
+                    }, IntPtr.Zero);
+                }
 
                 ctrl.ForeColor = DarkMode ? Color.White : Color.Black;
             }
