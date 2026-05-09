@@ -59,6 +59,21 @@ namespace WinPaletter.NativeMethods
         public static extern int GetSystemMetrics(int nIndex);
 
         /// <summary>
+        /// Retrieves the parameters of a scroll bar, including its range, page size, position, and tracking position.
+        /// </summary>
+        /// <remarks>The SCROLLINFO structure's cbSize member must be set to the size of the structure
+        /// before calling this function. This method is typically used in interop scenarios to call the native Win32
+        /// API.</remarks>
+        /// <param name="hwnd">A handle to the window with the scroll bar.</param>
+        /// <param name="fnBar">The type of scroll bar to retrieve information for. Specify SB_HORZ for the window's standard horizontal
+        /// scroll bar, SB_VERT for the standard vertical scroll bar, or SB_CTL for a scroll bar control.</param>
+        /// <param name="lpsi">A reference to a SCROLLINFO structure that, on input, specifies the scroll bar parameters to retrieve, and
+        /// on output, receives the scroll bar information.</param>
+        /// <returns>true if the function retrieves any values; otherwise, false.</returns>
+        [DllImport("user32.dll")]
+        public static extern bool GetScrollInfo(IntPtr hwnd, int fnBar, ref SCROLLINFO lpsi);
+
+        /// <summary>
         /// Loads the specified cursor resource from the application's executable file or a system-defined cursor.
         /// </summary>
         /// <remarks>This method is a wrapper for the Windows API function <c>LoadCursor</c>. When using system-defined
@@ -969,6 +984,24 @@ namespace WinPaletter.NativeMethods
             public IntPtr lpszDefaultScheme;
         }
 
+        /// <summary>
+        /// Contains scroll bar parameters used by Windows API functions to retrieve or set scroll bar information.
+        /// </summary>
+        /// <remarks>The SCROLLINFO structure is typically used with native Windows API calls to specify
+        /// or receive information about a scroll bar's range, page size, position, and tracking position. All fields
+        /// must be initialized appropriately before passing the structure to API functions. The cbSize field must be
+        /// set to the size of the structure in bytes.</remarks>
+        [StructLayout(LayoutKind.Sequential)]
+        public struct SCROLLINFO
+        {
+            public int cbSize;
+            public int fMask;
+            public int nMin;
+            public int nMax;
+            public int nPage;
+            public int nPos;
+            public int nTrackPos;
+        }
 
         [StructLayout(LayoutKind.Sequential)]
         public struct MSLLHOOKSTRUCT

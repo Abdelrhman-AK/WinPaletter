@@ -33,9 +33,9 @@ namespace WinPaletter.UI.WP
             if (_lastWidth != Width || _lastHeight != Height || _lastAlpha != alpha)
             {
                 int marginVal = (int)(alpha / 255f * 0.6 * shadowSize);
-                _rect_all = new Rectangle(0, 0, Width - 1, Height - 1);
-                _rect = new Rectangle(_rect_all.X + shadowSize, _rect_all.Y + shadowSize, _rect_all.Width - shadowSize * 2, _rect_all.Height - shadowSize * 2);
-                _rect_margin = new Rectangle(_rect_all.X + shadowSize - marginVal, _rect_all.Y + shadowSize - marginVal, _rect_all.Width - shadowSize * 2 + marginVal * 2, _rect_all.Height - shadowSize * 2 + marginVal * 2);
+                _rect_all = new(0, 0, Width - 1, Height - 1);
+                _rect = new(_rect_all.X + shadowSize, _rect_all.Y + shadowSize, _rect_all.Width - shadowSize * 2, _rect_all.Height - shadowSize * 2);
+                _rect_margin = new(_rect_all.X + shadowSize - marginVal, _rect_all.Y + shadowSize - marginVal, _rect_all.Width - shadowSize * 2 + marginVal * 2, _rect_all.Height - shadowSize * 2 + marginVal * 2);
                 _lastWidth = Width;
                 _lastHeight = Height;
                 _lastAlpha = alpha;
@@ -91,7 +91,6 @@ namespace WinPaletter.UI.WP
             }
         }
 
-        // Removed async/await and Task.Run for performance
         protected override void OnMouseEnter(EventArgs e)
         {
             State = MouseState.Over;
@@ -369,7 +368,7 @@ namespace WinPaletter.UI.WP
                 }
 
                 ////Disabled for better performance
-                //G.DrawGlow(rect_all, Color.FromArgb(alpha_hover, _color.CB(-0.1f)), shadowSize, 30, true);
+                //G.DrawGlow(rect_margin, Color.FromArgb(alpha, scheme.Colors.Back().CB(-0.1f)), shadowSize, 30, Program.Style.RoundedCorners);
 
                 using (Config.Colors_Collection colors = new(_color, _color, Program.Style.DarkMode))
                 using (SolidBrush br0 = new(colors.Back_Checked))
@@ -422,7 +421,7 @@ namespace WinPaletter.UI.WP
             else
             {
                 ////Disabled for better performance
-                //G.DrawGlow(rect_margin, Color.FromArgb(alpha_hover, scheme.Palette.Back.CB(-0.1f)), shadowSize, 30, Program.Style.RoundedCorners);
+                //G.DrawGlow(rect_margin, Color.FromArgb(alpha, scheme.Colors.Back().CB(-0.1f)), shadowSize, 30, Program.Style.RoundedCorners);
 
                 using (SolidBrush br = new(scheme.Colors.Back(parentLevel)))
                 {
@@ -542,13 +541,11 @@ namespace WinPaletter.UI.WP
             clipPath.Dispose();
         }
 
-        public static float Lerp(float a, float b, float t)
+        private static float Lerp(float a, float b, float t)
         {
             return a + (b - a) * t;
         }
-
-        // Utility method for linear interpolation with integer values
-        public static int Lerp(int a, int b, float t)
+        private static int Lerp(int a, int b, float t)
         {
             return (int)Lerp(a, (float)b, t);
         }

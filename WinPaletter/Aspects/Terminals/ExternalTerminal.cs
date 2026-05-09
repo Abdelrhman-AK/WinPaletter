@@ -400,9 +400,9 @@ namespace WinPaletter
             _Shown = true;
         }
 
-        public void FillTerminals(ComboBox ListBox)
+        public void FillTerminals(ComboBox comboBox)
         {
-            ListBox.Items.Clear();
+            comboBox.Items.Clear();
 
             foreach (string x in GetSubKeys("HKEY_CURRENT_USER\\Console"))
             {
@@ -414,7 +414,7 @@ namespace WinPaletter
 
                 if (!startupCondition && !systemRootCondition && !cmdExeCondition && !powershellExeCondition && !sysWow64PowershellCondition)
                 {
-                    ListBox.Items.Add(x);
+                    comboBox.Items.Add(x);
                 }
             }
         }

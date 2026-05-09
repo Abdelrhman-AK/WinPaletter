@@ -88,7 +88,7 @@ namespace WinPaletter
             this.PictureBox6 = new System.Windows.Forms.PictureBox();
             this.Button17 = new WinPaletter.UI.WP.Button();
             this.Button18 = new WinPaletter.UI.WP.Button();
-            this.ListBox1 = new System.Windows.Forms.ListBox();
+            this.ListBox1 = new WinPaletter.UI.WP.ListBox();
             this.Button4 = new WinPaletter.UI.WP.Button();
             this.TextBox2 = new WinPaletter.UI.WP.TextBox();
             this.PictureBox5 = new System.Windows.Forms.PictureBox();
@@ -751,9 +751,9 @@ namespace WinPaletter
             this.Button6.Image = null;
             this.Button6.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Down;
             this.Button6.ImageGlyphEnabled = true;
-            this.Button6.Location = new System.Drawing.Point(561, 130);
+            this.Button6.Location = new System.Drawing.Point(561, 128);
             this.Button6.Name = "Button6";
-            this.Button6.Size = new System.Drawing.Size(34, 24);
+            this.Button6.Size = new System.Drawing.Size(34, 23);
             this.Button6.TabIndex = 185;
             this.Button6.UseVisualStyleBackColor = false;
             this.Button6.Click += new System.EventHandler(this.Button6_Click);
@@ -768,9 +768,9 @@ namespace WinPaletter
             this.Button5.Image = null;
             this.Button5.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Up;
             this.Button5.ImageGlyphEnabled = true;
-            this.Button5.Location = new System.Drawing.Point(561, 102);
+            this.Button5.Location = new System.Drawing.Point(561, 101);
             this.Button5.Name = "Button5";
-            this.Button5.Size = new System.Drawing.Size(34, 24);
+            this.Button5.Size = new System.Drawing.Size(34, 23);
             this.Button5.TabIndex = 184;
             this.Button5.UseVisualStyleBackColor = false;
             this.Button5.Click += new System.EventHandler(this.Button5_Click);
@@ -886,9 +886,9 @@ namespace WinPaletter
             this.Button17.Image = null;
             this.Button17.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Remove;
             this.Button17.ImageGlyphEnabled = true;
-            this.Button17.Location = new System.Drawing.Point(561, 158);
+            this.Button17.Location = new System.Drawing.Point(561, 156);
             this.Button17.Name = "Button17";
-            this.Button17.Size = new System.Drawing.Size(34, 24);
+            this.Button17.Size = new System.Drawing.Size(34, 23);
             this.Button17.TabIndex = 170;
             this.Button17.UseVisualStyleBackColor = false;
             this.Button17.Click += new System.EventHandler(this.Button17_Click);
@@ -905,7 +905,7 @@ namespace WinPaletter
             this.Button18.ImageGlyphEnabled = true;
             this.Button18.Location = new System.Drawing.Point(561, 74);
             this.Button18.Name = "Button18";
-            this.Button18.Size = new System.Drawing.Size(34, 24);
+            this.Button18.Size = new System.Drawing.Size(34, 23);
             this.Button18.TabIndex = 169;
             this.Button18.UseVisualStyleBackColor = false;
             this.Button18.Click += new System.EventHandler(this.Button18_Click);
@@ -914,15 +914,16 @@ namespace WinPaletter
             // 
             this.ListBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ListBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
-            this.ListBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ListBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.ListBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.ListBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.ListBox1.ForeColor = System.Drawing.Color.White;
             this.ListBox1.FormattingEnabled = true;
-            this.ListBox1.ItemHeight = 15;
+            this.ListBox1.ItemHeight = 26;
             this.ListBox1.Location = new System.Drawing.Point(168, 74);
             this.ListBox1.Name = "ListBox1";
             this.ListBox1.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
-            this.ListBox1.Size = new System.Drawing.Size(386, 107);
+            this.ListBox1.Size = new System.Drawing.Size(386, 104);
             this.ListBox1.TabIndex = 168;
             // 
             // Button4
@@ -1468,7 +1469,7 @@ namespace WinPaletter
         internal UI.WP.Button Button4;
         internal UI.WP.TextBox TextBox2;
         internal PictureBox PictureBox5;
-        internal ListBox ListBox1;
+        internal UI.WP.ListBox ListBox1;
         internal PictureBox PictureBox6;
         internal UI.WP.Button Button17;
         internal UI.WP.Button Button18;

@@ -16,7 +16,7 @@ namespace WinPaletter.UI.WP
     {
         public Toggle()
         {
-            SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor, true);
+            SetStyle(ControlStyles.UserPaint |  ControlStyles.SupportsTransparentBackColor |  ControlStyles.OptimizedDoubleBuffer |  ControlStyles.AllPaintingInWmPaint |  ControlStyles.ResizeRedraw, true);
             DoubleBuffered = true;
             BackColor = Color.Transparent;
 
@@ -34,14 +34,24 @@ namespace WinPaletter.UI.WP
         }
 
         #region Variables
+
         private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
 
         private RectangleF CheckC = new(4, 4, 11, 11);
         private bool WasMoving = false;
         private readonly int DarkLight_TogglerSize = 13;
+        
+        private Rectangle _mainRect;
+        private int _min = 4;
+        private int _max;
+        private float _lastAlpha = -1;
+        private bool _lastDarkLightMode = false;
+        private bool _lastCheckedState = false;
+
         #endregion
 
         #region Properties
+
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
         public new Color BackColor { get => Color.Transparent; set {; } }
 
@@ -73,11 +83,20 @@ namespace WinPaletter.UI.WP
         public float CheckerX
         {
             get => _checkerX;
-            set { _checkerX = value; Invalidate(); }
+            set 
+            { 
+                if (_checkerX != value)
+                {
+                    _checkerX = value; 
+                    Invalidate();
+                }
+            }
         }
+
         #endregion
 
         #region Events/Overrides
+
         public event EventHandler CheckedChanged;
 
         protected virtual void OnCheckedChanged()
@@ -107,6 +126,9 @@ namespace WinPaletter.UI.WP
             Height = 20;
             if (Width < 40) Width = 40;
 
+            _mainRect = new Rectangle(0, 0, Width - 1, Height - 1);
+            _max = Width - 17;
+
             if (DarkLight_Toggler)
             {
                 CheckC.Width = DarkLight_TogglerSize;
@@ -127,14 +149,18 @@ namespace WinPaletter.UI.WP
                 // Only consider it a drag if it moves more than 2 pixels
                 if (i - CheckerX > 2f) WasMoving = true;
 
-                if (i <= 4) _checkerX = 4;
-                else if (i >= Width - 17) _checkerX = Width - 17;
-                else _checkerX = i;
+                float newCheckerX;
+                if (i <= 4) newCheckerX = 4;
+                else if (i >= Width - 17) newCheckerX = Width - 17;
+                else newCheckerX = i;
 
-                CheckC.X = CheckerX;
-                CheckC.Y = 4;
-
-                Invalidate();
+                if (Math.Abs(_checkerX - newCheckerX) > 0.1f)
+                {
+                    _checkerX = newCheckerX;
+                    CheckC.X = CheckerX;
+                    CheckC.Y = 4;
+                    Invalidate();
+                }
             }
 
             base.OnMouseMove(e);
@@ -164,9 +190,11 @@ namespace WinPaletter.UI.WP
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            CheckC.Width = 13;
-
-            Invalidate();
+            if (CheckC.Width != 13)
+            {
+                CheckC.Width = 13;
+                Invalidate();
+            }
 
             base.OnMouseDown(e);
         }
@@ -178,7 +206,6 @@ namespace WinPaletter.UI.WP
 
             parentLevel = this.Level();
         }
-
 
         #endregion
 
@@ -196,92 +223,92 @@ namespace WinPaletter.UI.WP
             //Makes background drawn properly, and transparent
             InvokePaintBackground(this, e);
 
-            Rectangle MainRect = new(0, 0, Width - 1, Height - 1);
+            // Initialize cached values if needed
+            if (_mainRect.Width != Width - 1 || _mainRect.Height != Height - 1)
+            {
+                _mainRect = new Rectangle(0, 0, Width - 1, Height - 1);
+                _max = Width - 17;
+            }
 
             Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
 
             CheckC.X = CheckerX;
 
-            int min = 4;
-            int max = Width - 17;
-            float val = (float)(CheckC.X / max);
-
+            // Calculate alpha value - optimized to avoid redundant calculations
+            float val = (float)(CheckC.X / _max);
             if (val < 0f) val = 0f;
             if (val > 1f) val = 1f;
-            if (CheckC.X <= min) val = 0f;
-            if (CheckC.X >= max) val = 1f;
+            if (CheckC.X <= _min) val = 0f;
+            if (CheckC.X >= _max) val = 1f;
 
             int alpha = (int)(255f * val);
 
+            // Skip painting if nothing changed (except for animations)
+            if (!CanAnimate && alpha == _lastAlpha && DarkLight_Toggler == _lastDarkLightMode && Checked == _lastCheckedState) return;
+
+            _lastAlpha = alpha;
+            _lastDarkLightMode = DarkLight_Toggler;
+            _lastCheckedState = Checked;
+
             if (!DarkLight_Toggler)
             {
-                // Checked part
-                using (SolidBrush br = new(Color.FromArgb(alpha, scheme.Colors.AccentAlt))) { G.FillRoundedRect(br, MainRect, 9, true); }
+                // Checked part - reuse brushes to reduce allocations
+                Color accentColor = Color.FromArgb(alpha, scheme.Colors.AccentAlt);
+                Color foreColor = Color.FromArgb(255 - alpha, scheme.Colors.ForeColor);
+                Color checkerColor = Color.FromArgb(alpha, scheme.Colors.AccentAlt.IsDark() ? Color.Black : Color.White);
 
-                using (Pen P = new(Color.FromArgb(alpha, scheme.Colors.AccentAlt))) { G.DrawRoundedRectBeveled(P, MainRect, 9, true); }
-
-                using (SolidBrush br = new(Color.FromArgb(alpha, scheme.Colors.AccentAlt.IsDark() ? Color.Black : Color.White))) { G.FillEllipse(br, CheckC); }
-
-                // Non checked part
-                using (SolidBrush br = new(Color.FromArgb(255 - alpha, scheme.Colors.ForeColor))) { G.FillEllipse(br, CheckC); }
-
-                using (Pen P = new(Color.FromArgb(255 - alpha, scheme.Colors.ForeColor))) { G.DrawRoundedRect(P, MainRect, 9, true); }
+                using (SolidBrush accentBrush = new(accentColor))
+                using (SolidBrush foreBrush = new(foreColor))
+                using (SolidBrush checkerBrush = new(checkerColor))
+                using (Pen accentPen = new(accentColor))
+                using (Pen forePen = new(foreColor))
+                {
+                    G.FillRoundedRect(accentBrush, _mainRect, 9, true);
+                    G.DrawRoundedRectBeveled(accentPen, _mainRect, 9, true);
+                    G.FillEllipse(checkerBrush, CheckC);
+                    G.FillEllipse(foreBrush, CheckC);
+                    G.DrawRoundedRect(forePen, _mainRect, 9, true);
+                }
             }
-
             else
             {
-                LinearGradientBrush lgbChecked =
-                    new(MainRect,
-                    Color.FromArgb(alpha, scheme.Colors.Accent),
-                    Color.FromArgb(alpha, scheme.Colors.AccentAlt),
-                    LinearGradientMode.ForwardDiagonal);
+                // DarkLight mode - optimize LinearGradientBrush creation
+                Color checkedColor1 = Color.FromArgb(alpha, scheme.Colors.Accent);
+                Color checkedColor2 = Color.FromArgb(alpha, scheme.Colors.AccentAlt);
+                Color nonCheckedColor1 = Color.FromArgb(255 - alpha, scheme.Colors.AccentAlt);
+                Color nonCheckedColor2 = Color.FromArgb(255 - alpha, scheme.Colors.Accent);
 
-                LinearGradientBrush lgborderChecked =
-                    new(MainRect,
-                    Color.FromArgb(alpha, scheme.Colors.Accent),
-                    Color.FromArgb(alpha, scheme.Colors.AccentAlt),
-                    LinearGradientMode.BackwardDiagonal);
-
-                LinearGradientBrush lgbNonChecked =
-                    new(MainRect, Color.FromArgb(255 - alpha, scheme.Colors.AccentAlt),
-                    Color.FromArgb(255 - alpha, scheme.Colors.Accent),
-                    LinearGradientMode.BackwardDiagonal);
-
-                LinearGradientBrush lgborderNonChecked =
-                    new(MainRect, Color.FromArgb(255 - alpha, scheme.Colors.AccentAlt),
-                    Color.FromArgb(255 - alpha, scheme.Colors.Accent),
-                    LinearGradientMode.ForwardDiagonal);
-
-                G.FillRoundedRect(lgbChecked, MainRect, 9, true);
-                G.FillRoundedRect(lgbNonChecked, MainRect, 9, true);
-
-                if (Checked)
+                using (LinearGradientBrush lgbChecked = new(_mainRect, checkedColor1, checkedColor2, LinearGradientMode.ForwardDiagonal))
+                using (LinearGradientBrush lgborderChecked = new(_mainRect, checkedColor1, checkedColor2, LinearGradientMode.BackwardDiagonal))
+                using (LinearGradientBrush lgbNonChecked = new(_mainRect, nonCheckedColor1, nonCheckedColor2, LinearGradientMode.BackwardDiagonal))
+                using (LinearGradientBrush lgborderNonChecked = new(_mainRect, nonCheckedColor1, nonCheckedColor2, LinearGradientMode.ForwardDiagonal))
                 {
-                    using (Bitmap b0 = (scheme.Colors.Line(parentLevel).IsDark() ? Resources.darkmode_light : Resources.darkmode_dark).Fade((float)val))
-                    using (Bitmap b1 = (scheme.Colors.Line(parentLevel).IsDark() ? Resources.lightmode_light : Resources.lightmode_dark).Fade((float)(1f - val)))
+                    G.FillRoundedRect(lgbChecked, _mainRect, 9, true);
+                    G.FillRoundedRect(lgbNonChecked, _mainRect, 9, true);
+
+                    // Optimize bitmap operations
+                    Bitmap baseBitmap = scheme.Colors.Line(parentLevel).IsDark() ? Resources.darkmode_light : Resources.darkmode_dark;
+                    Bitmap overlayBitmap = scheme.Colors.Line(parentLevel).IsDark() ? Resources.lightmode_light : Resources.lightmode_dark;
+
+                    if (!Checked)
+                    {
+                        baseBitmap = scheme.Colors.AccentAlt.IsDark() ? Resources.darkmode_light : Resources.darkmode_dark;
+                        overlayBitmap = scheme.Colors.AccentAlt.IsDark() ? Resources.lightmode_light : Resources.lightmode_dark;
+                    }
+
+                    using (Bitmap b0 = baseBitmap.Fade(val))
+                    using (Bitmap b1 = overlayBitmap.Fade(1f - val))
                     {
                         G.DrawImage(b0, CheckC);
                         G.DrawImage(b1, CheckC);
                     }
-                }
-                else
-                {
-                    using (Bitmap b0 = (scheme.Colors.AccentAlt.IsDark() ? Resources.darkmode_light : Resources.darkmode_dark).Fade((float)val))
-                    using (Bitmap b1 = (scheme.Colors.AccentAlt.IsDark() ? Resources.lightmode_light : Resources.lightmode_dark).Fade((float)(1f - val)))
-                    {
-                        G.DrawImage(b0, CheckC);
-                        G.DrawImage(b1, CheckC);
-                    }
-                }
 
-                using (Pen P = new(lgborderChecked)) { G.DrawRoundedRectBeveled(P, MainRect, 9, true); }
-
-                using (Pen P = new(lgborderNonChecked)) { G.DrawRoundedRectBeveled(P, MainRect, 9, true); }
+                    using (Pen P = new(lgborderChecked)) { G.DrawRoundedRectBeveled(P, _mainRect, 9, true); }
+                    using (Pen P = new(lgborderNonChecked)) { G.DrawRoundedRectBeveled(P, _mainRect, 9, true); }
+                }
             }
 
             base.OnPaint(e);
-
-
         }
     }
 }

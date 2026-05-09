@@ -316,13 +316,13 @@ namespace WinPaletter
             this.groupBox64 = new WinPaletter.UI.WP.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox65 = new WinPaletter.UI.WP.GroupBox();
-            this.ListBox2 = new System.Windows.Forms.ListBox();
+            this.ListBox2 = new WinPaletter.UI.WP.ListBox();
             this.Button18 = new WinPaletter.UI.WP.Button();
             this.PictureBox54 = new System.Windows.Forms.PictureBox();
             this.CheckBox29 = new WinPaletter.UI.WP.CheckBox();
             this.Button17 = new WinPaletter.UI.WP.Button();
             this.groupBox66 = new WinPaletter.UI.WP.GroupBox();
-            this.ListBox1 = new System.Windows.Forms.ListBox();
+            this.ListBox1 = new WinPaletter.UI.WP.ListBox();
             this.button14 = new WinPaletter.UI.WP.Button();
             this.button15 = new WinPaletter.UI.WP.Button();
             this.button34 = new WinPaletter.UI.WP.Button();
@@ -4364,7 +4364,7 @@ namespace WinPaletter
             this.groupBox30.Controls.Add(this.label53);
             this.groupBox30.Controls.Add(this.toggle17);
             this.groupBox30.Controls.Add(this.PictureBox2);
-            this.groupBox30.Location = new System.Drawing.Point(3, 395);
+            this.groupBox30.Location = new System.Drawing.Point(3, 404);
             this.groupBox30.Name = "groupBox30";
             this.groupBox30.Size = new System.Drawing.Size(803, 48);
             this.groupBox30.TabIndex = 69;
@@ -4419,7 +4419,7 @@ namespace WinPaletter
             this.groupBox29.Controls.Add(this.PictureBox64);
             this.groupBox29.Location = new System.Drawing.Point(3, 3);
             this.groupBox29.Name = "groupBox29";
-            this.groupBox29.Size = new System.Drawing.Size(803, 386);
+            this.groupBox29.Size = new System.Drawing.Size(803, 395);
             this.groupBox29.TabIndex = 68;
             this.groupBox29.UseDecorationPattern = false;
             this.groupBox29.UseSharpStyle = false;
@@ -4430,7 +4430,7 @@ namespace WinPaletter
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox64.BackColor = System.Drawing.Color.Transparent;
             this.groupBox64.Controls.Add(this.label1);
-            this.groupBox64.Location = new System.Drawing.Point(114, 305);
+            this.groupBox64.Location = new System.Drawing.Point(114, 313);
             this.groupBox64.Name = "groupBox64";
             this.groupBox64.Size = new System.Drawing.Size(678, 71);
             this.groupBox64.TabIndex = 254;
@@ -4461,9 +4461,9 @@ namespace WinPaletter
             this.groupBox65.Controls.Add(this.PictureBox54);
             this.groupBox65.Controls.Add(this.CheckBox29);
             this.groupBox65.Controls.Add(this.Button17);
-            this.groupBox65.Location = new System.Drawing.Point(114, 159);
+            this.groupBox65.Location = new System.Drawing.Point(114, 163);
             this.groupBox65.Name = "groupBox65";
-            this.groupBox65.Size = new System.Drawing.Size(678, 140);
+            this.groupBox65.Size = new System.Drawing.Size(678, 144);
             this.groupBox65.TabIndex = 253;
             this.groupBox65.UseDecorationPattern = false;
             this.groupBox65.UseSharpStyle = false;
@@ -4472,14 +4472,15 @@ namespace WinPaletter
             // 
             this.ListBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ListBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.ListBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.ListBox2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.ListBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.ListBox2.ForeColor = System.Drawing.Color.White;
             this.ListBox2.FormattingEnabled = true;
-            this.ListBox2.ItemHeight = 15;
+            this.ListBox2.ItemHeight = 24;
             this.ListBox2.Location = new System.Drawing.Point(7, 8);
             this.ListBox2.Name = "ListBox2";
-            this.ListBox2.Size = new System.Drawing.Size(634, 90);
+            this.ListBox2.Size = new System.Drawing.Size(634, 96);
             this.ListBox2.TabIndex = 60;
             // 
             // Button18
@@ -4502,7 +4503,7 @@ namespace WinPaletter
             // PictureBox54
             // 
             this.PictureBox54.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox54.Image")));
-            this.PictureBox54.Location = new System.Drawing.Point(7, 106);
+            this.PictureBox54.Location = new System.Drawing.Point(7, 111);
             this.PictureBox54.Name = "PictureBox54";
             this.PictureBox54.Size = new System.Drawing.Size(24, 24);
             this.PictureBox54.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -4516,7 +4517,7 @@ namespace WinPaletter
             this.CheckBox29.Checked = true;
             this.CheckBox29.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox29.ForeColor = System.Drawing.Color.White;
-            this.CheckBox29.Location = new System.Drawing.Point(37, 107);
+            this.CheckBox29.Location = new System.Drawing.Point(37, 112);
             this.CheckBox29.Name = "CheckBox29";
             this.CheckBox29.Size = new System.Drawing.Size(634, 23);
             this.CheckBox29.TabIndex = 64;
@@ -4550,7 +4551,7 @@ namespace WinPaletter
             this.groupBox66.Controls.Add(this.button34);
             this.groupBox66.Location = new System.Drawing.Point(114, 44);
             this.groupBox66.Name = "groupBox66";
-            this.groupBox66.Size = new System.Drawing.Size(678, 109);
+            this.groupBox66.Size = new System.Drawing.Size(678, 113);
             this.groupBox66.TabIndex = 252;
             this.groupBox66.UseDecorationPattern = false;
             this.groupBox66.UseSharpStyle = false;
@@ -4559,14 +4560,15 @@ namespace WinPaletter
             // 
             this.ListBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ListBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(30)))));
             this.ListBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.ListBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.ListBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.ListBox1.ForeColor = System.Drawing.Color.White;
             this.ListBox1.FormattingEnabled = true;
-            this.ListBox1.ItemHeight = 15;
+            this.ListBox1.ItemHeight = 24;
             this.ListBox1.Location = new System.Drawing.Point(7, 8);
             this.ListBox1.Name = "ListBox1";
-            this.ListBox1.Size = new System.Drawing.Size(634, 90);
+            this.ListBox1.Size = new System.Drawing.Size(634, 96);
             this.ListBox1.TabIndex = 55;
             // 
             // button14
@@ -4627,7 +4629,7 @@ namespace WinPaletter
             this.radioImage1.ForeColor = System.Drawing.Color.White;
             this.radioImage1.Image = ((System.Drawing.Image)(resources.GetObject("radioImage1.Image")));
             this.radioImage1.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage1.Location = new System.Drawing.Point(44, 305);
+            this.radioImage1.Location = new System.Drawing.Point(44, 313);
             this.radioImage1.Name = "radioImage1";
             this.radioImage1.Size = new System.Drawing.Size(64, 71);
             this.radioImage1.TabIndex = 251;
@@ -4644,7 +4646,7 @@ namespace WinPaletter
             this.radioImage2.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.radioImage2.Location = new System.Drawing.Point(44, 44);
             this.radioImage2.Name = "radioImage2";
-            this.radioImage2.Size = new System.Drawing.Size(64, 109);
+            this.radioImage2.Size = new System.Drawing.Size(64, 113);
             this.radioImage2.TabIndex = 249;
             this.radioImage2.Text = "Online";
             this.radioImage2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -4657,9 +4659,9 @@ namespace WinPaletter
             this.radioImage5.ForeColor = System.Drawing.Color.White;
             this.radioImage5.Image = ((System.Drawing.Image)(resources.GetObject("radioImage5.Image")));
             this.radioImage5.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage5.Location = new System.Drawing.Point(44, 159);
+            this.radioImage5.Location = new System.Drawing.Point(44, 163);
             this.radioImage5.Name = "radioImage5";
-            this.radioImage5.Size = new System.Drawing.Size(64, 140);
+            this.radioImage5.Size = new System.Drawing.Size(64, 144);
             this.radioImage5.TabIndex = 250;
             this.radioImage5.Text = "Offline";
             this.radioImage5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -8563,13 +8565,13 @@ namespace WinPaletter
         private UI.WP.GroupBox groupBox64;
         internal Label label1;
         private UI.WP.GroupBox groupBox65;
-        internal ListBox ListBox2;
+        internal UI.WP.ListBox ListBox2;
         internal UI.WP.Button Button18;
         internal PictureBox PictureBox54;
         internal UI.WP.CheckBox CheckBox29;
         internal UI.WP.Button Button17;
         private UI.WP.GroupBox groupBox66;
-        internal ListBox ListBox1;
+        internal UI.WP.ListBox ListBox1;
         internal UI.WP.Button button14;
         internal UI.WP.Button button15;
         internal UI.WP.Button button34;

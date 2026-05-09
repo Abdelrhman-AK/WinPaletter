@@ -457,6 +457,12 @@
     <Compile Include="GUI\Elements\ContainersAndBoxes\Banner.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="GUI\Elements\Lists\CheckedListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="GUI\Elements\Lists\ListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="GUI\Elements\Lists\ListView.cs">
       <SubType>Component</SubType>
     </Compile>

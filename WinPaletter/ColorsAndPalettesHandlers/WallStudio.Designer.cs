@@ -127,7 +127,7 @@
             this.banner3 = new WinPaletter.UI.WP.Banner();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.separatorH4 = new WinPaletter.UI.WP.SeparatorH();
-            this.CheckedListBox1 = new System.Windows.Forms.CheckedListBox();
+            this.CheckedListBox1 = new UI.WP.CheckedListBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.button7 = new WinPaletter.UI.WP.Button();
             this.button9 = new WinPaletter.UI.WP.Button();
@@ -2676,7 +2676,7 @@
         private System.Windows.Forms.Label label11;
         internal System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
-        internal System.Windows.Forms.CheckedListBox CheckedListBox1;
+        internal UI.WP.CheckedListBox CheckedListBox1;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Panel panel3;
         internal UI.WP.Button button7;

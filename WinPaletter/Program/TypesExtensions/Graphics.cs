@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -34,33 +35,42 @@ namespace WinPaletter.TypesExtensions
         /// null.</param>
         public static void DrawGlowString(this Graphics G, int glowSize, string text, Font font, Color foreColor, Color glowColor, RectangleF clientRectangle, RectangleF rectangle, StringFormat format)
         {
-            float glowFactor = 5f;
+            if (G == null || font == null || format == null || clientRectangle.Width <= 0 || clientRectangle.Height <= 0) return;
+            if (string.IsNullOrWhiteSpace(text)) return;
+            if (glowSize <= 0) return;
+            if (foreColor.A == 0 && glowColor.A == 0) return;
+
+            const float glowFactor = 5f;
             float w = Math.Max(8f, clientRectangle.Width / glowFactor);
             float h = Math.Max(8f, clientRectangle.Height / glowFactor);
             float emSize = G.DpiY * font.SizeInPoints / 72f;
-            if (text is null | string.IsNullOrWhiteSpace(text)) text = string.Empty;
 
-            using (Bitmap b = new((int)w, (int)h))
-            using (GraphicsPath gp = new())
-            using (Graphics gx = Graphics.FromImage(b))
-            using (Matrix m = new(1.0f / glowFactor, 0f, 0f, 1.0f / glowFactor, -(1.0f / glowFactor), -(1.0f / glowFactor)))
-            using (SolidBrush br = new(foreColor))
-            using (Pen P = new(glowColor, glowSize))
+            int bitmapWidth = (int)w;
+            int bitmapHeight = (int)h;
+            
+            using Bitmap b = new(bitmapWidth, bitmapHeight, PixelFormat.Format32bppArgb);
+            using GraphicsPath gp = new();
+            using Graphics gx = Graphics.FromImage(b);
+            using Matrix m = new(1.0f / glowFactor, 0f, 0f, 1.0f / glowFactor, -(1.0f / glowFactor), -(1.0f / glowFactor));
+            using SolidBrush br = new(foreColor);
+            using Pen P = new(glowColor, glowSize);
+
+            gp.AddString(text, font.FontFamily, (int)font.Style, emSize, rectangle, format);
+
+            gx.Transform = m;
+            gx.DrawPath(P, gp);
+            gx.FillPath(P.Brush, gp);
+
+            InterpolationMode oldInterpolationMode = G.InterpolationMode;
+            G.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            
+            try
             {
-                gp.AddString(text, font.FontFamily, (int)font.Style, emSize, rectangle, format);
-
-                gx.Transform = m;
-
-                gx.DrawPath(P, gp);
-                gx.FillPath(P.Brush, gp);
-
-                InterpolationMode oldInterpolationMode = G.InterpolationMode;
-
-                G.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                G.DrawImage(b, clientRectangle, new Rectangle(0, 0, b.Width, b.Height), GraphicsUnit.Pixel);
-
+                G.DrawImage(b, clientRectangle, new Rectangle(0, 0, bitmapWidth, bitmapHeight), GraphicsUnit.Pixel);
                 G.DrawString(text, font, br, rectangle, format);
-
+            }
+            finally
+            {
                 G.InterpolationMode = oldInterpolationMode;
             }
         }
@@ -81,23 +91,24 @@ namespace WinPaletter.TypesExtensions
         /// glow will be applied to a rounded rectangle; otherwise, it will follow the standard rectangle shape.</param>
         public static void DrawGlow(this Graphics G, RectangleF rectangle, Color glowColor, int glowSize = 5, int glowFade = 7, bool rounded = false)
         {
-            if (G is null) return;
-            if (rectangle.Width <= 0 || rectangle.Height <= 0) return;
-
+            if (G == null || rectangle.Width <= 0 || rectangle.Height <= 0) return;
             if (glowSize <= 0) glowSize = 1;
             if (glowFade <= 0) glowFade = 1;
+            if (glowColor.A == 0) return;
 
             RectangleF glowRect = rounded ? GetRoundedRectangle(rectangle, glowSize) : new(rectangle.X - glowSize - 2, rectangle.Y - glowSize - 2, rectangle.Width + glowSize * 2 + 3, rectangle.Height + glowSize * 2 + 3);
 
-            using (Bitmap glowBitmap = new((int)(glowRect.Width / glowFade), (int)(glowRect.Height / glowFade)))
-            using (Graphics glowGraphics = Graphics.FromImage(glowBitmap))
+            int bitmapWidth = Math.Max(1, (int)(glowRect.Width / glowFade));
+            int bitmapHeight = Math.Max(1, (int)(glowRect.Height / glowFade));
+            
+            using Bitmap glowBitmap = new(bitmapWidth, bitmapHeight, PixelFormat.Format32bppArgb);
+            using Graphics glowGraphics = Graphics.FromImage(glowBitmap);
             {
                 Rectangle glowRect2 = new(1, 1, glowBitmap.Width, glowBitmap.Height);
-
-                using (SolidBrush glowBrush = new(glowColor)) { glowGraphics.FillRectangle(glowBrush, glowRect2); }
-
-                G.DrawImage(glowBitmap, glowRect);
+                using SolidBrush glowBrush = new(glowColor);
+                glowGraphics.FillRectangle(glowBrush, glowRect2);
             }
+            G.DrawImage(glowBitmap, glowRect);
         }
 
         private static RectangleF GetRoundedRectangle(RectangleF rectangle, int radius)
@@ -130,27 +141,26 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         public static void DrawAeroEffect(this Graphics G, RectangleF rect, Bitmap backgroundBlurred, Color colorizationColor, float colorBalance, Color glowColor, float glowBalance, float alpha, int radius, bool roundedCorners)
         {
-            if (G is null) return;
-            if (rect.Width <= 0 || rect.Height <= 0) return;
-            if (backgroundBlurred is null) return;
+            if (G == null || rect.Width <= 0 || rect.Height <= 0 || backgroundBlurred == null) return;
 
             // Clamp values inline
-            if (colorBalance < 0f) colorBalance = 0f;
-            if (colorBalance > 1f) colorBalance = 1f;
-            if (glowBalance < 0f) glowBalance = 0f;
-            if (glowBalance > 1f) glowBalance = 1f;
-            if (alpha < 0f) alpha = 0f;
-            if (alpha > 1f) alpha = 1f;
+            colorBalance = colorBalance < 0f ? 0f : colorBalance > 1f ? 1f : colorBalance;
+            glowBalance = glowBalance < 0f ? 0f : glowBalance > 1f ? 1f : glowBalance;
+            alpha = alpha < 0f ? 0f : alpha > 1f ? 1f : alpha;
 
             RectangleF innerRect = new(rect.X, rect.Y, rect.Width - 1, rect.Height - 1);
 
             // Set smoothing for rounded corners
             if (roundedCorners && radius > 0)
             {
-                using (GraphicsPath path = innerRect.Round(radius))
+                using GraphicsPath path = innerRect.Round(radius);
+                G.SetClip(path);
+                try
                 {
-                    G.SetClip(path);
                     RenderAeroLayers(G, rect, backgroundBlurred, colorizationColor, colorBalance, glowColor, glowBalance, alpha);
+                }
+                finally
+                {
                     G.ResetClip();
                 }
             }
@@ -169,11 +179,12 @@ namespace WinPaletter.TypesExtensions
             G.DrawImage(backgroundBlurred, rect);
 
             // Colorization overlay (tint)
-            if (colorBalance > 0f)
+            if (colorBalance > 0f && colorizationColor.A > 0)
             {
                 int tintAlpha = (int)(alpha * colorBalance * 255);
-                using (SolidBrush tintBrush = new(Color.FromArgb(tintAlpha, colorizationColor)))
+                if (tintAlpha > 0)
                 {
+                    using SolidBrush tintBrush = new(Color.FromArgb(tintAlpha, colorizationColor));
                     G.FillRectangle(tintBrush, rect);
                 }
             }
@@ -182,18 +193,17 @@ namespace WinPaletter.TypesExtensions
             if (alpha > 0f)
             {
                 int shadowAlpha = (int)(alpha * 60); // ~24% opacity
-                using (SolidBrush shadowBrush = new(Color.FromArgb(shadowAlpha, Color.Black)))
-                {
-                    G.FillRectangle(shadowBrush, rect);
-                }
+                using SolidBrush shadowBrush = new(Color.FromArgb(shadowAlpha, Color.Black));
+                G.FillRectangle(shadowBrush, rect);
             }
 
             // Glow overlay (soft highlight, usually near text or edges)
-            if (glowBalance > 0f)
+            if (glowBalance > 0f && glowColor.A > 0)
             {
                 int glowAlpha = (int)(alpha * glowBalance * 180); // softer intensity
-                using (SolidBrush glowBrush = new(Color.FromArgb(glowAlpha, glowColor)))
+                if (glowAlpha > 0)
                 {
+                    using SolidBrush glowBrush = new(Color.FromArgb(glowAlpha, glowColor));
                     G.FillRectangle(glowBrush, rect);
                 }
             }
@@ -202,14 +212,15 @@ namespace WinPaletter.TypesExtensions
             int whiteAlpha = (int)((1f - alpha) * 40); // subtle top-glass shine
             if (whiteAlpha > 0)
             {
-                using (LinearGradientBrush whiteBrush = new(
-                           new PointF(rect.Left, rect.Top),
-                           new PointF(rect.Left, rect.Bottom),
-                           Color.FromArgb(whiteAlpha, Color.White),
-                           Color.Transparent))
+                using LinearGradientBrush whiteBrush = new(new PointF(rect.Left, rect.Top), new PointF(rect.Left, rect.Bottom), Color.FromArgb(whiteAlpha, Color.White), Color.Transparent)
                 {
-                    G.FillRectangle(whiteBrush, rect);
-                }
+                    InterpolationColors = new(3)
+                    {
+                        Colors = [Color.FromArgb(whiteAlpha, Color.White), Color.FromArgb(whiteAlpha / 2, Color.White), Color.Transparent],
+                        Positions = [0f, 0.5f, 1f]
+                    }
+                };
+                G.FillRectangle(whiteBrush, rect);
             }
         }
 
@@ -249,29 +260,27 @@ namespace WinPaletter.TypesExtensions
         /// or the radius is zero, the path will represent a standard rectangle.</returns>
         public static GraphicsPath Round(this RectangleF rectangle, int radius = -1, RoundedCorners corners = RoundedCorners.All)
         {
-            GraphicsPath path = new()
-            {
-                // Reset to default FillMode which is more efficient
-                FillMode = FillMode.Winding
-            };
-
             float width = rectangle.Width;
             float height = rectangle.Height;
 
-            if (width <= 0f || height <= 0f) return path;
+            if (width <= 0f || height <= 0f) 
+            {
+                GraphicsPath emptyPath = new() { FillMode = FillMode.Winding };
+                return emptyPath;
+            }
 
             if (radius < 0) radius = Program.Style.Radius;
 
             float r = Math.Min(radius, Math.Min(width, height) / 2f);
             if (r <= 0f || corners == RoundedCorners.None)
             {
-                path.AddRectangle(rectangle);
-                path.CloseFigure(); // Ensure path is closed
-                return path;
+                GraphicsPath rectPath = new() { FillMode = FillMode.Winding };
+                rectPath.AddRectangle(rectangle);
+                rectPath.CloseFigure();
+                return rectPath;
             }
 
             float d = r * 2f;
-
             float left = rectangle.Left;
             float top = rectangle.Top;
             float right = rectangle.Right;
@@ -286,6 +295,7 @@ namespace WinPaletter.TypesExtensions
             bool verticalCapsule = width <= r;
             bool horizontalCapsule = height <= r;
 
+            GraphicsPath path = new() { FillMode = FillMode.Winding };
             path.StartFigure();
 
             if (verticalCapsule)
@@ -377,10 +387,12 @@ namespace WinPaletter.TypesExtensions
         public static void FillRoundedRect(this Graphics G, Brush brush, RectangleF rectangle, int radius = -1, bool forcedRoundCorner = false, RoundedCorners corners = RoundedCorners.All)
         {
             if (G == null || !IsValid(brush) || rectangle.IsEmpty || rectangle.Width <= 0 || rectangle.Height <= 0) return;
-
+            
             if (radius == -1) radius = Program.Style.Radius;
 
-            if ((Program.Style.RoundedCorners || forcedRoundCorner) && radius > 0)
+            bool useRounded = (Program.Style.RoundedCorners || forcedRoundCorner) && radius > 0;
+
+            if (useRounded)
             {
                 using GraphicsPath path = rectangle.Round(radius, corners);
                 G.FillPath(brush, path);
@@ -449,7 +461,9 @@ namespace WinPaletter.TypesExtensions
 
             if (radius == -1) radius = Program.Style.Radius;
 
-            if ((Program.Style.RoundedCorners || forcedRoundCorner) && radius > 0)
+            bool useRounded = (Program.Style.RoundedCorners || forcedRoundCorner) && radius > 0;
+
+            if (useRounded)
             {
                 using GraphicsPath path = rectangle.Round(radius, corners);
                 G.DrawPath(pen, path);
@@ -465,7 +479,7 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         public static void DrawRoundedRectBeveled(this Graphics G, Pen pen, RectangleF rectangleF, float radius = -1, bool forcedRoundCorner = false, bool reverseBevel = false, RoundedCorners corners = RoundedCorners.All)
         {
-            if (G == null || !IsValid(pen) || rectangleF.IsEmpty || rectangleF.Width <= 0 || rectangleF.Height <= 0)  return;
+            if (G == null || !IsValid(pen) || rectangleF.IsEmpty || rectangleF.Width <= 0 || rectangleF.Height <= 0) return;
 
             bool dark = Program.Style.DarkMode;
             bool useRoundedCorners = Program.Style.RoundedCorners || forcedRoundCorner;
@@ -476,7 +490,6 @@ namespace WinPaletter.TypesExtensions
 
             Color baseColor = pen.Brush is LinearGradientBrush lgb ? lgb.LinearColors[0] : pen.Color;
             Color bevelColor = baseColor.CB(dark ? 0.09f : -0.08f);
-
             bool drawTop = dark ^ reverseBevel;
 
             // Draw the main rounded rectangle
@@ -484,15 +497,11 @@ namespace WinPaletter.TypesExtensions
             {
                 using GraphicsPath path = rectangleF.Round((int)radius, corners);
                 G.DrawPath(pen, path);
-
-                // Draw bevel
                 DrawBevel(G, pen, rectangleF, radius, bevelColor, drawTop);
             }
             else
             {
                 G.DrawRectangle(pen, rectangleF.X, rectangleF.Y, rectangleF.Width, rectangleF.Height);
-
-                // Draw bevel for non-rounded rectangle
                 DrawBevel(G, pen, rectangleF, 0, bevelColor, drawTop);
             }
         }
@@ -504,6 +513,7 @@ namespace WinPaletter.TypesExtensions
             float x2 = rect.Right - radius;
 
             if (x1 >= x2) return; // Don't draw if rectangle is too narrow
+            if (bevelColor.A == 0) return; // Don't draw if bevel color has zero alpha
 
             // Pre-calculate brush rectangle
             RectangleF bevelRect = new(rect.Left, bevelY - 1, rect.Width, 2);
@@ -708,7 +718,7 @@ namespace WinPaletter.TypesExtensions
 
         public static bool IsValid(this Brush brush)
         {
-            if (brush == null) return false;
+            if (brush is null) return false;
 
             try
             {
@@ -722,7 +732,7 @@ namespace WinPaletter.TypesExtensions
 
         public static bool IsValid(this Pen pen)
         {
-            if (pen == null) return false;
+            if (pen is null) return false;
 
             try
             {
@@ -747,20 +757,10 @@ namespace WinPaletter.TypesExtensions
             SizeF imageSize = img?.Size ?? SizeF.Empty;
             SizeF textSize;
 
-            using (Graphics G = button.CreateGraphics())
-            {
-                textSize = string.IsNullOrEmpty(button.Text) ? SizeF.Empty : TextRenderer.MeasureText(G, button.Text, button.Font);
-            }
+            using Graphics G = button.CreateGraphics();
+            textSize = string.IsNullOrEmpty(button.Text) ? SizeF.Empty : TextRenderer.MeasureText(G, button.Text, button.Font);
 
-            GetTextAndImageRectangles(
-                bounds,
-                imageSize,
-                textSize,
-                button.ImageAlign,
-                button.TextAlign,
-                button.TextImageRelation,
-                out imageRect,
-                out textRect);
+            GetTextAndImageRectangles(bounds, imageSize, textSize, button.ImageAlign, button.TextAlign,  button.TextImageRelation, out imageRect, out textRect);
         }
 
         /// <summary>
@@ -776,20 +776,10 @@ namespace WinPaletter.TypesExtensions
             SizeF imageSize = img?.Size ?? SizeF.Empty;
             SizeF textSize;
 
-            using (Graphics G = button.CreateGraphics())
-            {
-                textSize = string.IsNullOrEmpty(button.Text) ? SizeF.Empty : TextRenderer.MeasureText(G, button.Text, button.Font);
-            }
+            using Graphics G = button.CreateGraphics();
+            textSize = string.IsNullOrEmpty(button.Text) ? SizeF.Empty : TextRenderer.MeasureText(G, button.Text, button.Font);
 
-            GetTextAndImageRectangles(
-                bounds,
-                imageSize,
-                textSize,
-                button.ImageAlign,
-                button.TextAlign,
-                button.TextImageRelation,
-                out imageRect,
-                out textRect);
+            GetTextAndImageRectangles(bounds, imageSize, textSize, button.ImageAlign, button.TextAlign, button.TextImageRelation, out imageRect, out textRect);
         }
 
         /// <summary>
@@ -957,12 +947,9 @@ namespace WinPaletter.TypesExtensions
         /// <returns></returns>
         public static Bitmap CaptureFromScreen(Rectangle screenRect)
         {
-            Bitmap bmp = new(screenRect.Width, screenRect.Height);
-            using (Graphics G = Graphics.FromImage(bmp))
-            {
-                // copy from screen coordinates -> bitmap (destination origin 0,0)
-                G.CopyFromScreen(screenRect.Left, screenRect.Top, 0, 0, screenRect.Size, CopyPixelOperation.SourceCopy);
-            }
+            Bitmap bmp = new(screenRect.Width, screenRect.Height, PixelFormat.Format32bppArgb);
+            using Graphics G = Graphics.FromImage(bmp);
+            G.CopyFromScreen(screenRect.Left, screenRect.Top, 0, 0, screenRect.Size, CopyPixelOperation.SourceCopy);
             return bmp;
         }
     }
