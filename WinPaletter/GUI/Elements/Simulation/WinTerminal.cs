@@ -55,9 +55,21 @@ namespace WinPaletter.UI.Simulation
 
         readonly Timer Timer = new() { Enabled = false, Interval = 500 };
 
-        private static TextureBrush Noise = new(Resources.Noise.Fade(0.15f));
+        private static TextureBrush Noise;
         private Bitmap adaptedBack;
         private Bitmap adaptedBackBlurred;
+
+        static WinTerminal()
+        {
+            Noise = new(Resources.Noise.Fade(0.15f));
+        }
+
+        ~WinTerminal()
+        {
+            Noise?.Dispose();
+            adaptedBack?.Dispose();
+            adaptedBackBlurred?.Dispose();
+        }
         private bool tick = false;
         private Image img;
 

@@ -87,7 +87,8 @@ namespace WinPaletter.TypesExtensions
         public enum BlurType
         {
             Gaussian,
-            Box
+            Box,
+            Frosted
         }
 
         /// <summary>
@@ -96,7 +97,8 @@ namespace WinPaletter.TypesExtensions
         /// <param name="bitmap">The source <see cref="Bitmap"/> to blur. Cannot be <see langword="null"/>.</param>
         /// <param name="blurPower">
         /// Controls blur intensity. For <see cref="BlurType.Gaussian"/>, this is the sigma value of the Gaussian kernel.
-        /// For <see cref="BlurType.Box"/>, this is the kernel radius in pixels. Must be greater than 0. Defaults to 2.0f.
+        /// For <see cref="BlurType.Box"/>, this is the kernel radius in pixels. For <see cref="BlurType.Frosted"/>, combines Gaussian with noise.
+        /// Must be greater than 0. Defaults to 2.0f.
         /// </param>
         /// <param name="blurType">The blur algorithm to use. Defaults to <see cref="BlurType.Gaussian"/>.</param>
         /// <param name="opacity">
@@ -108,7 +110,7 @@ namespace WinPaletter.TypesExtensions
         /// A new <see cref="Bitmap"/> with the blur applied, or <see langword="null"/> if the input is
         /// <see langword="null"/>, cancelled, or has zero dimensions.
         /// </returns>
-        public static Bitmap Blur(this Bitmap bitmap, float blurPower = 2.0f, BlurType blurType = BlurType.Gaussian, float opacity = 1.0f, CancellationToken cancellationToken = default)
+        public static Bitmap Blur(this Bitmap bitmap, float blurPower = 2.0f, BlurType blurType = BlurType.Frosted, float opacity = 1.0f, CancellationToken cancellationToken = default)
         {
             if (bitmap == null || bitmap.Width == 0 || bitmap.Height == 0) return null;
 
@@ -127,95 +129,116 @@ namespace WinPaletter.TypesExtensions
                     BitmapData srcData = src.LockBits(new(0, 0, width, height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
                     BitmapData dstData = result.LockBits(new(0, 0, width, height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
 
-                    int stride = srcData.Stride;
-                    int bufSize = stride * height;
-
-                    byte[] srcBuffer = new byte[bufSize];
-                    byte[] tmpBuffer = new byte[bufSize];
-                    byte[] dstBuffer = new byte[bufSize];
-
-                    Marshal.Copy(srcData.Scan0, srcBuffer, 0, bufSize);
-                    src.UnlockBits(srcData);
-
-                    bool blendOpacity = opacity < 1f;
-                    float invOpacity = 1f - opacity;
-
-                    // Horizontal pass: srcBuffer -> tmpBuffer
-                    for (int y = 0; y < height; y++)
+                    try
                     {
-                        if (cancellationToken.IsCancellationRequested) return null;
+                        int stride = srcData.Stride;
+                        bool blendOpacity = opacity < 1f;
+                        float invOpacity = 1f - opacity;
 
-                        int row = y * stride;
-                        for (int x = 0; x < width; x++)
+                        unsafe
                         {
-                            float b = 0f, g = 0f, r = 0f, a = 0f;
+                            byte* srcPtr = (byte*)srcData.Scan0;
+                            byte* dstPtr = (byte*)dstData.Scan0;
 
-                            for (int k = -radius; k <= radius; k++)
+                            // Allocate temporary buffer
+                            int tmpBufSize = stride * height;
+                            byte* tmpPtr = (byte*)Marshal.AllocHGlobal(tmpBufSize);
+
+                            try
                             {
-                                int px = x + k;
-                                if (px < 0) px = 0;
-                                else if (px >= width) px = width - 1;
+                                // Horizontal pass: srcPtr -> tmpPtr
+                                for (int y = 0; y < height; y++)
+                                {
+                                    if (cancellationToken.IsCancellationRequested) return null;
 
-                                float w = kernel[k + radius];
-                                int srcIdx = row + px * 4;
-                                b += srcBuffer[srcIdx] * w;
-                                g += srcBuffer[srcIdx + 1] * w;
-                                r += srcBuffer[srcIdx + 2] * w;
-                                a += srcBuffer[srcIdx + 3] * w;
+                                    byte* srcRow = srcPtr + y * stride;
+                                    byte* tmpRow = tmpPtr + y * stride;
+
+                                    for (int x = 0; x < width; x++)
+                                    {
+                                        float b = 0f, g = 0f, r = 0f, a = 0f;
+
+                                        // Optimized kernel application
+                                        for (int k = -radius; k <= radius; k++)
+                                        {
+                                            int px = x + k;
+                                            if (px < 0) px = 0;
+                                            else if (px >= width) px = width - 1;
+
+                                            float w = kernel[k + radius];
+                                            byte* srcPx = srcRow + px * 4;
+                                            b += srcPx[0] * w;
+                                            g += srcPx[1] * w;
+                                            r += srcPx[2] * w;
+                                            a += srcPx[3] * w;
+                                        }
+
+                                        byte* dstPx = tmpRow + x * 4;
+                                        dstPx[0] = (byte)b;
+                                        dstPx[1] = (byte)g;
+                                        dstPx[2] = (byte)r;
+                                        dstPx[3] = (byte)a;
+                                    }
+                                }
+
+                                // Vertical pass: tmpPtr -> dstPtr
+                                for (int x = 0; x < width; x++)
+                                {
+                                    if (cancellationToken.IsCancellationRequested) return null;
+
+                                    int colOffset = x * 4;
+
+                                    for (int y = 0; y < height; y++)
+                                    {
+                                        float b = 0f, g = 0f, r = 0f, a = 0f;
+
+                                        for (int k = -radius; k <= radius; k++)
+                                        {
+                                            int py = y + k;
+                                            if (py < 0) py = 0;
+                                            else if (py >= height) py = height - 1;
+
+                                            float w = kernel[k + radius];
+                                            byte* tmpPx = tmpPtr + py * stride + colOffset;
+                                            b += tmpPx[0] * w;
+                                            g += tmpPx[1] * w;
+                                            r += tmpPx[2] * w;
+                                            a += tmpPx[3] * w;
+                                        }
+
+                                        byte* dstPx = dstPtr + y * stride + colOffset;
+                                        if (blendOpacity)
+                                        {
+                                            byte* srcPx = srcPtr + y * stride + colOffset;
+                                            dstPx[0] = (byte)(srcPx[0] * invOpacity + b * opacity);
+                                            dstPx[1] = (byte)(srcPx[1] * invOpacity + g * opacity);
+                                            dstPx[2] = (byte)(srcPx[2] * invOpacity + r * opacity);
+                                            dstPx[3] = (byte)(srcPx[3] * invOpacity + a * opacity);
+                                        }
+                                        else
+                                        {
+                                            dstPx[0] = (byte)b;
+                                            dstPx[1] = (byte)g;
+                                            dstPx[2] = (byte)r;
+                                            dstPx[3] = (byte)a;
+                                        }
+                                    }
+                                }
                             }
-
-                            int baseIdx = row + x * 4;
-                            tmpBuffer[baseIdx] = (byte)b;
-                            tmpBuffer[baseIdx + 1] = (byte)g;
-                            tmpBuffer[baseIdx + 2] = (byte)r;
-                            tmpBuffer[baseIdx + 3] = (byte)a;
+                            finally
+                            {
+                                if (tmpPtr != null)
+                                {
+                                    Marshal.FreeHGlobal((IntPtr)tmpPtr);
+                                }
+                            }
                         }
                     }
-
-                    // Vertical pass: tmpBuffer -> dstBuffer
-                    for (int x = 0; x < width; x++)
+                    finally
                     {
-                        if (cancellationToken.IsCancellationRequested) return null;
-
-                        int colOffset = x * 4;
-                        for (int y = 0; y < height; y++)
-                        {
-                            float b = 0f, g = 0f, r = 0f, a = 0f;
-
-                            for (int k = -radius; k <= radius; k++)
-                            {
-                                int py = y + k;
-                                if (py < 0) py = 0;
-                                else if (py >= height) py = height - 1;
-
-                                float w = kernel[k + radius];
-                                int srcIdx = py * stride + colOffset;
-                                b += tmpBuffer[srcIdx] * w;
-                                g += tmpBuffer[srcIdx + 1] * w;
-                                r += tmpBuffer[srcIdx + 2] * w;
-                                a += tmpBuffer[srcIdx + 3] * w;
-                            }
-
-                            int outIdx = y * stride + colOffset;
-                            if (blendOpacity)
-                            {
-                                dstBuffer[outIdx] = (byte)(srcBuffer[outIdx] * invOpacity + b * opacity);
-                                dstBuffer[outIdx + 1] = (byte)(srcBuffer[outIdx + 1] * invOpacity + g * opacity);
-                                dstBuffer[outIdx + 2] = (byte)(srcBuffer[outIdx + 2] * invOpacity + r * opacity);
-                                dstBuffer[outIdx + 3] = (byte)(srcBuffer[outIdx + 3] * invOpacity + a * opacity);
-                            }
-                            else
-                            {
-                                dstBuffer[outIdx] = (byte)b;
-                                dstBuffer[outIdx + 1] = (byte)g;
-                                dstBuffer[outIdx + 2] = (byte)r;
-                                dstBuffer[outIdx + 3] = (byte)a;
-                            }
-                        }
+                        src.UnlockBits(srcData);
+                        result.UnlockBits(dstData);
                     }
-
-                    Marshal.Copy(dstBuffer, 0, dstData.Scan0, bufSize);
-                    result.UnlockBits(dstData);
 
                     return result.Clone() as Bitmap;
                 }
@@ -228,8 +251,8 @@ namespace WinPaletter.TypesExtensions
             {
                 case BlurType.Gaussian:
                     {
-                        float sigma = Math.Max(0.1f, blurPower);
-                        radius = (int)Math.Ceiling(3f * sigma);
+                        float sigma = Math.Max(0.5f, blurPower * 1.2f);
+                        radius = (int)Math.Ceiling(3.5f * sigma);
                         int kSize = 2 * radius + 1;
                         float[] kernel = new float[kSize];
                         float kSum = 0f;
@@ -251,6 +274,32 @@ namespace WinPaletter.TypesExtensions
                         float[] kernel = new float[kSize];
                         float w = 1f / kSize;
                         for (int i = 0; i < kSize; i++) kernel[i] = w;
+                        return kernel;
+                    }
+
+                case BlurType.Frosted:
+                    {
+                        // Frosted blur combines Gaussian with subtle noise pattern
+                        float sigma = Math.Max(1.0f, blurPower * 1.5f);
+                        radius = (int)Math.Ceiling(3.5f * sigma);
+                        int kSize = 2 * radius + 1;
+                        float[] kernel = new float[kSize];
+                        float kSum = 0f;
+                        
+                        for (int i = 0; i < kSize; i++)
+                        {
+                            int off = i - radius;
+                            // Gaussian base
+                            float gaussian = (float)Math.Exp(-(off * off) / (2f * sigma * sigma));
+                            // Add subtle noise variation for frosted effect
+                            float noise = 0.6f + 0.4f * (float)Math.Sin(off * 1.2f) * (float)Math.Cos(off * 0.6f);
+                            float v = gaussian * noise;
+                            kernel[i] = v;
+                            kSum += v;
+                        }
+                        
+                        // Normalize kernel
+                        for (int i = 0; i < kSize; i++) kernel[i] /= kSum;
                         return kernel;
                     }
 

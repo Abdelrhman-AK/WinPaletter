@@ -478,21 +478,49 @@ namespace WinPaletter.UI.Simulation
             {
                 if (Active && !AccentColor_Enabled)
                 {
-                    if (DarkMode)
+                    // Mica-like effect implementation
+                    using (Bitmap micaBase = AdaptedBack.Blur(3.0f, TypesExtensions.BitmapExtensions.BlurType.Frosted, 1.0f))
                     {
-                        using (Bitmap b = AdaptedBack.Blur(15))
+                        if (micaBase != null)
                         {
-                            if (b != null)
+                            // Apply Mica-specific HSL adjustments
+                            Bitmap micaAdjusted = null;
+                            
+                            if (DarkMode)
                             {
-                                AdaptedBackBlurred?.Dispose();
-                                AdaptedBackBlurred = b.Contrast(0.05f);
+                                // Dark mode Mica: reduce saturation, increase contrast, slight brightness reduction
+                                micaAdjusted = micaBase.AdjustHSL(
+                                    hShift: 0f,           // No hue shift
+                                    sValue: 0.3f,         // Reduce saturation to 30%
+                                    lValue: 0.45f         // Slightly reduce lightness
+                                );
+                                
+                                // Apply additional contrast for depth
+                                using (Bitmap contrasted = micaAdjusted.Contrast(0.1f))
+                                {
+                                    AdaptedBackBlurred?.Dispose();
+                                    AdaptedBackBlurred = (Bitmap)contrasted.Clone();
+                                }
                             }
+                            else
+                            {
+                                // Light mode Mica: subtle adjustments with brightness increase
+                                micaAdjusted = micaBase.AdjustHSL(
+                                    hShift: 5f,            // Slight warm hue shift
+                                    sValue: 0.4f,          // Moderate saturation reduction  
+                                    lValue: 0.55f          // Increase lightness
+                                );
+                                
+                                // Apply subtle contrast
+                                using (Bitmap contrasted = micaAdjusted.Contrast(0.03f))
+                                {
+                                    AdaptedBackBlurred?.Dispose();
+                                    AdaptedBackBlurred = (Bitmap)contrasted.Clone();
+                                }
+                            }
+                            
+                            micaAdjusted?.Dispose();
                         }
-                    }
-                    else
-                    {
-                        AdaptedBackBlurred?.Dispose();
-                        AdaptedBackBlurred = AdaptedBack.Blur(15);
                     }
                 }
             }

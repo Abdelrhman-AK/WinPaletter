@@ -369,24 +369,91 @@ namespace WinPaletter.UI.Simulation
 
             int blurAmount = BlurPower;
 
-            // Aero glass styles use a lighter blur to preserve the glass look
+            // Aero glass styles use a lighter blur to preserve glass look
             if (Style is Styles.Start7Aero or Styles.Taskbar7Aero or Styles.StartVistaAero or Styles.TaskbarVistaAero or Styles.AltTab7Aero)
             {
                 blurAmount = 3;
             }
 
-            Bitmap blurred = back.Blur(blurAmount);
-            if (blurred == null) return;
-
-            // Win11 dark mode dims the blurred wallpaper to keep contrast readable
-            if (Style is Styles.Taskbar11 or Styles.Start11 or Styles.ActionCenter11 or Styles.AltTab11 && DarkMode)
+            // Enhanced Acrylic blur for Windows 10/11
+            Bitmap blurred = null;
+            if (Style is Styles.Taskbar11 or Styles.Start11 or Styles.ActionCenter11 or Styles.AltTab11 or 
+                Styles.Taskbar10 or Styles.Start10 or Styles.ActionCenter10 or Styles.AltTab10)
             {
-                using Bitmap adjusted = blurred.AdjustHSL(null, 0.6f);
-                back_blurred = new Bitmap(adjusted);
-                blurred.Dispose();
+                // Use Frosted blur for authentic Acrylic effect
+                blurred = back.Blur(blurAmount, TypesExtensions.BitmapExtensions.BlurType.Frosted, 1.0f);
+                
+                if (blurred != null)
+                {
+                    // Apply Acrylic-specific HSL adjustments
+                    if (Style is Styles.Taskbar11 or Styles.Start11 or Styles.ActionCenter11 or Styles.AltTab11)
+                    {
+                        // Windows 11 Acrylic: more subtle adjustments
+                        if (DarkMode)
+                        {
+                            using (Bitmap adjusted = blurred.AdjustHSL(
+                                hShift: 0f,           // No hue shift
+                                sValue: 0.4f,         // Reduce saturation to 40%
+                                lValue: 0.5f          // Slightly reduce lightness
+                            ))
+                                using (Bitmap contrasted = adjusted.Contrast(0.05f))
+                                {
+                                    back_blurred = new Bitmap(contrasted);
+                                }
+                            }
+                        else
+                        {
+                            using (Bitmap adjusted = blurred.AdjustHSL(
+                                hShift: 3f,            // Slight warm hue shift
+                                sValue: 0.5f,          // Moderate saturation reduction
+                                lValue: 0.6f           // Increase lightness
+                            ))
+                            {
+                                using (Bitmap contrasted = adjusted.Contrast(0.02f))
+                                {
+                                    back_blurred = new Bitmap(contrasted);
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // Windows 10 Acrylic: more pronounced blur effect
+                        if (DarkMode)
+                        {
+                            using (Bitmap adjusted = blurred.AdjustHSL(
+                                hShift: 0f,           // No hue shift
+                                sValue: 0.35f,        // Reduce saturation to 35%
+                                lValue: 0.45f         // Reduce lightness more
+                            ))
+                            {
+                                using (Bitmap contrasted = adjusted.Contrast(0.08f))
+                                {
+                                    back_blurred = new Bitmap(contrasted);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            using (Bitmap adjusted = blurred.AdjustHSL(
+                                hShift: 2f,            // Very slight warm hue shift
+                                sValue: 0.45f,         // Moderate saturation reduction
+                                lValue: 0.55f          // Increase lightness
+                            ))
+                            {
+                                using (Bitmap contrasted = adjusted.Contrast(0.04f))
+                                {
+                                    back_blurred = new Bitmap(contrasted);
+                                }
+                            }
+                        }
+                    }
+                }
             }
             else
             {
+                // Fallback to standard blur for other styles
+                blurred = back.Blur(blurAmount);
                 back_blurred = blurred;
             }
         }

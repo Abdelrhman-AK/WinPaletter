@@ -55,7 +55,7 @@ namespace WinPaletter.UI.Simulation
         private Icon _processedIcon = null; // the icon that matches IconSize
         public Icon Icon
         {
-            get => _icon;
+            get => _processedIcon ?? _icon;
             set
             {
                 if (value != _icon)
@@ -67,7 +67,6 @@ namespace WinPaletter.UI.Simulation
 
                     // Process icon for current IconSize
                     _processedIcon = _icon.FromSize(_IconSize);
-
                     Invalidate();
                 }
             }
@@ -328,8 +327,10 @@ namespace WinPaletter.UI.Simulation
             if (ProcessedIcon is not null)
             {
                 using (Bitmap bmp = ProcessedIcon.ToBitmap())
+                using (Graphics gBmp = Graphics.FromImage(bmp))
                 {
-                    if (bmp is not null) G.DrawImage(bmp, IconRectX);
+                    if (gBmp is not null) 
+                        G.DrawImage(bmp, IconRectX);
                 }
             }
 
@@ -356,11 +357,12 @@ namespace WinPaletter.UI.Simulation
                     using (Graphics gShadow = Graphics.FromImage(bmpShadow))
                     {
                         gShadow.DrawString(Text, Font, brShadow, new RectangleF(0, 1, LabelRectX.Width, LabelRectX.Height), sf);
-
                         using (Bitmap b_blur = bmpShadow.Blur(1.1f))
-                        using (Bitmap b_fade = b_blur.Fade(0.6f))
                         {
-                            G.DrawImage(b_fade, LabelRectX);
+                            using (Bitmap b_fade = b_blur.Fade(0.6f))
+                            {
+                                G.DrawImage(b_fade, LabelRectX);
+                            }
                         }
                     }
                 }
