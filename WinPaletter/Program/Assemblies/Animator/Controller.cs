@@ -78,6 +78,9 @@ namespace AnimatorNS
             AnimatedControl = null;
             pixelsBuffer = null;
             Hide();
+            
+            // Clear bitmap cache to prevent memory leaks
+            BitmapCache.Clear();
         }
 
         public void Hide()
@@ -89,10 +92,10 @@ namespace AnimatorNS
 
                 try
                 {
-                    // Check if we're on the UI thread
+                    // Always use synchronous disposal to ensure overlay is removed immediately
                     if (db.InvokeRequired)
                     {
-                        // We're on a background thread - use Invoke to ensure synchronous removal
+                        // We're on a background thread - use Invoke for synchronous removal
                         try
                         {
                             db.Invoke(new MethodInvoker(() =>
@@ -103,6 +106,15 @@ namespace AnimatorNS
                                     {
                                         if (db.Visible) db.Hide();
                                         db.Parent = null;
+                                        // Force immediate invalidation to clear visual artifacts
+                                        db.Invalidate();
+                                        db.Update();
+                                        // Force immediate repaint of parent area
+                                        if (db.Parent != null && !db.Parent.IsDisposed)
+                                        {
+                                            db.Parent.Invalidate(db.Bounds);
+                                            db.Parent.Update();
+                                        }
                                     }
                                     // Dispose the temporary double-buffer control/form on the UI thread
                                     // to release Win32 handles and detach event handlers promptly.
@@ -132,6 +144,15 @@ namespace AnimatorNS
                             {
                                 if (db.Visible) db.Hide();
                                 db.Parent = null;
+                                // Force immediate invalidation to clear visual artifacts
+                                db.Invalidate();
+                                db.Update();
+                                // Force immediate repaint of parent area
+                                if (db.Parent != null && !db.Parent.IsDisposed)
+                                {
+                                    db.Parent.Invalidate(db.Bounds);
+                                    db.Parent.Update();
+                                }
                             }
                             if (!db.IsDisposed)
                                 db.Dispose();
@@ -273,7 +294,7 @@ namespace AnimatorNS
             int h = bounds.Height;
             if (w <= 0) w = 1;
             if (h <= 0) h = 1;
-            Bitmap bmp = new Bitmap(w, h);
+            Bitmap bmp = BitmapCache.GetOrCreate(w, h, "background");
 
             var clientRect = new Rectangle(0, 0, bmp.Width, bmp.Height);
             using (Graphics g = Graphics.FromImage(bmp))
@@ -338,7 +359,7 @@ namespace AnimatorNS
             {
                 if (ctrl.Parent == null)
                 {
-                    bmp = new Bitmap(ctrl.Width + animation.Padding.Horizontal, ctrl.Height + animation.Padding.Vertical);
+                    bmp = BitmapCache.GetOrCreate(ctrl.Width + animation.Padding.Horizontal, ctrl.Height + animation.Padding.Vertical, "foreground");
                     ctrl.DrawToBitmap(bmp, new Rectangle(animation.Padding.Left, animation.Padding.Top, ctrl.Width, ctrl.Height));
                 }
                 else
@@ -346,7 +367,7 @@ namespace AnimatorNS
                     // Check if DoubleBitmap is null (disposed) - if so, return null
                     if (DoubleBitmap == null || DoubleBitmap.IsDisposed)
                         return null;
-                    bmp = new Bitmap(DoubleBitmap.Width, DoubleBitmap.Height);
+                    bmp = BitmapCache.GetOrCreate(DoubleBitmap.Width, DoubleBitmap.Height, "foreground");
                     ctrl.DrawToBitmap(bmp, new Rectangle(ctrl.Left - DoubleBitmap.Left, ctrl.Top - DoubleBitmap.Top, ctrl.Width, ctrl.Height));
                 }
             }
@@ -388,6 +409,8 @@ namespace AnimatorNS
                 return ctrlBmp;
 
             Bitmap bmp = null;
+            byte[] sourcePixels = null;
+            byte[] pooledBuffer = null;
             try
             {
                 bmp = (Bitmap)ctrlBmp.Clone();
@@ -399,9 +422,16 @@ namespace AnimatorNS
                 IntPtr ptr = bmpData.Scan0;
                 int numBytes = bmp.Width * bmp.Height * bytesPerPixel;
 
-                if (pixelsBuffer == null || pixelsBuffer.Length != numBytes)
-                    pixelsBuffer = new byte[numBytes];
-                System.Runtime.InteropServices.Marshal.Copy(ptr, pixelsBuffer, 0, numBytes);
+                // Use pooled buffer instead of instance field to reduce memory footprint
+                pooledBuffer = AnimatorPools.GetByteArray(numBytes);
+                System.Runtime.InteropServices.Marshal.Copy(ptr, pooledBuffer, 0, numBytes);
+
+                // Create source pixels buffer for blur if needed
+                if (animation.BlurRadius > 0f)
+                {
+                    sourcePixels = AnimatorPools.GetByteArray(numBytes);
+                    System.Runtime.InteropServices.Marshal.Copy(ptr, sourcePixels, 0, numBytes);
+                }
 
                 // CRITICAL FIX: Check DoubleBitmap again before creating the event args
                 if (DoubleBitmap == null || DoubleBitmap.IsDisposed)
@@ -414,7 +444,8 @@ namespace AnimatorNS
                 {
                     CurrentTime = CurrentTime,
                     ClientRectangle = DoubleBitmap.ClientRectangle,
-                    Pixels = pixelsBuffer,
+                    Pixels = pooledBuffer,
+                    SourcePixels = sourcePixels,
                     Stride = bmpData.Stride
                 };
 
@@ -427,19 +458,28 @@ namespace AnimatorNS
                 {
                     TransfromHelper.DoBlind(e, animation);
                     TransfromHelper.DoTransparent(e, animation);
-                    if (animation.BlurRadius > 0f)
-                    {
-                        // For animation, animate the blur radius
-                        int blurR = (int)(animation.BlurRadius * (1f - CurrentTime));
-                        if (blurR > 0)
-                            TransfromHelper.DoBlur(e, blurR);
-                    }
                 }
 
-                System.Runtime.InteropServices.Marshal.Copy(pixelsBuffer, 0, ptr, numBytes);
+                System.Runtime.InteropServices.Marshal.Copy(pooledBuffer, 0, ptr, numBytes);
                 bmp.UnlockBits(bmpData);
             }
-            catch { }
+            catch 
+            { 
+                // Cleanup on exception
+                if (bmp != null)
+                {
+                    try { bmp.Dispose(); } catch { }
+                    bmp = null;
+                }
+            }
+            finally
+            {
+                // Return buffers to pool
+                if (pooledBuffer != null)
+                    AnimatorPools.ReturnByteArray(pooledBuffer);
+                if (sourcePixels != null)
+                    AnimatorPools.ReturnByteArray(sourcePixels);
+            }
 
             return bmp;
         }

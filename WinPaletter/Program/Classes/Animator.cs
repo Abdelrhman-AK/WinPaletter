@@ -13,9 +13,9 @@ namespace WinPaletter
             _animator = new AnimatorNS.Animator
             {
                 Interval = 15,
-                TimeStep = 0.07f,
-                DefaultAnimation = Animation.Transparent,
-                AnimationType = AnimationType.Transparent
+                TimeStep = 0.06f,
+                DefaultAnimation = Animation.Fade,
+                AnimationType = AnimationType.Fade
             };
         }
 

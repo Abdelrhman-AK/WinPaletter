@@ -65,7 +65,7 @@ namespace AnimatorNS
 
         protected virtual void Init()
         {
-            AnimationType = AnimatorNS.AnimationType.VertSlide;
+            AnimationType = AnimatorNS.AnimationType.Fade;
             DefaultAnimation = new Animation();
             MaxAnimationTime = 1500;
             TimeStep = 0.02f;
@@ -142,6 +142,9 @@ namespace AnimatorNS
 
         readonly List<QueueItem> completed = new List<QueueItem>();
         readonly List<QueueItem> actived = new List<QueueItem>();
+        
+        // Reusable collections to reduce GC pressure
+        readonly Dictionary<Control, QueueItem> controlDict = new Dictionary<Control, QueueItem>();
 
         void Work()
         {
@@ -230,20 +233,21 @@ namespace AnimatorNS
             lock (requests)
             {
                 toRemove.Clear();
-                Dictionary<Control, QueueItem> dict = new Dictionary<Control, QueueItem>();
+                controlDict.Clear();
+                
                 foreach (var item in requests)
                 {
                     if (item.control != null)
                     {
-                        if (dict.ContainsKey(item.control))
-                            toRemove.Add(dict[item.control]);
-                        dict[item.control] = item;
+                        if (controlDict.ContainsKey(item.control))
+                            toRemove.Add(controlDict[item.control]);
+                        controlDict[item.control] = item;
                     }
                     else
                         toRemove.Add(item);
                 }
 
-                foreach (var item in dict.Values)
+                foreach (var item in controlDict.Values)
                 {
                     if (item.control != null && !IsStateOK(item.control, item.mode))
                     {
@@ -331,10 +335,9 @@ namespace AnimatorNS
                 case AnimationType.Custom: break;
                 case AnimationType.HorizSlide: DefaultAnimation = Animation.HorizSlide; break;
                 case AnimationType.VertSlide: DefaultAnimation = Animation.VertSlide; break;
-                case AnimationType.Transparent: DefaultAnimation = Animation.Transparent; break;
+                case AnimationType.Fade: DefaultAnimation = Animation.Fade; break;
                 case AnimationType.VertBlind: DefaultAnimation = Animation.VertBlind; break;
                 case AnimationType.HorizBlind: DefaultAnimation = Animation.HorizBlind; break;
-                case AnimationType.Blur: DefaultAnimation = Animation.Blur; break;
             }
         }
 

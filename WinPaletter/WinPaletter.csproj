@@ -519,6 +519,7 @@
     <Compile Include="Program\Assemblies\Animator\Animator.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Program\Assemblies\Animator\BitmapCache.cs" />
     <Compile Include="Program\Assemblies\Animator\Controller.cs" />
     <Compile Include="Program\Assemblies\Animator\DoubleBitmapControl.cs">
       <SubType>Component</SubType>
@@ -532,6 +533,7 @@
     <Compile Include="Program\Assemblies\Animator\DoubleBitmapForm.designer.cs">
       <DependentUpon>DoubleBitmapForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Program\Assemblies\Animator\Easing.cs" />
     <Compile Include="Program\Assemblies\Animator\ExtendedControls\TabControlEx.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -539,6 +541,7 @@
       <DependentUpon>TabControlEx.cs</DependentUpon>
     </Compile>
     <Compile Include="Program\Assemblies\Animator\Flags.cs" />
+    <Compile Include="Program\Assemblies\Animator\ObjectPool.cs" />
     <Compile Include="Program\Assemblies\Animator\PointFConverter.cs" />
     <Compile Include="Program\Assemblies\Animator\TransfromHelper.cs" />
     <Compile Include="Program\Classes\ActionQueue.cs" />

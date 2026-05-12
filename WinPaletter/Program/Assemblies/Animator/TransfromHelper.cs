@@ -13,7 +13,7 @@ namespace AnimatorNS
 
         public static void DoSlide(TransfromNeededEventArg e, Animation animation)
         {
-            var k = e.CurrentTime;
+            var k = Easing.Apply(animation.EasingFunction, e.CurrentTime);
             e.Matrix.Translate(-e.ClientRectangle.Width * k * animation.SlideCoeff.X, -e.ClientRectangle.Height * k * animation.SlideCoeff.Y);
         }
 
@@ -28,7 +28,8 @@ namespace AnimatorNS
             int s = e.Stride;
             float kx = animation.BlindCoeff.X;
             float ky = animation.BlindCoeff.Y;
-            int a = (int)((sx * kx + sy * ky) * (1 - e.CurrentTime));
+            float easedProgress = Easing.Apply(animation.EasingFunction, e.CurrentTime);
+            int a = (int)((sx * kx + sy * ky) * (1 - easedProgress));
 
             for (int y = 0; y < sy; y++)
             {
@@ -47,7 +48,8 @@ namespace AnimatorNS
         {
             if (animation.TransparencyCoeff == 0f)
                 return;
-            float opacity = 1f - animation.TransparencyCoeff * e.CurrentTime;
+            float easedProgress = Easing.Apply(animation.EasingFunction, e.CurrentTime);
+            float opacity = 1f - animation.TransparencyCoeff * easedProgress;
             if (opacity < 0f) opacity = 0f;
             if (opacity > 1f) opacity = 1f;
 
@@ -91,50 +93,6 @@ namespace AnimatorNS
             System.Runtime.InteropServices.Marshal.Copy(pixels1, 0, ptr1, numBytes);
             bmp1.UnlockBits(bmpData1);
             bmp2.UnlockBits(bmpData2);
-        }
-
-        public static void DoBlur(NonLinearTransfromNeededEventArg e, int r)
-        {
-            var output = e.Pixels;
-            var source = e.SourcePixels;
-
-            int s = e.Stride;
-            int sy = e.ClientRectangle.Height;
-            int sx = e.ClientRectangle.Width;
-            int maxI = source.Length - bytesPerPixel;
-
-            for (int x = r; x < sx - r; x++)
-            {
-                for (int y = r; y < sy - r; y++)
-                {
-                    int outI = y * s + x * bytesPerPixel;
-
-                    int R = 0, G = 0, B = 0, A = 0;
-                    int counter = 0;
-                    for (int xx = x - r; xx < x + r; xx++)
-                    {
-                        for (int yy = y - r; yy < y + r; yy++)
-                        {
-                            int srcI = yy * s + xx * bytesPerPixel;
-                            if (srcI >= 0 && srcI < maxI && source[srcI + 3] > 0)
-                            {
-                                B += source[srcI + 0];
-                                G += source[srcI + 1];
-                                R += source[srcI + 2];
-                                A += source[srcI + 3];
-                                counter++;
-                            }
-                        }
-                    }
-                    if (outI < maxI && counter > 5)
-                    {
-                        output[outI + 0] = (byte)(B / counter);
-                        output[outI + 1] = (byte)(G / counter);
-                        output[outI + 2] = (byte)(R / counter);
-                        output[outI + 3] = (byte)(A / counter);
-                    }
-                }
-            }
         }
     }
 }
