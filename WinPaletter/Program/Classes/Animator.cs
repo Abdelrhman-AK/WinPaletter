@@ -13,7 +13,7 @@ namespace WinPaletter
             _animator = new AnimatorNS.Animator
             {
                 Interval = 15,
-                TimeStep = 0.06f,
+                TimeStep = 0.05f,
                 DefaultAnimation = Animation.Fade,
                 AnimationType = AnimationType.Fade
             };

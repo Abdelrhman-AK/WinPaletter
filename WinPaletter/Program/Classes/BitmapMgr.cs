@@ -44,7 +44,7 @@ namespace WinPaletter
                     height = (int)(height * scale);
                 }
 
-                Bitmap bmp = new Bitmap(width, height, PixelFormat.Format32bppArgb);
+                Bitmap bmp = new(width, height, PixelFormat.Format32bppArgb);
                 bmp.SetResolution(img.HorizontalResolution, img.VerticalResolution);
 
                 using Graphics g = Graphics.FromImage(bmp);
@@ -86,20 +86,65 @@ namespace WinPaletter
         /// <returns>Thumbnail bitmap, or null if file does not exist or is invalid.</returns>
         public static Bitmap Thumbnail(string filePath, int targetWidth, int targetHeight)
         {
-            if (string.IsNullOrWhiteSpace(filePath) || !File.Exists(filePath))
+            if (string.IsNullOrWhiteSpace(filePath) || !File.Exists(filePath)) return null;
+
+            try
+            {
+                using FileStream fs = new(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+                using Bitmap src = new(fs);
+
+                // Fast path: extract embedded EXIF thumbnail (JPEG from cameras/editors)
+                // Property 0x501B = PropertyTagThumbnailData
+                PropertyItem exifThumb = Array.Find(src.PropertyItems, p => p.Id == 0x501B);
+                if (exifThumb != null)
+                {
+                    try
+                    {
+                        using MemoryStream ms = new(exifThumb.Value);
+                        using Bitmap embedded = new(ms);
+                        return RenderThumbnail(embedded, targetWidth, targetHeight);
+                    }
+                    catch { /* Corrupt EXIF data — fall through to GetThumbnailImage */ }
+                }
+
+                // Standard path: let GDI+ pick the best internal strategy
+                try
+                {
+                    Image thumbImg = src.GetThumbnailImage(targetWidth, targetHeight, () => false, IntPtr.Zero);
+                    Bitmap result = new(thumbImg);
+                    thumbImg.Dispose();
+                    return result;
+                }
+                catch { /* No HWND context (background thread) or unsupported format — fall through */ }
+
+                // Fallback: full manual downscale
+                return RenderThumbnail(src, targetWidth, targetHeight);
+            }
+            catch (Exception ex)
+            {
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Error generating thumbnail: {filePath}", ex);
                 return null;
+            }
+        }
 
-            using FileStream fs = new(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
-            using Image img = Image.FromStream(fs, useEmbeddedColorManagement: false, validateImageData: false);
+        private static Bitmap RenderThumbnail(Bitmap src, int targetWidth, int targetHeight)
+        {
+            float scale = Math.Min((float)targetWidth / src.Width, (float)targetHeight / src.Height);
+            int drawW = (int)(src.Width * scale);
+            int drawH = (int)(src.Height * scale);
+            int offsetX = (targetWidth - drawW) / 2;
+            int offsetY = (targetHeight - drawH) / 2;
 
-            // Use GetThumbnailImage: extremely low memory and fast, preserves aspect ratio
-            Image thumbImg = img.GetThumbnailImage(targetWidth, targetHeight, () => false, IntPtr.Zero);
-
-            // Return a fresh Bitmap (detached from the original stream) for safe use
-            Bitmap thumbnail = new(thumbImg);
-            thumbImg.Dispose();
-
-            return thumbnail;
+            Bitmap thumb = new(targetWidth, targetHeight, PixelFormat.Format32bppArgb);
+            using Graphics G = Graphics.FromImage(thumb);
+            G.InterpolationMode = InterpolationMode.Low;
+            G.CompositingMode = CompositingMode.SourceCopy;
+            G.CompositingQuality = CompositingQuality.HighSpeed;
+            G.SmoothingMode = SmoothingMode.None;
+            G.PixelOffsetMode = PixelOffsetMode.None;
+            G.Clear(Color.Transparent);
+            G.DrawImage(src, new Rectangle(offsetX, offsetY, drawW, drawH));
+            return thumb;
         }
 
         /// <summary>

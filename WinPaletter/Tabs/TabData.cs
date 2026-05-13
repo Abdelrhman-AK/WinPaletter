@@ -60,7 +60,19 @@ namespace WinPaletter.Tabs
         /// <summary>
         /// Image property for the tab.
         /// </summary>
-        public Bitmap Image { get; set; }
+        public Bitmap Image
+        {
+            get => _image;
+            set
+            {
+                if (_image != value)
+                {
+                    _image?.Dispose();
+                    _image = value;
+                }
+            }
+        }
+        private Bitmap _image;
 
         /// <summary>
         /// Reference to the associated tab page.
@@ -75,12 +87,18 @@ namespace WinPaletter.Tabs
             get => _form;
             private set
             {
-                UnsubscribeEvents();
-                if (_form != null) _form.ParentChanged -= _form_ParentChanged;
+                if (_form == value) return;
 
-                if (_form != value)
+                if (_form != null)
                 {
-                    _form = value;
+                    UnsubscribeEvents();
+                    _form.ParentChanged -= _form_ParentChanged;
+                }
+
+                _form = value;
+
+                if (_form != null)
+                {
                     SubscribeEvents();
                     _form.ParentChanged += _form_ParentChanged;
                 }
@@ -125,8 +143,18 @@ namespace WinPaletter.Tabs
             {
                 if (Rectangle.Top != value)
                 {
-                    Rectangle = new Rectangle(Rectangle.Left, value, Rectangle.Width, Rectangle.Height);
-                    tabsContainer.Invalidate();
+                    // Update rectangle on current thread
+                    _rectangle = new(Rectangle.Left, value, Rectangle.Width, Rectangle.Height);
+
+                    // Marshal invalidate to UI thread if needed to prevent blocking
+                    if (tabsContainer.InvokeRequired)
+                    {
+                        tabsContainer.BeginInvoke(() => tabsContainer.Invalidate());
+                    }
+                    else
+                    {
+                        tabsContainer.Invalidate();
+                    }
                 }
             }
         }
@@ -183,7 +211,16 @@ namespace WinPaletter.Tabs
                 if (_hoverAlpha != value)
                 {
                     _hoverAlpha = value;
-                    tabsContainer.Invalidate(_rectangle.InflateReturn(1, 0));
+                    
+                    // Marshal to UI thread if needed to prevent blocking
+                    if (tabsContainer.InvokeRequired)
+                    {
+                        tabsContainer.BeginInvoke(() => tabsContainer.Invalidate(_rectangle.InflateReturn(1, 0)));
+                    }
+                    else
+                    {
+                        tabsContainer.Invalidate(_rectangle.InflateReturn(1, 0));
+                    }
                 }
             }
         }
@@ -240,7 +277,16 @@ namespace WinPaletter.Tabs
             {
                 Image = Properties.Resources.Icon.ToBitmap();
             }
-            tabsContainer?.Invalidate(_rectangle);
+            
+            // Marshal to UI thread if needed to prevent blocking
+            if (tabsContainer != null && tabsContainer.InvokeRequired)
+            {
+                tabsContainer.BeginInvoke(() => tabsContainer.Invalidate(_rectangle));
+            }
+            else
+            {
+                tabsContainer?.Invalidate(_rectangle);
+            }
         }
 
         #endregion
@@ -294,20 +340,25 @@ namespace WinPaletter.Tabs
         {
             if (tabsContainer is not null && tabsContainer.IsHandleCreated)
             {
-                await Task.Run(() =>
+                if (tabsContainer.CanAnimate_Global)
                 {
-                    if (tabsContainer.CanAnimate_Global)
-                    {
-                        Transition.With(this, nameof(TabTop), afterAnimationValue)
-                        .HookOnCompletion(() => { tabsContainer.Invoke(HookOnCompletion); })
+                    var tcs = new TaskCompletionSource<bool>();
+                    
+                    Transition.With(this, nameof(TabTop), afterAnimationValue)
+                        .HookOnCompletion(() =>
+                        {
+                            HookOnCompletion?.Invoke();
+                            tcs.TrySetResult(true);
+                        })
                         .CriticalDamp(TimeSpan.FromMilliseconds(animate ? animationDuration : 1));
-                    }
-                    else
-                    {
-                        TabTop = afterAnimationValue;
-                        tabsContainer.Invoke(HookOnCompletion);
-                    }
-                });
+                    
+                    await tcs.Task;
+                }
+                else
+                {
+                    TabTop = afterAnimationValue;
+                    HookOnCompletion?.Invoke();
+                }
             }
         }
 
@@ -344,7 +395,17 @@ namespace WinPaletter.Tabs
         {
             Shown = true;
             tabsContainer.OnFormShown(_form, new(this));
-            tabsContainer.Invalidate(_rectangle);
+            
+            // Marshal to UI thread if needed to prevent blocking
+            if (tabsContainer.InvokeRequired)
+            {
+                tabsContainer.BeginInvoke(() => tabsContainer.Invalidate(_rectangle));
+            }
+            else
+            {
+                tabsContainer.Invalidate(_rectangle);
+            }
+            
             if (Forms.MainForm is not null) Forms.MainForm.BackgroundImage = null;
         }
 
@@ -358,7 +419,16 @@ namespace WinPaletter.Tabs
             Text = _form.Text;
             if (TabPage is not null) TabPage.Text = _form.Text;
             if (_form is not null) tabsContainer?.OnFormTextChanged(_form, new(this));
-            tabsContainer?.Invalidate(_rectangle);
+            
+            // Marshal to UI thread if needed to prevent blocking
+            if (tabsContainer != null && tabsContainer.InvokeRequired)
+            {
+                tabsContainer.BeginInvoke(() => tabsContainer.Invalidate(_rectangle));
+            }
+            else
+            {
+                tabsContainer?.Invalidate(_rectangle);
+            }
         }
 
         /// <summary>
@@ -408,7 +478,10 @@ namespace WinPaletter.Tabs
             UnsubscribeEvents();
 
             TabPage?.Dispose();
+            TabPage = null;
             Image?.Dispose();
+            Image = null;
+            Form = null;
         }
 
         #endregion
@@ -507,6 +580,7 @@ namespace WinPaletter.Tabs
         public void Dispose()
         {
             ReleaseHandle();
+            lastIconHandle = IntPtr.Zero;
         }
 
         #endregion
