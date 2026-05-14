@@ -28,6 +28,7 @@ namespace WinPaletter.Tabs
             AllowDrop = true;
 
             InitializeContextMenu();
+            InitializeHoverTimer();
         }
 
         #region Variables
@@ -65,6 +66,8 @@ namespace WinPaletter.Tabs
 
         private readonly UI.WP.ContextMenuStrip contextMenu = new() { ShowImageMargin = true, AllowTransparency = true };
         private TabData contextItemDropped;
+
+        private System.Windows.Forms.Timer hoverTimer;
 
         Scheme scheme => Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
         Scheme scheme_secondary => Enabled ? Program.Style.Schemes.Secondary : Program.Style.Schemes.Disabled;
@@ -105,6 +108,77 @@ namespace WinPaletter.Tabs
                 toolStripSeparator1,
                 helpButton
                 ]);
+        }
+
+        private void InitializeHoverTimer()
+        {
+            hoverTimer = new System.Windows.Forms.Timer
+            {
+                Interval = 16, // ~60 FPS
+                Enabled = false
+            };
+            hoverTimer.Tick += HoverTimer_Tick;
+        }
+
+        private void HoverTimer_Tick(object sender, EventArgs e)
+        {
+            if (IsBusy) return;
+            
+            Point mousePos = PointToClient(MousePosition);
+            TabData hoveredTab = null;
+            Rectangle hoveredRect = Rectangle.Empty;
+
+            // Create a copy to avoid collection modification during enumeration
+            List<TabData> tabDataCopy = new(TabDataList);
+
+            foreach (TabData tabData in tabDataCopy)
+            {
+                if (tabData != null && tabData.Rectangle.Contains(mousePos))
+                {
+                    tabData.Hovered = true;
+                    hoveredRect = tabData.Rectangle;
+                    hoveredTab = tabData;
+
+                    // Check if mouse is over close button
+                    bool overCloseBtn = closeRectangle(tabData.Rectangle).Contains(mousePos);
+                    
+                    // Only animate if the value actually changed to avoid excessive transitions
+                    if (tabData.CloseButtonAlpha != (overCloseBtn ? 255 : 0))
+                    {
+                        // Animate close button alpha
+                        if (Program.Style.Animations)
+                        {
+                            FluentTransitions.Transition.With(tabData, nameof(TabData.CloseButtonAlpha), overCloseBtn ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                        }
+                        else
+                        {
+                            tabData.CloseButtonAlpha = overCloseBtn ? 255 : 0;
+                        }
+                    }
+                }
+                else if (tabData != null)
+                {
+                    tabData.Hovered = false;
+                    
+                    // Only animate if the value actually changed to avoid excessive transitions
+                    if (tabData.CloseButtonAlpha != 0)
+                    {
+                        // Reset close button alpha when not hovering over tab
+                        if (Program.Style.Animations)
+                        {
+                            FluentTransitions.Transition.With(tabData, nameof(TabData.CloseButtonAlpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                        }
+                        else
+                        {
+                            tabData.CloseButtonAlpha = 0;
+                        }
+                    }
+                }
+            }
+
+            if (hoveredTab is not null) overCloseButton = closeRectangle(hoveredTab.Rectangle).Contains(mousePos); else overCloseButton = false;
+
+            if (hoveredRect != Rectangle.Empty) Invalidate(hoveredRect);
         }
 
         /// <summary>
@@ -262,6 +336,31 @@ namespace WinPaletter.Tabs
 
                 ResetModifiersToNull();
 
+                // Animate swap alpha
+                if (CanAnimate_Global)
+                {
+                    // Cancel existing swap transitions before starting new ones
+                    itemFrom.CancelTransition(nameof(TabData.SwapAlpha));
+                    itemTo.CancelTransition(nameof(TabData.SwapAlpha));
+
+                    FluentTransitions.Transition.With(itemFrom, nameof(TabData.SwapAlpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                    FluentTransitions.Transition.With(itemTo, nameof(TabData.SwapAlpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                    
+                    // Fade out after animation
+                    _ = Task.Run(async () =>
+                    {
+                        await Task.Delay(Program.AnimationDuration_Quick);
+                        if (IsHandleCreated)
+                        {
+                            BeginInvoke(() =>
+                            {
+                                FluentTransitions.Transition.With(itemFrom, nameof(TabData.SwapAlpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                                FluentTransitions.Transition.With(itemTo, nameof(TabData.SwapAlpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                            });
+                        }
+                    });
+                }
+
                 Refresh();
             }
         }
@@ -287,6 +386,28 @@ namespace WinPaletter.Tabs
 
                 ResetModifiersToNull();
 
+                // Animate movement alpha
+                if (CanAnimate_Global)
+                {
+                    // Cancel existing movement transition before starting new one
+                    itemFrom.CancelTransition(nameof(TabData.MovementAlpha));
+
+                    FluentTransitions.Transition.With(itemFrom, nameof(TabData.MovementAlpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                    
+                    // Fade out after animation
+                    _ = Task.Run(async () =>
+                    {
+                        await Task.Delay(Program.AnimationDuration_Quick);
+                        if (IsHandleCreated)
+                        {
+                            BeginInvoke(() =>
+                            {
+                                FluentTransitions.Transition.With(itemFrom, nameof(TabData.MovementAlpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                            });
+                        }
+                    });
+                }
+
                 Refresh();
             }
         }
@@ -309,6 +430,28 @@ namespace WinPaletter.Tabs
                 SelectedIndex = 0;
 
                 ResetModifiersToNull();
+
+                // Animate movement alpha
+                if (CanAnimate_Global)
+                {
+                    // Cancel existing movement transition before starting new one
+                    itemFrom.CancelTransition(nameof(TabData.MovementAlpha));
+
+                    FluentTransitions.Transition.With(itemFrom, nameof(TabData.MovementAlpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                    
+                    // Fade out after animation
+                    _ = Task.Run(async () =>
+                    {
+                        await Task.Delay(Program.AnimationDuration_Quick);
+                        if (IsHandleCreated)
+                        {
+                            BeginInvoke(() =>
+                            {
+                                FluentTransitions.Transition.With(itemFrom, nameof(TabData.MovementAlpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                            });
+                        }
+                    });
+                }
 
                 Refresh();
             }
@@ -359,6 +502,8 @@ namespace WinPaletter.Tabs
                 List<TabData> tabDatas = new(collection);
                 collection.Clear();
 
+                Point mousePos = PointToClient(MousePosition);
+
                 int i = 0;
                 foreach (TabData tabData in tabDatas)
                 {
@@ -366,6 +511,17 @@ namespace WinPaletter.Tabs
                     {
                         TabData tabDataX = CreateTabData(tabData.TabPage, i);
                         tabDataX.Selected = i == _selectedIndex;
+                        
+                        // Preserve alpha values from old tab data
+                        tabDataX.SelectionAlpha = tabData.SelectionAlpha;
+                        tabDataX.SwapAlpha = tabData.SwapAlpha;
+                        tabDataX.MovementAlpha = tabData.MovementAlpha;
+                        tabDataX.RemovingAlpha = tabData.RemovingAlpha;
+                        tabDataX.CloseButtonAlpha = tabData.CloseButtonAlpha;
+                        
+                        // Initialize hover state based on current mouse position to prevent first-hover flicker
+                        tabDataX.Hovered = tabDataX.Rectangle.Contains(mousePos);
+                        
                         collection.Add(tabDataX);
                         i++;
                     }
@@ -527,10 +683,6 @@ namespace WinPaletter.Tabs
             else if (e.Button == MouseButtons.Left && FindForm() != null && !overCloseButton)
             {
                 HandleFormMove();
-            }
-            else if (e.Button == MouseButtons.None)
-            {
-                HandleMouseHover(e);
             }
         }
 
@@ -885,9 +1037,10 @@ namespace WinPaletter.Tabs
 
                 TabDataList[TabDataList.Count - 1].TabTop = Height;
 
-                SelectedIndex = TabDataList.Count - 1;
+                // Set SelectionAlpha directly to avoid animation flicker on first tab creation
+                TabDataList[TabDataList.Count - 1].SelectionAlpha = 255;
 
-                // Tab animation is now handled synchronously in AddFormIntoTab
+                SelectedIndex = TabDataList.Count - 1;
             }
         }
 
@@ -908,6 +1061,16 @@ namespace WinPaletter.Tabs
             animate &= /*GetIndex(tabData) == SelectedIndex &&*/ animate;
 
             tabData.IsRemoving = true;
+
+            // Animate removal alpha
+            if (CanAnimate_Global && animate)
+            {
+                FluentTransitions.Transition.With(tabData, nameof(TabData.RemovingAlpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+            }
+            else
+            {
+                tabData.RemovingAlpha = 0;
+            }
 
             int SI = SelectedIndex;
 
@@ -1040,8 +1203,24 @@ namespace WinPaletter.Tabs
 
         /// <summary>
         /// <param name="e"></param>
+        protected override void OnMouseEnter(EventArgs e)
+        {
+            if (hoverTimer != null && !hoverTimer.Enabled)
+            {
+                hoverTimer.Enabled = true;
+            }
+            base.OnMouseEnter(e);
+        }
+
+        /// <summary>
+        /// <param name="e"></param>
         protected override void OnMouseLeave(EventArgs e)
         {
+            if (hoverTimer != null)
+            {
+                hoverTimer.Enabled = false;
+            }
+
             foreach (TabData tabData in TabDataList)
             {
                 tabData.Hovered = false;
@@ -1262,6 +1441,15 @@ namespace WinPaletter.Tabs
             }
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                hoverTimer?.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
         /// <summary>
         /// Helper to draw tab element
         /// </summary>
@@ -1329,23 +1517,76 @@ namespace WinPaletter.Tabs
                         }
                     }
 
-                    using (LinearGradientBrush lgb_back = new(rect, Color.FromArgb(tabData.HoverAlpha, tabData.Selected ? scheme.Colors.Back_Checked : scheme.Colors.Back_Hover()), Color.Transparent, LinearGradientMode.Vertical))
-                    using (LinearGradientBrush lgb_border = new(rect, Color.FromArgb(tabData.HoverAlpha, tabData.Selected ? scheme.Colors.Line_Checked_Hover : scheme.Colors.Line_Hover()), Color.Transparent, LinearGradientMode.Vertical))
-                    using (Pen P_hover = new(lgb_border))
+                    // Selection alpha overlay
+                    if (tabData.SelectionAlpha > 0)
                     {
-                        G.FillPath(lgb_back, path);
-                        G.DrawPath(P_hover, path);
+                        using (LinearGradientBrush lgb_selection = new(rect, Color.FromArgb(tabData.SelectionAlpha, scheme.Colors.Back_Hover()), Color.Transparent, LinearGradientMode.Vertical))
+                        using (LinearGradientBrush lgb_selection_border = new(rect, Color.FromArgb(tabData.SelectionAlpha, scheme.Colors.Line_Hover()), Color.Transparent, LinearGradientMode.Vertical))
+                        using (Pen P_selection = new(lgb_selection_border))
+                        {
+                            G.FillPath(lgb_selection, path);
+                            G.DrawPath(P_selection, path);
+                        }
                     }
 
-                    // Draw close button on hovered tab
-                    if (tabData.Hovered & overCloseButton)
+                    // Hover effect: Blue for selected+hovered, Greyish for selected (not hovered) or unselected+hovered
+                    if (tabData.HoverAlpha > 0)
                     {
-                        using (LinearGradientBrush lgb0 = new(closeRectangle(rect), scheme_secondary.Colors.Back_Checked, scheme_secondary.Colors.Back_Checked_Hover, LinearGradientMode.Vertical))
-                        using (LinearGradientBrush lgb1 = new(closeRectangle(rect), scheme_secondary.Colors.Line_Checked, scheme_secondary.Colors.Line_Checked_Hover, LinearGradientMode.Vertical))
+                        using (LinearGradientBrush lgb_back = new(rect, Color.FromArgb(tabData.HoverAlpha, scheme.Colors.Back_Checked), Color.Transparent, LinearGradientMode.Vertical))
+                        using (LinearGradientBrush lgb_border = new(rect, Color.FromArgb(tabData.HoverAlpha, scheme.Colors.Line_Checked_Hover), Color.Transparent, LinearGradientMode.Vertical))
+                        using (Pen P_hover = new(lgb_border))
+                        {
+                            G.FillPath(lgb_back, path);
+                            G.DrawPath(P_hover, path);
+                        }
+                    }
+
+                    // Swap alpha overlay
+                    if (tabData.SwapAlpha > 0)
+                    {
+                        using (LinearGradientBrush lgb_swap = new(rect, Color.FromArgb(tabData.SwapAlpha, scheme_secondary.Colors.Back_Checked), Color.Transparent, LinearGradientMode.Vertical))
+                        using (LinearGradientBrush lgb_swap_border = new(rect, Color.FromArgb(tabData.SwapAlpha, scheme_secondary.Colors.Line_Checked_Hover), Color.Transparent, LinearGradientMode.Vertical))
+                        using (Pen P_swap = new(lgb_swap_border))
+                        {
+                            G.FillPath(lgb_swap, path);
+                            G.DrawPath(P_swap, path);
+                        }
+                    }
+
+                    // Movement alpha overlay
+                    if (tabData.MovementAlpha > 0)
+                    {
+                        using (LinearGradientBrush lgb_movement = new(rect, Color.FromArgb(tabData.MovementAlpha, scheme.Colors.Back_Hover()), Color.Transparent, LinearGradientMode.Vertical))
+                        using (LinearGradientBrush lgb_movement_border = new(rect, Color.FromArgb(tabData.MovementAlpha, scheme.Colors.Line_Hover()), Color.Transparent, LinearGradientMode.Vertical))
+                        using (Pen P_movement = new(lgb_movement_border))
+                        {
+                            G.FillPath(lgb_movement, path);
+                            G.DrawPath(P_movement, path);
+                        }
+                    }
+
+                    // Removing alpha overlay
+                    if (tabData.RemovingAlpha < 255)
+                    {
+                        using (LinearGradientBrush lgb_removing = new(rect, Color.FromArgb(255 - tabData.RemovingAlpha, scheme.Colors.Back(parentLevel)), Color.Transparent, LinearGradientMode.Vertical))
+                        using (LinearGradientBrush lgb_removing_border = new(rect, Color.FromArgb(255 - tabData.RemovingAlpha, scheme.Colors.Line(parentLevel)), Color.Transparent, LinearGradientMode.Vertical))
+                        using (Pen P_removing = new(lgb_removing_border))
+                        {
+                            G.FillPath(lgb_removing, path);
+                            G.DrawPath(P_removing, path);
+                        }
+                    }
+
+                    // Draw close button with alpha animation
+                    if (tabData.CloseButtonAlpha > 0)
+                    {
+                        Rectangle closeRect = closeRectangle(rect);
+                        using (LinearGradientBrush lgb0 = new(closeRect, Color.FromArgb(tabData.CloseButtonAlpha, scheme_secondary.Colors.Back_Checked_Hover), Color.FromArgb(tabData.CloseButtonAlpha, scheme_secondary.Colors.Back_Checked_Hover), LinearGradientMode.Vertical))
+                        using (LinearGradientBrush lgb1 = new(closeRect, Color.FromArgb(tabData.CloseButtonAlpha, scheme_secondary.Colors.Line_Checked_Hover), Color.FromArgb(tabData.CloseButtonAlpha, scheme_secondary.Colors.Line_Checked_Hover), LinearGradientMode.Vertical))
                         using (Pen P = new(lgb1))
                         {
-                            G.FillRoundedRect(lgb0, closeRectangle(rect));
-                            G.DrawRoundedRectBeveled(P, closeRectangle(rect));
+                            G.FillRoundedRect(lgb0, closeRect);
+                            G.DrawRoundedRectBeveled(P, closeRect);
                         }
                     }
                 }

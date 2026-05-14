@@ -74,6 +74,15 @@ namespace WinPaletter.NativeMethods
         public static extern bool GetScrollInfo(IntPtr hwnd, int fnBar, ref SCROLLINFO lpsi);
 
         /// <summary>
+        /// Sets the specified window's show state, such as hiding or showing the window without activating it.
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <param name="nCmdShow"></param>
+        /// <returns></returns>
+        [DllImport("user32.dll")]
+        public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+        /// <summary>
         /// Loads the specified cursor resource from the application's executable file or a system-defined cursor.
         /// </summary>
         /// <remarks>This method is a wrapper for the Windows API function <c>LoadCursor</c>. When using system-defined
@@ -947,6 +956,8 @@ namespace WinPaletter.NativeMethods
         public const uint WDA_MONITOR = 0x00000001;
         public const uint WDA_EXCLUDEFROMCAPTURE = 0x00000011;
         public const int EM_SETSEL = 0x00B1;
+        public const int SW_HIDE = 0;
+        public const int SW_SHOWNA = 8; // Show without activating, preserving position/size
 
         /// <summary>
         /// Contains information that an application uses to calculate the size, position, and valid client area of a

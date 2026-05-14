@@ -1,5 +1,6 @@
 ﻿using FluentTransitions;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,6 +25,11 @@ namespace WinPaletter.Tabs
         /// Tabs container reference.
         /// </summary>
         private readonly TabsContainer tabsContainer;
+
+        /// <summary>
+        /// Active transition tracker to prevent animation conflicts.
+        /// </summary>
+        private readonly Dictionary<string, FluentTransitions.TransitionDefinition> activeTransitions = [];
 
         /// <summary>
         /// Reference to the associated form's title bar extender.
@@ -128,6 +134,21 @@ namespace WinPaletter.Tabs
                     {
                         TitlebarExtender.TabLocation = _rectangle;
                     }
+
+                    // Cancel existing selection transition before starting new one
+                    CancelTransition(nameof(SelectionAlpha));
+
+                    // Animate selection alpha
+                    if (Program.Style.Animations)
+                    {
+                        var transition = Transition.With(this, nameof(SelectionAlpha), value ? 255 : 0);
+                        transition.CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                        TrackTransition(nameof(SelectionAlpha), transition);
+                    }
+                    else
+                    {
+                        SelectionAlpha = value ? 255 : 0;
+                    }
                 }
             }
         }
@@ -187,9 +208,14 @@ namespace WinPaletter.Tabs
                 {
                     _hovered = value;
 
+                    // Cancel existing hover transition before starting new one
+                    CancelTransition(nameof(HoverAlpha));
+
                     if (Program.Style.Animations)
                     {
-                        Transition.With(this, nameof(HoverAlpha), value ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                        var transition = Transition.With(this, nameof(HoverAlpha), value ? 255 : 0);
+                        transition.CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                        TrackTransition(nameof(HoverAlpha), transition);
                     }
                     else
                     {
@@ -226,6 +252,136 @@ namespace WinPaletter.Tabs
         }
         private int _hoverAlpha = 0;
 
+        /// <summary>
+        /// Alpha of selection effect over a tab
+        /// </summary>
+        public int SelectionAlpha
+        {
+            get => _selectionAlpha;
+            set
+            {
+                if (_selectionAlpha != value)
+                {
+                    _selectionAlpha = value;
+                    
+                    // Marshal to UI thread if needed to prevent blocking
+                    if (tabsContainer.InvokeRequired)
+                    {
+                        tabsContainer.BeginInvoke(() => tabsContainer.Invalidate(_rectangle.InflateReturn(1, 0)));
+                    }
+                    else
+                    {
+                        tabsContainer.Invalidate(_rectangle.InflateReturn(1, 0));
+                    }
+                }
+            }
+        }
+        private int _selectionAlpha = 0;
+
+        /// <summary>
+        /// Alpha of swap effect over a tab
+        /// </summary>
+        public int SwapAlpha
+        {
+            get => _swapAlpha;
+            set
+            {
+                if (_swapAlpha != value)
+                {
+                    _swapAlpha = value;
+                    
+                    // Marshal to UI thread if needed to prevent blocking
+                    if (tabsContainer.InvokeRequired)
+                    {
+                        tabsContainer.BeginInvoke(() => tabsContainer.Invalidate(_rectangle.InflateReturn(1, 0)));
+                    }
+                    else
+                    {
+                        tabsContainer.Invalidate(_rectangle.InflateReturn(1, 0));
+                    }
+                }
+            }
+        }
+        private int _swapAlpha = 0;
+
+        /// <summary>
+        /// Alpha of movement effect over a tab
+        /// </summary>
+        public int MovementAlpha
+        {
+            get => _movementAlpha;
+            set
+            {
+                if (_movementAlpha != value)
+                {
+                    _movementAlpha = value;
+                    
+                    // Marshal to UI thread if needed to prevent blocking
+                    if (tabsContainer.InvokeRequired)
+                    {
+                        tabsContainer.BeginInvoke(() => tabsContainer.Invalidate(_rectangle.InflateReturn(1, 0)));
+                    }
+                    else
+                    {
+                        tabsContainer.Invalidate(_rectangle.InflateReturn(1, 0));
+                    }
+                }
+            }
+        }
+        private int _movementAlpha = 0;
+
+        /// <summary>
+        /// Alpha of removal effect over a tab
+        /// </summary>
+        public int RemovingAlpha
+        {
+            get => _removingAlpha;
+            set
+            {
+                if (_removingAlpha != value)
+                {
+                    _removingAlpha = value;
+                    
+                    // Marshal to UI thread if needed to prevent blocking
+                    if (tabsContainer.InvokeRequired)
+                    {
+                        tabsContainer.BeginInvoke(() => tabsContainer.Invalidate(_rectangle.InflateReturn(1, 0)));
+                    }
+                    else
+                    {
+                        tabsContainer.Invalidate(_rectangle.InflateReturn(1, 0));
+                    }
+                }
+            }
+        }
+        private int _removingAlpha = 255;
+
+        /// <summary>
+        /// Alpha of close button hover effect over a tab
+        /// </summary>
+        public int CloseButtonAlpha
+        {
+            get => _closeButtonAlpha;
+            set
+            {
+                if (_closeButtonAlpha != value)
+                {
+                    _closeButtonAlpha = value;
+                    
+                    // Marshal to UI thread if needed to prevent blocking
+                    if (tabsContainer.InvokeRequired)
+                    {
+                        tabsContainer.BeginInvoke(() => tabsContainer.Invalidate(_rectangle.InflateReturn(1, 0)));
+                    }
+                    else
+                    {
+                        tabsContainer.Invalidate(_rectangle.InflateReturn(1, 0));
+                    }
+                }
+            }
+        }
+        private int _closeButtonAlpha = 0;
+
         #endregion
 
         #region Constructors
@@ -244,6 +400,9 @@ namespace WinPaletter.Tabs
             Text = tabPage.Text;
             Rectangle = rectangle;
             Image = new Icon(Form?.Icon ?? Properties.Resources.Icon, 16, 16).ToBitmap();
+            
+            // Initialize alpha values based on initial state
+            SelectionAlpha = Selected ? 255 : 0;
         }
 
         #endregion
@@ -468,6 +627,47 @@ namespace WinPaletter.Tabs
 
         #endregion
 
+        #region Transition Management
+
+        /// <summary>
+        /// Track a transition to allow cancellation.
+        /// </summary>
+        private void TrackTransition(string propertyName, FluentTransitions.TransitionDefinition transition)
+        {
+            if (activeTransitions.ContainsKey(propertyName))
+            {
+                activeTransitions[propertyName].Flash(1, TimeSpan.FromMilliseconds(1));
+            }
+            activeTransitions[propertyName] = transition;
+            transition.HookOnCompletion(() => activeTransitions.Remove(propertyName));
+        }
+
+        /// <summary>
+        /// Cancel an active transition for a property.
+        /// </summary>
+        public void CancelTransition(string propertyName)
+        {
+            if (activeTransitions.TryGetValue(propertyName, out var transition))
+            {
+                transition.Flash(1, TimeSpan.FromMilliseconds(1));
+                activeTransitions.Remove(propertyName);
+            }
+        }
+
+        /// <summary>
+        /// Cancel all active transitions.
+        /// </summary>
+        private void CancelAllTransitions()
+        {
+            foreach (var transition in activeTransitions.Values)
+            {
+                transition.Flash(1, TimeSpan.FromMilliseconds(1));
+            }
+            activeTransitions.Clear();
+        }
+
+        #endregion
+
         #region IDisposable Implementation
 
         /// <summary>
@@ -475,6 +675,7 @@ namespace WinPaletter.Tabs
         /// </summary>
         public void Dispose()
         {
+            CancelAllTransitions();
             UnsubscribeEvents();
 
             TabPage?.Dispose();
