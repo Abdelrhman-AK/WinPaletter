@@ -175,6 +175,27 @@ namespace WinPaletter.NativeMethods
         public static extern bool DestroyIcon(IntPtr hIcon);
 
         /// <summary>
+        /// Displays a shortcut menu at the specified location and tracks the selection of menu items by the user.
+        /// </summary>
+        /// <remarks>This function is typically used to display context menus in response to user actions
+        /// such as right-clicks. The caller is responsible for processing the command identifier returned by the
+        /// function. If the function fails, use Marshal.GetLastWin32Error to obtain error information.</remarks>
+        /// <param name="hMenu">A handle to the shortcut menu to be displayed. This handle must be created by a prior call to a menu
+        /// creation function.</param>
+        /// <param name="uFlags">A set of flags that specify function options and how the menu is displayed. These flags determine menu
+        /// alignment, animation, and user interaction behavior.</param>
+        /// <param name="x">The horizontal screen coordinate, in pixels, at which to display the menu.</param>
+        /// <param name="y">The vertical screen coordinate, in pixels, at which to display the menu.</param>
+        /// <param name="hWnd">A handle to the window that owns the shortcut menu. This window receives notification messages from the
+        /// menu.</param>
+        /// <param name="lptpm">A pointer to a TRACKPOPUPMENUEX structure that provides additional options for menu display, or IntPtr.Zero
+        /// if not used.</param>
+        /// <returns>The identifier of the selected menu item if a command item is chosen; otherwise, zero if no item is selected
+        /// or if an error occurs.</returns>
+        [DllImport("user32.dll", SetLastError = true, ExactSpelling = true)]
+        public static extern uint TrackPopupMenuEx(IntPtr hMenu, uint uFlags, int x, int y, IntPtr hWnd, IntPtr lptpm);
+
+        /// <summary>
         /// Changes the display colors for one or more display elements in the Windows user interface.
         /// </summary>
         /// <remarks>This method is a P/Invoke signature for the native SetSysColors function in

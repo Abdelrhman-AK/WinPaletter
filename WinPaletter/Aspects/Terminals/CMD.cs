@@ -1661,14 +1661,14 @@ while ($true) {{
                 Theme.Structures.WinTerminal.Types.Scheme scheme = null;
 
                 string selected = comboBox1.SelectedItem.ToString();
-                if (selected.StartsWith($"{Program.Localization.Strings.Aspects.TerminalStable} > "))
+                if (selected.StartsWith($"{Program.Localization.Strings.Aspects.TerminalStable} → "))
                 {
-                    selected = selected.Replace($"{Program.Localization.Strings.Aspects.TerminalStable} > ", string.Empty);
+                    selected = selected.Replace($"{Program.Localization.Strings.Aspects.TerminalStable} → ", string.Empty);
                     scheme = Program.TM.Terminal.Schemes.FirstOrDefault(x => x.Name == selected);
                 }
-                else if (selected.StartsWith($"{Program.Localization.Strings.Aspects.TerminalPreview} > "))
+                else if (selected.StartsWith($"{Program.Localization.Strings.Aspects.TerminalPreview} → "))
                 {
-                    selected = selected.Replace($"{Program.Localization.Strings.Aspects.TerminalPreview} > ", string.Empty);
+                    selected = selected.Replace($"{Program.Localization.Strings.Aspects.TerminalPreview} → ", string.Empty);
                     scheme = Program.TM.TerminalPreview.Schemes.FirstOrDefault(x => x.Name == selected);
                 }
 

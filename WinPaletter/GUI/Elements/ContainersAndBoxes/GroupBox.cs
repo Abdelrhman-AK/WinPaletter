@@ -157,7 +157,7 @@ namespace WinPaletter.UI.WP
         {
             if (IsDisposed) return;
 
-            Rectangle rect = new(0, 0, Width, Height);
+            Rectangle rect = new(-1, -1, Width + 2, Height + 2);
 
             Region?.Dispose();
 

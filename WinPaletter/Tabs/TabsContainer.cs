@@ -1,10 +1,13 @@
-﻿using Serilog.Events;
+﻿using Microsoft.VisualBasic.Devices;
+using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
@@ -1071,6 +1074,49 @@ namespace WinPaletter.Tabs
             base.OnMouseMove(e);
         }
 
+        /// Void onMouseClick to process the mouse click on tabs
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnMouseClick(MouseEventArgs e)
+        {
+            if (!IsBusy)
+            {
+                bool clickedOnTab = false;
+                foreach (TabData tabData in TabDataList)
+                {
+                    if (IsMouseOverTab(tabData))
+                    {
+                        ProcessTabMouseActions(tabData, e);
+                        clickedOnTab = true;
+                        break;
+                    }
+                }
+
+                // If right-clicked outside tabs, trigger system context menu
+                if (!clickedOnTab && e.Button == MouseButtons.Right)
+                {
+                    IntPtr formHandle = FindForm()?.Handle ?? IntPtr.Zero;
+                    if (formHandle != IntPtr.Zero)
+                    {
+                        IntPtr systemMenu = User32.GetSystemMenu(formHandle, false);
+                        if (systemMenu != IntPtr.Zero)
+                        {
+                            Point cursorPos = Control.MousePosition;
+                            const uint TPM_LEFTBUTTON = 0x0000;
+                            const uint TPM_RETURNCMD = 0x0100;
+                            uint result = User32.TrackPopupMenuEx(systemMenu, TPM_LEFTBUTTON | TPM_RETURNCMD, cursorPos.X, cursorPos.Y, formHandle, IntPtr.Zero);
+                            if (result != 0)
+                            {
+                                User32.SendMessage(formHandle, 0x0112 /*WM_SYSCOMMAND*/, new(result), IntPtr.Zero);
+                            }
+                        }
+                    }
+                }
+            }
+
+            base.OnMouseClick(e);
+        }
+
         /// <summary>
         /// Void onMouseDown to handle the movement of the tabs and also the associated form
         /// </summary>
@@ -1161,25 +1207,6 @@ namespace WinPaletter.Tabs
             Refresh();
 
             base.OnMouseLeave(e);
-        }
-        /// Void onMouseClick to process the mouse click on tabs
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnMouseClick(MouseEventArgs e)
-        {
-            if (!IsBusy)
-            {
-                foreach (TabData tabData in TabDataList)
-                {
-                    if (IsMouseOverTab(tabData))
-                    {
-                        ProcessTabMouseActions(tabData, e);
-                        break;
-                    }
-                }
-            }
-
-            base.OnMouseClick(e);
         }
 
         /// <summary>
