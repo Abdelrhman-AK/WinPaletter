@@ -279,58 +279,6 @@ namespace WinPaletter.Tabs
         private int _selectionAlpha = 0;
 
         /// <summary>
-        /// Alpha of swap effect over a tab
-        /// </summary>
-        public int SwapAlpha
-        {
-            get => _swapAlpha;
-            set
-            {
-                if (_swapAlpha != value)
-                {
-                    _swapAlpha = value;
-                    
-                    // Marshal to UI thread if needed to prevent blocking
-                    if (tabsContainer.InvokeRequired)
-                    {
-                        tabsContainer.BeginInvoke(() => tabsContainer.Invalidate(_rectangle.InflateReturn(1, 0)));
-                    }
-                    else
-                    {
-                        tabsContainer.Invalidate(_rectangle.InflateReturn(1, 0));
-                    }
-                }
-            }
-        }
-        private int _swapAlpha = 0;
-
-        /// <summary>
-        /// Alpha of movement effect over a tab
-        /// </summary>
-        public int MovementAlpha
-        {
-            get => _movementAlpha;
-            set
-            {
-                if (_movementAlpha != value)
-                {
-                    _movementAlpha = value;
-                    
-                    // Marshal to UI thread if needed to prevent blocking
-                    if (tabsContainer.InvokeRequired)
-                    {
-                        tabsContainer.BeginInvoke(() => tabsContainer.Invalidate(_rectangle.InflateReturn(1, 0)));
-                    }
-                    else
-                    {
-                        tabsContainer.Invalidate(_rectangle.InflateReturn(1, 0));
-                    }
-                }
-            }
-        }
-        private int _movementAlpha = 0;
-
-        /// <summary>
         /// Alpha of removal effect over a tab
         /// </summary>
         public int RemovingAlpha

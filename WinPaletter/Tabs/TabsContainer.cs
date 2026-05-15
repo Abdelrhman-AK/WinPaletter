@@ -123,7 +123,7 @@ namespace WinPaletter.Tabs
         private void HoverTimer_Tick(object sender, EventArgs e)
         {
             if (IsBusy) return;
-            
+
             Point mousePos = PointToClient(MousePosition);
             TabData hoveredTab = null;
             Rectangle hoveredRect = Rectangle.Empty;
@@ -141,7 +141,7 @@ namespace WinPaletter.Tabs
 
                     // Check if mouse is over close button
                     bool overCloseBtn = closeRectangle(tabData.Rectangle).Contains(mousePos);
-                    
+
                     // Only animate if the value actually changed to avoid excessive transitions
                     if (tabData.CloseButtonAlpha != (overCloseBtn ? 255 : 0))
                     {
@@ -159,7 +159,7 @@ namespace WinPaletter.Tabs
                 else if (tabData != null)
                 {
                     tabData.Hovered = false;
-                    
+
                     // Only animate if the value actually changed to avoid excessive transitions
                     if (tabData.CloseButtonAlpha != 0)
                     {
@@ -270,8 +270,8 @@ namespace WinPaletter.Tabs
 
         private Rectangle closeRectangle(Rectangle rectangle)
         {
-            int size = 15;
-            return new Rectangle(rectangle.Right - size - 5, rectangle.Y + (rectangle.Height - size) / 2, size, size);
+            int size = 18;
+            return new Rectangle(rectangle.Right - size - (rectangle.Height - size) / 2 + 1, rectangle.Y + (rectangle.Height - size) / 2, size, size);
         }
 
         private Rectangle iconRectangle(Rectangle rectangle)
@@ -336,31 +336,6 @@ namespace WinPaletter.Tabs
 
                 ResetModifiersToNull();
 
-                // Animate swap alpha
-                if (CanAnimate_Global)
-                {
-                    // Cancel existing swap transitions before starting new ones
-                    itemFrom.CancelTransition(nameof(TabData.SwapAlpha));
-                    itemTo.CancelTransition(nameof(TabData.SwapAlpha));
-
-                    FluentTransitions.Transition.With(itemFrom, nameof(TabData.SwapAlpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
-                    FluentTransitions.Transition.With(itemTo, nameof(TabData.SwapAlpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
-                    
-                    // Fade out after animation
-                    _ = Task.Run(async () =>
-                    {
-                        await Task.Delay(Program.AnimationDuration_Quick);
-                        if (IsHandleCreated)
-                        {
-                            BeginInvoke(() =>
-                            {
-                                FluentTransitions.Transition.With(itemFrom, nameof(TabData.SwapAlpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
-                                FluentTransitions.Transition.With(itemTo, nameof(TabData.SwapAlpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
-                            });
-                        }
-                    });
-                }
-
                 Refresh();
             }
         }
@@ -386,28 +361,6 @@ namespace WinPaletter.Tabs
 
                 ResetModifiersToNull();
 
-                // Animate movement alpha
-                if (CanAnimate_Global)
-                {
-                    // Cancel existing movement transition before starting new one
-                    itemFrom.CancelTransition(nameof(TabData.MovementAlpha));
-
-                    FluentTransitions.Transition.With(itemFrom, nameof(TabData.MovementAlpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
-                    
-                    // Fade out after animation
-                    _ = Task.Run(async () =>
-                    {
-                        await Task.Delay(Program.AnimationDuration_Quick);
-                        if (IsHandleCreated)
-                        {
-                            BeginInvoke(() =>
-                            {
-                                FluentTransitions.Transition.With(itemFrom, nameof(TabData.MovementAlpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
-                            });
-                        }
-                    });
-                }
-
                 Refresh();
             }
         }
@@ -430,28 +383,6 @@ namespace WinPaletter.Tabs
                 SelectedIndex = 0;
 
                 ResetModifiersToNull();
-
-                // Animate movement alpha
-                if (CanAnimate_Global)
-                {
-                    // Cancel existing movement transition before starting new one
-                    itemFrom.CancelTransition(nameof(TabData.MovementAlpha));
-
-                    FluentTransitions.Transition.With(itemFrom, nameof(TabData.MovementAlpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
-                    
-                    // Fade out after animation
-                    _ = Task.Run(async () =>
-                    {
-                        await Task.Delay(Program.AnimationDuration_Quick);
-                        if (IsHandleCreated)
-                        {
-                            BeginInvoke(() =>
-                            {
-                                FluentTransitions.Transition.With(itemFrom, nameof(TabData.MovementAlpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
-                            });
-                        }
-                    });
-                }
 
                 Refresh();
             }
@@ -511,17 +442,15 @@ namespace WinPaletter.Tabs
                     {
                         TabData tabDataX = CreateTabData(tabData.TabPage, i);
                         tabDataX.Selected = i == _selectedIndex;
-                        
+
                         // Preserve alpha values from old tab data
                         tabDataX.SelectionAlpha = tabData.SelectionAlpha;
-                        tabDataX.SwapAlpha = tabData.SwapAlpha;
-                        tabDataX.MovementAlpha = tabData.MovementAlpha;
                         tabDataX.RemovingAlpha = tabData.RemovingAlpha;
                         tabDataX.CloseButtonAlpha = tabData.CloseButtonAlpha;
-                        
+
                         // Initialize hover state based on current mouse position to prevent first-hover flicker
                         tabDataX.Hovered = tabDataX.Rectangle.Contains(mousePos);
-                        
+
                         collection.Add(tabDataX);
                         i++;
                     }
@@ -1541,30 +1470,6 @@ namespace WinPaletter.Tabs
                         }
                     }
 
-                    // Swap alpha overlay
-                    if (tabData.SwapAlpha > 0)
-                    {
-                        using (LinearGradientBrush lgb_swap = new(rect, Color.FromArgb(tabData.SwapAlpha, scheme_secondary.Colors.Back_Checked), Color.Transparent, LinearGradientMode.Vertical))
-                        using (LinearGradientBrush lgb_swap_border = new(rect, Color.FromArgb(tabData.SwapAlpha, scheme_secondary.Colors.Line_Checked_Hover), Color.Transparent, LinearGradientMode.Vertical))
-                        using (Pen P_swap = new(lgb_swap_border))
-                        {
-                            G.FillPath(lgb_swap, path);
-                            G.DrawPath(P_swap, path);
-                        }
-                    }
-
-                    // Movement alpha overlay
-                    if (tabData.MovementAlpha > 0)
-                    {
-                        using (LinearGradientBrush lgb_movement = new(rect, Color.FromArgb(tabData.MovementAlpha, scheme.Colors.Back_Hover()), Color.Transparent, LinearGradientMode.Vertical))
-                        using (LinearGradientBrush lgb_movement_border = new(rect, Color.FromArgb(tabData.MovementAlpha, scheme.Colors.Line_Hover()), Color.Transparent, LinearGradientMode.Vertical))
-                        using (Pen P_movement = new(lgb_movement_border))
-                        {
-                            G.FillPath(lgb_movement, path);
-                            G.DrawPath(P_movement, path);
-                        }
-                    }
-
                     // Removing alpha overlay
                     if (tabData.RemovingAlpha < 255)
                     {
@@ -1581,7 +1486,7 @@ namespace WinPaletter.Tabs
                     if (tabData.CloseButtonAlpha > 0)
                     {
                         Rectangle closeRect = closeRectangle(rect);
-                        using (LinearGradientBrush lgb0 = new(closeRect, Color.FromArgb(tabData.CloseButtonAlpha, scheme_secondary.Colors.Back_Checked_Hover), Color.FromArgb(tabData.CloseButtonAlpha, scheme_secondary.Colors.Back_Checked_Hover), LinearGradientMode.Vertical))
+                        using (LinearGradientBrush lgb0 = new(closeRect, Color.FromArgb(tabData.CloseButtonAlpha, scheme_secondary.Colors.Back_Checked), Color.FromArgb(tabData.CloseButtonAlpha, scheme_secondary.Colors.Back_Checked_Hover), LinearGradientMode.Vertical))
                         using (LinearGradientBrush lgb1 = new(closeRect, Color.FromArgb(tabData.CloseButtonAlpha, scheme_secondary.Colors.Line_Checked_Hover), Color.FromArgb(tabData.CloseButtonAlpha, scheme_secondary.Colors.Line_Checked_Hover), LinearGradientMode.Vertical))
                         using (Pen P = new(lgb1))
                         {
@@ -1603,7 +1508,13 @@ namespace WinPaletter.Tabs
                 Rectangle iconRect = iconRectangle(rect);
 
                 // Draw close button on tab
-                DrawTextOnGlass(G, "✕", Fonts.ConsoleMedium, ForeColor, closeRect, sf_close);
+                DrawTextOnGlass(G, "✕", Fonts.ConsoleLarge, Color.FromArgb(255 - tabData.CloseButtonAlpha, ForeColor), closeRect, sf_close);
+
+                if (tabData.CloseButtonAlpha > 0)
+                {
+                    DrawTextOnGlass(G, "✕", Fonts.ConsoleLarge, Color.FromArgb(tabData.CloseButtonAlpha, scheme_secondary.Colors.ForeColor_Accent), closeRect, sf_close);
+                }
+
 
                 // Draw icon and text on tab
                 if (icon != null) G.DrawImage(icon, iconRect);
