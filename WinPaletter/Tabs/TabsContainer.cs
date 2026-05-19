@@ -65,12 +65,20 @@ namespace WinPaletter.Tabs
         /// <summary>
         /// Padding of tabs from top of the control
         /// </summary>
-        public readonly int upperTabPadding = 5;
+        public readonly int upperTabPadding = 4;
 
         private readonly UI.WP.ContextMenuStrip contextMenu = new() { ShowImageMargin = true, AllowTransparency = true };
         private TabData contextItemDropped;
 
         private System.Windows.Forms.Timer hoverTimer;
+
+        private Point hoverPosition;
+        private RectangleF hoverRect;
+        private int _hoverSize;
+        private TabData _hoveredTabData;
+
+        public enum MouseState { None, Over, Down }
+        public MouseState State = MouseState.None;
 
         Scheme scheme => Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
         Scheme scheme_secondary => Enabled ? Program.Style.Schemes.Secondary : Program.Style.Schemes.Disabled;
@@ -181,6 +189,45 @@ namespace WinPaletter.Tabs
 
             if (hoveredTab is not null) overCloseButton = closeRectangle(hoveredTab.Rectangle).Contains(mousePos); else overCloseButton = false;
 
+            // Update hovered tab data for hover effect
+            if (hoveredTab != null && State != MouseState.Down)
+            {
+                if (_hoveredTabData != hoveredTab)
+                {
+                    _hoveredTabData = hoveredTab;
+                    hoverPosition = mousePos;
+
+                    // Animate hover size when entering a new tab
+                    int defaultHoverSize = Math.Max(hoveredTab.Rectangle.Width, hoveredTab.Rectangle.Height);
+                    if (CanAnimate_Global)
+                    {
+                        FluentTransitions.Transition.With(this, nameof(HoverSize), defaultHoverSize).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                    }
+                    else
+                    {
+                        HoverSize = defaultHoverSize;
+                    }
+                }
+                else
+                {
+                    // Update hover position while staying on the same tab
+                    hoverPosition = mousePos;
+                }
+            }
+            else if (hoveredTab == null && State == MouseState.None)
+            {
+                // Reset hover when not over any tab and not in any mouse state
+                _hoveredTabData = null;
+                if (CanAnimate_Global)
+                {
+                    FluentTransitions.Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                }
+                else
+                {
+                    HoverSize = 0;
+                }
+            }
+
             if (hoveredRect != Rectangle.Empty) Invalidate(hoveredRect);
         }
 
@@ -273,14 +320,16 @@ namespace WinPaletter.Tabs
 
         private Rectangle closeRectangle(Rectangle rectangle)
         {
-            int size = 18;
-            return new Rectangle(rectangle.Right - size - (rectangle.Height - size) / 2 + 1, rectangle.Y + (rectangle.Height - size) / 2, size, size);
+            int size = 17;
+            return new Rectangle(rectangle.Right - size - (rectangle.Height - size) / 2, rectangle.Y + (rectangle.Height - size) / 2, size, size);
         }
 
         private Rectangle iconRectangle(Rectangle rectangle)
         {
             int size = 16;
-            return new Rectangle(rectangle.X + 5, rectangle.Y + (rectangle.Height - size) / 2, size, size);
+            int top = rectangle.Y + (rectangle.Height - size) / 2;
+            int paddingLeft = (rectangle.Height - size) / 2;
+            return new Rectangle(rectangle.X + paddingLeft, top, size, size);
         }
 
         private Rectangle titleRectangle(Rectangle rectangle)
@@ -651,30 +700,6 @@ namespace WinPaletter.Tabs
         {
             Point locationNewPoint = MousePosition - (Size)locationOldPoint;
             if (FindForm() is not null) FindForm().Location = locationNewPoint;
-        }
-
-        private void HandleMouseHover(MouseEventArgs e)
-        {
-            TabData hoveredTab = null;
-            Rectangle hoveredRect = Rectangle.Empty;
-
-            foreach (TabData tabData in TabDataList)
-            {
-                if (tabData.Rectangle.Contains(e.Location))
-                {
-                    tabData.Hovered = true;
-                    hoveredRect = tabData.Rectangle;
-                    hoveredTab = tabData;
-                }
-                else
-                {
-                    tabData.Hovered = false;
-                }
-            }
-
-            if (hoveredTab is not null) overCloseButton = closeRectangle(hoveredTab.Rectangle).Contains(e.Location); else overCloseButton = false;
-
-            if (hoveredRect != Rectangle.Empty) Invalidate(hoveredRect);
         }
 
         private void SetTabMoveProperties(int moveToIndex, bool moveTab, bool moveToFirst, bool moveToLast)
@@ -1071,6 +1096,15 @@ namespace WinPaletter.Tabs
                 HandleFormMove();
             }
 
+            // Update hover position for hover effect
+            if (CanAnimate_Global && State != MouseState.None && _hoveredTabData != null)
+            {
+                hoverPosition = e.Location;
+                hoverRect.X = hoverPosition.X - 0.5f * _hoverSize;
+                hoverRect.Y = hoverPosition.Y - 0.5f * _hoverSize;
+                Invalidate();
+            }
+
             base.OnMouseMove(e);
         }
 
@@ -1132,6 +1166,26 @@ namespace WinPaletter.Tabs
                 locationOldPoint = MousePosition - (Size)FindForm()?.Location;
             }
 
+            // Update hover state for click effect
+            TabData clickedTab = GetTabAtMousePosition(e);
+            if (clickedTab != null)
+            {
+                State = MouseState.Down;
+                _hoveredTabData = clickedTab;
+                hoverPosition = e.Location;
+
+                // Increase hover size to fill the whole tab area (double the max dimension)
+                int maxHoverSize = Math.Max(clickedTab.Rectangle.Width, clickedTab.Rectangle.Height) * 2;
+                if (CanAnimate_Global)
+                {
+                    FluentTransitions.Transition.With(this, nameof(HoverSize), maxHoverSize).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                }
+                else
+                {
+                    HoverSize = maxHoverSize;
+                }
+            }
+
             base.OnMouseDown(e);
         }
 
@@ -1173,6 +1227,45 @@ namespace WinPaletter.Tabs
                 ResetModifiersToNull();
             }
 
+            // Reset hover state on release
+            if (State == MouseState.Down)
+            {
+                State = MouseState.Over;
+
+                // Check if we're still hovering over a tab
+                TabData currentHoveredTab = GetTabAtMousePosition(e);
+                if (currentHoveredTab != null)
+                {
+                    _hoveredTabData = currentHoveredTab;
+                    hoverPosition = e.Location;
+
+                    // Reset hover size to default (max dimension of tab)
+                    int defaultHoverSize = Math.Max(currentHoveredTab.Rectangle.Width, currentHoveredTab.Rectangle.Height);
+                    if (CanAnimate_Global)
+                    {
+                        FluentTransitions.Transition.With(this, nameof(HoverSize), defaultHoverSize).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                    }
+                    else
+                    {
+                        HoverSize = defaultHoverSize;
+                    }
+                }
+                else
+                {
+                    _hoveredTabData = null;
+
+                    // Reset hover size to 0 if not over any tab
+                    if (CanAnimate_Global)
+                    {
+                        FluentTransitions.Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                    }
+                    else
+                    {
+                        HoverSize = 0;
+                    }
+                }
+            }
+
             base.OnMouseUp(e);
         }
 
@@ -1184,6 +1277,9 @@ namespace WinPaletter.Tabs
             {
                 hoverTimer.Enabled = true;
             }
+
+            State = MouseState.Over;
+
             base.OnMouseEnter(e);
         }
 
@@ -1202,6 +1298,19 @@ namespace WinPaletter.Tabs
             }
 
             overCloseButton = false;
+            State = MouseState.None;
+            _hoveredTabData = null;
+
+            // Reset hover size
+            if (CanAnimate_Global)
+            {
+                FluentTransitions.Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+            }
+            else
+            {
+                HoverSize = 0;
+            }
+
             Invalidate();
 
             Refresh();
@@ -1274,56 +1383,92 @@ namespace WinPaletter.Tabs
 
         #endregion
 
+        #region Hover
+
+        [System.ComponentModel.DesignerSerializationVisibility(System.ComponentModel.DesignerSerializationVisibility.Hidden), System.ComponentModel.Browsable(false)]
+        public int HoverSize
+        {
+            get => _hoverSize;
+            set
+            {
+                _hoverSize = value;
+                hoverRect = new RectangleF(hoverPosition.X - 0.5f * _hoverSize, hoverPosition.Y - 0.5f * _hoverSize, _hoverSize, _hoverSize);
+                Invalidate();
+            }
+        }
+
+        private void DrawHover(Graphics G, GraphicsPath path, Rectangle rect, Color color)
+        {
+            Point clientMousePos = PointToClient(MousePosition);
+
+            using (GraphicsPath clipPath = new())
+            {
+                RectangleF bounds = path.GetBounds();
+                clipPath.AddRectangle(new RectangleF(bounds.X, bounds.Y, bounds.Width, bounds.Height - 2));
+
+                using (Region clipRegion = new(path))
+                {
+                    clipRegion.Intersect(clipPath.GetBounds());
+                    G.SetClip(clipRegion, CombineMode.Replace);
+                }
+            }
+
+            using (GraphicsPath gp = new())
+            {
+                Rectangle circle = new(
+                    clientMousePos.X - _hoverSize / 2,
+                    clientMousePos.Y - _hoverSize / 2,
+                    _hoverSize,
+                    _hoverSize);
+
+                gp.AddEllipse(circle);
+
+                using (PathGradientBrush pgb = new(gp)
+                {
+                    CenterPoint = clientMousePos,
+                    CenterColor = color,
+                    SurroundColors = [Color.Transparent]
+                })
+                {
+                    G.FillEllipse(pgb, circle);
+                }
+            }
+
+            G.ResetClip();
+        }
+
+        #endregion
+
         #region Graphics
 
         private GraphicsPath RR(Rectangle r, int radius, bool rounded)
         {
             GraphicsPath path = new();
 
+            // Extend bottom by 1 to push the open endpoints outside the drawn area, so the stroke between them is never rendered.
+            int bottom = r.Bottom + 1;
+
             if (rounded)
             {
-                // Create points for the path based on the provided Rectangle and radius
-                int diameter = 2 * radius;
-                Rectangle arcRect = new(r.X, r.Y, diameter, diameter);
+                int diameter = radius * 2;
 
-                // Top left corner
-                path.AddArc(arcRect, 180, 90);
+                // Top-left arc
+                path.AddArc(r.X, r.Y, diameter, diameter, 180, 90);
 
-                // Top edge
-                path.AddLine(r.X + radius, r.Y, r.Right - radius, r.Y);
+                // Top-right arc
+                path.AddArc(r.Right - diameter, r.Y, diameter, diameter, 270, 90);
 
-                // Top right corner
-                arcRect.X = r.Right - diameter;
-                path.AddArc(arcRect, 270, 90);
+                // Right edge — goes past the clip boundary
+                path.AddLine(r.Right, r.Y + radius, r.Right, bottom);
 
-                // Right edge
-                path.AddLine(r.Right, r.Y + radius, r.Right, r.Bottom - radius);
-
-                // Bottom right corner
-                path.AddLine(r.Right, r.Bottom - radius, r.Right, r.Bottom);
-
-                // Bottom edge
-                path.AddLine(r.Right, r.Bottom, r.X, r.Bottom);
-
-                // Bottom left corner
-                path.AddLine(r.X, r.Bottom, r.X, r.Bottom - radius);
-
-                // Left edge
-                path.AddLine(r.X, r.Bottom - radius, r.X, r.Y + radius);
-
-                // Top left corner
-                path.CloseFigure();
+                // Left edge — goes past the clip boundary
+                path.AddLine(r.X, bottom, r.X, r.Y + radius);
             }
             else
             {
-                // Create a path with sharp corners (no curves)
-                path.AddPolygon(
-                [
-            new Point(r.X, r.Y),
-            new Point(r.Right, r.Y),
-            new Point(r.Right, r.Bottom),
-            new Point(r.X, r.Bottom),
-        ]);
+                path.AddLine(r.X, bottom, r.X, r.Y);
+                path.AddLine(r.X, r.Y, r.Right, r.Y);
+                path.AddLine(r.Right, r.Y, r.Right, bottom);
             }
 
             return path;
@@ -1406,6 +1551,18 @@ namespace WinPaletter.Tabs
             base.Dispose(disposing);
         }
 
+        private void DrawTabPath(Graphics G, GraphicsPath path, Pen pen, Rectangle r, int radius, bool rounded)
+        {
+            Region oldClip = G.Clip;
+
+            // Clip to everything except the bottom edge row of pixels
+            Rectangle clip = new(r.X, r.Y, r.Width + 1, r.Height - 1);
+            G.SetClip(clip);
+            G.DrawPath(pen, path);
+
+            G.Clip = oldClip;
+        }
+
         /// <summary>
         /// Helper to draw tab element
         /// </summary>
@@ -1417,30 +1574,58 @@ namespace WinPaletter.Tabs
             Rectangle rect = !isMoving ? tabData.Rectangle : new Rectangle(tabNewPoint.X, tabData.Rectangle.Y, tabData.Rectangle.Width, tabData.Rectangle.Height);
 
             Bitmap icon = tabData.Image;
+            int radius = 5;
 
-            using (GraphicsPath path = RR(rect, 5, Program.Style.RoundedCorners))
+            using (GraphicsPath path = RR(rect, radius, Program.Style.RoundedCorners))
             {
                 if (isMoving)
                 {
-                    using (LinearGradientBrush lgb_back = new(rect, Color.FromArgb(128, scheme_secondary.Colors.Back_Checked), Color.Transparent, LinearGradientMode.Vertical))
-                    using (LinearGradientBrush lgb_border = new(rect, Color.FromArgb(128, scheme_secondary.Colors.Line_Checked_Hover), Color.Transparent, LinearGradientMode.Vertical))
-                    using (Pen P_hover = new(lgb_border))
-                    {
-                        G.FillPath(lgb_back, path);
-                        G.DrawPath(P_hover, path);
-                    }
-                }
-                else
-                {
+                    // Draw the tab with hover effect preserved when dragging
                     if (tabData.Selected)
                     {
-                        // Draw selected/opened tab
-
+                        // Draw selected/opened tab background
                         using (SolidBrush br = new(scheme.Colors.Back_Hover(parentLevel)))
-                        using (Pen P = new(scheme.Colors.Line_Hover(parentLevel)))
                         {
                             G.FillPath(br, path);
+                        }
+                    }
 
+                    // Selection alpha overlay
+                    if (tabData.SelectionAlpha > 0)
+                    {
+                        using (LinearGradientBrush lgb_selection = new(rect, Color.FromArgb(tabData.SelectionAlpha, scheme.Colors.Back_Hover(parentLevel)), Color.Transparent, LinearGradientMode.Vertical))
+                        {
+                            G.FillPath(lgb_selection, path);
+                        }
+                    }
+
+                    // Hover effect: Blue for selected+hovered, Greyish for selected (not hovered) or unselected+hovered
+                    if (tabData.HoverAlpha > 0)
+                    {
+                        using (LinearGradientBrush lgb_back = new(rect, Color.FromArgb(tabData.HoverAlpha, scheme.Colors.Back_Checked), Color.Transparent, LinearGradientMode.Vertical))
+                        {
+                            G.FillPath(lgb_back, path);
+                        }
+
+                        // Draw radial hover effect
+                        if (tabData == _hoveredTabData && _hoverSize > 0)
+                        {
+                            Color hoverColor = tabData.Selected ? scheme.Colors.ForeColor_Accent : Color.FromArgb(100, Program.Style.DarkMode ? Color.White : Color.Black);
+                            DrawHover(G, path, rect, hoverColor);
+                        }
+                    }
+
+                    // Semi-transparent overlay for dragging
+                    using (LinearGradientBrush lgb_back = new(rect, Color.FromArgb(128, scheme_secondary.Colors.Back_Checked), Color.Transparent, LinearGradientMode.Vertical))
+                    {
+                        G.FillPath(lgb_back, path);
+                    }
+
+                    // Draw border last
+                    if (tabData.Selected)
+                    {
+                        using (Pen P = new(scheme.Colors.Line_Hover(parentLevel)))
+                        {
                             if (OS.WVista || OS.W7 || OS.W8x)
                             {
                                 Color lineColor = Program.Style.DarkMode ? Color.White : Color.Black;
@@ -1461,39 +1646,66 @@ namespace WinPaletter.Tabs
                     }
                     else
                     {
-                        // Draw normal tab
                         if (Parent is null || Parent.FindForm() is null)
                         {
-                            using (SolidBrush br = new(scheme.Colors.Back(parentLevel)))
                             using (Pen P = new(scheme.Colors.Line(parentLevel)))
                             {
-                                G.FillPath(br, path);
                                 G.DrawPath(P, path);
                             }
                         }
                     }
-
+                }
+                else
+                {                    
                     // Selection alpha overlay
                     if (tabData.SelectionAlpha > 0)
                     {
-                        using (LinearGradientBrush lgb_selection = new(rect, Color.FromArgb(tabData.SelectionAlpha, scheme.Colors.Back_Hover()), Color.Transparent, LinearGradientMode.Vertical))
-                        using (LinearGradientBrush lgb_selection_border = new(rect, Color.FromArgb(tabData.SelectionAlpha, scheme.Colors.Line_Hover()), Color.Transparent, LinearGradientMode.Vertical))
-                        using (Pen P_selection = new(lgb_selection_border))
+                        // Draw selected/opened tab background
+                        using (SolidBrush br = new(Color.FromArgb(tabData.SelectionAlpha, scheme.Colors.Back_Hover(parentLevel))))
                         {
-                            G.FillPath(lgb_selection, path);
-                            G.DrawPath(P_selection, path);
+                            G.FillPath(br, path);
                         }
                     }
 
-                    // Hover effect: Blue for selected+hovered, Greyish for selected (not hovered) or unselected+hovered
+                    // Hover effect
                     if (tabData.HoverAlpha > 0)
                     {
-                        using (LinearGradientBrush lgb_back = new(rect, Color.FromArgb(tabData.HoverAlpha, scheme.Colors.Back_Checked), Color.Transparent, LinearGradientMode.Vertical))
-                        using (LinearGradientBrush lgb_border = new(rect, Color.FromArgb(tabData.HoverAlpha, scheme.Colors.Line_Checked_Hover), Color.Transparent, LinearGradientMode.Vertical))
-                        using (Pen P_hover = new(lgb_border))
+                        // Draw radial hover effect
+                        if (tabData == _hoveredTabData && _hoverSize > 0)
                         {
-                            G.FillPath(lgb_back, path);
-                            G.DrawPath(P_hover, path);
+                            Color hoverColor = tabData.Selected ? scheme.Colors.Back_Checked_Hover : Color.FromArgb(160, scheme.Colors.Back_Hover(parentLevel));
+                            DrawHover(G, path, rect, hoverColor);
+                        }
+                    }
+
+                    // Draw border last
+                    if (tabData.Selected)
+                    {
+                        using (Pen P = new(scheme.Colors.Line_Hover(parentLevel)))
+                        using (Pen P_Hover = new(Color.FromArgb(Math.Min(100, tabData.HoverAlpha), scheme.Colors.ForeColor_Accent)))
+                        {
+                            if (OS.WVista || OS.W7 || OS.W8x)
+                            {
+                                Color lineColor = Program.Style.DarkMode ? Color.White : Color.Black;
+
+                                // Draw a line around the tab to fix appearance issue that does not fit Windows style
+                                using (Pen Px = new(Color.FromArgb(OS.W8x ? 50 : 150, lineColor)))
+                                {
+                                    DrawTabPath(G, path, Px, new Rectangle(rect.X, rect.Y + rect.Height - 1, rect.Width + 1, 1), radius, Program.Style.RoundedCorners);
+                                }
+                            }
+                            else
+                            {
+                                DrawTabPath(G, path, P, rect, radius, Program.Style.RoundedCorners);
+                                DrawTabPath(G, path, P_Hover, rect, radius, Program.Style.RoundedCorners);
+                            }
+                        }
+                    }
+                    else if (tabData.HoverAlpha > 0)
+                    {
+                        using (Pen P_Hover = new(Color.FromArgb(Math.Min(100, tabData.HoverAlpha), scheme.Colors.Line_Hover(parentLevel))))
+                        {
+                            DrawTabPath(G, path, P_Hover, rect, radius, Program.Style.RoundedCorners);
                         }
                     }
 
@@ -1513,11 +1725,13 @@ namespace WinPaletter.Tabs
                     if (tabData.CloseButtonAlpha > 0)
                     {
                         Rectangle closeRect = closeRectangle(rect);
-                        using (LinearGradientBrush lgb0 = new(closeRect, Color.FromArgb(tabData.CloseButtonAlpha, scheme_secondary.Colors.Back_Checked), Color.FromArgb(tabData.CloseButtonAlpha, scheme_secondary.Colors.Back_Checked_Hover), LinearGradientMode.Vertical))
-                        using (LinearGradientBrush lgb1 = new(closeRect, Color.FromArgb(tabData.CloseButtonAlpha, scheme_secondary.Colors.Line_Checked_Hover), Color.FromArgb(tabData.CloseButtonAlpha, scheme_secondary.Colors.Line_Checked_Hover), LinearGradientMode.Vertical))
-                        using (Pen P = new(lgb1))
+                        Color back = tabData.Selected ? scheme_secondary.Colors.Back_Checked : scheme.Colors.Back(parentLevel);
+                        Color line = tabData.Selected ? scheme_secondary.Colors.Line_Checked_Hover : scheme.Colors.Line_Hover(parentLevel);
+
+                        using (SolidBrush br = new(Color.FromArgb(tabData.CloseButtonAlpha, back)))
+                        using (Pen P = new(Color.FromArgb(tabData.CloseButtonAlpha, line)))
                         {
-                            G.FillRoundedRect(lgb0, closeRect);
+                            G.FillRoundedRect(br, closeRect);
                             G.DrawRoundedRectBeveled(P, closeRect);
                         }
                     }
@@ -1535,13 +1749,12 @@ namespace WinPaletter.Tabs
                 Rectangle iconRect = iconRectangle(rect);
 
                 // Draw close button on tab
-                DrawTextOnGlass(G, "✕", Fonts.ConsoleLarge, Color.FromArgb(255 - tabData.CloseButtonAlpha, ForeColor), closeRect, sf_close);
+                DrawTextOnGlass(G, "✕", Fonts.ConsoleMedium, Color.FromArgb(255 - tabData.CloseButtonAlpha, ForeColor), closeRect, sf_close);
 
                 if (tabData.CloseButtonAlpha > 0)
                 {
-                    DrawTextOnGlass(G, "✕", Fonts.ConsoleLarge, Color.FromArgb(tabData.CloseButtonAlpha, scheme_secondary.Colors.ForeColor_Accent), closeRect, sf_close);
+                    DrawTextOnGlass(G, "✕", Fonts.ConsoleMedium, Color.FromArgb(tabData.CloseButtonAlpha, tabData.Selected ? scheme_secondary.Colors.ForeColor_Accent : ForeColor), closeRect, sf_close);
                 }
-
 
                 // Draw icon and text on tab
                 if (icon != null) G.DrawImage(icon, iconRect);

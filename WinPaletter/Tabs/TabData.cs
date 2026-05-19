@@ -348,9 +348,6 @@ namespace WinPaletter.Tabs
             Text = tabPage.Text;
             Rectangle = rectangle;
             Image = new Icon(Form?.Icon ?? Properties.Resources.Icon, 16, 16).ToBitmap();
-            
-            // Initialize alpha values based on initial state
-            SelectionAlpha = Selected ? 255 : 0;
         }
 
         #endregion
