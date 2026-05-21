@@ -237,7 +237,7 @@ namespace WinPaletter.Tabs
                 if (_hoverAlpha != value)
                 {
                     _hoverAlpha = value;
-                    
+
                     // Marshal to UI thread if needed to prevent blocking
                     if (tabsContainer.InvokeRequired)
                     {
@@ -263,7 +263,7 @@ namespace WinPaletter.Tabs
                 if (_selectionAlpha != value)
                 {
                     _selectionAlpha = value;
-                    
+
                     // Marshal to UI thread if needed to prevent blocking
                     if (tabsContainer.InvokeRequired)
                     {
@@ -276,7 +276,7 @@ namespace WinPaletter.Tabs
                 }
             }
         }
-        private int _selectionAlpha = 0;
+        private int _selectionAlpha = 255;
 
         /// <summary>
         /// Alpha of removal effect over a tab
@@ -289,7 +289,7 @@ namespace WinPaletter.Tabs
                 if (_removingAlpha != value)
                 {
                     _removingAlpha = value;
-                    
+
                     // Marshal to UI thread if needed to prevent blocking
                     if (tabsContainer.InvokeRequired)
                     {
@@ -315,7 +315,7 @@ namespace WinPaletter.Tabs
                 if (_closeButtonAlpha != value)
                 {
                     _closeButtonAlpha = value;
-                    
+
                     // Marshal to UI thread if needed to prevent blocking
                     if (tabsContainer.InvokeRequired)
                     {
@@ -381,7 +381,7 @@ namespace WinPaletter.Tabs
             {
                 Image = Properties.Resources.Icon.ToBitmap();
             }
-            
+
             // Marshal to UI thread if needed to prevent blocking
             if (tabsContainer != null && tabsContainer.InvokeRequired)
             {
@@ -447,19 +447,22 @@ namespace WinPaletter.Tabs
                 if (tabsContainer.CanAnimate_Global)
                 {
                     var tcs = new TaskCompletionSource<bool>();
-                    
-                    Transition.With(this, nameof(TabTop), afterAnimationValue)
+
+                    Transition
+                        .With(this, nameof(SelectionAlpha), _selected ? 255 : 0)
+                        .With(this, nameof(TabTop), afterAnimationValue)
                         .HookOnCompletion(() =>
                         {
                             HookOnCompletion?.Invoke();
                             tcs.TrySetResult(true);
                         })
                         .CriticalDamp(TimeSpan.FromMilliseconds(animate ? animationDuration : 1));
-                    
+
                     await tcs.Task;
                 }
                 else
                 {
+                    SelectionAlpha = _selected ? 255 : 0;
                     TabTop = afterAnimationValue;
                     HookOnCompletion?.Invoke();
                 }
@@ -499,7 +502,7 @@ namespace WinPaletter.Tabs
         {
             Shown = true;
             tabsContainer.OnFormShown(_form, new(this));
-            
+
             // Marshal to UI thread if needed to prevent blocking
             if (tabsContainer.InvokeRequired)
             {
@@ -509,7 +512,7 @@ namespace WinPaletter.Tabs
             {
                 tabsContainer.Invalidate(_rectangle);
             }
-            
+
             if (Forms.MainForm is not null) Forms.MainForm.BackgroundImage = null;
         }
 
@@ -523,7 +526,7 @@ namespace WinPaletter.Tabs
             Text = _form.Text;
             if (TabPage is not null) TabPage.Text = _form.Text;
             if (_form is not null) tabsContainer?.OnFormTextChanged(_form, new(this));
-            
+
             // Marshal to UI thread if needed to prevent blocking
             if (tabsContainer != null && tabsContainer.InvokeRequired)
             {

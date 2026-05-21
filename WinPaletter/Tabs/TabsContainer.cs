@@ -31,7 +31,6 @@ namespace WinPaletter.Tabs
             AllowDrop = true;
 
             InitializeContextMenu();
-            InitializeHoverTimer();
         }
 
         #region Variables
@@ -70,7 +69,6 @@ namespace WinPaletter.Tabs
         private readonly UI.WP.ContextMenuStrip contextMenu = new() { ShowImageMargin = true, AllowTransparency = true };
         private TabData contextItemDropped;
 
-        private System.Windows.Forms.Timer hoverTimer;
 
         private Point hoverPosition;
         private RectangleF hoverRect;
@@ -121,83 +119,60 @@ namespace WinPaletter.Tabs
                 ]);
         }
 
-        private void InitializeHoverTimer()
+        /// <summary>
+        /// Handle hover logic for a specific tab based on mouse position
+        /// </summary>
+        /// <param name="e">Mouse event args</param>
+        private void HandleHoverForTab(MouseEventArgs e)
         {
-            hoverTimer = new System.Windows.Forms.Timer
+            // Skip hover logic during tab dragging
+            if (isMovingTab)
             {
-                Interval = 16, // ~60 FPS
-                Enabled = false
-            };
-            hoverTimer.Tick += HoverTimer_Tick;
-        }
+                return;
+            }
 
-        private void HoverTimer_Tick(object sender, EventArgs e)
-        {
-            if (IsBusy) return;
-
-            Point mousePos = PointToClient(MousePosition);
+            Point mousePos = e.Location;
             TabData hoveredTab = null;
             Rectangle hoveredRect = Rectangle.Empty;
 
-            // Create a copy to avoid collection modification during enumeration
-            List<TabData> tabDataCopy = new(TabDataList);
-
-            foreach (TabData tabData in tabDataCopy)
+            // Find which tab is being hovered
+            foreach (TabData tabData in TabDataList)
             {
                 if (tabData != null && tabData.Rectangle.Contains(mousePos))
                 {
-                    tabData.Hovered = true;
-                    hoveredRect = tabData.Rectangle;
                     hoveredTab = tabData;
-
-                    // Check if mouse is over close button
-                    bool overCloseBtn = closeRectangle(tabData.Rectangle).Contains(mousePos);
-
-                    // Only animate if the value actually changed to avoid excessive transitions
-                    if (tabData.CloseButtonAlpha != (overCloseBtn ? 255 : 0))
-                    {
-                        // Animate close button alpha
-                        if (Program.Style.Animations)
-                        {
-                            FluentTransitions.Transition.With(tabData, nameof(TabData.CloseButtonAlpha), overCloseBtn ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
-                        }
-                        else
-                        {
-                            tabData.CloseButtonAlpha = overCloseBtn ? 255 : 0;
-                        }
-                    }
-                }
-                else if (tabData != null)
-                {
-                    tabData.Hovered = false;
-
-                    // Only animate if the value actually changed to avoid excessive transitions
-                    if (tabData.CloseButtonAlpha != 0)
-                    {
-                        // Reset close button alpha when not hovering over tab
-                        if (Program.Style.Animations)
-                        {
-                            FluentTransitions.Transition.With(tabData, nameof(TabData.CloseButtonAlpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
-                        }
-                        else
-                        {
-                            tabData.CloseButtonAlpha = 0;
-                        }
-                    }
+                    hoveredRect = tabData.Rectangle;
+                    break;
                 }
             }
 
-            if (hoveredTab is not null) overCloseButton = closeRectangle(hoveredTab.Rectangle).Contains(mousePos); else overCloseButton = false;
-
-            // Update hovered tab data for hover effect
-            if (hoveredTab != null && State != MouseState.Down)
+            // Handle tab hover state changes
+            if (hoveredTab != null)
             {
-                if (_hoveredTabData != hoveredTab)
+                // Check if mouse is over close button
+                bool overCloseBtn = closeRectangle(hoveredTab.Rectangle).Contains(mousePos);
+
+                // Update close button alpha
+                if (hoveredTab.CloseButtonAlpha != (overCloseBtn ? 255 : 0))
+                {
+                    if (Program.Style.Animations)
+                    {
+                        FluentTransitions.Transition.With(hoveredTab, nameof(TabData.CloseButtonAlpha), overCloseBtn ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                    }
+                    else
+                    {
+                        hoveredTab.CloseButtonAlpha = overCloseBtn ? 255 : 0;
+                    }
+                }
+
+                overCloseButton = overCloseBtn;
+
+                // Update hover circle animation when entering a new tab
+                if (_hoveredTabData != hoveredTab && State != MouseState.Down)
                 {
                     _hoveredTabData = hoveredTab;
                     hoverPosition = mousePos;
 
-                    // Animate hover size when entering a new tab
                     int defaultHoverSize = Math.Max(hoveredTab.Rectangle.Width, hoveredTab.Rectangle.Height);
                     if (CanAnimate_Global)
                     {
@@ -208,28 +183,54 @@ namespace WinPaletter.Tabs
                         HoverSize = defaultHoverSize;
                     }
                 }
-                else
+                else if (_hoveredTabData == hoveredTab)
                 {
                     // Update hover position while staying on the same tab
                     hoverPosition = mousePos;
                 }
-            }
-            else if (hoveredTab == null && State == MouseState.None)
-            {
-                // Reset hover when not over any tab and not in any mouse state
-                _hoveredTabData = null;
-                if (CanAnimate_Global)
-                {
-                    FluentTransitions.Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
-                }
-                else
-                {
-                    HoverSize = 0;
-                }
-            }
 
-            if (hoveredRect != Rectangle.Empty) Invalidate(hoveredRect);
+                // Set hovered state for the tab
+                foreach (TabData tabData in TabDataList)
+                {
+                    if (tabData != null)
+                    {
+                        tabData.Hovered = (tabData == hoveredTab);
+                    }
+                }
+
+                Invalidate(hoveredRect);
+            }
+            else
+            {
+                // Reset hover when not over any tab
+                if (_hoveredTabData != null && State == MouseState.None)
+                {
+                    _hoveredTabData = null;
+
+                    if (CanAnimate_Global)
+                    {
+                        FluentTransitions.Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                    }
+                    else
+                    {
+                        HoverSize = 0;
+                    }
+                }
+
+                // Reset all hover states
+                foreach (TabData tabData in TabDataList)
+                {
+                    if (tabData != null)
+                    {
+                        tabData.Hovered = false;
+                        tabData.CloseButtonAlpha = 0;
+                    }
+                }
+
+                overCloseButton = false;
+            }
         }
+
 
         /// <summary>
         /// Generate a tab page that have form inside, and add it into the tab control
@@ -378,7 +379,7 @@ namespace WinPaletter.Tabs
                 TabDataList[from] = itemTo;
                 TabDataList[to] = itemFrom;
 
-                UpdateTabPositions(TabDataList);
+                UpdateTabPositions(TabDataList, preserveSelectionAlpha: false);
 
                 // to avoid bug of non-selection
                 forceChangeSelectedIndex = true;
@@ -403,7 +404,7 @@ namespace WinPaletter.Tabs
                 TabDataList.RemoveAt(from);
                 TabDataList.Add(itemFrom);
 
-                UpdateTabPositions(TabDataList);
+                UpdateTabPositions(TabDataList, preserveSelectionAlpha: false);
 
                 // to avoid bug of non-selection
                 forceChangeSelectedIndex = true;
@@ -428,7 +429,7 @@ namespace WinPaletter.Tabs
                 TabDataList.RemoveAt(from);
                 TabDataList.Insert(0, itemFrom);
 
-                UpdateTabPositions(TabDataList);
+                UpdateTabPositions(TabDataList, preserveSelectionAlpha: false);
 
                 // to avoid bug of non-selection
                 forceChangeSelectedIndex = true;
@@ -470,7 +471,7 @@ namespace WinPaletter.Tabs
             return new TabData(this, page, tabRectangle);
         }
 
-        private void UpdateTabPositions(List<TabData> collection)
+        private void UpdateTabPositions(List<TabData> collection, bool preserveSelectionAlpha = true)
         {
             int collectionCount = collection.Count;
 
@@ -482,7 +483,7 @@ namespace WinPaletter.Tabs
 
             if (_selectedIndex >= 0 && _selectedIndex < collectionCount)
             {
-                List<TabData> tabDatas = new(collection);
+                List<TabData> tabDatas = [with(collection)];
                 collection.Clear();
 
                 Point mousePos = PointToClient(MousePosition);
@@ -496,7 +497,15 @@ namespace WinPaletter.Tabs
                         tabDataX.Selected = i == _selectedIndex;
 
                         // Preserve alpha values from old tab data
-                        tabDataX.SelectionAlpha = tabData.SelectionAlpha;
+                        if (preserveSelectionAlpha)
+                        {
+                            tabDataX.SelectionAlpha = tabData.SelectionAlpha;
+                        }
+                        else
+                        {
+                            // Set correct initial selection alpha based on selection state
+                            tabDataX.SelectionAlpha = tabDataX.Selected ? 255 : 0;
+                        }
                         tabDataX.RemovingAlpha = tabData.RemovingAlpha;
                         tabDataX.CloseButtonAlpha = tabData.CloseButtonAlpha;
 
@@ -548,6 +557,12 @@ namespace WinPaletter.Tabs
 
         private void ProcessTabMouseActions(TabData tabData, MouseEventArgs e)
         {
+            // Prevent close button interactions during tab dragging
+            if (isMovingTab)
+            {
+                return;
+            }
+
             if (overCloseButton)
             {
                 HandleCloseButtonClick(tabData);
@@ -994,9 +1009,6 @@ namespace WinPaletter.Tabs
 
                 TabDataList[TabDataList.Count - 1].TabTop = Height;
 
-                // Set SelectionAlpha directly to avoid animation flicker on first tab creation
-                TabDataList[TabDataList.Count - 1].SelectionAlpha = 255;
-
                 SelectedIndex = TabDataList.Count - 1;
             }
         }
@@ -1096,13 +1108,10 @@ namespace WinPaletter.Tabs
                 HandleFormMove();
             }
 
-            // Update hover position for hover effect
-            if (CanAnimate_Global && State != MouseState.None && _hoveredTabData != null)
+            // Handle hover logic for specific tab
+            if (!IsBusy)
             {
-                hoverPosition = e.Location;
-                hoverRect.X = hoverPosition.X - 0.5f * _hoverSize;
-                hoverRect.Y = hoverPosition.Y - 0.5f * _hoverSize;
-                Invalidate();
+                HandleHoverForTab(e);
             }
 
             base.OnMouseMove(e);
@@ -1273,12 +1282,11 @@ namespace WinPaletter.Tabs
         /// <param name="e"></param>
         protected override void OnMouseEnter(EventArgs e)
         {
-            if (hoverTimer != null && !hoverTimer.Enabled)
-            {
-                hoverTimer.Enabled = true;
-            }
-
             State = MouseState.Over;
+
+            // Handle hover on enter
+            Point mousePos = PointToClient(MousePosition);
+            HandleHoverForTab(new MouseEventArgs(MouseButtons.None, 0, mousePos.X, mousePos.Y, 0));
 
             base.OnMouseEnter(e);
         }
@@ -1287,14 +1295,14 @@ namespace WinPaletter.Tabs
         /// <param name="e"></param>
         protected override void OnMouseLeave(EventArgs e)
         {
-            if (hoverTimer != null)
-            {
-                hoverTimer.Enabled = false;
-            }
-
+            // Reset all hover states
             foreach (TabData tabData in TabDataList)
             {
-                tabData.Hovered = false;
+                if (tabData != null)
+                {
+                    tabData.Hovered = false;
+                    tabData.CloseButtonAlpha = 0;
+                }
             }
 
             overCloseButton = false;
@@ -1312,8 +1320,6 @@ namespace WinPaletter.Tabs
             }
 
             Invalidate();
-
-            Refresh();
 
             base.OnMouseLeave(e);
         }
@@ -1522,14 +1528,20 @@ namespace WinPaletter.Tabs
 
                 if (isMovingTab)
                 {
+                    TabData movingTab = null;
                     if (tabsToDraw != null && moveFrom != -1 && moveFrom <= tabsToDraw.Count - 1 && tabsToDraw[moveFrom] != null)
                     {
-                        DrawTab(G, tabsToDraw[moveFrom], true);
+                        movingTab = tabsToDraw[moveFrom];
                     }
 
                     foreach (TabData tabData in tabsToDraw)
                     {
-                        if (tabData != tabsToDraw[moveFrom]) DrawTab(G, tabData);
+                        if (tabData != movingTab) DrawTab(G, tabData);
+                    }
+
+                    if (movingTab is not null)
+                    {
+                        DrawTab(G, movingTab, true);
                     }
                 }
                 else
@@ -1540,15 +1552,6 @@ namespace WinPaletter.Tabs
                     }
                 }
             }
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                hoverTimer?.Dispose();
-            }
-            base.Dispose(disposing);
         }
 
         private void DrawTabPath(Graphics G, GraphicsPath path, Pen pen, Rectangle r, int radius, bool rounded)
@@ -1580,83 +1583,29 @@ namespace WinPaletter.Tabs
             {
                 if (isMoving)
                 {
-                    // Draw the tab with hover effect preserved when dragging
-                    if (tabData.Selected)
+                    // Draw selected/opened tab background
+                    using (SolidBrush br = new(Color.FromArgb(150, scheme_secondary.Colors.Back_Hover(parentLevel))))
                     {
-                        // Draw selected/opened tab background
-                        using (SolidBrush br = new(scheme.Colors.Back_Hover(parentLevel)))
-                        {
-                            G.FillPath(br, path);
-                        }
+                        G.FillPath(br, path);
                     }
 
-                    // Selection alpha overlay
-                    if (tabData.SelectionAlpha > 0)
+                    // Draw radial hover effect
+                    if (tabData == _hoveredTabData && _hoverSize > 0)
                     {
-                        using (LinearGradientBrush lgb_selection = new(rect, Color.FromArgb(tabData.SelectionAlpha, scheme.Colors.Back_Hover(parentLevel)), Color.Transparent, LinearGradientMode.Vertical))
-                        {
-                            G.FillPath(lgb_selection, path);
-                        }
-                    }
-
-                    // Hover effect: Blue for selected+hovered, Greyish for selected (not hovered) or unselected+hovered
-                    if (tabData.HoverAlpha > 0)
-                    {
-                        using (LinearGradientBrush lgb_back = new(rect, Color.FromArgb(tabData.HoverAlpha, scheme.Colors.Back_Checked), Color.Transparent, LinearGradientMode.Vertical))
-                        {
-                            G.FillPath(lgb_back, path);
-                        }
-
-                        // Draw radial hover effect
-                        if (tabData == _hoveredTabData && _hoverSize > 0)
-                        {
-                            Color hoverColor = tabData.Selected ? scheme.Colors.ForeColor_Accent : Color.FromArgb(100, Program.Style.DarkMode ? Color.White : Color.Black);
-                            DrawHover(G, path, rect, hoverColor);
-                        }
-                    }
-
-                    // Semi-transparent overlay for dragging
-                    using (LinearGradientBrush lgb_back = new(rect, Color.FromArgb(128, scheme_secondary.Colors.Back_Checked), Color.Transparent, LinearGradientMode.Vertical))
-                    {
-                        G.FillPath(lgb_back, path);
+                        Color hoverColor = Color.FromArgb(150, scheme_secondary.Colors.Back_Checked_Hover);
+                        DrawHover(G, path, rect, hoverColor);
                     }
 
                     // Draw border last
-                    if (tabData.Selected)
+                    using (Pen P = new(Color.FromArgb(150, scheme_secondary.Colors.Line_Hover(parentLevel))))
+                    using (Pen P_Hover = new(Color.FromArgb(Math.Min(100, tabData.HoverAlpha), scheme_secondary.Colors.ForeColor_Accent)))
                     {
-                        using (Pen P = new(scheme.Colors.Line_Hover(parentLevel)))
-                        {
-                            if (OS.WVista || OS.W7 || OS.W8x)
-                            {
-                                Color lineColor = Program.Style.DarkMode ? Color.White : Color.Black;
-
-                                // Draw a line around the tab to fix appearance issue that does not fit Windows style
-                                using (Pen Px = new(Color.FromArgb(OS.W8x ? 50 : 150, lineColor)))
-                                {
-                                    G.ExcludeClip(new Rectangle(rect.X, rect.Y + rect.Height - 1, rect.Width + 1, 1));
-                                    G.DrawPath(Px, path);
-                                    G.ResetClip();
-                                }
-                            }
-                            else
-                            {
-                                G.DrawPath(P, path);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (Parent is null || Parent.FindForm() is null)
-                        {
-                            using (Pen P = new(scheme.Colors.Line(parentLevel)))
-                            {
-                                G.DrawPath(P, path);
-                            }
-                        }
+                        DrawTabPath(G, path, P, rect, radius, Program.Style.RoundedCorners);
+                        DrawTabPath(G, path, P_Hover, rect, radius, Program.Style.RoundedCorners);
                     }
                 }
                 else
-                {                    
+                {
                     // Selection alpha overlay
                     if (tabData.SelectionAlpha > 0)
                     {
@@ -1673,7 +1622,7 @@ namespace WinPaletter.Tabs
                         // Draw radial hover effect
                         if (tabData == _hoveredTabData && _hoverSize > 0)
                         {
-                            Color hoverColor = tabData.Selected ? scheme.Colors.Back_Checked_Hover : Color.FromArgb(160, scheme.Colors.Back_Hover(parentLevel));
+                            Color hoverColor = tabData.Selected ? scheme.Colors.Back_Checked_Hover : Color.FromArgb(170, scheme.Colors.Line_Hover(parentLevel));
                             DrawHover(G, path, rect, hoverColor);
                         }
                     }
@@ -1681,7 +1630,7 @@ namespace WinPaletter.Tabs
                     // Draw border last
                     if (tabData.Selected)
                     {
-                        using (Pen P = new(scheme.Colors.Line_Hover(parentLevel)))
+                        using (Pen P = new(Color.FromArgb(tabData.SelectionAlpha, scheme.Colors.Line_Hover(parentLevel))))
                         using (Pen P_Hover = new(Color.FromArgb(Math.Min(100, tabData.HoverAlpha), scheme.Colors.ForeColor_Accent)))
                         {
                             if (OS.WVista || OS.W7 || OS.W8x)
@@ -1703,7 +1652,7 @@ namespace WinPaletter.Tabs
                     }
                     else if (tabData.HoverAlpha > 0)
                     {
-                        using (Pen P_Hover = new(Color.FromArgb(Math.Min(100, tabData.HoverAlpha), scheme.Colors.Line_Hover(parentLevel))))
+                        using (Pen P_Hover = new(Color.FromArgb(Math.Min(200, tabData.HoverAlpha), scheme.Colors.Line_Hover(parentLevel))))
                         {
                             DrawTabPath(G, path, P_Hover, rect, radius, Program.Style.RoundedCorners);
                         }
@@ -1759,9 +1708,10 @@ namespace WinPaletter.Tabs
                 // Draw icon and text on tab
                 if (icon != null) G.DrawImage(icon, iconRect);
 
-                Font fontSelected = tabData.Selected ? new(Font.Name, Font.Size, FontStyle.Bold) : null;
-
-                DrawTextOnGlass(G, tabData.Text, fontSelected ?? Font, ForeColor, textRect, sf);
+                using (Font fontSelected = tabData.Selected ? new(Font.Name, Font.Size, FontStyle.Bold) : null)
+                {
+                    DrawTextOnGlass(G, tabData.Text, fontSelected ?? Font, ForeColor, textRect, sf);
+                }
             }
         }
 
