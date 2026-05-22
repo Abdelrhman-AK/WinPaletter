@@ -400,7 +400,7 @@ namespace WinPaletter
 
                     if (hasNewerVersion)
                     {
-                        Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Updates);
+                        Forms.MainForm.AddTab(Forms.Updates);
 
                         NotifyUpdates.Visible = true;
                         Button5.ImageGlyph = Resources.Glyph_Update_Dot;
@@ -427,7 +427,7 @@ namespace WinPaletter
 
         private void Button12_Click(object sender, EventArgs e)
         {
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.About);
+            Forms.MainForm.AddTab(Forms.About);
         }
 
         private void Button39_Click(object sender, EventArgs e)
@@ -449,18 +449,18 @@ namespace WinPaletter
         {
             if (Program.Settings.Store.ShowNewXPIntro) Forms.Store_Intro_New.ShowDialog();
 
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Store);
+            Forms.MainForm.AddTab(Forms.Store);
         }
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Updates);
+            Forms.MainForm.AddTab(Forms.Updates);
             Button5.ImageGlyph = Resources.Glyph_Update;
         }
 
         private void Button11_Click(object sender, EventArgs e)
         {
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.SettingsX);
+            Forms.MainForm.AddTab(Forms.SettingsX);
         }
 
         private void card1_Click(object sender, EventArgs e)
@@ -505,13 +505,13 @@ namespace WinPaletter
             }
 
             Forms.MainForm.BackgroundImage = (sender as Card).Image;
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(form);
+            Forms.MainForm.AddTab(form);
         }
 
         private void card2_Click(object sender, EventArgs e)
         {
             Forms.MainForm.BackgroundImage = (sender as Card).Image;
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Win32UI);
+            Forms.MainForm.AddTab(Forms.Win32UI);
         }
 
         private void card3_Click(object sender, EventArgs e)
@@ -520,22 +520,22 @@ namespace WinPaletter
             if (Program.WindowStyle == WindowStyle.W12 || Program.WindowStyle == WindowStyle.W11 || Program.WindowStyle == WindowStyle.W10)
             {
                 Forms.MainForm.BackgroundImage = (sender as Card).Image;
-                Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.LogonUI);
+                Forms.MainForm.AddTab(Forms.LogonUI);
             }
             else if (Program.WindowStyle == WindowStyle.W81 || Program.WindowStyle == WindowStyle.W8)
             {
                 Forms.MainForm.BackgroundImage = (sender as Card).Image;
-                Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.LogonUI81);
+                Forms.MainForm.AddTab(Forms.LogonUI81);
             }
             else if (Program.WindowStyle == WindowStyle.W7)
             {
                 Forms.MainForm.BackgroundImage = (sender as Card).Image;
-                Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.LogonUI7);
+                Forms.MainForm.AddTab(Forms.LogonUI7);
             }
             else if (Program.WindowStyle == WindowStyle.WXP)
             {
                 Forms.MainForm.BackgroundImage = (sender as Card).Image;
-                Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.LogonUIXP);
+                Forms.MainForm.AddTab(Forms.LogonUIXP);
             }
             else if (Program.WindowStyle == WindowStyle.WVista)
             {
@@ -544,20 +544,20 @@ namespace WinPaletter
             else
             {
                 Forms.MainForm.BackgroundImage = (sender as Card).Image;
-                Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.LogonUI);
+                Forms.MainForm.AddTab(Forms.LogonUI);
             }
         }
 
         private void card6_Click(object sender, EventArgs e)
         {
             Forms.MainForm.BackgroundImage = (sender as Card).Image;
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.CursorsStudio);
+            Forms.MainForm.AddTab(Forms.CursorsStudio);
         }
 
         private void card5_Click(object sender, EventArgs e)
         {
             Forms.MainForm.BackgroundImage = (sender as Card).Image;
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Metrics_Fonts);
+            Forms.MainForm.AddTab(Forms.Metrics_Fonts);
         }
 
         private void card4_Click(object sender, EventArgs e)
@@ -606,25 +606,25 @@ namespace WinPaletter
             }
 
             Forms.MainForm.BackgroundImage = (sender as Card).Image;
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Wallpaper_Editor);
+            Forms.MainForm.AddTab(Forms.Wallpaper_Editor);
         }
 
         private void card9_Click(object sender, EventArgs e)
         {
             Forms.MainForm.BackgroundImage = (sender as Card).Image;
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.WinEffecter);
+            Forms.MainForm.AddTab(Forms.WinEffecter);
         }
 
         private void card7_Click(object sender, EventArgs e)
         {
             Forms.MainForm.BackgroundImage = (sender as Card).Image;
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Sounds_Editor);
+            Forms.MainForm.AddTab(Forms.Sounds_Editor);
         }
 
         private void card11_Click(object sender, EventArgs e)
         {
             Forms.MainForm.BackgroundImage = (sender as Card).Image;
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.ScreenSaver_Editor);
+            Forms.MainForm.AddTab(Forms.ScreenSaver_Editor);
         }
 
         private void card12_Click(object sender, EventArgs e)
@@ -632,7 +632,7 @@ namespace WinPaletter
             if (Program.WindowStyle != WindowStyle.WXP && Program.WindowStyle != WindowStyle.WVista)
             {
                 Forms.MainForm.BackgroundImage = (sender as Card).Image;
-                Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.AltTabEditor);
+                Forms.MainForm.AddTab(Forms.AltTabEditor);
             }
             else
             {
@@ -646,7 +646,7 @@ namespace WinPaletter
         private void card10_Click(object sender, EventArgs e)
         {
             Forms.MainForm.BackgroundImage = (sender as Card).Image;
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.ApplicationThemer);
+            Forms.MainForm.AddTab(Forms.ApplicationThemer);
         }
 
         private void Button3_Click(object sender, EventArgs e)
@@ -737,12 +737,12 @@ namespace WinPaletter
 
         private void Button10_Click(object sender, EventArgs e)
         {
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.EditInfo);
+            Forms.MainForm.AddTab(Forms.EditInfo);
         }
 
         private void btn_history_Click(object sender, EventArgs e)
         {
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.BackupThemes_List);
+            Forms.MainForm.AddTab(Forms.BackupThemes_List);
         }
 
         private void Button13_Click(object sender, EventArgs e)
@@ -790,7 +790,7 @@ namespace WinPaletter
         private void NotifyUpdates_BalloonTipClicked(object sender, EventArgs e)
         {
             NotifyUpdates.Visible = false;
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Updates);
+            Forms.MainForm.AddTab(Forms.Updates);
         }
 
         private void winEdition_Click(object sender, EventArgs e)
@@ -811,13 +811,13 @@ namespace WinPaletter
         private void card13_Click(object sender, EventArgs e)
         {
             Forms.MainForm.BackgroundImage = (sender as Card).Image;
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.IconsStudio);
+            Forms.MainForm.AddTab(Forms.IconsStudio);
         }
 
         private void card15_Click(object sender, EventArgs e)
         {
             Forms.MainForm.BackgroundImage = (sender as Card).Image;
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.AccessibilityEditor);
+            Forms.MainForm.AddTab(Forms.AccessibilityEditor);
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -837,12 +837,12 @@ namespace WinPaletter
 
         private void button15_Click(object sender, EventArgs e)
         {
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.GitHub_Mgr);
+            Forms.MainForm.AddTab(Forms.GitHub_Mgr);
         }
 
         private void pin_button_Click(object sender, EventArgs e)
         {
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(this);
+            Forms.MainForm.AddTab(this);
         }
 
         // When the parent of the dashboard is changed, check if it is a tab page to hide the pin button.

@@ -1128,5 +1128,12 @@ namespace WinPaletter
         {
             windowsDesktop1.Color9 = e.Color;
         }
+
+        private void button31_Click(object sender, EventArgs e)
+        {
+            Forms.MainForm.AddTab(Forms.SettingsX);
+            Forms.SettingsX.TabControl1.SelectedIndex = 4;
+            Forms.SettingsX.TabControl2.SelectedIndex = 1;
+        }
     }
 }

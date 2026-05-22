@@ -30,6 +30,9 @@ namespace WinPaletter.Tabs
             DoubleBuffered = true;
             AllowDrop = true;
 
+            sf.Trimming = StringTrimming.EllipsisCharacter;
+            sf.FormatFlags = StringFormatFlags.MeasureTrailingSpaces;
+
             InitializeContextMenu();
         }
 
@@ -45,12 +48,14 @@ namespace WinPaletter.Tabs
         /// </summary>
         public List<TabData> TabDataList = [];
 
-        private bool overCloseButton = false;
-
-        private readonly int MaxWidth = 245;
-        private readonly int paddingBetweenTabs = 5;
+        private static readonly int MaxWidth = 245;
+        private static readonly int paddingBetweenTabs = 5;
+        private static readonly int radius = 5;
+        public int upperTabPadding = 4;
+        private int _hoverSize;
 
         private bool forceChangeSelectedIndex = true;
+        private bool overCloseButton = false;
 
         private int moveFrom = -1;
         private int moveTo = -1;
@@ -65,18 +70,11 @@ namespace WinPaletter.Tabs
         // Client X position of the dragged tab's left edge, updated during MouseMove
         private int _dragX = 0;
 
-        /// <summary>
-        /// Padding of tabs from top of the control
-        /// </summary>
-        public readonly int upperTabPadding = 4;
-
         private readonly UI.WP.ContextMenuStrip contextMenu = new() { ShowImageMargin = true, AllowTransparency = true };
         private TabData contextItemDropped;
 
-
         private Point hoverPosition;
         private RectangleF hoverRect;
-        private int _hoverSize;
         private TabData _hoveredTabData;
 
         public enum MouseState { None, Over, Down }
@@ -84,6 +82,12 @@ namespace WinPaletter.Tabs
 
         Scheme scheme => Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
         Scheme scheme_secondary => Enabled ? Program.Style.Schemes.Secondary : Program.Style.Schemes.Disabled;
+
+        private static StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat();
+        private static StringFormat sf_close = ContentAlignment.MiddleCenter.ToStringFormat();
+        private static string closeStr = "✕";
+        private static Color win7BorderColor = Color.FromArgb(159, 255, 255, 255);
+        private Font selectedFont;
 
         #endregion
 
@@ -838,14 +842,6 @@ namespace WinPaletter.Tabs
             if (FindForm() is not null) FindForm().Location = locationNewPoint;
         }
 
-        private void SetTabMoveProperties(int moveToIndex, bool moveTab, bool moveToFirst, bool moveToLast)
-        {
-            moveTo = moveToIndex;
-            isMovingTab = moveTab;
-            isMovingToFirst = moveToFirst;
-            isMovingToLast = moveToLast;
-        }
-
         private void CloseAllTabsButThis()
         {
             if (TabDataList.Count > 1)
@@ -1120,6 +1116,21 @@ namespace WinPaletter.Tabs
             FormClosed?.Invoke(sender, e);
         }
 
+        protected override void OnFontChanged(EventArgs e)
+        {
+            selectedFont?.Dispose();
+            selectedFont = new(Font.Name, Font.Size, FontStyle.Bold);
+            base.OnFontChanged(e);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            sf?.Dispose();
+            sf_close?.Dispose();
+            selectedFont?.Dispose();
+            base.Dispose(disposing);
+        }
+
         private void _tabControl_ControlAdded(object sender, ControlEventArgs e)
         {
             if (_tabControl != null && e.Control is TabPage)
@@ -1335,6 +1346,8 @@ namespace WinPaletter.Tabs
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
+            if (IsDisposed) return;
+
             if (!IsBusy)
             {
                 bool wasDragging = isMovingTab && moveFrom > -1;
@@ -1709,9 +1722,10 @@ namespace WinPaletter.Tabs
         private void DrawTab(Graphics G, TabData tabData, bool isMoving = false)
         {
             Rectangle rect = !isMoving ? tabData.Rectangle : new Rectangle(_dragX, tabData.Rectangle.Y, tabData.Rectangle.Width, tabData.Rectangle.Height);
-
+            Rectangle textRect = titleRectangle(rect);
+            Rectangle closeRect = closeRectangle(rect);
+            Rectangle iconRect = iconRectangle(rect);
             Bitmap icon = tabData.Image;
-            int radius = 5;
 
             using (GraphicsPath path = RR(rect, radius, Program.Style.RoundedCorners))
             {
@@ -1762,34 +1776,48 @@ namespace WinPaletter.Tabs
                     }
 
                     // Draw border last
-                    if (tabData.Selected)
+                    if (OS.WVista || OS.W7)
                     {
-                        using (Pen P = new(Color.FromArgb(tabData.SelectionAlpha, scheme.Colors.Line_Hover(parentLevel))))
-                        using (Pen P_Hover = new(Color.FromArgb(Math.Min(100, tabData.HoverAlpha), scheme.Colors.ForeColor_Accent)))
+                        // Draw a line around the tab to fix appearance issue that does not fit Windows style
+                        using (Pen Px = new(win7BorderColor))
                         {
-                            if (OS.WVista || OS.W7 || OS.W8x)
-                            {
-                                Color lineColor = Program.Style.DarkMode ? Color.White : Color.Black;
+                            DrawTabPath(G, path, Px, rect, radius, Program.Style.RoundedCorners);
 
-                                // Draw a line around the tab to fix appearance issue that does not fit Windows style
-                                using (Pen Px = new(Color.FromArgb(OS.W8x ? 50 : 150, lineColor)))
-                                {
-                                    DrawTabPath(G, path, Px, new Rectangle(rect.X, rect.Y + rect.Height - 1, rect.Width + 1, 1), radius, Program.Style.RoundedCorners);
-                                }
-                            }
-                            else
+                            if (tabData.HoverAlpha == 0)
                             {
-                                DrawTabPath(G, path, P, rect, radius, Program.Style.RoundedCorners);
-                                DrawTabPath(G, path, P_Hover, rect, radius, Program.Style.RoundedCorners);
+                                Rectangle rect_smaller = new(rect.X + 1, rect.Y + 1, rect.Width - 2, rect.Height);
+                                using (GraphicsPath path_smaller = RR(rect_smaller, radius - 1, Program.Style.RoundedCorners))
+                                {
+                                    DrawTabPath(G, path_smaller, Pens.Black, rect_smaller, radius - 1, Program.Style.RoundedCorners);
+                                }
                             }
                         }
                     }
-                    else if (tabData.HoverAlpha > 0)
+                    else if (OS.W8x)
                     {
-                        using (Pen P_Hover = new(Color.FromArgb(Math.Min(200, tabData.HoverAlpha), scheme.Colors.Line_Hover(parentLevel))))
+                        Color lineColor = Color.White;
+
+                        // Draw a line around the tab to fix appearance issue that does not fit Windows style
+                        using (Pen Px = new(Color.FromArgb(50, lineColor)))
                         {
-                            DrawTabPath(G, path, P_Hover, rect, radius, Program.Style.RoundedCorners);
+                            DrawTabPath(G, path, Px, rect, radius, Program.Style.RoundedCorners);
                         }
+                    }
+                    else
+                    {
+                        Color normalLineColor = Color.FromArgb(tabData.SelectionAlpha, scheme.Colors.Line_Hover(parentLevel));
+
+                        using (Pen P_normal = new(normalLineColor))
+                        {
+                            DrawTabPath(G, path, P_normal, rect, radius, Program.Style.RoundedCorners);
+                        }
+                    }
+
+                    Color hoverLineColor = tabData.Selected ? scheme.Colors.Line_Checked_Hover : scheme.Colors.Line_Hover(parentLevel);
+
+                    using (Pen P_hover = new(Color.FromArgb(tabData.HoverAlpha, hoverLineColor)))
+                    {
+                        DrawTabPath(G, path, P_hover, rect, radius, Program.Style.RoundedCorners);
                     }
 
                     // Removing alpha overlay
@@ -1807,7 +1835,6 @@ namespace WinPaletter.Tabs
                     // Draw close button with alpha animation
                     if (tabData.CloseButtonAlpha > 0)
                     {
-                        Rectangle closeRect = closeRectangle(rect);
                         Color back = tabData.Selected ? scheme_secondary.Colors.Back_Checked : scheme.Colors.Back(parentLevel);
                         Color line = tabData.Selected ? scheme_secondary.Colors.Line_Checked_Hover : scheme.Colors.Line_Hover(parentLevel);
 
@@ -1821,32 +1848,18 @@ namespace WinPaletter.Tabs
                 }
             }
 
-            using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
-            using (StringFormat sf_close = ContentAlignment.MiddleCenter.ToStringFormat())
+            // Draw close button on tab
+            DrawTextOnGlass(G, closeStr, Fonts.ConsoleMedium, Color.FromArgb(255 - tabData.CloseButtonAlpha, ForeColor), closeRect, sf_close);
+
+            if (tabData.CloseButtonAlpha > 0)
             {
-                sf.Trimming = StringTrimming.EllipsisCharacter;
-                sf.FormatFlags = StringFormatFlags.MeasureTrailingSpaces;
-
-                Rectangle textRect = titleRectangle(rect);
-                Rectangle closeRect = closeRectangle(rect);
-                Rectangle iconRect = iconRectangle(rect);
-
-                // Draw close button on tab
-                DrawTextOnGlass(G, "✕", Fonts.ConsoleMedium, Color.FromArgb(255 - tabData.CloseButtonAlpha, ForeColor), closeRect, sf_close);
-
-                if (tabData.CloseButtonAlpha > 0)
-                {
-                    DrawTextOnGlass(G, "✕", Fonts.ConsoleMedium, Color.FromArgb(tabData.CloseButtonAlpha, tabData.Selected ? scheme_secondary.Colors.ForeColor_Accent : ForeColor), closeRect, sf_close);
-                }
-
-                // Draw icon and text on tab
-                if (icon != null) G.DrawImage(icon, iconRect);
-
-                using (Font fontSelected = tabData.Selected ? new(Font.Name, Font.Size, FontStyle.Bold) : null)
-                {
-                    DrawTextOnGlass(G, tabData.Text, fontSelected ?? Font, ForeColor, textRect, sf);
-                }
+                DrawTextOnGlass(G, closeStr, Fonts.ConsoleMedium, Color.FromArgb(tabData.CloseButtonAlpha, tabData.Selected ? scheme_secondary.Colors.ForeColor_Accent : ForeColor), closeRect, sf_close);
             }
+
+            // Draw icon and text on tab
+            if (icon != null) G.DrawImage(icon, iconRect);
+
+            DrawTextOnGlass(G, tabData.Text, tabData.Selected ? selectedFont : Font, ForeColor, textRect, sf);
         }
 
         void DrawTextOnGlass(Graphics g, string text, Font font, Color foreColor, Rectangle rect, StringFormat sf)

@@ -1160,7 +1160,7 @@ Generated automatically by WinPaletter. Please review the changes before merging
         private async void noNetworkPanel1_RetryClicked(object sender, EventArgs e) { await LoadInternal(); }
 
         private void pin_button_Click(object sender, EventArgs e)
-        { Forms.MainForm.tabsContainer1.AddFormIntoTab(this); }
+        { Forms.MainForm.AddTab(this); }
 
         private void ShowTab(int index, bool animate = true)
         {

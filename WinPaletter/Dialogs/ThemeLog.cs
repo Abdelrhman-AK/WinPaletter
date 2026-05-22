@@ -92,7 +92,7 @@ namespace WinPaletter
             if (Program.Settings.ThemeLog.VerboseLevel != Settings.Structures.ThemeLog.VerboseLevels.None)
             {
                 //Hide();
-                Forms.MainForm?.tabsContainer1?.AddFormIntoTab(this);
+                Forms.MainForm?.AddTab(this);
             }
 
             Apply_Thread = new(() =>

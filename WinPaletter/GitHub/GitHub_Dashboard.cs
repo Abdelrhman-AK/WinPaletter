@@ -53,7 +53,7 @@ namespace WinPaletter
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.GitHub_Mgr);
+            Forms.MainForm.AddTab(Forms.GitHub_Mgr);
             Close();
         }
 

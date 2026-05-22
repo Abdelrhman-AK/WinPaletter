@@ -163,6 +163,12 @@
             this.radioImage1 = new WinPaletter.UI.WP.RadioImage();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.label21 = new System.Windows.Forms.Label();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.groupBox69 = new WinPaletter.UI.WP.GroupBox();
+            this.alertBox25 = new WinPaletter.UI.WP.AlertBox();
+            this.button31 = new WinPaletter.UI.WP.Button();
+            this.label25 = new System.Windows.Forms.Label();
+            this.pictureBox82 = new System.Windows.Forms.PictureBox();
             this.GroupBox13.SuspendLayout();
             this.groupBox21.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic9)).BeginInit();
@@ -220,6 +226,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.groupBox22.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            this.tabPage2.SuspendLayout();
+            this.groupBox69.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox82)).BeginInit();
             this.SuspendLayout();
             // 
             // titlebarExtender1
@@ -248,6 +257,8 @@
             this.GroupBox13.Name = "GroupBox13";
             this.GroupBox13.Size = new System.Drawing.Size(580, 441);
             this.GroupBox13.TabIndex = 120;
+            this.GroupBox13.UseDecorationPattern = false;
+            this.GroupBox13.UseSharpStyle = false;
             // 
             // groupBox21
             // 
@@ -262,6 +273,8 @@
             this.groupBox21.Name = "groupBox21";
             this.groupBox21.Size = new System.Drawing.Size(566, 40);
             this.groupBox21.TabIndex = 34;
+            this.groupBox21.UseDecorationPattern = false;
+            this.groupBox21.UseSharpStyle = false;
             // 
             // label18
             // 
@@ -331,6 +344,8 @@
             this.groupBox11.Name = "groupBox11";
             this.groupBox11.Size = new System.Drawing.Size(566, 40);
             this.groupBox11.TabIndex = 33;
+            this.groupBox11.UseDecorationPattern = false;
+            this.groupBox11.UseSharpStyle = false;
             // 
             // pic8
             // 
@@ -398,6 +413,8 @@
             this.groupBox20.Name = "groupBox20";
             this.groupBox20.Size = new System.Drawing.Size(566, 40);
             this.groupBox20.TabIndex = 32;
+            this.groupBox20.UseDecorationPattern = false;
+            this.groupBox20.UseSharpStyle = false;
             // 
             // pic7
             // 
@@ -465,6 +482,8 @@
             this.groupBox9.Name = "groupBox9";
             this.groupBox9.Size = new System.Drawing.Size(566, 40);
             this.groupBox9.TabIndex = 31;
+            this.groupBox9.UseDecorationPattern = false;
+            this.groupBox9.UseSharpStyle = false;
             // 
             // pic6
             // 
@@ -532,6 +551,8 @@
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.Size = new System.Drawing.Size(566, 40);
             this.groupBox10.TabIndex = 30;
+            this.groupBox10.UseDecorationPattern = false;
+            this.groupBox10.UseSharpStyle = false;
             // 
             // pic5
             // 
@@ -599,6 +620,8 @@
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Size = new System.Drawing.Size(566, 40);
             this.groupBox8.TabIndex = 29;
+            this.groupBox8.UseDecorationPattern = false;
+            this.groupBox8.UseSharpStyle = false;
             // 
             // pic4
             // 
@@ -666,6 +689,8 @@
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(566, 40);
             this.groupBox7.TabIndex = 28;
+            this.groupBox7.UseDecorationPattern = false;
+            this.groupBox7.UseSharpStyle = false;
             // 
             // pic3
             // 
@@ -733,6 +758,8 @@
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(566, 40);
             this.groupBox6.TabIndex = 27;
+            this.groupBox6.UseDecorationPattern = false;
+            this.groupBox6.UseSharpStyle = false;
             // 
             // pic2
             // 
@@ -800,6 +827,8 @@
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(566, 40);
             this.groupBox5.TabIndex = 26;
+            this.groupBox5.UseDecorationPattern = false;
+            this.groupBox5.UseSharpStyle = false;
             // 
             // pic1
             // 
@@ -1127,6 +1156,8 @@
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(534, 392);
             this.groupBox2.TabIndex = 123;
+            this.groupBox2.UseDecorationPattern = false;
+            this.groupBox2.UseSharpStyle = false;
             // 
             // Button1
             // 
@@ -1231,6 +1262,7 @@
             this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Controls.Add(this.tabPage7);
             this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
             this.tabControl1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.tabControl1.ItemSize = new System.Drawing.Size(35, 115);
@@ -1267,6 +1299,8 @@
             this.groupBox12.Name = "groupBox12";
             this.groupBox12.Size = new System.Drawing.Size(582, 48);
             this.groupBox12.TabIndex = 29;
+            this.groupBox12.UseDecorationPattern = false;
+            this.groupBox12.UseSharpStyle = false;
             // 
             // label16
             // 
@@ -1337,6 +1371,8 @@
             this.groupBox23.Name = "groupBox23";
             this.groupBox23.Size = new System.Drawing.Size(582, 48);
             this.groupBox23.TabIndex = 28;
+            this.groupBox23.UseDecorationPattern = false;
+            this.groupBox23.UseSharpStyle = false;
             // 
             // label20
             // 
@@ -1419,6 +1455,8 @@
             this.groupBox16.Name = "groupBox16";
             this.groupBox16.Size = new System.Drawing.Size(582, 48);
             this.groupBox16.TabIndex = 24;
+            this.groupBox16.UseDecorationPattern = false;
+            this.groupBox16.UseSharpStyle = false;
             // 
             // label7
             // 
@@ -1454,6 +1492,8 @@
             this.groupBox15.Name = "groupBox15";
             this.groupBox15.Size = new System.Drawing.Size(582, 48);
             this.groupBox15.TabIndex = 23;
+            this.groupBox15.UseDecorationPattern = false;
+            this.groupBox15.UseSharpStyle = false;
             // 
             // label2
             // 
@@ -1489,6 +1529,8 @@
             this.groupBox14.Name = "groupBox14";
             this.groupBox14.Size = new System.Drawing.Size(582, 48);
             this.groupBox14.TabIndex = 22;
+            this.groupBox14.UseDecorationPattern = false;
+            this.groupBox14.UseSharpStyle = false;
             // 
             // label59
             // 
@@ -1537,6 +1579,8 @@
             this.groupBox19.Name = "groupBox19";
             this.groupBox19.Size = new System.Drawing.Size(582, 48);
             this.groupBox19.TabIndex = 25;
+            this.groupBox19.UseDecorationPattern = false;
+            this.groupBox19.UseSharpStyle = false;
             // 
             // label14
             // 
@@ -1573,6 +1617,8 @@
             this.groupBox18.Name = "groupBox18";
             this.groupBox18.Size = new System.Drawing.Size(582, 48);
             this.groupBox18.TabIndex = 24;
+            this.groupBox18.UseDecorationPattern = false;
+            this.groupBox18.UseSharpStyle = false;
             // 
             // label9
             // 
@@ -1608,6 +1654,8 @@
             this.groupBox17.Name = "groupBox17";
             this.groupBox17.Size = new System.Drawing.Size(582, 48);
             this.groupBox17.TabIndex = 23;
+            this.groupBox17.UseDecorationPattern = false;
+            this.groupBox17.UseSharpStyle = false;
             // 
             // label8
             // 
@@ -1659,6 +1707,8 @@
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(580, 111);
             this.groupBox1.TabIndex = 123;
+            this.groupBox1.UseDecorationPattern = false;
+            this.groupBox1.UseSharpStyle = false;
             // 
             // pictureBox1
             // 
@@ -1771,6 +1821,8 @@
             this.groupBox4.Padding = new System.Windows.Forms.Padding(1);
             this.groupBox4.Size = new System.Drawing.Size(582, 305);
             this.groupBox4.TabIndex = 231;
+            this.groupBox4.UseDecorationPattern = false;
+            this.groupBox4.UseSharpStyle = false;
             // 
             // alertBox3
             // 
@@ -1802,6 +1854,8 @@
             this.groupBox26.Name = "groupBox26";
             this.groupBox26.Size = new System.Drawing.Size(560, 76);
             this.groupBox26.TabIndex = 233;
+            this.groupBox26.UseDecorationPattern = false;
+            this.groupBox26.UseSharpStyle = false;
             // 
             // VS_ReplaceMetrics
             // 
@@ -1864,6 +1918,8 @@
             this.groupBox25.Name = "groupBox25";
             this.groupBox25.Size = new System.Drawing.Size(560, 76);
             this.groupBox25.TabIndex = 232;
+            this.groupBox25.UseDecorationPattern = false;
+            this.groupBox25.UseSharpStyle = false;
             // 
             // VS_ReplaceColors
             // 
@@ -1927,6 +1983,8 @@
             this.groupBox24.Name = "groupBox24";
             this.groupBox24.Size = new System.Drawing.Size(560, 48);
             this.groupBox24.TabIndex = 231;
+            this.groupBox24.UseDecorationPattern = false;
+            this.groupBox24.UseSharpStyle = false;
             // 
             // button21
             // 
@@ -2040,6 +2098,8 @@
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(582, 48);
             this.groupBox3.TabIndex = 230;
+            this.groupBox3.UseDecorationPattern = false;
+            this.groupBox3.UseSharpStyle = false;
             // 
             // label12
             // 
@@ -2090,6 +2150,8 @@
             this.groupBox22.Padding = new System.Windows.Forms.Padding(1);
             this.groupBox22.Size = new System.Drawing.Size(582, 150);
             this.groupBox22.TabIndex = 44;
+            this.groupBox22.UseDecorationPattern = false;
+            this.groupBox22.UseSharpStyle = false;
             // 
             // radioImage1
             // 
@@ -2132,9 +2194,96 @@
             this.label21.Text = "Presets";
             this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // tabPage2
+            // 
+            this.tabPage2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.tabPage2.Controls.Add(this.groupBox69);
+            this.tabPage2.Location = new System.Drawing.Point(119, 4);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(588, 604);
+            this.tabPage2.TabIndex = 6;
+            this.tabPage2.Text = "Troubleshoots";
+            // 
+            // groupBox69
+            // 
+            this.groupBox69.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox69.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox69.Controls.Add(this.alertBox25);
+            this.groupBox69.Controls.Add(this.button31);
+            this.groupBox69.Controls.Add(this.label25);
+            this.groupBox69.Controls.Add(this.pictureBox82);
+            this.groupBox69.Location = new System.Drawing.Point(3, 3);
+            this.groupBox69.Name = "groupBox69";
+            this.groupBox69.Size = new System.Drawing.Size(582, 140);
+            this.groupBox69.TabIndex = 57;
+            this.groupBox69.UseDecorationPattern = false;
+            this.groupBox69.UseSharpStyle = false;
+            // 
+            // alertBox25
+            // 
+            this.alertBox25.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
+            this.alertBox25.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.alertBox25.BackColor = System.Drawing.Color.Transparent;
+            this.alertBox25.CenterText = false;
+            this.alertBox25.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.alertBox25.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.alertBox25.Image = null;
+            this.alertBox25.Location = new System.Drawing.Point(11, 46);
+            this.alertBox25.Name = "alertBox25";
+            this.alertBox25.Size = new System.Drawing.Size(561, 84);
+            this.alertBox25.TabIndex = 60;
+            this.alertBox25.TabStop = false;
+            this.alertBox25.Text = resources.GetString("alertBox25.Text");
+            // 
+            // button31
+            // 
+            this.button31.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button31.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.button31.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
+            this.button31.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button31.ForeColor = System.Drawing.Color.White;
+            this.button31.Image = null;
+            this.button31.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button31.ImageGlyph")));
+            this.button31.ImageGlyphEnabled = true;
+            this.button31.Location = new System.Drawing.Point(484, 10);
+            this.button31.Name = "button31";
+            this.button31.Size = new System.Drawing.Size(87, 28);
+            this.button31.TabIndex = 59;
+            this.button31.Text = "Open";
+            this.button31.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button31.UseVisualStyleBackColor = false;
+            this.button31.Click += new System.EventHandler(this.button31_Click);
+            // 
+            // label25
+            // 
+            this.label25.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label25.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label25.Location = new System.Drawing.Point(41, 7);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(496, 34);
+            this.label25.TabIndex = 18;
+            this.label25.Text = "Use Vault feature in WinPaletter Settings";
+            this.label25.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // pictureBox82
+            // 
+            this.pictureBox82.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox82.Image")));
+            this.pictureBox82.Location = new System.Drawing.Point(11, 12);
+            this.pictureBox82.Name = "pictureBox82";
+            this.pictureBox82.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox82.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox82.TabIndex = 23;
+            this.pictureBox82.TabStop = false;
+            // 
             // Win10Colors
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.CanGeneratePalette = true;
             this.ClientSize = new System.Drawing.Size(1262, 727);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.groupBox2);
@@ -2204,6 +2353,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             this.groupBox22.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            this.tabPage2.ResumeLayout(false);
+            this.groupBox69.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox82)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -2343,5 +2495,11 @@
         private UI.WP.Button button3;
         private UI.WP.Button button2;
         internal UI.WP.AlertBox alertBox2;
+        private System.Windows.Forms.TabPage tabPage2;
+        private UI.WP.GroupBox groupBox69;
+        internal UI.WP.AlertBox alertBox25;
+        internal UI.WP.Button button31;
+        internal System.Windows.Forms.Label label25;
+        internal System.Windows.Forms.PictureBox pictureBox82;
     }
 }

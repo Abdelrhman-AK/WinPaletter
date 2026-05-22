@@ -41,7 +41,7 @@ namespace WinPaletter
             {
                 Forms.WindowsTerminal.Mode = WinTerminal.Version.Stable;
                 Close();
-                Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.WindowsTerminal);
+                Forms.MainForm.AddTab(Forms.WindowsTerminal);
             }
 
             else if (OS.W12 || OS.W11 || OS.W10)
@@ -65,7 +65,7 @@ namespace WinPaletter
                 {
                     Forms.WindowsTerminal.Mode = WinTerminal.Version.Stable;
                     Close();
-                    Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.WindowsTerminal);
+                    Forms.MainForm.AddTab(Forms.WindowsTerminal);
                 }
                 else
                 {
@@ -85,7 +85,7 @@ namespace WinPaletter
             {
                 Forms.WindowsTerminal.Mode = WinTerminal.Version.Preview;
                 Close();
-                Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.WindowsTerminal);
+                Forms.MainForm.AddTab(Forms.WindowsTerminal);
             }
             else if (OS.W12 || OS.W11 || OS.W10)
             {
@@ -108,7 +108,7 @@ namespace WinPaletter
                 {
                     Forms.WindowsTerminal.Mode = WinTerminal.Version.Preview;
                     Close();
-                    Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.WindowsTerminal);
+                    Forms.MainForm.AddTab(Forms.WindowsTerminal);
                 }
                 else
                 {
@@ -126,12 +126,12 @@ namespace WinPaletter
         {
             Forms.CMD._Edition = CMD.Edition.CMD;
             Close();
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.CMD);
+            Forms.MainForm.AddTab(Forms.CMD);
         }
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.ExternalTerminal);
+            Forms.MainForm.AddTab(Forms.ExternalTerminal);
             Close();
         }
 
@@ -141,7 +141,7 @@ namespace WinPaletter
             {
                 Forms.CMD._Edition = CMD.Edition.PowerShellx86;
                 Close();
-                Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.CMD);
+                Forms.MainForm.AddTab(Forms.CMD);
             }
             else
             {
@@ -153,7 +153,7 @@ namespace WinPaletter
                 {
                     Forms.CMD._Edition = CMD.Edition.PowerShellx86;
                     Close();
-                    Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.CMD);
+                    Forms.MainForm.AddTab(Forms.CMD);
                 }
                 else
                 {
@@ -170,7 +170,7 @@ namespace WinPaletter
             {
                 Forms.CMD._Edition = CMD.Edition.PowerShellx64;
                 Close();
-                Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.CMD);
+                Forms.MainForm.AddTab(Forms.CMD);
             }
             else
             {
@@ -182,7 +182,7 @@ namespace WinPaletter
                 {
                     Forms.CMD._Edition = CMD.Edition.PowerShellx64;
                     Close();
-                    Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.CMD);
+                    Forms.MainForm.AddTab(Forms.CMD);
                 }
                 else
                 {

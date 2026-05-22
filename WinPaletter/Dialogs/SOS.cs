@@ -192,7 +192,7 @@ namespace WinPaletter.Dialogs
 
         private void button7_Click(object sender, EventArgs e)
         {
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Uninstall);
+            Forms.MainForm.AddTab(Forms.Uninstall);
         }
 
         private void button13_Click(object sender, EventArgs e)

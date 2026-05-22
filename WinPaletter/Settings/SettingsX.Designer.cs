@@ -196,12 +196,6 @@ namespace WinPaletter
             this.groupBox18 = new WinPaletter.UI.WP.GroupBox();
             this.alertBox15 = new WinPaletter.UI.WP.AlertBox();
             this.label51 = new System.Windows.Forms.Label();
-            this.Panel5 = new System.Windows.Forms.Panel();
-            this.RadioButton10 = new WinPaletter.UI.WP.RadioButton();
-            this.RadioButton9 = new WinPaletter.UI.WP.RadioButton();
-            this.RadioButton7 = new WinPaletter.UI.WP.RadioButton();
-            this.RadioButton8 = new WinPaletter.UI.WP.RadioButton();
-            this.CheckBox24 = new System.Windows.Forms.Label();
             this.CheckBox23 = new System.Windows.Forms.Label();
             this.PictureBox51 = new System.Windows.Forms.PictureBox();
             this.Panel4 = new System.Windows.Forms.Panel();
@@ -634,7 +628,6 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox81)).BeginInit();
             this.panel14.SuspendLayout();
             this.groupBox18.SuspendLayout();
-            this.Panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox51)).BeginInit();
             this.Panel4.SuspendLayout();
             this.TabPage14.SuspendLayout();
@@ -2890,14 +2883,12 @@ namespace WinPaletter
             this.groupBox18.BackColor = System.Drawing.Color.Transparent;
             this.groupBox18.Controls.Add(this.alertBox15);
             this.groupBox18.Controls.Add(this.label51);
-            this.groupBox18.Controls.Add(this.Panel5);
-            this.groupBox18.Controls.Add(this.CheckBox24);
             this.groupBox18.Controls.Add(this.CheckBox23);
             this.groupBox18.Controls.Add(this.PictureBox51);
             this.groupBox18.Controls.Add(this.Panel4);
             this.groupBox18.Location = new System.Drawing.Point(3, 123);
             this.groupBox18.Name = "groupBox18";
-            this.groupBox18.Size = new System.Drawing.Size(803, 225);
+            this.groupBox18.Size = new System.Drawing.Size(803, 117);
             this.groupBox18.TabIndex = 53;
             this.groupBox18.UseDecorationPattern = false;
             this.groupBox18.UseSharpStyle = false;
@@ -2930,76 +2921,6 @@ namespace WinPaletter
             this.label51.TabIndex = 18;
             this.label51.Text = "On applying classic colors:";
             this.label51.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // Panel5
-            // 
-            this.Panel5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.Panel5.Controls.Add(this.RadioButton10);
-            this.Panel5.Controls.Add(this.RadioButton9);
-            this.Panel5.Controls.Add(this.RadioButton7);
-            this.Panel5.Controls.Add(this.RadioButton8);
-            this.Panel5.Location = new System.Drawing.Point(45, 155);
-            this.Panel5.Name = "Panel5";
-            this.Panel5.Size = new System.Drawing.Size(754, 61);
-            this.Panel5.TabIndex = 36;
-            // 
-            // RadioButton10
-            // 
-            this.RadioButton10.Checked = false;
-            this.RadioButton10.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.RadioButton10.ForeColor = System.Drawing.Color.White;
-            this.RadioButton10.Location = new System.Drawing.Point(328, 33);
-            this.RadioButton10.Name = "RadioButton10";
-            this.RadioButton10.Size = new System.Drawing.Size(272, 24);
-            this.RadioButton10.TabIndex = 3;
-            this.RadioButton10.Text = "Don\'t change";
-            // 
-            // RadioButton9
-            // 
-            this.RadioButton9.Checked = false;
-            this.RadioButton9.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.RadioButton9.ForeColor = System.Drawing.Color.White;
-            this.RadioButton9.Location = new System.Drawing.Point(328, 3);
-            this.RadioButton9.Name = "RadioButton9";
-            this.RadioButton9.Size = new System.Drawing.Size(272, 24);
-            this.RadioButton9.TabIndex = 2;
-            this.RadioButton9.Text = "Restore defaults";
-            // 
-            // RadioButton7
-            // 
-            this.RadioButton7.Checked = true;
-            this.RadioButton7.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.RadioButton7.ForeColor = System.Drawing.Color.White;
-            this.RadioButton7.Location = new System.Drawing.Point(19, 33);
-            this.RadioButton7.Name = "RadioButton7";
-            this.RadioButton7.Size = new System.Drawing.Size(272, 24);
-            this.RadioButton7.TabIndex = 1;
-            this.RadioButton7.Text = "Erase (Remove)";
-            // 
-            // RadioButton8
-            // 
-            this.RadioButton8.Checked = false;
-            this.RadioButton8.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.RadioButton8.ForeColor = System.Drawing.Color.White;
-            this.RadioButton8.Location = new System.Drawing.Point(19, 3);
-            this.RadioButton8.Name = "RadioButton8";
-            this.RadioButton8.Size = new System.Drawing.Size(272, 24);
-            this.RadioButton8.TabIndex = 0;
-            this.RadioButton8.Text = "Overwrite";
-            // 
-            // CheckBox24
-            // 
-            this.CheckBox24.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.CheckBox24.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CheckBox24.Location = new System.Drawing.Point(42, 114);
-            this.CheckBox24.Name = "CheckBox24";
-            this.CheckBox24.Size = new System.Drawing.Size(758, 35);
-            this.CheckBox24.TabIndex = 38;
-            this.CheckBox24.Text = "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Themes\\DefaultColors" +
-    "\\Standard (For LogonUI in Windows 8.1 and later)";
-            this.CheckBox24.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // CheckBox23
             // 
@@ -7949,7 +7870,6 @@ namespace WinPaletter
             this.panel14.ResumeLayout(false);
             this.groupBox18.ResumeLayout(false);
             this.groupBox18.PerformLayout();
-            this.Panel5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox51)).EndInit();
             this.Panel4.ResumeLayout(false);
             this.TabPage14.ResumeLayout(false);
@@ -8188,16 +8108,10 @@ namespace WinPaletter
         internal Panel Panel2;
         internal Panel Panel1;
         internal PictureBox PictureBox51;
-        internal Panel Panel5;
-        internal UI.WP.RadioButton RadioButton7;
-        internal UI.WP.RadioButton RadioButton8;
         internal Panel Panel4;
         internal UI.WP.RadioButton RadioButton6;
         internal UI.WP.RadioButton RadioButton5;
-        internal Label CheckBox24;
         internal Label CheckBox23;
-        internal UI.WP.RadioButton RadioButton10;
-        internal UI.WP.RadioButton RadioButton9;
         internal UI.WP.TabControl TabControl2;
         internal TabPage TabPage11;
         internal TabPage TabPage12;

@@ -251,11 +251,6 @@ namespace WinPaletter
                 public OverwriteOptions WindowsColors_HKU_DEFAULT_Prefs { get; set; } = Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
 
                 /// <summary>
-                /// <see cref="OverwriteOptions"/> to extend effects of Classic Colors settings to HKEY_LOCAL_MACHINE registry key
-                /// </summary>
-                public OverwriteOptions ClassicColors_HKLM_Prefs { get; set; } = Structures.ThemeApplyingBehavior.OverwriteOptions.Erase;
-
-                /// <summary>
                 /// Update User Preference Mack (UPM) in HKU\.DEFAULT registry key
                 /// </summary>
                 public bool UPM_HKU_DEFAULT { get; set; } = false;
@@ -385,7 +380,6 @@ namespace WinPaletter
                     ShowSaveConfirmation = ReadReg(REG_ThemeApplyingBehavior, "ShowSaveConfirmation", true);
                     WindowsColors_HKU_DEFAULT_Prefs = ReadReg(REG_ThemeApplyingBehavior, nameof(WindowsColors_HKU_DEFAULT_Prefs), OverwriteOptions.Overwrite);
                     ClassicColors_HKU_DEFAULT_Prefs = ReadReg(REG_ThemeApplyingBehavior, "ClassicColors_HKU_DEFAULT_Prefs", OverwriteOptions.Overwrite);
-                    ClassicColors_HKLM_Prefs = ReadReg(REG_ThemeApplyingBehavior, "ClassicColors_HKLM_Prefs", OverwriteOptions.Erase);
                     UPM_HKU_DEFAULT = ReadReg(REG_ThemeApplyingBehavior, "UPM_HKU_DEFAULT", false);
                     Metrics_HKU_DEFAULT_Prefs = ReadReg(REG_ThemeApplyingBehavior, "Metrics_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange);
                     Cursors_HKU_DEFAULT_Prefs = ReadReg(REG_ThemeApplyingBehavior, "Cursors_HKU_DEFAULT_Prefs", OverwriteOptions.DontChange);
@@ -416,7 +410,6 @@ namespace WinPaletter
                     WriteReg(REG_ThemeApplyingBehavior, "ShowSaveConfirmation", ShowSaveConfirmation, RegistryValueKind.DWord);
                     WriteReg(REG_ThemeApplyingBehavior, nameof(WindowsColors_HKU_DEFAULT_Prefs), WindowsColors_HKU_DEFAULT_Prefs, RegistryValueKind.DWord);
                     WriteReg(REG_ThemeApplyingBehavior, "ClassicColors_HKU_DEFAULT_Prefs", ClassicColors_HKU_DEFAULT_Prefs, RegistryValueKind.DWord);
-                    WriteReg(REG_ThemeApplyingBehavior, "ClassicColors_HKLM_Prefs", ClassicColors_HKLM_Prefs, RegistryValueKind.DWord);
                     WriteReg(REG_ThemeApplyingBehavior, "UPM_HKU_DEFAULT", UPM_HKU_DEFAULT, RegistryValueKind.DWord);
                     WriteReg(REG_ThemeApplyingBehavior, "Metrics_HKU_DEFAULT_Prefs", Metrics_HKU_DEFAULT_Prefs, RegistryValueKind.DWord);
                     WriteReg(REG_ThemeApplyingBehavior, "Cursors_HKU_DEFAULT_Prefs", Cursors_HKU_DEFAULT_Prefs, RegistryValueKind.DWord);

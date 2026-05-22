@@ -556,6 +556,34 @@
         0dQ9D7rv/QUeWSTXxDDWcAAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="alertBox25.Text" xml:space="preserve">
+    <value>Vault is a fallback mechanism in WinPaletter that re-applies the user’s selected Windows accent and personalization settings when session-change events incorrectly reset them to defaults. It ensures the chosen visual preferences are restored consistently after logon or unlock.</value>
+  </data>
+  <data name="button31.ImageGlyph" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAMVJREFUOE+1
+        kT0KwkAQhSOCWHgVBVEQsfIGKiSljaCWlvZWthYewFtZeBPxk4EXmUwSLYIPttj3t8xskvwbQAdYA1t3
+        TkAves08BTbOOAcmwJMyjjF8iw7gETxn4CUt88JY5BJo+1AOFz5UFaQiW4WU4MO6lwoyY3woRwyLs52s
+        vKmyANjptcLCgBnQ9URdgY22D9zdCjxXW1CF0vwiGxd8/YUcpsuXRmEkYVEQAmzz8g2jZuJV4i9cYvYD
+        YKBx6k4/ZhrjDVNQexdvilyQAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="pictureBox82.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAnNJREFUSEvt
+        kUtP21AQhfljLBqnUklKUWkkEIkgDk5CKJi86jjGMdc4juM4BjsvUlUVbRddVKrUXdfddd/+lFZid6p7
+        aS4BROgiiy4Y6dPMnTtnjh8LCw/xX0QrHMec4Oy3E5xhPox+OeH4CTew/SGxT4aYK/6QcAPL6xOr28d9
+        NGwPcqkKKZuDJGVZlstVGLZ3a5bu5AamGxKz08MsyjUd6XQaqlpHRanj46fPLNMz7dP7axo3vDIgzik5
+        agcIx+fovX4HWk9TqRtIJpOoaQ24wRitkxGHnmt1HclUis1NNHQnN9Btn+itE/ZUFFpPOGx2sZFMYTA6
+        Y6/e9Ae3oP3eYMRMDm3/Umv7Vwaa5ROt6SMcjBi0nnCg6EgkEiCOj2Ovfyek1WVzB0rjUmtNGaimR9Rj
+        D2F/yKB19ss3lnN7JWQyGRA3nInZCSGKIvJ7JaajO7mBQlyiEBdBf8igdebrd5a3CzK2trZw5AYw2ndD
+        7zc3NyEVZKajO7lB1XBI1WijNxwzaD0hLyuIxWLQTOfav7mJZrbYXKFY+6t1rgzKhk1KjRbenH9g0HpC
+        UW8i/nQZHf8UmtW99n84Vheu5yO+/AxF3WY6upMbFHWLHBw2UTfbUE0HtJ4mvSMjGo1Cyu+i4QRQrS6H
+        fh5pZxfR6GOIBZlr6E5uIGsW2a9bmMWGmEckIiAtikiJEsZv3yOVlthZEAR2Pz1Pd3KDPdUkL2sm7mN7
+        X8HKizU8ighYXFxkeSWxDklWbs3SndxgVyGk8OoI84Tu5Ab5MonlKsZFrmJgTlxkK8YSN5hEJL76U1ha
+        XbvZ/9cQ4s/XI7HVHzf7DzEz/gAM+Fx9Yqpd6AAAAABJRU5ErkJggg==
+</value>
+  </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>45</value>
   </metadata>

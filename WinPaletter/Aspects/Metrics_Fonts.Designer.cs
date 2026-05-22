@@ -190,6 +190,12 @@ namespace WinPaletter
             this.AlertBox5 = new WinPaletter.UI.WP.AlertBox();
             this.AlertBox7 = new WinPaletter.UI.WP.AlertBox();
             this.AlertBox8 = new WinPaletter.UI.WP.AlertBox();
+            this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.groupBox69 = new WinPaletter.UI.WP.GroupBox();
+            this.alertBox25 = new WinPaletter.UI.WP.AlertBox();
+            this.button31 = new WinPaletter.UI.WP.Button();
+            this.label17 = new System.Windows.Forms.Label();
+            this.pictureBox82 = new System.Windows.Forms.PictureBox();
             this.previewContainer = new WinPaletter.UI.WP.GroupBox();
             this.button7 = new WinPaletter.UI.WP.Button();
             this.tabs_preview = new WinPaletter.UI.WP.TablessControl();
@@ -287,6 +293,9 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox38)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox40)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox37)).BeginInit();
+            this.tabPage8.SuspendLayout();
+            this.groupBox69.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox82)).BeginInit();
             this.previewContainer.SuspendLayout();
             this.tabs_preview.SuspendLayout();
             this.TabPage6.SuspendLayout();
@@ -326,6 +335,7 @@ namespace WinPaletter
             this.TabControl1.Controls.Add(this.TabPage3);
             this.TabControl1.Controls.Add(this.TabPage5);
             this.TabControl1.Controls.Add(this.TabPage11);
+            this.TabControl1.Controls.Add(this.tabPage8);
             this.TabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
             this.TabControl1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.TabControl1.ItemSize = new System.Drawing.Size(35, 120);
@@ -2499,6 +2509,92 @@ namespace WinPaletter
     " to instability in the Start Menu and search functionality due to a bug in Windo" +
     "ws or Edge WebView.";
             // 
+            // tabPage8
+            // 
+            this.tabPage8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.tabPage8.Controls.Add(this.groupBox69);
+            this.tabPage8.Location = new System.Drawing.Point(124, 4);
+            this.tabPage8.Name = "tabPage8";
+            this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage8.Size = new System.Drawing.Size(401, 547);
+            this.tabPage8.TabIndex = 6;
+            this.tabPage8.Text = "Troubleshoots";
+            // 
+            // groupBox69
+            // 
+            this.groupBox69.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox69.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox69.Controls.Add(this.alertBox25);
+            this.groupBox69.Controls.Add(this.button31);
+            this.groupBox69.Controls.Add(this.label17);
+            this.groupBox69.Controls.Add(this.pictureBox82);
+            this.groupBox69.Location = new System.Drawing.Point(3, 2);
+            this.groupBox69.Name = "groupBox69";
+            this.groupBox69.Size = new System.Drawing.Size(395, 135);
+            this.groupBox69.TabIndex = 63;
+            this.groupBox69.UseDecorationPattern = false;
+            this.groupBox69.UseSharpStyle = false;
+            // 
+            // alertBox25
+            // 
+            this.alertBox25.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
+            this.alertBox25.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.alertBox25.BackColor = System.Drawing.Color.Transparent;
+            this.alertBox25.CenterText = false;
+            this.alertBox25.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.alertBox25.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.alertBox25.Image = null;
+            this.alertBox25.Location = new System.Drawing.Point(11, 46);
+            this.alertBox25.Name = "alertBox25";
+            this.alertBox25.Size = new System.Drawing.Size(374, 79);
+            this.alertBox25.TabIndex = 60;
+            this.alertBox25.TabStop = false;
+            this.alertBox25.Text = resources.GetString("alertBox25.Text");
+            // 
+            // button31
+            // 
+            this.button31.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button31.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.button31.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
+            this.button31.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button31.ForeColor = System.Drawing.Color.White;
+            this.button31.Image = null;
+            this.button31.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button31.ImageGlyph")));
+            this.button31.ImageGlyphEnabled = true;
+            this.button31.Location = new System.Drawing.Point(297, 10);
+            this.button31.Name = "button31";
+            this.button31.Size = new System.Drawing.Size(87, 28);
+            this.button31.TabIndex = 59;
+            this.button31.Text = "Open";
+            this.button31.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button31.UseVisualStyleBackColor = false;
+            this.button31.Click += new System.EventHandler(this.button31_Click);
+            // 
+            // label17
+            // 
+            this.label17.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label17.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.Location = new System.Drawing.Point(41, 7);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(309, 34);
+            this.label17.TabIndex = 18;
+            this.label17.Text = "Use Vault feature in WinPaletter Settings";
+            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // pictureBox82
+            // 
+            this.pictureBox82.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox82.Image")));
+            this.pictureBox82.Location = new System.Drawing.Point(11, 12);
+            this.pictureBox82.Name = "pictureBox82";
+            this.pictureBox82.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox82.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox82.TabIndex = 23;
+            this.pictureBox82.TabStop = false;
+            // 
             // previewContainer
             // 
             this.previewContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -2938,6 +3034,9 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox38)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox40)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox37)).EndInit();
+            this.tabPage8.ResumeLayout(false);
+            this.groupBox69.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox82)).EndInit();
             this.previewContainer.ResumeLayout(false);
             this.tabs_preview.ResumeLayout(false);
             this.TabPage6.ResumeLayout(false);
@@ -3129,5 +3228,11 @@ namespace WinPaletter
         private UI.WP.GroupBox groupBox33;
         private UI.WP.GroupBox groupBox32;
         private UI.WP.GroupBox groupBox31;
+        private TabPage tabPage8;
+        private UI.WP.GroupBox groupBox69;
+        internal UI.WP.AlertBox alertBox25;
+        internal UI.WP.Button button31;
+        internal Label label17;
+        internal PictureBox pictureBox82;
     }
 }

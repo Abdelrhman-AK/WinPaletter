@@ -23,6 +23,11 @@ namespace WinPaletter.Theme.Structures
     /// </summary>
     public class Win32UI : ManagerBase<Win32UI>
     {
+        private static string HKEY_CPL_Colors = @"HKEY_CURRENT_USER\Control Panel\Colors";
+        private static string HKEY_CPL_Desktop_Colors = @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors";
+        private static string HDef_CPL_Colors = @"HKEY_USERS\.DEFAULT\Control Panel\Colors";
+        private static string HKEY_LOCAL_MACHINE_Standards = @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard";
+
         /// <summary> Controls if Classic Colors editing is enabled or not </summary> 
         public bool Enabled { get; set; } = true;
 
@@ -129,6 +134,11 @@ namespace WinPaletter.Theme.Structures
         public Color Desktop { get; set; } = Color.FromArgb(0, 0, 0);
 
         /// <summary>
+        /// If <c>enabled</c>, WinPaletter will try to fix issue of that CTRL+ALT+DEL resets Win32UI colors by setting values machine wide in <c>HKEY_LOCAL_MACHINE</c>.
+        /// </summary>
+        public Settings.Structures.ThemeApplyingBehavior.OverwriteOptions CTRL_ALT_DEL_Troubleshoot { get; set; } = Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
+
+        /// <summary>
         /// Creates a new instance of Win32UI structure with default values
         /// </summary>
         public Win32UI() { }
@@ -167,6 +177,7 @@ namespace WinPaletter.Theme.Structures
                         Program.Log?.Write(LogEventLevel.Information, $"Loading Windows classic colors (Win32) from registry.");
 
                         Enabled = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\ClassicColors", string.Empty, true);
+                        CTRL_ALT_DEL_Troubleshoot = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\ClassicColors", nameof(CTRL_ALT_DEL_Troubleshoot), Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange);
 
                         // Set some flags like EnableTheming and EnableGradient
                         bool enableTheming = EnableTheming;
@@ -206,7 +217,7 @@ namespace WinPaletter.Theme.Structures
                         MenuHilight = GetColor(SysColorIndex.MenuHilight);
                         Desktop = GetColor(SysColorIndex.Background);
 
-                        ButtonAlternateFace = ReadReg(@"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonAlternateFace", ButtonAlternateFace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
+                        ButtonAlternateFace = ReadReg(HKEY_CPL_Colors, "ButtonAlternateFace", ButtonAlternateFace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
 
                         break;
                     }
@@ -519,71 +530,71 @@ namespace WinPaletter.Theme.Structures
                     wic.Undo();
                 }
 
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "ActiveBorder", ActiveBorder.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "ActiveTitle", ActiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "AppWorkspace", AppWorkspace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "Background", Background.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonAlternateFace", ButtonAlternateFace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonDkShadow", ButtonDkShadow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonFace", ButtonFace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonHilight", ButtonHilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonLight", ButtonLight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonShadow", ButtonShadow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "ButtonText", ButtonText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "GradientActiveTitle", GradientActiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "GradientInactiveTitle", GradientInactiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "GrayText", GrayText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "HilightText", HilightText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "HotTrackingColor", HotTrackingColor.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "InactiveBorder", InactiveBorder.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitle", InactiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "InactiveTitleText", InactiveTitleText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "InfoText", InfoText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "InfoWindow", InfoWindow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "Menu", Menu.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "MenuBar", MenuBar.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "MenuText", MenuText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "Scrollbar", Scrollbar.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "TitleText", TitleText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "Window", Window.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "WindowFrame", WindowFrame.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "WindowText", WindowText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "Hilight", Hilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "MenuHilight", MenuHilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Colors", "Desktop", Desktop.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Colors, "ActiveBorder", ActiveBorder.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Colors, "ActiveTitle", ActiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Colors, "AppWorkspace", AppWorkspace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Colors, "Background", Background.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Colors, "ButtonAlternateFace", ButtonAlternateFace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Colors, "ButtonDkShadow", ButtonDkShadow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Colors, "ButtonFace", ButtonFace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Colors, "ButtonHilight", ButtonHilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Colors, "ButtonLight", ButtonLight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Colors, "ButtonShadow", ButtonShadow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Colors, "ButtonText", ButtonText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Colors, "GradientActiveTitle", GradientActiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Colors, "GradientInactiveTitle", GradientInactiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Colors, "GrayText", GrayText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Colors, "HilightText", HilightText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Colors, "HotTrackingColor", HotTrackingColor.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Colors, "InactiveBorder", InactiveBorder.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Colors, "InactiveTitle", InactiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Colors, "InactiveTitleText", InactiveTitleText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Colors, "InfoText", InfoText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Colors, "InfoWindow", InfoWindow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Colors, "Menu", Menu.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Colors, "MenuBar", MenuBar.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Colors, "MenuText", MenuText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Colors, "Scrollbar", Scrollbar.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Colors, "TitleText", TitleText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Colors, "Window", Window.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Colors, "WindowFrame", WindowFrame.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Colors, "WindowText", WindowText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Colors, "Hilight", Hilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Colors, "MenuHilight", MenuHilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Colors, "Desktop", Desktop.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
 
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ActiveBorder", ActiveBorder.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ActiveTitle", ActiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "AppWorkspace", AppWorkspace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Background", Background.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonAlternateFace", ButtonAlternateFace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonDkShadow", ButtonDkShadow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonFace", ButtonFace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonHilight", ButtonHilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonLight", ButtonLight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonShadow", ButtonShadow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "ButtonText", ButtonText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "GradientActiveTitle", GradientActiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "GradientInactiveTitle", GradientInactiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "GrayText", GrayText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "HilightText", HilightText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "HotTrackingColor", HotTrackingColor.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InactiveBorder", InactiveBorder.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InactiveTitle", InactiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InactiveTitleText", InactiveTitleText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InfoText", InfoText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "InfoWindow", InfoWindow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Menu", Menu.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "MenuBar", MenuBar.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "MenuText", MenuText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Scrollbar", Scrollbar.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "TitleText", TitleText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Window", Window.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "WindowFrame", WindowFrame.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "WindowText", WindowText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Hilight", Hilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "MenuHilight", MenuHilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\Colors", "Desktop", Desktop.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Desktop_Colors, "ActiveBorder", ActiveBorder.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Desktop_Colors, "ActiveTitle", ActiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Desktop_Colors, "AppWorkspace", AppWorkspace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Desktop_Colors, "Background", Background.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Desktop_Colors, "ButtonAlternateFace", ButtonAlternateFace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Desktop_Colors, "ButtonDkShadow", ButtonDkShadow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Desktop_Colors, "ButtonFace", ButtonFace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Desktop_Colors, "ButtonHilight", ButtonHilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Desktop_Colors, "ButtonLight", ButtonLight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Desktop_Colors, "ButtonShadow", ButtonShadow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Desktop_Colors, "ButtonText", ButtonText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Desktop_Colors, "GradientActiveTitle", GradientActiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Desktop_Colors, "GradientInactiveTitle", GradientInactiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Desktop_Colors, "GrayText", GrayText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Desktop_Colors, "HilightText", HilightText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Desktop_Colors, "HotTrackingColor", HotTrackingColor.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Desktop_Colors, "InactiveBorder", InactiveBorder.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Desktop_Colors, "InactiveTitle", InactiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Desktop_Colors, "InactiveTitleText", InactiveTitleText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Desktop_Colors, "InfoText", InfoText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Desktop_Colors, "InfoWindow", InfoWindow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Desktop_Colors, "Menu", Menu.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Desktop_Colors, "MenuBar", MenuBar.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Desktop_Colors, "MenuText", MenuText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Desktop_Colors, "Scrollbar", Scrollbar.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Desktop_Colors, "TitleText", TitleText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Desktop_Colors, "Window", Window.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Desktop_Colors, "WindowFrame", WindowFrame.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Desktop_Colors, "WindowText", WindowText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Desktop_Colors, "Hilight", Hilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Desktop_Colors, "MenuHilight", MenuHilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, HKEY_CPL_Desktop_Colors, "Desktop", Desktop.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
 
                 // Fix bug in WinForms when classic theme applied on classic Windows mode
                 if (isClassic)
@@ -607,63 +618,65 @@ namespace WinPaletter.Theme.Structures
                 {
                     Program.Log?.Write(LogEventLevel.Information, $"Applying classic colors to the default user registry (HKEY_USERS\\.DEFAULT) as it is enabled in WinPaletter settings.");
 
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "ActiveBorder", ActiveBorder.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "ActiveTitle", ActiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "AppWorkspace", AppWorkspace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "Background", Background.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonAlternateFace", ButtonAlternateFace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonDkShadow", ButtonDkShadow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonFace", ButtonFace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonHilight", ButtonHilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonLight", ButtonLight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonShadow", ButtonShadow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "ButtonText", ButtonText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "GradientActiveTitle", GradientActiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "GradientInactiveTitle", GradientInactiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "GrayText", GrayText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "HilightText", HilightText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "HotTrackingColor", HotTrackingColor.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "InactiveBorder", InactiveBorder.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "InactiveTitle", InactiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "InactiveTitleText", InactiveTitleText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "InfoText", InfoText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "InfoWindow", InfoWindow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "Menu", Menu.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "MenuBar", MenuBar.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "MenuText", MenuText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "Scrollbar", Scrollbar.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "TitleText", TitleText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "Window", Window.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "WindowFrame", WindowFrame.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "WindowText", WindowText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "Hilight", Hilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "MenuHilight", MenuHilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_USERS\.DEFAULT\Control Panel\Colors", "Desktop", Desktop.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                    WriteReg(treeView, HDef_CPL_Colors, "ActiveBorder", ActiveBorder.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                    WriteReg(treeView, HDef_CPL_Colors, "ActiveTitle", ActiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                    WriteReg(treeView, HDef_CPL_Colors, "AppWorkspace", AppWorkspace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                    WriteReg(treeView, HDef_CPL_Colors, "Background", Background.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                    WriteReg(treeView, HDef_CPL_Colors, "ButtonAlternateFace", ButtonAlternateFace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                    WriteReg(treeView, HDef_CPL_Colors, "ButtonDkShadow", ButtonDkShadow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                    WriteReg(treeView, HDef_CPL_Colors, "ButtonFace", ButtonFace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                    WriteReg(treeView, HDef_CPL_Colors, "ButtonHilight", ButtonHilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                    WriteReg(treeView, HDef_CPL_Colors, "ButtonLight", ButtonLight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                    WriteReg(treeView, HDef_CPL_Colors, "ButtonShadow", ButtonShadow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                    WriteReg(treeView, HDef_CPL_Colors, "ButtonText", ButtonText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                    WriteReg(treeView, HDef_CPL_Colors, "GradientActiveTitle", GradientActiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                    WriteReg(treeView, HDef_CPL_Colors, "GradientInactiveTitle", GradientInactiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                    WriteReg(treeView, HDef_CPL_Colors, "GrayText", GrayText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                    WriteReg(treeView, HDef_CPL_Colors, "HilightText", HilightText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                    WriteReg(treeView, HDef_CPL_Colors, "HotTrackingColor", HotTrackingColor.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                    WriteReg(treeView, HDef_CPL_Colors, "InactiveBorder", InactiveBorder.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                    WriteReg(treeView, HDef_CPL_Colors, "InactiveTitle", InactiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                    WriteReg(treeView, HDef_CPL_Colors, "InactiveTitleText", InactiveTitleText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                    WriteReg(treeView, HDef_CPL_Colors, "InfoText", InfoText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                    WriteReg(treeView, HDef_CPL_Colors, "InfoWindow", InfoWindow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                    WriteReg(treeView, HDef_CPL_Colors, "Menu", Menu.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                    WriteReg(treeView, HDef_CPL_Colors, "MenuBar", MenuBar.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                    WriteReg(treeView, HDef_CPL_Colors, "MenuText", MenuText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                    WriteReg(treeView, HDef_CPL_Colors, "Scrollbar", Scrollbar.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                    WriteReg(treeView, HDef_CPL_Colors, "TitleText", TitleText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                    WriteReg(treeView, HDef_CPL_Colors, "Window", Window.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                    WriteReg(treeView, HDef_CPL_Colors, "WindowFrame", WindowFrame.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                    WriteReg(treeView, HDef_CPL_Colors, "WindowText", WindowText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                    WriteReg(treeView, HDef_CPL_Colors, "Hilight", Hilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                    WriteReg(treeView, HDef_CPL_Colors, "MenuHilight", MenuHilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                    WriteReg(treeView, HDef_CPL_Colors, "Desktop", Desktop.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
                 }
+
+                 WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\ClassicColors", nameof(CTRL_ALT_DEL_Troubleshoot), CTRL_ALT_DEL_Troubleshoot, RegistryValueKind.DWord);
 
                 // Override some colors in the HKEY_Local_Machine registry if overriden in WinPaletter settings
-                if (Program.Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+                if (CTRL_ALT_DEL_Troubleshoot == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
                 {
-                    Program.Log?.Write(LogEventLevel.Information, $"Applying classic colors to the HKEY_LOCAL_MACHINE registry as it is enabled in WinPaletter settings.");
+                    Program.Log?.Write(LogEventLevel.Information, $"Applying classic colors to '{HKEY_LOCAL_MACHINE_Standards}' to fix reset issue.");
 
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ActiveTitle", Color.FromArgb(0, ActiveTitle).Reverse().ToArgb(), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonFace", Color.FromArgb(0, ButtonFace).Reverse().ToArgb(), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonText", Color.FromArgb(0, ButtonText).Reverse().ToArgb(), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "GrayText", Color.FromArgb(0, GrayText).Reverse().ToArgb(), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Hilight", Color.FromArgb(0, Hilight).Reverse().ToArgb(), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HilightText", Color.FromArgb(0, HilightText).Reverse().ToArgb(), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HotTrackingColor", Color.FromArgb(0, HotTrackingColor).Reverse().ToArgb(), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitle", Color.FromArgb(0, InactiveTitle).Reverse().ToArgb(), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitleText", Color.FromArgb(0, InactiveTitleText).Reverse().ToArgb(), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "MenuHilight", Color.FromArgb(0, MenuHilight).Reverse().ToArgb(), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "TitleText", Color.FromArgb(0, TitleText).Reverse().ToArgb(), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Window", Color.FromArgb(0, Window).Reverse().ToArgb(), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "WindowText", Color.FromArgb(0, WindowText).Reverse().ToArgb(), RegistryValueKind.String);
+                    WriteReg(treeView, HKEY_LOCAL_MACHINE_Standards, "ActiveTitle", Color.FromArgb(0, ActiveTitle).Reverse().ToArgb(), RegistryValueKind.String);
+                    WriteReg(treeView, HKEY_LOCAL_MACHINE_Standards, "ButtonFace", Color.FromArgb(0, ButtonFace).Reverse().ToArgb(), RegistryValueKind.String);
+                    WriteReg(treeView, HKEY_LOCAL_MACHINE_Standards, "ButtonText", Color.FromArgb(0, ButtonText).Reverse().ToArgb(), RegistryValueKind.String);
+                    WriteReg(treeView, HKEY_LOCAL_MACHINE_Standards, "GrayText", Color.FromArgb(0, GrayText).Reverse().ToArgb(), RegistryValueKind.String);
+                    WriteReg(treeView, HKEY_LOCAL_MACHINE_Standards, "Hilight", Color.FromArgb(0, Hilight).Reverse().ToArgb(), RegistryValueKind.String);
+                    WriteReg(treeView, HKEY_LOCAL_MACHINE_Standards, "HilightText", Color.FromArgb(0, HilightText).Reverse().ToArgb(), RegistryValueKind.String);
+                    WriteReg(treeView, HKEY_LOCAL_MACHINE_Standards, "HotTrackingColor", Color.FromArgb(0, HotTrackingColor).Reverse().ToArgb(), RegistryValueKind.String);
+                    WriteReg(treeView, HKEY_LOCAL_MACHINE_Standards, "InactiveTitle", Color.FromArgb(0, InactiveTitle).Reverse().ToArgb(), RegistryValueKind.String);
+                    WriteReg(treeView, HKEY_LOCAL_MACHINE_Standards, "InactiveTitleText", Color.FromArgb(0, InactiveTitleText).Reverse().ToArgb(), RegistryValueKind.String);
+                    WriteReg(treeView, HKEY_LOCAL_MACHINE_Standards, "MenuHilight", Color.FromArgb(0, MenuHilight).Reverse().ToArgb(), RegistryValueKind.String);
+                    WriteReg(treeView, HKEY_LOCAL_MACHINE_Standards, "TitleText", Color.FromArgb(0, TitleText).Reverse().ToArgb(), RegistryValueKind.String);
+                    WriteReg(treeView, HKEY_LOCAL_MACHINE_Standards, "Window", Color.FromArgb(0, Window).Reverse().ToArgb(), RegistryValueKind.String);
+                    WriteReg(treeView, HKEY_LOCAL_MACHINE_Standards, "WindowText", Color.FromArgb(0, WindowText).Reverse().ToArgb(), RegistryValueKind.String);
                 }
 
-                else if (Program.Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults)
+                else if (CTRL_ALT_DEL_Troubleshoot == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults)
                 {
-                    Program.Log?.Write(LogEventLevel.Information, $"Restoring classic colors to the default values in the HKEY_LOCAL_MACHINE registry as it is enabled in WinPaletter settings.");
+                    Program.Log?.Write(LogEventLevel.Information, $"Restoring classic colors to the default values in '{HKEY_LOCAL_MACHINE_Standards}' as it is enabled in Classic Colors settings.");
 
                     Win32UI @default;
                     if (Program.WindowStyle == WindowStyle.W12)
@@ -699,24 +712,24 @@ namespace WinPaletter.Theme.Structures
                         @default = Default.Windows11.Win32;
                     }
 
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ActiveTitle", Color.FromArgb(0, @default.ActiveTitle).Reverse().ToArgb(), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonFace", Color.FromArgb(0, @default.ButtonFace).Reverse().ToArgb(), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "ButtonText", Color.FromArgb(0, @default.ButtonText).Reverse().ToArgb(), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "GrayText", Color.FromArgb(0, @default.GrayText).Reverse().ToArgb(), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Hilight", Color.FromArgb(0, @default.Hilight).Reverse().ToArgb(), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HilightText", Color.FromArgb(0, @default.HilightText).Reverse().ToArgb(), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "HotTrackingColor", Color.FromArgb(0, @default.HotTrackingColor).Reverse().ToArgb(), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitle", Color.FromArgb(0, @default.InactiveTitle).Reverse().ToArgb(), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "InactiveTitleText", Color.FromArgb(0, @default.InactiveTitleText).Reverse().ToArgb(), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "MenuHilight", Color.FromArgb(0, @default.MenuHilight).Reverse().ToArgb(), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "TitleText", Color.FromArgb(0, @default.TitleText).Reverse().ToArgb(), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "Window", Color.FromArgb(0, @default.Window).Reverse().ToArgb(), RegistryValueKind.String);
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors\Standard", "WindowText", Color.FromArgb(0, @default.WindowText).Reverse().ToArgb(), RegistryValueKind.String);
+                    WriteReg(treeView, HKEY_LOCAL_MACHINE_Standards, "ActiveTitle", Color.FromArgb(0, @default.ActiveTitle).Reverse().ToArgb(), RegistryValueKind.String);
+                    WriteReg(treeView, HKEY_LOCAL_MACHINE_Standards, "ButtonFace", Color.FromArgb(0, @default.ButtonFace).Reverse().ToArgb(), RegistryValueKind.String);
+                    WriteReg(treeView, HKEY_LOCAL_MACHINE_Standards, "ButtonText", Color.FromArgb(0, @default.ButtonText).Reverse().ToArgb(), RegistryValueKind.String);
+                    WriteReg(treeView, HKEY_LOCAL_MACHINE_Standards, "GrayText", Color.FromArgb(0, @default.GrayText).Reverse().ToArgb(), RegistryValueKind.String);
+                    WriteReg(treeView, HKEY_LOCAL_MACHINE_Standards, "Hilight", Color.FromArgb(0, @default.Hilight).Reverse().ToArgb(), RegistryValueKind.String);
+                    WriteReg(treeView, HKEY_LOCAL_MACHINE_Standards, "HilightText", Color.FromArgb(0, @default.HilightText).Reverse().ToArgb(), RegistryValueKind.String);
+                    WriteReg(treeView, HKEY_LOCAL_MACHINE_Standards, "HotTrackingColor", Color.FromArgb(0, @default.HotTrackingColor).Reverse().ToArgb(), RegistryValueKind.String);
+                    WriteReg(treeView, HKEY_LOCAL_MACHINE_Standards, "InactiveTitle", Color.FromArgb(0, @default.InactiveTitle).Reverse().ToArgb(), RegistryValueKind.String);
+                    WriteReg(treeView, HKEY_LOCAL_MACHINE_Standards, "InactiveTitleText", Color.FromArgb(0, @default.InactiveTitleText).Reverse().ToArgb(), RegistryValueKind.String);
+                    WriteReg(treeView, HKEY_LOCAL_MACHINE_Standards, "MenuHilight", Color.FromArgb(0, @default.MenuHilight).Reverse().ToArgb(), RegistryValueKind.String);
+                    WriteReg(treeView, HKEY_LOCAL_MACHINE_Standards, "TitleText", Color.FromArgb(0, @default.TitleText).Reverse().ToArgb(), RegistryValueKind.String);
+                    WriteReg(treeView, HKEY_LOCAL_MACHINE_Standards, "Window", Color.FromArgb(0, @default.Window).Reverse().ToArgb(), RegistryValueKind.String);
+                    WriteReg(treeView, HKEY_LOCAL_MACHINE_Standards, "WindowText", Color.FromArgb(0, @default.WindowText).Reverse().ToArgb(), RegistryValueKind.String);
                 }
 
-                else if (Program.Settings.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Erase)
+                else if (CTRL_ALT_DEL_Troubleshoot == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Erase)
                 {
-                    Program.Log?.Write(LogEventLevel.Information, $"Erasing classic colors from the HKEY_LOCAL_MACHINE registry as it is enabled in WinPaletter settings.");
+                    Program.Log?.Write(LogEventLevel.Information, $"Erasing classic colors in '{HKEY_LOCAL_MACHINE_Standards}' as it is enabled in Classic Colors settings.");
 
                     DeleteValueAsAdministrator(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\DefaultColors", "Standard");
                 }
@@ -909,38 +922,38 @@ namespace WinPaletter.Theme.Structures
         {
             try
             {
-                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "ActiveBorder", ActiveBorder.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "ActiveTitle", ActiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "AppWorkspace", AppWorkspace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "Background", Background.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "ButtonAlternateFace", ButtonAlternateFace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "ButtonDkShadow", ButtonDkShadow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "ButtonFace", ButtonFace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "ButtonHilight", ButtonHilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "ButtonLight", ButtonLight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "ButtonShadow", ButtonShadow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "ButtonText", ButtonText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "GradientActiveTitle", GradientActiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "GradientInactiveTitle", GradientInactiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "GrayText", GrayText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "HilightText", HilightText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "HotTrackingColor", HotTrackingColor.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "InactiveBorder", InactiveBorder.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "InactiveTitle", InactiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "InactiveTitleText", InactiveTitleText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "InfoText", InfoText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "InfoWindow", InfoWindow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "Menu", Menu.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "MenuBar", MenuBar.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "MenuText", MenuText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "Scrollbar", Scrollbar.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "TitleText", TitleText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "Window", Window.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "WindowFrame", WindowFrame.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "WindowText", WindowText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "Hilight", Hilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "MenuHilight", MenuHilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
-                WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors"), "Desktop", Desktop.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(HKEY_CPL_Colors), "ActiveBorder", ActiveBorder.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(HKEY_CPL_Colors), "ActiveTitle", ActiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(HKEY_CPL_Colors), "AppWorkspace", AppWorkspace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(HKEY_CPL_Colors), "Background", Background.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(HKEY_CPL_Colors), "ButtonAlternateFace", ButtonAlternateFace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(HKEY_CPL_Colors), "ButtonDkShadow", ButtonDkShadow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(HKEY_CPL_Colors), "ButtonFace", ButtonFace.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(HKEY_CPL_Colors), "ButtonHilight", ButtonHilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(HKEY_CPL_Colors), "ButtonLight", ButtonLight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(HKEY_CPL_Colors), "ButtonShadow", ButtonShadow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(HKEY_CPL_Colors), "ButtonText", ButtonText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(HKEY_CPL_Colors), "GradientActiveTitle", GradientActiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(HKEY_CPL_Colors), "GradientInactiveTitle", GradientInactiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(HKEY_CPL_Colors), "GrayText", GrayText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(HKEY_CPL_Colors), "HilightText", HilightText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(HKEY_CPL_Colors), "HotTrackingColor", HotTrackingColor.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(HKEY_CPL_Colors), "InactiveBorder", InactiveBorder.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(HKEY_CPL_Colors), "InactiveTitle", InactiveTitle.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(HKEY_CPL_Colors), "InactiveTitleText", InactiveTitleText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(HKEY_CPL_Colors), "InfoText", InfoText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(HKEY_CPL_Colors), "InfoWindow", InfoWindow.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(HKEY_CPL_Colors), "Menu", Menu.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(HKEY_CPL_Colors), "MenuBar", MenuBar.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(HKEY_CPL_Colors), "MenuText", MenuText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(HKEY_CPL_Colors), "Scrollbar", Scrollbar.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(HKEY_CPL_Colors), "TitleText", TitleText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(HKEY_CPL_Colors), "Window", Window.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(HKEY_CPL_Colors), "WindowFrame", WindowFrame.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(HKEY_CPL_Colors), "WindowText", WindowText.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(HKEY_CPL_Colors), "Hilight", Hilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(HKEY_CPL_Colors), "MenuHilight", MenuHilight.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
+                WriteReg(treeView, ToVaultPath(HKEY_CPL_Colors), "Desktop", Desktop.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
 
 
                 Program.Log?.Write(LogEventLevel.Information, "SaveVault (Win32UI): Saved.");
@@ -965,7 +978,7 @@ namespace WinPaletter.Theme.Structures
                     return;
                 }
 
-                string vp = ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Colors");
+                string vp = ToVaultPath(HKEY_CPL_Colors);
 
                 Desktop = ReadReg(vp, "Desktop", Desktop.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();
                 ActiveBorder = ReadReg(vp, "ActiveBorder", ActiveBorder.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true)).ToColorFromWin32();

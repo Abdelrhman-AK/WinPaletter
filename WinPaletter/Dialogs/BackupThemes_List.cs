@@ -300,7 +300,7 @@ namespace WinPaletter
 
         private void pin_button_Click(object sender, EventArgs e)
         {
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(this);
+            Forms.MainForm.AddTab(this);
         }
 
         private void BackupThemes_List_ParentChanged(object sender, EventArgs e)

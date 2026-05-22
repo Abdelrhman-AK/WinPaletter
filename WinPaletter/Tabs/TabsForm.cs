@@ -36,5 +36,15 @@ namespace WinPaletter.Tabs
         {
             InitializeComponent();
         }
+
+        /// <summary>
+        /// Adds the specified Form to the tabs container as a new tab.
+        /// </summary>
+        /// <param name="form">The Form to add as a new tab.</param>
+        public void AddTab(Form form)
+        {
+            if (form == null || form.IsDisposed) return;
+            tabsContainer1?.AddFormIntoTab(form);
+        }
     }
 }

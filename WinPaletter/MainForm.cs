@@ -45,9 +45,9 @@ namespace WinPaletter
             tabControl1.Visible = false;
             Status_pnl.Visible = Program.Settings.AppLog.StatusPanel;
             Status_lbl.Font = Fonts.Console;
-            tabsContainer1.AddFormIntoTab(Forms.Home);
+            AddTab(Forms.Home);
             if (Program.ShowWhatsNew) Process.Start($"{Links.Releases}/tag/v{Program.Version}");
-            if (Program.Settings.Miscellaneous.ShowWelcomeDialog) Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Welcome);
+            if (Program.Settings.Miscellaneous.ShowWelcomeDialog) Forms.MainForm.AddTab(Forms.Welcome);
 
             Program.Animator.ShowSync(tabControl1);
         }

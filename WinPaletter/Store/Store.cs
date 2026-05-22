@@ -1732,7 +1732,7 @@ namespace WinPaletter
 
         private void pin_button_Click(object sender, EventArgs e)
         {
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(this);
+            Forms.MainForm.AddTab(this);
         }
 
         #endregion
@@ -1773,7 +1773,7 @@ namespace WinPaletter
 
         private void button5_Click(object sender, EventArgs e)
         {
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.SettingsX);
+            Forms.MainForm.AddTab(Forms.SettingsX);
             Forms.SettingsX.TabControl1.SelectedIndex = 6;
 
         }

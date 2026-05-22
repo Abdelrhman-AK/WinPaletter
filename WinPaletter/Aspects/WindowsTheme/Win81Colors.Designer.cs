@@ -193,6 +193,7 @@
             this.windowsDesktop1.Metrics_CaptionWidth = 22;
             this.windowsDesktop1.Metrics_PaddedBorderWidth = 4;
             this.windowsDesktop1.Name = "windowsDesktop1";
+            this.windowsDesktop1.Preview = WinPaletter.UI.Simulation.Window.Preview_Enum.W8;
             this.windowsDesktop1.resVS = null;
             this.windowsDesktop1.Shadow = true;
             this.windowsDesktop1.Size = new System.Drawing.Size(528, 297);
@@ -216,7 +217,6 @@
             this.windowsDesktop1.Window = System.Drawing.Color.Empty;
             this.windowsDesktop1.WindowFrame = System.Drawing.Color.Empty;
             this.windowsDesktop1.WindowStyle = WinPaletter.PreviewHelpers.WindowStyle.W81;
-            this.windowsDesktop1.Preview = WinPaletter.UI.Simulation.Window.Preview_Enum.W8;
             this.windowsDesktop1.WindowText = System.Drawing.Color.Empty;
             this.windowsDesktop1.WinVista = false;
             this.windowsDesktop1.EditorInvoker += new WinPaletter.Templates.WindowsDesktop.EditorInvokerEventHandler(this.windowsDesktop1_EditorInvoker);
@@ -241,7 +241,7 @@
             this.label4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.label4.Location = new System.Drawing.Point(39, 129);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(312, 24);
+            this.label4.Size = new System.Drawing.Size(317, 24);
             this.label4.TabIndex = 19;
             this.label4.Text = "Backgrounds (secondary: start, LogonUI)";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -255,7 +255,7 @@
             this.Label33.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Label33.Location = new System.Drawing.Point(39, 99);
             this.Label33.Name = "Label33";
-            this.Label33.Size = new System.Drawing.Size(311, 24);
+            this.Label33.Size = new System.Drawing.Size(316, 24);
             this.Label33.TabIndex = 18;
             this.Label33.Text = "Backgrounds (primary: start, LogonUI)";
             this.Label33.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -280,7 +280,7 @@
             this.Label29.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Label29.Location = new System.Drawing.Point(39, 69);
             this.Label29.Name = "Label29";
-            this.Label29.Size = new System.Drawing.Size(311, 24);
+            this.Label29.Size = new System.Drawing.Size(316, 24);
             this.Label29.TabIndex = 16;
             this.Label29.Text = "Foregrounds (secondary)";
             this.Label29.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -294,7 +294,7 @@
             this.Foregrounds.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Foregrounds.Location = new System.Drawing.Point(39, 39);
             this.Foregrounds.Name = "Foregrounds";
-            this.Foregrounds.Size = new System.Drawing.Size(311, 24);
+            this.Foregrounds.Size = new System.Drawing.Size(316, 24);
             this.Foregrounds.TabIndex = 15;
             this.Foregrounds.Text = "Foregrounds (primary)";
             this.Foregrounds.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -306,7 +306,7 @@
             this.start_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
             this.start_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.start_pick.DontShowInfo = false;
-            this.start_pick.Location = new System.Drawing.Point(357, 129);
+            this.start_pick.Location = new System.Drawing.Point(362, 129);
             this.start_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.start_pick.Name = "start_pick";
             this.start_pick.Size = new System.Drawing.Size(110, 24);
@@ -331,7 +331,7 @@
             this.personalcls_background_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
             this.personalcls_background_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.personalcls_background_pick.DontShowInfo = false;
-            this.personalcls_background_pick.Location = new System.Drawing.Point(357, 99);
+            this.personalcls_background_pick.Location = new System.Drawing.Point(362, 99);
             this.personalcls_background_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.personalcls_background_pick.Name = "personalcls_background_pick";
             this.personalcls_background_pick.Size = new System.Drawing.Size(110, 24);
@@ -346,7 +346,7 @@
             this.accent_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
             this.accent_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.accent_pick.DontShowInfo = false;
-            this.accent_pick.Location = new System.Drawing.Point(357, 69);
+            this.accent_pick.Location = new System.Drawing.Point(362, 69);
             this.accent_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.accent_pick.Name = "accent_pick";
             this.accent_pick.Size = new System.Drawing.Size(110, 24);
@@ -371,7 +371,7 @@
             this.personalcolor_accent_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
             this.personalcolor_accent_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.personalcolor_accent_pick.DontShowInfo = false;
-            this.personalcolor_accent_pick.Location = new System.Drawing.Point(357, 39);
+            this.personalcolor_accent_pick.Location = new System.Drawing.Point(362, 39);
             this.personalcolor_accent_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.personalcolor_accent_pick.Name = "personalcolor_accent_pick";
             this.personalcolor_accent_pick.Size = new System.Drawing.Size(110, 24);
@@ -386,7 +386,7 @@
             this.theme_aerolite.ForeColor = System.Drawing.Color.White;
             this.theme_aerolite.Image = ((System.Drawing.Image)(resources.GetObject("theme_aerolite.Image")));
             this.theme_aerolite.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.theme_aerolite.Location = new System.Drawing.Point(189, 45);
+            this.theme_aerolite.Location = new System.Drawing.Point(192, 45);
             this.theme_aerolite.Name = "theme_aerolite";
             this.theme_aerolite.Size = new System.Drawing.Size(95, 95);
             this.theme_aerolite.TabIndex = 42;
@@ -403,7 +403,7 @@
             this.theme_aero.ForeColor = System.Drawing.Color.White;
             this.theme_aero.Image = ((System.Drawing.Image)(resources.GetObject("theme_aero.Image")));
             this.theme_aero.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.theme_aero.Location = new System.Drawing.Point(88, 45);
+            this.theme_aero.Location = new System.Drawing.Point(91, 45);
             this.theme_aero.Name = "theme_aero";
             this.theme_aero.Size = new System.Drawing.Size(95, 95);
             this.theme_aero.TabIndex = 41;
@@ -421,11 +421,13 @@
             this.GroupBox30.Controls.Add(this.Label27);
             this.GroupBox30.Controls.Add(this.ColorizationColorBalance_bar);
             this.GroupBox30.Controls.Add(this.ColorizationColor_pick);
-            this.GroupBox30.Location = new System.Drawing.Point(5, 6);
+            this.GroupBox30.Location = new System.Drawing.Point(3, 3);
             this.GroupBox30.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.GroupBox30.Name = "GroupBox30";
-            this.GroupBox30.Size = new System.Drawing.Size(474, 68);
+            this.GroupBox30.Size = new System.Drawing.Size(478, 68);
             this.GroupBox30.TabIndex = 41;
+            this.GroupBox30.UseDecorationPattern = false;
+            this.GroupBox30.UseSharpStyle = false;
             // 
             // PictureBox25
             // 
@@ -446,7 +448,7 @@
             this.Label27.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label27.Location = new System.Drawing.Point(39, 3);
             this.Label27.Name = "Label27";
-            this.Label27.Size = new System.Drawing.Size(428, 30);
+            this.Label27.Size = new System.Drawing.Size(432, 30);
             this.Label27.TabIndex = 0;
             this.Label27.Text = "Windows color (titlebars && taskbar)";
             this.Label27.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -461,12 +463,12 @@
             this.ColorizationColorBalance_bar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ColorizationColorBalance_bar.Location = new System.Drawing.Point(4, 39);
             this.ColorizationColorBalance_bar.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.ColorizationColorBalance_bar.Maximum = 100;
-            this.ColorizationColorBalance_bar.Minimum = 0;
+            this.ColorizationColorBalance_bar.Maximum = 100F;
+            this.ColorizationColorBalance_bar.Minimum = 0F;
             this.ColorizationColorBalance_bar.Name = "ColorizationColorBalance_bar";
-            this.ColorizationColorBalance_bar.Size = new System.Drawing.Size(348, 24);
+            this.ColorizationColorBalance_bar.Size = new System.Drawing.Size(352, 24);
             this.ColorizationColorBalance_bar.TabIndex = 124;
-            this.ColorizationColorBalance_bar.Value = 0;
+            this.ColorizationColorBalance_bar.Value = 0F;
             this.ColorizationColorBalance_bar.ValueChanged += new System.EventHandler(this.ColorizationColorBalance_bar_ValueChanged);
             // 
             // ColorizationColor_pick
@@ -476,7 +478,7 @@
             this.ColorizationColor_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
             this.ColorizationColor_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.ColorizationColor_pick.DontShowInfo = false;
-            this.ColorizationColor_pick.Location = new System.Drawing.Point(360, 39);
+            this.ColorizationColor_pick.Location = new System.Drawing.Point(364, 39);
             this.ColorizationColor_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.ColorizationColor_pick.Name = "ColorizationColor_pick";
             this.ColorizationColor_pick.Size = new System.Drawing.Size(110, 24);
@@ -497,6 +499,8 @@
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(534, 337);
             this.groupBox2.TabIndex = 123;
+            this.groupBox2.UseDecorationPattern = false;
+            this.groupBox2.UseSharpStyle = false;
             // 
             // Button1
             // 
@@ -596,11 +600,13 @@
             this.groupBox8.Controls.Add(this.PictureBox29);
             this.groupBox8.Controls.Add(this.personalcls_background_pick);
             this.groupBox8.Controls.Add(this.start_pick);
-            this.groupBox8.Location = new System.Drawing.Point(5, 319);
+            this.groupBox8.Location = new System.Drawing.Point(3, 316);
             this.groupBox8.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(473, 162);
+            this.groupBox8.Size = new System.Drawing.Size(478, 162);
             this.groupBox8.TabIndex = 44;
+            this.groupBox8.UseDecorationPattern = false;
+            this.groupBox8.UseSharpStyle = false;
             // 
             // pictureBox3
             // 
@@ -621,7 +627,7 @@
             this.label2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(39, 3);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(427, 30);
+            this.label2.Size = new System.Drawing.Size(432, 30);
             this.label2.TabIndex = 0;
             this.label2.Text = "Accent (affects start screen, metro apps and lock screen)";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -653,11 +659,13 @@
             this.groupBox9.Controls.Add(this.img4);
             this.groupBox9.Controls.Add(this.pictureBox4);
             this.groupBox9.Controls.Add(this.label9);
-            this.groupBox9.Location = new System.Drawing.Point(5, 6);
+            this.groupBox9.Location = new System.Drawing.Point(3, 3);
             this.groupBox9.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(473, 307);
+            this.groupBox9.Size = new System.Drawing.Size(478, 307);
             this.groupBox9.TabIndex = 45;
+            this.groupBox9.UseDecorationPattern = false;
+            this.groupBox9.UseSharpStyle = false;
             // 
             // img20
             // 
@@ -667,7 +675,7 @@
             this.img20.ForeColor = System.Drawing.Color.White;
             this.img20.Image = null;
             this.img20.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.img20.Location = new System.Drawing.Point(239, 238);
+            this.img20.Location = new System.Drawing.Point(242, 238);
             this.img20.Name = "img20";
             this.img20.Size = new System.Drawing.Size(60, 60);
             this.img20.TabIndex = 25;
@@ -682,7 +690,7 @@
             this.img19.ForeColor = System.Drawing.Color.White;
             this.img19.Image = null;
             this.img19.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.img19.Location = new System.Drawing.Point(173, 238);
+            this.img19.Location = new System.Drawing.Point(176, 238);
             this.img19.Name = "img19";
             this.img19.Size = new System.Drawing.Size(60, 60);
             this.img19.TabIndex = 24;
@@ -697,7 +705,7 @@
             this.img18.ForeColor = System.Drawing.Color.White;
             this.img18.Image = ((System.Drawing.Image)(resources.GetObject("img18.Image")));
             this.img18.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.img18.Location = new System.Drawing.Point(371, 172);
+            this.img18.Location = new System.Drawing.Point(374, 172);
             this.img18.Name = "img18";
             this.img18.Size = new System.Drawing.Size(60, 60);
             this.img18.TabIndex = 23;
@@ -712,7 +720,7 @@
             this.img17.ForeColor = System.Drawing.Color.White;
             this.img17.Image = ((System.Drawing.Image)(resources.GetObject("img17.Image")));
             this.img17.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.img17.Location = new System.Drawing.Point(305, 172);
+            this.img17.Location = new System.Drawing.Point(308, 172);
             this.img17.Name = "img17";
             this.img17.Size = new System.Drawing.Size(60, 60);
             this.img17.TabIndex = 22;
@@ -727,7 +735,7 @@
             this.img16.ForeColor = System.Drawing.Color.White;
             this.img16.Image = ((System.Drawing.Image)(resources.GetObject("img16.Image")));
             this.img16.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.img16.Location = new System.Drawing.Point(239, 172);
+            this.img16.Location = new System.Drawing.Point(242, 172);
             this.img16.Name = "img16";
             this.img16.Size = new System.Drawing.Size(60, 60);
             this.img16.TabIndex = 21;
@@ -742,7 +750,7 @@
             this.img15.ForeColor = System.Drawing.Color.White;
             this.img15.Image = ((System.Drawing.Image)(resources.GetObject("img15.Image")));
             this.img15.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.img15.Location = new System.Drawing.Point(173, 172);
+            this.img15.Location = new System.Drawing.Point(176, 172);
             this.img15.Name = "img15";
             this.img15.Size = new System.Drawing.Size(60, 60);
             this.img15.TabIndex = 20;
@@ -757,7 +765,7 @@
             this.img14.ForeColor = System.Drawing.Color.White;
             this.img14.Image = ((System.Drawing.Image)(resources.GetObject("img14.Image")));
             this.img14.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.img14.Location = new System.Drawing.Point(107, 172);
+            this.img14.Location = new System.Drawing.Point(110, 172);
             this.img14.Name = "img14";
             this.img14.Size = new System.Drawing.Size(60, 60);
             this.img14.TabIndex = 19;
@@ -772,7 +780,7 @@
             this.img12.ForeColor = System.Drawing.Color.White;
             this.img12.Image = ((System.Drawing.Image)(resources.GetObject("img12.Image")));
             this.img12.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.img12.Location = new System.Drawing.Point(371, 106);
+            this.img12.Location = new System.Drawing.Point(374, 106);
             this.img12.Name = "img12";
             this.img12.Size = new System.Drawing.Size(60, 60);
             this.img12.TabIndex = 18;
@@ -787,7 +795,7 @@
             this.img11.ForeColor = System.Drawing.Color.White;
             this.img11.Image = ((System.Drawing.Image)(resources.GetObject("img11.Image")));
             this.img11.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.img11.Location = new System.Drawing.Point(305, 106);
+            this.img11.Location = new System.Drawing.Point(308, 106);
             this.img11.Name = "img11";
             this.img11.Size = new System.Drawing.Size(60, 60);
             this.img11.TabIndex = 17;
@@ -802,7 +810,7 @@
             this.img13.ForeColor = System.Drawing.Color.White;
             this.img13.Image = ((System.Drawing.Image)(resources.GetObject("img13.Image")));
             this.img13.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.img13.Location = new System.Drawing.Point(41, 172);
+            this.img13.Location = new System.Drawing.Point(44, 172);
             this.img13.Name = "img13";
             this.img13.Size = new System.Drawing.Size(60, 60);
             this.img13.TabIndex = 16;
@@ -817,7 +825,7 @@
             this.img7.ForeColor = System.Drawing.Color.White;
             this.img7.Image = ((System.Drawing.Image)(resources.GetObject("img7.Image")));
             this.img7.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.img7.Location = new System.Drawing.Point(41, 106);
+            this.img7.Location = new System.Drawing.Point(44, 106);
             this.img7.Name = "img7";
             this.img7.Size = new System.Drawing.Size(60, 60);
             this.img7.TabIndex = 11;
@@ -832,7 +840,7 @@
             this.img6.ForeColor = System.Drawing.Color.White;
             this.img6.Image = ((System.Drawing.Image)(resources.GetObject("img6.Image")));
             this.img6.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.img6.Location = new System.Drawing.Point(371, 40);
+            this.img6.Location = new System.Drawing.Point(374, 40);
             this.img6.Name = "img6";
             this.img6.Size = new System.Drawing.Size(60, 60);
             this.img6.TabIndex = 12;
@@ -847,7 +855,7 @@
             this.img8.ForeColor = System.Drawing.Color.White;
             this.img8.Image = ((System.Drawing.Image)(resources.GetObject("img8.Image")));
             this.img8.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.img8.Location = new System.Drawing.Point(107, 106);
+            this.img8.Location = new System.Drawing.Point(110, 106);
             this.img8.Name = "img8";
             this.img8.Size = new System.Drawing.Size(60, 60);
             this.img8.TabIndex = 13;
@@ -862,7 +870,7 @@
             this.img9.ForeColor = System.Drawing.Color.White;
             this.img9.Image = ((System.Drawing.Image)(resources.GetObject("img9.Image")));
             this.img9.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.img9.Location = new System.Drawing.Point(173, 106);
+            this.img9.Location = new System.Drawing.Point(176, 106);
             this.img9.Name = "img9";
             this.img9.Size = new System.Drawing.Size(60, 60);
             this.img9.TabIndex = 14;
@@ -877,7 +885,7 @@
             this.img10.ForeColor = System.Drawing.Color.White;
             this.img10.Image = ((System.Drawing.Image)(resources.GetObject("img10.Image")));
             this.img10.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.img10.Location = new System.Drawing.Point(239, 106);
+            this.img10.Location = new System.Drawing.Point(242, 106);
             this.img10.Name = "img10";
             this.img10.Size = new System.Drawing.Size(60, 60);
             this.img10.TabIndex = 15;
@@ -892,7 +900,7 @@
             this.img5.ForeColor = System.Drawing.Color.White;
             this.img5.Image = ((System.Drawing.Image)(resources.GetObject("img5.Image")));
             this.img5.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.img5.Location = new System.Drawing.Point(305, 40);
+            this.img5.Location = new System.Drawing.Point(308, 40);
             this.img5.Name = "img5";
             this.img5.Size = new System.Drawing.Size(60, 60);
             this.img5.TabIndex = 9;
@@ -907,7 +915,7 @@
             this.img1.ForeColor = System.Drawing.Color.White;
             this.img1.Image = ((System.Drawing.Image)(resources.GetObject("img1.Image")));
             this.img1.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.img1.Location = new System.Drawing.Point(41, 40);
+            this.img1.Location = new System.Drawing.Point(44, 40);
             this.img1.Name = "img1";
             this.img1.Size = new System.Drawing.Size(60, 60);
             this.img1.TabIndex = 5;
@@ -922,7 +930,7 @@
             this.img2.ForeColor = System.Drawing.Color.White;
             this.img2.Image = ((System.Drawing.Image)(resources.GetObject("img2.Image")));
             this.img2.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.img2.Location = new System.Drawing.Point(107, 40);
+            this.img2.Location = new System.Drawing.Point(110, 40);
             this.img2.Name = "img2";
             this.img2.Size = new System.Drawing.Size(60, 60);
             this.img2.TabIndex = 6;
@@ -937,7 +945,7 @@
             this.img3.ForeColor = System.Drawing.Color.White;
             this.img3.Image = ((System.Drawing.Image)(resources.GetObject("img3.Image")));
             this.img3.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.img3.Location = new System.Drawing.Point(173, 40);
+            this.img3.Location = new System.Drawing.Point(176, 40);
             this.img3.Name = "img3";
             this.img3.Size = new System.Drawing.Size(60, 60);
             this.img3.TabIndex = 7;
@@ -952,7 +960,7 @@
             this.img4.ForeColor = System.Drawing.Color.White;
             this.img4.Image = ((System.Drawing.Image)(resources.GetObject("img4.Image")));
             this.img4.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.img4.Location = new System.Drawing.Point(239, 40);
+            this.img4.Location = new System.Drawing.Point(242, 40);
             this.img4.Name = "img4";
             this.img4.Size = new System.Drawing.Size(60, 60);
             this.img4.TabIndex = 8;
@@ -978,7 +986,7 @@
             this.label9.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.Location = new System.Drawing.Point(39, 3);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(427, 30);
+            this.label9.Size = new System.Drawing.Size(432, 30);
             this.label9.TabIndex = 0;
             this.label9.Text = "Start screen background";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1063,12 +1071,14 @@
             this.groupBox4.Controls.Add(this.groupBox24);
             this.groupBox4.Controls.Add(this.pictureBox6);
             this.groupBox4.Controls.Add(this.label15);
-            this.groupBox4.Location = new System.Drawing.Point(6, 212);
+            this.groupBox4.Location = new System.Drawing.Point(3, 209);
             this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(1);
-            this.groupBox4.Size = new System.Drawing.Size(472, 305);
+            this.groupBox4.Size = new System.Drawing.Size(478, 305);
             this.groupBox4.TabIndex = 234;
+            this.groupBox4.UseDecorationPattern = false;
+            this.groupBox4.UseSharpStyle = false;
             // 
             // alertBox3
             // 
@@ -1082,7 +1092,7 @@
             this.alertBox3.Image = null;
             this.alertBox3.Location = new System.Drawing.Point(11, 266);
             this.alertBox3.Name = "alertBox3";
-            this.alertBox3.Size = new System.Drawing.Size(450, 28);
+            this.alertBox3.Size = new System.Drawing.Size(456, 28);
             this.alertBox3.TabIndex = 234;
             this.alertBox3.TabStop = false;
             this.alertBox3.Text = "Preview is unsupported. Use \'Apply\' with visual styles enabled to test.";
@@ -1098,8 +1108,10 @@
             this.groupBox26.Controls.Add(this.pictureBox1);
             this.groupBox26.Location = new System.Drawing.Point(11, 181);
             this.groupBox26.Name = "groupBox26";
-            this.groupBox26.Size = new System.Drawing.Size(450, 76);
+            this.groupBox26.Size = new System.Drawing.Size(456, 76);
             this.groupBox26.TabIndex = 233;
+            this.groupBox26.UseDecorationPattern = false;
+            this.groupBox26.UseSharpStyle = false;
             // 
             // VS_ReplaceMetrics
             // 
@@ -1110,7 +1122,7 @@
             this.VS_ReplaceMetrics.ForeColor = System.Drawing.Color.White;
             this.VS_ReplaceMetrics.Location = new System.Drawing.Point(11, 44);
             this.VS_ReplaceMetrics.Name = "VS_ReplaceMetrics";
-            this.VS_ReplaceMetrics.Size = new System.Drawing.Size(428, 23);
+            this.VS_ReplaceMetrics.Size = new System.Drawing.Size(434, 23);
             this.VS_ReplaceMetrics.TabIndex = 219;
             this.VS_ReplaceMetrics.Text = "Overwrite Metrics and Fonts with selected size scheme.";
             // 
@@ -1126,7 +1138,7 @@
             this.VS_SizesList.ItemHeight = 20;
             this.VS_SizesList.Location = new System.Drawing.Point(102, 11);
             this.VS_SizesList.Name = "VS_SizesList";
-            this.VS_SizesList.Size = new System.Drawing.Size(337, 26);
+            this.VS_SizesList.Size = new System.Drawing.Size(343, 26);
             this.VS_SizesList.TabIndex = 218;
             // 
             // label1
@@ -1160,8 +1172,10 @@
             this.groupBox25.Controls.Add(this.pictureBox12);
             this.groupBox25.Location = new System.Drawing.Point(11, 99);
             this.groupBox25.Name = "groupBox25";
-            this.groupBox25.Size = new System.Drawing.Size(450, 76);
+            this.groupBox25.Size = new System.Drawing.Size(456, 76);
             this.groupBox25.TabIndex = 232;
+            this.groupBox25.UseDecorationPattern = false;
+            this.groupBox25.UseSharpStyle = false;
             // 
             // VS_ReplaceColors
             // 
@@ -1172,7 +1186,7 @@
             this.VS_ReplaceColors.ForeColor = System.Drawing.Color.White;
             this.VS_ReplaceColors.Location = new System.Drawing.Point(11, 44);
             this.VS_ReplaceColors.Name = "VS_ReplaceColors";
-            this.VS_ReplaceColors.Size = new System.Drawing.Size(428, 23);
+            this.VS_ReplaceColors.Size = new System.Drawing.Size(434, 23);
             this.VS_ReplaceColors.TabIndex = 219;
             this.VS_ReplaceColors.Text = "Overwrite Classic Colors with selected scheme.";
             // 
@@ -1188,7 +1202,7 @@
             this.VS_ColorsList.ItemHeight = 20;
             this.VS_ColorsList.Location = new System.Drawing.Point(102, 11);
             this.VS_ColorsList.Name = "VS_ColorsList";
-            this.VS_ColorsList.Size = new System.Drawing.Size(337, 26);
+            this.VS_ColorsList.Size = new System.Drawing.Size(343, 26);
             this.VS_ColorsList.TabIndex = 218;
             // 
             // label23
@@ -1223,8 +1237,10 @@
             this.groupBox24.Controls.Add(this.VS_Browse);
             this.groupBox24.Location = new System.Drawing.Point(11, 45);
             this.groupBox24.Name = "groupBox24";
-            this.groupBox24.Size = new System.Drawing.Size(450, 48);
+            this.groupBox24.Size = new System.Drawing.Size(456, 48);
             this.groupBox24.TabIndex = 231;
+            this.groupBox24.UseDecorationPattern = false;
+            this.groupBox24.UseSharpStyle = false;
             // 
             // button21
             // 
@@ -1236,7 +1252,7 @@
             this.button21.Image = null;
             this.button21.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Undo;
             this.button21.ImageGlyphEnabled = true;
-            this.button21.Location = new System.Drawing.Point(374, 14);
+            this.button21.Location = new System.Drawing.Point(380, 14);
             this.button21.Name = "button21";
             this.button21.Size = new System.Drawing.Size(29, 21);
             this.button21.TabIndex = 235;
@@ -1278,7 +1294,7 @@
             this.VS_textbox.SelectedText = "";
             this.VS_textbox.SelectionLength = 0;
             this.VS_textbox.SelectionStart = 0;
-            this.VS_textbox.Size = new System.Drawing.Size(267, 24);
+            this.VS_textbox.Size = new System.Drawing.Size(273, 24);
             this.VS_textbox.TabIndex = 233;
             this.VS_textbox.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.VS_textbox.UseSystemPasswordChar = false;
@@ -1295,7 +1311,7 @@
             this.VS_Browse.Image = null;
             this.VS_Browse.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Browse;
             this.VS_Browse.ImageGlyphEnabled = true;
-            this.VS_Browse.Location = new System.Drawing.Point(409, 14);
+            this.VS_Browse.Location = new System.Drawing.Point(415, 14);
             this.VS_Browse.Name = "VS_Browse";
             this.VS_Browse.Size = new System.Drawing.Size(30, 21);
             this.VS_Browse.TabIndex = 234;
@@ -1321,7 +1337,7 @@
             this.label15.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label15.Location = new System.Drawing.Point(42, 6);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(426, 30);
+            this.label15.Size = new System.Drawing.Size(432, 30);
             this.label15.TabIndex = 0;
             this.label15.Text = "Settings";
             this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1334,10 +1350,12 @@
             this.groupBox1.Controls.Add(this.label12);
             this.groupBox1.Controls.Add(this.pictureBox5);
             this.groupBox1.Controls.Add(this.toggle1);
-            this.groupBox1.Location = new System.Drawing.Point(6, 6);
+            this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(472, 48);
+            this.groupBox1.Size = new System.Drawing.Size(478, 48);
             this.groupBox1.TabIndex = 233;
+            this.groupBox1.UseDecorationPattern = false;
+            this.groupBox1.UseSharpStyle = false;
             // 
             // label12
             // 
@@ -1345,7 +1363,7 @@
             this.label12.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.Location = new System.Drawing.Point(41, 7);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(374, 34);
+            this.label12.Size = new System.Drawing.Size(380, 34);
             this.label12.TabIndex = 18;
             this.label12.Text = "Enable Visual Styles modifications";
             this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1366,7 +1384,7 @@
             this.toggle1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.toggle1.Checked = false;
             this.toggle1.DarkLight_Toggler = false;
-            this.toggle1.Location = new System.Drawing.Point(421, 14);
+            this.toggle1.Location = new System.Drawing.Point(427, 14);
             this.toggle1.Name = "toggle1";
             this.toggle1.Size = new System.Drawing.Size(40, 20);
             this.toggle1.TabIndex = 6;
@@ -1382,12 +1400,14 @@
             this.groupBox22.Controls.Add(this.theme_aero);
             this.groupBox22.Controls.Add(this.label21);
             this.groupBox22.Controls.Add(this.theme_aerolite);
-            this.groupBox22.Location = new System.Drawing.Point(6, 58);
+            this.groupBox22.Location = new System.Drawing.Point(3, 55);
             this.groupBox22.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox22.Name = "groupBox22";
             this.groupBox22.Padding = new System.Windows.Forms.Padding(1);
-            this.groupBox22.Size = new System.Drawing.Size(472, 150);
+            this.groupBox22.Size = new System.Drawing.Size(478, 150);
             this.groupBox22.TabIndex = 232;
+            this.groupBox22.UseDecorationPattern = false;
+            this.groupBox22.UseSharpStyle = false;
             // 
             // theme_custom_check
             // 
@@ -1397,7 +1417,7 @@
             this.theme_custom_check.ForeColor = System.Drawing.Color.White;
             this.theme_custom_check.Image = ((System.Drawing.Image)(resources.GetObject("theme_custom_check.Image")));
             this.theme_custom_check.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.theme_custom_check.Location = new System.Drawing.Point(290, 45);
+            this.theme_custom_check.Location = new System.Drawing.Point(293, 45);
             this.theme_custom_check.Name = "theme_custom_check";
             this.theme_custom_check.Size = new System.Drawing.Size(95, 95);
             this.theme_custom_check.TabIndex = 45;
@@ -1425,7 +1445,7 @@
             this.label21.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label21.Location = new System.Drawing.Point(42, 6);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(426, 30);
+            this.label21.Size = new System.Drawing.Size(432, 30);
             this.label21.TabIndex = 0;
             this.label21.Text = "Presets";
             this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1433,6 +1453,7 @@
             // Win81Colors
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.CanGeneratePalette = true;
             this.ClientSize = new System.Drawing.Size(1184, 696);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.tips_box);

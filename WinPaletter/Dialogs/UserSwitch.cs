@@ -268,7 +268,7 @@ namespace WinPaletter
         private void button4_Click(object sender, EventArgs e)
         {
             Close();
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.GitHub_Mgr);
+            Forms.MainForm.AddTab(Forms.GitHub_Mgr);
         }
 
         private async void button23_Click(object sender, EventArgs e)

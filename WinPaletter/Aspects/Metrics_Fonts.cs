@@ -973,5 +973,12 @@ namespace WinPaletter
             Program.Style.TextRenderingHint = toggle1.Checked ? TextRenderingHint.SingleBitPerPixelGridFit : TextRenderingHint.ClearTypeGridFit;
             windowMetrics1.Refresh();
         }
+
+        private void button31_Click(object sender, EventArgs e)
+        {
+            Forms.MainForm.AddTab(Forms.SettingsX);
+            Forms.SettingsX.TabControl1.SelectedIndex = 4;
+            Forms.SettingsX.TabControl2.SelectedIndex = 1;
+        }
     }
 }

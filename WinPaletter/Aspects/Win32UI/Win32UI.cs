@@ -331,6 +331,15 @@ namespace WinPaletter
             windowR2.ForeColor = win32ui.InactiveTitleText;
             windowR2.ColorBorder = win32ui.InactiveBorder;
             windowR2.ColorGradient = win32ui.EnableGradient;
+
+            if (win32ui.CTRL_ALT_DEL_Troubleshoot == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
+                RadioButton8.Checked = true;
+            else if (win32ui.CTRL_ALT_DEL_Troubleshoot == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Erase)
+                RadioButton7.Checked = true;
+            else if (win32ui.CTRL_ALT_DEL_Troubleshoot == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults)
+                RadioButton9.Checked = true;
+            else
+                RadioButton10.Checked = true;
         }
 
         public void LoadFromRetroPreview(RetroDesktopColors retroDesktopColors)
@@ -526,6 +535,11 @@ namespace WinPaletter
             Win32.Hilight = hilight_pick.BackColor;
             Win32.MenuHilight = menuhilight_pick.BackColor;
             Win32.Desktop = desktop_pick.BackColor;
+
+            if (RadioButton8.Checked) Win32.CTRL_ALT_DEL_Troubleshoot = Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
+            else if (RadioButton7.Checked) Win32.CTRL_ALT_DEL_Troubleshoot = Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Erase;
+            else if (RadioButton9.Checked) Win32.CTRL_ALT_DEL_Troubleshoot = Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults;
+            else Win32.CTRL_ALT_DEL_Troubleshoot = Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
         }
 
         private void ColorItem_Click(object sender, EventArgs e)
@@ -1211,6 +1225,13 @@ namespace WinPaletter
         private void ColorItem_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
             ApplyRetroPreview();
+        }
+
+        private void button31_Click(object sender, EventArgs e)
+        {
+            Forms.MainForm.AddTab(Forms.SettingsX);
+            Forms.SettingsX.TabControl1.SelectedIndex = 4;
+            Forms.SettingsX.TabControl2.SelectedIndex = 1;
         }
     }
 }

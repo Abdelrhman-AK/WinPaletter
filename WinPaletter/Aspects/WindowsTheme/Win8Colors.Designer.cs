@@ -256,11 +256,13 @@
             this.groupBox9.Controls.Add(this.start_1);
             this.groupBox9.Controls.Add(this.pictureBox4);
             this.groupBox9.Controls.Add(this.label9);
-            this.groupBox9.Location = new System.Drawing.Point(5, 6);
+            this.groupBox9.Location = new System.Drawing.Point(3, 3);
             this.groupBox9.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(474, 310);
+            this.groupBox9.Size = new System.Drawing.Size(478, 310);
             this.groupBox9.TabIndex = 45;
+            this.groupBox9.UseDecorationPattern = false;
+            this.groupBox9.UseSharpStyle = false;
             // 
             // start_20
             // 
@@ -270,7 +272,7 @@
             this.start_20.ForeColor = System.Drawing.Color.White;
             this.start_20.Image = ((System.Drawing.Image)(resources.GetObject("start_20.Image")));
             this.start_20.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.start_20.Location = new System.Drawing.Point(240, 240);
+            this.start_20.Location = new System.Drawing.Point(242, 240);
             this.start_20.Name = "start_20";
             this.start_20.Size = new System.Drawing.Size(60, 60);
             this.start_20.TabIndex = 21;
@@ -285,7 +287,7 @@
             this.start_19.ForeColor = System.Drawing.Color.White;
             this.start_19.Image = ((System.Drawing.Image)(resources.GetObject("start_19.Image")));
             this.start_19.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.start_19.Location = new System.Drawing.Point(174, 240);
+            this.start_19.Location = new System.Drawing.Point(176, 240);
             this.start_19.Name = "start_19";
             this.start_19.Size = new System.Drawing.Size(60, 60);
             this.start_19.TabIndex = 20;
@@ -300,7 +302,7 @@
             this.start_18.ForeColor = System.Drawing.Color.White;
             this.start_18.Image = ((System.Drawing.Image)(resources.GetObject("start_18.Image")));
             this.start_18.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.start_18.Location = new System.Drawing.Point(372, 174);
+            this.start_18.Location = new System.Drawing.Point(374, 174);
             this.start_18.Name = "start_18";
             this.start_18.Size = new System.Drawing.Size(60, 60);
             this.start_18.TabIndex = 19;
@@ -315,7 +317,7 @@
             this.start_17.ForeColor = System.Drawing.Color.White;
             this.start_17.Image = ((System.Drawing.Image)(resources.GetObject("start_17.Image")));
             this.start_17.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.start_17.Location = new System.Drawing.Point(306, 174);
+            this.start_17.Location = new System.Drawing.Point(308, 174);
             this.start_17.Name = "start_17";
             this.start_17.Size = new System.Drawing.Size(60, 60);
             this.start_17.TabIndex = 18;
@@ -330,7 +332,7 @@
             this.start_16.ForeColor = System.Drawing.Color.White;
             this.start_16.Image = ((System.Drawing.Image)(resources.GetObject("start_16.Image")));
             this.start_16.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.start_16.Location = new System.Drawing.Point(240, 174);
+            this.start_16.Location = new System.Drawing.Point(242, 174);
             this.start_16.Name = "start_16";
             this.start_16.Size = new System.Drawing.Size(60, 60);
             this.start_16.TabIndex = 17;
@@ -345,7 +347,7 @@
             this.start_15.ForeColor = System.Drawing.Color.White;
             this.start_15.Image = ((System.Drawing.Image)(resources.GetObject("start_15.Image")));
             this.start_15.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.start_15.Location = new System.Drawing.Point(174, 174);
+            this.start_15.Location = new System.Drawing.Point(176, 174);
             this.start_15.Name = "start_15";
             this.start_15.Size = new System.Drawing.Size(60, 60);
             this.start_15.TabIndex = 16;
@@ -360,7 +362,7 @@
             this.start_14.ForeColor = System.Drawing.Color.White;
             this.start_14.Image = ((System.Drawing.Image)(resources.GetObject("start_14.Image")));
             this.start_14.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.start_14.Location = new System.Drawing.Point(108, 174);
+            this.start_14.Location = new System.Drawing.Point(110, 174);
             this.start_14.Name = "start_14";
             this.start_14.Size = new System.Drawing.Size(60, 60);
             this.start_14.TabIndex = 15;
@@ -375,7 +377,7 @@
             this.start_13.ForeColor = System.Drawing.Color.White;
             this.start_13.Image = ((System.Drawing.Image)(resources.GetObject("start_13.Image")));
             this.start_13.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.start_13.Location = new System.Drawing.Point(42, 174);
+            this.start_13.Location = new System.Drawing.Point(44, 174);
             this.start_13.Name = "start_13";
             this.start_13.Size = new System.Drawing.Size(60, 60);
             this.start_13.TabIndex = 14;
@@ -390,7 +392,7 @@
             this.start_12.ForeColor = System.Drawing.Color.White;
             this.start_12.Image = ((System.Drawing.Image)(resources.GetObject("start_12.Image")));
             this.start_12.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.start_12.Location = new System.Drawing.Point(372, 108);
+            this.start_12.Location = new System.Drawing.Point(374, 108);
             this.start_12.Name = "start_12";
             this.start_12.Size = new System.Drawing.Size(60, 60);
             this.start_12.TabIndex = 13;
@@ -405,7 +407,7 @@
             this.start_11.ForeColor = System.Drawing.Color.White;
             this.start_11.Image = ((System.Drawing.Image)(resources.GetObject("start_11.Image")));
             this.start_11.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.start_11.Location = new System.Drawing.Point(306, 108);
+            this.start_11.Location = new System.Drawing.Point(308, 108);
             this.start_11.Name = "start_11";
             this.start_11.Size = new System.Drawing.Size(60, 60);
             this.start_11.TabIndex = 12;
@@ -420,7 +422,7 @@
             this.start_10.ForeColor = System.Drawing.Color.White;
             this.start_10.Image = ((System.Drawing.Image)(resources.GetObject("start_10.Image")));
             this.start_10.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.start_10.Location = new System.Drawing.Point(240, 108);
+            this.start_10.Location = new System.Drawing.Point(242, 108);
             this.start_10.Name = "start_10";
             this.start_10.Size = new System.Drawing.Size(60, 60);
             this.start_10.TabIndex = 11;
@@ -435,7 +437,7 @@
             this.start_9.ForeColor = System.Drawing.Color.White;
             this.start_9.Image = ((System.Drawing.Image)(resources.GetObject("start_9.Image")));
             this.start_9.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.start_9.Location = new System.Drawing.Point(174, 108);
+            this.start_9.Location = new System.Drawing.Point(176, 108);
             this.start_9.Name = "start_9";
             this.start_9.Size = new System.Drawing.Size(60, 60);
             this.start_9.TabIndex = 10;
@@ -450,7 +452,7 @@
             this.start_8.ForeColor = System.Drawing.Color.White;
             this.start_8.Image = ((System.Drawing.Image)(resources.GetObject("start_8.Image")));
             this.start_8.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.start_8.Location = new System.Drawing.Point(108, 108);
+            this.start_8.Location = new System.Drawing.Point(110, 108);
             this.start_8.Name = "start_8";
             this.start_8.Size = new System.Drawing.Size(60, 60);
             this.start_8.TabIndex = 9;
@@ -465,7 +467,7 @@
             this.start_7.ForeColor = System.Drawing.Color.White;
             this.start_7.Image = ((System.Drawing.Image)(resources.GetObject("start_7.Image")));
             this.start_7.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.start_7.Location = new System.Drawing.Point(42, 108);
+            this.start_7.Location = new System.Drawing.Point(44, 108);
             this.start_7.Name = "start_7";
             this.start_7.Size = new System.Drawing.Size(60, 60);
             this.start_7.TabIndex = 8;
@@ -480,7 +482,7 @@
             this.start_6.ForeColor = System.Drawing.Color.White;
             this.start_6.Image = ((System.Drawing.Image)(resources.GetObject("start_6.Image")));
             this.start_6.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.start_6.Location = new System.Drawing.Point(372, 42);
+            this.start_6.Location = new System.Drawing.Point(374, 42);
             this.start_6.Name = "start_6";
             this.start_6.Size = new System.Drawing.Size(60, 60);
             this.start_6.TabIndex = 7;
@@ -495,7 +497,7 @@
             this.start_5.ForeColor = System.Drawing.Color.White;
             this.start_5.Image = ((System.Drawing.Image)(resources.GetObject("start_5.Image")));
             this.start_5.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.start_5.Location = new System.Drawing.Point(306, 42);
+            this.start_5.Location = new System.Drawing.Point(308, 42);
             this.start_5.Name = "start_5";
             this.start_5.Size = new System.Drawing.Size(60, 60);
             this.start_5.TabIndex = 6;
@@ -510,7 +512,7 @@
             this.start_4.ForeColor = System.Drawing.Color.White;
             this.start_4.Image = ((System.Drawing.Image)(resources.GetObject("start_4.Image")));
             this.start_4.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.start_4.Location = new System.Drawing.Point(240, 42);
+            this.start_4.Location = new System.Drawing.Point(242, 42);
             this.start_4.Name = "start_4";
             this.start_4.Size = new System.Drawing.Size(60, 60);
             this.start_4.TabIndex = 5;
@@ -525,7 +527,7 @@
             this.start_3.ForeColor = System.Drawing.Color.White;
             this.start_3.Image = ((System.Drawing.Image)(resources.GetObject("start_3.Image")));
             this.start_3.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.start_3.Location = new System.Drawing.Point(174, 42);
+            this.start_3.Location = new System.Drawing.Point(176, 42);
             this.start_3.Name = "start_3";
             this.start_3.Size = new System.Drawing.Size(60, 60);
             this.start_3.TabIndex = 4;
@@ -540,7 +542,7 @@
             this.start_2.ForeColor = System.Drawing.Color.White;
             this.start_2.Image = ((System.Drawing.Image)(resources.GetObject("start_2.Image")));
             this.start_2.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.start_2.Location = new System.Drawing.Point(108, 42);
+            this.start_2.Location = new System.Drawing.Point(110, 42);
             this.start_2.Name = "start_2";
             this.start_2.Size = new System.Drawing.Size(60, 60);
             this.start_2.TabIndex = 3;
@@ -555,7 +557,7 @@
             this.start_1.ForeColor = System.Drawing.Color.White;
             this.start_1.Image = ((System.Drawing.Image)(resources.GetObject("start_1.Image")));
             this.start_1.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.start_1.Location = new System.Drawing.Point(42, 42);
+            this.start_1.Location = new System.Drawing.Point(44, 42);
             this.start_1.Name = "start_1";
             this.start_1.Size = new System.Drawing.Size(60, 60);
             this.start_1.TabIndex = 2;
@@ -581,7 +583,7 @@
             this.label9.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.Location = new System.Drawing.Point(39, 3);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(428, 30);
+            this.label9.Size = new System.Drawing.Size(432, 30);
             this.label9.TabIndex = 0;
             this.label9.Text = "Start screen background";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -618,11 +620,13 @@
             this.groupBox8.Controls.Add(this.radioImage20);
             this.groupBox8.Controls.Add(this.radioImage23);
             this.groupBox8.Controls.Add(this.radioImage17);
-            this.groupBox8.Location = new System.Drawing.Point(5, 322);
+            this.groupBox8.Location = new System.Drawing.Point(3, 319);
             this.groupBox8.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(474, 180);
+            this.groupBox8.Size = new System.Drawing.Size(478, 180);
             this.groupBox8.TabIndex = 44;
+            this.groupBox8.UseDecorationPattern = false;
+            this.groupBox8.UseSharpStyle = false;
             // 
             // radioImage25
             // 
@@ -632,7 +636,7 @@
             this.radioImage25.ForeColor = System.Drawing.Color.White;
             this.radioImage25.Image = null;
             this.radioImage25.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage25.Location = new System.Drawing.Point(324, 131);
+            this.radioImage25.Location = new System.Drawing.Point(326, 131);
             this.radioImage25.Name = "radioImage25";
             this.radioImage25.Size = new System.Drawing.Size(36, 36);
             this.radioImage25.TabIndex = 26;
@@ -658,7 +662,7 @@
             this.label4.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(39, 3);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(428, 30);
+            this.label4.Size = new System.Drawing.Size(432, 30);
             this.label4.TabIndex = 0;
             this.label4.Text = "Accent (affects start screen, metro apps and lock screen)";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -671,7 +675,7 @@
             this.radioImage10.ForeColor = System.Drawing.Color.White;
             this.radioImage10.Image = null;
             this.radioImage10.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage10.Location = new System.Drawing.Point(408, 47);
+            this.radioImage10.Location = new System.Drawing.Point(410, 47);
             this.radioImage10.Name = "radioImage10";
             this.radioImage10.Size = new System.Drawing.Size(36, 36);
             this.radioImage10.TabIndex = 13;
@@ -686,7 +690,7 @@
             this.radioImage1.ForeColor = System.Drawing.Color.White;
             this.radioImage1.Image = null;
             this.radioImage1.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage1.Location = new System.Drawing.Point(30, 47);
+            this.radioImage1.Location = new System.Drawing.Point(32, 47);
             this.radioImage1.Name = "radioImage1";
             this.radioImage1.Size = new System.Drawing.Size(36, 36);
             this.radioImage1.TabIndex = 2;
@@ -701,7 +705,7 @@
             this.radioImage5.ForeColor = System.Drawing.Color.White;
             this.radioImage5.Image = null;
             this.radioImage5.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage5.Location = new System.Drawing.Point(198, 47);
+            this.radioImage5.Location = new System.Drawing.Point(200, 47);
             this.radioImage5.Name = "radioImage5";
             this.radioImage5.Size = new System.Drawing.Size(36, 36);
             this.radioImage5.TabIndex = 6;
@@ -716,7 +720,7 @@
             this.radioImage7.ForeColor = System.Drawing.Color.White;
             this.radioImage7.Image = null;
             this.radioImage7.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage7.Location = new System.Drawing.Point(282, 47);
+            this.radioImage7.Location = new System.Drawing.Point(284, 47);
             this.radioImage7.Name = "radioImage7";
             this.radioImage7.Size = new System.Drawing.Size(36, 36);
             this.radioImage7.TabIndex = 10;
@@ -731,7 +735,7 @@
             this.radioImage12.ForeColor = System.Drawing.Color.White;
             this.radioImage12.Image = null;
             this.radioImage12.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage12.Location = new System.Drawing.Point(72, 89);
+            this.radioImage12.Location = new System.Drawing.Point(74, 89);
             this.radioImage12.Name = "radioImage12";
             this.radioImage12.Size = new System.Drawing.Size(36, 36);
             this.radioImage12.TabIndex = 11;
@@ -746,7 +750,7 @@
             this.radioImage11.ForeColor = System.Drawing.Color.White;
             this.radioImage11.Image = null;
             this.radioImage11.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage11.Location = new System.Drawing.Point(30, 89);
+            this.radioImage11.Location = new System.Drawing.Point(32, 89);
             this.radioImage11.Name = "radioImage11";
             this.radioImage11.Size = new System.Drawing.Size(36, 36);
             this.radioImage11.TabIndex = 12;
@@ -761,7 +765,7 @@
             this.radioImage19.ForeColor = System.Drawing.Color.White;
             this.radioImage19.Image = null;
             this.radioImage19.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage19.Location = new System.Drawing.Point(366, 89);
+            this.radioImage19.Location = new System.Drawing.Point(368, 89);
             this.radioImage19.Name = "radioImage19";
             this.radioImage19.Size = new System.Drawing.Size(36, 36);
             this.radioImage19.TabIndex = 25;
@@ -776,7 +780,7 @@
             this.radioImage6.ForeColor = System.Drawing.Color.White;
             this.radioImage6.Image = null;
             this.radioImage6.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage6.Location = new System.Drawing.Point(240, 47);
+            this.radioImage6.Location = new System.Drawing.Point(242, 47);
             this.radioImage6.Name = "radioImage6";
             this.radioImage6.Size = new System.Drawing.Size(36, 36);
             this.radioImage6.TabIndex = 5;
@@ -791,7 +795,7 @@
             this.radioImage15.ForeColor = System.Drawing.Color.White;
             this.radioImage15.Image = null;
             this.radioImage15.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage15.Location = new System.Drawing.Point(198, 89);
+            this.radioImage15.Location = new System.Drawing.Point(200, 89);
             this.radioImage15.Name = "radioImage15";
             this.radioImage15.Size = new System.Drawing.Size(36, 36);
             this.radioImage15.TabIndex = 17;
@@ -806,7 +810,7 @@
             this.radioImage4.ForeColor = System.Drawing.Color.White;
             this.radioImage4.Image = null;
             this.radioImage4.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage4.Location = new System.Drawing.Point(156, 47);
+            this.radioImage4.Location = new System.Drawing.Point(158, 47);
             this.radioImage4.Name = "radioImage4";
             this.radioImage4.Size = new System.Drawing.Size(36, 36);
             this.radioImage4.TabIndex = 7;
@@ -821,7 +825,7 @@
             this.radioImage21.ForeColor = System.Drawing.Color.White;
             this.radioImage21.Image = null;
             this.radioImage21.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage21.Location = new System.Drawing.Point(156, 131);
+            this.radioImage21.Location = new System.Drawing.Point(158, 131);
             this.radioImage21.Name = "radioImage21";
             this.radioImage21.Size = new System.Drawing.Size(36, 36);
             this.radioImage21.TabIndex = 23;
@@ -836,7 +840,7 @@
             this.radioImage3.ForeColor = System.Drawing.Color.White;
             this.radioImage3.Image = null;
             this.radioImage3.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage3.Location = new System.Drawing.Point(114, 47);
+            this.radioImage3.Location = new System.Drawing.Point(116, 47);
             this.radioImage3.Name = "radioImage3";
             this.radioImage3.Size = new System.Drawing.Size(36, 36);
             this.radioImage3.TabIndex = 4;
@@ -851,7 +855,7 @@
             this.radioImage13.ForeColor = System.Drawing.Color.White;
             this.radioImage13.Image = null;
             this.radioImage13.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage13.Location = new System.Drawing.Point(114, 89);
+            this.radioImage13.Location = new System.Drawing.Point(116, 89);
             this.radioImage13.Name = "radioImage13";
             this.radioImage13.Size = new System.Drawing.Size(36, 36);
             this.radioImage13.TabIndex = 19;
@@ -866,7 +870,7 @@
             this.radioImage9.ForeColor = System.Drawing.Color.White;
             this.radioImage9.Image = null;
             this.radioImage9.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage9.Location = new System.Drawing.Point(366, 47);
+            this.radioImage9.Location = new System.Drawing.Point(368, 47);
             this.radioImage9.Name = "radioImage9";
             this.radioImage9.Size = new System.Drawing.Size(36, 36);
             this.radioImage9.TabIndex = 8;
@@ -881,7 +885,7 @@
             this.radioImage22.ForeColor = System.Drawing.Color.White;
             this.radioImage22.Image = null;
             this.radioImage22.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage22.Location = new System.Drawing.Point(198, 131);
+            this.radioImage22.Location = new System.Drawing.Point(200, 131);
             this.radioImage22.Name = "radioImage22";
             this.radioImage22.Size = new System.Drawing.Size(36, 36);
             this.radioImage22.TabIndex = 22;
@@ -896,7 +900,7 @@
             this.radioImage18.ForeColor = System.Drawing.Color.White;
             this.radioImage18.Image = null;
             this.radioImage18.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage18.Location = new System.Drawing.Point(324, 89);
+            this.radioImage18.Location = new System.Drawing.Point(326, 89);
             this.radioImage18.Name = "radioImage18";
             this.radioImage18.Size = new System.Drawing.Size(36, 36);
             this.radioImage18.TabIndex = 14;
@@ -911,7 +915,7 @@
             this.radioImage14.ForeColor = System.Drawing.Color.White;
             this.radioImage14.Image = null;
             this.radioImage14.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage14.Location = new System.Drawing.Point(156, 89);
+            this.radioImage14.Location = new System.Drawing.Point(158, 89);
             this.radioImage14.Name = "radioImage14";
             this.radioImage14.Size = new System.Drawing.Size(36, 36);
             this.radioImage14.TabIndex = 18;
@@ -926,7 +930,7 @@
             this.radioImage24.ForeColor = System.Drawing.Color.White;
             this.radioImage24.Image = null;
             this.radioImage24.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage24.Location = new System.Drawing.Point(282, 131);
+            this.radioImage24.Location = new System.Drawing.Point(284, 131);
             this.radioImage24.Name = "radioImage24";
             this.radioImage24.Size = new System.Drawing.Size(36, 36);
             this.radioImage24.TabIndex = 20;
@@ -941,7 +945,7 @@
             this.radioImage8.ForeColor = System.Drawing.Color.White;
             this.radioImage8.Image = null;
             this.radioImage8.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage8.Location = new System.Drawing.Point(324, 47);
+            this.radioImage8.Location = new System.Drawing.Point(326, 47);
             this.radioImage8.Name = "radioImage8";
             this.radioImage8.Size = new System.Drawing.Size(36, 36);
             this.radioImage8.TabIndex = 9;
@@ -956,7 +960,7 @@
             this.radioImage2.ForeColor = System.Drawing.Color.White;
             this.radioImage2.Image = null;
             this.radioImage2.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage2.Location = new System.Drawing.Point(72, 47);
+            this.radioImage2.Location = new System.Drawing.Point(74, 47);
             this.radioImage2.Name = "radioImage2";
             this.radioImage2.Size = new System.Drawing.Size(36, 36);
             this.radioImage2.TabIndex = 3;
@@ -971,7 +975,7 @@
             this.radioImage16.ForeColor = System.Drawing.Color.White;
             this.radioImage16.Image = null;
             this.radioImage16.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage16.Location = new System.Drawing.Point(240, 89);
+            this.radioImage16.Location = new System.Drawing.Point(242, 89);
             this.radioImage16.Name = "radioImage16";
             this.radioImage16.Size = new System.Drawing.Size(36, 36);
             this.radioImage16.TabIndex = 16;
@@ -986,7 +990,7 @@
             this.radioImage20.ForeColor = System.Drawing.Color.White;
             this.radioImage20.Image = null;
             this.radioImage20.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage20.Location = new System.Drawing.Point(408, 89);
+            this.radioImage20.Location = new System.Drawing.Point(410, 89);
             this.radioImage20.Name = "radioImage20";
             this.radioImage20.Size = new System.Drawing.Size(36, 36);
             this.radioImage20.TabIndex = 24;
@@ -1001,7 +1005,7 @@
             this.radioImage23.ForeColor = System.Drawing.Color.White;
             this.radioImage23.Image = null;
             this.radioImage23.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage23.Location = new System.Drawing.Point(240, 131);
+            this.radioImage23.Location = new System.Drawing.Point(242, 131);
             this.radioImage23.Name = "radioImage23";
             this.radioImage23.Size = new System.Drawing.Size(36, 36);
             this.radioImage23.TabIndex = 21;
@@ -1016,7 +1020,7 @@
             this.radioImage17.ForeColor = System.Drawing.Color.White;
             this.radioImage17.Image = null;
             this.radioImage17.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage17.Location = new System.Drawing.Point(282, 89);
+            this.radioImage17.Location = new System.Drawing.Point(284, 89);
             this.radioImage17.Name = "radioImage17";
             this.radioImage17.Size = new System.Drawing.Size(36, 36);
             this.radioImage17.TabIndex = 15;
@@ -1031,7 +1035,7 @@
             this.theme_aerolite.ForeColor = System.Drawing.Color.White;
             this.theme_aerolite.Image = ((System.Drawing.Image)(resources.GetObject("theme_aerolite.Image")));
             this.theme_aerolite.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.theme_aerolite.Location = new System.Drawing.Point(189, 45);
+            this.theme_aerolite.Location = new System.Drawing.Point(192, 45);
             this.theme_aerolite.Name = "theme_aerolite";
             this.theme_aerolite.Size = new System.Drawing.Size(95, 95);
             this.theme_aerolite.TabIndex = 42;
@@ -1048,7 +1052,7 @@
             this.theme_aero.ForeColor = System.Drawing.Color.White;
             this.theme_aero.Image = ((System.Drawing.Image)(resources.GetObject("theme_aero.Image")));
             this.theme_aero.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.theme_aero.Location = new System.Drawing.Point(88, 45);
+            this.theme_aero.Location = new System.Drawing.Point(91, 45);
             this.theme_aero.Name = "theme_aero";
             this.theme_aero.Size = new System.Drawing.Size(95, 95);
             this.theme_aero.TabIndex = 41;
@@ -1066,11 +1070,13 @@
             this.GroupBox30.Controls.Add(this.Label27);
             this.GroupBox30.Controls.Add(this.ColorizationColorBalance_bar);
             this.GroupBox30.Controls.Add(this.ColorizationColor_pick);
-            this.GroupBox30.Location = new System.Drawing.Point(5, 6);
+            this.GroupBox30.Location = new System.Drawing.Point(3, 3);
             this.GroupBox30.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.GroupBox30.Name = "GroupBox30";
-            this.GroupBox30.Size = new System.Drawing.Size(474, 68);
+            this.GroupBox30.Size = new System.Drawing.Size(478, 68);
             this.GroupBox30.TabIndex = 41;
+            this.GroupBox30.UseDecorationPattern = false;
+            this.GroupBox30.UseSharpStyle = false;
             // 
             // PictureBox25
             // 
@@ -1091,7 +1097,7 @@
             this.Label27.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Label27.Location = new System.Drawing.Point(39, 3);
             this.Label27.Name = "Label27";
-            this.Label27.Size = new System.Drawing.Size(428, 30);
+            this.Label27.Size = new System.Drawing.Size(432, 30);
             this.Label27.TabIndex = 0;
             this.Label27.Text = "Windows color (titlebars && taskbar)";
             this.Label27.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1106,12 +1112,12 @@
             this.ColorizationColorBalance_bar.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ColorizationColorBalance_bar.Location = new System.Drawing.Point(4, 39);
             this.ColorizationColorBalance_bar.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.ColorizationColorBalance_bar.Maximum = 100;
-            this.ColorizationColorBalance_bar.Minimum = 0;
+            this.ColorizationColorBalance_bar.Maximum = 100F;
+            this.ColorizationColorBalance_bar.Minimum = 0F;
             this.ColorizationColorBalance_bar.Name = "ColorizationColorBalance_bar";
-            this.ColorizationColorBalance_bar.Size = new System.Drawing.Size(348, 24);
+            this.ColorizationColorBalance_bar.Size = new System.Drawing.Size(352, 24);
             this.ColorizationColorBalance_bar.TabIndex = 124;
-            this.ColorizationColorBalance_bar.Value = 0;
+            this.ColorizationColorBalance_bar.Value = 0F;
             this.ColorizationColorBalance_bar.ValueChanged += new System.EventHandler(this.ColorizationColorBalance_bar_ValueChanged);
             // 
             // ColorizationColor_pick
@@ -1121,7 +1127,7 @@
             this.ColorizationColor_pick.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(47)))), ((int)(((byte)(47)))), ((int)(((byte)(48)))));
             this.ColorizationColor_pick.DefaultBackColor = System.Drawing.Color.Black;
             this.ColorizationColor_pick.DontShowInfo = false;
-            this.ColorizationColor_pick.Location = new System.Drawing.Point(360, 39);
+            this.ColorizationColor_pick.Location = new System.Drawing.Point(364, 39);
             this.ColorizationColor_pick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.ColorizationColor_pick.Name = "ColorizationColor_pick";
             this.ColorizationColor_pick.Size = new System.Drawing.Size(110, 24);
@@ -1142,6 +1148,8 @@
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(534, 337);
             this.groupBox2.TabIndex = 123;
+            this.groupBox2.UseDecorationPattern = false;
+            this.groupBox2.UseSharpStyle = false;
             // 
             // Button1
             // 
@@ -1283,12 +1291,14 @@
             this.groupBox4.Controls.Add(this.groupBox24);
             this.groupBox4.Controls.Add(this.pictureBox6);
             this.groupBox4.Controls.Add(this.label15);
-            this.groupBox4.Location = new System.Drawing.Point(6, 212);
+            this.groupBox4.Location = new System.Drawing.Point(3, 209);
             this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Padding = new System.Windows.Forms.Padding(1);
-            this.groupBox4.Size = new System.Drawing.Size(472, 305);
+            this.groupBox4.Size = new System.Drawing.Size(478, 305);
             this.groupBox4.TabIndex = 237;
+            this.groupBox4.UseDecorationPattern = false;
+            this.groupBox4.UseSharpStyle = false;
             // 
             // alertBox3
             // 
@@ -1302,7 +1312,7 @@
             this.alertBox3.Image = null;
             this.alertBox3.Location = new System.Drawing.Point(11, 266);
             this.alertBox3.Name = "alertBox3";
-            this.alertBox3.Size = new System.Drawing.Size(450, 28);
+            this.alertBox3.Size = new System.Drawing.Size(456, 28);
             this.alertBox3.TabIndex = 234;
             this.alertBox3.TabStop = false;
             this.alertBox3.Text = "Preview is unsupported. Use \'Apply\' with visual styles enabled to test.";
@@ -1318,8 +1328,10 @@
             this.groupBox26.Controls.Add(this.pictureBox1);
             this.groupBox26.Location = new System.Drawing.Point(11, 181);
             this.groupBox26.Name = "groupBox26";
-            this.groupBox26.Size = new System.Drawing.Size(450, 76);
+            this.groupBox26.Size = new System.Drawing.Size(456, 76);
             this.groupBox26.TabIndex = 233;
+            this.groupBox26.UseDecorationPattern = false;
+            this.groupBox26.UseSharpStyle = false;
             // 
             // VS_ReplaceMetrics
             // 
@@ -1330,7 +1342,7 @@
             this.VS_ReplaceMetrics.ForeColor = System.Drawing.Color.White;
             this.VS_ReplaceMetrics.Location = new System.Drawing.Point(11, 44);
             this.VS_ReplaceMetrics.Name = "VS_ReplaceMetrics";
-            this.VS_ReplaceMetrics.Size = new System.Drawing.Size(428, 23);
+            this.VS_ReplaceMetrics.Size = new System.Drawing.Size(434, 23);
             this.VS_ReplaceMetrics.TabIndex = 219;
             this.VS_ReplaceMetrics.Text = "Overwrite Metrics and Fonts with selected size scheme.";
             // 
@@ -1346,7 +1358,7 @@
             this.VS_SizesList.ItemHeight = 20;
             this.VS_SizesList.Location = new System.Drawing.Point(102, 11);
             this.VS_SizesList.Name = "VS_SizesList";
-            this.VS_SizesList.Size = new System.Drawing.Size(337, 26);
+            this.VS_SizesList.Size = new System.Drawing.Size(343, 26);
             this.VS_SizesList.TabIndex = 218;
             // 
             // label1
@@ -1380,8 +1392,10 @@
             this.groupBox25.Controls.Add(this.pictureBox12);
             this.groupBox25.Location = new System.Drawing.Point(11, 99);
             this.groupBox25.Name = "groupBox25";
-            this.groupBox25.Size = new System.Drawing.Size(450, 76);
+            this.groupBox25.Size = new System.Drawing.Size(456, 76);
             this.groupBox25.TabIndex = 232;
+            this.groupBox25.UseDecorationPattern = false;
+            this.groupBox25.UseSharpStyle = false;
             // 
             // VS_ReplaceColors
             // 
@@ -1392,7 +1406,7 @@
             this.VS_ReplaceColors.ForeColor = System.Drawing.Color.White;
             this.VS_ReplaceColors.Location = new System.Drawing.Point(11, 44);
             this.VS_ReplaceColors.Name = "VS_ReplaceColors";
-            this.VS_ReplaceColors.Size = new System.Drawing.Size(428, 23);
+            this.VS_ReplaceColors.Size = new System.Drawing.Size(434, 23);
             this.VS_ReplaceColors.TabIndex = 219;
             this.VS_ReplaceColors.Text = "Overwrite Classic Colors with selected scheme.";
             // 
@@ -1408,7 +1422,7 @@
             this.VS_ColorsList.ItemHeight = 20;
             this.VS_ColorsList.Location = new System.Drawing.Point(102, 11);
             this.VS_ColorsList.Name = "VS_ColorsList";
-            this.VS_ColorsList.Size = new System.Drawing.Size(337, 26);
+            this.VS_ColorsList.Size = new System.Drawing.Size(343, 26);
             this.VS_ColorsList.TabIndex = 218;
             // 
             // label23
@@ -1443,8 +1457,10 @@
             this.groupBox24.Controls.Add(this.VS_Browse);
             this.groupBox24.Location = new System.Drawing.Point(11, 45);
             this.groupBox24.Name = "groupBox24";
-            this.groupBox24.Size = new System.Drawing.Size(450, 48);
+            this.groupBox24.Size = new System.Drawing.Size(456, 48);
             this.groupBox24.TabIndex = 231;
+            this.groupBox24.UseDecorationPattern = false;
+            this.groupBox24.UseSharpStyle = false;
             // 
             // button21
             // 
@@ -1456,7 +1472,7 @@
             this.button21.Image = null;
             this.button21.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Undo;
             this.button21.ImageGlyphEnabled = true;
-            this.button21.Location = new System.Drawing.Point(374, 14);
+            this.button21.Location = new System.Drawing.Point(380, 14);
             this.button21.Name = "button21";
             this.button21.Size = new System.Drawing.Size(29, 21);
             this.button21.TabIndex = 235;
@@ -1498,7 +1514,7 @@
             this.VS_textbox.SelectedText = "";
             this.VS_textbox.SelectionLength = 0;
             this.VS_textbox.SelectionStart = 0;
-            this.VS_textbox.Size = new System.Drawing.Size(267, 24);
+            this.VS_textbox.Size = new System.Drawing.Size(273, 24);
             this.VS_textbox.TabIndex = 233;
             this.VS_textbox.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.VS_textbox.UseSystemPasswordChar = false;
@@ -1515,7 +1531,7 @@
             this.VS_Browse.Image = null;
             this.VS_Browse.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Browse;
             this.VS_Browse.ImageGlyphEnabled = true;
-            this.VS_Browse.Location = new System.Drawing.Point(409, 14);
+            this.VS_Browse.Location = new System.Drawing.Point(415, 14);
             this.VS_Browse.Name = "VS_Browse";
             this.VS_Browse.Size = new System.Drawing.Size(30, 21);
             this.VS_Browse.TabIndex = 234;
@@ -1541,7 +1557,7 @@
             this.label15.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label15.Location = new System.Drawing.Point(42, 6);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(426, 30);
+            this.label15.Size = new System.Drawing.Size(432, 30);
             this.label15.TabIndex = 0;
             this.label15.Text = "Settings";
             this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1554,10 +1570,12 @@
             this.groupBox1.Controls.Add(this.label12);
             this.groupBox1.Controls.Add(this.pictureBox5);
             this.groupBox1.Controls.Add(this.toggle1);
-            this.groupBox1.Location = new System.Drawing.Point(6, 6);
+            this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(472, 48);
+            this.groupBox1.Size = new System.Drawing.Size(478, 48);
             this.groupBox1.TabIndex = 236;
+            this.groupBox1.UseDecorationPattern = false;
+            this.groupBox1.UseSharpStyle = false;
             // 
             // label12
             // 
@@ -1565,7 +1583,7 @@
             this.label12.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.Location = new System.Drawing.Point(41, 7);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(374, 34);
+            this.label12.Size = new System.Drawing.Size(380, 34);
             this.label12.TabIndex = 18;
             this.label12.Text = "Enable Visual Styles modifications";
             this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1586,7 +1604,7 @@
             this.toggle1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.toggle1.Checked = false;
             this.toggle1.DarkLight_Toggler = false;
-            this.toggle1.Location = new System.Drawing.Point(421, 14);
+            this.toggle1.Location = new System.Drawing.Point(427, 14);
             this.toggle1.Name = "toggle1";
             this.toggle1.Size = new System.Drawing.Size(40, 20);
             this.toggle1.TabIndex = 6;
@@ -1602,12 +1620,14 @@
             this.groupBox22.Controls.Add(this.theme_custom_check);
             this.groupBox22.Controls.Add(this.pictureBox7);
             this.groupBox22.Controls.Add(this.label21);
-            this.groupBox22.Location = new System.Drawing.Point(6, 58);
+            this.groupBox22.Location = new System.Drawing.Point(3, 55);
             this.groupBox22.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox22.Name = "groupBox22";
             this.groupBox22.Padding = new System.Windows.Forms.Padding(1);
-            this.groupBox22.Size = new System.Drawing.Size(472, 150);
+            this.groupBox22.Size = new System.Drawing.Size(478, 150);
             this.groupBox22.TabIndex = 235;
+            this.groupBox22.UseDecorationPattern = false;
+            this.groupBox22.UseSharpStyle = false;
             // 
             // theme_custom_check
             // 
@@ -1617,7 +1637,7 @@
             this.theme_custom_check.ForeColor = System.Drawing.Color.White;
             this.theme_custom_check.Image = ((System.Drawing.Image)(resources.GetObject("theme_custom_check.Image")));
             this.theme_custom_check.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.theme_custom_check.Location = new System.Drawing.Point(290, 45);
+            this.theme_custom_check.Location = new System.Drawing.Point(293, 45);
             this.theme_custom_check.Name = "theme_custom_check";
             this.theme_custom_check.Size = new System.Drawing.Size(95, 95);
             this.theme_custom_check.TabIndex = 45;
@@ -1645,7 +1665,7 @@
             this.label21.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label21.Location = new System.Drawing.Point(42, 6);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(426, 30);
+            this.label21.Size = new System.Drawing.Size(432, 30);
             this.label21.TabIndex = 0;
             this.label21.Text = "Presets";
             this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -1653,6 +1673,7 @@
             // Win8Colors
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.CanGeneratePalette = true;
             this.ClientSize = new System.Drawing.Size(1184, 686);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.tips_box);

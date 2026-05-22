@@ -152,10 +152,6 @@ namespace WinPaletter
             radioButton28.Checked = Sets.ThemeApplyingBehavior.WindowsColors_HKU_DEFAULT_Prefs != Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
             RadioButton5.Checked = Sets.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
             RadioButton6.Checked = !(Sets.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite);
-            RadioButton8.Checked = Sets.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
-            RadioButton10.Checked = Sets.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
-            RadioButton9.Checked = Sets.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults;
-            RadioButton7.Checked = Sets.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Erase;
             toggle10.Checked = Sets.ThemeApplyingBehavior.UPM_HKU_DEFAULT;
             RadioButton12.Checked = Sets.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
             RadioButton11.Checked = !(Sets.ThemeApplyingBehavior.Metrics_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite);
@@ -501,18 +497,6 @@ namespace WinPaletter
             else
                 Sets.ThemeApplyingBehavior.ClassicColors_HKU_DEFAULT_Prefs = Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
 
-            if (RadioButton8.Checked)
-                Sets.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite;
-
-            if (RadioButton10.Checked)
-                Sets.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.DontChange;
-
-            if (RadioButton9.Checked)
-                Sets.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.RestoreDefaults;
-
-            if (RadioButton7.Checked)
-                Sets.ThemeApplyingBehavior.ClassicColors_HKLM_Prefs = Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Erase;
-
             Sets.ThemeApplyingBehavior.UPM_HKU_DEFAULT = toggle10.Checked;
 
             if (RadioButton12.Checked)
@@ -846,7 +830,7 @@ namespace WinPaletter
 
         private void Button6_Click(object sender, EventArgs e)
         {
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Uninstall);
+            Forms.MainForm.AddTab(Forms.Uninstall);
         }
 
         /// <summary>
@@ -918,7 +902,7 @@ namespace WinPaletter
 
         private void Button11_Click(object sender, EventArgs e)
         {
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.Lang_Editor);
+            Forms.MainForm.AddTab(Forms.Lang_Editor);
         }
 
         private void Button14_Click(object sender, EventArgs e)
@@ -1039,12 +1023,12 @@ namespace WinPaletter
 
         private void pin_button_Click(object sender, EventArgs e)
         {
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(this);
+            Forms.MainForm.AddTab(this);
         }
 
         private void button24_Click(object sender, EventArgs e)
         {
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(Forms.BackupThemes_List);
+            Forms.MainForm.AddTab(Forms.BackupThemes_List);
         }
 
         /// <summary>

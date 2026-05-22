@@ -1349,7 +1349,7 @@ namespace WinPaletter
 
         private void pin_button_Click(object sender, EventArgs e)
         {
-            Forms.MainForm.tabsContainer1.AddFormIntoTab(this);
+            Forms.MainForm.AddTab(this);
         }
 
         private void Lang_JSON_GUI_ParentChanged(object sender, EventArgs e)

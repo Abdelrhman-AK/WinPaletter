@@ -186,6 +186,22 @@ namespace WinPaletter
             this.Label17 = new System.Windows.Forms.Label();
             this.Label28 = new System.Windows.Forms.Label();
             this.Scrollbar_pick = new WinPaletter.UI.Controllers.ColorItem();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.groupBox69 = new WinPaletter.UI.WP.GroupBox();
+            this.alertBox25 = new WinPaletter.UI.WP.AlertBox();
+            this.button31 = new WinPaletter.UI.WP.Button();
+            this.label10 = new System.Windows.Forms.Label();
+            this.pictureBox82 = new System.Windows.Forms.PictureBox();
+            this.groupBox28 = new WinPaletter.UI.WP.GroupBox();
+            this.alertBox1 = new WinPaletter.UI.WP.AlertBox();
+            this.alertBox15 = new WinPaletter.UI.WP.AlertBox();
+            this.label51 = new System.Windows.Forms.Label();
+            this.Panel5 = new System.Windows.Forms.Panel();
+            this.RadioButton10 = new WinPaletter.UI.WP.RadioButton();
+            this.RadioButton9 = new WinPaletter.UI.WP.RadioButton();
+            this.RadioButton7 = new WinPaletter.UI.WP.RadioButton();
+            this.RadioButton8 = new WinPaletter.UI.WP.RadioButton();
+            this.PictureBox51 = new System.Windows.Forms.PictureBox();
             this.preview = new WinPaletter.UI.WP.GroupBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.retroDesktopColors1 = new WinPaletter.Templates.RetroDesktopColors();
@@ -256,6 +272,12 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox32)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox17)).BeginInit();
+            this.tabPage6.SuspendLayout();
+            this.groupBox69.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox82)).BeginInit();
+            this.groupBox28.SuspendLayout();
+            this.Panel5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox51)).BeginInit();
             this.preview.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -284,6 +306,7 @@ namespace WinPaletter
             this.ImageList1.Images.SetKeyName(2, "Selection");
             this.ImageList1.Images.SetKeyName(3, "Window");
             this.ImageList1.Images.SetKeyName(4, "Obsolete");
+            this.ImageList1.Images.SetKeyName(5, "Toubleshoot");
             // 
             // PictureBox16
             // 
@@ -382,6 +405,7 @@ namespace WinPaletter
             this.TabControl1.Controls.Add(this.TabPage3);
             this.TabControl1.Controls.Add(this.TabPage4);
             this.TabControl1.Controls.Add(this.TabPage5);
+            this.TabControl1.Controls.Add(this.tabPage6);
             this.TabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
             this.TabControl1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.TabControl1.ImageList = this.ImageList1;
@@ -2261,6 +2285,224 @@ namespace WinPaletter
             this.Scrollbar_pick.Size = new System.Drawing.Size(89, 22);
             this.Scrollbar_pick.TabIndex = 2;
             // 
+            // tabPage6
+            // 
+            this.tabPage6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.tabPage6.Controls.Add(this.groupBox69);
+            this.tabPage6.Controls.Add(this.groupBox28);
+            this.tabPage6.Location = new System.Drawing.Point(164, 4);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(357, 480);
+            this.tabPage6.TabIndex = 5;
+            this.tabPage6.Text = "Troubleshoots";
+            // 
+            // groupBox69
+            // 
+            this.groupBox69.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox69.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox69.Controls.Add(this.alertBox25);
+            this.groupBox69.Controls.Add(this.button31);
+            this.groupBox69.Controls.Add(this.label10);
+            this.groupBox69.Controls.Add(this.pictureBox82);
+            this.groupBox69.Location = new System.Drawing.Point(6, 308);
+            this.groupBox69.Name = "groupBox69";
+            this.groupBox69.Size = new System.Drawing.Size(345, 120);
+            this.groupBox69.TabIndex = 56;
+            this.groupBox69.UseDecorationPattern = false;
+            this.groupBox69.UseSharpStyle = false;
+            // 
+            // alertBox25
+            // 
+            this.alertBox25.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
+            this.alertBox25.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.alertBox25.BackColor = System.Drawing.Color.Transparent;
+            this.alertBox25.CenterText = false;
+            this.alertBox25.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.alertBox25.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.alertBox25.Image = null;
+            this.alertBox25.Location = new System.Drawing.Point(11, 46);
+            this.alertBox25.Name = "alertBox25";
+            this.alertBox25.Size = new System.Drawing.Size(324, 64);
+            this.alertBox25.TabIndex = 60;
+            this.alertBox25.TabStop = false;
+            this.alertBox25.Text = resources.GetString("alertBox25.Text");
+            // 
+            // button31
+            // 
+            this.button31.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button31.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.button31.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
+            this.button31.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button31.ForeColor = System.Drawing.Color.White;
+            this.button31.Image = null;
+            this.button31.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button31.ImageGlyph")));
+            this.button31.ImageGlyphEnabled = true;
+            this.button31.Location = new System.Drawing.Point(247, 10);
+            this.button31.Name = "button31";
+            this.button31.Size = new System.Drawing.Size(87, 28);
+            this.button31.TabIndex = 59;
+            this.button31.Text = "Open";
+            this.button31.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button31.UseVisualStyleBackColor = false;
+            this.button31.Click += new System.EventHandler(this.button31_Click);
+            // 
+            // label10
+            // 
+            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label10.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(41, 7);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(259, 34);
+            this.label10.TabIndex = 18;
+            this.label10.Text = "Use Vault feature in WinPaletter Settings";
+            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // pictureBox82
+            // 
+            this.pictureBox82.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox82.Image")));
+            this.pictureBox82.Location = new System.Drawing.Point(11, 12);
+            this.pictureBox82.Name = "pictureBox82";
+            this.pictureBox82.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox82.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox82.TabIndex = 23;
+            this.pictureBox82.TabStop = false;
+            // 
+            // groupBox28
+            // 
+            this.groupBox28.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox28.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox28.Controls.Add(this.alertBox1);
+            this.groupBox28.Controls.Add(this.alertBox15);
+            this.groupBox28.Controls.Add(this.label51);
+            this.groupBox28.Controls.Add(this.Panel5);
+            this.groupBox28.Controls.Add(this.PictureBox51);
+            this.groupBox28.Location = new System.Drawing.Point(6, 6);
+            this.groupBox28.Name = "groupBox28";
+            this.groupBox28.Size = new System.Drawing.Size(345, 296);
+            this.groupBox28.TabIndex = 54;
+            this.groupBox28.UseDecorationPattern = false;
+            this.groupBox28.UseSharpStyle = false;
+            // 
+            // alertBox1
+            // 
+            this.alertBox1.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
+            this.alertBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.alertBox1.BackColor = System.Drawing.Color.Transparent;
+            this.alertBox1.CenterText = false;
+            this.alertBox1.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.alertBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.alertBox1.Image = null;
+            this.alertBox1.Location = new System.Drawing.Point(11, 175);
+            this.alertBox1.Name = "alertBox1";
+            this.alertBox1.Size = new System.Drawing.Size(324, 110);
+            this.alertBox1.TabIndex = 51;
+            this.alertBox1.TabStop = false;
+            this.alertBox1.Text = resources.GetString("alertBox1.Text");
+            // 
+            // alertBox15
+            // 
+            this.alertBox15.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Notice;
+            this.alertBox15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.alertBox15.AutoSize = true;
+            this.alertBox15.BackColor = System.Drawing.Color.Transparent;
+            this.alertBox15.CenterText = true;
+            this.alertBox15.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.alertBox15.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.alertBox15.Image = null;
+            this.alertBox15.Location = new System.Drawing.Point(121, 13);
+            this.alertBox15.Name = "alertBox15";
+            this.alertBox15.Size = new System.Drawing.Size(213, 22);
+            this.alertBox15.TabIndex = 50;
+            this.alertBox15.TabStop = false;
+            this.alertBox15.Text = "For advanced users & affects all users";
+            // 
+            // label51
+            // 
+            this.label51.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label51.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label51.Location = new System.Drawing.Point(41, 7);
+            this.label51.Name = "label51";
+            this.label51.Size = new System.Drawing.Size(293, 34);
+            this.label51.TabIndex = 18;
+            this.label51.Text = "Colors reset on lock screen troubleshooter";
+            this.label51.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // Panel5
+            // 
+            this.Panel5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Panel5.Controls.Add(this.RadioButton10);
+            this.Panel5.Controls.Add(this.RadioButton9);
+            this.Panel5.Controls.Add(this.RadioButton7);
+            this.Panel5.Controls.Add(this.RadioButton8);
+            this.Panel5.Location = new System.Drawing.Point(11, 44);
+            this.Panel5.Name = "Panel5";
+            this.Panel5.Size = new System.Drawing.Size(323, 122);
+            this.Panel5.TabIndex = 36;
+            // 
+            // RadioButton10
+            // 
+            this.RadioButton10.Checked = false;
+            this.RadioButton10.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.RadioButton10.ForeColor = System.Drawing.Color.White;
+            this.RadioButton10.Location = new System.Drawing.Point(19, 93);
+            this.RadioButton10.Name = "RadioButton10";
+            this.RadioButton10.Size = new System.Drawing.Size(301, 24);
+            this.RadioButton10.TabIndex = 3;
+            this.RadioButton10.Text = "Do nothing";
+            // 
+            // RadioButton9
+            // 
+            this.RadioButton9.Checked = false;
+            this.RadioButton9.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.RadioButton9.ForeColor = System.Drawing.Color.White;
+            this.RadioButton9.Location = new System.Drawing.Point(19, 63);
+            this.RadioButton9.Name = "RadioButton9";
+            this.RadioButton9.Size = new System.Drawing.Size(301, 24);
+            this.RadioButton9.TabIndex = 2;
+            this.RadioButton9.Text = "Restore defaults";
+            // 
+            // RadioButton7
+            // 
+            this.RadioButton7.Checked = false;
+            this.RadioButton7.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.RadioButton7.ForeColor = System.Drawing.Color.White;
+            this.RadioButton7.Location = new System.Drawing.Point(19, 33);
+            this.RadioButton7.Name = "RadioButton7";
+            this.RadioButton7.Size = new System.Drawing.Size(301, 24);
+            this.RadioButton7.TabIndex = 1;
+            this.RadioButton7.Text = "Erase (Remove)";
+            // 
+            // RadioButton8
+            // 
+            this.RadioButton8.Checked = false;
+            this.RadioButton8.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.RadioButton8.ForeColor = System.Drawing.Color.White;
+            this.RadioButton8.Location = new System.Drawing.Point(19, 3);
+            this.RadioButton8.Name = "RadioButton8";
+            this.RadioButton8.Size = new System.Drawing.Size(301, 24);
+            this.RadioButton8.TabIndex = 0;
+            this.RadioButton8.Text = "Overwrite";
+            // 
+            // PictureBox51
+            // 
+            this.PictureBox51.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox51.Image")));
+            this.PictureBox51.Location = new System.Drawing.Point(11, 12);
+            this.PictureBox51.Name = "PictureBox51";
+            this.PictureBox51.Size = new System.Drawing.Size(24, 24);
+            this.PictureBox51.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.PictureBox51.TabIndex = 27;
+            this.PictureBox51.TabStop = false;
+            // 
             // preview
             // 
             this.preview.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -2603,6 +2845,13 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox32)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox17)).EndInit();
+            this.tabPage6.ResumeLayout(false);
+            this.groupBox69.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox82)).EndInit();
+            this.groupBox28.ResumeLayout(false);
+            this.groupBox28.PerformLayout();
+            this.Panel5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBox51)).EndInit();
             this.preview.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -2783,5 +3032,21 @@ namespace WinPaletter
         private UI.WP.GroupBox groupBox25;
         private UI.WP.GroupBox groupBox27;
         internal UI.WP.SeparatorH separatorH1;
+        private TabPage tabPage6;
+        private UI.WP.GroupBox groupBox28;
+        internal UI.WP.AlertBox alertBox15;
+        internal Label label51;
+        internal Panel Panel5;
+        internal UI.WP.RadioButton RadioButton10;
+        internal UI.WP.RadioButton RadioButton9;
+        internal UI.WP.RadioButton RadioButton7;
+        internal UI.WP.RadioButton RadioButton8;
+        internal PictureBox PictureBox51;
+        internal UI.WP.AlertBox alertBox1;
+        private UI.WP.GroupBox groupBox69;
+        internal Label label10;
+        internal PictureBox pictureBox82;
+        internal UI.WP.Button button31;
+        internal UI.WP.AlertBox alertBox25;
     }
 }
