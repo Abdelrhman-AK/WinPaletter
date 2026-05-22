@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
+using static WinPaletter.NativeMethods.UxTheme;
 
 namespace WinPaletter.UI.WP
 {
@@ -54,7 +55,10 @@ namespace WinPaletter.UI.WP
 
             CheckForIllegalCrossThreadCalls = false;
 
-            if (FormBorderStyle == FormBorderStyle.None && _borders && DWMAPI.IsCompositionEnabled()) Opacity = 0;
+            if (FormBorderStyle == FormBorderStyle.None && _borders && DWMAPI.IsCompositionEnabled() && !(OS.WVista || OS.W7 || OS.W8 || OS.W81))
+            {
+                Opacity = 0;
+            }
 
             if (_backdrop)
             {
@@ -72,7 +76,7 @@ namespace WinPaletter.UI.WP
             base.OnShown(e);
             if (DesignMode) return;
 
-            if (FormBorderStyle == FormBorderStyle.None && _borders && DWMAPI.IsCompositionEnabled())
+            if (FormBorderStyle == FormBorderStyle.None && _borders && DWMAPI.IsCompositionEnabled() && !(OS.WVista || OS.W7 || OS.W8 || OS.W81))
             {
                 Transition.With(this, nameof(Opacity), 1.0d).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
             }
@@ -106,7 +110,7 @@ namespace WinPaletter.UI.WP
 
         public new void Close()
         {
-            if (!DesignMode && FormBorderStyle == FormBorderStyle.None && _borders && DWMAPI.IsCompositionEnabled())
+            if (!DesignMode && FormBorderStyle == FormBorderStyle.None && _borders && DWMAPI.IsCompositionEnabled() && !(OS.WVista || OS.W7 || OS.W8 || OS.W81))
             {
                 Deactivate(true);
             }
@@ -197,6 +201,15 @@ namespace WinPaletter.UI.WP
                     cp.ClassStyle |= DWMAPI.CS_DROPSHADOW;
                     cp.ExStyle |= 33554432; // WS_EX_LAYERED
                 }
+
+                // On Win7 (Vista/W8/W81 too), WS_EX_LAYERED on a borderless DWM-bordered window
+                // causes DWM to composite through the layered alpha channel, producing a black frame.
+                // Strip it from CreateParams; SetOpacityLayered adds it dynamically later if needed.
+                if ((OS.WVista || OS.W7 || OS.W8 || OS.W81) && _borders && DWMAPI.IsCompositionEnabled())
+                {
+                    cp.ExStyle &= ~33554432; // strip WS_EX_LAYERED
+                }
+
                 return cp;
             }
         }
@@ -657,7 +670,22 @@ namespace WinPaletter.UI.WP
 
         private static void ApplyBlur(IntPtr hwnd, bool enable, byte opacity)
         {
-            if (Environment.OSVersion.Version.Build < 10240) return; // Windows 10+
+            if (OS.WVista || OS.W7 || OS.W8 || OS.W81)
+            {
+                // DwmEnableBlurBehindWindow is the only blur API on Vista/7/8/8.1 opacity is not supported by this API; the blur is always full
+                DWMAPI.DWM_BLURBEHIND bb = new()
+                {
+                    dwFlags = DWMAPI.DWM_BB_ENABLE,
+                    fEnable = enable,
+                    hRgnBlur = IntPtr.Zero,
+                    fTransitionOnMaximized = false
+                };
+                DWMAPI.DwmEnableBlurBehindWindow(hwnd, bb);
+                return;
+            }
+
+            // Windows 10+ acrylic blur via SetWindowCompositionAttribute
+            if (Environment.OSVersion.Version.Build < 10240) return;
 
             var accent = new User32.AccentPolicy
             {
@@ -686,16 +714,46 @@ namespace WinPaletter.UI.WP
             {
                 int val = 2;
                 DWMAPI.DwmSetWindowAttribute(Handle, Program.Style.RoundedCorners ? 2 : 1, ref val, 4);
+                int borderWidth = GetDWMBorderWidth();
 
                 DWMAPI.MARGINS margins = new()
                 {
-                    topHeight = 1,
-                    bottomHeight = 1,
-                    leftWidth = 1,
-                    rightWidth = 1,
+                    topHeight = borderWidth,
+                    bottomHeight = borderWidth,
+                    leftWidth = borderWidth,
+                    rightWidth = borderWidth,
                 };
                 DWMAPI.DwmExtendFrameIntoClientArea(Handle, ref margins);
             }
+        }
+
+        private int GetDWMBorderWidth()
+        {
+            if (OS.WXP)  return Math.Max(1, User32.GetSystemMetrics(5)); // SM_CXBORDER = 5
+
+            if (OS.WVista || OS.W7 || OS.W8 || OS.W81)
+            {
+                // SM_CXSIZEFRAME (32) = resize border, SM_CXPADDEDBORDER (92) = DWM padding
+                // Together they form the full invisible DWM border on Aero glass windows
+                int sizeFrame = User32.GetSystemMetrics(32); // SM_CXSIZEFRAME
+                int paddedBorder = User32.GetSystemMetrics(92); // SM_CXPADDEDBORDER
+                return Math.Max(1, sizeFrame + paddedBorder);
+            }
+
+            // DWMWA_EXTENDED_FRAME_BOUNDS = 9
+            // Returns the visible frame rect excluding the invisible resize border
+            int result = DWMAPI.DwmGetWindowAttribute(Handle, 9, out RECT extendedFrame, Marshal.SizeOf<RECT>());
+
+            if (result != 0) // S_OK
+                return 1;
+
+            User32.GetWindowRect(Handle, out RECT windowRect);
+
+            // The difference on any edge is the invisible DWM border thickness
+            int borderWidth = extendedFrame.left - windowRect.left;
+
+            // Clamp: should always be >= 1 on a bordered window, but never negative
+            return Math.Max(1, borderWidth);
         }
 
         private static void SetOpacityLayered(IntPtr handle, double alpha)

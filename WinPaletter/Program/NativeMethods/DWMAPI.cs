@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using static WinPaletter.NativeMethods.UxTheme;
 
 namespace WinPaletter.NativeMethods
 {
@@ -101,6 +102,20 @@ namespace WinPaletter.NativeMethods
         /// <returns>Returns S_OK if successful; otherwise, an HRESULT error code.</returns>
         [DllImport("dwmapi.dll")]
         public static extern int DwmIsCompositionEnabled(out bool isEnabled);
+
+        /// <summary>
+        /// Retrieves a Desktop Window Manager (DWM) attribute for the specified window.
+        /// </summary>
+        /// <remarks>Requires DWM (dwmapi.dll) and is available on Windows Vista and later when Desktop
+        /// Window Manager is present. Ensure cbAttribute matches the expected size for the requested attribute;
+        /// otherwise the call may fail.</remarks>
+        /// <param name="hwnd">Handle of the window to query.</param>
+        /// <param name="dwAttribute">DWM attribute constant (DWMWA_*) that specifies which attribute to retrieve.</param>
+        /// <param name="pvAttribute">Out parameter that receives the attribute value as a RECT; the actual data depends on dwAttribute.</param>
+        /// <param name="cbAttribute">Size, in bytes, of the structure pointed to by pvAttribute; typically Marshal.SizeOf(typeof(RECT)).</param>
+        /// <returns>HRESULT code: S_OK (0) on success; otherwise an error code indicating failure.</returns>
+        [DllImport("dwmapi.dll")]
+        public static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out RECT pvAttribute, int cbAttribute);
 
         /// <summary>
         /// Extends the window frame into the client area.

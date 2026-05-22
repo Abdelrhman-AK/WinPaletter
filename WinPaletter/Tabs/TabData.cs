@@ -181,6 +181,30 @@ namespace WinPaletter.Tabs
         }
 
         /// <summary>
+        /// Left position of the tab. Animatable for drag-reorder transitions.
+        /// </summary>
+        public int TabLeft
+        {
+            get => Rectangle.Left;
+            set
+            {
+                if (_rectangle.Left != value)
+                {
+                    _rectangle = new Rectangle(value, _rectangle.Y, _rectangle.Width, _rectangle.Height);
+
+                    if (tabsContainer.InvokeRequired)
+                    {
+                        tabsContainer.BeginInvoke(() => tabsContainer.Invalidate());
+                    }
+                    else
+                    {
+                        tabsContainer.Invalidate();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Flag indicating whether the tab is being removed.
         /// </summary>
         public bool IsRemoving

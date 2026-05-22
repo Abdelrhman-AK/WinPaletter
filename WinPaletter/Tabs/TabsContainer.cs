@@ -59,7 +59,11 @@ namespace WinPaletter.Tabs
         private bool isMovingToFirst = false;
 
         private Point tabOldPoint = new();
+        private Point tabNewPoint;
         private Point locationOldPoint = new();
+
+        // Client X position of the dragged tab's left edge, updated during MouseMove
+        private int _dragX = 0;
 
         /// <summary>
         /// Padding of tabs from top of the control
@@ -448,6 +452,7 @@ namespace WinPaletter.Tabs
             isMovingToLast = false;
             isMovingToFirst = false;
             isMovingTab = false;
+            _dragX = 0;
             Invalidate();
         }
 
@@ -595,7 +600,9 @@ namespace WinPaletter.Tabs
                             if (IsMouseOverTab(tabData) && !IsMouseOverCloseButton(tabData, e))
                             {
                                 moveFrom = GetIndex(tabData);
-                                tabOldPoint = MousePosition - (Size)tabData.Rectangle.Location;
+                                moveTo = moveFrom;
+                                _dragX = tabData.Rectangle.Left;
+                                tabOldPoint = new Point(PointToClient(MousePosition).X - tabData.Rectangle.Left, PointToClient(MousePosition).Y - tabData.Rectangle.Top);
 
                                 break;
                             }
@@ -682,32 +689,146 @@ namespace WinPaletter.Tabs
             }
         }
 
-        private Point tabNewPoint;
-
         private void HandleTabMove(MouseEventArgs e)
         {
-            TabData tabData = GetTabAtMousePosition(e);
+            if (TabDataList == null || moveFrom < 0 || moveFrom >= TabDataList.Count) return;
 
-            if (tabData != null)
+            TabData dragged = TabDataList[moveFrom];
+            if (dragged == null || dragged.IsRemoving) return;
+
+            isMovingTab = true;
+
+            // _dragX: client-space left edge of the dragged tab
+            _dragX = PointToClient(MousePosition).X - tabOldPoint.X;
+
+            int draggedCenter = _dragX + dragged.Rectangle.Width / 2;
+
+            // Resolve which logical slot the dragged tab currently occupies based on its center position
+            int newMoveTo = moveFrom;
+            for (int i = 0; i < TabDataList.Count; i++)
             {
-                SetTabMoveProperties(GetIndex(tabData), true, false, false);
+                if (i == moveFrom) continue;
+                TabData other = TabDataList[i];
+                if (other == null || other.IsRemoving) continue;
+
+                // Use the tab's current logical slot X (not animated TabLeft) for midpoint comparison
+                int logicalX = i * tabWidth + paddingBetweenTabs;
+                int otherMid = logicalX + other.Rectangle.Width / 2;
+
+                if (i < moveFrom && draggedCenter < otherMid)
+                {
+                    newMoveTo = i;
+                    break;
+                }
+                else if (i > moveFrom && draggedCenter > otherMid)
+                {
+                    newMoveTo = i;
+                }
+            }
+
+            // Detect edge cases for move-to-first / move-to-last
+            int firstNonDraggedLogicalX = 0 * tabWidth + paddingBetweenTabs;
+            int lastNonDraggedLogicalRight = (TabDataList.Count - 1) * tabWidth + paddingBetweenTabs + dragged.Rectangle.Width;
+
+            if (_dragX + dragged.Rectangle.Width / 2 < firstNonDraggedLogicalX)
+            {
+                isMovingToFirst = true;
+                isMovingToLast = false;
+                newMoveTo = 0;
+            }
+            else if (_dragX + dragged.Rectangle.Width / 2 > lastNonDraggedLogicalRight)
+            {
+                isMovingToLast = true;
+                isMovingToFirst = false;
+                newMoveTo = TabDataList.Count - 1;
             }
             else
             {
-                if (e.X > TabDataList.Last().Rectangle.Right)
-                {
-                    SetTabMoveProperties(-1, true, false, true);
-                }
-                else if (e.X < TabDataList.First().Rectangle.Left)
-                {
-                    SetTabMoveProperties(-1, true, true, false);
-                }
+                isMovingToFirst = false;
+                isMovingToLast = false;
             }
 
-            if (isMovingTab)
+            // When the target slot changes, animate non-dragged tabs to their new visual positions
+            if (newMoveTo != moveTo)
             {
-                tabNewPoint = MousePosition - (Size)tabOldPoint;
-                Refresh();
+                moveTo = newMoveTo;
+                AnimateNeighborTabsForDrag();
+            }
+
+            Invalidate();
+        }
+
+        /// <summary>
+        /// Animate all non-dragged tabs to the visual positions they would occupy if the drag were committed now.
+        /// The dragged tab's slot (moveFrom) is vacated; tabs between moveFrom and moveTo shift by one slot.
+        /// </summary>
+        private void AnimateNeighborTabsForDrag()
+        {
+            if (TabDataList == null || moveFrom < 0 || moveTo < 0) return;
+
+            for (int i = 0; i < TabDataList.Count; i++)
+            {
+                if (i == moveFrom) continue;
+
+                TabData tab = TabDataList[i];
+                if (tab == null || tab.IsRemoving) continue;
+
+                // Compute the logical slot this tab would occupy after the swap
+                int logicalSlot = i;
+
+                if (moveFrom < moveTo)
+                {
+                    // Dragged forward: tabs between (moveFrom+1..moveTo) shift one slot left
+                    if (i > moveFrom && i <= moveTo) logicalSlot = i - 1;
+                }
+                else if (moveFrom > moveTo)
+                {
+                    // Dragged backward: tabs between (moveTo..moveFrom-1) shift one slot right
+                    if (i >= moveTo && i < moveFrom) logicalSlot = i + 1;
+                }
+
+                int targetLeft = logicalSlot * tabWidth + paddingBetweenTabs;
+
+                if (tab.TabLeft != targetLeft)
+                {
+                    if (CanAnimate_Global)
+                    {
+                        FluentTransitions.Transition.With(tab, nameof(TabData.TabLeft), targetLeft)
+                            .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                    }
+                    else
+                    {
+                        tab.TabLeft = targetLeft;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Snap all tabs back to their natural grid positions after a cancelled drag.
+        /// </summary>
+        private void ResetAllTabLeftPositions()
+        {
+            if (TabDataList == null) return;
+
+            for (int i = 0; i < TabDataList.Count; i++)
+            {
+                TabData tab = TabDataList[i];
+                if (tab == null || tab.IsRemoving) continue;
+
+                int naturalLeft = i * tabWidth + paddingBetweenTabs;
+
+                if (tab.TabLeft != naturalLeft)
+                {
+                    if (CanAnimate_Global)
+                    {
+                        FluentTransitions.Transition.With(tab, nameof(TabData.TabLeft), naturalLeft).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                    }
+                    else
+                    {
+                        tab.TabLeft = naturalLeft;
+                    }
+                }
             }
         }
 
@@ -1212,70 +1333,69 @@ namespace WinPaletter.Tabs
             base.OnMouseDoubleClick(e);
         }
 
-        /// <summary>
-        /// Void onMouseUp to handle the movement of the tabs
-        /// </summary>
-        /// <param name="e"></param>
         protected override void OnMouseUp(MouseEventArgs e)
         {
             if (!IsBusy)
             {
-                if (isMovingToLast)
+                if (isMovingTab && moveFrom > -1)
                 {
-                    MoveToLast(moveFrom);
-                }
-                else if (isMovingToFirst)
-                {
-                    MoveToFirst(moveFrom);
-                }
-                else if (moveFrom > -1 && moveTo > -1 && moveFrom != moveTo)
-                {
-                    SwapTabs(moveFrom, moveTo);
+                    int capturedFrom = moveFrom;
+                    int capturedTo = moveTo > -1 ? moveTo : moveFrom;
+                    bool capturedToLast = isMovingToLast;
+                    bool capturedToFirst = isMovingToFirst;
+
+                    // Animate the dragged tab from its current drag position to its target slot
+                    if (capturedFrom < TabDataList.Count && TabDataList[capturedFrom] != null)
+                    {
+                        TabData dragged = TabDataList[capturedFrom];
+
+                        int finalSlot = capturedToFirst ? 0
+                            : capturedToLast ? TabDataList.Count - 1
+                            : capturedTo;
+
+                        int targetLeft = finalSlot * tabWidth + paddingBetweenTabs;
+
+                        // Set TabLeft to current _dragX so the animation starts from the drag position
+                        dragged.TabLeft = _dragX;
+
+                        void CommitAfterAnimation()
+                        {
+                            if (capturedToLast)
+                            {
+                                MoveToLast(capturedFrom);
+                            }
+                            else if (capturedToFirst)
+                            {
+                                MoveToFirst(capturedFrom);
+                            }
+                            else if (capturedFrom != capturedTo)
+                            {
+                                SwapTabs(capturedFrom, capturedTo);
+                            }
+                            else
+                            {
+                                // No reorder needed; snap all tabs back to their natural positions
+                                ResetAllTabLeftPositions();
+                            }
+                        }
+
+                        if (CanAnimate_Global)
+                        {
+                            FluentTransitions.Transition
+                                .With(dragged, nameof(TabData.TabLeft), targetLeft)
+                                .HookOnCompletion(CommitAfterAnimation)
+                                .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                        }
+                        else
+                        {
+                            dragged.TabLeft = targetLeft;
+                            CommitAfterAnimation();
+                        }
+                    }
                 }
 
                 ResetModifiersToNull();
             }
-
-            // Reset hover state on release
-            if (State == MouseState.Down)
-            {
-                State = MouseState.Over;
-
-                // Check if we're still hovering over a tab
-                TabData currentHoveredTab = GetTabAtMousePosition(e);
-                if (currentHoveredTab != null)
-                {
-                    _hoveredTabData = currentHoveredTab;
-                    hoverPosition = e.Location;
-
-                    // Reset hover size to default (max dimension of tab)
-                    int defaultHoverSize = Math.Max(currentHoveredTab.Rectangle.Width, currentHoveredTab.Rectangle.Height);
-                    if (CanAnimate_Global)
-                    {
-                        FluentTransitions.Transition.With(this, nameof(HoverSize), defaultHoverSize).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
-                    }
-                    else
-                    {
-                        HoverSize = defaultHoverSize;
-                    }
-                }
-                else
-                {
-                    _hoveredTabData = null;
-
-                    // Reset hover size to 0 if not over any tab
-                    if (CanAnimate_Global)
-                    {
-                        FluentTransitions.Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
-                    }
-                    else
-                    {
-                        HoverSize = 0;
-                    }
-                }
-            }
-
-            base.OnMouseUp(e);
         }
 
         /// <summary>
@@ -1574,7 +1694,7 @@ namespace WinPaletter.Tabs
         /// <param name="isMoving"></param>
         private void DrawTab(Graphics G, TabData tabData, bool isMoving = false)
         {
-            Rectangle rect = !isMoving ? tabData.Rectangle : new Rectangle(tabNewPoint.X, tabData.Rectangle.Y, tabData.Rectangle.Width, tabData.Rectangle.Height);
+            Rectangle rect = !isMoving ? tabData.Rectangle : new Rectangle(_dragX, tabData.Rectangle.Y, tabData.Rectangle.Width, tabData.Rectangle.Height);
 
             Bitmap icon = tabData.Image;
             int radius = 5;
