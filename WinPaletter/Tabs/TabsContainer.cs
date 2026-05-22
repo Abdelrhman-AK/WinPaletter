@@ -383,11 +383,11 @@ namespace WinPaletter.Tabs
                 TabDataList[from] = itemTo;
                 TabDataList[to] = itemFrom;
 
-                UpdateTabPositions(TabDataList, preserveSelectionAlpha: false);
-
                 // to avoid bug of non-selection
                 forceChangeSelectedIndex = true;
                 SelectedIndex = to;
+
+                UpdateTabPositions(TabDataList, preserveSelectionAlpha: false);
 
                 isMovingTab = false;
 
@@ -408,11 +408,11 @@ namespace WinPaletter.Tabs
                 TabDataList.RemoveAt(from);
                 TabDataList.Add(itemFrom);
 
-                UpdateTabPositions(TabDataList, preserveSelectionAlpha: false);
-
                 // to avoid bug of non-selection
                 forceChangeSelectedIndex = true;
                 SelectedIndex = TabDataList.Count - 1;
+
+                UpdateTabPositions(TabDataList, preserveSelectionAlpha: false);
 
                 isMovingTab = false;
 
@@ -433,11 +433,11 @@ namespace WinPaletter.Tabs
                 TabDataList.RemoveAt(from);
                 TabDataList.Insert(0, itemFrom);
 
-                UpdateTabPositions(TabDataList, preserveSelectionAlpha: false);
-
                 // to avoid bug of non-selection
                 forceChangeSelectedIndex = true;
                 SelectedIndex = 0;
+
+                UpdateTabPositions(TabDataList, preserveSelectionAlpha: false);
 
                 ResetModifiersToNull();
 
@@ -1337,7 +1337,9 @@ namespace WinPaletter.Tabs
         {
             if (!IsBusy)
             {
-                if (isMovingTab && moveFrom > -1)
+                bool wasDragging = isMovingTab && moveFrom > -1;
+
+                if (wasDragging)
                 {
                     int capturedFrom = moveFrom;
                     int capturedTo = moveTo > -1 ? moveTo : moveFrom;
@@ -1392,9 +1394,21 @@ namespace WinPaletter.Tabs
                             CommitAfterAnimation();
                         }
                     }
+
+                    ResetModifiersToNull();
+                }
+                else
+                {
+                    // Not a drag operation - just reset modifiers
+                    ResetModifiersToNull();
                 }
 
-                ResetModifiersToNull();
+                // Reset mouse state to allow hover animation to work
+                State = MouseState.None;
+
+                // Re-evaluate hover state after mouse up to restore hover animation
+                Point mousePos = PointToClient(MousePosition);
+                HandleHoverForTab(new MouseEventArgs(MouseButtons.None, 0, mousePos.X, mousePos.Y, 0));
             }
         }
 
