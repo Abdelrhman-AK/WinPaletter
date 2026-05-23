@@ -364,6 +364,9 @@ namespace WinPaletter.Tabs
                 {
                     _closeButtonAlpha = value;
 
+                    // Cancel existing close button alpha transition before starting new one
+                    CancelTransition(nameof(CloseButtonAlpha));
+
                     // Marshal to UI thread if needed to prevent blocking
                     if (tabsContainer.InvokeRequired)
                     {

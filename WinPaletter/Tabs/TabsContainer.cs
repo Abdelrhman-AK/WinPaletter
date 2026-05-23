@@ -93,6 +93,7 @@ namespace WinPaletter.Tabs
 
         private bool forceChangeSelectedIndex = true;
         private bool overCloseButton = false;
+        private bool skipTabDataRecreation = false;
 
         private int moveFrom = -1;
         private int moveTo = -1;
@@ -175,6 +176,41 @@ namespace WinPaletter.Tabs
             }
 
             Point mousePos = e.Location;
+
+            // Skip hover logic if mouse is outside the visible region
+            if (!IsPointInVisibleRegion(mousePos))
+            {
+                // Reset hover when not over visible region
+                if (_hoveredTabData != null)
+                {
+                    _hoveredTabData = null;
+
+                    if (CanAnimate_Global)
+                    {
+                        FluentTransitions.Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                    }
+                    else
+                    {
+                        HoverSize = 0;
+                    }
+                }
+
+                // Reset all hover states and cancel transitions
+                foreach (TabData tabData in TabDataList.ToList())
+                {
+                    if (tabData != null)
+                    {
+                        tabData.CancelTransition(nameof(TabData.HoverAlpha));
+                        tabData.CancelTransition(nameof(TabData.CloseButtonAlpha));
+                        tabData.Hovered = false;
+                        tabData.CloseButtonAlpha = 0;
+                    }
+                }
+
+                overCloseButton = false;
+                return;
+            }
+
             TabData hoveredTab = null;
             Rectangle hoveredRect = Rectangle.Empty;
 
@@ -260,11 +296,13 @@ namespace WinPaletter.Tabs
                     }
                 }
 
-                // Reset all hover states
+                // Reset all hover states and cancel transitions
                 foreach (TabData tabData in TabDataList.ToList())
                 {
                     if (tabData != null)
                     {
+                        tabData.CancelTransition(nameof(TabData.HoverAlpha));
+                        tabData.CancelTransition(nameof(TabData.CloseButtonAlpha));
                         tabData.Hovered = false;
                         tabData.CloseButtonAlpha = 0;
                     }
@@ -326,7 +364,13 @@ namespace WinPaletter.Tabs
             // Show tab animation on background thread to prevent blocking form addition
             if (TabDataList.Count > 0 && TabDataList[TabDataList.Count - 1] != null)
             {
-                _ = Task.Run(async () => await TabDataList[TabDataList.Count - 1].Show(() => Invalidate()));
+                skipTabDataRecreation = true;
+                _ = Task.Run(async () =>
+                {
+                    await TabDataList[TabDataList.Count - 1].Show(() => Invalidate());
+                    // Clear the flag after animation completes
+                    this.BeginInvoke(() => skipTabDataRecreation = false);
+                });
             }
 
             // Then continue with form addition
@@ -545,6 +589,12 @@ namespace WinPaletter.Tabs
 
         private TabData GetTabAtMousePosition(MouseEventArgs e)
         {
+            // Only check tabs if mouse is within the visible region
+            if (!IsPointInVisibleRegion(e.Location))
+            {
+                return null;
+            }
+
             foreach (TabData tabData in TabDataList.ToList())
             {
                 if (tabData.Rectangle.Contains(e.Location))
@@ -557,12 +607,13 @@ namespace WinPaletter.Tabs
             return null;
         }
 
-        private TabData CreateTabData(TabPage page, int index)
+        private TabData CreateTabData(TabPage page, int index, int? tabTop = null)
         {
             int tabX = LeftBoundary + index * (tabWidth + _paddingBetweenTabs) - _animatedScrollOffset;
             int tabW = tabWidth;
+            int tabY = tabTop ?? _upperTabPadding;
 
-            Rectangle tabRectangle = new(tabX, _upperTabPadding, tabW, tabHeight);
+            Rectangle tabRectangle = new(tabX, tabY, tabW, tabHeight);
             return new TabData(this, page, tabRectangle);
         }
 
@@ -606,6 +657,14 @@ namespace WinPaletter.Tabs
         }
 
         /// <summary>
+        /// Check if a point is within the valid tab region (between LeftBoundary and RightBoundary)
+        /// </summary>
+        private bool IsPointInVisibleRegion(Point point)
+        {
+            return point.X >= LeftBoundary && point.X <= RightBoundary;
+        }
+
+        /// <summary>
         /// Check if a tab is within or partially within the visible region
         /// </summary>
         private bool IsTabVisible(Rectangle tabRect)
@@ -633,7 +692,7 @@ namespace WinPaletter.Tabs
             }
         }
 
-        private void UpdateTabPositions(List<TabData> collection, bool preserveSelectionAlpha = true, bool animateWidth = false)
+        private void UpdateTabPositions(List<TabData> collection, bool preserveSelectionAlpha = true, bool animateWidth = false, bool preserveTabTop = false)
         {
             int collectionCount = collection.Count;
 
@@ -658,23 +717,36 @@ namespace WinPaletter.Tabs
                 {
                     if (tabData != null && tabData.TabPage != null && !tabData.IsRemoving)
                     {
-                        TabData tabDataX = CreateTabData(tabData.TabPage, i);
-                        tabDataX.Selected = i == _selectedIndex;
+                        // Preserve TabTop value for animation or when skipTabDataRecreation is set
+                        int? preservedTabTop = null;
+                        if (preserveTabTop || skipTabDataRecreation)
+                        {
+                            preservedTabTop = tabData.TabTop;
+                        }
+
+                        TabData tabDataX = CreateTabData(tabData.TabPage, i, preservedTabTop);
+                        bool shouldBeSelected = i == _selectedIndex;
 
                         // Preserve alpha values from old tab data
                         if (preserveSelectionAlpha)
                         {
                             tabDataX.SelectionAlpha = tabData.SelectionAlpha;
+                            // Set Selected property only if selection state actually changed to avoid unnecessary animation
+                            if (tabData.Selected != shouldBeSelected)
+                            {
+                                tabDataX.Selected = shouldBeSelected;
+                            }
                         }
                         else
                         {
-                            // Set correct initial selection alpha based on selection state
-                            tabDataX.SelectionAlpha = tabDataX.Selected ? 255 : 0;
+                            // Set Selected property to trigger animation
+                            tabDataX.Selected = shouldBeSelected;
                         }
 
-                        // Set selectionAlpha to 0 during width animation
+                        // Cancel selection transition and set to 0 during width animation
                         if (animateWidth)
                         {
+                            tabDataX.CancelTransition(nameof(TabData.SelectionAlpha));
                             tabDataX.SelectionAlpha = 0;
                         }
 
@@ -682,7 +754,7 @@ namespace WinPaletter.Tabs
                         tabDataX.CloseButtonAlpha = tabData.CloseButtonAlpha;
 
                         // Initialize hover state based on current mouse position to prevent first-hover flicker
-                        tabDataX.Hovered = tabDataX.Rectangle.Contains(mousePos);
+                        tabDataX.Hovered = IsPointInVisibleRegion(mousePos) && tabDataX.Rectangle.Contains(mousePos);
 
                         // Animate tab width if requested
                         if (animateWidth && tabData.TabWidth != tabWidth)
@@ -692,10 +764,10 @@ namespace WinPaletter.Tabs
                                 FluentTransitions.Transition.With(tabDataX, nameof(TabData.TabWidth), tabWidth)
                                     .HookOnCompletion(() =>
                                     {
-                                        // Restore selection alpha after width animation
+                                        // Restore selection alpha animation after width animation
                                         if (tabDataX.Selected)
                                         {
-                                            tabDataX.SelectionAlpha = 255;
+                                            tabDataX.Selected = true;
                                         }
                                     })
                                     .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
@@ -758,7 +830,9 @@ namespace WinPaletter.Tabs
 
         private bool IsMouseOverTab(TabData tabData)
         {
-            return tabData.Rectangle.Contains(PointToClient(MousePosition));
+            Point mousePos = PointToClient(MousePosition);
+            // Only consider tab as interactable if mouse is within the visible region
+            return IsPointInVisibleRegion(mousePos) && tabData.Rectangle.Contains(mousePos);
         }
 
         private void ProcessTabMouseActions(TabData tabData, MouseEventArgs e)
@@ -1402,8 +1476,17 @@ namespace WinPaletter.Tabs
                 TabDataList[TabDataList.Count - 1].TabTop = Height;
                 SelectedIndex = TabDataList.Count - 1;
 
-                // Animate tab widths when a new tab is added
-                UpdateTabPositions(TabDataList, animateWidth: true);
+                // Animate tab showing (TabTop and SelectionAlpha)
+                if (TabDataList.Count > 0 && TabDataList[TabDataList.Count - 1] != null)
+                {
+                    skipTabDataRecreation = true;
+                    _ = Task.Run(async () =>
+                    {
+                        await TabDataList[TabDataList.Count - 1].Show(() => Invalidate());
+                        // Clear the flag after animation completes
+                        this.BeginInvoke(() => skipTabDataRecreation = false);
+                    });
+                }
             }
         }
 
@@ -1485,7 +1568,7 @@ namespace WinPaletter.Tabs
             TabData newHoveredTab = null;
             foreach (TabData tabDataX in TabDataList)
             {
-                if (tabDataX != null && tabDataX.Rectangle.Contains(mousePos))
+                if (tabDataX != null && IsPointInVisibleRegion(mousePos) && tabDataX.Rectangle.Contains(mousePos))
                 {
                     newHoveredTab = tabDataX;
                     break;
@@ -1825,11 +1908,13 @@ namespace WinPaletter.Tabs
         /// <param name="e"></param>
         protected override void OnMouseLeave(EventArgs e)
         {
-            // Reset all hover states
+            // Reset all hover states and cancel transitions
             foreach (TabData tabData in TabDataList.ToList())
             {
                 if (tabData != null)
                 {
+                    tabData.CancelTransition(nameof(TabData.HoverAlpha));
+                    tabData.CancelTransition(nameof(TabData.CloseButtonAlpha));
                     tabData.Hovered = false;
                     tabData.CloseButtonAlpha = 0;
                 }
@@ -1893,7 +1978,8 @@ namespace WinPaletter.Tabs
 
                     foreach (TabData tabData in TabDataList.ToList())
                     {
-                        if (tabData.Rectangle.Contains(PointToClient(MousePosition)))
+                        Point clientPos = PointToClient(MousePosition);
+                        if (IsPointInVisibleRegion(clientPos) && tabData.Rectangle.Contains(clientPos))
                         {
                             SelectedIndex = GetIndex(tabData);
                             break;
