@@ -49,6 +49,12 @@ namespace WinPaletter
             if (Program.ShowWhatsNew) Process.Start($"{Links.Releases}/tag/v{Program.Version}");
             if (Program.Settings.Miscellaneous.ShowWelcomeDialog) Forms.MainForm.AddTab(Forms.Welcome);
 
+            for (int i = 0; i <= 20; i++)
+            {
+                UI.WP.Form f = new() { Text = $"Form {i + 1}" };
+                AddTab(f);
+            }
+
             Program.Animator.ShowSync(tabControl1);
         }
 

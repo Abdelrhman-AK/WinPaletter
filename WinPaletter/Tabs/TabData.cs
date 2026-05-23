@@ -205,6 +205,30 @@ namespace WinPaletter.Tabs
         }
 
         /// <summary>
+        /// Width of the tab. Animatable for dynamic width transitions.
+        /// </summary>
+        public int TabWidth
+        {
+            get => Rectangle.Width;
+            set
+            {
+                if (_rectangle.Width != value)
+                {
+                    _rectangle = new Rectangle(_rectangle.X, _rectangle.Y, value, _rectangle.Height);
+
+                    if (tabsContainer.InvokeRequired)
+                    {
+                        tabsContainer.BeginInvoke(() => tabsContainer.Invalidate());
+                    }
+                    else
+                    {
+                        tabsContainer.Invalidate();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Flag indicating whether the tab is being removed.
         /// </summary>
         public bool IsRemoving
@@ -510,7 +534,7 @@ namespace WinPaletter.Tabs
         /// <returns></returns>
         public async Task Show(Action HookOnCompletion = null)
         {
-            await Animate(tabsContainer.CanAnimate_Global, Program.AnimationDuration, tabsContainer.upperTabPadding, HookOnCompletion);
+            await Animate(tabsContainer.CanAnimate_Global, Program.AnimationDuration, tabsContainer._upperTabPadding, HookOnCompletion);
         }
 
         #endregion

@@ -1,13 +1,10 @@
-﻿using Microsoft.VisualBasic.Devices;
-using Serilog.Events;
+﻿using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
@@ -48,11 +45,51 @@ namespace WinPaletter.Tabs
         /// </summary>
         public List<TabData> TabDataList = [];
 
-        private static readonly int MaxWidth = 245;
-        private static readonly int paddingBetweenTabs = 5;
-        private static readonly int radius = 5;
-        public int upperTabPadding = 4;
+        // Static constants for UI element sizes and offsets
+        private static readonly int _maxTabWidth = 245;
+        private static readonly int _paddingBetweenTabs = 5;
+        private static readonly int _radius = 5;
+        public int _upperTabPadding = 4;
+        private static readonly int _closeButtonSize = 17;
+        private static readonly int _iconSize = 16;
+        private static readonly int _paddingPostIcon = 4;
+        private static readonly int _paddingPreCloseButton = 5;
+        private static readonly int _interval = 50;
+        private static readonly int _rectSmallerOffset = 1;
+        private static readonly int _rectSmallerWidthReduction = 2;
+        private static readonly int _clipHeightOffset = 2;
+        private static readonly int _smallerRadiusOffset = 1;
         private int _hoverSize;
+
+        // Overflow scrolling variables
+        private int _scrollOffset = 0;
+        private int _maxScrollOffset = 0;
+        private int _animatedScrollOffset = 0;
+        private static readonly int _scrollAmount = 100;
+        private static readonly int _minimumIndicatorWidth = 20;
+        private static readonly int _indicatorHeight = 2;
+        private static readonly int _indicatorBottomOffset = 3;
+
+        /// <summary>
+        /// Animated scroll offset for smooth scrolling
+        /// </summary>
+        public int AnimatedScrollOffset
+        {
+            get => _animatedScrollOffset;
+            set
+            {
+                if (_animatedScrollOffset != value)
+                {
+                    _animatedScrollOffset = value;
+                    UpdateTabPositions(TabDataList);
+                    Invalidate();
+                }
+            }
+        }
+
+        // Minimum tab width will be calculated dynamically based on tab height
+        // Formula: left padding + icon (_iconSize) + gap (_paddingPostIcon) + close button (_closeButtonSize) + right padding
+        private int minTabWidth => (tabHeight - _iconSize) / 2 + _iconSize + _paddingPostIcon + _closeButtonSize + (tabHeight - _closeButtonSize) / 2;
 
         private bool forceChangeSelectedIndex = true;
         private bool overCloseButton = false;
@@ -64,7 +101,6 @@ namespace WinPaletter.Tabs
         private bool isMovingToFirst = false;
 
         private Point tabOldPoint = new();
-        private Point tabNewPoint;
         private Point locationOldPoint = new();
 
         // Client X position of the dragged tab's left edge, updated during MouseMove
@@ -74,7 +110,6 @@ namespace WinPaletter.Tabs
         private TabData contextItemDropped;
 
         private Point hoverPosition;
-        private RectangleF hoverRect;
         private TabData _hoveredTabData;
 
         public enum MouseState { None, Over, Down }
@@ -84,7 +119,7 @@ namespace WinPaletter.Tabs
         Scheme scheme_secondary => Enabled ? Program.Style.Schemes.Secondary : Program.Style.Schemes.Disabled;
 
         private static StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat();
-        private static StringFormat sf_close = ContentAlignment.MiddleCenter.ToStringFormat();
+        private static StringFormat sf_middleCenter = ContentAlignment.MiddleCenter.ToStringFormat();
         private static string closeStr = "✕";
         private static Color win7BorderColor = Color.FromArgb(159, 255, 255, 255);
         private Font selectedFont;
@@ -144,7 +179,7 @@ namespace WinPaletter.Tabs
             Rectangle hoveredRect = Rectangle.Empty;
 
             // Find which tab is being hovered
-            foreach (TabData tabData in TabDataList)
+            foreach (TabData tabData in TabDataList.ToList())
             {
                 if (tabData != null && tabData.Rectangle.Contains(mousePos))
                 {
@@ -198,7 +233,7 @@ namespace WinPaletter.Tabs
                 }
 
                 // Set hovered state for the tab
-                foreach (TabData tabData in TabDataList)
+                foreach (TabData tabData in TabDataList.ToList())
                 {
                     if (tabData != null)
                     {
@@ -226,7 +261,7 @@ namespace WinPaletter.Tabs
                 }
 
                 // Reset all hover states
-                foreach (TabData tabData in TabDataList)
+                foreach (TabData tabData in TabDataList.ToList())
                 {
                     if (tabData != null)
                     {
@@ -291,7 +326,7 @@ namespace WinPaletter.Tabs
             // Show tab animation on background thread to prevent blocking form addition
             if (TabDataList.Count > 0 && TabDataList[TabDataList.Count - 1] != null)
             {
-                _ = Task.Run(async () => await TabDataList[TabDataList.Count - 1].Show(() => UpdateTabPositions(TabDataList)));
+                _ = Task.Run(async () => await TabDataList[TabDataList.Count - 1].Show(() => Invalidate()));
             }
 
             // Then continue with form addition
@@ -319,13 +354,39 @@ namespace WinPaletter.Tabs
             Cursor = Cursors.Default;
         }
 
-        private int tabWidth => Math.Min(MaxWidth, Width / _tabControl.TabPages.Count);
-        private int tabHeight => Height - upperTabPadding;
+        private int tabWidth
+        {
+            get
+            {
+                if (_tabControl == null || _tabControl.TabPages.Count == 0)
+                    return _maxTabWidth;
+
+                int availableWidth = RightBoundary - LeftBoundary;
+                int totalPadding = _paddingBetweenTabs * (_tabControl.TabPages.Count - 1);
+                int availableForTabs = availableWidth - totalPadding;
+
+                // Ensure availableForTabs is at least enough for minimum tab widths
+                if (availableForTabs < minTabWidth * _tabControl.TabPages.Count)
+                    availableForTabs = minTabWidth * _tabControl.TabPages.Count;
+
+                // Calculate width that fits all tabs exactly using floating-point for precision
+                double calculatedWidth = (double)availableForTabs / _tabControl.TabPages.Count;
+
+                // Round down to ensure total width never exceeds available space
+                int finalWidth = (int)Math.Floor(calculatedWidth);
+
+                // Ensure the calculated width doesn't exceed _maxTabWidth
+                // But also ensure total width doesn't exceed available space
+                // Also ensure minimum width respects padding between tabs
+                return Math.Max(minTabWidth, Math.Min(_maxTabWidth, finalWidth));
+            }
+        }
+        private int tabHeight => Height - _upperTabPadding;
 
         /// <summary>
         /// Gets the effective left boundary for tabs (left padding)
         /// </summary>
-        private int LeftBoundary => paddingBetweenTabs;
+        private int LeftBoundary => _paddingBetweenTabs;
 
         /// <summary>
         /// Gets the effective right boundary for tabs (right padding, or BETA badge left padding if present)
@@ -337,11 +398,11 @@ namespace WinPaletter.Tabs
                 if (Program.IsBeta)
                 {
                     SizeF betaSize = Program.Localization.Strings.General.Beta.ToUpper().Measure(Fonts.ConsoleMedium) + new SizeF(2, 2);
-                    return Width - (int)betaSize.Width - 5 - paddingBetweenTabs;
+                    return Width - (int)betaSize.Width - 5 - _paddingBetweenTabs;
                 }
                 else
                 {
-                    return Width - paddingBetweenTabs;
+                    return Width - _paddingBetweenTabs;
                 }
             }
         }
@@ -353,16 +414,14 @@ namespace WinPaletter.Tabs
 
         private Rectangle closeRectangle(Rectangle rectangle)
         {
-            int size = 17;
-            return new Rectangle(rectangle.Right - size - (rectangle.Height - size) / 2, rectangle.Y + (rectangle.Height - size) / 2, size, size);
+            return new Rectangle(rectangle.Right - _closeButtonSize - (rectangle.Height - _closeButtonSize) / 2, rectangle.Y + (rectangle.Height - _closeButtonSize) / 2, _closeButtonSize, _closeButtonSize);
         }
 
         private Rectangle iconRectangle(Rectangle rectangle)
         {
-            int size = 16;
-            int top = rectangle.Y + (rectangle.Height - size) / 2;
-            int paddingLeft = (rectangle.Height - size) / 2;
-            return new Rectangle(rectangle.X + paddingLeft, top, size, size);
+            int top = rectangle.Y + (rectangle.Height - _iconSize) / 2;
+            int paddingLeft = (rectangle.Height - _iconSize) / 2;
+            return new Rectangle(rectangle.X + paddingLeft, top, _iconSize, _iconSize);
         }
 
         private Rectangle titleRectangle(Rectangle rectangle)
@@ -370,7 +429,7 @@ namespace WinPaletter.Tabs
             Rectangle iconRect = iconRectangle(rectangle);
             Rectangle closeRect = closeRectangle(rectangle);
 
-            return Rectangle.FromLTRB(iconRect.Right + 4, iconRect.Top, closeRect.Left - 5, iconRect.Bottom);
+            return Rectangle.FromLTRB(iconRect.Right + _paddingPostIcon, iconRect.Top, closeRect.Left - _paddingPreCloseButton, iconRect.Bottom);
         }
 
         private int GetIndex(TabData tabData)
@@ -415,7 +474,7 @@ namespace WinPaletter.Tabs
                 forceChangeSelectedIndex = true;
                 SelectedIndex = to;
 
-                UpdateTabPositions(TabDataList, preserveSelectionAlpha: false);
+                UpdateTabPositions(TabDataList, preserveSelectionAlpha: false, animateWidth: false);
 
                 isMovingTab = false;
 
@@ -440,7 +499,7 @@ namespace WinPaletter.Tabs
                 forceChangeSelectedIndex = true;
                 SelectedIndex = TabDataList.Count - 1;
 
-                UpdateTabPositions(TabDataList, preserveSelectionAlpha: false);
+                UpdateTabPositions(TabDataList, preserveSelectionAlpha: false, animateWidth: false);
 
                 isMovingTab = false;
 
@@ -465,7 +524,7 @@ namespace WinPaletter.Tabs
                 forceChangeSelectedIndex = true;
                 SelectedIndex = 0;
 
-                UpdateTabPositions(TabDataList, preserveSelectionAlpha: false);
+                UpdateTabPositions(TabDataList, preserveSelectionAlpha: false, animateWidth: false);
 
                 ResetModifiersToNull();
 
@@ -486,7 +545,7 @@ namespace WinPaletter.Tabs
 
         private TabData GetTabAtMousePosition(MouseEventArgs e)
         {
-            foreach (TabData tabData in TabDataList)
+            foreach (TabData tabData in TabDataList.ToList())
             {
                 if (tabData.Rectangle.Contains(e.Location))
                 {
@@ -500,26 +559,81 @@ namespace WinPaletter.Tabs
 
         private TabData CreateTabData(TabPage page, int index)
         {
-            int tabX = index * tabWidth + paddingBetweenTabs;
-            int tabW = tabWidth - paddingBetweenTabs;
+            int tabX = LeftBoundary + index * (tabWidth + _paddingBetweenTabs) - _animatedScrollOffset;
+            int tabW = tabWidth;
 
-            // Ensure tab doesn't exceed right boundary
-            if (tabX + tabW > RightBoundary)
-            {
-                tabW = RightBoundary - tabX;
-            }
-
-            // Ensure tab doesn't go beyond left boundary
-            if (tabX < LeftBoundary)
-            {
-                tabX = LeftBoundary;
-            }
-
-            Rectangle tabRectangle = new(tabX, upperTabPadding, tabW, tabHeight);
+            Rectangle tabRectangle = new(tabX, _upperTabPadding, tabW, tabHeight);
             return new TabData(this, page, tabRectangle);
         }
 
-        private void UpdateTabPositions(List<TabData> collection, bool preserveSelectionAlpha = true)
+        /// <summary>
+        /// Calculate the maximum scroll offset based on total tab width and available space
+        /// </summary>
+        private void CalculateScrollOffset()
+        {
+            if (TabDataList == null || TabDataList.Count == 0)
+            {
+                _maxScrollOffset = 0;
+                _scrollOffset = 0;
+                _animatedScrollOffset = 0;
+                return;
+            }
+
+            int totalTabWidth = TabDataList.Count * tabWidth + _paddingBetweenTabs * (TabDataList.Count - 1);
+            int availableWidth = RightBoundary - LeftBoundary;
+
+            if (totalTabWidth <= availableWidth)
+            {
+                // All tabs fit, no scrolling needed
+                _maxScrollOffset = 0;
+                _scrollOffset = 0;
+            }
+            else
+            {
+                // Calculate how much we need to scroll
+                _maxScrollOffset = totalTabWidth - availableWidth;
+                // Clamp scroll offset to valid range
+                _scrollOffset = Math.Min(_scrollOffset, _maxScrollOffset);
+            }
+
+            // Ensure scroll offset doesn't cause tabs to extend beyond right boundary
+            int lastTabRight = LeftBoundary + (TabDataList.Count - 1) * (tabWidth + _paddingBetweenTabs) + tabWidth - _scrollOffset;
+            if (lastTabRight > RightBoundary)
+            {
+                _scrollOffset = lastTabRight - RightBoundary;
+                _scrollOffset = Math.Min(_scrollOffset, _maxScrollOffset);
+            }
+        }
+
+        /// <summary>
+        /// Check if a tab is within or partially within the visible region
+        /// </summary>
+        private bool IsTabVisible(Rectangle tabRect)
+        {
+            // Tab is visible if it intersects with the visible region
+            Rectangle visibleRegion = new(LeftBoundary, 0, RightBoundary - LeftBoundary, Height);
+            return tabRect.IntersectsWith(visibleRegion);
+        }
+
+        /// <summary>
+        /// Animate scroll offset to target value
+        /// </summary>
+        private void AnimateScrollOffset(int targetOffset)
+        {
+            _scrollOffset = Math.Max(0, Math.Min(targetOffset, _maxScrollOffset));
+
+            if (CanAnimate_Global)
+            {
+                FluentTransitions.Transition.With(this, nameof(AnimatedScrollOffset), _scrollOffset)
+                    .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+            }
+            else
+            {
+                AnimatedScrollOffset = _scrollOffset;
+            }
+        }
+
+        private void UpdateTabPositions(List<TabData> collection, bool preserveSelectionAlpha = true, bool animateWidth = false)
         {
             int collectionCount = collection.Count;
 
@@ -528,6 +642,9 @@ namespace WinPaletter.Tabs
                 // Handle the case where the TabDataList is empty
                 return;
             }
+
+            // Calculate scroll offset before updating positions
+            CalculateScrollOffset();
 
             if (_selectedIndex >= 0 && _selectedIndex < collectionCount)
             {
@@ -554,11 +671,45 @@ namespace WinPaletter.Tabs
                             // Set correct initial selection alpha based on selection state
                             tabDataX.SelectionAlpha = tabDataX.Selected ? 255 : 0;
                         }
+
+                        // Set selectionAlpha to 0 during width animation
+                        if (animateWidth)
+                        {
+                            tabDataX.SelectionAlpha = 0;
+                        }
+
                         tabDataX.RemovingAlpha = tabData.RemovingAlpha;
                         tabDataX.CloseButtonAlpha = tabData.CloseButtonAlpha;
 
                         // Initialize hover state based on current mouse position to prevent first-hover flicker
                         tabDataX.Hovered = tabDataX.Rectangle.Contains(mousePos);
+
+                        // Animate tab width if requested
+                        if (animateWidth && tabData.TabWidth != tabWidth)
+                        {
+                            if (CanAnimate_Global)
+                            {
+                                FluentTransitions.Transition.With(tabDataX, nameof(TabData.TabWidth), tabWidth)
+                                    .HookOnCompletion(() =>
+                                    {
+                                        // Restore selection alpha after width animation
+                                        if (tabDataX.Selected)
+                                        {
+                                            tabDataX.SelectionAlpha = 255;
+                                        }
+                                    })
+                                    .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                            }
+                            else
+                            {
+                                tabDataX.TabWidth = tabWidth;
+                                // Restore selection alpha immediately if not animating
+                                if (tabDataX.Selected)
+                                {
+                                    tabDataX.SelectionAlpha = 255;
+                                }
+                            }
+                        }
 
                         collection.Add(tabDataX);
                         i++;
@@ -584,7 +735,11 @@ namespace WinPaletter.Tabs
             {
                 if (_selectedIndex > -1)
                 {
-                    SelectedTab = TabDataList[_selectedIndex].TabPage;
+                    // Directly set the tab control's selected tab to avoid circular dependency
+                    if (_tabControl != null && _tabControl.SelectedTab != TabDataList[_selectedIndex].TabPage)
+                    {
+                        _tabControl.SelectedTab = TabDataList[_selectedIndex].TabPage;
+                    }
 
                     foreach (TabData t in TabDataList)
                     {
@@ -593,7 +748,10 @@ namespace WinPaletter.Tabs
                 }
                 else
                 {
-                    SelectedTab = null;
+                    if (_tabControl != null && _tabControl.SelectedTab != null)
+                    {
+                        _tabControl.SelectedTab = null;
+                    }
                 }
             }
         }
@@ -636,7 +794,7 @@ namespace WinPaletter.Tabs
             {
                 if (TabDataList.Count > 0)
                 {
-                    foreach (TabData tabData in TabDataList)
+                    foreach (TabData tabData in TabDataList.ToList())
                     {
                         if (!tabData.IsRemoving)
                         {
@@ -663,28 +821,28 @@ namespace WinPaletter.Tabs
             }
             else if (e.Button == MouseButtons.Middle)
             {
-                foreach (TabData tabData in TabDataList)
+                foreach (TabData tabData in TabDataList.ToList())
                 {
                     if (IsMouseOverTab(tabData))
                     {
                         // Store the mouse position for hover re-evaluation after removal
                         Point mousePos = e.Location;
-                        
+
                         tabData.Form.Close();
-                        
+
                         // Schedule hover re-evaluation after a short delay to allow tab removal to complete
-                        System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer { Interval = 50 };
+                        System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer { Interval = _interval };
                         timer.Tick += (s, args) =>
                         {
                             timer.Stop();
                             timer.Dispose();
-                            
+
                             // Re-evaluate hover state
                             Point currentMousePos = PointToClient(MousePosition);
                             HandleHoverForTab(new MouseEventArgs(MouseButtons.None, 0, currentMousePos.X, currentMousePos.Y, 0));
                         };
                         timer.Start();
-                        
+
                         break;
                     }
                 }
@@ -697,7 +855,7 @@ namespace WinPaletter.Tabs
 
             if (e.Button == MouseButtons.Left)
             {
-                foreach (TabData tabData in TabDataList)
+                foreach (TabData tabData in TabDataList.ToList())
                 {
                     if (IsMouseOverTab(tabData))
                     {
@@ -723,6 +881,36 @@ namespace WinPaletter.Tabs
             if (tabData.TabPage != _tabControl.SelectedTab)
             {
                 SelectedIndex = GetIndex(tabData);
+
+                // Scroll to the selected tab if there's overflow
+                if (_maxScrollOffset > 0)
+                {
+                    int tabIndex = GetIndex(tabData);
+                    int tabLeftPosition = tabIndex * tabWidth + _paddingBetweenTabs;
+                    int tabRightPosition = tabLeftPosition + tabWidth;
+
+                    // Calculate target scroll offset to show the tab
+                    int targetScrollOffset = _scrollOffset;
+
+                    if (tabLeftPosition - _animatedScrollOffset < LeftBoundary)
+                    {
+                        // Tab is off to the left, scroll to show it
+                        targetScrollOffset = tabLeftPosition - LeftBoundary;
+                    }
+                    else if (tabRightPosition - _animatedScrollOffset > RightBoundary)
+                    {
+                        // Tab is off to the right, scroll to show it
+                        targetScrollOffset = tabRightPosition - RightBoundary;
+                    }
+
+                    // Clamp to valid range
+                    targetScrollOffset = Math.Max(0, Math.Min(targetScrollOffset, _maxScrollOffset));
+
+                    if (targetScrollOffset != _scrollOffset)
+                    {
+                        AnimateScrollOffset(targetScrollOffset);
+                    }
+                }
             }
         }
 
@@ -782,7 +970,7 @@ namespace WinPaletter.Tabs
                 if (other == null || other.IsRemoving) continue;
 
                 // Use the tab's current logical slot X (not animated TabLeft) for midpoint comparison
-                int logicalX = i * tabWidth + paddingBetweenTabs;
+                int logicalX = LeftBoundary + i * (tabWidth + _paddingBetweenTabs);
                 int otherMid = logicalX + other.Rectangle.Width / 2;
 
                 if (i < moveFrom && draggedCenter < otherMid)
@@ -796,17 +984,19 @@ namespace WinPaletter.Tabs
                 }
             }
 
-            // Detect edge cases for move-to-first / move-to-last
-            int firstNonDraggedLogicalX = 0 * tabWidth + paddingBetweenTabs;
-            int lastNonDraggedLogicalRight = (TabDataList.Count - 1) * tabWidth + paddingBetweenTabs + dragged.Rectangle.Width;
+            // Detect edge cases for swap with first/last tab when dragging to borders
+            int firstNonDraggedLogicalX = LeftBoundary + 0 * (tabWidth + _paddingBetweenTabs);
+            int lastNonDraggedLogicalRight = LeftBoundary + (TabDataList.Count - 1) * (tabWidth + _paddingBetweenTabs) + dragged.Rectangle.Width;
 
-            if (_dragX + dragged.Rectangle.Width / 2 < firstNonDraggedLogicalX)
+            // Check if dragged to left border - swap with first tab
+            if (_dragX <= LeftBoundary && moveFrom != 0)
             {
                 isMovingToFirst = true;
                 isMovingToLast = false;
                 newMoveTo = 0;
             }
-            else if (_dragX + dragged.Rectangle.Width / 2 > lastNonDraggedLogicalRight)
+            // Check if dragged to right border - swap with last tab
+            else if (_dragX + dragged.Rectangle.Width >= RightBoundary && moveFrom != TabDataList.Count - 1)
             {
                 isMovingToLast = true;
                 isMovingToFirst = false;
@@ -857,7 +1047,7 @@ namespace WinPaletter.Tabs
                     if (i >= moveTo && i < moveFrom) logicalSlot = i + 1;
                 }
 
-                int targetLeft = logicalSlot * tabWidth + paddingBetweenTabs;
+                int targetLeft = LeftBoundary + logicalSlot * (tabWidth + _paddingBetweenTabs);
 
                 if (tab.TabLeft != targetLeft)
                 {
@@ -886,7 +1076,7 @@ namespace WinPaletter.Tabs
                 TabData tab = TabDataList[i];
                 if (tab == null || tab.IsRemoving) continue;
 
-                int naturalLeft = i * tabWidth + paddingBetweenTabs;
+                int naturalLeft = LeftBoundary + i * (tabWidth + _paddingBetweenTabs);
 
                 if (tab.TabLeft != naturalLeft)
                 {
@@ -910,14 +1100,13 @@ namespace WinPaletter.Tabs
 
         private void CloseAllTabsButThis()
         {
-            if (TabDataList.Count > 1)
+            if (TabDataList.Count <= 1) return;
+
+            foreach (TabData tabData in TabDataList.ToList())
             {
-                foreach (TabData tabData in TabDataList)
+                if (tabData.TabPage != contextItemDropped.TabPage)
                 {
-                    if (tabData.TabPage != contextItemDropped.TabPage)
-                    {
-                        tabData.Form.Close();
-                    }
+                    tabData.Form.Close();
                 }
             }
         }
@@ -925,29 +1114,36 @@ namespace WinPaletter.Tabs
         private void CloseAllTabsToTheRight()
         {
             int index = TabDataList.IndexOf(contextItemDropped);
-
+            List<TabData> tabsToClose = [];
             for (int i = index + 1; i < TabDataList.Count; i++)
             {
-                TabDataList[i].Form.Close();
+                tabsToClose.Add(TabDataList[i]);
+            }
+            foreach (TabData tabData in tabsToClose)
+            {
+                tabData.Form.Close();
             }
         }
 
         private void CloseAllTabsToTheLeft()
         {
             int index = TabDataList.IndexOf(contextItemDropped);
-
+            List<TabData> tabsToClose = [];
             for (int i = 0; i < index; i++)
             {
-                TabDataList[0].Form.Close();
+                tabsToClose.Add(TabDataList[i]);
+            }
+            foreach (TabData tabData in tabsToClose)
+            {
+                tabData.Form.Close();
             }
         }
 
         private void CloseAllTabs()
         {
-            int count = TabDataList.Count;
-            for (int i = 0; i < count; i++)
+            foreach (TabData tabData in TabDataList.ToList())
             {
-                TabDataList[0].Form.Close();
+                tabData.Form.Close();
             }
         }
 
@@ -964,10 +1160,9 @@ namespace WinPaletter.Tabs
 
         private void DetachAllTabs()
         {
-            int count = TabDataList.Count;
-            for (int i = 0; i <= count - 1; i++)
+            foreach (TabData tab in TabDataList.ToList())
             {
-                if (TabDataList[0].Form != null) DetachTab(TabDataList[0]);
+                if (tab.Form != null) DetachTab(tab);
             }
         }
 
@@ -1192,7 +1387,7 @@ namespace WinPaletter.Tabs
         protected override void Dispose(bool disposing)
         {
             sf?.Dispose();
-            sf_close?.Dispose();
+            sf_middleCenter?.Dispose();
             selectedFont?.Dispose();
             base.Dispose(disposing);
         }
@@ -1204,10 +1399,11 @@ namespace WinPaletter.Tabs
                 TabPage page = e.Control as TabPage;
 
                 TabDataList.Add(CreateTabData(page, TabDataList.Count));
-
                 TabDataList[TabDataList.Count - 1].TabTop = Height;
-
                 SelectedIndex = TabDataList.Count - 1;
+
+                // Animate tab widths when a new tab is added
+                UpdateTabPositions(TabDataList, animateWidth: true);
             }
         }
 
@@ -1216,7 +1412,6 @@ namespace WinPaletter.Tabs
             if (_tabControl != null && e.Control is TabPage && TabDataList.Any(t => t.TabPage == e.Control))
             {
                 TabPage page = e.Control as TabPage;
-
                 RemoveTab(TabDataList.Where(t => t.TabPage == page).FirstOrDefault());
             }
         }
@@ -1250,7 +1445,7 @@ namespace WinPaletter.Tabs
         {
             TabDataList.Remove(tabData);
 
-            UpdateTabPositions(TabDataList);
+            UpdateTabPositions(TabDataList, animateWidth: true);
 
             forceChangeSelectedIndex = true;
             SelectedIndex = SI;
@@ -1265,7 +1460,7 @@ namespace WinPaletter.Tabs
             State = MouseState.None;
             _hoveredTabData = null;
             overCloseButton = false;
-            
+
             // Reset all tab hover states
             foreach (TabData t in TabDataList)
             {
@@ -1275,7 +1470,7 @@ namespace WinPaletter.Tabs
                     t.CloseButtonAlpha = 0;
                 }
             }
-            
+
             if (CanAnimate_Global)
             {
                 FluentTransitions.Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
@@ -1339,7 +1534,30 @@ namespace WinPaletter.Tabs
 
             if (TabDataList != null && TabDataList.Count > 0)
             {
-                UpdateTabPositions(TabDataList);
+                // Recalculate scroll offset based on new size
+                CalculateScrollOffset();
+
+                // Adjust scroll offset to ensure selected tab remains visible
+                if (_selectedIndex >= 0 && _selectedIndex < TabDataList.Count)
+                {
+                    int selectedTabLeft = LeftBoundary + _selectedIndex * (tabWidth + _paddingBetweenTabs) - _animatedScrollOffset;
+                    int selectedTabRight = selectedTabLeft + tabWidth;
+
+                    if (selectedTabLeft < LeftBoundary)
+                    {
+                        // Selected tab is off to the left, scroll to show it
+                        int targetOffset = _animatedScrollOffset + (LeftBoundary - selectedTabLeft);
+                        AnimateScrollOffset(targetOffset);
+                    }
+                    else if (selectedTabRight > RightBoundary)
+                    {
+                        // Selected tab is off to the right, scroll to show it
+                        int targetOffset = _animatedScrollOffset + (selectedTabRight - RightBoundary);
+                        AnimateScrollOffset(targetOffset);
+                    }
+                }
+
+                UpdateTabPositions(TabDataList, animateWidth: true);
                 Refresh();
             }
         }
@@ -1376,7 +1594,7 @@ namespace WinPaletter.Tabs
             if (!IsBusy)
             {
                 bool clickedOnTab = false;
-                foreach (TabData tabData in TabDataList)
+                foreach (TabData tabData in TabDataList.ToList())
                 {
                     if (IsMouseOverTab(tabData))
                     {
@@ -1463,6 +1681,35 @@ namespace WinPaletter.Tabs
             base.OnMouseDoubleClick(e);
         }
 
+        /// <summary>
+        /// Handle mouse wheel for tab scrolling when overflow exists
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnMouseWheel(MouseEventArgs e)
+        {
+            if (_maxScrollOffset > 0)
+            {
+                int scrollDelta = e.Delta;
+                int scrollAmount = _scrollAmount; // Amount to scroll per wheel tick
+
+                if (scrollDelta > 0)
+                {
+                    // Scroll left
+                    AnimateScrollOffset(_scrollOffset - scrollAmount);
+                }
+                else
+                {
+                    // Scroll right
+                    AnimateScrollOffset(_scrollOffset + scrollAmount);
+                }
+
+                // Don't call base.OnMouseWheel to suppress default scrolling
+                return;
+            }
+
+            base.OnMouseWheel(e);
+        }
+
         protected override void OnMouseUp(MouseEventArgs e)
         {
             if (IsDisposed) return;
@@ -1487,7 +1734,7 @@ namespace WinPaletter.Tabs
                             : capturedToLast ? TabDataList.Count - 1
                             : capturedTo;
 
-                        int targetLeft = finalSlot * tabWidth + paddingBetweenTabs;
+                        int targetLeft = LeftBoundary + finalSlot * (tabWidth + _paddingBetweenTabs);
 
                         // Set TabLeft to current _dragX so the animation starts from the drag position
                         dragged.TabLeft = _dragX;
@@ -1496,11 +1743,13 @@ namespace WinPaletter.Tabs
                         {
                             if (capturedToLast)
                             {
-                                MoveToLast(capturedFrom);
+                                // Swap with last tab at right border
+                                SwapTabs(capturedFrom, TabDataList.Count - 1);
                             }
                             else if (capturedToFirst)
                             {
-                                MoveToFirst(capturedFrom);
+                                // Swap with first tab at left border
+                                SwapTabs(capturedFrom, 0);
                             }
                             else if (capturedFrom != capturedTo)
                             {
@@ -1577,7 +1826,7 @@ namespace WinPaletter.Tabs
         protected override void OnMouseLeave(EventArgs e)
         {
             // Reset all hover states
-            foreach (TabData tabData in TabDataList)
+            foreach (TabData tabData in TabDataList.ToList())
             {
                 if (tabData != null)
                 {
@@ -1642,7 +1891,7 @@ namespace WinPaletter.Tabs
                 {
                     Point MousePosition = new(e.X, e.Y);
 
-                    foreach (TabData tabData in TabDataList)
+                    foreach (TabData tabData in TabDataList.ToList())
                     {
                         if (tabData.Rectangle.Contains(PointToClient(MousePosition)))
                         {
@@ -1679,7 +1928,6 @@ namespace WinPaletter.Tabs
             set
             {
                 _hoverSize = value;
-                hoverRect = new RectangleF(hoverPosition.X - 0.5f * _hoverSize, hoverPosition.Y - 0.5f * _hoverSize, _hoverSize, _hoverSize);
                 Invalidate();
             }
         }
@@ -1691,7 +1939,7 @@ namespace WinPaletter.Tabs
             using (GraphicsPath clipPath = new())
             {
                 RectangleF bounds = path.GetBounds();
-                clipPath.AddRectangle(new RectangleF(bounds.X, bounds.Y, bounds.Width, bounds.Height - 2));
+                clipPath.AddRectangle(new RectangleF(bounds.X, bounds.Y, bounds.Width, bounds.Height - _clipHeightOffset));
 
                 using (Region clipRegion = new(path))
                 {
@@ -1786,6 +2034,13 @@ namespace WinPaletter.Tabs
             // Makes background drawn properly, and transparent
             InvokePaintBackground(this, e);
 
+            // Inferior border
+            using (Pen P = new(!OS.W7 ? scheme.Colors.Line_Hover(0) : Color.Black)) { G.DrawLine(P, new Point(0, Height - 1), new Point(Width - 1, Height - 1)); }
+
+            // Set clipping region to prevent tabs from drawing beyond RightBoundary
+            Rectangle clipRect = new(LeftBoundary, 0, RightBoundary - LeftBoundary, Height);
+
+            // Draw BETA badge before clipping (it's outside the tab region)
             if (Program.IsBeta)
             {
                 Rectangle rect = new(0, 0, Width - 1, Height - 1);
@@ -1793,19 +2048,23 @@ namespace WinPaletter.Tabs
                 Rectangle betaRect = new(Width - (int)betaSize.Width - 5, rect.Y + (int)((rect.Height - betaSize.Height) / 2), (int)betaSize.Width, (int)betaSize.Height);
                 G.FillRoundedRect(scheme_secondary.Brushes.Back_Checked, betaRect);
                 G.DrawRoundedRectBeveled(scheme_secondary.Pens.Line_Checked, betaRect);
-                using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
-                {
-                    betaRect.Y++;
-                    G.DrawString(Program.Localization.Strings.General.Beta.ToUpper(), Fonts.ConsoleMedium, scheme_secondary.Brushes.ForeColor_Accent, betaRect, sf);
-                }
+                betaRect.Y++;
+                G.DrawString(Program.Localization.Strings.General.Beta.ToUpper(), Fonts.ConsoleMedium, scheme_secondary.Brushes.ForeColor_Accent, betaRect, sf_middleCenter);
             }
 
-            // Inferior border
-            using (Pen P = new(!OS.W7 ? scheme.Colors.Line_Hover(0) : Color.Black)) { G.DrawLine(P, new Point(0, Height - 1), new Point(Width - 1, Height - 1)); }
+            G.SetClip(clipRect);
 
             if (_tabControl != null)
             {
-                List<TabData> tabsToDraw = [.. TabDataList];
+                List<TabData> tabsToDraw;
+                try
+                {
+                    tabsToDraw = [.. TabDataList];
+                }
+                catch
+                {
+                    tabsToDraw = [];
+                }
 
                 if (isMovingTab)
                 {
@@ -1817,7 +2076,8 @@ namespace WinPaletter.Tabs
 
                     foreach (TabData tabData in tabsToDraw)
                     {
-                        if (tabData != movingTab) DrawTab(G, tabData);
+                        // Only draw tabs that are within or partially within the visible region
+                        if (tabData != movingTab && IsTabVisible(tabData.Rectangle)) DrawTab(G, tabData);
                     }
 
                     if (movingTab is not null)
@@ -1829,8 +2089,28 @@ namespace WinPaletter.Tabs
                 {
                     foreach (TabData tabData in tabsToDraw)
                     {
-                        DrawTab(G, tabData);
+                        // Only draw tabs that are within or partially within the visible region
+                        if (IsTabVisible(tabData.Rectangle)) DrawTab(G, tabData);
                     }
+                }
+            }
+
+            // Reset clipping to allow beta badge and other elements to draw properly
+            G.ResetClip();
+
+            // Draw scroll indicator when overflow exists
+            if (_maxScrollOffset > 0)
+            {
+                int availableWidth = RightBoundary - LeftBoundary;
+                int tabDataListCount = TabDataList.Count;
+                int totalTabWidth = tabDataListCount * tabWidth + _paddingBetweenTabs * (tabDataListCount - 1);
+                int indicatorWidth = Math.Max(_minimumIndicatorWidth, (int)((double)availableWidth / totalTabWidth * availableWidth));
+                int indicatorX = LeftBoundary + (int)((double)_animatedScrollOffset / _maxScrollOffset * (availableWidth - indicatorWidth));
+                Rectangle indicatorRect = new(indicatorX, Height - _indicatorBottomOffset, indicatorWidth, _indicatorHeight);
+
+                using (SolidBrush indicatorBrush = new(scheme.Colors.ForeColor_Accent))
+                {
+                    G.FillRectangle(indicatorBrush, indicatorRect);
                 }
             }
         }
@@ -1855,13 +2135,16 @@ namespace WinPaletter.Tabs
         /// <param name="isMoving"></param>
         private void DrawTab(Graphics G, TabData tabData, bool isMoving = false)
         {
+            // Save the old clip before drawing
+            Region oldClip = G.Clip;
+
             Rectangle rect = !isMoving ? tabData.Rectangle : new Rectangle(_dragX, tabData.Rectangle.Y, tabData.Rectangle.Width, tabData.Rectangle.Height);
             Rectangle textRect = titleRectangle(rect);
             Rectangle closeRect = closeRectangle(rect);
             Rectangle iconRect = iconRectangle(rect);
             Bitmap icon = tabData.Image;
 
-            using (GraphicsPath path = RR(rect, radius, Program.Style.RoundedCorners))
+            using (GraphicsPath path = RR(rect, _radius, Program.Style.RoundedCorners))
             {
                 if (isMoving)
                 {
@@ -1882,8 +2165,8 @@ namespace WinPaletter.Tabs
                     using (Pen P = new(Color.FromArgb(150, scheme_secondary.Colors.Line_Hover(parentLevel))))
                     using (Pen P_Hover = new(Color.FromArgb(Math.Min(100, tabData.HoverAlpha), scheme_secondary.Colors.ForeColor_Accent)))
                     {
-                        DrawTabPath(G, path, P, rect, radius, Program.Style.RoundedCorners);
-                        DrawTabPath(G, path, P_Hover, rect, radius, Program.Style.RoundedCorners);
+                        DrawTabPath(G, path, P, rect, _radius, Program.Style.RoundedCorners);
+                        DrawTabPath(G, path, P_Hover, rect, _radius, Program.Style.RoundedCorners);
                     }
                 }
                 else
@@ -1915,14 +2198,14 @@ namespace WinPaletter.Tabs
                         // Draw a line around the tab to fix appearance issue that does not fit Windows style
                         using (Pen Px = new(win7BorderColor))
                         {
-                            DrawTabPath(G, path, Px, rect, radius, Program.Style.RoundedCorners);
+                            DrawTabPath(G, path, Px, rect, _radius, Program.Style.RoundedCorners);
 
                             if (tabData.HoverAlpha == 0)
                             {
-                                Rectangle rect_smaller = new(rect.X + 1, rect.Y + 1, rect.Width - 2, rect.Height);
-                                using (GraphicsPath path_smaller = RR(rect_smaller, radius - 1, Program.Style.RoundedCorners))
+                                Rectangle rect_smaller = new(rect.X + _rectSmallerOffset, rect.Y + _rectSmallerOffset, rect.Width - _rectSmallerWidthReduction, rect.Height);
+                                using (GraphicsPath path_smaller = RR(rect_smaller, _radius - _smallerRadiusOffset, Program.Style.RoundedCorners))
                                 {
-                                    DrawTabPath(G, path_smaller, Pens.Black, rect_smaller, radius - 1, Program.Style.RoundedCorners);
+                                    DrawTabPath(G, path_smaller, Pens.Black, rect_smaller, _radius - _smallerRadiusOffset, Program.Style.RoundedCorners);
                                 }
                             }
                         }
@@ -1934,7 +2217,7 @@ namespace WinPaletter.Tabs
                         // Draw a line around the tab to fix appearance issue that does not fit Windows style
                         using (Pen Px = new(Color.FromArgb(50, lineColor)))
                         {
-                            DrawTabPath(G, path, Px, rect, radius, Program.Style.RoundedCorners);
+                            DrawTabPath(G, path, Px, rect, _radius, Program.Style.RoundedCorners);
                         }
                     }
                     else
@@ -1943,7 +2226,7 @@ namespace WinPaletter.Tabs
 
                         using (Pen P_normal = new(normalLineColor))
                         {
-                            DrawTabPath(G, path, P_normal, rect, radius, Program.Style.RoundedCorners);
+                            DrawTabPath(G, path, P_normal, rect, _radius, Program.Style.RoundedCorners);
                         }
                     }
 
@@ -1951,7 +2234,7 @@ namespace WinPaletter.Tabs
 
                     using (Pen P_hover = new(Color.FromArgb(tabData.HoverAlpha, hoverLineColor)))
                     {
-                        DrawTabPath(G, path, P_hover, rect, radius, Program.Style.RoundedCorners);
+                        DrawTabPath(G, path, P_hover, rect, _radius, Program.Style.RoundedCorners);
                     }
 
                     // Removing alpha overlay
@@ -1983,17 +2266,24 @@ namespace WinPaletter.Tabs
             }
 
             // Draw close button on tab
-            DrawTextOnGlass(G, closeStr, Fonts.ConsoleMedium, Color.FromArgb(255 - tabData.CloseButtonAlpha, ForeColor), closeRect, sf_close);
+            DrawTextOnGlass(G, closeStr, Fonts.ConsoleMedium, Color.FromArgb(255 - tabData.CloseButtonAlpha, ForeColor), closeRect, sf_middleCenter);
 
             if (tabData.CloseButtonAlpha > 0)
             {
-                DrawTextOnGlass(G, closeStr, Fonts.ConsoleMedium, Color.FromArgb(tabData.CloseButtonAlpha, tabData.Selected ? scheme_secondary.Colors.ForeColor_Accent : ForeColor), closeRect, sf_close);
+                DrawTextOnGlass(G, closeStr, Fonts.ConsoleMedium, Color.FromArgb(tabData.CloseButtonAlpha, tabData.Selected ? scheme_secondary.Colors.ForeColor_Accent : ForeColor), closeRect, sf_middleCenter);
             }
 
             // Draw icon and text on tab
             if (icon != null) G.DrawImage(icon, iconRect);
 
-            DrawTextOnGlass(G, tabData.Text, tabData.Selected ? selectedFont : Font, ForeColor, textRect, sf);
+            // Only draw title if tab is not condensed (has room for text)
+            if (rect.Width > minTabWidth)
+            {
+                DrawTextOnGlass(G, tabData.Text, tabData.Selected ? selectedFont : Font, ForeColor, textRect, sf);
+            }
+
+            // Restore the old clip after drawing
+            G.Clip = oldClip;
         }
 
         void DrawTextOnGlass(Graphics g, string text, Font font, Color foreColor, Rectangle rect, StringFormat sf)

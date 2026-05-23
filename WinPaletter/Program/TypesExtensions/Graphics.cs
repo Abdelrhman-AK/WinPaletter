@@ -133,7 +133,7 @@ namespace WinPaletter.TypesExtensions
         /// <param name="glowColor">The secondary color used for blending with <paramref name="colorizationColor"/> to create a gradient effect.</param>
         /// <param name="glowBalance">A value between 0 and 1 that controls the intensity of the glow effect. Higher values produce a stronger glow.</param>
         /// <param name="alpha">A value between 0 and 1 that specifies the transparency of the effect. Higher values make the effect more opaque.</param>
-        /// <param name="radius">The corner radius for rounded rectangles. Ignored if <paramref name="roundedCorners"/> is <see langword="false"/>.</param>
+        /// <param name="radius">The corner _radius for rounded rectangles. Ignored if <paramref name="roundedCorners"/> is <see langword="false"/>.</param>
         /// <param name="roundedCorners">A <see langword="bool"/> indicating whether the effect should use rounded corners. If <see langword="true"/>,
         /// rounded corners are applied.</param>
         /// <summary>
@@ -236,10 +236,10 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Creates a rounded rectangle as a <see cref="GraphicsPath"/> with the specified corner radius.
+        /// Creates a rounded rectangle as a <see cref="GraphicsPath"/> with the specified corner _radius.
         /// </summary>
         /// <param name="rectangle">The <see cref="Rectangle"/> to round.</param>
-        /// <param name="radius">The radius of the corners. If set to -1, the radius will default to half the smaller dimension of the rectangle.</param>
+        /// <param name="radius">The _radius of the corners. If set to -1, the _radius will default to half the smaller dimension of the rectangle.</param>
         /// <returns>A <see cref="GraphicsPath"/> representing the rounded rectangle.</returns>
         public static GraphicsPath Round(this Rectangle rectangle, int radius = -1, RoundedCorners corners = RoundedCorners.All)
         {
@@ -251,13 +251,13 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         /// <remarks>This method adjusts the shape of the rectangle based on its dimensions: <list
         /// type="bullet"> <item>If the rectangle is too narrow or short, the result may be a capsule shape.</item>
-        /// <item>If the radius is zero or the rectangle's dimensions are too small, the result will be a standard
+        /// <item>If the _radius is zero or the rectangle's dimensions are too small, the result will be a standard
         /// rectangle.</item> </list></remarks>
         /// <param name="rectangle">The <see cref="RectangleF"/> that defines the bounds of the shape.</param>
-        /// <param name="radius">The radius of the rounded corners. If negative, a default radius is used. The radius is clamped to ensure it
+        /// <param name="radius">The _radius of the rounded corners. If negative, a default _radius is used. The _radius is clamped to ensure it
         /// does not exceed half the width or height of the rectangle.</param>
         /// <returns>A <see cref="GraphicsPath"/> representing the rounded rectangle. If the rectangle's dimensions are too small
-        /// or the radius is zero, the path will represent a standard rectangle.</returns>
+        /// or the _radius is zero, the path will represent a standard rectangle.</returns>
         public static GraphicsPath Round(this RectangleF rectangle, int radius = -1, RoundedCorners corners = RoundedCorners.All)
         {
             float width = rectangle.Width;
@@ -485,7 +485,7 @@ namespace WinPaletter.TypesExtensions
             bool useRoundedCorners = Program.Style.RoundedCorners || forcedRoundCorner;
             if (radius == -1) radius = Program.Style.Radius;
 
-            // Clamp radius to half of width/height to avoid overlapping arcs
+            // Clamp _radius to half of width/height to avoid overlapping arcs
             radius = Math.Min(radius, Math.Min(rectangleF.Width, rectangleF.Height) / 2f);
 
             Color baseColor = pen.Brush is LinearGradientBrush lgb ? lgb.LinearColors[0] : pen.Color;

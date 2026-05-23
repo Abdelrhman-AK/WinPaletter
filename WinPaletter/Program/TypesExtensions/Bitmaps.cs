@@ -97,7 +97,7 @@ namespace WinPaletter.TypesExtensions
         /// <param name="bitmap">The source <see cref="Bitmap"/> to blur. Cannot be <see langword="null"/>.</param>
         /// <param name="blurPower">
         /// Controls blur intensity. For <see cref="BlurType.Gaussian"/>, this is the sigma value of the Gaussian kernel.
-        /// For <see cref="BlurType.Box"/>, this is the kernel radius in pixels. For <see cref="BlurType.Frosted"/>, combines Gaussian with noise.
+        /// For <see cref="BlurType.Box"/>, this is the kernel _radius in pixels. For <see cref="BlurType.Frosted"/>, combines Gaussian with noise.
         /// Must be greater than 0. Defaults to 2.0f.
         /// </param>
         /// <param name="blurType">The blur algorithm to use. Defaults to <see cref="BlurType.Gaussian"/>.</param>

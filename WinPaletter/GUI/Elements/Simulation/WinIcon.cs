@@ -52,7 +52,7 @@ namespace WinPaletter.UI.Simulation
         public Color ColorGlow { get; set; } = Color.FromArgb(50, 0, 0, 0);
 
         private Icon _icon = null;
-        private Icon _processedIcon = null; // the icon that matches IconSize
+        private Icon _processedIcon = null; // the icon that matches _iconSize
         public Icon Icon
         {
             get => _processedIcon ?? _icon;
@@ -65,7 +65,7 @@ namespace WinPaletter.UI.Simulation
 
                     _icon = value;
 
-                    // Process icon for current IconSize
+                    // Process icon for current _iconSize
                     _processedIcon = _icon.FromSize(_IconSize);
                     Invalidate();
                 }

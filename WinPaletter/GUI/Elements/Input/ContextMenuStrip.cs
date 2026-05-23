@@ -435,20 +435,20 @@ namespace WinPaletter.UI.WP
 
                 using (Bitmap small = new(w, h))
                 {
-                    using (Graphics g = Graphics.FromImage(small))
+                    using (Graphics G = Graphics.FromImage(small))
                     {
-                        g.InterpolationMode = InterpolationMode.Bilinear;
-                        g.DrawImage(capture, 0, 0, w, h);
+                        G.InterpolationMode = InterpolationMode.Bilinear;
+                        G.DrawImage(capture, 0, 0, w, h);
                     }
 
-                    using (Bitmap blurredSmall = small.Blur(4))
+                    using (Bitmap blurredSmall = small.Blur(3))
                     {
                         BlurredBackground = new Bitmap(capture.Width, capture.Height);
-                        using (Graphics g = Graphics.FromImage(BlurredBackground))
+                        using (Graphics G = Graphics.FromImage(BlurredBackground))
                         {
-                            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
-                            g.DrawImage(capture, 0, 0, Width, Height);
-                            g.DrawImage(blurredSmall, 0, 0, Width, Height);
+                            G.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                            G.DrawImage(capture, 0, 0, Width, Height);
+                            G.DrawImage(blurredSmall, 0, 0, Width, Height);
                         }
                     }
                 }

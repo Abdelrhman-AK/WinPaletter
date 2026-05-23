@@ -81,7 +81,7 @@ namespace WinPaletter.UI.Style
         public bool RoundedCorners { get; set; } = GetRoundedCorners();
 
         /// <summary>
-        /// Gets or sets the radius of the rounded corners if <see cref="RoundedCorners"/> is set to true
+        /// Gets or sets the _radius of the rounded corners if <see cref="RoundedCorners"/> is set to true
         /// </summary>
 
         public int Radius => 4;
