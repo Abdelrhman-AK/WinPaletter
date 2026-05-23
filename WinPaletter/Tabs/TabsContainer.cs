@@ -176,7 +176,7 @@ namespace WinPaletter.Tabs
                 overCloseButton = overCloseBtn;
 
                 // Update hover circle animation when entering a new tab
-                if (_hoveredTabData != hoveredTab && State != MouseState.Down)
+                if (_hoveredTabData != hoveredTab)
                 {
                     _hoveredTabData = hoveredTab;
                     hoverPosition = mousePos;
@@ -211,7 +211,7 @@ namespace WinPaletter.Tabs
             else
             {
                 // Reset hover when not over any tab
-                if (_hoveredTabData != null && State == MouseState.None)
+                if (_hoveredTabData != null)
                 {
                     _hoveredTabData = null;
 
@@ -321,6 +321,30 @@ namespace WinPaletter.Tabs
 
         private int tabWidth => Math.Min(MaxWidth, Width / _tabControl.TabPages.Count);
         private int tabHeight => Height - upperTabPadding;
+
+        /// <summary>
+        /// Gets the effective left boundary for tabs (left padding)
+        /// </summary>
+        private int LeftBoundary => paddingBetweenTabs;
+
+        /// <summary>
+        /// Gets the effective right boundary for tabs (right padding, or BETA badge left padding if present)
+        /// </summary>
+        private int RightBoundary
+        {
+            get
+            {
+                if (Program.IsBeta)
+                {
+                    SizeF betaSize = Program.Localization.Strings.General.Beta.ToUpper().Measure(Fonts.ConsoleMedium) + new SizeF(2, 2);
+                    return Width - (int)betaSize.Width - 5 - paddingBetweenTabs;
+                }
+                else
+                {
+                    return Width - paddingBetweenTabs;
+                }
+            }
+        }
 
         /// <summary>
         /// Count of tabs in current TabContainer
@@ -476,7 +500,22 @@ namespace WinPaletter.Tabs
 
         private TabData CreateTabData(TabPage page, int index)
         {
-            Rectangle tabRectangle = new(index * tabWidth + paddingBetweenTabs, upperTabPadding, tabWidth - paddingBetweenTabs, tabHeight);
+            int tabX = index * tabWidth + paddingBetweenTabs;
+            int tabW = tabWidth - paddingBetweenTabs;
+
+            // Ensure tab doesn't exceed right boundary
+            if (tabX + tabW > RightBoundary)
+            {
+                tabW = RightBoundary - tabX;
+            }
+
+            // Ensure tab doesn't go beyond left boundary
+            if (tabX < LeftBoundary)
+            {
+                tabX = LeftBoundary;
+            }
+
+            Rectangle tabRectangle = new(tabX, upperTabPadding, tabW, tabHeight);
             return new TabData(this, page, tabRectangle);
         }
 
@@ -628,7 +667,24 @@ namespace WinPaletter.Tabs
                 {
                     if (IsMouseOverTab(tabData))
                     {
+                        // Store the mouse position for hover re-evaluation after removal
+                        Point mousePos = e.Location;
+                        
                         tabData.Form.Close();
+                        
+                        // Schedule hover re-evaluation after a short delay to allow tab removal to complete
+                        System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer { Interval = 50 };
+                        timer.Tick += (s, args) =>
+                        {
+                            timer.Stop();
+                            timer.Dispose();
+                            
+                            // Re-evaluate hover state
+                            Point currentMousePos = PointToClient(MousePosition);
+                            HandleHoverForTab(new MouseEventArgs(MouseButtons.None, 0, currentMousePos.X, currentMousePos.Y, 0));
+                        };
+                        timer.Start();
+                        
                         break;
                     }
                 }
@@ -704,6 +760,16 @@ namespace WinPaletter.Tabs
 
             // _dragX: client-space left edge of the dragged tab
             _dragX = PointToClient(MousePosition).X - tabOldPoint.X;
+
+            // Constrain drag position to boundaries
+            if (_dragX < LeftBoundary)
+            {
+                _dragX = LeftBoundary;
+            }
+            else if (_dragX + dragged.Rectangle.Width > RightBoundary)
+            {
+                _dragX = RightBoundary - dragged.Rectangle.Width;
+            }
 
             int draggedCenter = _dragX + dragged.Rectangle.Width / 2;
 
@@ -1195,6 +1261,59 @@ namespace WinPaletter.Tabs
 
             tabData.Dispose();
 
+            // Reset hover state after tab removal to fix hover not working after middle-click close
+            State = MouseState.None;
+            _hoveredTabData = null;
+            overCloseButton = false;
+            
+            // Reset all tab hover states
+            foreach (TabData t in TabDataList)
+            {
+                if (t != null)
+                {
+                    t.Hovered = false;
+                    t.CloseButtonAlpha = 0;
+                }
+            }
+            
+            if (CanAnimate_Global)
+            {
+                FluentTransitions.Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+            }
+            else
+            {
+                HoverSize = 0;
+            }
+
+            // Force hover re-evaluation after tab removal
+            Point mousePos = PointToClient(MousePosition);
+            TabData newHoveredTab = null;
+            foreach (TabData tabDataX in TabDataList)
+            {
+                if (tabDataX != null && tabDataX.Rectangle.Contains(mousePos))
+                {
+                    newHoveredTab = tabDataX;
+                    break;
+                }
+            }
+
+            // If mouse is over a tab after removal, set hover state directly
+            if (newHoveredTab != null)
+            {
+                _hoveredTabData = newHoveredTab;
+                hoverPosition = mousePos;
+                int defaultHoverSize = Math.Max(newHoveredTab.Rectangle.Width, newHoveredTab.Rectangle.Height);
+                if (CanAnimate_Global)
+                {
+                    FluentTransitions.Transition.With(this, nameof(HoverSize), defaultHoverSize).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                }
+                else
+                {
+                    HoverSize = defaultHoverSize;
+                }
+                newHoveredTab.Hovered = true;
+            }
+
             Refresh();
 
             // try is made to bypass ex error of that object is in use elsewhere
@@ -1418,6 +1537,21 @@ namespace WinPaletter.Tabs
 
                 // Reset mouse state to allow hover animation to work
                 State = MouseState.None;
+
+                // Reset hover size to default value on mouse up
+                TabData hoveredTab = GetTabAtMousePosition(new MouseEventArgs(MouseButtons.None, 0, PointToClient(MousePosition).X, PointToClient(MousePosition).Y, 0));
+                if (hoveredTab != null)
+                {
+                    int defaultHoverSize = Math.Max(hoveredTab.Rectangle.Width, hoveredTab.Rectangle.Height);
+                    if (CanAnimate_Global)
+                    {
+                        FluentTransitions.Transition.With(this, nameof(HoverSize), defaultHoverSize).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                    }
+                    else
+                    {
+                        HoverSize = defaultHoverSize;
+                    }
+                }
 
                 // Re-evaluate hover state after mouse up to restore hover animation
                 Point mousePos = PointToClient(MousePosition);
