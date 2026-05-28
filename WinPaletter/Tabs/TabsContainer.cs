@@ -85,6 +85,7 @@ namespace WinPaletter.Tabs
 
         private Point tabOldPoint = new();
         private Point locationOldPoint = new();
+        private Point mouseDownPoint = new();
 
         private int _dragX = 0;
 
@@ -319,12 +320,14 @@ namespace WinPaletter.Tabs
 
             if (TabDataList.Count > 0 && TabDataList[TabDataList.Count - 1] != null)
             {
-                skipTabDataRecreation = true;
-                _ = Task.Run(async () =>
-                {
-                    await TabDataList[TabDataList.Count - 1].Show(() => Invalidate());
-                    this.BeginInvoke(() => skipTabDataRecreation = false);
-                });
+                    skipTabDataRecreation = true;
+                    var finalTab = TabDataList[TabDataList.Count - 1];
+                    // Ensure Show() runs on UI thread so FluentTransitions executes properly
+                    _ = finalTab.Show(() => Invalidate()).ContinueWith(_ =>
+                    {
+                        if (this.IsHandleCreated)
+                            this.BeginInvoke(() => skipTabDataRecreation = false);
+                    });
             }
 
             TP.Controls.Add(form);
@@ -629,9 +632,12 @@ namespace WinPaletter.Tabs
 
                 if (!selected)
                 {
-                    tab.CancelTransition(nameof(TabData.SelectionAlpha));
-                    tab.SelectionAlpha = 0;
                     tab.Selected = false;
+
+                    if (!(CanAnimate_Global && !_isResizing))
+                    {
+                        tab.SelectionAlpha = 0;
+                    }
                 }
                 else
                 {
@@ -753,10 +759,38 @@ namespace WinPaletter.Tabs
                         _tabControl.SelectedTab = TabDataList[_selectedIndex].TabPage;
                     }
 
-                    foreach (TabData t in TabDataList)
-                    {
-                        t.Selected = TabDataList[_selectedIndex].Form == t.Form && !t.IsRemoving;
-                    }
+                        foreach (TabData t in TabDataList)
+                        {
+                            bool shouldBeSelected = TabDataList[_selectedIndex].Form == t.Form && !t.IsRemoving;
+
+                        if (t.Selected != shouldBeSelected)
+                        {
+                            t.CancelTransition(nameof(TabData.SelectionAlpha));
+
+                            if (shouldBeSelected)
+                            {
+                                if (CanAnimate_Global && !_isResizing)
+                                {
+                                    t.SelectionAlpha = 0; // start from 0 so TabData.Selected animates to 255
+                                }
+                                else
+                                {
+                                    t.SelectionAlpha = 255;
+                                }
+
+                                t.Selected = true;
+                            }
+                            else
+                            {
+                                t.Selected = false; // TabData.Selected will animate to 0 if allowed
+
+                                if (!(CanAnimate_Global && !_isResizing))
+                                {
+                                    t.SelectionAlpha = 0;
+                                }
+                            }
+                        }
+                        }
                 }
                 else
                 {
@@ -813,6 +847,14 @@ namespace WinPaletter.Tabs
                                 moveTo = moveFrom;
                                 _dragX = tabData.Rectangle.Left;
                                 tabOldPoint = new Point(PointToClient(MousePosition).X - tabData.Rectangle.Left, PointToClient(MousePosition).Y - tabData.Rectangle.Top);
+                                mouseDownPoint = PointToClient(MousePosition);
+                                
+                                // Select the tab when mouse down occurs on it
+                                if (tabData.TabPage != _tabControl.SelectedTab)
+                                {
+                                    SelectedIndex = GetIndex(tabData);
+                                }
+                                
                                 break;
                             }
                             else
@@ -927,6 +969,17 @@ namespace WinPaletter.Tabs
         {
             if (e.Button == MouseButtons.Left && moveFrom != -1)
             {
+                if (!isMovingTab)
+                {
+                    Point current = PointToClient(MousePosition);
+                    int dx = current.X - mouseDownPoint.X;
+                    int dy = current.Y - mouseDownPoint.Y;
+                    if (dx * dx + dy * dy < 4) // require ~2 pixels movement before starting drag
+                    {
+                        return;
+                    }
+                }
+
                 HandleTabMove(e);
             }
             else if (e.Button == MouseButtons.Left && FindForm() != null && !overCloseButton)
@@ -1341,7 +1394,6 @@ namespace WinPaletter.Tabs
                     forceChangeSelectedIndex = false;
                     _selectedIndex = AdjustSelectedIndex(value);
                     UpdateSelectedTab();
-                    Refresh();
                 }
             }
         }
@@ -1433,16 +1485,35 @@ namespace WinPaletter.Tabs
                 TabDataList[TabDataList.Count - 1].TabTop = Height;
                 SelectedIndex = TabDataList.Count - 1;
 
-                // Animate tab showing (TabTop and SelectionAlpha)
+                // Animate tab showing (TabTop and SelectionAlpha) on UI thread
                 if (TabDataList.Count > 0 && TabDataList[TabDataList.Count - 1] != null)
                 {
                     skipTabDataRecreation = true;
-                    _ = Task.Run(async () =>
-                    {
-                        await TabDataList[TabDataList.Count - 1].Show(() => Invalidate());
-                        this.BeginInvoke(() => skipTabDataRecreation = false);
-                    });
+                    var newTab = TabDataList[TabDataList.Count - 1];
+                    _ = ShowTabAsync(newTab);
                 }
+            }
+        }
+
+        private async System.Threading.Tasks.Task ShowTabAsync(TabData tab)
+        {
+            try
+            {
+                await tab.Show(() => Invalidate());
+            }
+            catch
+            {
+                // Ignore animation exceptions
+            }
+
+            if (this.IsHandleCreated)
+            {
+                try { this.BeginInvoke(() => skipTabDataRecreation = false); }
+                catch { skipTabDataRecreation = false; }
+            }
+            else
+            {
+                skipTabDataRecreation = false;
             }
         }
 
@@ -1473,13 +1544,14 @@ namespace WinPaletter.Tabs
             }
 
             int SI = SelectedIndex;
+            bool removedWasSelected = (GetIndex(tabData) == SI) || (tabData.TabPage == SelectedTab);
 
-            await tabData.Hide(animate, () => AfterRemovingTab(tabData, animate, SI));
+            await tabData.Hide(animate, () => AfterRemovingTab(tabData, animate, SI, removedWasSelected));
 
             if (FindForm() is not null) FindForm().BackgroundImage = null;
         }
 
-        private void AfterRemovingTab(TabData tabData, bool animate, int SI)
+        private void AfterRemovingTab(TabData tabData, bool animate, int SI, bool removedWasSelected)
         {
             TabDataList.Remove(tabData);
 
@@ -1541,6 +1613,61 @@ namespace WinPaletter.Tabs
                     HoverSize = defaultHoverSize;
                 }
                 newHoveredTab.Hovered = true;
+            }
+
+            // Animate SelectionAlpha (always allowed) and TabTop only if the removed tab was selected
+            if (SI >= 0 && SI < TabDataList.Count && TabDataList[SI] != null)
+            {
+                TabData newlySelectedTab = TabDataList[SI];
+                if (animate && CanAnimate_Global)
+                {
+                    skipTabDataRecreation = true;
+
+
+                    // Always animate SelectionAlpha. If the removed tab was selected, start from 0.
+                    var tcsSelection = new TaskCompletionSource<bool>();
+                    if (removedWasSelected)
+                    {
+                        newlySelectedTab.SelectionAlpha = 0;
+                    }
+
+                    FluentTransitions.Transition
+                        .With(newlySelectedTab, nameof(TabData.SelectionAlpha), 255)
+                        .HookOnCompletion(() => tcsSelection.TrySetResult(true))
+                        .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+
+                    if (removedWasSelected)
+                    {
+                        // Only animate TabTop when the removed tab was the selected one
+                        var tcsTop = new TaskCompletionSource<bool>();
+                        newlySelectedTab.TabTop = Height;
+                        FluentTransitions.Transition
+                            .With(newlySelectedTab, nameof(TabData.TabTop), _upperTabPadding)
+                            .HookOnCompletion(() => tcsTop.TrySetResult(true))
+                            .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+
+                        _ = Task.Run(async () =>
+                        {
+                            await Task.WhenAll(tcsSelection.Task, tcsTop.Task);
+                            this.BeginInvoke(() => skipTabDataRecreation = false);
+                            this.BeginInvoke(() => Invalidate());
+                        });
+                    }
+                    else
+                    {
+                        _ = Task.Run(async () =>
+                        {
+                            await tcsSelection.Task;
+                            this.BeginInvoke(() => skipTabDataRecreation = false);
+                            this.BeginInvoke(() => Invalidate());
+                        });
+                    }
+                }
+                else
+                {
+                    // If not animating, ensure SelectionAlpha is set immediately
+                    newlySelectedTab.SelectionAlpha = 255;
+                }
             }
 
             Refresh();
@@ -2038,9 +2165,9 @@ namespace WinPaletter.Tabs
                 {
                     TabData movingTab = null;
 
-                    if (moveFrom != -1 && moveFrom < tabsToDraw.Count)
+                    if (moveFrom != -1 && moveFrom < TabDataList.Count)
                     {
-                        movingTab = tabsToDraw[moveFrom];
+                        movingTab = TabDataList[moveFrom];
                     }
 
                     foreach (TabData tabData in tabsToDraw)

@@ -138,8 +138,8 @@ namespace WinPaletter.Tabs
                     // Cancel existing selection transition before starting new one
                     CancelTransition(nameof(SelectionAlpha));
 
-                    // Animate selection alpha
-                    if (Program.Style.Animations)
+                    // Animate selection alpha if container allows animation
+                    if (tabsContainer != null && tabsContainer.CanAnimate_Global)
                     {
                         var transition = Transition.With(this, nameof(SelectionAlpha), value ? 255 : 0);
                         transition.CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
