@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 using WinPaletter.UI.Controllers;
+using WinPaletter.Properties;
 using static WinPaletter.UI.Style.Config;
 
 namespace WinPaletter.Tabs
@@ -47,6 +48,11 @@ namespace WinPaletter.Tabs
         private static readonly int _clipHeightOffset = 2;
         private static readonly int _smallerRadiusOffset = 1;
         private int _hoverSize;
+        // Progress animation (marquee + highlight)
+        private System.Windows.Forms.Timer _tabMarqueeTimer;
+        private System.Windows.Forms.Timer _tabProgressTimer;
+        private float _marqueeOffset = 0f;
+        private float _hoverOffset = 0f;
 
         private int _scrollOffset = 0;
         private int _maxScrollOffset = 0;
@@ -94,6 +100,7 @@ namespace WinPaletter.Tabs
 
         private Point hoverPosition;
         private TabData _hoveredTabData;
+        private static TextureBrush _noise = new(Resources.Noise);
 
         public enum MouseState { None, Over, Down }
         public MouseState State = MouseState.None;
@@ -320,14 +327,14 @@ namespace WinPaletter.Tabs
 
             if (TabDataList.Count > 0 && TabDataList[TabDataList.Count - 1] != null)
             {
-                    skipTabDataRecreation = true;
-                    var finalTab = TabDataList[TabDataList.Count - 1];
-                    // Ensure Show() runs on UI thread so FluentTransitions executes properly
-                    _ = finalTab.Show(() => Invalidate()).ContinueWith(_ =>
-                    {
-                        if (this.IsHandleCreated)
-                            this.BeginInvoke(() => skipTabDataRecreation = false);
-                    });
+                skipTabDataRecreation = true;
+                var finalTab = TabDataList[TabDataList.Count - 1];
+                // Ensure Show() runs on UI thread so FluentTransitions executes properly
+                _ = finalTab.Show(() => Invalidate()).ContinueWith(_ =>
+                {
+                    if (this.IsHandleCreated)
+                        this.BeginInvoke(() => skipTabDataRecreation = false);
+                });
             }
 
             TP.Controls.Add(form);
@@ -619,6 +626,61 @@ namespace WinPaletter.Tabs
             }
         }
 
+        // Progress timer management for marquee animation across tabs
+        private void EnsureTabTimersInitialized()
+        {
+            if (_tabMarqueeTimer != null && _tabProgressTimer != null) return;
+
+            // Marquee timer: match ProgressBar default behaviour
+            if (_tabMarqueeTimer == null)
+            {
+                int marqueeInterval = Math.Max(1, 2000 / 100); // MarqueeAnimationSpeed default = 100
+                _tabMarqueeTimer = new System.Windows.Forms.Timer { Interval = marqueeInterval };
+                _tabMarqueeTimer.Tick += (s, e) =>
+                {
+                    _marqueeOffset += 0.02f;
+                    if (_marqueeOffset > 1f) _marqueeOffset = 0f;
+                    if (TabDataList != null && TabDataList.Any(t => t != null && t.ProgressMarquee)) Invalidate();
+                };
+            }
+
+            // Highlight/progress timer: match ProgressBar highlight behaviour
+            if (_tabProgressTimer == null)
+            {
+                int progressInterval = Math.Max(1, 3500 / 300); // HighlightAnimationSpeed default = 300
+                _tabProgressTimer = new System.Windows.Forms.Timer { Interval = progressInterval };
+                _tabProgressTimer.Tick += (s, e) =>
+                {
+                    _hoverOffset += 0.01f;
+                    if (_hoverOffset > 1f) _hoverOffset = 0f;
+                    if (TabDataList != null && TabDataList.Any(t => t != null && t.ProgressEnabled && t.ProgressValue > 0)) Invalidate();
+                };
+            }
+        }
+
+        internal void StartProgressTimer()
+        {
+            EnsureTabTimersInitialized();
+            try
+            {
+                if (_tabMarqueeTimer != null && !_tabMarqueeTimer.Enabled) _tabMarqueeTimer.Start();
+                if (_tabProgressTimer != null && !_tabProgressTimer.Enabled) _tabProgressTimer.Start();
+            }
+            catch { }
+        }
+
+        internal void StopProgressTimer()
+        {
+            try
+            {
+                if (_tabMarqueeTimer != null && _tabMarqueeTimer.Enabled) _tabMarqueeTimer.Stop();
+                if (_tabProgressTimer != null && _tabProgressTimer.Enabled) _tabProgressTimer.Stop();
+            }
+            catch { }
+            _marqueeOffset = 0f;
+            _hoverOffset = 0f;
+        }
+
         private void NormalizeSelectionAlpha()
         {
             if (TabDataList == null) return;
@@ -759,9 +821,9 @@ namespace WinPaletter.Tabs
                         _tabControl.SelectedTab = TabDataList[_selectedIndex].TabPage;
                     }
 
-                        foreach (TabData t in TabDataList)
-                        {
-                            bool shouldBeSelected = TabDataList[_selectedIndex].Form == t.Form && !t.IsRemoving;
+                    foreach (TabData t in TabDataList)
+                    {
+                        bool shouldBeSelected = TabDataList[_selectedIndex].Form == t.Form && !t.IsRemoving;
 
                         if (t.Selected != shouldBeSelected)
                         {
@@ -790,7 +852,7 @@ namespace WinPaletter.Tabs
                                 }
                             }
                         }
-                        }
+                    }
                 }
                 else
                 {
@@ -848,13 +910,13 @@ namespace WinPaletter.Tabs
                                 _dragX = tabData.Rectangle.Left;
                                 tabOldPoint = new Point(PointToClient(MousePosition).X - tabData.Rectangle.Left, PointToClient(MousePosition).Y - tabData.Rectangle.Top);
                                 mouseDownPoint = PointToClient(MousePosition);
-                                
+
                                 // Select the tab when mouse down occurs on it
                                 if (tabData.TabPage != _tabControl.SelectedTab)
                                 {
                                     SelectedIndex = GetIndex(tabData);
                                 }
-                                
+
                                 break;
                             }
                             else
@@ -1472,6 +1534,7 @@ namespace WinPaletter.Tabs
             sf?.Dispose();
             sf_middleCenter?.Dispose();
             selectedFont?.Dispose();
+            try { StopProgressTimer(); _tabMarqueeTimer?.Dispose(); _tabProgressTimer?.Dispose(); } catch { }
             base.Dispose(disposing);
         }
 
@@ -2235,6 +2298,7 @@ namespace WinPaletter.Tabs
             Rectangle closeRect = closeRectangle(rect);
             Rectangle iconRect = iconRectangle(rect);
             Bitmap icon = tabData.Image;
+            bool shouldDrawProgress = tabData.ProgressMarquee || (tabData.ProgressEnabled && tabData.ProgressValue > 0);
 
             using (GraphicsPath path = RR(rect, _radius, Program.Style.RoundedCorners))
             {
@@ -2277,6 +2341,81 @@ namespace WinPaletter.Tabs
                         }
                     }
 
+                    // Draw progress fill or marquee clipped to tab rounded path
+                    if (shouldDrawProgress)
+                    {
+                        oldClip = G.Clip;
+                        G.SetClip(path);
+
+                        Color accent = scheme.Colors.ForeColor_Accent.Blend(scheme.Colors.Line_Hover(parentLevel), tabData.SelectionAlpha / 255f);
+
+                        if (tabData.ProgressMarquee)
+                        {
+                            int marqueeWidth = Math.Max(16, (int)(rect.Width * 0.25f));
+                            float marqueeLeft = -marqueeWidth + (rect.Width + marqueeWidth) * _marqueeOffset;
+                            RectangleF marqueeRect = new(marqueeLeft + rect.X, rect.Y, marqueeWidth, rect.Height);
+
+                            using (LinearGradientBrush brush = new(marqueeRect, Color.Transparent, Color.Transparent, LinearGradientMode.Horizontal))
+                            {
+                                ColorBlend cb = new()
+                                {
+                                    Colors = [Color.Transparent, Color.FromArgb(120, accent), Color.Transparent],
+                                    Positions = [0f, 0.5f, 1f]
+                                };
+                                brush.InterpolationColors = cb;
+                                G.FillRoundedRect(brush, marqueeRect);
+                            }
+                        }
+                        else
+                        {
+                            int w = (int)(rect.Width * tabData.ProgressValue / 100.0);
+                            if (w > 0)
+                            {
+                                Rectangle fillRect = new(rect.X, rect.Y, w, rect.Height);
+
+                                // Use gradient similar to ProgressBar normal fill
+                                Color stateColor = scheme.Colors.ForeColor_Accent.Blend(Color.FromArgb(200, scheme.Colors.Line_Hover(parentLevel)), tabData.SelectionAlpha / 255f);
+                                using (LinearGradientBrush br = new(fillRect, Program.Style.DarkMode ? stateColor.Dark(0.05f) : stateColor.Light(), stateColor, (float)(tabData.ProgressValue / 100.0) * 360f, true))
+                                {
+                                    G.FillRoundedRect(br, fillRect);
+                                }
+
+                                // Noise overlay
+                                G.FillRoundedRect(_noise, fillRect);
+
+                                // Moving highlight effect (only when progress in range)
+                                if (tabData.ProgressEnabled && Program.Style.Animations)
+                                {
+                                    float highlightWidth = Math.Max(1, fillRect.Width * 0.3f);
+                                    float offset = (_hoverOffset * (fillRect.Width + highlightWidth));
+                                    float highlightLeft = rect.X + (offset - highlightWidth);
+
+                                    RectangleF highlightRect = new(highlightLeft, fillRect.Top, highlightWidth, fillRect.Height);
+
+                                    // Clip to fillRect region while drawing highlight
+                                    Region oldClip3 = G.Clip;
+                                    G.SetClip(fillRect);
+
+                                    Color hilightColor = Program.Style.DarkMode ? stateColor.Light() : stateColor.Dark();
+                                    using (LinearGradientBrush hbrush = new(highlightRect, Color.Transparent, hilightColor, LinearGradientMode.Horizontal))
+                                    {
+                                        ColorBlend cb2 = new()
+                                        {
+                                            Colors = [Color.Transparent, Color.FromArgb(160, hilightColor), Color.Transparent],
+                                            Positions = [0f, 0.5f, 1f]
+                                        };
+                                        hbrush.InterpolationColors = cb2;
+                                        G.FillRoundedRect(hbrush, highlightRect);
+                                    }
+
+                                    G.Clip = oldClip3;
+                                }
+                            }
+                        }
+
+                        G.Clip = oldClip;
+                    }
+
                     if (OS.WVista || OS.W7)
                     {
                         using (Pen Px = new(win7BorderColor))
@@ -2304,7 +2443,7 @@ namespace WinPaletter.Tabs
                     }
                     else
                     {
-                        Color normalLineColor = Color.FromArgb(tabData.SelectionAlpha, scheme.Colors.Line_Hover(parentLevel));
+                        Color normalLineColor = Color.FromArgb(shouldDrawProgress ? 255 : tabData.SelectionAlpha, scheme.Colors.Line_Hover(parentLevel));
 
                         using (Pen P_normal = new(normalLineColor))
                         {

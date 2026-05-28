@@ -519,6 +519,9 @@ namespace WinPaletter.TypesExtensions
             if (amount < 0f) amount = 0f;
             else if (amount > 1f) amount = 1f;
 
+            if (amount == 0f) return backColor;
+            else if (amount == 1f) return color;
+
             byte a = (byte)(color.A * amount + backColor.A * (1 - amount));
             byte r = (byte)(color.R * amount + backColor.R * (1 - amount));
             byte g = (byte)(color.G * amount + backColor.G * (1 - amount));

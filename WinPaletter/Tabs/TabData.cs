@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
+using WinPaletter.UI.WP;
 
 namespace WinPaletter.Tabs
 {
@@ -381,6 +382,90 @@ namespace WinPaletter.Tabs
         }
         private int _closeButtonAlpha = 0;
 
+        // Progress related
+        private int _progressValue = 0; // 0..100
+        /// <summary>
+        /// Progress value for this tab (0-100). If TaskbarBroadcasting ProgressBar exists on the form,
+        /// its value will be reflected here.
+        /// </summary>
+        public int ProgressValue
+        {
+            get => _progressValue;
+            set
+            {
+                int v = Math.Max(0, Math.Min(100, value));
+                if (_progressValue != v)
+                {
+                    _progressValue = v;
+                    if (tabsContainer != null)
+                    {
+                        if (tabsContainer.InvokeRequired)
+                            tabsContainer.BeginInvoke(() => tabsContainer.Invalidate(_rectangle));
+                        else
+                            tabsContainer.Invalidate(_rectangle);
+                    }
+                }
+            }
+        }
+
+        private bool _progressMarquee = false;
+        /// <summary>
+        /// If true, show marquee animation instead of continuous fill.
+        /// </summary>
+        public bool ProgressMarquee
+        {
+            get => _progressMarquee;
+            set
+            {
+                if (_progressMarquee != value)
+                {
+                    _progressMarquee = value;
+                    if (tabsContainer != null)
+                    {
+                        if (tabsContainer.InvokeRequired)
+                            tabsContainer.BeginInvoke(() => tabsContainer.Invalidate(_rectangle));
+                        else
+                            tabsContainer.Invalidate(_rectangle);
+
+                        try
+                        {
+                            if (_progressMarquee)
+                                tabsContainer.StartProgressTimer();
+                            else if (!tabsContainer.TabDataList.Any(t => t != null && t.ProgressMarquee))
+                                tabsContainer.StopProgressTimer();
+                        }
+                        catch { }
+                    }
+                }
+            }
+        }
+
+        private bool _progressEnabled = false;
+        /// <summary>
+        /// Whether the progress should be drawn. False when value equals Minimum or Maximum and not marquee.
+        /// </summary>
+        public bool ProgressEnabled
+        {
+            get => _progressEnabled;
+            set
+            {
+                if (_progressEnabled != value)
+                {
+                    _progressEnabled = value;
+                    if (tabsContainer != null)
+                    {
+                        if (tabsContainer.InvokeRequired)
+                            tabsContainer.BeginInvoke(() => tabsContainer.Invalidate(_rectangle));
+                        else
+                            tabsContainer.Invalidate(_rectangle);
+                    }
+                }
+            }
+        }
+
+        // tracked progressbar controls for unsubscribing
+        private List<UI.WP.ProgressBar> trackedProgressBars = new();
+
         #endregion
 
         #region Constructors
@@ -460,6 +545,46 @@ namespace WinPaletter.Tabs
                 _form.FormClosing += _form_FormClosing;
                 _form.FormClosed += _form_FormClosed;
                 iconChangeDetector = new(_form.Handle, this);
+
+                // Attach to progress bars on the form that broadcast to taskbar so we can reflect progress on the tab
+                try
+                {
+                    foreach (UI.WP.ProgressBar pb in _form.GetAllControls().OfType<UI.WP.ProgressBar>())
+                    {
+                        if (!trackedProgressBars.Contains(pb))
+                        {
+                            pb.ValueChanged += ProgressBar_ValueChanged;
+                            pb.StyleChanged += ProgressBar_StyleChanged;
+                            trackedProgressBars.Add(pb);
+
+                            // Initialize from current state
+                            if (pb.TaskbarBroadcast)
+                            {
+                                ProgressMarquee = pb.IsMarquee;
+                                if (pb.IsMarquee)
+                                {
+                                    ProgressEnabled = true;
+                                    ProgressValue = 0;
+                                }
+                                else
+                                {
+                                    bool enabled = pb.Value > pb.Minimum && pb.Value < pb.Maximum;
+                                    ProgressEnabled = enabled;
+                                    if (enabled && pb.Maximum > pb.Minimum)
+                                    {
+                                        double pct = (pb.Value - pb.Minimum) / (double)(pb.Maximum - pb.Minimum) * 100.0;
+                                        ProgressValue = (int)Math.Round(pct);
+                                    }
+                                    else
+                                    {
+                                        ProgressValue = 0;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                catch { }
             }
         }
 
@@ -474,6 +599,18 @@ namespace WinPaletter.Tabs
                 _form.TextChanged -= _form_TextChanged;
                 _form.FormClosing -= _form_FormClosing;
                 _form.FormClosed -= _form_FormClosed;
+
+                // detach progress bar handlers
+                try
+                {
+                    foreach (UI.WP.ProgressBar pb in trackedProgressBars.ToList())
+                    {
+                        try { pb.ValueChanged -= ProgressBar_ValueChanged; } catch { }
+                        try { pb.StyleChanged -= ProgressBar_StyleChanged; } catch { }
+                    }
+                    trackedProgressBars.Clear();
+                }
+                catch { }
 
                 iconChangeDetector?.Dispose();
             }
@@ -610,6 +747,75 @@ namespace WinPaletter.Tabs
         {
             Shown = false;
             if (_form is not null) tabsContainer?.OnFormClosed(_form, new(this));
+        }
+
+        private void ProgressBar_ValueChanged(object sender, EventArgs e)
+        {
+            if (sender is UI.WP.ProgressBar pb)
+            {
+                try
+                {
+                    if (pb.TaskbarBroadcast)
+                    {
+                        if (pb.IsMarquee)
+                        {
+                            ProgressMarquee = true;
+                            ProgressEnabled = true;
+                            ProgressValue = 0;
+                        }
+                        else
+                        {
+                            ProgressMarquee = false;
+                            bool enabled = pb.Value > pb.Minimum && pb.Value < pb.Maximum;
+                            ProgressEnabled = enabled;
+                            if (enabled && pb.Maximum > pb.Minimum)
+                            {
+                                double pct = (pb.Value - pb.Minimum) / (double)(pb.Maximum - pb.Minimum) * 100.0;
+                                ProgressValue = (int)Math.Round(pct);
+                            }
+                            else
+                            {
+                                ProgressValue = 0;
+                            }
+                        }
+                    }
+                }
+                catch { }
+            }
+        }
+
+        private void ProgressBar_StyleChanged(object sender, EventArgs e)
+        {
+            if (sender is UI.WP.ProgressBar pb)
+            {
+                try
+                {
+                    if (pb.TaskbarBroadcast)
+                    {
+                        ProgressMarquee = pb.IsMarquee;
+                        if (pb.IsMarquee)
+                        {
+                            ProgressEnabled = true;
+                            ProgressValue = 0;
+                        }
+                        else
+                        {
+                            bool enabled = pb.Value > pb.Minimum && pb.Value < pb.Maximum;
+                            ProgressEnabled = enabled;
+                            if (enabled && pb.Maximum > pb.Minimum)
+                            {
+                                double pct = (pb.Value - pb.Minimum) / (double)(pb.Maximum - pb.Minimum) * 100.0;
+                                ProgressValue = (int)Math.Round(pct);
+                            }
+                            else
+                            {
+                                ProgressValue = 0;
+                            }
+                        }
+                    }
+                }
+                catch { }
+            }
         }
 
         private void _form_ParentChanged(object sender, EventArgs e)
