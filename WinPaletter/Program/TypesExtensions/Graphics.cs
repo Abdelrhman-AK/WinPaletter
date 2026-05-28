@@ -546,6 +546,124 @@ namespace WinPaletter.TypesExtensions
             DrawRoundedRectBeveled(G, pen, rectangle, radius, forcedRoundCorner, true, corners);
         }
 
+        private static TextureBrush _noiseBrush;
+        private static Bitmap _stamp;
+        private static byte[] _radialAlpha;
+        private static int _cachedHoverSize = -1;
+
+        private static void EnsureCache(int hoverSize)
+        {
+            if (_cachedHoverSize == hoverSize) return;
+
+            _noiseBrush?.Dispose();
+            _noiseBrush = new TextureBrush(Properties.Resources.Noise);
+
+            _stamp?.Dispose();
+            _stamp = new Bitmap(hoverSize, hoverSize, PixelFormat.Format32bppArgb);
+
+            int total = hoverSize * hoverSize;
+            _radialAlpha = new byte[total];
+            float cx = hoverSize / 2f;
+            float cy = hoverSize / 2f;
+            float maxDist = cx;
+
+            for (int i = 0; i < total; i++)
+            {
+                float dx = (i % hoverSize) - cx;
+                float dy = (i / hoverSize) - cy;
+                float dist = (float)Math.Sqrt(dx * dx + dy * dy);
+                float t = 1f - Math.Min(dist / maxDist, 1f);
+                _radialAlpha[i] = (byte)(t * t * 255f);
+            }
+
+            _cachedHoverSize = hoverSize;
+        }
+
+        /// <summary>
+        /// Draws a circular hover highlight at the current cursor position onto the specified Graphics, clipped to the provided path.
+        /// </summary>
+        /// <remarks>Composes the effect into an offscreen stamp using layered fill and noise, applies a
+        /// per-pixel radial alpha, and draws the stamped image; temporarily modifies the Graphics clip and restores it
+        /// before returning.</remarks>
+        /// <param name="G">Graphics surface used for rendering the hover highlight.</param>
+        /// <param name="host">Control used to translate screen coordinates to client coordinates for the cursor position.</param>
+        /// <param name="path">GraphicsPath that specifies the clipping region for the hover effect.</param>
+        /// <param name="color">Base color of the hover; its alpha is combined with a radial alpha mask to produce the final transparency.</param>
+        /// <param name="hoverSize">Diameter in pixels of the hover circle.</param>
+        /// <param name="clipHeightOffset">Optional number of pixels to subtract from the path's bounding height before applying the clip.</param>
+        public static void DrawHover(this Graphics G, Control host, GraphicsPath path, Color color, int hoverSize, int clipHeightOffset = 0)
+        {
+            Point clientMousePos = host.PointToClient(Cursor.Position);
+
+            using (GraphicsPath clipPath = new())
+            {
+                RectangleF bounds = path.GetBounds();
+                clipPath.AddRectangle(new RectangleF(bounds.X, bounds.Y, bounds.Width, bounds.Height - clipHeightOffset));
+
+                using (Region clipRegion = new(path))
+                {
+                    clipRegion.Intersect(clipPath.GetBounds());
+                    G.SetClip(clipRegion, CombineMode.Replace);
+                }
+            }
+
+            Rectangle circle = new(clientMousePos.X - hoverSize / 2, clientMousePos.Y - hoverSize / 2, hoverSize, hoverSize);
+
+            EnsureCache(hoverSize);
+
+            using (Graphics sg = Graphics.FromImage(_stamp))
+            {
+                sg.Clear(Color.Transparent);
+                sg.CompositingMode = CompositingMode.SourceOver;
+
+                // Layer 1: flat color fill clipped to ellipse, pixel loop handles fade
+                using (GraphicsPath gp = new())
+                {
+                    gp.AddEllipse(0, 0, hoverSize, hoverSize);
+                    sg.SetClip(gp);
+                }
+
+                using (SolidBrush sb = new(Color.FromArgb(255, color)))
+                {
+                    sg.FillRectangle(sb, 0, 0, hoverSize, hoverSize);
+                }
+
+                sg.ResetClip();
+
+                // Layer 2: noise clipped to ellipse
+                using (GraphicsPath gp = new())
+                {
+                    gp.AddEllipse(0, 0, hoverSize, hoverSize);
+                    sg.SetClip(gp);
+                }
+
+                _noiseBrush.TranslateTransform(-circle.X, -circle.Y);
+                sg.FillRectangle(_noiseBrush, 0, 0, hoverSize, hoverSize);
+                _noiseBrush.ResetTransform();
+
+                sg.ResetClip();
+            }
+
+            BitmapData stampData = _stamp.LockBits(new Rectangle(0, 0, hoverSize, hoverSize), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+
+            unsafe
+            {
+                byte* sp = (byte*)stampData.Scan0;
+                int total = hoverSize * hoverSize;
+
+                for (int i = 0; i < total; i++)
+                {
+                    int idx = i * 4;
+                    sp[idx + 3] = (byte)(sp[idx + 3] * _radialAlpha[i] * color.A / 65025);
+                }
+            }
+
+            _stamp.UnlockBits(stampData);
+
+            G.DrawImage(_stamp, circle);
+            G.ResetClip();
+        }
+
         /// <summary>
         /// Determines whether the specified point is inside the given polygon.
         /// </summary>

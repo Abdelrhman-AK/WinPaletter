@@ -911,11 +911,7 @@ namespace WinPaletter.Tabs
                                 tabOldPoint = new Point(PointToClient(MousePosition).X - tabData.Rectangle.Left, PointToClient(MousePosition).Y - tabData.Rectangle.Top);
                                 mouseDownPoint = PointToClient(MousePosition);
 
-                                // Select the tab when mouse down occurs on it
-                                if (tabData.TabPage != _tabControl.SelectedTab)
-                                {
-                                    SelectedIndex = GetIndex(tabData);
-                                }
+                                // Selection is handled on mouse click/up instead of mouse down.
 
                                 break;
                             }
@@ -2103,46 +2099,6 @@ namespace WinPaletter.Tabs
             }
         }
 
-        private void DrawHover(Graphics G, GraphicsPath path, Rectangle rect, Color color)
-        {
-            Point clientMousePos = PointToClient(MousePosition);
-
-            using (GraphicsPath clipPath = new())
-            {
-                RectangleF bounds = path.GetBounds();
-                clipPath.AddRectangle(new RectangleF(bounds.X, bounds.Y, bounds.Width, bounds.Height - _clipHeightOffset));
-
-                using (Region clipRegion = new(path))
-                {
-                    clipRegion.Intersect(clipPath.GetBounds());
-                    G.SetClip(clipRegion, CombineMode.Replace);
-                }
-            }
-
-            using (GraphicsPath gp = new())
-            {
-                Rectangle circle = new(
-                    clientMousePos.X - _hoverSize / 2,
-                    clientMousePos.Y - _hoverSize / 2,
-                    _hoverSize,
-                    _hoverSize);
-
-                gp.AddEllipse(circle);
-
-                using (PathGradientBrush pgb = new(gp)
-                {
-                    CenterPoint = clientMousePos,
-                    CenterColor = color,
-                    SurroundColors = [Color.Transparent]
-                })
-                {
-                    G.FillEllipse(pgb, circle);
-                }
-            }
-
-            G.ResetClip();
-        }
-
         #endregion
 
         #region Graphics
@@ -2312,7 +2268,7 @@ namespace WinPaletter.Tabs
                     if (tabData == _hoveredTabData && _hoverSize > 0)
                     {
                         Color hoverColor = Color.FromArgb(150, scheme_secondary.Colors.Back_Checked_Hover);
-                        DrawHover(G, path, rect, hoverColor);
+                        G.DrawHover(this, path, hoverColor, HoverSize, _clipHeightOffset);
                     }
 
                     using (Pen P = new(Color.FromArgb(150, scheme_secondary.Colors.Line_Hover(parentLevel))))
@@ -2337,7 +2293,7 @@ namespace WinPaletter.Tabs
                         if (tabData == _hoveredTabData && _hoverSize > 0)
                         {
                             Color hoverColor = tabData.Selected ? scheme.Colors.Back_Checked_Hover : Color.FromArgb(170, scheme.Colors.Line_Hover(parentLevel));
-                            DrawHover(G, path, rect, hoverColor);
+                            G.DrawHover(this, path, hoverColor, HoverSize, _clipHeightOffset);
                         }
                     }
 
