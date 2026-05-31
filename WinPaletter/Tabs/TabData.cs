@@ -431,13 +431,53 @@ namespace WinPaletter.Tabs
                         {
                             if (_progressMarquee)
                                 tabsContainer.StartProgressTimer();
-                            else if (!tabsContainer.TabDataList.Any(t => t != null && t.ProgressMarquee))
-                                tabsContainer.StopProgressTimer();
+                            else
+                            {
+                                bool any = false;
+                                if (tabsContainer?.TabDataList != null)
+                                {
+                                    for (int _ii = 0; _ii < tabsContainer.TabDataList.Count; _ii++)
+                                    {
+                                        var _t = tabsContainer.TabDataList[_ii];
+                                        if (_t != null && _t.ProgressMarquee)
+                                        {
+                                            any = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                                if (!any) tabsContainer.StopProgressTimer();
+                            }
                         }
                         catch { }
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Animate the ProgressValue to the target using FluentTransitions when possible.
+        /// Falls back to setting the value directly when animations are disabled.
+        /// </summary>
+        /// <param name="target">Target progress value (0..100)</param>
+        private void AnimateProgressTo(int target)
+        {
+            try
+            {
+                CancelTransition(nameof(ProgressValue));
+
+                if (tabsContainer != null && tabsContainer.CanAnimate_Global)
+                {
+                    var tr = Transition.With(this, nameof(ProgressValue), target);
+                    tr.CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                    TrackTransition(nameof(ProgressValue), tr);
+                }
+                else
+                {
+                    ProgressValue = target;
+                }
+            }
+            catch { ProgressValue = target; }
         }
 
         private bool _progressEnabled = false;
@@ -564,7 +604,7 @@ namespace WinPaletter.Tabs
                                 if (pb.IsMarquee)
                                 {
                                     ProgressEnabled = true;
-                                    ProgressValue = 0;
+                                    AnimateProgressTo(0);
                                 }
                                 else
                                 {
@@ -573,11 +613,11 @@ namespace WinPaletter.Tabs
                                     if (enabled && pb.Maximum > pb.Minimum)
                                     {
                                         double pct = (pb.Value - pb.Minimum) / (double)(pb.Maximum - pb.Minimum) * 100.0;
-                                        ProgressValue = (int)Math.Round(pct);
+                                        AnimateProgressTo((int)Math.Round(pct));
                                     }
                                     else
                                     {
-                                        ProgressValue = 0;
+                                        AnimateProgressTo(0);
                                     }
                                 }
                             }
@@ -603,8 +643,9 @@ namespace WinPaletter.Tabs
                 // detach progress bar handlers
                 try
                 {
-                    foreach (UI.WP.ProgressBar pb in trackedProgressBars.ToList())
+                    for (int i = 0; i < trackedProgressBars.Count; i++)
                     {
+                        var pb = trackedProgressBars[i];
                         try { pb.ValueChanged -= ProgressBar_ValueChanged; } catch { }
                         try { pb.StyleChanged -= ProgressBar_StyleChanged; } catch { }
                     }
@@ -761,7 +802,7 @@ namespace WinPaletter.Tabs
                         {
                             ProgressMarquee = true;
                             ProgressEnabled = true;
-                            ProgressValue = 0;
+                            AnimateProgressTo(0);
                         }
                         else
                         {
@@ -771,11 +812,11 @@ namespace WinPaletter.Tabs
                             if (enabled && pb.Maximum > pb.Minimum)
                             {
                                 double pct = (pb.Value - pb.Minimum) / (double)(pb.Maximum - pb.Minimum) * 100.0;
-                                ProgressValue = (int)Math.Round(pct);
+                                AnimateProgressTo((int)Math.Round(pct));
                             }
                             else
                             {
-                                ProgressValue = 0;
+                                AnimateProgressTo(0);
                             }
                         }
                     }
@@ -796,7 +837,7 @@ namespace WinPaletter.Tabs
                         if (pb.IsMarquee)
                         {
                             ProgressEnabled = true;
-                            ProgressValue = 0;
+                            AnimateProgressTo(0);
                         }
                         else
                         {
@@ -805,11 +846,11 @@ namespace WinPaletter.Tabs
                             if (enabled && pb.Maximum > pb.Minimum)
                             {
                                 double pct = (pb.Value - pb.Minimum) / (double)(pb.Maximum - pb.Minimum) * 100.0;
-                                ProgressValue = (int)Math.Round(pct);
+                                AnimateProgressTo((int)Math.Round(pct));
                             }
                             else
                             {
-                                ProgressValue = 0;
+                                AnimateProgressTo(0);
                             }
                         }
                     }
@@ -880,14 +921,33 @@ namespace WinPaletter.Tabs
         /// </summary>
         public void Dispose()
         {
-            CancelAllTransitions();
-            UnsubscribeEvents();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
-            TabPage?.Dispose();
-            TabPage = null;
-            Image?.Dispose();
-            Image = null;
-            Form = null;
+        /// <summary>
+        /// Protected dispose pattern implementation.
+        /// </summary>
+        /// <param name="disposing">True when called from Dispose(), false from finalizer.</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                // dispose managed resources
+                try { CancelAllTransitions(); } catch { }
+                try { UnsubscribeEvents(); } catch { }
+
+                try { TabPage?.Dispose(); } catch { }
+                TabPage = null;
+
+                try { Image?.Dispose(); } catch { }
+                Image = null;
+
+                try { iconChangeDetector?.Dispose(); } catch { }
+                iconChangeDetector = null;
+
+                Form = null;
+            }
         }
 
         #endregion
