@@ -144,7 +144,7 @@ namespace WinPaletter.UI.WP
 
                         if (_animateChanges)
                         {
-                            Transition.With(this, nameof(Value), (int)value).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                            Transition.With(this, nameof(Value), (int)value).CriticalDamp(Program.AnimationSpan);
                         }
                         else
                         {

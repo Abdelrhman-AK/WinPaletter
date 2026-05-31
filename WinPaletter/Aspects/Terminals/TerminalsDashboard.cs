@@ -200,12 +200,12 @@ namespace WinPaletter
 
         private void Button1_MouseEnter(object sender, EventArgs e)
         {
-            Transition.With(labelAlt1, nameof(labelAlt1.Text), (sender as UI.WP.Button).Tag.ToString()).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+            Transition.With(labelAlt1, nameof(labelAlt1.Text), (sender as UI.WP.Button).Tag.ToString()).CriticalDamp(Program.AnimationSpan_Quick);
         }
 
         private void Button1_MouseLeave(object sender, EventArgs e)
         {
-            Transition.With(labelAlt1, nameof(labelAlt1.Text), string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+            Transition.With(labelAlt1, nameof(labelAlt1.Text), string.Empty).CriticalDamp(Program.AnimationSpan_Quick);
         }
 
         private void TerminalsDashboard_Shown(object sender, EventArgs e)

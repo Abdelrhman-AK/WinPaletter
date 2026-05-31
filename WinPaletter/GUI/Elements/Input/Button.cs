@@ -371,8 +371,8 @@ namespace WinPaletter.UI.WP
 
             if (CanAnimate)
             {
-                Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-                if (_ripple) Transition.With(this, nameof(HoverSize), Math.Max(Width, Height)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                Transition.With(this, nameof(alpha), 255).CriticalDamp(Program.AnimationSpan);
+                if (_ripple) Transition.With(this, nameof(HoverSize), Math.Max(Width, Height)).CriticalDamp(Program.AnimationSpan_Quick);
             }
             else
             {
@@ -391,8 +391,8 @@ namespace WinPaletter.UI.WP
 
             if (CanAnimate)
             {
-                Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-                if (_ripple) Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                Transition.With(this, nameof(alpha), 0).CriticalDamp(Program.AnimationSpan);
+                if (_ripple) Transition.With(this, nameof(HoverSize), 0).CriticalDamp(Program.AnimationSpan_Quick);
             }
             else
             {
@@ -411,8 +411,8 @@ namespace WinPaletter.UI.WP
 
             if (CanAnimate)
             {
-                Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-                if (_ripple) Transition.With(this, nameof(HoverSize), Math.Max(Width, Height) * 5).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                Transition.With(this, nameof(alpha), 0).CriticalDamp(Program.AnimationSpan);
+                if (_ripple) Transition.With(this, nameof(HoverSize), Math.Max(Width, Height) * 5).CriticalDamp(Program.AnimationSpan);
             }
             else
             {
@@ -430,8 +430,8 @@ namespace WinPaletter.UI.WP
             if (CanAnimate)
             {
                 bool focused = ContainsFocus && State == MouseState.Over;
-                Transition.With(this, nameof(alpha), focused ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-                if (_ripple) Transition.With(this, nameof(HoverSize), focused ? Math.Max(Width, Height) : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                Transition.With(this, nameof(alpha), focused ? 255 : 0).CriticalDamp(Program.AnimationSpan);
+                if (_ripple) Transition.With(this, nameof(HoverSize), focused ? Math.Max(Width, Height) : 0).CriticalDamp(Program.AnimationSpan_Quick);
             }
             else
             {
@@ -470,8 +470,8 @@ namespace WinPaletter.UI.WP
 
             if (CanAnimate)
             {
-                Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-                if (_ripple) Transition.With(this, nameof(HoverSize), Math.Max(Width, Height) * 5).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                Transition.With(this, nameof(alpha), 0).CriticalDamp(Program.AnimationSpan);
+                if (_ripple) Transition.With(this, nameof(HoverSize), Math.Max(Width, Height) * 5).CriticalDamp(Program.AnimationSpan);
             }
             else
             {
@@ -489,7 +489,7 @@ namespace WinPaletter.UI.WP
             _hoverSize = Math.Max(Width, Height);
             hoverRect = new(hoverPosition.X - 0.5f * _hoverSize, hoverPosition.Y - 0.5f * _hoverSize, _hoverSize, _hoverSize);
 
-            if (CanAnimate) Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+            if (CanAnimate) Transition.With(this, nameof(alpha), 255).CriticalDamp(Program.AnimationSpan);
             else alpha = 255;
 
             base.OnKeyUp(e);
@@ -520,7 +520,7 @@ namespace WinPaletter.UI.WP
 
             Animate();
 
-            if (CanAnimate) Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+            if (CanAnimate) Transition.With(this, nameof(alpha), 0).CriticalDamp(Program.AnimationSpan);
             else alpha = 0;
 
             base.OnLeave(e);
@@ -534,8 +534,8 @@ namespace WinPaletter.UI.WP
 
             if (CanAnimate)
             {
-                Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-                if (_ripple) Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                Transition.With(this, nameof(alpha), 0).CriticalDamp(Program.AnimationSpan);
+                if (_ripple) Transition.With(this, nameof(HoverSize), 0).CriticalDamp(Program.AnimationSpan_Quick);
             }
             else
             {
@@ -605,7 +605,7 @@ namespace WinPaletter.UI.WP
                 if (State != MouseState.None)
                     hoverRect = new(hoverPosition.X - 0.5f * _hoverSize, hoverPosition.Y - 0.5f * _hoverSize, _hoverSize, _hoverSize);
 
-                Transition.With(this, nameof(Color), Colorize()).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                Transition.With(this, nameof(Color), Colorize()).CriticalDamp(Program.AnimationSpan);
             }
             else
             {

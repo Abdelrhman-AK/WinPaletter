@@ -185,7 +185,7 @@ namespace WinPaletter
             if (Program.Style.Animations)
                 FluentTransitions.Transition
                     .With(mainForm.Status_lbl, nameof(mainForm.Status_lbl.BackColor), color)
-                    .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                    .CriticalDamp(Program.AnimationSpan_Quick);
             else
                 mainForm.Status_lbl.BackColor = color;
         }
@@ -225,7 +225,7 @@ namespace WinPaletter
                 if (Program.Style.Animations)
                     FluentTransitions.Transition
                         .With(mainForm.Status_lbl, nameof(mainForm.Status_lbl.Text), string.Empty)
-                        .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                        .CriticalDamp(Program.AnimationSpan_Quick);
                 else
                     mainForm.Status_lbl.Text = string.Empty;
 

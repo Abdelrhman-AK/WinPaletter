@@ -707,7 +707,7 @@ namespace WinPaletter.UI.WP
 
             if (CanAnimate)
                 Transition.With(this, nameof(StateColor), color)
-                    .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                    .CriticalDamp(Program.AnimationSpan_Quick);
             else
                 StateColor = color;
         }

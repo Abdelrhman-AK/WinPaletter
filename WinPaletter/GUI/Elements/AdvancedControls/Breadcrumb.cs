@@ -223,7 +223,7 @@ namespace WinPaletter.UI.WP
                     progressValue = Math.Max(progressMinimum, Math.Min(progressMaximum, value));
 
                     if (CanAnimate)
-                        Transition.With(this, nameof(Value_Animation), progressValue).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                        Transition.With(this, nameof(Value_Animation), progressValue).CriticalDamp(Program.AnimationSpan_Quick);
                     else
                         Value_Animation = progressValue;
 
@@ -863,7 +863,7 @@ namespace WinPaletter.UI.WP
                               _alpha = 255;
                               StopMarquee();
                           })
-                          .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                          .CriticalDamp(Program.AnimationSpan_Quick);
             }
             else
             {
@@ -918,7 +918,7 @@ namespace WinPaletter.UI.WP
         {
             if (CanAnimate)
             {
-                Transition.With(this, nameof(HoverAlpha), enter ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                Transition.With(this, nameof(HoverAlpha), enter ? 255 : 0).CriticalDamp(Program.AnimationSpan);
             }
             else
             {

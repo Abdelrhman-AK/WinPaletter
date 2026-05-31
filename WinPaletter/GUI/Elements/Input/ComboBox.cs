@@ -146,7 +146,7 @@ namespace WinPaletter.UI.WP
 
         protected override void OnMouseEnter(EventArgs e)
         {
-            if (CanAnimate) Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+            if (CanAnimate) Transition.With(this, nameof(alpha), 255).CriticalDamp(Program.AnimationSpan);
             else alpha = 255;
 
             base.OnMouseEnter(e);
@@ -154,7 +154,7 @@ namespace WinPaletter.UI.WP
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            if (CanAnimate) Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+            if (CanAnimate) Transition.With(this, nameof(alpha), 0).CriticalDamp(Program.AnimationSpan);
             else alpha = 0;
 
             base.OnMouseDown(e);
@@ -162,7 +162,7 @@ namespace WinPaletter.UI.WP
 
         protected override void OnMouseLeave(EventArgs e)
         {
-            if (CanAnimate) Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+            if (CanAnimate) Transition.With(this, nameof(alpha), 0).CriticalDamp(Program.AnimationSpan);
             else alpha = 0;
 
             base.OnMouseLeave(e);
@@ -184,7 +184,7 @@ namespace WinPaletter.UI.WP
 
         protected override void OnDropDown(EventArgs e)
         {
-            if (CanAnimate) Transition.With(this, nameof(alpha2), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+            if (CanAnimate) Transition.With(this, nameof(alpha2), 0).CriticalDamp(Program.AnimationSpan);
             else alpha2 = 0;
 
             base.OnDropDown(e);
@@ -192,7 +192,7 @@ namespace WinPaletter.UI.WP
 
         protected override void OnDropDownClosed(EventArgs e)
         {
-            if (CanAnimate) Transition.With(this, nameof(alpha2), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+            if (CanAnimate) Transition.With(this, nameof(alpha2), 255).CriticalDamp(Program.AnimationSpan);
             else alpha2 = 255;
 
             _lastThemedListBox = IntPtr.Zero; // Reset so next open is re-themed.

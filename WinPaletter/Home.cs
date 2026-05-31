@@ -82,14 +82,14 @@ namespace WinPaletter
             // Add animations to toolbar buttons and cards.
             foreach (UI.WP.Button button in titlebarExtender2.GetAllControls().OfType<UI.WP.Button>())
             {
-                button.MouseEnter += (s, e) => Transition.With(tip_label, nameof(tip_label.Text), ((s as UI.WP.Button).Tag ?? string.Empty).ToString()).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
-                button.MouseLeave += (s, e) => Transition.With(tip_label, nameof(tip_label.Text), string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                button.MouseEnter += (s, e) => Transition.With(tip_label, nameof(tip_label.Text), ((s as UI.WP.Button).Tag ?? string.Empty).ToString()).CriticalDamp(Program.AnimationSpan_Quick);
+                button.MouseLeave += (s, e) => Transition.With(tip_label, nameof(tip_label.Text), string.Empty).CriticalDamp(Program.AnimationSpan_Quick);
             }
 
             foreach (Card card in flowLayoutPanel1.Controls.OfType<Card>())
             {
-                card.MouseEnter += (s, e) => Transition.With(panel1, nameof(panel1.BackColor), Program.Style.DarkMode ? (s as Card).Color.Dark(0.7f) : (s as Card).Color.CB(0.7f)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-                card.MouseLeave += (s, e) => Transition.With(panel1, nameof(panel1.BackColor), BackColor).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                card.MouseEnter += (s, e) => Transition.With(panel1, nameof(panel1.BackColor), Program.Style.DarkMode ? (s as Card).Color.Dark(0.7f) : (s as Card).Color.CB(0.7f)).CriticalDamp(Program.AnimationSpan);
+                card.MouseLeave += (s, e) => Transition.With(panel1, nameof(panel1.BackColor), BackColor).CriticalDamp(Program.AnimationSpan);
             }
         }
 
@@ -222,11 +222,11 @@ namespace WinPaletter
             {
                 Task.Run(() =>
                 {
-                    Transition.With(tip_label, nameof(tip_label.Text), $"{Program.Localization.Strings.General.Welcome}, {User.GitHub.Login}").CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                    Transition.With(tip_label, nameof(tip_label.Text), $"{Program.Localization.Strings.General.Welcome}, {User.GitHub.Login}").CriticalDamp(Program.AnimationSpan_Quick);
 
                     System.Threading.Thread.Sleep(3500);
 
-                    Transition.With(tip_label, nameof(tip_label.Text), string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                    Transition.With(tip_label, nameof(tip_label.Text), string.Empty).CriticalDamp(Program.AnimationSpan_Quick);
                 });
 
                 userButton.Tag = User.GitHub.Login + " > " + User.Name;

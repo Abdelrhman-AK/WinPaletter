@@ -443,7 +443,7 @@ namespace WinPaletter
                                       {
                                           foreach (Action action in completionActions) action();
                                       })
-                                      .Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                                      .Linear(Program.AnimationSpan);
                         }
                     }
                     catch
@@ -501,7 +501,7 @@ namespace WinPaletter
                 {
                     try
                     {
-                        Transition.With(entry.Key, prop ?? "BackColor", color).Linear(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                        Transition.With(entry.Key, prop ?? "BackColor", color).Linear(Program.AnimationSpan);
                     }
                     catch
                     {

@@ -28,9 +28,9 @@ namespace WinPaletter.Tabs
         private readonly TabsContainer tabsContainer;
 
         /// <summary>
-        /// Active transition tracker to prevent animation conflicts.
+        /// Tracks active animations per-property so they can be cancelled or replaced.
         /// </summary>
-        private readonly Dictionary<string, FluentTransitions.TransitionDefinition> activeTransitions = [];
+        private readonly Dictionary<string, FluentTransitions.TransitionDefinition> activeTransitions = new();
 
         /// <summary>
         /// Reference to the associated form's title bar extender.
@@ -143,7 +143,7 @@ namespace WinPaletter.Tabs
                     if (tabsContainer != null && tabsContainer.CanAnimate_Global)
                     {
                         var transition = Transition.With(this, nameof(SelectionAlpha), value ? 255 : 0);
-                        transition.CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                        transition.CriticalDamp(Program.AnimationSpan);
                         TrackTransition(nameof(SelectionAlpha), transition);
                     }
                     else
@@ -263,7 +263,7 @@ namespace WinPaletter.Tabs
                     if (Program.Style.Animations)
                     {
                         var transition = Transition.With(this, nameof(HoverAlpha), value ? 255 : 0);
-                        transition.CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                        transition.CriticalDamp(Program.AnimationSpan);
                         TrackTransition(nameof(HoverAlpha), transition);
                     }
                     else
@@ -469,7 +469,7 @@ namespace WinPaletter.Tabs
                 if (tabsContainer != null && tabsContainer.CanAnimate_Global)
                 {
                     var tr = Transition.With(this, nameof(ProgressValue), target);
-                    tr.CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                    tr.CriticalDamp(Program.AnimationSpan_Quick);
                     TrackTransition(nameof(ProgressValue), tr);
                 }
                 else
@@ -511,11 +511,11 @@ namespace WinPaletter.Tabs
         #region Constructors
 
         /// <summary>
-        /// Constructor.
+        /// Create a new TabData and attach it to the owning container, tab page and bounds.
         /// </summary>
-        /// <param name="tabsContainer">Tabs container reference.</param>
-        /// <param name="tabPage">Reference to the associated tab page.</param>
-        /// <param name="rectangle">Rectangle property for the tab's location.</param>
+        /// <param name="tabsContainer">Owning <see cref="TabsContainer"/>.</param>
+        /// <param name="tabPage">Associated <see cref="TabPage"/>.</param>
+        /// <param name="rectangle">Initial bounds for the tab.</param>
         public TabData(TabsContainer tabsContainer, TabPage tabPage, Rectangle rectangle)
         {
             this.tabsContainer = tabsContainer;
@@ -917,7 +917,7 @@ namespace WinPaletter.Tabs
         #region IDisposable Implementation
 
         /// <summary>
-        /// Dispose method.
+        /// Dispose managed resources, cancel animations and unsubscribe events.
         /// </summary>
         public void Dispose()
         {
@@ -954,18 +954,19 @@ namespace WinPaletter.Tabs
     }
 
     /// <summary>
-    /// Event arguments for tab events.
+    /// Event arguments carrying the related <see cref="TabData"/> instance.
     /// </summary>
-    /// <remarks>
-    /// Constructor.
-    /// </remarks>
-    /// <param name="tabData">TabData associated with the event.</param>
-    public class TabDataEventArgs(TabData tabData) : EventArgs
+    public class TabDataEventArgs : EventArgs
     {
         /// <summary>
-        /// TabData associated with the event.
+        /// The related TabData.
         /// </summary>
-        public TabData TabData { get; } = tabData;
+        public TabData TabData { get; }
+
+        /// <summary>
+        /// Create args for the provided <paramref name="tabData"/>.
+        /// </summary>
+        public TabDataEventArgs(TabData tabData) => TabData = tabData;
     }
 
     /// <summary>

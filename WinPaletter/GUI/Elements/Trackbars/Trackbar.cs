@@ -135,7 +135,7 @@ namespace WinPaletter.UI.WP
             if (e.Button == MouseButtons.Left)
             {
                 if (CanAnimate)
-                    Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                    Transition.With(this, nameof(alpha), 0).CriticalDamp(Program.AnimationSpan);
                 else
                     alpha = 0;
 
@@ -163,7 +163,7 @@ namespace WinPaletter.UI.WP
 
             if (CanAnimate)
                 Transition.With(this, nameof(alpha), Circle.Contains(PointToClient(MousePosition)) ? 255 : 0)
-                          .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                          .CriticalDamp(Program.AnimationSpan);
             else
                 alpha = Circle.Contains(PointToClient(MousePosition)) ? 255 : 0;
 
@@ -174,7 +174,7 @@ namespace WinPaletter.UI.WP
         {
             ThumbDown = false;
             if (CanAnimate)
-                Transition.With(this, nameof(alpha), ContainsFocus ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                Transition.With(this, nameof(alpha), ContainsFocus ? 255 : 0).CriticalDamp(Program.AnimationSpan);
             else
                 alpha = ContainsFocus ? 255 : 0;
 
@@ -225,7 +225,7 @@ namespace WinPaletter.UI.WP
         {
             base.OnGotFocus(e);
             if (CanAnimate)
-                Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                Transition.With(this, nameof(alpha), 255).CriticalDamp(Program.AnimationSpan);
             else
                 alpha = 255;
             Invalidate();
@@ -235,7 +235,7 @@ namespace WinPaletter.UI.WP
         {
             base.OnLostFocus(e);
             if (CanAnimate)
-                Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                Transition.With(this, nameof(alpha), 0).CriticalDamp(Program.AnimationSpan);
             else
                 alpha = 0;
             Invalidate();

@@ -55,7 +55,7 @@ namespace WinPaletter.Tabs
 
         public bool CanAnimate_Global => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
 
-        public List<TabData> TabDataList = [];
+        public List<TabData> TabDataList = new();
 
         private static readonly int _maxTabWidth = 245;
         private static readonly int _paddingBetweenTabs = 5;
@@ -171,12 +171,13 @@ namespace WinPaletter.Tabs
             detachAllButThis.Click += (s, e) => DetachAllTabsButThis();
             helpButton.Click += (s, e) => TriggerHelp();
 
-            contextMenu.Items.AddRange([closeButton, closeAllToTheRight, closeAllToTheLeft, closeAll, closeAllButThis,
+            contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+                closeButton, closeAllToTheRight, closeAllToTheLeft, closeAll, closeAllButThis,
                 toolStripSeparator0,
                 detach, detachAll, detachAllButThis,
                 toolStripSeparator1,
                 helpButton
-                ]);
+            });
         }
 
         /// <summary>
@@ -226,7 +227,7 @@ namespace WinPaletter.Tabs
                 {
                     _hoveredTabData = null;
                     if (CanAnimate_Global)
-                        FluentTransitions.Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                        FluentTransitions.Transition.With(this, nameof(HoverSize), 0).CriticalDamp(Program.AnimationSpan_Quick);
                     else
                         HoverSize = 0;
                 }
@@ -259,7 +260,7 @@ namespace WinPaletter.Tabs
                 if (hoveredTab.CloseButtonAlpha != targetCloseAlpha)
                 {
                     if (Program.Style.Animations)
-                        FluentTransitions.Transition.With(hoveredTab, nameof(TabData.CloseButtonAlpha), targetCloseAlpha).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                        FluentTransitions.Transition.With(hoveredTab, nameof(TabData.CloseButtonAlpha), targetCloseAlpha).CriticalDamp(Program.AnimationSpan_Quick);
                     else
                         hoveredTab.CloseButtonAlpha = targetCloseAlpha;
 
@@ -276,7 +277,7 @@ namespace WinPaletter.Tabs
 
                     int defaultHoverSize = Math.Max(hoveredTab.Rectangle.Width, hoveredTab.Rectangle.Height);
                     if (CanAnimate_Global)
-                        FluentTransitions.Transition.With(this, nameof(HoverSize), defaultHoverSize).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                        FluentTransitions.Transition.With(this, nameof(HoverSize), defaultHoverSize).CriticalDamp(Program.AnimationSpan_Quick);
                     else
                         HoverSize = defaultHoverSize;
 
@@ -309,7 +310,7 @@ namespace WinPaletter.Tabs
                 {
                     _hoveredTabData = null;
                     if (CanAnimate_Global)
-                        FluentTransitions.Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                        FluentTransitions.Transition.With(this, nameof(HoverSize), 0).CriticalDamp(Program.AnimationSpan_Quick);
                     else
                         HoverSize = 0;
                 }
@@ -691,8 +692,7 @@ namespace WinPaletter.Tabs
 
             if (CanAnimate_Global)
             {
-                FluentTransitions.Transition.With(this, nameof(AnimatedScrollOffset), _scrollOffset)
-                    .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                FluentTransitions.Transition.With(this, nameof(AnimatedScrollOffset), _scrollOffset).CriticalDamp(Program.AnimationSpan_Quick);
             }
             else
             {
@@ -848,9 +848,7 @@ namespace WinPaletter.Tabs
                 newTab.TabLeft = naturalLeft;
                 newTab.TabWidth = tabWidth;
 
-                newTab.Hovered =
-                    IsPointInVisibleRegion(currentMousePos) &&
-                    newTab.Rectangle.Contains(currentMousePos);
+                newTab.Hovered = IsPointInVisibleRegion(currentMousePos) && newTab.Rectangle.Contains(currentMousePos);
 
                 // Cancel any existing selection alpha transitions
                 newTab.CancelTransition(nameof(TabData.SelectionAlpha));
@@ -871,9 +869,7 @@ namespace WinPaletter.Tabs
 
                         if (animateSelection && CanAnimate_Global && !_isResizing)
                         {
-                            FluentTransitions.Transition
-                                .With(newTab, nameof(TabData.SelectionAlpha), 255)
-                                .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                            FluentTransitions.Transition.With(newTab, nameof(TabData.SelectionAlpha), 255).CriticalDamp(Program.AnimationSpan_Quick);
                         }
                         else
                         {
@@ -900,8 +896,7 @@ namespace WinPaletter.Tabs
         {
             if (TabDataList != null && TabDataList.Count > 0)
             {
-                if (value > TabDataList.Count - 1)
-                    return TabDataList.Count - 1;
+                if (value > TabDataList.Count - 1) return TabDataList.Count - 1;
             }
 
             return value;
@@ -1035,7 +1030,7 @@ namespace WinPaletter.Tabs
                         Point mousePos = e.Location;
                         tabData.Form.Close();
 
-                        System.Windows.Forms.Timer timer = new System.Windows.Forms.Timer { Interval = _interval };
+                        System.Windows.Forms.Timer timer = new() { Interval = _interval };
                         timer.Tick += (s, args) =>
                         {
                             timer.Stop();
@@ -1201,7 +1196,7 @@ namespace WinPaletter.Tabs
                                 {
                                     if (CanAnimate_Global)
                                     {
-                                        FluentTransitions.Transition.With(t, nameof(TabData.TabLeft), naturalLeft).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                                        FluentTransitions.Transition.With(t, nameof(TabData.TabLeft), naturalLeft).CriticalDamp(Program.AnimationSpan_Quick);
                                     }
                                     else
                                     {
@@ -1250,10 +1245,8 @@ namespace WinPaletter.Tabs
             int newMoveTo = moveFrom;
 
             // Swap decision based on overlap threshold (half width) relative to drag direction.
-            // When dragging left (moving a tab from right to left), require the dragged tab's
-            // left border to overlap the target (left neighbor) by at least half the neighbor's width.
-            // When dragging right, require the dragged tab's right border to overlap the target
-            // (right neighbor) by at least half the neighbor's width.
+            // When dragging left (moving a tab from right to left), require the dragged tab's left border to overlap the target (left neighbor) by at least half the neighbor's width.
+            // When dragging right, require the dragged tab's right border to overlap the target (right neighbor) by at least half the neighbor's width.
             for (int i = 0; i < TabDataList.Count; i++)
             {
                 if (i == moveFrom) continue;
@@ -1316,34 +1309,6 @@ namespace WinPaletter.Tabs
             Invalidate();
         }
 
-        private void ForceRepositionAllTabs()
-        {
-            if (TabDataList == null || TabDataList.Count == 0) return;
-
-            _scrollOffset = 0;
-            _animatedScrollOffset = 0;
-
-            CalculateScrollOffset();
-
-            for (int i = 0; i < TabDataList.Count; i++)
-            {
-                TabData tab = TabDataList[i];
-                if (tab == null || tab.IsRemoving) continue;
-
-                int naturalLeft = LeftBoundary + i * (tabWidth + _paddingBetweenTabs);
-
-                tab.TabLeft = naturalLeft;
-                tab.TabWidth = tabWidth;
-
-                tab.Rectangle = new Rectangle(naturalLeft, tab.TabTop, tabWidth, tabHeight);
-            }
-
-            NormalizeSelectionAlpha();
-
-            Invalidate();
-            Update();
-        }
-
         private void AnimateNeighborTabsForDrag()
         {
             if (TabDataList == null || moveFrom < 0 || moveTo < 0) return;
@@ -1372,7 +1337,7 @@ namespace WinPaletter.Tabs
                 {
                     if (CanAnimate_Global)
                     {
-                        FluentTransitions.Transition.With(tab, nameof(TabData.TabLeft), targetLeft).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                        FluentTransitions.Transition.With(tab, nameof(TabData.TabLeft), targetLeft).CriticalDamp(Program.AnimationSpan_Quick);
                     }
                     else
                     {
@@ -1397,7 +1362,7 @@ namespace WinPaletter.Tabs
                 {
                     if (CanAnimate_Global)
                     {
-                        FluentTransitions.Transition.With(tab, nameof(TabData.TabLeft), naturalLeft).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                        FluentTransitions.Transition.With(tab, nameof(TabData.TabLeft), naturalLeft).CriticalDamp(Program.AnimationSpan_Quick);
                     }
                     else
                     {
@@ -1501,6 +1466,26 @@ namespace WinPaletter.Tabs
             if (intPtr != IntPtr.Zero)
             {
                 User32.SendMessage(intPtr, 0x0112, 0xF180, 0);
+            }
+        }
+
+        private void TriggerSystemContextMenu()
+        {
+            IntPtr formHandle = FindForm()?.Handle ?? IntPtr.Zero;
+            if (formHandle != IntPtr.Zero)
+            {
+                IntPtr systemMenu = User32.GetSystemMenu(formHandle, false);
+                if (systemMenu != IntPtr.Zero)
+                {
+                    Point cursorPos = Control.MousePosition;
+                    const uint TPM_LEFTBUTTON = 0x0000;
+                    const uint TPM_RETURNCMD = 0x0100;
+                    uint result = User32.TrackPopupMenuEx(systemMenu, TPM_LEFTBUTTON | TPM_RETURNCMD, cursorPos.X, cursorPos.Y, formHandle, IntPtr.Zero);
+                    if (result != 0)
+                    {
+                        User32.SendMessage(formHandle, 0x0112, new(result), IntPtr.Zero);
+                    }
+                }
             }
         }
 
@@ -1753,7 +1738,7 @@ namespace WinPaletter.Tabs
 
             if (CanAnimate_Global && animate)
             {
-                FluentTransitions.Transition.With(tabData, nameof(TabData.RemovingAlpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                FluentTransitions.Transition.With(tabData, nameof(TabData.RemovingAlpha), 0).CriticalDamp(Program.AnimationSpan_Quick);
             }
             else
             {
@@ -1794,7 +1779,7 @@ namespace WinPaletter.Tabs
                     {
                         if (CanAnimate_Global)
                         {
-                            FluentTransitions.Transition.With(t, nameof(TabData.TabLeft), naturalLeft).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                            FluentTransitions.Transition.With(t, nameof(TabData.TabLeft), naturalLeft).CriticalDamp(Program.AnimationSpan_Quick);
                         }
                         else
                         {
@@ -1827,7 +1812,7 @@ namespace WinPaletter.Tabs
 
             if (CanAnimate_Global)
             {
-                FluentTransitions.Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                FluentTransitions.Transition.With(this, nameof(HoverSize), 0).CriticalDamp(Program.AnimationSpan_Quick);
             }
             else
             {
@@ -1852,7 +1837,7 @@ namespace WinPaletter.Tabs
                 int defaultHoverSize = Math.Max(newHoveredTab.Rectangle.Width, newHoveredTab.Rectangle.Height);
                 if (CanAnimate_Global)
                 {
-                    FluentTransitions.Transition.With(this, nameof(HoverSize), defaultHoverSize).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                    FluentTransitions.Transition.With(this, nameof(HoverSize), defaultHoverSize).CriticalDamp(Program.AnimationSpan_Quick);
                 }
                 else
                 {
@@ -1877,20 +1862,16 @@ namespace WinPaletter.Tabs
                         newlySelectedTab.SelectionAlpha = 0;
                     }
 
-                    FluentTransitions.Transition
-                        .With(newlySelectedTab, nameof(TabData.SelectionAlpha), 255)
-                        .HookOnCompletion(() => tcsSelection.TrySetResult(true))
-                        .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                    FluentTransitions.Transition.With(newlySelectedTab, nameof(TabData.SelectionAlpha), 255).HookOnCompletion(() => tcsSelection.TrySetResult(true))
+                        .CriticalDamp(Program.AnimationSpan);
 
                     if (removedWasSelected)
                     {
                         // Only animate TabTop when the removed tab was the selected one
                         var tcsTop = new TaskCompletionSource<bool>();
                         newlySelectedTab.TabTop = Height;
-                        FluentTransitions.Transition
-                            .With(newlySelectedTab, nameof(TabData.TabTop), _upperTabPadding)
-                            .HookOnCompletion(() => tcsTop.TrySetResult(true))
-                            .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                        FluentTransitions.Transition.With(newlySelectedTab, nameof(TabData.TabTop), _upperTabPadding).HookOnCompletion(() => tcsTop.TrySetResult(true))
+                            .CriticalDamp(Program.AnimationSpan);
 
                         _ = Task.Run(async () =>
                         {
@@ -2003,24 +1984,10 @@ namespace WinPaletter.Tabs
                     }
                 }
 
+                // Trigger system menu on right-click of empty tab area (only if not clicking on a tab)
                 if (!clickedOnTab && e.Button == MouseButtons.Right)
                 {
-                    IntPtr formHandle = FindForm()?.Handle ?? IntPtr.Zero;
-                    if (formHandle != IntPtr.Zero)
-                    {
-                        IntPtr systemMenu = User32.GetSystemMenu(formHandle, false);
-                        if (systemMenu != IntPtr.Zero)
-                        {
-                            Point cursorPos = Control.MousePosition;
-                            const uint TPM_LEFTBUTTON = 0x0000;
-                            const uint TPM_RETURNCMD = 0x0100;
-                            uint result = User32.TrackPopupMenuEx(systemMenu, TPM_LEFTBUTTON | TPM_RETURNCMD, cursorPos.X, cursorPos.Y, formHandle, IntPtr.Zero);
-                            if (result != 0)
-                            {
-                                User32.SendMessage(formHandle, 0x0112, new(result), IntPtr.Zero);
-                            }
-                        }
-                    }
+                    TriggerSystemContextMenu();
                 }
             }
 
@@ -2048,7 +2015,7 @@ namespace WinPaletter.Tabs
                 int maxHoverSize = Math.Max(clickedTab.Rectangle.Width, clickedTab.Rectangle.Height) * 2;
                 if (CanAnimate_Global)
                 {
-                    FluentTransitions.Transition.With(this, nameof(HoverSize), maxHoverSize).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                    FluentTransitions.Transition.With(this, nameof(HoverSize), maxHoverSize).CriticalDamp(Program.AnimationSpan);
                 }
                 else
                 {
@@ -2140,10 +2107,8 @@ namespace WinPaletter.Tabs
 
                         if (CanAnimate_Global)
                         {
-                            FluentTransitions.Transition
-                                .With(dragged, nameof(TabData.TabLeft), targetLeft)
-                                .HookOnCompletion(CommitAfterAnimation)
-                                .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                            FluentTransitions.Transition.With(dragged, nameof(TabData.TabLeft), targetLeft).HookOnCompletion(CommitAfterAnimation)
+                                .CriticalDamp(Program.AnimationSpan_Quick);
                         }
                         else
                         {
@@ -2167,7 +2132,7 @@ namespace WinPaletter.Tabs
                     int defaultHoverSize = Math.Max(hoveredTab.Rectangle.Width, hoveredTab.Rectangle.Height);
                     if (CanAnimate_Global)
                     {
-                        FluentTransitions.Transition.With(this, nameof(HoverSize), defaultHoverSize).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                        FluentTransitions.Transition.With(this, nameof(HoverSize), defaultHoverSize).CriticalDamp(Program.AnimationSpan_Quick);
                     }
                     else
                     {
@@ -2208,7 +2173,7 @@ namespace WinPaletter.Tabs
 
             if (CanAnimate_Global)
             {
-                FluentTransitions.Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                FluentTransitions.Transition.With(this, nameof(HoverSize), 0).CriticalDamp(Program.AnimationSpan_Quick);
             }
             else
             {
@@ -2287,35 +2252,6 @@ namespace WinPaletter.Tabs
                 _hoverSize = value;
                 Invalidate();
             }
-        }
-
-        #endregion
-
-        #region Graphics
-
-        private GraphicsPath RR(Rectangle r, int radius, bool rounded)
-        {
-            GraphicsPath path = new();
-
-            int bottom = r.Bottom + 1;
-
-            if (rounded)
-            {
-                int diameter = radius * 2;
-
-                path.AddArc(r.X, r.Y, diameter, diameter, 180, 90);
-                path.AddArc(r.Right - diameter, r.Y, diameter, diameter, 270, 90);
-                path.AddLine(r.Right, r.Y + radius, r.Right, bottom);
-                path.AddLine(r.X, bottom, r.X, r.Y + radius);
-            }
-            else
-            {
-                path.AddLine(r.X, bottom, r.X, r.Y);
-                path.AddLine(r.X, r.Y, r.Right, r.Y);
-                path.AddLine(r.Right, r.Y, r.Right, bottom);
-            }
-
-            return path;
         }
 
         #endregion
@@ -2444,7 +2380,7 @@ namespace WinPaletter.Tabs
             Bitmap icon = tabData.Image;
             bool shouldDrawProgress = tabData.ProgressMarquee || (tabData.ProgressEnabled && tabData.ProgressValue > 0);
 
-            using (GraphicsPath path = RR(rect, _radius, Program.Style.RoundedCorners))
+            using (GraphicsPath path = rect.ToTabPath(_radius, Program.Style.RoundedCorners ? GraphicsExtensions.TabStyle.Rounded : GraphicsExtensions.TabStyle.Sharp))
             {
                 if (isMoving)
                 {
@@ -2569,7 +2505,7 @@ namespace WinPaletter.Tabs
                             if (tabData.HoverAlpha == 0)
                             {
                                 Rectangle rect_smaller = new(rect.X + _rectSmallerOffset, rect.Y + _rectSmallerOffset, rect.Width - _rectSmallerWidthReduction, rect.Height);
-                                using (GraphicsPath path_smaller = RR(rect_smaller, _radius - _smallerRadiusOffset, Program.Style.RoundedCorners))
+                                using (GraphicsPath path_smaller = rect_smaller.ToTabPath(_radius - _smallerRadiusOffset, Program.Style.RoundedCorners ? GraphicsExtensions.TabStyle.Rounded : GraphicsExtensions.TabStyle.Sharp))
                                 {
                                     DrawTabPath(G, path_smaller, Pens.Black, rect_smaller, _radius - _smallerRadiusOffset, Program.Style.RoundedCorners);
                                 }

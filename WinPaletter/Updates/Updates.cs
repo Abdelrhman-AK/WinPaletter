@@ -254,7 +254,7 @@ namespace WinPaletter
                       .With(channel_lbl, nameof(channel_lbl.Text), info.Channel == Settings.Structures.Updates.Channels.Stable ? Program.Localization.Strings.General.Stable : Program.Localization.Strings.General.Beta)
                       .With(releasedate_lbl, nameof(releasedate_lbl.Text), info.ReleaseDate.ToLongDateString())
                       .With(size_lbl, nameof(size_lbl.Text), $"{info.Size} {Program.Localization.Strings.General.MBSizeUnit}")
-                      .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                      .CriticalDamp(Program.AnimationSpan_Quick);
 
             button2.Enabled = info.Version > new Version(Program.Version);
             groupBox55.UseDecorationPattern = info.Version > new Version(Program.Version);
@@ -269,7 +269,7 @@ namespace WinPaletter
                       .With(channel_lbl, nameof(channel_lbl.Text), "-")
                       .With(releasedate_lbl, nameof(releasedate_lbl.Text), DateTime.MinValue.ToLongDateString())
                       .With(size_lbl, nameof(size_lbl.Text), 0.ToStringFileSize())
-                      .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                      .CriticalDamp(Program.AnimationSpan_Quick);
 
             groupBox55.UseDecorationPattern = false;
             button2.Enabled = false;

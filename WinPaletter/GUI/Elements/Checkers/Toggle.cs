@@ -105,7 +105,7 @@ namespace WinPaletter.UI.WP
 
             if (CanAnimate)
             {
-                Transition.With(this, nameof(CheckerX), _checked ? Width - 17f : 4f).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                Transition.With(this, nameof(CheckerX), _checked ? Width - 17f : 4f).CriticalDamp(Program.AnimationSpan_Quick);
             }
             else
             {

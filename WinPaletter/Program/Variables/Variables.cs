@@ -56,6 +56,16 @@ namespace WinPaletter
         public static int AnimationDuration_Quick => 200;
 
         /// <summary>
+        /// WinPaletter elements animation time span.
+        /// </summary>
+        public static TimeSpan AnimationSpan { get; } = TimeSpan.FromMilliseconds(AnimationDuration);
+
+        /// <summary>
+        /// WinPaletter elements quick animation time span.
+        /// </summary>
+        public static TimeSpan AnimationSpan_Quick { get; } = TimeSpan.FromMilliseconds(AnimationDuration_Quick);
+
+        /// <summary>
         /// WinPaletter executable File path
         /// </summary>
         public static string AppFile => Assembly.GetExecutingAssembly().Location;

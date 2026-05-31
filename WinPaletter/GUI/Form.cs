@@ -78,7 +78,7 @@ namespace WinPaletter.UI.WP
 
             if (FormBorderStyle == FormBorderStyle.None && _borders && DWMAPI.IsCompositionEnabled() && !(OS.WVista || OS.W7 || OS.W8 || OS.W81))
             {
-                Transition.With(this, nameof(Opacity), 1.0d).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                Transition.With(this, nameof(Opacity), 1.0d).CriticalDamp(Program.AnimationSpan_Quick);
             }
 
             _shown = true;
@@ -102,7 +102,7 @@ namespace WinPaletter.UI.WP
                 Transition
                     .With(this, nameof(Opacity), 0d)
                     .HookOnCompletionInUiThread(this, () => { if (close) base.Close(); })
-                    .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                    .CriticalDamp(Program.AnimationSpan_Quick);
 
                 _shown = false;
             }

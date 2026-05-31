@@ -111,7 +111,7 @@ namespace WinPaletter.UI.Controllers
 
             //if (_animateChanges)
             //{
-            //    FluentTransitions.Transition.With(this, nameof(Value), (int)value).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+            //    FluentTransitions.Transition.With(this, nameof(Value), (int)value).CriticalDamp(Program.AnimationSpan);
             //}
             //else
             //{
@@ -136,7 +136,7 @@ namespace WinPaletter.UI.Controllers
                     {
                         if (_animateChanges)
                         {
-                            Transition.With(this, nameof(Value), (int)value).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                            Transition.With(this, nameof(Value), (int)value).CriticalDamp(Program.AnimationSpan);
                         }
                         else
                         {
@@ -151,7 +151,7 @@ namespace WinPaletter.UI.Controllers
         {
             if (_animateChanges)
             {
-                Transition.With(this, nameof(Value), Math.Min(Math.Max(defaultValue, Minimum), Maximum)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                Transition.With(this, nameof(Value), Math.Min(Math.Max(defaultValue, Minimum), Maximum)).CriticalDamp(Program.AnimationSpan);
             }
             else
             {

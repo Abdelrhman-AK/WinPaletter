@@ -427,7 +427,7 @@ namespace WinPaletter.UI.WP
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            if (CanAnimate) { Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            if (CanAnimate) { Transition.With(this, nameof(alpha), 0).CriticalDamp(Program.AnimationSpan); }
             else { alpha = 0; }
 
             base.OnMouseDown(e);
@@ -435,7 +435,7 @@ namespace WinPaletter.UI.WP
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            if (CanAnimate) { Transition.With(this, nameof(alpha), ContainsFocus ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            if (CanAnimate) { Transition.With(this, nameof(alpha), ContainsFocus ? 255 : 0).CriticalDamp(Program.AnimationSpan); }
             else { alpha = ContainsFocus ? 255 : 0; }
 
             tb.Focus();
@@ -445,7 +445,7 @@ namespace WinPaletter.UI.WP
 
         protected override void OnMouseEnter(EventArgs e)
         {
-            if (CanAnimate) { Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            if (CanAnimate) { Transition.With(this, nameof(alpha), 255).CriticalDamp(Program.AnimationSpan); }
             else { alpha = 255; }
 
             base.OnMouseEnter(e);
@@ -453,7 +453,7 @@ namespace WinPaletter.UI.WP
 
         protected override void OnMouseLeave(EventArgs e)
         {
-            if (CanAnimate) { Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            if (CanAnimate) { Transition.With(this, nameof(alpha), 0).CriticalDamp(Program.AnimationSpan); }
             else { alpha = 0; }
 
             base.OnMouseLeave(e);
@@ -481,7 +481,7 @@ namespace WinPaletter.UI.WP
 
         private void TB_LostFocus(object sender, EventArgs e)
         {
-            if (CanAnimate) { Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            if (CanAnimate) { Transition.With(this, nameof(alpha), 0).CriticalDamp(Program.AnimationSpan); }
             else { alpha = 0; }
         }
 

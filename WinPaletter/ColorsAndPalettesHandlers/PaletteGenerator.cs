@@ -742,7 +742,7 @@ namespace WinPaletter
                 {
                     FluentTransitions.Transition.With(this, nameof(Height), GroupBox1.Bottom + bottom_buttons.Height + 5)
                         .HookOnCompletion(() => Program.Animator.ShowSync(GroupBox1))
-                        .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                        .CriticalDamp(Program.AnimationSpan_Quick);
                 }
                 else
                 {
@@ -756,7 +756,7 @@ namespace WinPaletter
                 {
                     FluentTransitions.Transition.With(this, nameof(Height), GroupBox1.Top + bottom_buttons.Height)
                         .HookOnCompletion(() => Program.Animator.HideSync(GroupBox1))
-                        .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                        .CriticalDamp(Program.AnimationSpan_Quick);
                 }
                 else
                 {

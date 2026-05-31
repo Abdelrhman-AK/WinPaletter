@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Drawing.Text;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.Properties;
@@ -485,30 +486,6 @@ namespace WinPaletter.UI.Simulation
             return path;
         }
 
-        private GraphicsPath RRNoLine(Rectangle r, int radius)
-        {
-            GraphicsPath path = new();
-            int d = radius * 2;
-            float f0 = 0.5f;
-            float f1 = 2f - f0;
-
-            RectangleF R1 = new(r.X + f0 * d, r.Y, d, d);
-            RectangleF R2 = new(r.X + r.Width - f1 * d, r.Y, d, d);
-            RectangleF R3 = new(r.X - f0 * d, r.Y + r.Height - f0 * d, d, f0 * d);
-            RectangleF R4 = new(r.X + r.Width - f0 * d, r.Y + r.Height - f0 * d, d, f0 * d);
-
-            path.AddArc(R4, 90f, 90f);
-            path.AddLine(new PointF(R4.X, R4.Y), new PointF(R2.Right, R2.Bottom));
-            path.AddArc(R2, 0f, -90);
-            path.AddArc(R1, -90, -90);
-            path.AddArc(R3, 0f, 90f);
-            path.AddLine(new PointF(R3.X + R3.Width, R3.Y + R3.Height), new PointF(R4.X, R4.Y + R4.Height));
-
-            path.CloseFigure();
-
-            return path;
-        }
-
         private void FillSemiRect(Graphics Graphics, Brush Brush, Rectangle Rectangle, int Radius = -1)
         {
             if (Radius == -1) Radius = 6;
@@ -793,28 +770,30 @@ namespace WinPaletter.UI.Simulation
             {
                 G.SmoothingMode = SmoothingMode.Default;
                 using (SolidBrush br = new(TabFocusedFinalColor))
-                {
-                    G.FillPath(br, RR(Rect_Tab0, Radius));
-                }
-                G.SmoothingMode = SmoothingMode.AntiAlias;
+                using (GraphicsPath path = RR(Rect_Tab0, Radius))
                 using (Pen P = new(TabFocusedFinalColor))
                 {
-                    G.DrawPath(P, RRNoLine(Rect_Tab0, Radius));
+                    G.FillPath(br, path);
+                    G.SmoothingMode = SmoothingMode.AntiAlias;
+                    G.DrawPath(P, path);
+                    G.SmoothingMode = SmoothingMode.Default;
                 }
-                G.SmoothingMode = SmoothingMode.Default;
 
-                if (!UseAcrylicOnTitlebar)
+                using (GraphicsPath path = RR(Rect_Tab1, Radius))
                 {
-                    using (SolidBrush br = new(Color_TabUnFocused))
+                    if (!UseAcrylicOnTitlebar)
                     {
-                        G.FillPath(br, RR(Rect_Tab1, Radius));
+                        using (SolidBrush br = new(Color_TabUnFocused))
+                        {
+                            G.FillPath(br, path);
+                        }
                     }
-                }
-                else if (Color_TabUnFocused != Color_Titlebar)
-                {
-                    using (SolidBrush br = new(Color_TabUnFocused))
+                    else if (Color_TabUnFocused != Color_Titlebar)
                     {
-                        G.FillPath(br, RR(Rect_Tab1, Radius));
+                        using (SolidBrush br = new(Color_TabUnFocused))
+                        {
+                            G.FillPath(br, path);
+                        }
                     }
                 }
             }

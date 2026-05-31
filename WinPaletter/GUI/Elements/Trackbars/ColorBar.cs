@@ -201,7 +201,7 @@ namespace WinPaletter.UI.WP
             if (e.Button == MouseButtons.Left)
             {
                 State = MouseState.Down;
-                if (CanAnimate) Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                if (CanAnimate) Transition.With(this, nameof(alpha), 0).CriticalDamp(Program.AnimationSpan);
                 else alpha = 0;
 
                 if (Circle.Contains(e.Location)) { ThumbDown = true; return; }
@@ -226,7 +226,7 @@ namespace WinPaletter.UI.WP
             }
 
             if (CanAnimate)
-                Transition.With(this, nameof(alpha), Circle.Contains(PointToClient(MousePosition)) ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                Transition.With(this, nameof(alpha), Circle.Contains(PointToClient(MousePosition)) ? 255 : 0).CriticalDamp(Program.AnimationSpan);
             else alpha = Circle.Contains(PointToClient(MousePosition)) ? 255 : 0;
 
             Invalidate();
@@ -237,7 +237,7 @@ namespace WinPaletter.UI.WP
         {
             ThumbDown = false;
             State = MouseState.None;
-            if (CanAnimate) Transition.With(this, nameof(alpha), ContainsFocus ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+            if (CanAnimate) Transition.With(this, nameof(alpha), ContainsFocus ? 255 : 0).CriticalDamp(Program.AnimationSpan);
             else alpha = ContainsFocus ? 255 : 0;
             base.OnMouseUp(e);
         }

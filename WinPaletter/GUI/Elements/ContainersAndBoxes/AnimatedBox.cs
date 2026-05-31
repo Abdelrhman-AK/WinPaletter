@@ -129,11 +129,11 @@ namespace WinPaletter.UI.WP
                     {
                         if (Color == C1 || Color == Color1)
                         {
-                            await Task.Run(() => Transition.With(this, nameof(Color), C2).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)));
+                            await Task.Run(() => Transition.With(this, nameof(Color), C2).CriticalDamp(Program.AnimationSpan));
                         }
                         else
                         {
-                            await Task.Run(() => Transition.With(this, nameof(Color), C1).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)));
+                            await Task.Run(() => Transition.With(this, nameof(Color), C1).CriticalDamp(Program.AnimationSpan));
                         }
                         needInvalidate = true;
                     }

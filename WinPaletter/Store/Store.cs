@@ -304,12 +304,12 @@ namespace WinPaletter
 
         private void PictureBox_MouseLeave(object sender, EventArgs e)
         {
-            Transition.With(lbl_hint, nameof(lbl_hint.Text), string.Empty).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+            Transition.With(lbl_hint, nameof(lbl_hint.Text), string.Empty).CriticalDamp(Program.AnimationSpan_Quick);
         }
 
         private void PictureBox_MouseEnter(object sender, EventArgs e)
         {
-            Transition.With(lbl_hint, nameof(lbl_hint.Text), ((sender as PictureBox).Tag ?? string.Empty).ToString()).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+            Transition.With(lbl_hint, nameof(lbl_hint.Text), ((sender as PictureBox).Tag ?? string.Empty).ToString()).CriticalDamp(Program.AnimationSpan_Quick);
         }
 
         private void LoadTogglesData()

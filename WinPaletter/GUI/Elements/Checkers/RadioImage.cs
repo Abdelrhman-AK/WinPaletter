@@ -62,7 +62,7 @@ namespace WinPaletter.UI.WP
 
                     if (CanAnimate)
                     {
-                        Transition.With(this, nameof(alpha2), _checked ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                        Transition.With(this, nameof(alpha2), _checked ? 255 : 0).CriticalDamp(Program.AnimationSpan);
                     }
                     else { alpha2 = Checked ? 255 : 0; }
 
@@ -126,7 +126,7 @@ namespace WinPaletter.UI.WP
             Checked = _useAsCheckBox ? !_checked : true;
             State = MouseState.Down;
 
-            if (CanAnimate) { Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            if (CanAnimate) { Transition.With(this, nameof(alpha), 0).CriticalDamp(Program.AnimationSpan); }
             else { alpha = 0; }
 
             base.OnMouseDown(e);
@@ -136,7 +136,7 @@ namespace WinPaletter.UI.WP
         {
             State = MouseState.Over;
 
-            if (CanAnimate) { Transition.With(this, nameof(alpha), ContainsFocus ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            if (CanAnimate) { Transition.With(this, nameof(alpha), ContainsFocus ? 255 : 0).CriticalDamp(Program.AnimationSpan); }
             else { alpha = ContainsFocus ? 255 : 0; }
 
             base.OnMouseUp(e);
@@ -146,7 +146,7 @@ namespace WinPaletter.UI.WP
         {
             State = MouseState.Over;
 
-            if (CanAnimate) { Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            if (CanAnimate) { Transition.With(this, nameof(alpha), 255).CriticalDamp(Program.AnimationSpan); }
             else { alpha = 255; }
 
             base.OnMouseEnter(e);
@@ -156,7 +156,7 @@ namespace WinPaletter.UI.WP
         {
             State = MouseState.None;
 
-            if (CanAnimate) { Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration)); }
+            if (CanAnimate) { Transition.With(this, nameof(alpha), 0).CriticalDamp(Program.AnimationSpan); }
             else { alpha = 0; }
 
             base.OnMouseLeave(e);

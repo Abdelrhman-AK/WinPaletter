@@ -574,7 +574,7 @@ namespace WinPaletter
                 Transition
                     .With(this, nameof(Height), previousHeight)
                     .With(this, nameof(Top), Top - (previousHeight - Height) / 2)
-                    .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                    .CriticalDamp(Program.AnimationSpan);
 
                 Program.Animator.HideSync(label2);
 
@@ -598,7 +598,7 @@ namespace WinPaletter
                 Transition
                     .With(this, nameof(Height), CollapsedHeight)
                     .With(this, nameof(Top), Top + (Height - CollapsedHeight) / 2)
-                    .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                    .CriticalDamp(Program.AnimationSpan);
             }
         }
 

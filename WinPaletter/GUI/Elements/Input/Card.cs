@@ -97,8 +97,8 @@ namespace WinPaletter.UI.WP
 
             if (CanAnimate)
             {
-                Transition.With(this, nameof(alpha), 255).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-                Transition.With(this, nameof(HoverSize), (int)(Math.Min(Width, Height) * 1.5)).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                Transition.With(this, nameof(alpha), 255).CriticalDamp(Program.AnimationSpan);
+                Transition.With(this, nameof(HoverSize), (int)(Math.Min(Width, Height) * 1.5)).CriticalDamp(Program.AnimationSpan_Quick);
             }
             else
             {
@@ -131,8 +131,8 @@ namespace WinPaletter.UI.WP
 
             if (CanAnimate)
             {
-                Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-                Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                Transition.With(this, nameof(alpha), 0).CriticalDamp(Program.AnimationSpan);
+                Transition.With(this, nameof(HoverSize), 0).CriticalDamp(Program.AnimationSpan_Quick);
             }
             else
             {
@@ -151,7 +151,7 @@ namespace WinPaletter.UI.WP
 
             if (CanAnimate)
             {
-                Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                Transition.With(this, nameof(alpha), 0).CriticalDamp(Program.AnimationSpan);
             }
             else { alpha = 0; }
 
@@ -164,8 +164,8 @@ namespace WinPaletter.UI.WP
 
             if (CanAnimate)
             {
-                Transition.With(this, nameof(alpha), 128).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-                Transition.With(this, nameof(HoverSize), (int)(Math.Min(Width, Height) * 1.5) * 5).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                Transition.With(this, nameof(alpha), 128).CriticalDamp(Program.AnimationSpan);
+                Transition.With(this, nameof(HoverSize), (int)(Math.Min(Width, Height) * 1.5) * 5).CriticalDamp(Program.AnimationSpan);
             }
             else
             {
@@ -184,8 +184,8 @@ namespace WinPaletter.UI.WP
 
             if (CanAnimate)
             {
-                Transition.With(this, nameof(alpha), ContainsFocus ? 255 : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-                Transition.With(this, nameof(HoverSize), ContainsFocus ? (int)(Math.Min(Width, Height) * 1.5) : 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                Transition.With(this, nameof(alpha), ContainsFocus ? 255 : 0).CriticalDamp(Program.AnimationSpan);
+                Transition.With(this, nameof(HoverSize), ContainsFocus ? (int)(Math.Min(Width, Height) * 1.5) : 0).CriticalDamp(Program.AnimationSpan_Quick);
             }
             else
             {
@@ -219,8 +219,8 @@ namespace WinPaletter.UI.WP
 
             if (CanAnimate)
             {
-                Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-                Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                Transition.With(this, nameof(alpha), 0).CriticalDamp(Program.AnimationSpan);
+                Transition.With(this, nameof(HoverSize), 0).CriticalDamp(Program.AnimationSpan_Quick);
             }
             else
             {
@@ -235,8 +235,8 @@ namespace WinPaletter.UI.WP
         {
             if (CanAnimate)
             {
-                Transition.With(this, nameof(alpha), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
-                Transition.With(this, nameof(HoverSize), 0).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                Transition.With(this, nameof(alpha), 0).CriticalDamp(Program.AnimationSpan);
+                Transition.With(this, nameof(HoverSize), 0).CriticalDamp(Program.AnimationSpan_Quick);
             }
             else
             {

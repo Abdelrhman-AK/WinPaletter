@@ -105,7 +105,7 @@ namespace WinPaletter.UI.WP
                     StopMarqueeTimer();
                     if (CanAnimate)
                     {
-                        Transition.With(this, nameof(Value_Animation), _value).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                        Transition.With(this, nameof(Value_Animation), _value).CriticalDamp(Program.AnimationSpan);
                     }
                     else
                     {
@@ -236,7 +236,7 @@ namespace WinPaletter.UI.WP
 
                     if (CanAnimate && Style != ProgressBarStyle.Marquee)
                     {
-                        Transition.With(this, nameof(Value_Animation), _value).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration));
+                        Transition.With(this, nameof(Value_Animation), _value).CriticalDamp(Program.AnimationSpan);
                     }
                     else { Value_Animation = _value; }
 
@@ -332,7 +332,7 @@ namespace WinPaletter.UI.WP
                             }
                     }
 
-                    if (CanAnimate) { Transition.With(this, nameof(StateColor), color).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick)); }
+                    if (CanAnimate) { Transition.With(this, nameof(StateColor), color).CriticalDamp(Program.AnimationSpan_Quick); }
                     else { StateColor = color; }
 
                     ThrottleTaskbarUpdate();

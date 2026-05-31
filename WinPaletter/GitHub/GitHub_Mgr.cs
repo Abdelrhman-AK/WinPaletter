@@ -422,13 +422,13 @@ namespace WinPaletter
         private void btn_new_MouseEnter(object sender, EventArgs e)
         {
             Transition.With(label15, nameof(label15.Text), ((sender as UI.WP.Button).Tag ?? string.Empty).ToString())
-                .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                .CriticalDamp(Program.AnimationSpan_Quick);
         }
 
         private void btn_new_MouseLeave(object sender, EventArgs e)
         {
             Transition.With(label15, nameof(label15.Text), string.Empty)
-                .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                .CriticalDamp(Program.AnimationSpan_Quick);
         }
 
         private void btn_paste_Click(object sender, EventArgs e) { FileSystem.ActionQueue.Enqueue(FileSystem.Paste); }
@@ -701,13 +701,13 @@ Generated automatically by WinPaletter. Please review the changes before merging
         private void button14_MouseEnter(object sender, EventArgs e)
         {
             Transition.With(label12, nameof(label12.Text), ((sender as UI.WP.Button).Tag ?? string.Empty).ToString())
-                .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                .CriticalDamp(Program.AnimationSpan_Quick);
         }
 
         private void button14_MouseLeave(object sender, EventArgs e)
         {
             Transition.With(label12, nameof(label12.Text), string.Empty)
-                .CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration_Quick));
+                .CriticalDamp(Program.AnimationSpan_Quick);
         }
 
         private void button15_Click(object sender, EventArgs e)

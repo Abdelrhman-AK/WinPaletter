@@ -47,7 +47,7 @@ namespace WinPaletter.TypesExtensions
 
             int bitmapWidth = (int)w;
             int bitmapHeight = (int)h;
-            
+
             using Bitmap b = new(bitmapWidth, bitmapHeight, PixelFormat.Format32bppArgb);
             using GraphicsPath gp = new();
             using Graphics gx = Graphics.FromImage(b);
@@ -63,7 +63,7 @@ namespace WinPaletter.TypesExtensions
 
             InterpolationMode oldInterpolationMode = G.InterpolationMode;
             G.InterpolationMode = InterpolationMode.HighQualityBicubic;
-            
+
             try
             {
                 G.DrawImage(b, clientRectangle, new Rectangle(0, 0, bitmapWidth, bitmapHeight), GraphicsUnit.Pixel);
@@ -100,7 +100,7 @@ namespace WinPaletter.TypesExtensions
 
             int bitmapWidth = Math.Max(1, (int)(glowRect.Width / glowFade));
             int bitmapHeight = Math.Max(1, (int)(glowRect.Height / glowFade));
-            
+
             using Bitmap glowBitmap = new(bitmapWidth, bitmapHeight, PixelFormat.Format32bppArgb);
             using Graphics glowGraphics = Graphics.FromImage(glowBitmap);
             {
@@ -263,7 +263,7 @@ namespace WinPaletter.TypesExtensions
             float width = rectangle.Width;
             float height = rectangle.Height;
 
-            if (width <= 0f || height <= 0f) 
+            if (width <= 0f || height <= 0f)
             {
                 GraphicsPath emptyPath = new() { FillMode = FillMode.Winding };
                 return emptyPath;
@@ -387,7 +387,7 @@ namespace WinPaletter.TypesExtensions
         public static void FillRoundedRect(this Graphics G, Brush brush, RectangleF rectangle, int radius = -1, bool forcedRoundCorner = false, RoundedCorners corners = RoundedCorners.All)
         {
             if (G == null || !IsValid(brush) || rectangle.IsEmpty || rectangle.Width <= 0 || rectangle.Height <= 0) return;
-            
+
             if (radius == -1) radius = Program.Style.Radius;
 
             bool useRounded = (Program.Style.RoundedCorners || forcedRoundCorner) && radius > 0;
@@ -811,6 +811,56 @@ namespace WinPaletter.TypesExtensions
             return new Rectangle(rect.X - dx, rect.Y - dy, rect.Width + dx * 2, rect.Height + dy * 2);
         }
 
+        public enum TabStyle
+        {
+            /// <summary>Top corners rounded, flat bottom (standard tab)</summary>
+            Rounded,
+            /// <summary>Top corners sharp, flat bottom</summary>
+            Sharp
+        }
+
+        /// <summary>
+        /// Creates a <see cref="GraphicsPath"/> representing a tab shape based on the specified rectangle, corner radius, and style.
+        /// </summary>
+        /// <param name="rectangle"></param>
+        /// <param name="radius"></param>
+        /// <param name="style"></param>
+        /// <returns></returns>
+        public static GraphicsPath ToTabPath(this Rectangle rectangle, int radius = -1, TabStyle style = TabStyle.Rounded)
+        {
+            if (radius == -1) radius = Program.Style.Radius;
+            if (radius == 0) style = TabStyle.Sharp;
+
+            GraphicsPath path = new();
+
+            switch (style)
+            {
+                case TabStyle.Rounded:
+                    {
+                        int bottom = rectangle.Bottom + 1;
+                        int diameter = radius * 2;
+
+                        path.AddArc(rectangle.X, rectangle.Y, diameter, diameter, 180, 90);
+                        path.AddArc(rectangle.Right - diameter, rectangle.Y, diameter, diameter, 270, 90);
+                        path.AddLine(rectangle.Right, rectangle.Y + radius, rectangle.Right, bottom);
+                        path.AddLine(rectangle.X, bottom, rectangle.X, rectangle.Y + radius);
+                        break;
+                    }
+
+                case TabStyle.Sharp:
+                    {
+                        int bottom = rectangle.Bottom + 1;
+
+                        path.AddLine(rectangle.X, bottom, rectangle.X, rectangle.Y);
+                        path.AddLine(rectangle.X, rectangle.Y, rectangle.Right, rectangle.Y);
+                        path.AddLine(rectangle.Right, rectangle.Y, rectangle.Right, bottom);
+                        break;
+                    }
+            }
+
+            return path;
+        }
+
         private static readonly Func<Brush, IntPtr> GetBrushHandle = CreateBrushGetter();
         private static readonly Func<Pen, IntPtr> GetPenHandle = CreatePenGetter();
 
@@ -878,7 +928,7 @@ namespace WinPaletter.TypesExtensions
             using Graphics G = button.CreateGraphics();
             textSize = string.IsNullOrEmpty(button.Text) ? SizeF.Empty : TextRenderer.MeasureText(G, button.Text, button.Font);
 
-            GetTextAndImageRectangles(bounds, imageSize, textSize, button.ImageAlign, button.TextAlign,  button.TextImageRelation, out imageRect, out textRect);
+            GetTextAndImageRectangles(bounds, imageSize, textSize, button.ImageAlign, button.TextAlign, button.TextImageRelation, out imageRect, out textRect);
         }
 
         /// <summary>
@@ -911,7 +961,7 @@ namespace WinPaletter.TypesExtensions
         /// <param name="relation"></param>
         /// <param name="imageRect"></param>
         /// <param name="textRect"></param>
-        public static void GetTextAndImageRectangles(RectangleF bounds, SizeF imageSize, SizeF textSize, ContentAlignment imageAlign, ContentAlignment textAlign, TextImageRelation relation,  out RectangleF imageRect, out RectangleF textRect)
+        public static void GetTextAndImageRectangles(RectangleF bounds, SizeF imageSize, SizeF textSize, ContentAlignment imageAlign, ContentAlignment textAlign, TextImageRelation relation, out RectangleF imageRect, out RectangleF textRect)
         {
             imageRect = RectangleF.Empty;
             textRect = RectangleF.Empty;
