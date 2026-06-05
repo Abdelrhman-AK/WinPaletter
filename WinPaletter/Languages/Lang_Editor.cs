@@ -115,13 +115,13 @@ namespace WinPaletter
             RadioButton2.Checked = modifiedLang.Information.RightToLeft;
 
             // Load language code
-            if (ComboBox2.Items.Contains(modifiedLang.Information.LangCode))
+            if (ComboBox2.Items.Contains(modifiedLang.Information.LangCode.ToUpper()))
             {
-                ComboBox2.SelectedItem = modifiedLang.Information.LangCode ?? "en-US";
+                ComboBox2.SelectedItem = modifiedLang.Information.LangCode.ToUpper() ?? "EN-US";
             }
             else
             {
-                ComboBox2.SelectedItem = "en-US";
+                ComboBox2.SelectedItem = "EN-US";
             }
 
             // Load global strings; strings that are not associated with any form and are used globally inside code
@@ -1043,8 +1043,8 @@ namespace WinPaletter
 
             foreach (CultureInfo culture in cultures)
             {
-                if (!ComboBox2.Items.Contains(culture.Name) & !string.IsNullOrWhiteSpace(culture.Name))
-                    ComboBox2.Items.Add(culture.Name);
+                if (!ComboBox2.Items.Contains(culture.Name.ToUpper()) & !string.IsNullOrWhiteSpace(culture.Name))
+                    ComboBox2.Items.Add(culture.Name.ToUpper());
             }
 
             Refresh();
@@ -1280,12 +1280,12 @@ namespace WinPaletter
                 // Create a new JObject for the information
                 JObject j_info = new()
                 {
-                    { "Name".ToLower(), TextBox5.Text ?? Environment.UserName },
-                    { "TranslationVersion".ToLower(), TextBox6.Text ?? "1.0" },
-                    { "Lang".ToLower(), TextBox3.Text ?? "English" },
-                    { "LangCode".ToLower(), ComboBox2.SelectedItem.ToString() ?? "EN-US" },
-                    { "AppVer".ToLower(), TextBox7.Text ?? Program.Version },
-                    { "RightToLeft".ToLower(), RadioButton2.Checked }
+                    { nameof(Localizer.Information_Cls.Name), TextBox5.Text ?? Environment.UserName },
+                    { nameof(Localizer.Information_Cls.TranslationVersion), TextBox6.Text ?? "1.0" },
+                    { nameof(Localizer.Information_Cls.Lang), TextBox3.Text ?? "English" },
+                    { nameof(Localizer.Information_Cls.LangCode), ComboBox2.SelectedItem.ToString().ToUpper() ?? "EN-US" },
+                    { nameof(Localizer.Information_Cls.AppVer), TextBox7.Text ?? Program.Version },
+                    { nameof(Localizer.Information_Cls.RightToLeft), RadioButton2.Checked }
                 };
 
                 // Set the information JObject and the global strings JObject in the main JObject
