@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Ookii.Dialogs.WinForms;
 using System;
 using System.Diagnostics;
@@ -8,6 +9,7 @@ using System.Windows.Forms;
 using WinPaletter.Assets;
 using WinPaletter.Properties;
 using WinPaletter.UI.WP;
+using static WinPaletter.Localizer;
 
 namespace WinPaletter
 {
@@ -49,13 +51,6 @@ namespace WinPaletter
                 sets = new(Settings.Source.File, _File);
 
             Read(sets);
-
-            Label11.Text = Program.Localization.Information.Name;
-            Label12.Text = Program.Localization.Information.TranslationVersion;
-            Label14.Text = $"{Program.Localization.Information.AppVer} {Program.Localization.Strings.General.AndBelow}";
-            Label19.Text = Program.Localization.Information.Lang;
-            Label16.Text = Program.Localization.Information.LangCode;
-            Label22.Text = !Program.Localization.Information.RightToLeft ? Program.Localization.Strings.Languages.LeftToRight : Program.Localization.Strings.Languages.RightToLeft;
 
             TextBox3.Text = Program.Settings.Language.File;
         }
@@ -845,19 +840,6 @@ namespace WinPaletter
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     TextBox3.Text = dlg.FileName;
-                    StreamReader _File = new(TextBox3.Text);
-                    JObject J = JObject.Parse(_File.ReadToEnd());
-                    _File.Close();
-
-                    if (J["Information"] is not null)
-                    {
-                        Label11.Text = J["Information"]["name"] is not null ? J["Information"]["name"].ToString() : string.Empty;
-                        Label12.Text = J["Information"]["translationversion"] is not null ? J["Information"]["translationversion"].ToString() : string.Empty;
-                        Label14.Text = $"{(J["Information"]["appver"] is not null ? J["Information"]["appver"] : Program.Version)} {Program.Localization.Strings.General.AndBelow}";
-                        Label19.Text = J["Information"]["lang"] is not null ? J["Information"]["lang"].ToString() : string.Empty;
-                        Label16.Text = J["Information"]["langcode"] is not null ? J["Information"]["langcode"].ToString() : string.Empty;
-                        Label22.Text = J["Information"]["righttoleft"] is not null ? (!(bool)J["Information"]["righttoleft"] ? Program.Localization.Strings.Languages.LeftToRight : Program.Localization.Strings.Languages.RightToLeft) : Program.Localization.Strings.Languages.LeftToRight;
-                    }
                 }
             }
         }
@@ -1391,6 +1373,51 @@ namespace WinPaletter
                 else
                     ListBox2.SelectedIndex = ListBox2.Items.Count - 1;
             }
+        }
+
+        private void TextBox3_TextChanged(object sender, EventArgs e)
+        {
+            Label11.Text = Program.Localization.Information.Name;
+            Label12.Text = Program.Localization.Information.TranslationVersion;
+            Label14.Text = $"{Program.Localization.Information.AppVer} {Program.Localization.Strings.General.AndBelow}";
+            Label19.Text = Program.Localization.Information.Lang;
+            Label16.Text = Program.Localization.Information.LangCode;
+            Label22.Text = !Program.Localization.Information.RightToLeft ? Program.Localization.Strings.Languages.LeftToRight : Program.Localization.Strings.Languages.RightToLeft;
+
+            string fileName = TextBox3.Text;
+
+            if (!File.Exists(fileName) || !Path.GetExtension(fileName).Equals(".json", StringComparison.OrdinalIgnoreCase)) return;
+
+            using StreamReader file = new(fileName);
+            using JsonTextReader reader = new(file);
+
+            JObject? information = null;
+
+            while (reader.Read())
+            {
+                if (reader.TokenType == JsonToken.PropertyName && reader.Value?.ToString().Equals("Information", StringComparison.OrdinalIgnoreCase) == true)
+                {
+                    reader.Read();
+                    information = JObject.Load(reader);
+                    break;
+                }
+            }
+
+            if (information is null) return;
+
+            Label11.Text = information.TryGetValue(nameof(Information_Cls.Name), StringComparison.OrdinalIgnoreCase, out JToken? name) ? name.ToString() : string.Empty;
+
+            Label12.Text = information.TryGetValue(nameof(Information_Cls.TranslationVersion), StringComparison.OrdinalIgnoreCase, out JToken? translationVersion) ? translationVersion.ToString() : string.Empty;
+
+            Label14.Text = $"{(information.TryGetValue(nameof(Information_Cls.AppVer), StringComparison.OrdinalIgnoreCase, out JToken? appVer) ? appVer : Program.Version)} {Program.Localization.Strings.General.AndBelow}";
+
+            Label19.Text = information.TryGetValue(nameof(Information_Cls.Lang), StringComparison.OrdinalIgnoreCase, out JToken? lang) ? lang.ToString() : string.Empty;
+
+            Label16.Text = information.TryGetValue(nameof(Information_Cls.LangCode), StringComparison.OrdinalIgnoreCase, out JToken? langCode) ? langCode.ToString().ToUpper() : string.Empty;
+
+            Label22.Text = information.TryGetValue(nameof(Information_Cls.RightToLeft), StringComparison.OrdinalIgnoreCase, out JToken? rtl) && rtl.Type == JTokenType.Boolean && (bool)rtl
+                ? Program.Localization.Strings.Languages.RightToLeft
+                : Program.Localization.Strings.Languages.LeftToRight;
         }
     }
 }

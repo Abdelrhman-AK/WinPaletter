@@ -1502,6 +1502,7 @@ namespace WinPaletter
             this.TextBox3.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
             this.TextBox3.UseSystemPasswordChar = false;
             this.TextBox3.WordWrap = true;
+            this.TextBox3.TextChanged += new System.EventHandler(this.TextBox3_TextChanged);
             // 
             // Button8
             // 
