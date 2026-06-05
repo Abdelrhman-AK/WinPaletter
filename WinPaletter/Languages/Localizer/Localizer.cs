@@ -10,35 +10,19 @@ namespace WinPaletter
     public partial class Localizer : IDisposable
     {
         #region IDisposable Support
-        private bool disposedValue; // To detect redundant calls
+        private bool disposedValue;
 
-        // IDisposable
         protected virtual void Dispose(bool disposing)
         {
             if (!disposedValue)
             {
-                if (disposing)
-                {
-                    // TODO: dispose managed state (managed objects).
-                }
-
-                // TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.
-                // TODO: set large fields to null.
+                if (disposing) { }
+                disposedValue = true;
             }
-            disposedValue = true;
         }
 
-        // TODO: override Finalize() only if Dispose(ByVal disposing As Boolean) above has code to free unmanaged resources.
-        // Protected Overrides Sub Finalize()
-        // ' Do not change this code.  Put cleanup code in Dispose(ByVal disposing As Boolean) above.
-        // Dispose(False)
-        // MyBase.Finalize()
-        // End Sub
-
-        // This code added by Visual Basic to correctly implement the disposable pattern.
         public void Dispose()
         {
-            // Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
             Dispose(true);
             GC.SuppressFinalize(this);
         }
@@ -46,7 +30,8 @@ namespace WinPaletter
 
         #region Variables
 
-        private List<Tuple<string, string, string, string>> _tree = [];
+        // Grouped by form name (lowercased) for O(1) lookup instead of scanning the flat list.
+        private Dictionary<string, List<(string ControlName, string Prop, string Value)>> _treeByForm = [with(StringComparer.OrdinalIgnoreCase)];
 
         /// <summary>
         /// Information about the current language
@@ -70,50 +55,43 @@ namespace WinPaletter
         /// <summary>
         /// Load the language File
         /// </summary>
-        /// <param name="File"></param>
-        /// <param name="form"></param>
         public void Load(string File, System.Windows.Forms.Form form = null)
         {
-            if (System.IO.File.Exists(File))
+            if (!System.IO.File.Exists(File)) return;
+
+            Program.Log?.Write(LogEventLevel.Information, $"Loading language from file `{File}`.");
+
+            JObject JObj;
+
+            using (StreamReader St = new(File))
             {
-                Program.Log?.Write(LogEventLevel.Information, $"Loading language from file `{File}`.");
-
-                JObject JObj;
-
-                using (StreamReader St = new(File))
-                {
-                    JObj = JObject.Parse(St.ReadToEnd());
-                    St.Close();
-                }
-
-                Information = new();
-                Strings = new();
-                Forms = [];
-
-                bool isValid = JObj.ContainsKey(nameof(Information)) && JObj.ContainsKey("Global Strings") && JObj.ContainsKey("Forms Strings");
-
-                if (!isValid) return;
-
-                Information = JObj[nameof(Information)].ToObject<Information_Cls>();
-                Program.Log?.Write(LogEventLevel.Information, $"Information of language file have been loaded.");
-
-                Strings = JObj["Global Strings"].ToObject<Strings_Cls>();
-                Program.Log?.Write(LogEventLevel.Information, $"Global strings inside language file have been loaded.");
-
-                Forms = (JObject)JObj["Forms Strings"];
-
-                _tree = DeserializeFormsJSONIntoList(Forms);
-
-                LoadFromStrings(form);
-                Program.Log?.Write(LogEventLevel.Information, $"Forms strings inside language file have been loaded.");
+                JObj = JObject.Parse(St.ReadToEnd());
             }
+
+            Information = new();
+            Strings = new();
+            Forms = [];
+            _treeByForm = [with(StringComparer.OrdinalIgnoreCase)];
+
+            if (!JObj.ContainsKey(nameof(Information)) || !JObj.ContainsKey("Global Strings") || !JObj.ContainsKey("Forms Strings")) return;
+
+            Information = JObj[nameof(Information)].ToObject<Information_Cls>();
+            Program.Log?.Write(LogEventLevel.Information, "Information of language file have been loaded.");
+
+            Strings = JObj["Global Strings"].ToObject<Strings_Cls>();
+            Program.Log?.Write(LogEventLevel.Information, "Global strings inside language file have been loaded.");
+
+            Forms = (JObject)JObj["Forms Strings"];
+
+            DeserializeFormsJSONIntoDict(Forms, _treeByForm);
+
+            LoadFromStrings(form);
+            Program.Log?.Write(LogEventLevel.Information, "Forms strings inside language file have been loaded.");
         }
 
         /// <summary>
         /// Save the language File as JSON format
         /// </summary>
-        /// <param name="File"></param>
-        /// <param name="Forms"></param>
         public void Save(string File, System.Windows.Forms.Form[] Forms = null)
         {
             Information.AppVer = Program.Version;
@@ -138,21 +116,13 @@ namespace WinPaletter
                     JObject oldSource = JObject.Parse(System.IO.File.ReadAllText(File));
                     j_Forms = oldSource["Forms Strings"] as JObject ?? [];
                 }
-                else
-                {
-                    j_Forms = [];
-                }
 
                 foreach (System.Windows.Forms.Form form in Forms)
                 {
                     if (j_Forms.ContainsKey(form.Name))
-                    {
                         j_Forms[form.Name] = form.ToJSON();
-                    }
                     else
-                    {
                         j_Forms.Add(form.Name, form.ToJSON());
-                    }
                 }
             }
 
@@ -166,8 +136,6 @@ namespace WinPaletter
         /// <summary>
         /// Save the language File as JSON format
         /// </summary>
-        /// <param name="File"></param>
-        /// <param name="formsJObject"></param>
         public void Save(string File, JObject formsJObject)
         {
             Information.AppVer = Program.Version;
@@ -180,228 +148,162 @@ namespace WinPaletter
             System.IO.File.WriteAllText(File, JSON_Overall.ToString());
         }
 
-        private List<Tuple<string, string, string, string>> DeserializeFormsJSONIntoList(JObject JSON_Forms)
+        // Reads a "Text" value from a JObject using case-insensitive key matching with a single TryGetValue call.
+        private static bool TryGetTextValue(JObject jobj, out string value)
         {
-            // Tuple of four values; sub_form name, control name, property, property value
-            // If there is no control and you want to change sub_form property, make control name: String.Empty
-            List<Tuple<string, string, string, string>> tree = [];
-            tree.Clear();
+            // JObject property names are case-sensitive; try common casings cheaply before falling back.
+            if (jobj.TryGetValue("Text", StringComparison.Ordinal, out JToken tok) || jobj.TryGetValue("text", StringComparison.Ordinal, out tok) || jobj.TryGetValue("TEXT", StringComparison.Ordinal, out tok))
+            {
+                value = tok.ToString();
+                return true;
+            }
+            value = null;
+            return false;
+        }
 
-            string FormName, ControlName, Prop, Value;
-            FormName = string.Empty;
-            ControlName = string.Empty;
-            Prop = string.Empty;
-            Value = string.Empty;
+        // Reads a "Controls" sub-object using case-insensitive key matching.
+        private static bool TryGetControls(JObject jobj, out JObject controls)
+        {
+            if (jobj.TryGetValue("Controls", StringComparison.Ordinal, out JToken tok) || jobj.TryGetValue("controls", StringComparison.Ordinal, out tok) || jobj.TryGetValue("CONTROLS", StringComparison.Ordinal, out tok))
+            {
+                controls = tok as JObject;
+                return controls != null;
+            }
+            controls = null;
+            return false;
+        }
 
-            // Loop through all forms nodes in JObj
+        // Shared deserialization core. Populates the target dictionary keyed by form name.
+        private static void DeserializeFormsJSONIntoDict(JObject JSON_Forms, Dictionary<string, List<(string ControlName, string Prop, string Value)>> target)
+        {
             foreach (KeyValuePair<string, JToken> F in JSON_Forms)
             {
-                // Get one sub_form node
-                // There is only one specific property "Text"
-                JObject J_Specific_Form = [];
-                J_Specific_Form = (JObject)JSON_Forms[F.Key];
-                FormName = F.Key.ToString();
-                ControlName = string.Empty;
-                Prop = "Text";
+                string formName = F.Key;
+                JObject J_Specific_Form = F.Value as JObject;
+                if (J_Specific_Form == null) continue;
 
-                if (J_Specific_Form.ContainsKey("Text") | J_Specific_Form.ContainsKey("text") | J_Specific_Form.ContainsKey("TEXT"))
+                if (!target.TryGetValue(formName, out List<(string, string, string)> entries))
                 {
-                    if (J_Specific_Form.ContainsKey("Text")) Value = J_Specific_Form["Text"].ToString();
-                    if (J_Specific_Form.ContainsKey("text")) Value = J_Specific_Form["text"].ToString();
-                    if (J_Specific_Form.ContainsKey("TEXT")) Value = J_Specific_Form["TEXT"].ToString();
-                    tree.Add(new Tuple<string, string, string, string>(FormName, ControlName, Prop, Value));
+                    entries = [];
+                    target[formName] = entries;
                 }
 
-                // If this sub_form has a control/controls then get them
-                if (J_Specific_Form.ContainsKey("Controls") | J_Specific_Form.ContainsKey("controls") | J_Specific_Form.ContainsKey("CONTROLS"))
-                {
-                    // JObj nodes of all child controls
-                    JObject J_Controls = [];
-                    if (J_Specific_Form.ContainsKey("Controls")) J_Controls = (JObject)J_Specific_Form["Controls"];
-                    if (J_Specific_Form.ContainsKey("controls")) J_Controls = (JObject)J_Specific_Form["controls"];
-                    if (J_Specific_Form.ContainsKey("CONTROLS")) J_Controls = (JObject)J_Specific_Form["CONTROLS"];
+                if (TryGetTextValue(J_Specific_Form, out string formText)) entries.Add((string.Empty, "Text", formText));
 
-                    // Loop through all child controls JObj nodes
+                if (TryGetControls(J_Specific_Form, out JObject J_Controls))
+                {
                     foreach (KeyValuePair<string, JToken> ctrl in J_Controls)
                     {
-                        // If there is a dot in JObj node value, then there is a specific mentioned property,
-                        // if not, then it is a "Text" property only.
-                        if (ctrl.Key.Contains("."))
+                        string value = ctrl.Value?.ToString() ?? string.Empty;
+
+                        if (ctrl.Key.IndexOf('.') >= 0)
                         {
-                            ControlName = ctrl.Key.Split('.')[0];
-                            Prop = ctrl.Key.Split('.')[1] ?? "Text";
-                            Value = ctrl.Value is not null ? ctrl.Value?.ToString() : string.Empty;
-                            tree.Add(new Tuple<string, string, string, string>(FormName, ControlName, Prop, Value));
+                            int dot = ctrl.Key.IndexOf('.');
+                            entries.Add((ctrl.Key.Substring(0, dot), ctrl.Key.Substring(dot + 1), value));
                         }
                         else
                         {
-                            ControlName = ctrl.Key.ToString();
-                            Prop = "Text";
-                            Value = ctrl.Value is not null ? ctrl.Value?.ToString() : string.Empty;
-                            tree.Add(new Tuple<string, string, string, string>(FormName, ControlName, Prop, Value));
+                            entries.Add((ctrl.Key, "Text", value));
                         }
                     }
                 }
             }
-
-            return tree;
         }
 
-        private List<Tuple<string, string, string, string>> DeserializeOneFormJSONIntoList(string FormName, JObject JSON_Form)
+        // Deserializes a single form's JSON node. Used when reloading one form from an external JObject.
+        private static List<(string ControlName, string Prop, string Value)> DeserializeOneFormJSON(string formName, JObject JSON_Form)
         {
-            if (JSON_Form is null) return null;
+            if (JSON_Form == null) return null;
 
-            // Tuple of four values; sub_form name, control name, property, property value
-            // If there is no control and you want to change sub_form property, make control name: String.EmptyError
-            List<Tuple<string, string, string, string>> tree = [];
-            tree.Clear();
+            Dictionary<string, List<(string, string, string)>> temp = new(1, StringComparer.OrdinalIgnoreCase);
+            JObject wrapper = new() { [formName] = JSON_Form };
+            DeserializeFormsJSONIntoDict(wrapper, temp);
 
-            string ControlName, Prop, Value;
-            ControlName = string.Empty;
-            Prop = string.Empty;
-            Value = string.Empty;
-
-            // Loop through all forms nodes in JObj
-            foreach (KeyValuePair<string, JToken> F in JSON_Form)
-            {
-                ControlName = string.Empty;
-                Prop = "Text";
-
-                if (JSON_Form.ContainsKey("Text") | JSON_Form.ContainsKey("text") | JSON_Form.ContainsKey("TEXT"))
-                {
-                    if (JSON_Form.ContainsKey("Text")) Value = JSON_Form["Text"].ToString();
-                    if (JSON_Form.ContainsKey("text")) Value = JSON_Form["text"].ToString();
-                    if (JSON_Form.ContainsKey("TEXT")) Value = JSON_Form["TEXT"].ToString();
-                    tree.Add(new Tuple<string, string, string, string>(FormName, ControlName, Prop, Value));
-                }
-
-                // If this sub_form has a control/controls then get them
-                if (JSON_Form.ContainsKey("Controls") | JSON_Form.ContainsKey("controls") | JSON_Form.ContainsKey("CONTROLS"))
-                {
-                    // JObj nodes of all child controls
-                    JObject J_Controls = [];
-                    if (JSON_Form.ContainsKey("Controls")) J_Controls = (JObject)JSON_Form["Controls"];
-                    if (JSON_Form.ContainsKey("controls")) J_Controls = (JObject)JSON_Form["controls"];
-                    if (JSON_Form.ContainsKey("CONTROLS")) J_Controls = (JObject)JSON_Form["CONTROLS"];
-
-                    // Loop through all child controls JObj nodes
-                    foreach (KeyValuePair<string, JToken> ctrl in J_Controls)
-                    {
-                        // If there is a dot in JObj node value, then there is a specific mentioned property,
-                        // if not, then it is a "Text" property only.
-                        if (ctrl.Key.Contains("."))
-                        {
-                            ControlName = ctrl.Key.Split('.')[0];
-                            Prop = ctrl.Key.Split('.')[1] ?? "Text";
-                            Value = ctrl.Value is not null ? ctrl.Value?.ToString() : string.Empty;
-                            tree.Add(new Tuple<string, string, string, string>(FormName, ControlName, Prop, Value));
-                        }
-                        else
-                        {
-                            ControlName = ctrl.Key.ToString();
-                            Prop = "Text";
-                            Value = ctrl.Value is not null ? ctrl.Value?.ToString() : string.Empty;
-                            tree.Add(new Tuple<string, string, string, string>(FormName, ControlName, Prop, Value));
-                        }
-                    }
-                }
-            }
-
-            return tree;
+            return temp.TryGetValue(formName, out List<(string, string, string)> entries) ? entries : null;
         }
 
         /// <summary>
-        /// Load the language strings into the forms
+        /// Load the language strings into the form using the preloaded tree.
         /// </summary>
-        /// <param name="form"></param>
         public void LoadFromStrings(System.Windows.Forms.Form form)
         {
-            if (form is not null)
-            {
-                bool WasVisible = form.Visible;
+            if (form == null) return;
 
-                if (WasVisible) form.Visible = false;
+            if (!_treeByForm.TryGetValue(form.Name, out List<(string ControlName, string Prop, string Value)> entries)) return;
 
-                SetFormValues(_tree, form);
-
-                if (WasVisible) form.Visible = true;
-            }
+            ApplyEntriesToForm(entries, form);
         }
 
         /// <summary>
-        /// Load the language strings into the forms
+        /// Load the language strings into the form from a JObject.
         /// </summary>
-        /// <param name="form"></param>
-        /// <param name="jObject"></param>
         public void LoadFromStrings(System.Windows.Forms.Form form, JObject jObject)
         {
-            if (form is not null)
-            {
-                bool WasVisible = form.Visible;
+            if (form == null) return;
 
-                if (WasVisible) form.Visible = false;
+            List<(string ControlName, string Prop, string Value)> entries = DeserializeOneFormJSON(form.Name, jObject);
+            if (entries == null) return;
 
-                SetFormValues(DeserializeOneFormJSONIntoList(form.Name, jObject), form);
-
-                if (WasVisible) form.Visible = true;
-            }
+            ApplyEntriesToForm(entries, form);
         }
 
         /// <summary>
         /// Load the language of a form.
         /// </summary>
-        /// <param name="Form"></param>
-        /// <param name="jObject"></param>
-        /// <param name="Localizer"></param>
         public static void LoadLanguage(System.Windows.Forms.Form Form, JObject jObject, Localizer Localizer)
         {
             Localizer?.LoadFromStrings(Form, jObject);
         }
 
-        /// <summary>
-        /// Set the form values from the deserialized JSON tree
-        /// </summary>
-        /// <param name="PopCtrlList"></param>
-        /// <param name="form"></param>
-        private void SetFormValues(List<Tuple<string, string, string, string>> PopCtrlList, System.Windows.Forms.Form form)
+        // Builds a name→control lookup once per call to avoid repeated Controls.Find() tree walks.
+        private static Dictionary<string, Control> BuildControlMap(System.Windows.Forms.Form form)
+        {
+            // Controls.Find with empty string returns nothing on some WinForms versions; use recursive helper instead.
+            Dictionary<string, Control> map = [with(StringComparer.OrdinalIgnoreCase)];
+            CollectControls(form.Controls, map);
+            return map;
+        }
+
+        private static void CollectControls(Control.ControlCollection controls, Dictionary<string, Control> map)
+        {
+            foreach (Control c in controls)
+            {
+                if (!string.IsNullOrEmpty(c.Name) && !map.ContainsKey(c.Name)) map[c.Name] = c;
+
+                if (c.HasChildren) CollectControls(c.Controls, map);
+            }
+        }
+
+        // Applies a pre-parsed entry list to the target form.
+        // Hides the form only once, builds the control map once, then applies all entries.
+        private static void ApplyEntriesToForm(List<(string ControlName, string Prop, string Value)> entries, System.Windows.Forms.Form form)
         {
             Program.Log?.Write(LogEventLevel.Information, $"Setting strings for form `{form.Name}`.");
 
-            if (PopCtrlList is null) return;
+            bool wasVisible = form.Visible;
+            if (wasVisible) form.Visible = false;
 
-            // Item1 = FormName
-            // Item2 = ControlName
-            // Item3 = Prop
-            // Item4 = Value
-            foreach (Tuple<string, string, string, string> member in PopCtrlList)
+            // Build name→control map once so we never call Controls.Find() inside the loop.
+            Dictionary<string, Control> controlMap = BuildControlMap(form);
+
+            foreach ((string controlName, string prop, string value) in entries)
             {
-                if ((form.Name.ToLower() ?? string.Empty) == (member.Item1.ToLower() ?? string.Empty))
+                string propLower = prop.ToLowerInvariant();
+
+                if (string.IsNullOrEmpty(controlName))
                 {
-                    if (string.IsNullOrEmpty(member.Item2))
-                    {
-                        // # form
-                        if (member.Item3 is not null && !string.IsNullOrWhiteSpace(member.Item3))
-                        {
-                            if (member.Item3.ToLower() == "text") form.SetText(member.Item4 ?? string.Empty);
-                            else if (member.Item3.ToLower() == "tag") form.SetTag((member.Item4 ?? string.Empty).ToString());
-                        }
-                    }
-
-                    // # Control
-                    else if (!string.IsNullOrEmpty(member.Item2))
-                    {
-                        foreach (Control ctrl in form.Controls.Find(member.Item2, true))
-                        {
-                            if (member.Item3.ToLower() == "text")
-                            {
-                                ctrl.SetText(member.Item4.ToString());
-                            }
-
-                            if (member.Item3.ToLower() == "tag") ctrl.SetTag(member.Item4.ToString());
-                        }
-                    }
+                    // Form-level property
+                    if (propLower == "text") form.SetText(value ?? string.Empty);
+                    else if (propLower == "tag") form.SetTag(value ?? string.Empty);
+                }
+                else if (controlMap.TryGetValue(controlName, out Control ctrl))
+                {
+                    if (propLower == "text") ctrl.SetText(value);
+                    else if (propLower == "tag") ctrl.SetTag(value);
                 }
             }
+
+            if (wasVisible) form.Visible = true;
         }
     }
 }
