@@ -95,7 +95,7 @@ namespace WinPaletter
         {
             DesignerData data = new(this)
             {
-                AspectName = string.Format(Program.Localization.Strings.Aspects.WinTheme, OS.Name),
+                AspectName = string.Format(Program.Localization.Strings.Aspects.WinTheme, Program.Localization.Strings.Windows.W12),
                 Enabled = Program.TM.Windows12.Enabled,
                 GeneratePalette = true,
                 GenerateMSTheme = false,

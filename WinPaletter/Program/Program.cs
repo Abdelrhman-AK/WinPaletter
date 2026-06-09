@@ -1,4 +1,5 @@
-﻿using Serilog.Events;
+﻿using Newtonsoft.Json;
+using Serilog.Events;
 using System;
 using System.Globalization;
 using System.IO;

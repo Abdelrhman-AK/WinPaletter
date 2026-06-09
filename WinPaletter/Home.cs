@@ -699,12 +699,12 @@ namespace WinPaletter
 
         private void Button9_Click(object sender, EventArgs e)
         {
-            using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = string.IsNullOrWhiteSpace(File) ? Program.TM.Info.ThemeName + ".wpth" : File, Title = Program.Localization.Strings.Extensions.SaveWinPaletterTheme })
+            using (SaveFileDialog dlg = new() { Filter = $"{Program.Filters.WinPaletterTheme}|{Program.Filters.WinPaletterTheme_Uncompressed}", FileName = string.IsNullOrWhiteSpace(File) ? Program.TM.Info.ThemeName + ".wpth" : File, Title = Program.Localization.Strings.Extensions.SaveWinPaletterTheme })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     File = dlg.FileNames[0];
-                    Program.TM.Save(Source.File, File);
+                    Program.TM.Save(Source.File, File, ignoreCompression: dlg.FilterIndex == 2);
                     Text = Path.GetFileName(File);
                     LoadFromTM(Program.TM);
                 }

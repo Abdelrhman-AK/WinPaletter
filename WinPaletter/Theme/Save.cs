@@ -30,7 +30,7 @@ namespace WinPaletter.Theme
         /// <param name="treeView">Specify treeView to write theme applying log (Registry destination only)</param>
         /// <param name="resetToDefault">Restore Windows theme to default before applying a WinPaletter theme</param>
         /// <param name="silent">Don't show alerts on applying a WinPaletter theme</param>
-        public void Save(Source destination, string file = "", TreeView treeView = null, bool resetToDefault = false, bool silent = false)
+        public void Save(Source destination, string file = "", TreeView treeView = null, bool resetToDefault = false, bool silent = false, bool ignoreCompression = false)
         {
             switch (destination)
             {
@@ -753,7 +753,7 @@ namespace WinPaletter.Theme
                         }
                     }
 
-                    else { File.WriteAllText(file, ToString()); }
+                    else { File.WriteAllText(file, ToString(ignoreCompression)); }
 
                     break;
             }
@@ -798,20 +798,15 @@ namespace WinPaletter.Theme
         {
             protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
             {
-                // Get all public instance properties
-                var props = type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                                .Where(p => p.CanWrite && p.GetSetMethod(false) != null) // must have a *public* setter
-                                .Select(p => base.CreateProperty(p, memberSerialization))
-                                .ToList();
+                IList<JsonProperty> props = base.CreateProperties(type, memberSerialization);
 
-                // Mark all as readable/writable to preserve JSON values
-                foreach (var prop in props)
+                foreach (JsonProperty prop in props)
                 {
                     prop.Readable = true;
                     prop.Writable = true;
                 }
 
-                return props;
+                return [.. props.Where(p => p.Writable)];
             }
         }
 

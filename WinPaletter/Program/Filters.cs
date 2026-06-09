@@ -15,7 +15,12 @@
             /// <summary>
             /// Gets the filter for WinPaletter theme files.
             /// </summary>
-            public static string WinPaletterTheme => $"{Localization.Strings.Extensions.WinPaletterThemeFiles} (*.wpth)|*.wpth";
+            public static string WinPaletterTheme => $"{Localization.Strings.Extensions.WinPaletterThemeFile} (*.wpth)|*.wpth";
+
+            /// <summary>
+            /// Gets the filter for WinPaletter theme files.
+            /// </summary>
+            public static string WinPaletterTheme_Uncompressed => $"{Localization.Strings.Extensions.WinPaletterThemeFile_Uncompressed} (*.wpth)|*.wpth";
 
             /// <summary>
             /// Gets the filter for WinPaletter settings files.

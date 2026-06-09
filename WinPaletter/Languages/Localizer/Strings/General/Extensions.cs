@@ -8,6 +8,7 @@
             {
                 public string AllFiles { get; set; } = "All files";
                 public string WinPaletterThemeFile { get; set; } = "WinPaletter theme file";
+                public string WinPaletterThemeFile_Uncompressed { get; set; } = "WinPaletter theme file (Uncompressed)";
                 public string WinPaletterThemeFiles { get; set; } = "WinPaletter theme files";
                 public string WinPaletterSettings { get; set; } = "WinPaletter settings files";
                 public string WinPaletterResourcesPack { get; set; } = "WinPaletter theme resources pack";
