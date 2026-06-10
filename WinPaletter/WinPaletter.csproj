@@ -102,8 +102,8 @@
       <HintPath>..\..\Workspace\WinPaletter_WorkingArea\3. Assemblies\Devcorp.Controls.VisualStyles.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="FastCloner, Version=3.4.7.0, Culture=neutral, PublicKeyToken=e66300c36cd73760, processorArchitecture=MSIL">
-      <HintPath>..\packages\FastCloner.3.4.7\lib\net46\FastCloner.dll</HintPath>
+    <Reference Include="FastCloner, Version=3.5.5.0, Culture=neutral, PublicKeyToken=e66300c36cd73760, processorArchitecture=MSIL">
+      <HintPath>..\packages\FastCloner.3.5.5\lib\net46\FastCloner.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="FluentTransitions, Version=2.0.3.0, Culture=neutral, PublicKeyToken=121ceb2df72b2338, processorArchitecture=MSIL">
@@ -111,7 +111,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=11.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.11.0.0-preview.1.26104.118\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.11.0.0-preview.5.26302.115\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Bcl.HashCode, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -141,11 +141,11 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Serilog, Version=4.3.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <HintPath>..\packages\Serilog.4.3.2-dev-02419\lib\net471\Serilog.dll</HintPath>
+      <HintPath>..\packages\Serilog.4.3.2-dev-02433\lib\net471\Serilog.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Serilog.Sinks.File, Version=8.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <HintPath>..\packages\Serilog.Sinks.File.8.0.0-dev-02318\lib\net471\Serilog.Sinks.File.dll</HintPath>
+      <HintPath>..\packages\Serilog.Sinks.File.8.0.0-nblumhardt-02322\lib\net471\Serilog.Sinks.File.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System">
@@ -156,7 +156,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Collections.Immutable, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Collections.Immutable.11.0.0-preview.1.26104.118\lib\net462\System.Collections.Immutable.dll</HintPath>
+      <HintPath>..\packages\System.Collections.Immutable.11.0.0-preview.5.26302.115\lib\net462\System.Collections.Immutable.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Data" />
@@ -164,7 +164,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=11.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.11.0.0-preview.1.26104.118\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.11.0.0-preview.5.26302.115\lib\net462\System.Diagnostics.DiagnosticSource.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.DirectoryServices.AccountManagement">
@@ -174,11 +174,11 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Drawing.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Drawing.Common.11.0.0-preview.1.26104.118\lib\net462\System.Drawing.Common.dll</HintPath>
+      <HintPath>..\packages\System.Drawing.Common.11.0.0-preview.5.26302.115\lib\net462\System.Drawing.Common.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Formats.Nrbf, Version=11.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Formats.Nrbf.11.0.0-preview.1.26104.118\lib\net462\System.Formats.Nrbf.dll</HintPath>
+      <HintPath>..\packages\System.Formats.Nrbf.11.0.0-preview.5.26302.115\lib\net462\System.Formats.Nrbf.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.IO.Compression">
@@ -200,11 +200,11 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Reflection.Metadata, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Reflection.Metadata.11.0.0-preview.1.26104.118\lib\net462\System.Reflection.Metadata.dll</HintPath>
+      <HintPath>..\packages\System.Reflection.Metadata.11.0.0-preview.5.26302.115\lib\net462\System.Reflection.Metadata.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Resources.Extensions, Version=11.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Resources.Extensions.11.0.0-preview.1.26104.118\lib\net462\System.Resources.Extensions.dll</HintPath>
+      <HintPath>..\packages\System.Resources.Extensions.11.0.0-preview.5.26302.115\lib\net462\System.Resources.Extensions.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -213,7 +213,7 @@
     </Reference>
     <Reference Include="System.Security" />
     <Reference Include="System.Threading.Channels, Version=11.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Channels.11.0.0-preview.1.26104.118\lib\net462\System.Threading.Channels.dll</HintPath>
+      <HintPath>..\packages\System.Threading.Channels.11.0.0-preview.5.26302.115\lib\net462\System.Threading.Channels.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.4.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -564,7 +564,6 @@
     <Compile Include="Program\Filters.cs" />
     <Compile Include="Program\UserPreferences.cs" />
     <Compile Include="Program\Variables\Links.cs" />
-    <Compile Include="Program\TypesExtensions\Forms.cs" />
     <Compile Include="GitHub\Core\Cache.cs" />
     <Compile Include="GitHub\Core\Entry.cs" />
     <Compile Include="GitHub\Core\Navigation.cs" />
@@ -2098,8 +2097,8 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\System.ValueTuple.4.6.2\build\net471\System.ValueTuple.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\System.ValueTuple.4.6.2\build\net471\System.ValueTuple.targets'))" />
-    <Error Condition="!Exists('..\packages\Serilog.4.3.2-dev-02419\build\Serilog.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Serilog.4.3.2-dev-02419\build\Serilog.targets'))" />
+    <Error Condition="!Exists('..\packages\Serilog.4.3.2-dev-02433\build\Serilog.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Serilog.4.3.2-dev-02433\build\Serilog.targets'))" />
   </Target>
   <Import Project="..\packages\System.ValueTuple.4.6.2\build\net471\System.ValueTuple.targets" Condition="Exists('..\packages\System.ValueTuple.4.6.2\build\net471\System.ValueTuple.targets')" />
-  <Import Project="..\packages\Serilog.4.3.2-dev-02419\build\Serilog.targets" Condition="Exists('..\packages\Serilog.4.3.2-dev-02419\build\Serilog.targets')" />
+  <Import Project="..\packages\Serilog.4.3.2-dev-02433\build\Serilog.targets" Condition="Exists('..\packages\Serilog.4.3.2-dev-02433\build\Serilog.targets')" />
 </Project>

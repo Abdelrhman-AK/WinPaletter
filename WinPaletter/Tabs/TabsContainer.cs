@@ -1489,7 +1489,7 @@ namespace WinPaletter.Tabs
             }
         }
 
-        private void DetachForm(System.Windows.Forms.Form form)
+        private void DetachForm(UI.WP.Form form)
         {
             form.Visible = false;
             form.Parent?.Controls.Remove(form);
@@ -1500,11 +1500,11 @@ namespace WinPaletter.Tabs
 
             if (form is AspectsTemplate)
             {
-                (form as AspectsTemplate).titlebarExtender1.Flag = TitlebarExtender.Flags.System;
+                (form as AspectsTemplate).titlebarExtender1.Flag = Flags.System;
             }
-            else if (form is System.Windows.Forms.Form && form.Controls.OfType<TitlebarExtender>().Any())
+            else if (form.Controls.OfType<TitlebarExtender>().Any())
             {
-                form.Controls.OfType<TitlebarExtender>().FirstOrDefault().Flag = TitlebarExtender.Flags.System;
+                form.Controls.OfType<TitlebarExtender>().FirstOrDefault().Flag = Flags.System;
             }
 
             ApplyStyle(form);

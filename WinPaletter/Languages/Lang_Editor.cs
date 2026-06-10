@@ -632,7 +632,7 @@ namespace WinPaletter
                     else
                     {
                         // Create nested object if it does not exist
-                        if (currentToken[component] == null || currentToken[component] is not JObject)
+                        if (currentToken[component] == null || currentToken[component] is not Newtonsoft.Json.Linq.JObject)
                         {
                             currentToken[component] = new JObject();
                         }
@@ -654,8 +654,8 @@ namespace WinPaletter
         private void Child_Closing(object sender, FormClosingEventArgs e)
         {
             // Save the language of the form when it's closing to be used in the built list
-            JObject newLang = (sender as System.Windows.Forms.Form).ToJSON();
-            FormsList[(sender as System.Windows.Forms.Form).Name] = newLang;
+            JObject newLang = (sender as Form).JObject();
+            FormsList[(sender as Form).Name] = newLang;
             forms_box.Visible = true;
             properties_box.Visible = false;
             openedForm.Hide();

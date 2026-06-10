@@ -89,7 +89,7 @@ namespace WinPaletter.Tabs
         /// <summary>
         /// Reference to the associated form.
         /// </summary>
-        public System.Windows.Forms.Form Form
+        public UI.WP.Form Form
         {
             get => _form;
             private set
@@ -111,7 +111,7 @@ namespace WinPaletter.Tabs
                 }
             }
         }
-        private System.Windows.Forms.Form _form = null;
+        private UI.WP.Form _form = null;
 
         /// <summary>
         /// Flag indicating whether the form is shown.
@@ -520,7 +520,7 @@ namespace WinPaletter.Tabs
         {
             this.tabsContainer = tabsContainer;
             TabPage = tabPage;
-            Form = TabPage?.Controls?.OfType<System.Windows.Forms.Form>().FirstOrDefault();
+            Form = TabPage?.Controls?.OfType<UI.WP.Form>().FirstOrDefault();
             Text = tabPage.Text;
             Rectangle = rectangle;
             Image = new Icon(Form?.Icon ?? Properties.Resources.Icon, 16, 16).ToBitmap();

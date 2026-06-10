@@ -378,7 +378,7 @@ namespace WinPaletter
                 {
                     Program.Localization = new();
                     Program.Localization.Load(Program.Settings.Language.File);
-                    foreach (System.Windows.Forms.Form f in Application.OpenForms) f.Localize();
+                    foreach (UI.WP.Form f in Application.OpenForms) f.Localize();
                 }
                 else
                 {

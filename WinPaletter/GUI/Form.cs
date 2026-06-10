@@ -1,7 +1,11 @@
 ﻿using FluentTransitions;
+using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
@@ -119,6 +123,33 @@ namespace WinPaletter.UI.WP
                 base.Close();
             }
         }
+
+        /// <summary>
+        /// Centers the form on the primary screen
+        /// </summary>
+        public new void CenterToScreen()
+        {
+            Rectangle screenBounds = Screen.PrimaryScreen.WorkingArea;
+            Location = new Point((screenBounds.Width - Width) / 2, (screenBounds.Height - Height) / 2);
+        }
+
+        /// <summary>
+        /// Applies localization to the form using the program's default localizer
+        /// or a specified one.
+        /// </summary>
+        /// <param name="form">The form to localize</param>
+        /// <param name="localizer">Optional specific localizer. Uses Program.Localization if null.</param>
+        public void Localize(Localizer localizer = null)
+        {
+            localizer ??= Program.Localization;
+
+            if (localizer != null && Program.Settings.Language.Enabled)
+            {
+                localizer.ApplyLocalization(this);
+            }
+        }
+
+        public JObject JObject => LocalizerExtensions.JObject(this);
 
         protected override void OnFormClosed(FormClosedEventArgs e)
         {
