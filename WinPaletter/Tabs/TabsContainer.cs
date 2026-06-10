@@ -45,9 +45,6 @@ namespace WinPaletter.Tabs
             DoubleBuffered = true;
             AllowDrop = true;
 
-            sf.Trimming = StringTrimming.EllipsisCharacter;
-            sf.FormatFlags = StringFormatFlags.MeasureTrailingSpaces;
-
             InitializeContextMenu();
         }
 
@@ -135,7 +132,7 @@ namespace WinPaletter.Tabs
         Scheme scheme => Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
         Scheme scheme_secondary => Enabled ? Program.Style.Schemes.Secondary : Program.Style.Schemes.Disabled;
 
-        private static StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat();
+        private static StringFormat sf = new() { LineAlignment = StringAlignment.Center, Alignment = StringAlignment.Near, Trimming = StringTrimming.EllipsisCharacter, FormatFlags = StringFormatFlags.MeasureTrailingSpaces };
         private static StringFormat sf_middleCenter = ContentAlignment.MiddleCenter.ToStringFormat();
         private static string closeStr = "✕";
         private static Color win7BorderColor = Color.FromArgb(159, 255, 255, 255);
@@ -2287,7 +2284,10 @@ namespace WinPaletter.Tabs
                 G.FillRoundedRect(scheme_secondary.Brushes.Back_Checked, betaRect);
                 G.DrawRoundedRectBeveled(scheme_secondary.Pens.Line_Checked, betaRect);
                 betaRect.Y++;
-                G.DrawString(Program.Localization.Strings.General.Beta.ToUpper(), Fonts.ConsoleMedium, scheme_secondary.Brushes.ForeColor_Accent, betaRect, sf_middleCenter);
+                if (sf_middleCenter is not null)
+                {
+                    G.DrawString(Program.Localization.Strings.General.Beta.ToUpper(), Fonts.ConsoleMedium, scheme_secondary.Brushes.ForeColor_Accent, betaRect, sf_middleCenter);
+                }
             }
 
             G.SetClip(clipRect);
@@ -2564,16 +2564,19 @@ namespace WinPaletter.Tabs
                 }
             }
 
-            DrawTextOnGlass(G, closeStr, Fonts.ConsoleMedium, Color.FromArgb(255 - tabData.CloseButtonAlpha, ForeColor), closeRect, sf_middleCenter);
-
-            if (tabData.CloseButtonAlpha > 0)
+            if (sf_middleCenter is not null)
             {
-                DrawTextOnGlass(G, closeStr, Fonts.ConsoleMedium, Color.FromArgb(tabData.CloseButtonAlpha, tabData.Selected ? scheme_secondary.Colors.ForeColor_Accent : ForeColor), closeRect, sf_middleCenter);
+                DrawTextOnGlass(G, closeStr, Fonts.ConsoleMedium, Color.FromArgb(255 - tabData.CloseButtonAlpha, ForeColor), closeRect, sf_middleCenter);
+
+                if (tabData.CloseButtonAlpha > 0)
+                {
+                    DrawTextOnGlass(G, closeStr, Fonts.ConsoleMedium, Color.FromArgb(tabData.CloseButtonAlpha, tabData.Selected ? scheme_secondary.Colors.ForeColor_Accent : ForeColor), closeRect, sf_middleCenter);
+                }
             }
 
             if (icon != null) G.DrawImage(icon, iconRect);
 
-            if (rect.Width > minTabWidth)
+            if (rect.Width > minTabWidth && sf is not null)
             {
                 DrawTextOnGlass(G, tabData.Text, tabData.Selected ? selectedFont : Font, ForeColor, textRect, sf);
             }
@@ -2583,6 +2586,8 @@ namespace WinPaletter.Tabs
 
         void DrawTextOnGlass(Graphics g, string text, Font font, Color foreColor, Rectangle rect, StringFormat sf)
         {
+            if (sf is null) return;
+
             using (GraphicsPath path = new())
             {
                 path.AddString(text, font.FontFamily, (int)font.Style, g.DpiY * font.Size / 72 * 0.97f, rect, sf);
