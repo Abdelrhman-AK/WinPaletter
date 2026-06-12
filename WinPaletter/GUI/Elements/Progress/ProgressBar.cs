@@ -93,31 +93,24 @@ namespace WinPaletter.UI.WP
         {
             if (!DesignMode)
             {
-                EnsureTimersInitialized();
-
-                // Handle marquee timer based on Style
                 if (Style == ProgressBarStyle.Marquee)
                 {
+                    EnsureMarqueeTimerInitialized();
                     StartMarqueeTimer();
                 }
                 else
                 {
                     StopMarqueeTimer();
                     if (CanAnimate)
-                    {
                         Transition.With(this, nameof(Value_Animation), _value).CriticalDamp(Program.AnimationSpan);
-                    }
                     else
-                    {
                         Value_Animation = _value;
-                    }
                 }
             }
 
             await Task.Delay(10);
             Invalidate();
             StyleChanged?.Invoke(this, e);
-
             base.OnStyleChanged(e);
         }
 
@@ -185,42 +178,44 @@ namespace WinPaletter.UI.WP
             parentLevel = this.Level();
         }
 
-        protected override void OnVisibleChanged(EventArgs e)
-        {
-            base.OnVisibleChanged(e);
-            if (DesignMode) return;
-
-            if (Visible)
-            {
-                EnsureTimersInitialized();
-
-                // Force taskbar update bypassing the throttle gate so the
-                // re-show always pushes the current state immediately.
-                _lastTaskbarUpdate = DateTime.MinValue;
-                UpdateTaskbar();
-
-                if (Style == ProgressBarStyle.Marquee)
-                    StartMarqueeTimer();
-                else
-                    UpdateProgressTimerState();
-            }
-            else
-            {
-                // Directly clear taskbar state before stopping timers so no
-                // in-flight ThrottleTaskbarUpdate call can re-set it afterward.
-                SetProgressState(TaskbarProgressBarState.NoProgress);
-                SetProgressValue(0);
-                StopAllTimers();
-
-                // Reset the throttle timestamp so the next show triggers a
-                // fresh update rather than being silently swallowed.
-                _lastTaskbarUpdate = DateTime.MinValue;
-            }
-        }
-
         #endregion
 
         #region Properties
+
+        public new bool Visible
+        {
+            get => base.Visible;
+            set
+            {
+                if (base.Visible != value)
+                {
+                    base.Visible = value;
+
+                    if (value)
+                    {
+                        _lastTaskbarUpdate = DateTime.MinValue;
+                        UpdateTaskbar();
+
+                        if (Style == ProgressBarStyle.Marquee)
+                        {
+                            EnsureMarqueeTimerInitialized();
+                            StartMarqueeTimer();
+                        }
+                        else
+                        {
+                            UpdateProgressTimerState();
+                        }
+                    }
+                    else
+                    {
+                        SetProgressState(TaskbarProgressBarState.NoProgress);
+                        SetProgressValue(0);
+                        StopAllTimers();
+                        _lastTaskbarUpdate = DateTime.MinValue;
+                    }
+                }
+            }
+        }
 
         private int _value = 0;
         public new int Value
@@ -451,17 +446,43 @@ namespace WinPaletter.UI.WP
         /// </summary>
         public bool IsMarquee => Style == ProgressBarStyle.Marquee && _marqueeTimer != null;
 
-        #endregion
-
-        public new bool Visible
+        /// <summary>
+        /// Gets or sets the speed of the marquee animation.
+        /// Higher values = faster animation, Lower values = slower animation.
+        /// Default is 100.
+        /// </summary>
+        [Category("Behavior")]
+        [Description("The speed of the marquee animation. Higher values = faster animation, Lower values = slower animation")]
+        [DefaultValue(100)]
+        public new int MarqueeAnimationSpeed
         {
-            get => base.Visible;
+            get => _marqueeAnimationSpeed;
             set
             {
-                // Let OnVisibleChanged handle the logic
-                base.Visible = value;
+                if (_marqueeAnimationSpeed != value && value > 0)
+                {
+                    _marqueeAnimationSpeed = value;
+
+                    if (_marqueeTimer != null)
+                    {
+                        bool wasRunning = _marqueeTimer.Enabled;
+                        _marqueeTimer.Stop();
+                        _marqueeTimer.Dispose();
+                        _marqueeTimer = null;
+
+                        if (wasRunning)
+                        {
+                            EnsureMarqueeTimerInitialized();
+                            StartMarqueeTimer();
+                        }
+                    }
+                }
             }
         }
+
+        private int _marqueeAnimationSpeed = 100;
+
+        #endregion
 
         #endregion
 
@@ -631,13 +652,15 @@ namespace WinPaletter.UI.WP
             if (_progressTimer != null)
             {
                 _progressTimer.Stop();
-                // Don't dispose - just stop
+                _progressTimer.Dispose();
+                _progressTimer = null;
             }
 
             if (_marqueeTimer != null)
             {
                 _marqueeTimer.Stop();
-                // Don't dispose - just stop
+                _marqueeTimer.Dispose();
+                _marqueeTimer = null;
             }
 
             _hoverOffset = 0;
@@ -652,6 +675,8 @@ namespace WinPaletter.UI.WP
             if (_progressTimer != null)
             {
                 _progressTimer.Stop();
+                _progressTimer.Dispose();
+                _progressTimer = null;
             }
             _hoverOffset = 0;
         }
@@ -679,6 +704,8 @@ namespace WinPaletter.UI.WP
             if (_marqueeTimer != null)
             {
                 _marqueeTimer.Stop();
+                _marqueeTimer.Dispose();
+                _marqueeTimer = null;
             }
             _marqueeOffset = 0;
             Invalidate();

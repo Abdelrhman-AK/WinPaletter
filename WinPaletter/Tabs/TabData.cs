@@ -595,10 +595,11 @@ namespace WinPaletter.Tabs
                         {
                             pb.ValueChanged += ProgressBar_ValueChanged;
                             pb.StyleChanged += ProgressBar_StyleChanged;
+                            pb.VisibleChanged += ProgressBar_VisibleChanged;
                             trackedProgressBars.Add(pb);
 
                             // Initialize from current state
-                            if (pb.TaskbarBroadcast)
+                            if (pb.TaskbarBroadcast && pb.Visible)
                             {
                                 ProgressMarquee = pb.IsMarquee;
                                 if (pb.IsMarquee)
@@ -648,6 +649,7 @@ namespace WinPaletter.Tabs
                         var pb = trackedProgressBars[i];
                         try { pb.ValueChanged -= ProgressBar_ValueChanged; } catch { }
                         try { pb.StyleChanged -= ProgressBar_StyleChanged; } catch { }
+                        try { pb.VisibleChanged -= ProgressBar_VisibleChanged; } catch { }
                     }
                     trackedProgressBars.Clear();
                 }
@@ -831,7 +833,7 @@ namespace WinPaletter.Tabs
             {
                 try
                 {
-                    if (pb.TaskbarBroadcast)
+                    if (pb.TaskbarBroadcast && pb.Visible)
                     {
                         ProgressMarquee = pb.IsMarquee;
                         if (pb.IsMarquee)
@@ -852,6 +854,51 @@ namespace WinPaletter.Tabs
                             {
                                 AnimateProgressTo(0);
                             }
+                        }
+                    }
+                }
+                catch { }
+            }
+        }
+
+        private void ProgressBar_VisibleChanged(object sender, EventArgs e)
+        {
+            if (sender is UI.WP.ProgressBar pb)
+            {
+                try
+                {
+                    if (pb.TaskbarBroadcast)
+                    {
+                        if (pb.Visible)
+                        {
+                            // ProgressBar became visible - restore progress state
+                            ProgressMarquee = pb.IsMarquee;
+                            if (pb.IsMarquee)
+                            {
+                                ProgressEnabled = true;
+                                AnimateProgressTo(0);
+                            }
+                            else
+                            {
+                                bool enabled = pb.Value > pb.Minimum && pb.Value < pb.Maximum;
+                                ProgressEnabled = enabled;
+                                if (enabled && pb.Maximum > pb.Minimum)
+                                {
+                                    double pct = (pb.Value - pb.Minimum) / (double)(pb.Maximum - pb.Minimum) * 100.0;
+                                    AnimateProgressTo((int)Math.Round(pct));
+                                }
+                                else
+                                {
+                                    AnimateProgressTo(0);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            // ProgressBar became invisible - clear progress state
+                            ProgressMarquee = false;
+                            ProgressEnabled = false;
+                            AnimateProgressTo(0);
                         }
                     }
                 }

@@ -328,6 +328,12 @@ namespace WinPaletter.UI.WP
             }
         }
 
+        public string SearchText
+        {
+            get => pathTextBox.Text;
+            set => pathTextBox.Text = value;
+        }
+
         #endregion
 
         #region Constructor

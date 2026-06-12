@@ -1,6 +1,5 @@
 ﻿using Octokit;
 using System;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -9,33 +8,40 @@ namespace WinPaletter.GitHub
 {
     public static class Helpers
     {
-        // Cached rate limit to avoid multiple API calls
-        private static (int remaining, DateTime reset) _cachedRateLimit;
-        private static DateTime _lastRateLimitCheck;
+        private static DateTime? _rateLimitReset;
 
-        public static async Task<(int remainingTrials, DateTime whenWillReset)> RemainingTrials()
+        public static bool IsRateLimited => _rateLimitReset.HasValue && _rateLimitReset.Value > DateTime.UtcNow;
+
+        public static DateTime? RateLimitReset => _rateLimitReset;
+
+        public static async Task<(int? remainingTrials, DateTime? whenWillReset)> RemainingTrials()
         {
-            // Use cached rate limit if checked in last 20 seconds
-            if ((DateTime.UtcNow - _lastRateLimitCheck).TotalSeconds < 20)
-                return _cachedRateLimit;
+            if (IsRateLimited) return (0, _rateLimitReset);
 
             try
             {
-                MiscellaneousRateLimit rateLimits = await Program.GitHub.Client.RateLimit.GetRateLimits();
-                RateLimit coreLimit = rateLimits.Resources.Core;
-                _cachedRateLimit = (coreLimit.Remaining, coreLimit.Reset.UtcDateTime);
-                _lastRateLimitCheck = DateTime.UtcNow;
-                return _cachedRateLimit;
+                MiscellaneousRateLimit limits = await Program.GitHub.Client.RateLimit.GetRateLimits();
+                RateLimit core = limits.Resources.Core;
+
+                if (core.Remaining <= 0)
+                {
+                    _rateLimitReset = core.Reset.UtcDateTime;
+                    return (0, _rateLimitReset);
+                }
+
+                _rateLimitReset = null;
+                return (core.Remaining, core.Reset.UtcDateTime);
             }
             catch
             {
-                // On failure, assume 0 remaining to prevent API abuse
-                return (0, DateTime.UtcNow.AddMinutes(1));
+                // Unknown state.
+                // Do not assume rate limit.
+                return (null, null);
             }
         }
 
         /// <summary>
-        /// Executes a GitHub API action safely, handling network issues, rate limits, and server errors.
+        /// Executes a GitHub API action safely.
         /// </summary>
         public static async Task<T> Do<T>(Func<Task<T>> action)
         {
@@ -45,36 +51,52 @@ namespace WinPaletter.GitHub
                 return default;
             }
 
-            var (remaining, reset) = await RemainingTrials();
-            if (remaining <= 0)
+            if (IsRateLimited)
             {
-                Events.OnRateLimitExceeded(reset);
+                Events.OnRateLimitExceeded(_rateLimitReset.Value);
                 return default;
             }
 
             try
             {
-                return await action();
+                T result = await action();
+
+                if (_rateLimitReset.HasValue &&
+                    _rateLimitReset.Value <= DateTime.UtcNow)
+                {
+                    _rateLimitReset = null;
+                }
+
+                return result;
             }
-            catch (Octokit.NotFoundException)
+            catch (NotFoundException)
             {
-                // Let callers that wrap in try/catch handle this,
-                // but don't crash — rethrow so methods can catch it
                 throw;
             }
-            catch (Octokit.ApiException ex) when (IsRateLimitException(ex))
+            catch (RateLimitExceededException ex)
             {
-                Events.OnRateLimitExceeded(DateTime.UtcNow.AddMinutes(1));
+                _rateLimitReset = ex.Reset.UtcDateTime;
+
+                Events.OnRateLimitExceeded(_rateLimitReset.Value);
                 return default;
             }
-            catch (Octokit.ApiException ex) when (IsServerError(ex))
+            catch (AbuseException)
             {
-                Events.OnServerUnavailable();
+                DateTime reset = DateTime.UtcNow.AddMinutes(1);
+
+                _rateLimitReset = reset;
+
+                Events.OnRateLimitExceeded(reset);
                 return default;
             }
-            catch (Octokit.AuthorizationException ex)
+            catch (AuthorizationException ex)
             {
                 Events.OnAuthorizationFailureEvent(ex.Message);
+                return default;
+            }
+            catch (ApiException ex) when (IsServerError(ex))
+            {
+                Events.OnServerUnavailable();
                 return default;
             }
             catch (HttpRequestException)
@@ -82,27 +104,14 @@ namespace WinPaletter.GitHub
                 Events.OnNetworkLost();
                 return default;
             }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-
-        private static bool IsRateLimitException(ApiException ex)
-        {
-            if (ex == null) return false;
-            if (ex.StatusCode != HttpStatusCode.Forbidden) return false;
-            string msg = ex.ApiError?.Message ?? ex.Message;
-            if (string.IsNullOrEmpty(msg)) return false;
-            string[] keywords = { "rate limit", "throttled", "abuse" };
-            return keywords.Any(k => msg.IndexOf(k, StringComparison.OrdinalIgnoreCase) >= 0);
         }
 
         private static bool IsServerError(ApiException ex)
         {
             if (ex == null) return false;
-            return ex.StatusCode == HttpStatusCode.BadGateway || // 502
-                   ex.StatusCode == HttpStatusCode.ServiceUnavailable; // 503
+
+            int code = (int)ex.StatusCode;
+            return code >= 500 && code <= 599;
         }
     }
 }

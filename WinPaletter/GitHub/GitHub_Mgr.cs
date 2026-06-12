@@ -133,7 +133,7 @@ namespace WinPaletter
 
             if (remainingTrials == 0)
             {
-                labelAlt3.Text = string.Format(Program.Localization.Strings.GitHubStrings.API_RateLimited, whenWillReset.ToLocalTime());
+                labelAlt3.Text = string.Format(Program.Localization.Strings.GitHubStrings.API_RateLimited, whenWillReset?.ToLocalTime());
                 ShowTab(4, false);
                 return;
             }

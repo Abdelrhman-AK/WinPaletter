@@ -316,8 +316,8 @@ namespace WinPaletter.GitHub
         {
             if (string.IsNullOrEmpty(path)) return null;
             path = NormalizePath(path);
-            if (!IsPathSafeForRepository(path))
-                return null;
+            if (!IsPathSafeForRepository(path)) return null;
+
             if (cts is not null && cts.Token.IsCancellationRequested) return null;
 
             // 1. Check cache
@@ -344,12 +344,12 @@ namespace WinPaletter.GitHub
             try
             {
                 await Helpers.Do(async () =>
-                    await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(
+                    contents = await Program.GitHub.Client.Repository.Content.GetAllContentsByRef(
                         Repository.Owner,
                         GitHub.Repository.Name,
                         path,
                         GitHub.Repository.Branch.Name).ConfigureAwait(false)
-                    );
+                );
             }
             catch { }
 

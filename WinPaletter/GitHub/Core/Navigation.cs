@@ -1,4 +1,5 @@
-﻿using Octokit;
+﻿using Microsoft.VisualBasic.Devices;
+using Octokit;
 using Ookii.Dialogs.WinForms;
 using Serilog.Events;
 using System;
@@ -1090,6 +1091,8 @@ namespace WinPaletter.GitHub
             menu_newTheme.Click += Menu_newTheme_Click;
 
             menu_properties.Text = Program.Localization.Strings.GitHubStrings.Explorer_Properties;
+            menu_properties.Click -= Menu_ItemProperties_Click;
+            menu_properties.Click += Menu_ItemProperties_Click;
 
             contextMenu_all.Items.Clear();
             contextMenu_all.Items.AddRange(
@@ -1165,8 +1168,6 @@ namespace WinPaletter.GitHub
         #endregion
 
         #region Events
-
-
 
         /// <summary>
         /// Attaches event handlers to the specified tree and list controls for navigation and interaction.
@@ -1465,7 +1466,8 @@ namespace WinPaletter.GitHub
             }
             else if (e.Control && e.KeyCode == Keys.Shift && e.KeyCode == Keys.N)
             {
-                // Create new file
+                // Upload a new theme
+                Forms.GitHub_ThemeUpload.ShowDialog();
             }
             else if (e.Alt && e.KeyCode == Keys.Enter)
             {
@@ -1477,6 +1479,7 @@ namespace WinPaletter.GitHub
             else if (e.Control && e.KeyCode == Keys.F)
             {
                 // Search in current directory
+                await SearchAsync(_boundbreadcrumbControl.SearchText);
             }
         }
 
@@ -1554,6 +1557,11 @@ namespace WinPaletter.GitHub
             if (_boundList.SelectedItems.Count > 0)
             {
                 Forms.GitHub_EntryProperties.Load_Entries([.. _boundList.SelectedItems.Cast<ListViewItem>()]);
+            }
+            else
+            {
+                Forms.GitHub_EntryProperties.Load_Folder_From_RepositoryContent(await GetRepositoryContentAsync(CurrentPath), CurrentPath.Equals(_root, StringComparison.OrdinalIgnoreCase));
+
             }
         }
 
@@ -2089,12 +2097,12 @@ namespace WinPaletter.GitHub
                 // Get all files from snapshot, skip .gitkeep
                 List<RepositoryContent> allFiles = [.. snapshot.Select(i => i.Tag as RepositoryContent).Where(rc => rc != null && rc.Type != ContentType.Dir && !rc.Name.Equals(".gitkeep", StringComparison.OrdinalIgnoreCase))];
 
-                // --- Step 1: Include linked files if needed ---
+                // Step 1: Include linked files if needed 
                 if (Program.Settings.GitHub.FilesLinking != Settings.Structures.GitHub.FilesLinkingMode.NeverExecute)
                 {
                     var allFileDict = _boundList.Items.Cast<ListViewItem>().Where(i => i.Tag is RepositoryContent rc && rc.Type != ContentType.Dir).ToDictionary(i => i.Text, i => i.Tag as RepositoryContent, StringComparer.OrdinalIgnoreCase);
 
-                    List<RepositoryContent> toAdd = new();
+                    List<RepositoryContent> toAdd = [];
 
                     foreach (var rc in allFiles)
                     {
@@ -2129,7 +2137,7 @@ namespace WinPaletter.GitHub
                     allFiles.AddRange(toAdd);
                 }
 
-                // --- Step 2: Ask for confirmation for files ---
+                // Step 2: Ask for confirmation for files
                 List<string> filePaths = [];
                 if (allFiles.Count > 1)
                 {
@@ -2153,7 +2161,7 @@ namespace WinPaletter.GitHub
                     }
                 }
 
-                // --- Step 3: Ask for confirmation for directories ---
+                // Step 3: Ask for confirmation for directories
                 List<RepositoryContent> allDirs = [.. snapshot.Select(i => i.Tag as RepositoryContent).Where(rc => rc != null && rc.Type == ContentType.Dir)];
 
                 List<string> dirPaths = [];
@@ -2170,7 +2178,7 @@ namespace WinPaletter.GitHub
                     }
                 }
 
-                // --- Step 4: Process deletion ---
+                // Step 4: Process deletion
                 async Task ProcessDeletionAsync(List<string> paths, bool isDirectory)
                 {
                     if (!paths.Any()) return;
@@ -2233,7 +2241,7 @@ namespace WinPaletter.GitHub
 
             var downloads_files = new List<(string url, string saveAs, long size, Bitmap icon)>();
 
-            // --- Step 1: Gather all files in the ListView ---
+            // Step 1: Gather all files in the ListView
             var selectedFiles = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             var availableFiles = new Dictionary<string, RepositoryContent>(StringComparer.OrdinalIgnoreCase);
 
@@ -2246,7 +2254,7 @@ namespace WinPaletter.GitHub
                 }
             }
 
-            // --- Step 2: Handle selected items ---
+            // Step 2: Handle selected items
             foreach (ListViewItem item in _boundList.SelectedItems)
             {
                 if (cts?.Token.IsCancellationRequested ?? false) return;
@@ -2267,7 +2275,7 @@ namespace WinPaletter.GitHub
                 }
                 else if (rc.Type == ContentType.Dir)
                 {
-                    // --- Step 2a: Enumerate all entries in the directory ---
+                    // Step 2a: Enumerate all entries in the directory
                     var entries = new List<Entry>();
                     await foreach (Entry entry in EnumerateEntriesAsync(rc.Path, recursive: true, ct: cts.Token)) entries.Add(entry);
 
@@ -2306,7 +2314,7 @@ namespace WinPaletter.GitHub
                 }
             }
 
-            // --- Step 3: Handle paired files (.wpth / .wptp) ---
+            // Step 3: Handle paired files (.wpth / .wptp)
             foreach (var fileName in selectedFiles.ToList())
             {
                 // Skip .gitkeep files from pairing consideration
@@ -2362,7 +2370,7 @@ namespace WinPaletter.GitHub
                 }
             }
 
-            // --- Step 4: Start download ---
+            // Step 4: Start download
             Forms.DownloadManager_Dlg.DownloadFile(downloads_files);
         }
 

@@ -56,7 +56,7 @@ namespace WinPaletter.Dialogs
             this.button1 = new WinPaletter.UI.WP.Button();
             this.button2 = new WinPaletter.UI.WP.Button();
             this.button3 = new WinPaletter.UI.WP.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel1 = new UI.WP.SmoothPanel();
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -633,7 +633,7 @@ namespace WinPaletter.Dialogs
         private UI.WP.Button button13;
         private UI.WP.Button button14;
         private UI.WP.Button button15;
-        private System.Windows.Forms.Panel panel1;
+        private UI.WP.SmoothPanel panel1;
         private UI.WP.Button button16;
         private UI.WP.Button button17;
     }

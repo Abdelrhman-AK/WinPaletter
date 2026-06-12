@@ -52,7 +52,7 @@ namespace WinPaletter.Tabs
 
         public bool CanAnimate_Global => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
 
-        public List<TabData> TabDataList = new();
+        public List<TabData> TabDataList = [];
 
         private static readonly int _maxTabWidth = 245;
         private static readonly int _paddingBetweenTabs = 5;

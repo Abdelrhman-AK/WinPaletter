@@ -18,8 +18,8 @@ namespace WinPaletter
     /// </summary>
     public partial class Localizer : IDisposable
     {
-        private Dictionary<string, List<FormStringEntry>> _treeByForm = new Dictionary<string, List<FormStringEntry>>(StringComparer.OrdinalIgnoreCase);
-        private static readonly Regex SingleLetterWithPunctuationRegex = new Regex(@"^[\p{P}]*[A-Za-z][\p{P}]*$", RegexOptions.Compiled);
+        private Dictionary<string, List<FormStringEntry>> _treeByForm = [with(StringComparer.OrdinalIgnoreCase)];
+        private static readonly Regex SingleLetterWithPunctuationRegex = new(@"^[\p{P}]*[A-Za-z][\p{P}]*$", RegexOptions.Compiled);
         private static readonly Regex VersionRegex = new Regex(@"^\d+(\.\d+){1,3}$", RegexOptions.Compiled);
 
         // Opcode byte values used in IL parsing (single-byte opcodes only needed here)
@@ -32,7 +32,7 @@ namespace WinPaletter
 
         public Information_Cls Information { get; set; } = new Information_Cls();
         public Strings_Cls Strings { get; set; } = new Strings_Cls();
-        public JObject Forms { get; set; } = new JObject();
+        public JObject Forms { get; set; } = [];
 
         #region Constructor
 
@@ -96,24 +96,20 @@ namespace WinPaletter
                 jObj = JObject.Parse(sr.ReadToEnd());
             }
 
-            Information = new Information_Cls();
-            Strings = new Strings_Cls();
-            Forms = new JObject();
-            _treeByForm = new Dictionary<string, List<FormStringEntry>>(StringComparer.OrdinalIgnoreCase);
+            Information = new();
+            Strings = new();
+            Forms = [];
+            _treeByForm = [with(StringComparer.OrdinalIgnoreCase)];
 
-            if (!jObj.ContainsKey("Information") ||
-                !jObj.ContainsKey("Global Strings") ||
-                !jObj.ContainsKey("Forms Strings"))
-                return;
+            if (!jObj.ContainsKey("Information") || !jObj.ContainsKey("Global Strings") || !jObj.ContainsKey("Forms Strings")) return;
 
             Information = jObj["Information"].ToObject<Information_Cls>();
             Strings = jObj["Global Strings"].ToObject<Strings_Cls>();
-            Forms = jObj["Forms Strings"] as JObject ?? new JObject();
+            Forms = jObj["Forms Strings"] as JObject ?? [];
 
             DeserializeFormsJSONIntoDict(Forms, _treeByForm);
 
-            if (form != null)
-                ApplyLocalization(form);
+            if (form != null) ApplyLocalization(form);
         }
 
         #endregion

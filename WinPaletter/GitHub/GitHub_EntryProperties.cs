@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -12,17 +13,110 @@ namespace WinPaletter
     public partial class GitHub_EntryProperties : UI.WP.Form
     {
         private Octokit.RepositoryContent rc;
-        private bool previousReadOnlyState;
         private ListViewItem boundListViewItem;
+
+        // Pending commit fetch for the single-entry tab; set in Load_Core, consumed in Shown event.
+        private string _pendingCommitPath;
+        // Pending commit fetches for the multi-entry tab; set in Load_Entries, consumed in Shown event.
+        private List<(string path, string displayName)> _pendingMultiCommitPaths;
+
+        // Cancels any in-flight fetch when the form is re-opened before the previous one finishes.
+        private CancellationTokenSource _fetchCts;
 
         public GitHub_EntryProperties()
         {
             InitializeComponent();
+            Shown += GitHub_EntryProperties_Shown;
         }
 
         private void GitHub_EntryProperties_Load(object sender, EventArgs e)
         {
             textBox2.Font = Fonts.ConsoleMedium;
+        }
+
+        // Fires every time ShowDialog() brings the form into its modal loop — guaranteed to run
+        // after the UI is fully visible, so Invoke/BeginInvoke are safe on every open.
+        private async void GitHub_EntryProperties_Shown(object sender, EventArgs e)
+        {
+            // Cancel any previous in-flight fetch (e.g. user closed and re-opened before it finished).
+            _fetchCts?.Cancel();
+            _fetchCts = new CancellationTokenSource();
+            CancellationToken ct = _fetchCts.Token;
+
+            if (_pendingCommitPath is not null)
+            {
+                await FetchAndApplySingleCommitAsync(_pendingCommitPath, ct);
+                _pendingCommitPath = null;
+            }
+            else if (_pendingMultiCommitPaths is not null)
+            {
+                await FetchAndApplyMultiCommitsAsync(_pendingMultiCommitPaths, ct);
+                _pendingMultiCommitPaths = null;
+            }
+        }
+
+        private async Task FetchAndApplySingleCommitAsync(string path, CancellationToken ct)
+        {
+            progressBar1.Visible = true;
+
+            try
+            {
+                IReadOnlyList<GitHubCommit> commits = await Program.GitHub.Client.Repository.Commit.GetAll(
+                    GitHub.Repository.Owner,
+                    GitHub.Repository.Name,
+                    new CommitRequest { Path = path, Sha = GitHub.Repository.Branch.Name });
+
+                if (ct.IsCancellationRequested) return;
+
+                GitHubCommit latestCommit = commits.FirstOrDefault();
+
+                if (latestCommit is not null)
+                {
+                    label9.Text = latestCommit.Commit.Author.Name;
+                    label11.Text = Forms.GitHub_Mgr.ToFriendlyString(latestCommit.Commit.Author.Date);
+                    textBox2.Text = latestCommit.Commit.Message;
+                    AddPropertiesRecursive(latestCommit, listView1);
+                }
+                else
+                {
+                    label9.Text = Program.Localization.Strings.General.Unknown;
+                    label11.Text = Program.Localization.Strings.General.Unknown;
+                    textBox2.Text = Program.Localization.Strings.General.Unknown;
+                }
+            }
+            catch (OperationCanceledException) { }
+            finally
+            {
+                if (!ct.IsCancellationRequested) progressBar1.Visible = false;
+            }
+        }
+
+        private async Task FetchAndApplyMultiCommitsAsync(List<(string path, string displayName)> entries, CancellationToken ct)
+        {
+            progressBar1.Visible = true;
+
+            try
+            {
+                foreach ((string path, string displayName) in entries)
+                {
+                    if (ct.IsCancellationRequested) return;
+
+                    IReadOnlyList<GitHubCommit> commits = await Program.GitHub.Client.Repository.Commit.GetAll(
+                        GitHub.Repository.Owner,
+                        GitHub.Repository.Name,
+                        new CommitRequest { Path = path, Sha = GitHub.Repository.Branch.Name });
+
+                    if (ct.IsCancellationRequested) return;
+
+                    GitHubCommit latestCommit = commits.FirstOrDefault();
+                    if (latestCommit is not null) AddPropertiesRecursive(latestCommit, listView2, displayName);
+                }
+            }
+            catch (OperationCanceledException) { }
+            finally
+            {
+                if (!ct.IsCancellationRequested) progressBar1.Visible = false;
+            }
         }
 
         public void Load_Entries(List<ListViewItem> listViewItems)
@@ -48,7 +142,7 @@ namespace WinPaletter
             label29.Text = $"{files} {Program.Localization.Strings.Extensions.Files}, {dirs} {Program.Localization.Strings.Extensions.Folders}";
 
             long size = 0;
-            foreach (var item in listViewItems)
+            foreach (ListViewItem item in listViewItems)
             {
                 if (item.Tag is RepositoryContent rc)
                 {
@@ -64,43 +158,31 @@ namespace WinPaletter
                 label22.Text = GitHub.FileSystem.GetParent(rc_default.Path);
             }
 
-            Task.Run(async () =>
-            {
-                Invoke(() => progressBar1.Visible = true);
-
-                foreach (var item in listViewItems)
-                {
-                    if (item.Tag is RepositoryContent rcx)
-                    {
-                        IReadOnlyList<GitHubCommit> commits = await Program.GitHub.Client.Repository.Commit.GetAll(GitHub.Repository.Owner, GitHub.Repository.Name, new CommitRequest { Path = rcx.Path, Sha = GitHub.Repository.Branch.Name });
-                        GitHubCommit latestCommit = commits.First();
-
-                        Invoke(() =>
-                        {
-                            if (latestCommit is not null) AddPropertiesRecursive(latestCommit, listView2, rcx.Name);
-                        });
-                    }
-                }
-
-                Invoke(() => progressBar1.Visible = false);
-            });
+            // Schedule commit fetches; the Shown event will execute them once the modal loop is running.
+            _pendingCommitPath = null;
+            _pendingMultiCommitPaths = listViewItems
+                .Where(i => i.Tag is RepositoryContent)
+                .Select(i => (path: ((RepositoryContent)i.Tag).Path, displayName: ((RepositoryContent)i.Tag).Name))
+                .ToList();
 
             ShowDialog();
         }
 
-        public void Load_Entry(ListViewItem listViewItem)
+        // Shared core loader used by both Load_Entry and Load_Folder_From_RepositoryContent.
+        // image: the large icon shown in pictureBox1. boundItem: the ListView row to update on rename, or null.
+        private void Load_Core(Octokit.RepositoryContent content, System.Drawing.Image image, ListViewItem boundItem, bool readOnly)
         {
-            if (listViewItem is null) return;
-            if (listViewItem.Tag is not Octokit.RepositoryContent content) return;
-            boundListViewItem = listViewItem;
-
             tablessControl1.SelectedIndex = 0;
+            boundListViewItem = boundItem;
+            rc = content;
 
-            this.rc = content;
             this.Text = string.Format(Program.Localization.Strings.General.Properties_Entry, content.Name);
 
             pictureBox1.Image?.Dispose();
-            pictureBox1.Image = listViewItem.ListView.LargeImageList.Images[listViewItem.ImageKey.Replace("ghost_", string.Empty)];
+            pictureBox1.Image = image;
+
+            textBox1.Enabled = !readOnly;
+            checkBox1.Enabled = !readOnly;
 
             Icon?.Dispose();
 
@@ -124,45 +206,34 @@ namespace WinPaletter
             label5.Text = $"{GitHub.FileSystem.Cache.GetSize(content.Path)} {Program.Localization.Strings.General.BytesSize} ({GitHub.FileSystem.Cache.GetSize(content.Path).ToStringFileSize()})";
 
             checkBox1.Checked = content.Name.StartsWith(".");
-            previousReadOnlyState = checkBox1.Checked;
 
+            // Reset commit fields before the async fetch so stale data from a previous open is never shown.
             label9.Text = string.Empty;
             label11.Text = string.Empty;
             textBox2.Text = string.Empty;
 
-            // Advanced details
             listView1.Items.Clear();
             AddPropertiesRecursive(content, listView1);
 
-            Task.Run(async () =>
-            {
-                Invoke(() => progressBar1.Visible = true);
-
-                IReadOnlyList<GitHubCommit> commits = await Program.GitHub.Client.Repository.Commit.GetAll(GitHub.Repository.Owner, GitHub.Repository.Name, new CommitRequest { Path = content.Path, Sha = GitHub.Repository.Branch.Name });
-                GitHubCommit latestCommit = commits.First();
-
-                Invoke(() =>
-                {
-                    if (latestCommit is not null)
-                    {
-                        label9.Text = latestCommit.Commit.Author.Name;
-                        label11.Text = Forms.GitHub_Mgr.ToFriendlyString(latestCommit.Commit.Author.Date);
-                        textBox2.Text = latestCommit.Commit.Message;
-                    }
-                    else
-                    {
-                        label9.Text = Program.Localization.Strings.General.Unknown;
-                        label11.Text = Program.Localization.Strings.General.Unknown;
-                        textBox2.Text = Program.Localization.Strings.General.Unknown;
-                    }
-
-                    if (latestCommit is not null) AddPropertiesRecursive(latestCommit, listView1);
-
-                    progressBar1.Visible = false;
-                });
-            });
+            // Schedule commit fetch for this path; the Shown event will execute it once the modal loop is running.
+            _pendingMultiCommitPaths = null;
+            _pendingCommitPath = content.Path;
 
             ShowDialog();
+        }
+
+        public void Load_Folder_From_RepositoryContent(Octokit.RepositoryContent content, bool readOnly = false)
+        {
+            Load_Core(content, Assets.GitHubMgr.folder_web_48, null, readOnly);
+        }
+
+        public void Load_Entry(ListViewItem listViewItem, bool readOnly = false)
+        {
+            if (listViewItem is null) return;
+            if (listViewItem.Tag is not Octokit.RepositoryContent content) return;
+
+            System.Drawing.Image image = listViewItem.ListView.LargeImageList.Images[listViewItem.ImageKey.Replace("ghost_", string.Empty)];
+            Load_Core(content, image, listViewItem, readOnly);
         }
 
         static void AddPropertiesRecursive(object obj, ListView listView, string prefix = "")
@@ -170,9 +241,9 @@ namespace WinPaletter
             if (obj == null) return;
             Type type = obj.GetType();
 
-            foreach (var prop in type.GetProperties(BindingFlags.Public | BindingFlags.Instance))
+            foreach (PropertyInfo prop in type.GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
-                if (prop.GetIndexParameters().Length > 0) continue; // skip indexers
+                if (prop.GetIndexParameters().Length > 0) continue;
 
                 object value;
                 try { value = prop.GetValue(obj); }
@@ -182,21 +253,18 @@ namespace WinPaletter
 
                 string name = string.IsNullOrEmpty(prefix) ? prop.Name : $"{prefix}.{prop.Name}";
 
-                // Skip generic collections or unhelpful types
                 if (value is string || value.GetType().IsValueType)
                 {
                     listView.Items.Add(new ListViewItem([name, value.ToString()]));
                 }
                 else if (value is IEnumerable enumerable && value is not string)
                 {
-                    // If collection has items, show count
                     var enumerator = enumerable.GetEnumerator();
                     if (enumerator.MoveNext())
                         listView.Items.Add(new ListViewItem([name, $"Collection[{enumerable.Cast<object>().Count()}]"]));
                 }
                 else
                 {
-                    // Recursively explore complex types
                     AddPropertiesRecursive(value, listView, name);
                 }
             }
@@ -204,18 +272,19 @@ namespace WinPaletter
 
         private void button2_Click(object sender, EventArgs e)
         {
+            _fetchCts?.Cancel();
             DialogResult = DialogResult.Cancel;
             Close();
         }
 
         private async void button1_Click(object sender, EventArgs e)
         {
-            await Apply();
+            await Apply(rc.Type == ContentType.Dir);
             DialogResult = DialogResult.OK;
             Close();
         }
 
-        private async Task Apply()
+        private async Task Apply(bool isADir = false)
         {
             Cursor = Cursors.WaitCursor;
 
@@ -227,13 +296,14 @@ namespace WinPaletter
                 string parent = GitHub.FileSystem.GetParent(rc.Path);
                 string fullPath = string.IsNullOrEmpty(parent) ? newName : $"{parent}/{newName}";
 
-                GitHub.FileSystem.Entry result = await GitHub.FileSystem.MoveFileAsync(rc.Path, fullPath, $"{(checkBox1.Checked ? "Hide" : "Unhide")} '{rc.Path}' by {GitHub.Repository.Owner}");
+                GitHub.FileSystem.Entry result = !isADir ?
+                    await GitHub.FileSystem.MoveFileAsync(rc.Path, fullPath, $"{(checkBox1.Checked ? "Hide" : "Unhide")} '{rc.Path}' by {GitHub.Repository.Owner}") :
+                    await GitHub.FileSystem.MoveDirectoryAsync(rc.Path, fullPath, $"{(checkBox1.Checked ? "Hide" : "Unhide")} '{rc.Path}' by {GitHub.Repository.Owner}");
 
                 if (result is not null && boundListViewItem is not null)
                 {
                     rc = result.Content;
 
-                    // Update properties
                     boundListViewItem.Text = result.Name;
                     boundListViewItem.Tag = result.Content;
 
@@ -248,7 +318,7 @@ namespace WinPaletter
 
         private async void button3_Click(object sender, EventArgs e)
         {
-            await Apply();
+            await Apply(rc.Type == ContentType.Dir);
         }
 
         private void button4_Click(object sender, EventArgs e)
