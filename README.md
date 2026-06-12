@@ -52,7 +52,7 @@ While significant new features are not anticipated, the goal is to place the pro
    
    - Alternatively, you can use:
   
-     - Softonic: [Visit WinPaletter Pa](https://winpaletter.en.softonic.com)
+     - Softonic: [Visit WinPaletter Page at Softonic](https://winpaletter.en.softonic.com)
      
      - Microsoft WinGet: 
        
