@@ -1,6 +1,7 @@
 ﻿using Ressy;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -864,8 +865,11 @@ namespace WinPaletter
                         {
                             try
                             {
-                                PortableExecutable PE = new(dlg.FileName);
-                                count = PE.GetResourceIdentifiers().Where(x => x.Type.Code == ResourceType.IconGroup.Code).Count();
+                                using (System.IO.Stream stream = new FileStream(dlg.FileName, FileMode.OpenOrCreate))
+                                {
+                                    PortableExecutable PE = new(stream);
+                                    count = PE.GetResourceIdentifiers().Count(x => x.Type.Code == ResourceType.IconGroup.Code);
+                                }
                             }
                             catch { }
                         }

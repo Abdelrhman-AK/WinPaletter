@@ -285,7 +285,7 @@ namespace WinPaletter.TypesExtensions
                         int kSize = 2 * radius + 1;
                         float[] kernel = new float[kSize];
                         float kSum = 0f;
-                        
+
                         for (int i = 0; i < kSize; i++)
                         {
                             int off = i - radius;
@@ -297,7 +297,7 @@ namespace WinPaletter.TypesExtensions
                             kernel[i] = v;
                             kSum += v;
                         }
-                        
+
                         // Normalize kernel
                         for (int i = 0; i < kSize; i++) kernel[i] /= kSum;
                         return kernel;
@@ -990,7 +990,7 @@ namespace WinPaletter.TypesExtensions
             {
                 // Optimize: work directly with source if it's already 32bpp ARGB
                 bool needsFormatConversion = source.PixelFormat != PixelFormat.Format32bppArgb;
-                
+
                 if (needsFormatConversion)
                 {
                     srcToProcess = new Bitmap(source.Width, source.Height, PixelFormat.Format32bppArgb);
@@ -1031,40 +1031,40 @@ namespace WinPaletter.TypesExtensions
                     {
                         byte* srcRow = srcBase + y * srcStride;
                         byte* dstRow = dstBase + y * dstStride;
-                        
+
                         // Process 4 pixels at a time for better cache utilization
                         int x = 0;
                         int widthMinus4 = width - 4;
-                        
+
                         for (; x <= widthMinus4; x += 4)
                         {
                             int baseIdx = x << 2;
-                            
+
                             // Pixel 1
                             dstRow[baseIdx + 0] = srcRow[baseIdx + 0];
                             dstRow[baseIdx + 1] = srcRow[baseIdx + 1];
                             dstRow[baseIdx + 2] = srcRow[baseIdx + 2];
                             dstRow[baseIdx + 3] = (byte)((srcRow[baseIdx + 3] * opacityFixed) >> 16);
-                            
+
                             // Pixel 2
                             dstRow[baseIdx + 4] = srcRow[baseIdx + 4];
                             dstRow[baseIdx + 5] = srcRow[baseIdx + 5];
                             dstRow[baseIdx + 6] = srcRow[baseIdx + 6];
                             dstRow[baseIdx + 7] = (byte)((srcRow[baseIdx + 7] * opacityFixed) >> 16);
-                            
+
                             // Pixel 3
                             dstRow[baseIdx + 8] = srcRow[baseIdx + 8];
                             dstRow[baseIdx + 9] = srcRow[baseIdx + 9];
                             dstRow[baseIdx + 10] = srcRow[baseIdx + 10];
                             dstRow[baseIdx + 11] = (byte)((srcRow[baseIdx + 11] * opacityFixed) >> 16);
-                            
+
                             // Pixel 4
                             dstRow[baseIdx + 12] = srcRow[baseIdx + 12];
                             dstRow[baseIdx + 13] = srcRow[baseIdx + 13];
                             dstRow[baseIdx + 14] = srcRow[baseIdx + 14];
                             dstRow[baseIdx + 15] = (byte)((srcRow[baseIdx + 15] * opacityFixed) >> 16);
                         }
-                        
+
                         // Handle remaining pixels
                         for (; x < width; x++)
                         {

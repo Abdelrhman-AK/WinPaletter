@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -21,6 +21,21 @@ namespace WinPaletter
 {
     public partial class WallStudio : UI.WP.Form
     {
+        private static class ReflectionCache
+        {
+            public static readonly PropertyInfo[] Windows10xProps = [.. typeof(Windows10x).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.PropertyType == typeof(Color) && p.CanRead && p.CanWrite)];
+            public static readonly PropertyInfo[] Windows81Props = [.. typeof(Windows81).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.PropertyType == typeof(Color) && p.CanRead && p.CanWrite)];
+            public static readonly PropertyInfo[] Windows8Props = [.. typeof(Windows8).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.PropertyType == typeof(Color) && p.CanRead && p.CanWrite)];
+            public static readonly PropertyInfo[] Windows7Props = [.. typeof(Windows7).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.PropertyType == typeof(Color) && p.CanRead && p.CanWrite)];
+            public static readonly PropertyInfo[] WindowsVistaProps = [.. typeof(WindowsVista).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.PropertyType == typeof(Color) && p.CanRead && p.CanWrite)];
+            public static readonly PropertyInfo[] Win32UIProps = [.. typeof(Win32UI).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.PropertyType == typeof(Color) && p.CanRead && p.CanWrite)];
+            public static readonly PropertyInfo[] ConsoleProps = [.. typeof(Theme.Structures.Console).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.PropertyType == typeof(Color) && p.CanRead && p.CanWrite)];
+            public static readonly PropertyInfo[] InfoProps = [.. typeof(Info).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.PropertyType == typeof(Color) && p.CanRead && p.CanWrite)];
+            public static readonly PropertyInfo[] CursorProps = [.. typeof(Theme.Structures.Cursor).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.PropertyType == typeof(Color) && p.CanRead && p.CanWrite)];
+            public static readonly PropertyInfo[] SchemeProps = [.. typeof(Theme.Structures.WinTerminal.Types.Scheme).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.PropertyType == typeof(Color) && p.CanRead && p.CanWrite)];
+            public static readonly PropertyInfo[] AppThemeProps = [.. typeof(AppTheme).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.PropertyType == typeof(Color) && p.CanRead && p.CanWrite)];
+        }
+
         List<Color> Palette = null;
         Manager TM;
         private readonly List<CursorControl> AnimateList = [];
@@ -253,14 +268,21 @@ namespace WinPaletter
                 ApplyCMDPreview(CMD3, TM.PowerShellx64, true);
 
                 ColorProperties = [];
+                Dictionary<Type, PropertyInfo[]> controlPropertiesCache = [];
 
                 foreach (Control ctrl in FlowLayoutPanel1.Controls.Cast<Control>().Concat(Cursors_Container.Controls.Cast<Control>()))
                 {
                     // Skip FlowLayoutPanel itself
                     if (ctrl is FlowLayoutPanel) continue;
 
-                    // Get all writable Color properties except BackColor
-                    var props = ctrl.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.PropertyType == typeof(Color) && p.CanWrite/* && p.Name != "BackColor"*/);
+                    Type ctrlType = ctrl.GetType();
+                    if (!controlPropertiesCache.TryGetValue(ctrlType, out var props))
+                    {
+                        props = ctrlType.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+                                        .Where(p => p.PropertyType == typeof(Color) && p.CanWrite)
+                                        .ToArray();
+                        controlPropertiesCache[ctrlType] = props;
+                    }
 
                     foreach (PropertyInfo prop in props)
                     {
@@ -316,6 +338,7 @@ namespace WinPaletter
             if (!e.Cancel)
             {
                 cts?.Cancel();
+                cts?.Dispose();
                 Forms.GlassWindow.Close();
             }
         }
@@ -707,51 +730,51 @@ namespace WinPaletter
             TM.Cursors.Cursor_IBeam.UseFromFile = false;
             TM.Cursors.Cursor_Cross.UseFromFile = false;
 
-            foreach (PropertyInfo prop in typeof(Windows10x).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.PropertyType == typeof(Color)))
+            foreach (PropertyInfo prop in ReflectionCache.Windows10xProps)
             {
                 prop.SetValue(TM.Windows12, ApplyEffect(((Color)prop.GetValue(TM.Windows12)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
                 prop.SetValue(TM.Windows11, ApplyEffect(((Color)prop.GetValue(TM.Windows11)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
                 prop.SetValue(TM.Windows10, ApplyEffect(((Color)prop.GetValue(TM.Windows10)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
             }
 
-            foreach (PropertyInfo prop in typeof(Windows81).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.PropertyType == typeof(Color)))
+            foreach (PropertyInfo prop in ReflectionCache.Windows81Props)
             {
                 prop.SetValue(TM.Windows81, ApplyEffect(((Color)prop.GetValue(TM.Windows81)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
             }
 
-            foreach (PropertyInfo prop in typeof(Windows8).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.PropertyType == typeof(Color)))
+            foreach (PropertyInfo prop in ReflectionCache.Windows8Props)
             {
                 prop.SetValue(TM.Windows8, ApplyEffect(((Color)prop.GetValue(TM.Windows8)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
             }
 
-            foreach (PropertyInfo prop in typeof(Windows7).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.PropertyType == typeof(Color)))
+            foreach (PropertyInfo prop in ReflectionCache.Windows7Props)
             {
                 prop.SetValue(TM.Windows7, ApplyEffect(((Color)prop.GetValue(TM.Windows7)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
             }
 
-            foreach (PropertyInfo prop in typeof(WindowsVista).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.PropertyType == typeof(Color)))
+            foreach (PropertyInfo prop in ReflectionCache.WindowsVistaProps)
             {
                 prop.SetValue(TM.WindowsVista, ApplyEffect(((Color)prop.GetValue(TM.WindowsVista)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
             }
 
-            foreach (PropertyInfo prop in typeof(Theme.Structures.Win32UI).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.PropertyType == typeof(Color)))
+            foreach (PropertyInfo prop in ReflectionCache.Win32UIProps)
             {
                 prop.SetValue(TM.Win32, ApplyEffect(((Color)prop.GetValue(TM.Win32)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
             }
 
-            foreach (PropertyInfo prop in typeof(Theme.Structures.Console).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.PropertyType == typeof(Color)))
+            foreach (PropertyInfo prop in ReflectionCache.ConsoleProps)
             {
                 prop.SetValue(TM.CommandPrompt, ApplyEffect(((Color)prop.GetValue(TM.CommandPrompt)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
                 prop.SetValue(TM.PowerShellx86, ApplyEffect(((Color)prop.GetValue(TM.PowerShellx86)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
                 prop.SetValue(TM.PowerShellx64, ApplyEffect(((Color)prop.GetValue(TM.PowerShellx64)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
             }
 
-            foreach (PropertyInfo prop in typeof(Info).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.PropertyType == typeof(Color)))
+            foreach (PropertyInfo prop in ReflectionCache.InfoProps)
             {
                 prop.SetValue(TM.Info, ApplyEffect(((Color)prop.GetValue(TM.Info)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
             }
 
-            foreach (PropertyInfo prop in typeof(Theme.Structures.Cursor).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.PropertyType == typeof(Color)))
+            foreach (PropertyInfo prop in ReflectionCache.CursorProps)
             {
                 prop.SetValue(TM.Cursors.Cursor_Arrow, ApplyEffect(((Color)prop.GetValue(TM.Cursors.Cursor_Arrow)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
                 prop.SetValue(TM.Cursors.Cursor_Help, ApplyEffect(((Color)prop.GetValue(TM.Cursors.Cursor_Help)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
@@ -774,7 +797,7 @@ namespace WinPaletter
 
             foreach (Theme.Structures.WinTerminal.Types.Scheme scheme in TM.Terminal.Schemes)
             {
-                foreach (PropertyInfo prop in typeof(Theme.Structures.WinTerminal.Types.Scheme).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.PropertyType == typeof(Color)))
+                foreach (PropertyInfo prop in ReflectionCache.SchemeProps)
                 {
                     prop.SetValue(scheme, ApplyEffect(((Color)prop.GetValue(scheme)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
                 }
@@ -782,7 +805,7 @@ namespace WinPaletter
 
             foreach (Theme.Structures.WinTerminal.Types.Scheme scheme in TM.TerminalPreview.Schemes)
             {
-                foreach (PropertyInfo prop in typeof(Theme.Structures.WinTerminal.Types.Scheme).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.PropertyType == typeof(Color)))
+                foreach (PropertyInfo prop in ReflectionCache.SchemeProps)
                 {
                     prop.SetValue(scheme, ApplyEffect(((Color)prop.GetValue(scheme)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
                 }
@@ -790,43 +813,53 @@ namespace WinPaletter
 
             foreach (Theme.Structures.WinTerminal.Types.Theme theme in TM.Terminal.Themes)
             {
-                foreach (PropertyInfo prop in typeof(Theme.Structures.WinTerminal.Types.Theme).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.PropertyType == typeof(Color)))
+                if (theme.Tab != null)
                 {
-                    prop.SetValue(theme, ApplyEffect(((Color)prop.GetValue(theme)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+                    theme.Tab.Background = ApplyEffect(theme.Tab.Background.Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects);
+                    theme.Tab.UnfocusedBackground = ApplyEffect(theme.Tab.UnfocusedBackground.Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects);
+                }
+                if (theme.TabRow != null)
+                {
+                    theme.TabRow.Background = ApplyEffect(theme.TabRow.Background.Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects);
+                    theme.TabRow.UnfocusedBackground = ApplyEffect(theme.TabRow.UnfocusedBackground.Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects);
                 }
             }
 
             foreach (Theme.Structures.WinTerminal.Types.Theme theme in TM.TerminalPreview.Themes)
             {
-                foreach (PropertyInfo prop in typeof(Theme.Structures.WinTerminal.Types.Theme).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.PropertyType == typeof(Color)))
+                if (theme.Tab != null)
                 {
-                    prop.SetValue(theme, ApplyEffect(((Color)prop.GetValue(theme)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+                    theme.Tab.Background = ApplyEffect(theme.Tab.Background.Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects);
+                    theme.Tab.UnfocusedBackground = ApplyEffect(theme.Tab.UnfocusedBackground.Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects);
+                }
+                if (theme.TabRow != null)
+                {
+                    theme.TabRow.Background = ApplyEffect(theme.TabRow.Background.Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects);
+                    theme.TabRow.UnfocusedBackground = ApplyEffect(theme.TabRow.UnfocusedBackground.Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects);
                 }
             }
 
             foreach (Theme.Structures.WinTerminal.Types.Profile profile in TM.Terminal.Profiles.List)
             {
-                foreach (PropertyInfo prop in typeof(Theme.Structures.WinTerminal.Types.Theme).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.PropertyType == typeof(Color)))
-                {
-                    prop.SetValue(profile, ApplyEffect(((Color)prop.GetValue(profile)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
-                }
+                profile.TabColor = ApplyEffect(profile.TabColor.Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects);
             }
 
             foreach (Theme.Structures.WinTerminal.Types.Profile profile in TM.TerminalPreview.Profiles.List)
             {
-                foreach (PropertyInfo prop in typeof(Theme.Structures.WinTerminal.Types.Theme).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.PropertyType == typeof(Color)))
-                {
-                    prop.SetValue(profile, ApplyEffect(((Color)prop.GetValue(profile)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
-                }
+                profile.TabColor = ApplyEffect(profile.TabColor.Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects);
             }
 
-            foreach (PropertyInfo prop in typeof(Theme.Structures.WinTerminal.Types.Profile).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.PropertyType == typeof(Color)))
+            if (TM.Terminal.Profiles.Defaults != null)
             {
-                prop.SetValue(TM.Terminal.Profiles.Defaults, ApplyEffect(((Color)prop.GetValue(TM.Terminal.Profiles.Defaults)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
-                prop.SetValue(TM.TerminalPreview.Profiles.Defaults, ApplyEffect(((Color)prop.GetValue(TM.TerminalPreview.Profiles.Defaults)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+                TM.Terminal.Profiles.Defaults.TabColor = ApplyEffect(TM.Terminal.Profiles.Defaults.TabColor.Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects);
             }
 
-            foreach (PropertyInfo prop in typeof(AppTheme).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.PropertyType == typeof(Color)))
+            if (TM.TerminalPreview.Profiles.Defaults != null)
+            {
+                TM.TerminalPreview.Profiles.Defaults.TabColor = ApplyEffect(TM.TerminalPreview.Profiles.Defaults.TabColor.Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects);
+            }
+
+            foreach (PropertyInfo prop in ReflectionCache.AppThemeProps)
             {
                 prop.SetValue(TM.AppTheme, ApplyEffect(((Color)prop.GetValue(TM.AppTheme)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
             }
@@ -856,8 +889,33 @@ namespace WinPaletter
             tabs_preview_1.TabPages[1].BackgroundImage?.Dispose();
             tabs_preview_1.TabPages[2].BackgroundImage?.Dispose();
 
-            tabs_preview_1.TabPages[0].BackgroundImage = System.IO.File.Exists(TM.LogonUI11.ImageFile) ? BitmapMgr.Load(TM.LogonUI11.ImageFile) : CaptureLockScreen() ?? null;
-            tabs_preview_1.TabPages[1].BackgroundImage = System.IO.File.Exists(TM.LogonUI10.ImageFile) ? BitmapMgr.Load(TM.LogonUI10.ImageFile) : CaptureLockScreen() ?? null;
+            Bitmap lockScreenBmp = null;
+            if (System.IO.File.Exists(TM.LogonUI11.ImageFile))
+            {
+                tabs_preview_1.TabPages[0].BackgroundImage = BitmapMgr.Load(TM.LogonUI11.ImageFile);
+            }
+            else
+            {
+                lockScreenBmp = CaptureLockScreen();
+                tabs_preview_1.TabPages[0].BackgroundImage = lockScreenBmp;
+            }
+
+            if (System.IO.File.Exists(TM.LogonUI10.ImageFile))
+            {
+                tabs_preview_1.TabPages[1].BackgroundImage = BitmapMgr.Load(TM.LogonUI10.ImageFile);
+            }
+            else
+            {
+                if (lockScreenBmp == null)
+                {
+                    tabs_preview_1.TabPages[1].BackgroundImage = CaptureLockScreen();
+                }
+                else
+                {
+                    tabs_preview_1.TabPages[1].BackgroundImage = new Bitmap(lockScreenBmp);
+                }
+            }
+
             tabs_preview_1.TabPages[2].BackgroundImage = ReturnBK() ?? null;
         }
 
@@ -865,7 +923,10 @@ namespace WinPaletter
         {
             if (File.Exists(textBox2.Text))
             {
-                return BitmapMgr.Load(textBox2.Text).Resize(Program.PreviewSize);
+                using (Bitmap loaded = BitmapMgr.Load(textBox2.Text))
+                {
+                    return loaded.Resize(Program.PreviewSize);
+                }
             }
             else
             {
@@ -881,7 +942,7 @@ namespace WinPaletter
                     // Get the list of files in the lock screen folder
                     string[] files = Directory.GetFiles(lockScreenPath);
 
-                    if (files.Count() > 0)
+                    if (files.Length > 0)
                     {
                         // Find the most recently accessed File (assuming it's the lock screen image)
                         mostRecentFile = files.OrderByDescending(File.GetLastAccessTime).FirstOrDefault();
@@ -906,37 +967,54 @@ namespace WinPaletter
                 }
                 else
                 {
-                    return Program.WallpaperMonitor.Get(Program.TM, Program.WindowStyle);
+                    Bitmap wall = Program.WallpaperMonitor.Get(Program.TM, Program.WindowStyle);
+                    return wall != null ? new Bitmap(wall) : null;
                 }
             }
         }
 
         public object ApplyEffects(Bitmap bmp)
         {
-            Bitmap _bmp = bmp;
+            Bitmap current = bmp;
 
-            if (TM.LogonUI7.Grayscale) _bmp = _bmp.Grayscale();
+            if (TM.LogonUI7.Grayscale)
+            {
+                Bitmap next = current.Grayscale();
+                if (current != bmp) current.Dispose();
+                current = next;
+            }
 
-            if (TM.LogonUI7.Blur) _bmp = _bmp.Blur(TM.LogonUI7.Blur_Intensity);
+            if (TM.LogonUI7.Blur)
+            {
+                Bitmap next = current.Blur(TM.LogonUI7.Blur_Intensity);
+                if (current != bmp) current.Dispose();
+                current = next;
+            }
 
             if (TM.LogonUI7.Noise)
             {
+                Bitmap next = null;
                 switch (TM.LogonUI7.Noise_Mode)
                 {
                     case BitmapExtensions.NoiseMode.Acrylic:
                         {
-                            _bmp = _bmp.Noise(BitmapExtensions.NoiseMode.Acrylic, TM.LogonUI7.Noise_Intensity / 100f);
+                            next = current.Noise(BitmapExtensions.NoiseMode.Acrylic, TM.LogonUI7.Noise_Intensity / 100f);
                             break;
                         }
                     case BitmapExtensions.NoiseMode.Aero:
                         {
-                            _bmp = _bmp.Noise(BitmapExtensions.NoiseMode.Aero, TM.LogonUI7.Noise_Intensity / 100f);
+                            next = current.Noise(BitmapExtensions.NoiseMode.Aero, TM.LogonUI7.Noise_Intensity / 100f);
                             break;
                         }
                 }
+                if (next != null)
+                {
+                    if (current != bmp) current.Dispose();
+                    current = next;
+                }
             }
 
-            return _bmp;
+            return current;
         }
 
         public Bitmap ReturnBK()
@@ -959,7 +1037,6 @@ namespace WinPaletter
             {
                 bmpX = BitmapMgr.Load(textBox2.Text);
             }
-
             else
             {
                 bmpX = Color.Black.ToBitmap(Screen.PrimaryScreen.Bounds.Size);
@@ -967,7 +1044,18 @@ namespace WinPaletter
 
             if (bmpX is not null)
             {
-                return (Bitmap)ApplyEffects(bmpX.Resize(Program.PreviewSize));
+                Bitmap resized = bmpX.Resize(Program.PreviewSize);
+                if (TM.LogonUI7.Mode != Theme.Structures.LogonUI7.Sources.Wallpaper)
+                {
+                    bmpX.Dispose();
+                }
+
+                Bitmap finalBmp = (Bitmap)ApplyEffects(resized);
+                if (finalBmp != resized)
+                {
+                    resized.Dispose();
+                }
+                return finalBmp;
             }
             else
             {

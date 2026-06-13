@@ -34,8 +34,6 @@ namespace WinPaletter
                 if (PE is null) throw new ArgumentNullException(nameof(PE));
                 if (iconGroupResourceIdentifier is null) throw new ArgumentNullException(nameof(iconGroupResourceIdentifier));
 
-                Program.Log?.Write(LogEventLevel.Information, $"Extracting icon group '{iconGroupResourceIdentifier}' from PE file '{PE.FilePath}'.");
-
                 int structureSize = 14;
                 byte[] iconBytes = [.. PE.GetResource(iconGroupResourceIdentifier).Data.Skip(6)];
 
@@ -66,7 +64,7 @@ namespace WinPaletter
                     // Reset the stream position before reading the icon data
                     stream.Seek(0, SeekOrigin.Begin);
 
-                    Program.Log?.Write(LogEventLevel.Information, $"Successfully extracted {icons.Count} icons from PE file '{PE.FilePath}'.");
+                    Program.Log?.Write(LogEventLevel.Information, $"Successfully extracted {icons.Count} icons from PE file.");
 
                     return new Icon(stream);
                 }
@@ -209,8 +207,12 @@ namespace WinPaletter
         public static byte[] GetResource(string SourceFile, string ResourceType, int ID, ushort LangID = 1033)
         {
             Program.Log?.Write(LogEventLevel.Information, $"Getting resource '{ResourceType}' with ID '{ID}' from PE file '{SourceFile}'.");
-            PortableExecutable PE_File = new(SourceFile);
-            return PE_File.GetResource(new(Ressy.ResourceType.FromString(ResourceType), ResourceName.FromCode(ID), new Language(LangID))).Data;
+
+            using (System.IO.Stream stream = new FileStream(SourceFile, FileMode.OpenOrCreate))
+            {
+                PortableExecutable PE_File = new(stream);
+                return PE_File.GetResource(new(Ressy.ResourceType.FromString(ResourceType), ResourceName.FromCode(ID), new Language(LangID))).Data;
+            }
         }
 
         /// <summary>
@@ -268,14 +270,18 @@ namespace WinPaletter
 
                             if (treeView is not null)
                                 ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.PE_PatchingPE, Path.GetFileName(SourceFile)), "pe_patch");
-                            PortableExecutable PE_File = new(SourceFile);
-                            PE_File.SetResource(new(Ressy.ResourceType.FromString(ResourceType), ResourceName.FromCode(ID), new Language(LangID)), NewRes);
-                            Program.Log?.Write(LogEventLevel.Information, $"Resource '{ResourceType}' with ID '{ID}' has been replaced in PE file '{SourceFile}'.");
+
+                            using (System.IO.Stream stream = new FileStream(SourceFile, FileMode.OpenOrCreate))
+                            {
+                                PortableExecutable PE_File = new(stream);
+                                Resource res = new(new(Ressy.ResourceType.FromString(ResourceType), ResourceName.FromCode(ID), new Language(LangID)), NewRes);
+                                PE_File.SetResource(res);
+                                Program.Log?.Write(LogEventLevel.Information, $"Resource '{ResourceType}' with ID '{ID}' has been replaced in PE file '{SourceFile}'.");
+                            }
 
                             if (treeView is not null)
                                 ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Advanced.PE_RestoringPermissions, Path.GetFileName(SourceFile)), "pe_restore");
                             RestorePermissions(SourceFile, TempFile);        // Restore source File rights
-
                         }
                     }
 
@@ -287,8 +293,13 @@ namespace WinPaletter
                 // It isn't in system directory and can be modified without changing rights/permissions.
                 if (treeView is not null)
                     ThemeLog.AddNode(treeView, $"Replacing '{Path.GetFileName(SourceFile)}' resources", "pe_patch");
-                PortableExecutable PE_File = new(SourceFile);
-                PE_File.SetResource(new(Ressy.ResourceType.FromString(ResourceType), ResourceName.FromCode(ID), new Language(LangID)), NewRes);
+
+                using (System.IO.Stream stream = new FileStream(SourceFile, FileMode.OpenOrCreate))
+                {
+                    PortableExecutable PE_File = new(stream);
+                    Resource res = new(new(Ressy.ResourceType.FromString(ResourceType), ResourceName.FromCode(ID), new Language(LangID)), NewRes);
+                    PE_File.SetResource(res);
+                }
                 Program.Log?.Write(LogEventLevel.Information, $"Resource '{ResourceType}' with ID '{ID}' has been replaced in PE file '{SourceFile}'.");
             }
 
