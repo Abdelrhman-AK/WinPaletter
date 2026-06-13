@@ -51,6 +51,8 @@ While significant new features are not anticipated, the goal is to place the pro
      > **Note:** It is the first source to be updated.
    
    - Alternatively, you can use:
+  
+     - Softonic: [Visit WinPaletter Page at Softonic](https://winpaletter.en.softonic.com)
      
      - Microsoft WinGet: 
        
