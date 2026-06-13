@@ -173,11 +173,11 @@ namespace WinPaletter
 
                     if (File.Exists(TerDir) && Mode == WinTerminal.Version.Stable)
                     {
-                        _Terminal.Save(TerDir, WinTerminal.Mode.JSONFile);
+                        _Terminal.Save(WinTerminal.Mode.JSONFile);
                     }
                     else if (File.Exists(TerPreDir) && Mode == WinTerminal.Version.Preview)
                     {
-                        _Terminal.Save(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview);
+                        _Terminal.Save(WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview);
                     }
 
                     Cursor = System.Windows.Forms.Cursors.Default;

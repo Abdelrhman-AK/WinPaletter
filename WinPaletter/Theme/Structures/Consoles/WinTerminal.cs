@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 using static WinPaletter.Theme.Structures.WinTerminal.Types;
 
 namespace WinPaletter.Theme.Structures
@@ -44,6 +45,13 @@ namespace WinPaletter.Theme.Structures
         }
 
         #region Properties
+
+        [JsonIgnore]
+        private string _signature;
+
+        [JsonIgnore]
+        private string signatureEnabled => $"{_signature}_Enabled";   
+
         /// <summary>
         /// Controls if this feature is enabled or not
         /// </summary>
@@ -1562,6 +1570,11 @@ namespace WinPaletter.Theme.Structures
         /// <summary>
         /// Create an instance of a <see cref="WinTerminal"/> class that has all data from Windows Terminal settings.
         /// </summary>
+        public WinTerminal(string signature) { _signature = signature; }
+
+        /// <summary>
+        /// Create an instance of a <see cref="WinTerminal"/> class that has all data from Windows Terminal settings.
+        /// </summary>
         /// <param name="File">File to be opened, either JSON or WinPaletter theme File</param>
         /// <param name="Mode">Either Windows Terminal JSON settings File or WinPaletter theme File</param>
         /// <param name="Version">Either Stable or Preview</param>
@@ -1644,8 +1657,24 @@ namespace WinPaletter.Theme.Structures
         /// <param name="Mode">Either Windows Terminal JSON settings File or WinPaletter theme File</param>
         /// <param name="Version">Either Stable or Preview</param>
         /// <returns></returns>
-        public string Save(string File, Mode Mode, Version Version = Version.Stable)
+        public string Save(Mode Mode, Version Version = Version.Stable)
         {
+            return Save(null, Mode, Version);
+        }
+
+        /// <summary>
+        /// Save Windows Terminal settings data
+        /// </summary>
+        /// <param name="treeView">TreeView control for logging</param>
+        /// <param name="Mode">Either Windows Terminal JSON settings File or WinPaletter theme File</param>
+        /// <param name="Version">Either Stable or Preview</param>
+        /// <returns></returns>
+        public string Save(TreeView treeView, Mode Mode, Version Version = Version.Stable)
+        {
+            SaveToggleState(treeView);
+
+            if (!Enabled) return string.Empty;
+
             switch (Mode)
             {
                 // Save Windows Terminal settings to JSON File
@@ -1779,6 +1808,16 @@ namespace WinPaletter.Theme.Structures
                         return string.Empty;
                     }
             }
+        }
+
+        /// <summary>
+        /// Saves the toggle state of this Windows Terminal instance.
+        /// </summary>
+        /// <param name="treeView"></param>
+        /// <param name="edition"></param>
+        public void SaveToggleState(TreeView treeView = null)
+        {
+            WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", signatureEnabled, Enabled);
         }
     }
 }

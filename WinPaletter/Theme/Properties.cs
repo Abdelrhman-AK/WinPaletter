@@ -228,30 +228,30 @@ namespace WinPaletter.Theme
         /// Structure instance that contains data about Command Prompt, and it can be customized.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(nameof(CommandPrompt))]
-        public Console CommandPrompt { get; set; } = new("Terminal_CMD_Enabled", [string.Empty, "%SystemRoot%_System32_cmd.exe"]);
+        public Console CommandPrompt { get; set; } = new("Terminal_CMD", [string.Empty, "%SystemRoot%_System32_cmd.exe"]);
 
         /// <summary>
         /// Structure instance that contains data about PowerShell x86, and it can be customized.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(nameof(PowerShellx86))]
-        public Console PowerShellx86 { get; set; } = new("Terminal_PS_32_Enabled", [SysPaths.PS86_reg]) { PopupForeground = 15, PopupBackground = 3, ScreenColorsForeground = 6, ScreenColorsBackground = 5 };
+        public Console PowerShellx86 { get; set; } = new("Terminal_PS_32", [SysPaths.PS86_reg]) { PopupForeground = 15, PopupBackground = 3, ScreenColorsForeground = 6, ScreenColorsBackground = 5 };
 
         /// <summary>
         /// Structure instance that contains data about PowerShell x64, and it can be customized.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(nameof(PowerShellx64))]
-        public Console PowerShellx64 { get; set; } = new("Terminal_PS_64_Enabled", [SysPaths.PS64_reg]) { PopupForeground = 15, PopupBackground = 3, ScreenColorsForeground = 6, ScreenColorsBackground = 5 };
+        public Console PowerShellx64 { get; set; } = new("Terminal_PS_64", [SysPaths.PS64_reg]) { PopupForeground = 15, PopupBackground = 3, ScreenColorsForeground = 6, ScreenColorsBackground = 5 };
 
         /// <summary>
         /// class that contains data about Windows Terminal Stable, and it can be customized.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(nameof(Terminal))]
-        public WinTerminal Terminal { get; set; } = new();
+        public WinTerminal Terminal { get; set; } = new("Terminal_Stable");
 
         /// <summary>
         /// class that contains data about Windows Terminal Preview, and it can be customized.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(nameof(TerminalPreview))]
-        public WinTerminal TerminalPreview { get; set; } = new();
+        public WinTerminal TerminalPreview { get; set; } = new("Terminal_Preview");
     }
 }

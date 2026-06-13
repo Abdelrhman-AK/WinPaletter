@@ -113,6 +113,7 @@ namespace WinPaletter.Theme.Structures
 
         private string[] regKeys = [];
         private string signature;
+        private string signatureEnabled => $"{signature}_Enabled";
 
         /// <summary>
         /// Create console structure with default data
@@ -231,6 +232,7 @@ namespace WinPaletter.Theme.Structures
         {
             Program.Log?.Write(LogEventLevel.Information, $"Applying {consoleType} preferences...");
 
+            SaveToggleState(treeView);
             Save_Internal("HKEY_CURRENT_USER", treeView);
 
             if (overwriteHKU)
@@ -318,6 +320,17 @@ namespace WinPaletter.Theme.Structures
                     WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Console\TrueTypeFont", "000", FaceName, RegistryValueKind.String);
                 }
             }
+        }
+
+
+        /// <summary>
+        /// Saves the toggle state of this console instance.
+        /// </summary>
+        /// <param name="treeView"></param>
+        /// <param name="edition"></param>
+        public void SaveToggleState(TreeView treeView = null)
+        {
+            WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", signatureEnabled, Enabled);
         }
     }
 }

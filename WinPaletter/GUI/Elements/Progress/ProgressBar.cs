@@ -30,6 +30,7 @@ namespace WinPaletter.UI.WP
         private IntPtr FormHwnd = IntPtr.Zero;
         private static readonly TextureBrush Noise = new(Resources.Noise);
         private DateTime _lastTaskbarUpdate = DateTime.MinValue;
+        private bool _intendedVisible = true;
 
         // Animation fields
         private System.Windows.Forms.Timer _marqueeTimer;
@@ -187,33 +188,48 @@ namespace WinPaletter.UI.WP
             get => base.Visible;
             set
             {
-                if (base.Visible != value)
+                _intendedVisible = value;
+                base.Visible = value;
+                // OnVisibleChanged fires automatically via base — but only if the
+                // effective visibility actually changed. For deep-nested controls
+                // whose parent chain suppresses them, we push the intended state
+                // directly so timers and taskbar always reflect what the caller wanted.
+                ApplyVisibilityState(value);
+            }
+        }
+
+        protected override void OnVisibleChanged(EventArgs e)
+        {
+            base.OnVisibleChanged(e);
+            if (DesignMode) return;
+            ApplyVisibilityState(_intendedVisible && base.Visible);
+        }
+
+        private void ApplyVisibilityState(bool isVisible)
+        {
+            if (DesignMode) return;
+
+            if (isVisible)
+            {
+                _lastTaskbarUpdate = DateTime.MinValue;
+                UpdateTaskbar();
+
+                if (Style == ProgressBarStyle.Marquee)
                 {
-                    base.Visible = value;
-
-                    if (value)
-                    {
-                        _lastTaskbarUpdate = DateTime.MinValue;
-                        UpdateTaskbar();
-
-                        if (Style == ProgressBarStyle.Marquee)
-                        {
-                            EnsureMarqueeTimerInitialized();
-                            StartMarqueeTimer();
-                        }
-                        else
-                        {
-                            UpdateProgressTimerState();
-                        }
-                    }
-                    else
-                    {
-                        SetProgressState(TaskbarProgressBarState.NoProgress);
-                        SetProgressValue(0);
-                        StopAllTimers();
-                        _lastTaskbarUpdate = DateTime.MinValue;
-                    }
+                    EnsureMarqueeTimerInitialized();
+                    StartMarqueeTimer();
                 }
+                else
+                {
+                    UpdateProgressTimerState();
+                }
+            }
+            else
+            {
+                SetProgressState(TaskbarProgressBarState.NoProgress);
+                SetProgressValue(0);
+                StopAllTimers();
+                _lastTaskbarUpdate = DateTime.MinValue;
             }
         }
 

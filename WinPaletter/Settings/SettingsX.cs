@@ -1381,7 +1381,7 @@ namespace WinPaletter
             Label12.Text = Program.Localization.Information.TranslationVersion;
             Label14.Text = $"{Program.Localization.Information.AppVer} {Program.Localization.Strings.General.AndBelow}";
             Label19.Text = Program.Localization.Information.Lang;
-            Label16.Text = Program.Localization.Information.LangCode;
+            Label16.Text = Program.Localization.Information.LangCode.ToUpper();
             Label22.Text = !Program.Localization.Information.RightToLeft ? Program.Localization.Strings.Languages.LeftToRight : Program.Localization.Strings.Languages.RightToLeft;
 
             string fileName = TextBox3.Text;

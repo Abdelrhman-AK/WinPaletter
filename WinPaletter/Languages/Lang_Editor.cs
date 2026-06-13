@@ -653,18 +653,27 @@ namespace WinPaletter
 
         private void Child_Closing(object sender, FormClosingEventArgs e)
         {
-            // Save the language of the form when it's closing to be used in the built list
-            JObject newLang = (sender as Form).JObject();
-            FormsList[(sender as Form).Name] = newLang;
+            Form form = (Form)sender;
+
+            // Save directly from TextTranslationItem controls — do not call form.JObject()
+            // which would return null for a plain System.Windows.Forms.Form instance
+            if (!string.IsNullOrEmpty(form.Name)) SaveOpenedFormToMemory();
+
             forms_box.Visible = true;
             properties_box.Visible = false;
-            openedForm.Hide();
+
+            form.Hide();
             e.Cancel = true;
         }
 
         private void Child_Closed(object sender, FormClosedEventArgs e)
         {
-            openedForm?.Dispose();
+            // Only clear openedForm if it is this form (real close, not a hide+cancel)
+            if (ReferenceEquals(openedForm, sender))
+            {
+                openedForm?.Dispose();
+                openedForm = null;
+            }
         }
 
         #endregion
@@ -1057,16 +1066,17 @@ namespace WinPaletter
         /// <param name="e"></param>
         private void Lang_JSON_GUI_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // Remove the event handler from translation control
+            // Save whatever is open before closing the editor
+            SaveOpenedFormToMemory();
+
             ControlSelection -= Lang_JSON_GUI_ControlSelection;
 
-            // Dispose the opened form and the modified language
             modifiedLang?.Dispose();
 
             selectedControl = null;
 
-            // Dispose the mini form for translation
             openedForm?.Dispose();
+            openedForm = null;
         }
 
         /// <summary>
@@ -1076,34 +1086,121 @@ namespace WinPaletter
         /// <param name="e"></param>
         private void treeView1_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            // Check if the node has a parent and the text is not empty
+            // Snapshot the currently open form into FormsList before switching
+            SaveOpenedFormToMemory();
+
             if (e.Node.Parent is not null && !string.IsNullOrWhiteSpace(e.Node.Text))
             {
-                // Set the selected form name to the node text
                 selectedFormName = e.Node.Text;
 
-                // Check if the form name exists in the forms list
-                if (FormsList.TryGetValue(selectedFormName, out JObject form_lang))
+                if (FormsList.TryGetValue(selectedFormName, out JObject savedState))
                 {
-                    // Create a new form instance from the selected form name
-                    Form form = (Form)Activator.CreateInstance(Assembly.GetExecutingAssembly().GetTypes()
-                                   .Where(t => t.IsSubclassOf(typeof(Form)) && !t.IsAbstract && t.Name == selectedFormName)
-                                   .FirstOrDefault());
+                    Form form = Activator.CreateInstance(Assembly.GetExecutingAssembly().GetTypes().FirstOrDefault(t => t.IsSubclassOf(typeof(Form)) && !t.IsAbstract && t.Name == selectedFormName)) as Form;
 
-                    // Create a mini form from the original form
+                    openedForm?.Dispose();
+                    openedForm = null;
+
+                    // Build the mini-form from the original form (gets original English strings)
                     openedForm = CreateMiniForm(form, form);
 
-                    // Load the language of the form
-                    Localizer.LoadLanguage(openedForm, form_lang, modifiedLang);
+                    // Apply saved translations directly onto the mini-form controls,
+                    // bypassing Localizer.ApplyLocalization entirely
+                    RestoreFormFromMemory(openedForm, savedState);
 
-                    // Set the form name label in properties box to the selected form name
                     openedForm.Show();
-
-                    // Add the mini form to the split container panel as a child MDI form
                     SplitContainer1.Panel1.Controls.Add(openedForm);
                     forms_box.Visible = false;
                     properties_box.Visible = true;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Saves all TextTranslationItem control states from the currently open mini-form
+        /// directly into FormsList. Bypasses JObject() extension which excludes base Form types.
+        /// </summary>
+        private void SaveOpenedFormToMemory()
+        {
+            if (openedForm is null || openedForm.IsDisposed) return;
+
+            JObject jControls = new JObject();
+
+            // Capture the form title
+            JObject jForm = new JObject();
+            jForm["Text"] = openedForm.Text;
+
+            // Walk every TextTranslationItem in the mini-form directly
+            foreach (Control ctrl in openedForm.GetAllControls())
+            {
+                if (ctrl is not TextTranslationItem item || string.IsNullOrEmpty(item.Name)) continue;
+
+                string textKey = $"{item.Name}.Text";
+                string tagKey = $"{item.Name}.Tag";
+
+                if (!jControls.ContainsKey(textKey))
+                    jControls[textKey] = item.Text ?? string.Empty;
+
+                string tag = item.Tag?.ToString() ?? string.Empty;
+                if (!jControls.ContainsKey(tagKey) && !string.IsNullOrEmpty(tag))
+                    jControls[tagKey] = tag;
+            }
+
+            // Also capture TabPage texts (translator can rename tabs)
+            foreach (Control ctrl in openedForm.GetAllControls())
+            {
+                if (ctrl is not TabPage tp || string.IsNullOrEmpty(tp.Name)) continue;
+
+                string textKey = $"{tp.Name}.Text";
+                if (!jControls.ContainsKey(textKey))
+                    jControls[textKey] = tp.Text ?? string.Empty;
+            }
+
+            if (jControls.Count > 0)
+                jForm["Controls"] = jControls;
+
+            FormsList[openedForm.Name] = jForm;
+        }
+
+        /// <summary>
+        /// Restores TextTranslationItem and TabPage control states from FormsList
+        /// directly into the currently open mini-form, without going through
+        /// Localizer.ApplyLocalization or BuildControlMap.
+        /// </summary>
+        private void RestoreFormFromMemory(System.Windows.Forms.Form form, JObject savedState)
+        {
+            if (form is null || savedState is null) return;
+
+            // Restore form title
+            if (savedState.TryGetValue("Text", out JToken titleToken) && titleToken.Type != JTokenType.Null)
+                form.Text = titleToken.ToString();
+
+            JObject controls = savedState["Controls"] as JObject;
+            if (controls is null) return;
+
+            // Build a flat name->control map from the mini-form directly
+            Dictionary<string, Control> controlMap = new Dictionary<string, Control>(StringComparer.OrdinalIgnoreCase);
+            foreach (Control ctrl in form.GetAllControls())
+            {
+                if (!string.IsNullOrEmpty(ctrl.Name) && !controlMap.ContainsKey(ctrl.Name))
+                    controlMap[ctrl.Name] = ctrl;
+            }
+
+            // Apply each saved entry back to its control
+            foreach (KeyValuePair<string, JToken> entry in controls)
+            {
+                string value = entry.Value?.ToString() ?? string.Empty;
+                int dot = entry.Key.IndexOf('.');
+                if (dot < 0) continue;
+
+                string controlName = entry.Key.Substring(0, dot);
+                string propertyName = entry.Key.Substring(dot + 1);
+
+                if (!controlMap.TryGetValue(controlName, out Control ctrl)) continue;
+
+                if (propertyName.Equals("Text", StringComparison.OrdinalIgnoreCase))
+                    ctrl.Text = value;
+                else if (propertyName.Equals("Tag", StringComparison.OrdinalIgnoreCase))
+                    ctrl.Tag = value;
             }
         }
 
@@ -1269,6 +1366,8 @@ namespace WinPaletter
         /// <param name="e"></param>
         private void Button2_Click(object sender, EventArgs e)
         {
+            SaveOpenedFormToMemory();
+
             if (File.Exists(LangFile))
             {
                 JObject formsJObject = JObject.FromObject(FormsList);

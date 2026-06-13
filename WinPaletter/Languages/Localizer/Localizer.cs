@@ -1,12 +1,10 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Reflection.Emit;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -597,15 +595,48 @@ namespace WinPaletter
 
         public void ApplyLocalization(System.Windows.Forms.Form form, JObject localizationJson)
         {
-            if (form == null) return;
+            if (form == null || localizationJson == null) return;
 
-            var tempDict = new Dictionary<string, List<FormStringEntry>>();
-            DeserializeFormsJSONIntoDict(localizationJson, tempDict);
-
-            if (!tempDict.TryGetValue(form.Name, out List<FormStringEntry> entries))
-                return;
-
+            List<FormStringEntry> entries = DeserializeFormJObjectIntoEntries(localizationJson);
             ApplyEntries(entries, form);
+        }
+
+        /// <summary>
+        /// Deserializes a single form JObject (already unwrapped — containing "Text" and "Controls"
+        /// directly) into a flat list of FormStringEntry values.
+        /// Used by ApplyLocalization(form, JObject) which receives the inner per-form object,
+        /// not the outer forms collection.
+        /// </summary>
+        private static List<FormStringEntry> DeserializeFormJObjectIntoEntries(JObject formObj)
+        {
+            List<FormStringEntry> entries = [];
+
+            if (formObj.TryGetValue("Text", out JToken textToken) && textToken.Type != JTokenType.Null)
+            {
+                entries.Add(FormStringEntry.FormEntry("Text", textToken.ToString()));
+            }
+
+            JObject controlsObj = formObj["Controls"] as JObject;
+            if (controlsObj == null) return entries;
+
+            foreach (KeyValuePair<string, JToken> controlProperty in controlsObj)
+            {
+                string value = controlProperty.Value?.ToString() ?? string.Empty;
+                int dotIndex = controlProperty.Key.IndexOf('.');
+
+                if (dotIndex >= 0)
+                {
+                    string controlName = controlProperty.Key.Substring(0, dotIndex);
+                    string propertyName = controlProperty.Key.Substring(dotIndex + 1);
+                    entries.Add(FormStringEntry.ControlEntry(controlName, propertyName, value));
+                }
+                else
+                {
+                    entries.Add(FormStringEntry.ControlEntry(controlProperty.Key, "Text", value));
+                }
+            }
+
+            return entries;
         }
 
         private static void ApplyEntries(List<FormStringEntry> entries, System.Windows.Forms.Form form)
@@ -628,8 +659,8 @@ namespace WinPaletter
 
                     if (controlMap.TryGetValue(entry.ControlName, out Control control))
                     {
-                        if (entry.PropertyName.Equals("Text", StringComparison.OrdinalIgnoreCase))
-                            control.Text = entry.Value;
+                        if (entry.PropertyName.Equals("Text", StringComparison.OrdinalIgnoreCase)) control.Text = entry.Value;
+                        else if (entry.PropertyName.Equals("Tag", StringComparison.OrdinalIgnoreCase)) control.Tag = entry.Value;
                     }
                 }
             }

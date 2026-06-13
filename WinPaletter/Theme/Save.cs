@@ -118,7 +118,7 @@ namespace WinPaletter.Theme
 
                             Program.Log?.Write(LogEventLevel.Information, $"WinPaletter will apply the theme as if you are using {OS_str}");
 
-                            ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Localization.Strings.ThemeManager.Actions.Applying_Started}", "info");
+                            ThemeLog.AddNode(treeView, $"{DateTime.Now:T}: {Program.Localization.Strings.ThemeManager.Actions.Applying_Started}", "info");
 
                             if (!Program.Elevated)
                             {
@@ -179,16 +179,15 @@ namespace WinPaletter.Theme
                         WallpaperTone_WXP.SaveToggleState(tv);
                         Cursors.SaveToggleState(tv);
                         WindowsEffects.SaveToggleState(tv);
+                        CommandPrompt.SaveToggleState(tv);
+                        PowerShellx86.SaveToggleState(tv);
+                        PowerShellx64.SaveToggleState(tv);
+                        Terminal.SaveToggleState(tv);
+                        TerminalPreview.SaveToggleState(tv);
                         AltTab.SaveToggleState(tv);
                         ScreenSaver.SaveToggleState(tv);
                         Sounds.SaveToggleState(tv);
                         Icons.SaveToggleState(tv);
-
-                        WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_CMD_Enabled", CommandPrompt.Enabled);
-                        WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_PS_32_Enabled", PowerShellx86.Enabled);
-                        WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_PS_64_Enabled", PowerShellx64.Enabled);
-                        WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Stable_Enabled", Terminal.Enabled);
-                        WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", "Terminal_Preview_Enabled", TerminalPreview.Enabled);
 
                         // Sometimes, this entry is set to 1 when manipulating preferences by User32.SystemParametersInfo
                         WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "AutoColorization", 0);
@@ -495,29 +494,29 @@ namespace WinPaletter.Theme
                             {
                                 if (Program.Settings.AspectsControl.Enabled && !!Program.Settings.AspectsControl.WinTerminals)
                                 {
-                                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Localization.Strings.ThemeManager.Skip.Terminals}", "skip");
+                                    ThemeLog.AddNode(treeView, $"{DateTime.Now:T}: {Program.Localization.Strings.ThemeManager.Skip.Terminals}", "skip");
                                 }
 
                                 else if (Terminal.Enabled & TerminalPreview.Enabled)
                                 {
-                                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Localization.Strings.ThemeManager.Check.Terminals}", "info");
+                                    ThemeLog.AddNode(treeView, $"{DateTime.Now:T}: {Program.Localization.Strings.ThemeManager.Check.Terminals}", "info");
                                 }
 
                                 else if (Terminal.Enabled)
                                 {
-                                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, Program.Localization.Strings.Aspects.TerminalStable)}", "skip");
-                                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Localization.Strings.ThemeManager.Check.Terminal, Program.Localization.Strings.Aspects.TerminalStable)}", "info");
+                                    ThemeLog.AddNode(treeView, $"{DateTime.Now:T}: {string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, Program.Localization.Strings.Aspects.TerminalStable)}", "skip");
+                                    ThemeLog.AddNode(treeView, $"{DateTime.Now:T}: {string.Format(Program.Localization.Strings.ThemeManager.Check.Terminal, Program.Localization.Strings.Aspects.TerminalStable)}", "info");
                                 }
 
                                 else if (TerminalPreview.Enabled)
                                 {
-                                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, Program.Localization.Strings.Aspects.TerminalPreview)}", "skip");
-                                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Localization.Strings.ThemeManager.Check.Terminal, Program.Localization.Strings.Aspects.TerminalPreview)}", "info");
+                                    ThemeLog.AddNode(treeView, $"{DateTime.Now:T}: {string.Format(Program.Localization.Strings.ThemeManager.Skip.Main, Program.Localization.Strings.Aspects.TerminalPreview)}", "skip");
+                                    ThemeLog.AddNode(treeView, $"{DateTime.Now:T}: {string.Format(Program.Localization.Strings.ThemeManager.Check.Terminal, Program.Localization.Strings.Aspects.TerminalPreview)}", "info");
                                 }
 
                                 else
                                 {
-                                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Localization.Strings.ThemeManager.Skip.Terminals}", "skip");
+                                    ThemeLog.AddNode(treeView, $"{DateTime.Now:T}: {Program.Localization.Strings.ThemeManager.Skip.Terminals}", "skip");
                                 }
 
                             }
@@ -558,8 +557,8 @@ namespace WinPaletter.Theme
                                 {
                                     try
                                     {
-                                        ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Localization.Strings.ThemeManager.Actions.Applying_Feature, Program.Localization.Strings.Aspects.TerminalStable)}", "info");
-                                        Terminal.Save(TerDir, WinTerminal.Mode.JSONFile);
+                                        ThemeLog.AddNode(treeView, $"{DateTime.Now:T}: {string.Format(Program.Localization.Strings.ThemeManager.Actions.Applying_Feature, Program.Localization.Strings.Aspects.TerminalStable)}", "info");
+                                        Terminal.Save(treeView, WinTerminal.Mode.JSONFile);
                                         if (ReportProgress)
                                             ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Actions.Time, sw.ElapsedMilliseconds / 1000d), "time");
                                     }
@@ -570,7 +569,7 @@ namespace WinPaletter.Theme
                                         _ErrorHappened = true;
                                         if (ReportProgress)
                                         {
-                                            ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, Program.Localization.Strings.Aspects.TerminalStable)}", "error");
+                                            ThemeLog.AddNode(treeView, $"{DateTime.Now:T}: {string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, Program.Localization.Strings.Aspects.TerminalStable)}", "error");
                                             AddException(string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, Program.Localization.Strings.Aspects.TerminalStable), ex);
                                         }
                                         else
@@ -584,7 +583,7 @@ namespace WinPaletter.Theme
                                 }
                                 else
                                 {
-                                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Localization.Strings.ThemeManager.Skip.Terminal_JSONNotFound, Program.Localization.Strings.Aspects.TerminalStable)}", "skip");
+                                    ThemeLog.AddNode(treeView, $"{DateTime.Now:T}: {string.Format(Program.Localization.Strings.ThemeManager.Skip.Terminal_JSONNotFound, Program.Localization.Strings.Aspects.TerminalStable)}", "skip");
                                 }
                             }
 
@@ -592,11 +591,10 @@ namespace WinPaletter.Theme
                             {
                                 if (File.Exists(TerPreDir))
                                 {
-
                                     try
                                     {
-                                        ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Localization.Strings.ThemeManager.Actions.Applying_Feature, Program.Localization.Strings.Aspects.TerminalPreview)}", "info");
-                                        TerminalPreview.Save(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview);
+                                        ThemeLog.AddNode(treeView, $"{DateTime.Now:T}: {string.Format(Program.Localization.Strings.ThemeManager.Actions.Applying_Feature, Program.Localization.Strings.Aspects.TerminalPreview)}", "info");
+                                        TerminalPreview.Save(treeView, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview);
                                         if (ReportProgress)
                                             ThemeLog.AddNode(treeView, string.Format(Program.Localization.Strings.ThemeManager.Actions.Time, sw.ElapsedMilliseconds / 1000d), "time");
                                     }
@@ -607,7 +605,7 @@ namespace WinPaletter.Theme
                                         _ErrorHappened = true;
                                         if (ReportProgress)
                                         {
-                                            ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, Program.Localization.Strings.Aspects.TerminalPreview)}", "error");
+                                            ThemeLog.AddNode(treeView, $"{DateTime.Now:T}: {string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, Program.Localization.Strings.Aspects.TerminalPreview)}", "error");
                                             AddException(string.Format(Program.Localization.Strings.ThemeManager.Errors.Error, Program.Localization.Strings.Aspects.TerminalPreview), ex);
                                         }
                                         else
@@ -621,14 +619,14 @@ namespace WinPaletter.Theme
                                 }
                                 else
                                 {
-                                    ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Localization.Strings.ThemeManager.Skip.Terminal_JSONNotFound, Program.Localization.Strings.Aspects.TerminalPreview)}", "skip");
+                                    ThemeLog.AddNode(treeView, $"{DateTime.Now:T}: {string.Format(Program.Localization.Strings.ThemeManager.Skip.Terminal_JSONNotFound, Program.Localization.Strings.Aspects.TerminalPreview)}", "skip");
                                 }
                             }
                         }
 
                         else
                         {
-                            ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {Program.Localization.Strings.ThemeManager.Skip.Terminals_NotSupported}", "skip");
+                            ThemeLog.AddNode(treeView, $"{DateTime.Now:T}: {Program.Localization.Strings.ThemeManager.Skip.Terminals_NotSupported}", "skip");
                         }
                         sw.Stop();
                         #endregion
@@ -718,11 +716,11 @@ namespace WinPaletter.Theme
                         {
                             if (!_ErrorHappened && Exceptions.ThemeApply.Count == 0)
                             {
-                                ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Localization.Strings.ThemeManager.Actions.Applied, sw_all.ElapsedMilliseconds / 1000d)}", "success");
+                                ThemeLog.AddNode(treeView, $"{DateTime.Now:T}: {string.Format(Program.Localization.Strings.ThemeManager.Actions.Applied, sw_all.ElapsedMilliseconds / 1000d)}", "success");
                             }
                             else
                             {
-                                ThemeLog.AddNode(treeView, $"{DateTime.Now.ToLongTimeString()}: {string.Format(Program.Localization.Strings.ThemeManager.Actions.AppliedWithErrors, sw_all.ElapsedMilliseconds / 1000d)}", "warning");
+                                ThemeLog.AddNode(treeView, $"{DateTime.Now:T}: {string.Format(Program.Localization.Strings.ThemeManager.Actions.AppliedWithErrors, sw_all.ElapsedMilliseconds / 1000d)}", "warning");
                             }
                         }
 
