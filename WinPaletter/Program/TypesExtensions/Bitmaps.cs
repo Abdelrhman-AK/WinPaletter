@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -1610,7 +1611,8 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Extracts a palette of dominant colors from the specified bitmap image, optionally enhanced with vivid color variations.
+        /// Extracts a palette of dominant colors from the specified bitmap image,
+        /// optionally enhanced with vivid color variations.
         /// </summary>
         public static async Task<List<Color>> ToPalette(this Bitmap bmp, PaletteGeneratorSettings settings)
         {
@@ -1622,121 +1624,40 @@ namespace WinPaletter.TypesExtensions
             {
                 settings.Status?.Report($"{Program.Localization.Strings.General.SamplingPixels}...");
 
-                using Bitmap clone = new(bmp.Width, bmp.Height, PixelFormat.Format32bppArgb);
-                using (Graphics g = Graphics.FromImage(clone)) g.DrawImage(bmp, new Rectangle(0, 0, clone.Width, clone.Height));
+                int[] sampledPixels = await SamplePixelsAsync(bmp, settings);
 
-                BitmapData data = clone.LockBits(new Rectangle(0, 0, clone.Width, clone.Height), ImageLockMode.ReadOnly, clone.PixelFormat);
-
-                int bytesPerPixel = 4;
-                int width = data.Width;
-                int height = data.Height;
-                int stride = data.Stride;
-                List<Color> pixels = new(width * height / (settings.ColorQuality * settings.ColorQuality));
-
-                int batchSize = 50;
-
-                for (int yStart = 0; yStart < height; yStart += batchSize)
-                {
-                    if (settings.CancellationToken.IsCancellationRequested) return null;
-
-                    int yEnd = Math.Min(yStart + batchSize, height);
-                    List<Color> batchPixels = new();
-
-                    unsafe
-                    {
-                        byte* ptr = (byte*)data.Scan0;
-                        for (int y = yStart; y < yEnd; y++)
-                        {
-                            if (y % settings.ColorQuality != 0) continue;
-
-                            for (int x = 0; x < width; x += settings.ColorQuality)
-                            {
-                                byte* pixelPtr = ptr + y * stride + x * bytesPerPixel;
-                                byte b = pixelPtr[0];
-                                byte g = pixelPtr[1];
-                                byte r = pixelPtr[2];
-                                byte a = pixelPtr[3];
-
-                                if (settings.IgnoreWhiteColors && r >= settings.WhiteThreshold && g >= settings.WhiteThreshold && b >= settings.WhiteThreshold)
-                                    continue;
-
-                                if (settings.DisableTransparency && a < 255) a = 255;
-
-                                if (a > 0) batchPixels.Add(Color.FromArgb(a, r, g, b));
-                            }
-                        }
-                    }
-
-                    lock (pixels) pixels.AddRange(batchPixels);
-                    settings.Progress?.Report((float)yEnd / height * 0.5f);
-                    await Task.Delay(1, settings.CancellationToken);
-                }
-
-                clone.UnlockBits(data);
-
-                if (pixels.Count == 0) return new List<Color>();
+                if (sampledPixels == null || sampledPixels.Length == 0) return [];
 
                 settings.Status?.Report($"{Program.Localization.Strings.General.ClusteringColors}...");
-                List<Color> centroids = LockFreeKMeansAsync(pixels, settings.ColorCount, settings);
+                List<Color> centroids = LockFreeKMeans(sampledPixels, settings);
 
-                // Map all centroids toward accent color if provided
-                if (settings?.AccentColor.HasValue == true)
+                if (centroids == null || centroids.Count == 0)
+                    return new List<Color>();
+
+                if (settings.AccentColor.HasValue)
                 {
                     Color target = settings.AccentColor.Value;
                     float targetHue = target.ToHSV().H;
 
-                    List<Color> transformed = new(centroids.Count);
-
-                    foreach (var c in centroids)
+                    for (int i = 0; i < centroids.Count; i++)
                     {
-                        (float, float, float) hsv = c.ToHSV();
-                        Color newC = ColorsExtensions.HSVToColor(targetHue, hsv.Item2, hsv.Item3);
-                        transformed.Add(Color.FromArgb(c.A, newC.R, newC.G, newC.B));
+                        Color c = centroids[i];
+                        (float H, float S, float V) hsv = c.ToHSV();
+                        Color mapped = ColorsExtensions.HSVToColor(targetHue, hsv.S, hsv.V);
+                        centroids[i] = Color.FromArgb(c.A, mapped.R, mapped.G, mapped.B);
                     }
-
-                    centroids = transformed;
                 }
 
-                // Sort by dominance if requested
-                if (settings.SortByDominance && centroids.Count > 0)
+                if (settings.SortByDominance)
                 {
                     settings.Status?.Report($"{Program.Localization.Strings.General.SortingByDominance}...");
-                    Dictionary<Color, int> colorFrequency = pixels
-                        .GroupBy(px => centroids.OrderBy(c => px.Distance(c)).First())
-                        .ToDictionary(g => g.Key, g => g.Count());
-
-                    centroids = colorFrequency.OrderByDescending(kv => kv.Value).Select(kv => kv.Key).ToList();
+                    centroids = SortByDominance(sampledPixels, centroids, settings.CancellationToken);
                 }
 
-                // Include variations if requested
-                if (settings.IncludeVariations && centroids.Count > 0)
+                if (settings.IncludeVariations)
                 {
                     settings.Status?.Report($"{Program.Localization.Strings.General.GeneratingColorsVariations}...");
-                    List<Color> strongColors = centroids
-                        .OrderByDescending(c => c.GetSaturation() * (1f - Math.Abs(c.GetBrightness() - 0.5f)))
-                        .Take(Math.Min(centroids.Count / 2 + 1, 10))
-                        .ToList();
-
-                    List<Color> variations = new();
-                    foreach (var c in strongColors)
-                    {
-                        variations.Add(c.CB(0.7f));
-                        variations.Add(c.CB(-0.7f));
-                    }
-
-                    Color avgTone = Color.FromArgb(
-                        255,
-                        (int)centroids.Average(c => c.R),
-                        (int)centroids.Average(c => c.G),
-                        (int)centroids.Average(c => c.B)
-                    );
-
-                    variations.Add(avgTone);
-                    variations.Add(avgTone.CB(0.5f));
-                    variations.Add(avgTone.CB(-0.5f));
-
-                    centroids.AddRange(variations);
-                    centroids = centroids.GroupBy(c => c.ToArgb()).Select(g => g.First()).Take(settings.ColorCount * 2).ToList();
+                    AppendVariations(centroids, settings.ColorCount);
                 }
 
                 settings.Progress?.Report(1f);
@@ -1746,40 +1667,172 @@ namespace WinPaletter.TypesExtensions
             }, settings.CancellationToken);
         }
 
-        private static List<Color> LockFreeKMeansAsync(List<Color> pixels, int k, PaletteGeneratorSettings? settings = null)
+        private static async Task<int[]> SamplePixelsAsync(Bitmap bmp, PaletteGeneratorSettings settings)
         {
-            if (pixels == null || pixels.Count == 0) return new List<Color>();
+            int width = bmp.Width;
+            int height = bmp.Height;
+            int quality = settings.ColorQuality;
+            byte whiteThreshold = settings.WhiteThreshold;
+            bool ignoreWhite = settings.IgnoreWhiteColors;
+            bool disableAlpha = settings.DisableTransparency;
+            CancellationToken ct = settings.CancellationToken;
 
+            // Compute exact sampled dimensions to avoid int overflow on large images.
+            int sampledW = (width + quality - 1) / quality;
+            int sampledH = (height + quality - 1) / quality;
+
+            // Guard against overflow: cap buffer at 50M entries (~200 MB).
+            // Excess pixels are simply not sampled; k-means quality is unaffected.
+            const int MaxSampledPixels = 50_000_000;
+            long rawCapacity = (long)sampledW * sampledH;
+            int bufferCapacity = (int)Math.Min(rawCapacity, MaxSampledPixels);
+
+            int[] buffer = new int[bufferCapacity];
+            int count = 0;
+
+            using Bitmap clone = new(width, height, PixelFormat.Format32bppArgb);
+            using (Graphics G = Graphics.FromImage(clone)) G.DrawImage(bmp, new Rectangle(0, 0, width, height));
+
+            BitmapData data = clone.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+
+            int stride = data.Stride;
+            const int BatchRows = 64;
+
+            try
+            {
+                for (int yStart = 0; yStart < height; yStart += BatchRows)
+                {
+                    if (ct.IsCancellationRequested) return null;
+
+                    int yEnd = Math.Min(yStart + BatchRows, height);
+
+                    unsafe
+                    {
+                        byte* scan0 = (byte*)data.Scan0;
+
+                        for (int y = yStart; y < yEnd; y += quality)
+                        {
+                            byte* row = scan0 + (long)y * stride;
+
+                            for (int x = 0; x < width; x += quality)
+                            {
+                                // Stop if buffer is full (can happen when MaxSampledPixels cap is hit).
+                                if (count >= bufferCapacity) goto doneSampling;
+
+                                byte* px = row + x * 4;
+                                byte b = px[0];
+                                byte g = px[1];
+                                byte r = px[2];
+                                byte a = px[3];
+
+                                if (ignoreWhite && r >= whiteThreshold && g >= whiteThreshold && b >= whiteThreshold) continue;
+
+                                if (a == 0) continue;
+                                if (disableAlpha) a = 255;
+
+                                buffer[count++] = (a << 24) | (r << 16) | (g << 8) | b;
+                            }
+                        }
+                    }
+
+                    settings.Progress?.Report((float)yEnd / height * 0.5f);
+                    await Task.Delay(1, ct);
+                }
+
+            doneSampling:;
+            }
+            finally
+            {
+                clone.UnlockBits(data);
+            }
+
+            if (count == buffer.Length) return buffer;
+            int[] result = new int[count];
+            Array.Copy(buffer, result, count);
+            return result;
+        }
+
+        private static List<Color> LockFreeKMeans(int[] pixels, PaletteGeneratorSettings settings)
+        {
+            int k = Math.Min(settings.ColorCount, pixels.Length);
+            if (k == 0) return [];
+
+            // Iterations: fixed at 10 (same semantic as original ColorCount / 10 heuristic).
+            int iterations = 10;
+            CancellationToken ct = settings.CancellationToken;
+
+            // Seed with a stratified random sample — deduplicated.
             Random rnd = new();
-            int kEffective = Math.Min(k, pixels.Count);
+            int[] centroidArgb = new int[k];
+            HashSet<int> seen = [with(k * 2)];
+            int added = 0;
 
-            List<Color> centroids = pixels.OrderBy(p => rnd.Next()).Take(kEffective).ToList();
-            Color? accent = settings?.AccentColor;
-            float accentWeight = settings?.AccentWeight ?? 2f;
-            int iterations = settings?.ColorCount ?? 10;
-            int totalSteps = iterations * pixels.Count;
-            int completedSteps = 0;
+            // Single pass through a shuffled index range to guarantee termination.
+            int[] shuffled = new int[pixels.Length];
+            for (int i = 0; i < shuffled.Length; i++) shuffled[i] = i;
+            for (int i = shuffled.Length - 1; i > 0; i--)
+            {
+                int j = rnd.Next(i + 1);
+                (shuffled[j], shuffled[i]) = (shuffled[i], shuffled[j]);
+            }
+
+            for (int i = 0; i < shuffled.Length && added < k; i++)
+            {
+                int argb = pixels[shuffled[i]];
+                if (seen.Add(argb)) centroidArgb[added++] = argb;
+            }
+
+            // If distinct pixel colors < k, duplicate existing centroids to fill.
+            for (int i = added; i < k; i++) centroidArgb[i] = centroidArgb[i % added];
+
+            int[] cA = new int[k];
+            int[] cR = new int[k];
+            int[] cG = new int[k];
+            int[] cB = new int[k];
+            UnpackCentroids(centroidArgb, k, cA, cR, cG, cB);
+
+            // Pre-extract accent channels outside all loops.
+            bool hasAccent = settings.AccentColor.HasValue;
+            int acR = 0, acG = 0, acB = 0;
+            float accentWeight = settings.AccentWeight;
+
+            if (hasAccent)
+            {
+                Color ac = settings.AccentColor.Value;
+                acR = ac.R; acG = ac.G; acB = ac.B;
+            }
+
+            int[] assignments = new int[pixels.Length];
 
             for (int iter = 0; iter < iterations; iter++)
             {
-                if (settings.CancellationToken.IsCancellationRequested) return null;
+                if (ct.IsCancellationRequested) return null;
 
-                List<List<Color>> clusters = new(kEffective);
-                for (int i = 0; i < kEffective; i++) clusters.Add(new List<Color>());
-
-                Parallel.ForEach(pixels, new ParallelOptions { CancellationToken = settings?.CancellationToken ?? default }, px =>
+                // Assignment step (parallel, zero shared writes)
+                Parallel.For(0, pixels.Length, new ParallelOptions { CancellationToken = ct }, pi =>
                 {
+                    int argb = pixels[pi];
+                    int pR = (argb >> 16) & 0xFF;
+                    int pG = (argb >> 8) & 0xFF;
+                    int pB = argb & 0xFF;
+
                     int bestIndex = 0;
                     float minDist = float.MaxValue;
 
-                    for (int i = 0; i < kEffective; i++)
+                    for (int i = 0; i < k; i++)
                     {
-                        float dist = px.Distance(centroids[i]);
+                        int dR = pR - cR[i];
+                        int dG = pG - cG[i];
+                        int dB = pB - cB[i];
+                        float dist = dR * dR + dG * dG + dB * dB;
 
-                        if (accent.HasValue)
+                        if (hasAccent)
                         {
-                            float accentDist = px.Distance(accent.Value);
-                            dist /= (1f + accentWeight / (1f + accentDist));
+                            int eR = pR - acR;
+                            int eG = pG - acG;
+                            int eB = pB - acB;
+                            float accentDist = eR * eR + eG * eG + eB * eB;
+                            dist /= 1f + accentWeight / (1f + accentDist);
                         }
 
                         if (dist < minDist)
@@ -1789,31 +1842,208 @@ namespace WinPaletter.TypesExtensions
                         }
                     }
 
-                    lock (clusters[bestIndex])
-                        clusters[bestIndex].Add(px);
-
-                    Interlocked.Increment(ref completedSteps);
-                    settings?.Progress?.Report(0.5f + (float)completedSteps / totalSteps * 0.5f);
+                    assignments[pi] = bestIndex;
                 });
 
-                Parallel.For(0, kEffective, new ParallelOptions { CancellationToken = settings?.CancellationToken ?? default }, i =>
+                if (ct.IsCancellationRequested) return null;
+
+                // Update step: thread-local accumulators, merged once
+                long[] globalSumR = new long[k];
+                long[] globalSumG = new long[k];
+                long[] globalSumB = new long[k];
+                long[] globalSumA = new long[k];
+                int[] globalCount = new int[k];
+
+                object mergeLock = new();
+
+                Parallel.ForEach(
+                    Partitioner.Create(0, pixels.Length),
+                    new ParallelOptions { CancellationToken = ct },
+                    () => (new long[k], new long[k], new long[k], new long[k], new int[k]),
+                    (range, _, local) =>
+                    {
+                        (long[] lR, long[] lG, long[] lB, long[] lA, int[] lC) = local;
+
+                        for (int pi = range.Item1; pi < range.Item2; pi++)
+                        {
+                            int argb = pixels[pi];
+                            int ci = assignments[pi];
+
+                            lR[ci] += (argb >> 16) & 0xFF;
+                            lG[ci] += (argb >> 8) & 0xFF;
+                            lB[ci] += argb & 0xFF;
+                            lA[ci] += (argb >> 24) & 0xFF;
+                            lC[ci]++;
+                        }
+
+                        return local;
+                    },
+                    local =>
+                    {
+                        (long[] lR, long[] lG, long[] lB, long[] lA, int[] lC) = local;
+                        lock (mergeLock)
+                        {
+                            for (int i = 0; i < k; i++)
+                            {
+                                globalSumR[i] += lR[i];
+                                globalSumG[i] += lG[i];
+                                globalSumB[i] += lB[i];
+                                globalSumA[i] += lA[i];
+                                globalCount[i] += lC[i];
+                            }
+                        }
+                    });
+
+                for (int i = 0; i < k; i++)
                 {
-                    var cluster = clusters[i];
-                    if (cluster.Count == 0) return;
+                    int c = globalCount[i];
+                    if (c == 0) continue;
+                    cR[i] = (int)(globalSumR[i] / c);
+                    cG[i] = (int)(globalSumG[i] / c);
+                    cB[i] = (int)(globalSumB[i] / c);
+                    cA[i] = (int)(globalSumA[i] / c);
+                }
 
-                    int r = (int)cluster.Average(c => c.R);
-                    int g = (int)cluster.Average(c => c.G);
-                    int b = (int)cluster.Average(c => c.B);
-                    int a = (int)cluster.Average(c => c.A);
-
-                    centroids[i] = Color.FromArgb(a, r, g, b);
-                });
-
-                Thread.Yield();
+                settings.Progress?.Report(0.5f + (float)(iter + 1) / iterations * 0.4f);
             }
 
-            settings?.Progress?.Report(1f);
-            return centroids;
+            List<Color> result = [with(k)];
+            for (int i = 0; i < k; i++) result.Add(Color.FromArgb(cA[i], cR[i], cG[i], cB[i]));
+
+            return result;
+        }
+
+        private static void UnpackCentroids(int[] argb, int k, int[] cA, int[] cR, int[] cG, int[] cB)
+        {
+            for (int i = 0; i < k; i++)
+            {
+                int v = argb[i];
+                cA[i] = (v >> 24) & 0xFF;
+                cR[i] = (v >> 16) & 0xFF;
+                cG[i] = (v >> 8) & 0xFF;
+                cB[i] = v & 0xFF;
+            }
+        }
+
+        private static List<Color> SortByDominance(int[] pixels, List<Color> centroids, CancellationToken ct)
+        {
+            int k = centroids.Count;
+            int[] cR = new int[k];
+            int[] cG = new int[k];
+            int[] cB = new int[k];
+
+            for (int i = 0; i < k; i++)
+            {
+                cR[i] = centroids[i].R;
+                cG[i] = centroids[i].G;
+                cB[i] = centroids[i].B;
+            }
+
+            int[] freq = new int[k];
+            object mergeLock = new();
+
+            Parallel.ForEach(Partitioner.Create(0, pixels.Length),
+                new() { CancellationToken = ct }, () =>  new int[k], (range, _, localFreq) =>
+                {
+                    for (int pi = range.Item1; pi < range.Item2; pi++)
+                    {
+                        int argb = pixels[pi];
+                        int pR = (argb >> 16) & 0xFF;
+                        int pG = (argb >> 8) & 0xFF;
+                        int pB = argb & 0xFF;
+
+                        int bestIndex = 0;
+                        int minDist = int.MaxValue;
+
+                        for (int i = 0; i < k; i++)
+                        {
+                            int dR = pR - cR[i];
+                            int dG = pG - cG[i];
+                            int dB = pB - cB[i];
+                            int dist = dR * dR + dG * dG + dB * dB;
+
+                            if (dist < minDist)
+                            {
+                                minDist = dist;
+                                bestIndex = i;
+                            }
+                        }
+
+                        localFreq[bestIndex]++;
+                    }
+
+                    return localFreq;
+                },
+                localFreq =>
+                {
+                    lock (mergeLock)  for (int i = 0; i < k; i++) freq[i] += localFreq[i];
+                });
+
+            int[] indices = new int[k];
+            for (int i = 0; i < k; i++) indices[i] = i;
+            Array.Sort(indices, (a, b) => freq[b].CompareTo(freq[a]));
+
+            List<Color> sorted = [with(k)];
+            for (int i = 0; i < k; i++) sorted.Add(centroids[indices[i]]);
+
+            return sorted;
+        }
+
+        private static void AppendVariations(List<Color> centroids, int colorCount)
+        {
+            int initialCount = centroids.Count;
+            if (initialCount == 0) return;
+
+            int take = Math.Min(initialCount / 2 + 1, 10);
+
+            // Score each centroid for vividness without LINQ on hot path.
+            float[] scores = new float[initialCount];
+            for (int i = 0; i < initialCount; i++)
+            {
+                Color c = centroids[i];
+                scores[i] = c.GetSaturation() * (1f - Math.Abs(c.GetBrightness() - 0.5f));
+            }
+
+            // Partial sort: find top `take` indices by score.
+            int[] scoreIndices = new int[initialCount];
+            for (int i = 0; i < initialCount; i++) scoreIndices[i] = i;
+            Array.Sort(scoreIndices, (a, b) => scores[b].CompareTo(scores[a]));
+
+            long sumR = 0, sumG = 0, sumB = 0;
+            for (int i = 0; i < initialCount; i++)
+            {
+                sumR += centroids[i].R;
+                sumG += centroids[i].G;
+                sumB += centroids[i].B;
+            }
+
+            Color avgTone = Color.FromArgb(255, (int)(sumR / initialCount), (int)(sumG / initialCount), (int)(sumB / initialCount));
+
+            int extraSlots = take * 2 + 3;
+            if (centroids.Capacity < centroids.Count + extraSlots) centroids.Capacity = centroids.Count + extraSlots;
+
+            for (int i = 0; i < take; i++)
+            {
+                Color c = centroids[scoreIndices[i]];
+                centroids.Add(c.CB(0.7f));
+                centroids.Add(c.CB(-0.7f));
+            }
+
+            centroids.Add(avgTone);
+            centroids.Add(avgTone.CB(0.5f));
+            centroids.Add(avgTone.CB(-0.5f));
+
+            // Deduplicate in-place.
+            HashSet<int> seen = [with(centroids.Count)];
+            int write = 0;
+            int limit = colorCount * 2;
+
+            for (int i = 0; i < centroids.Count && write < limit; i++)
+            {
+                if (seen.Add(centroids[i].ToArgb())) centroids[write++] = centroids[i];
+            }
+
+            if (write < centroids.Count) centroids.RemoveRange(write, centroids.Count - write);
         }
 
         /// <summary>
