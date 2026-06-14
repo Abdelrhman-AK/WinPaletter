@@ -711,7 +711,7 @@ namespace WinPaletter.UI.WP
             {
                 if (_ripple && CanAnimate && hoverRect.Width > 0 && hoverRect.Height > 0)
                 {
-                    G.DrawHover(Rect, Rectangle.Round(hoverRect), hoverPosition, Color.FromArgb(Math.Max(175, _alpha), _rippleColor));
+                    G.DrawHover(State == MouseState.Over ? Rect : RectInner , Rectangle.Round(hoverRect), hoverPosition, Color.FromArgb(Math.Max(175, _alpha), _rippleColor));
                 }
             }
 
@@ -731,7 +731,7 @@ namespace WinPaletter.UI.WP
             // Outer border with alpha
             // Cached alpha pen — no allocation
             if (State == MouseState.Down) G.DrawRoundedRectBeveledReverse(_cachedAlphaPen, Rect);
-            else G.DrawRoundedRectBeveled(_cachedAlphaPen, Rect);
+            else G.DrawRoundedRectBeveled(_cachedAlphaPen, State == MouseState.Over ? Rect : RectInner);
 
             // Text and image
             this.GetTextAndImageRectangles(TextAndImageRect, out RectangleF imageRectF, out RectangleF textRectF);
