@@ -4,9 +4,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using WinPaletter.Properties;
 using static WinPaletter.UI.Style.Config;
 
 namespace WinPaletter.UI.WP
@@ -43,8 +41,6 @@ namespace WinPaletter.UI.WP
         private readonly int MenuSplitterWidth = 15;
         private Rectangle MenuSplitterRectangle;
         private bool isMouseOverMenuSplitter = false;
-
-        private static readonly TextureBrush Noise = new(Resources.Noise.Fade(0.6f));
         private Color imageColor;
 
         public MouseState State = MouseState.None;
@@ -55,7 +51,7 @@ namespace WinPaletter.UI.WP
 
         private readonly bool _ripple = true;
         private bool ForceUpdateImageGlyph = false;
-        private static Font marlett = new ("Marlett", 8f);
+        private static Font marlett = new("Marlett", 8f);
         private static StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat();
 
         #endregion

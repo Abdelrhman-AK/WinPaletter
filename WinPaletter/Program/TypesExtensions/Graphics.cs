@@ -4,11 +4,8 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WinPaletter.UI.WP;
-using static WinPaletter.NativeMethods.UxTheme;
 
 namespace WinPaletter.TypesExtensions
 {
