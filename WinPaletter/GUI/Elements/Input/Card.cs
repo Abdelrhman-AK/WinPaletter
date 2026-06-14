@@ -45,7 +45,6 @@ namespace WinPaletter.UI.WP
         Rectangle rect_margin { get { UpdateRects(); return _rect_margin; } }
 
         private static readonly TextureBrush Noise = new(Resources.Noise.Fade(0.45f));
-        private static readonly TextureBrush NoiseHover = new(Resources.Noise.Fade(0.9f));
 
         public MouseState State = MouseState.None;
 
@@ -375,7 +374,6 @@ namespace WinPaletter.UI.WP
                 using (SolidBrush br1 = new(Color.FromArgb(alpha, colors.Back_Checked_Hover)))
                 using (Pen P0 = new(colors.Line_Checked))
                 using (Pen P1 = new(Color.FromArgb(alpha, colors.Line_Checked_Hover)))
-                using (GraphicsPath gp = new())
                 {
                     G.FillRoundedRect(br0, rect_margin, radius);
                     G.FillRoundedRect(br1, rect_margin, radius);
@@ -390,7 +388,7 @@ namespace WinPaletter.UI.WP
                     {
                         G.FillRectangle(br0G, rect_margin);
 
-                        G.FillRectangle(State == MouseState.None ? Noise : NoiseHover, rect_margin);
+                        G.FillRectangle(Noise, rect_margin);
 
                         G.DrawImage(Image, imageRect);
 
@@ -399,17 +397,7 @@ namespace WinPaletter.UI.WP
 
                     if (CanAnimate && hoverRect.Width > 0 && hoverRect.Height > 0)
                     {
-                        gp.AddEllipse(hoverRect);
-
-                        using (PathGradientBrush pgb = new(gp)
-                        {
-                            CenterPoint = hoverPosition,
-                            CenterColor = Color.FromArgb(Math.Min(30, alpha), Program.Style.DarkMode ? Color.White : Color.Black),
-                            SurroundColors = [Color.Transparent]
-                        })
-                        {
-                            G.FillEllipse(pgb, hoverRect);
-                        }
+                        G.DrawHover(rect, Rectangle.Round(hoverRect), hoverPosition, Color.FromArgb(Math.Min(30, alpha), Program.Style.DarkMode ? Color.White : Color.Black), 0.15f);
                     }
 
                     G.ResetClip();
@@ -433,34 +421,11 @@ namespace WinPaletter.UI.WP
                     G.FillRoundedRect(br, rect_margin, radius);
                 }
 
-                if (State != MouseState.None)
-                {
-                    G.FillRectangle(NoiseHover, rect_margin);
-                }
-                else
-                {
-                    G.FillRectangle(Noise, rect_margin);
-                }
+                G.FillRectangle(Noise, rect_margin);
 
                 if (CanAnimate && hoverRect.Width > 0 && hoverRect.Height > 0)
                 {
-                    G.SetClip(clipPath, CombineMode.Intersect);
-
-                    using (GraphicsPath gp = new())
-                    {
-                        gp.AddEllipse(hoverRect);
-                        using (PathGradientBrush pgb = new(gp)
-                        {
-                            CenterPoint = hoverPosition,
-                            CenterColor = Color.FromArgb(Math.Min(30, alpha), Program.Style.DarkMode ? Color.White : Color.Black),
-                            SurroundColors = [Color.Transparent]
-                        })
-                        {
-                            G.FillEllipse(pgb, hoverRect);
-                        }
-
-                        G.ResetClip();
-                    }
+                    G.DrawHover(rect, Rectangle.Round(hoverRect), hoverPosition, Color.FromArgb(Math.Min(30, alpha), Program.Style.DarkMode ? Color.White : Color.Black));
                 }
 
                 using (Pen P = new(scheme.Colors.Line(parentLevel)))

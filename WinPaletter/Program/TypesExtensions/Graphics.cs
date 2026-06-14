@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WinPaletter.UI.WP;
+using static WinPaletter.NativeMethods.UxTheme;
 
 namespace WinPaletter.TypesExtensions
 {
@@ -29,10 +30,9 @@ namespace WinPaletter.TypesExtensions
         /// <param name="font">The <see cref="Font"/> used to render the text. Cannot be null.</param>
         /// <param name="foreColor">The color of the text.</param>
         /// <param name="glowColor">The color of the glow effect surrounding the text.</param>
-        /// <param name="clientRectangle">The rectangle that defines the area where the glowing text will be drawn.</param>
-        /// <param name="rectangle">The rectangle that specifies the layout of the text within the <paramref name="clientRectangle"/>.</param>
-        /// <param name="format">The <see cref="StringFormat"/> that specifies text layout information, such as alignment and line spacing. Cannot be
-        /// null.</param>
+        /// <param name="clientRectangle">The bounds that defines the area where the glowing text will be drawn.</param>
+        /// <param name="rectangle">The bounds that specifies the layout of the text within the <paramref name="clientRectangle"/>.</param>
+        /// <param name="format">The <see cref="StringFormat"/> that specifies text layout information, such as alignment and line spacing. Cannot be null.</param>
         public static void DrawGlowString(this Graphics G, int glowSize, string text, Font font, Color foreColor, Color glowColor, RectangleF clientRectangle, RectangleF rectangle, StringFormat format)
         {
             if (G == null || font == null || format == null || clientRectangle.Width <= 0 || clientRectangle.Height <= 0) return;
@@ -76,10 +76,10 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Draws a glowing effect around the specified rectangle on the provided <see cref="Graphics"/> surface.
+        /// Draws a glowing effect around the specified bounds on the provided <see cref="Graphics"/> surface.
         /// </summary>
-        /// <remarks>This method creates a glowing effect around the specified rectangle by drawing a semi-transparent
-        /// glow with the specified color, size, and fade factor. The glow can optionally follow a rounded rectangle
+        /// <remarks>This method creates a glowing effect around the specified bounds by drawing a semi-transparent
+        /// glow with the specified color, size, and fade factor. The glow can optionally follow a rounded bounds
         /// shape.</remarks>
         /// <param name="G">The <see cref="Graphics"/> object on which the glow effect will be drawn. Cannot be <see langword="null"/>.</param>
         /// <param name="rectangle">The <see cref="Rectangle"/> around which the glow effect will be applied. Must have a positive width and height.</param>
@@ -87,8 +87,8 @@ namespace WinPaletter.TypesExtensions
         /// <param name="glowSize">The size of the glow effect in pixels. Defaults to 5. Must be greater than 0.</param>
         /// <param name="glowFade">The fade factor of the glow effect, which determines the smoothness of the glow. Defaults to 7. Must be greater than
         /// 0.</param>
-        /// <param name="rounded">A value indicating whether the glow effect should follow a rounded rectangle shape. If <see langword="true"/>, the
-        /// glow will be applied to a rounded rectangle; otherwise, it will follow the standard rectangle shape.</param>
+        /// <param name="rounded">A value indicating whether the glow effect should follow a rounded bounds shape. If <see langword="true"/>, the
+        /// glow will be applied to a rounded bounds; otherwise, it will follow the standard bounds shape.</param>
         public static void DrawGlow(this Graphics G, RectangleF rectangle, Color glowColor, int glowSize = 5, int glowFade = 7, bool rounded = false)
         {
             if (G == null || rectangle.Width <= 0 || rectangle.Height <= 0) return;
@@ -119,7 +119,7 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Draws an Aero-style visual effect on the specified graphics surface within the given rectangle.
+        /// Draws an Aero-style visual effect on the specified graphics surface within the given bounds.
         /// </summary>
         /// <remarks>This method applies a layered visual effect that combines a blurred background, color tinting, and
         /// optional glow. It supports both rectangular and rounded-corner shapes, depending on the value of <paramref
@@ -236,28 +236,28 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Creates a rounded rectangle as a <see cref="GraphicsPath"/> with the specified corner _radius.
+        /// Creates a rounded bounds as a <see cref="GraphicsPath"/> with the specified corner _radius.
         /// </summary>
         /// <param name="rectangle">The <see cref="Rectangle"/> to round.</param>
-        /// <param name="radius">The _radius of the corners. If set to -1, the _radius will default to half the smaller dimension of the rectangle.</param>
-        /// <returns>A <see cref="GraphicsPath"/> representing the rounded rectangle.</returns>
+        /// <param name="radius">The _radius of the corners. If set to -1, the _radius will default to half the smaller dimension of the bounds.</param>
+        /// <returns>A <see cref="GraphicsPath"/> representing the rounded bounds.</returns>
         public static GraphicsPath Round(this Rectangle rectangle, int radius = -1, RoundedCorners corners = RoundedCorners.All)
         {
             return Round(new RectangleF(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height), radius, corners);
         }
 
         /// <summary>
-        /// Creates a <see cref="GraphicsPath"/> representing a rectangle with rounded corners.
+        /// Creates a <see cref="GraphicsPath"/> representing a bounds with rounded corners.
         /// </summary>
-        /// <remarks>This method adjusts the shape of the rectangle based on its dimensions: <list
-        /// type="bullet"> <item>If the rectangle is too narrow or short, the result may be a capsule shape.</item>
-        /// <item>If the _radius is zero or the rectangle's dimensions are too small, the result will be a standard
-        /// rectangle.</item> </list></remarks>
+        /// <remarks>This method adjusts the shape of the bounds based on its dimensions: <list
+        /// type="bullet"> <item>If the bounds is too narrow or short, the result may be a capsule shape.</item>
+        /// <item>If the _radius is zero or the bounds's dimensions are too small, the result will be a standard
+        /// bounds.</item> </list></remarks>
         /// <param name="rectangle">The <see cref="RectangleF"/> that defines the bounds of the shape.</param>
         /// <param name="radius">The _radius of the rounded corners. If negative, a default _radius is used. The _radius is clamped to ensure it
-        /// does not exceed half the width or height of the rectangle.</param>
-        /// <returns>A <see cref="GraphicsPath"/> representing the rounded rectangle. If the rectangle's dimensions are too small
-        /// or the _radius is zero, the path will represent a standard rectangle.</returns>
+        /// does not exceed half the width or height of the bounds.</param>
+        /// <returns>A <see cref="GraphicsPath"/> representing the rounded bounds. If the bounds's dimensions are too small
+        /// or the _radius is zero, the path will represent a standard bounds.</returns>
         public static GraphicsPath Round(this RectangleF rectangle, int radius = -1, RoundedCorners corners = RoundedCorners.All)
         {
             float width = rectangle.Width;
@@ -374,7 +374,7 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Fills a rectangle with rounded corners using the specified brush.
+        /// Fills a bounds with rounded corners using the specified brush.
         /// </summary>
         public static void FillRoundedRect(this Graphics G, Brush brush, Rectangle rectangle, int radius = -1, bool forcedRoundCorner = false, RoundedCorners corners = RoundedCorners.All)
         {
@@ -382,7 +382,7 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Fills a rectangle with rounded corners or a standard rectangle, depending on the specified parameters.
+        /// Fills a bounds with rounded corners or a standard bounds, depending on the specified parameters.
         /// </summary>
         public static void FillRoundedRect(this Graphics G, Brush brush, RectangleF rectangle, int radius = -1, bool forcedRoundCorner = false, RoundedCorners corners = RoundedCorners.All)
         {
@@ -404,7 +404,7 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Draws an image within a specified rectangle, optionally applying rounded corners.
+        /// Draws an image within a specified bounds, optionally applying rounded corners.
         /// </summary>
         public static void DrawRoundImage(this Graphics G, Image image, RectangleF rectangle, int radius = -1, bool forcedRoundCorner = false)
         {
@@ -445,7 +445,7 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Draws a rectangle with rounded corners on the specified <see cref="Graphics"/> surface.
+        /// Draws a bounds with rounded corners on the specified <see cref="Graphics"/> surface.
         /// </summary>
         public static void DrawRoundedRect(this Graphics G, Pen pen, Rectangle rectangle, int radius = -1, bool forcedRoundCorner = false, RoundedCorners corners = RoundedCorners.All)
         {
@@ -453,7 +453,7 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Draws a rectangle with optional rounded corners on the specified <see cref="Graphics"/> surface.
+        /// Draws a bounds with optional rounded corners on the specified <see cref="Graphics"/> surface.
         /// </summary>
         public static void DrawRoundedRect(this Graphics G, Pen pen, RectangleF rectangle, int radius = -1, bool forcedRoundCorner = false, RoundedCorners corners = RoundedCorners.All)
         {
@@ -475,7 +475,7 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Draws a rounded rectangle with an optional beveled edge effect.
+        /// Draws a rounded rectangle with a 1px WinUI3-style bevel highlight/shadow on the top or bottom edge.
         /// </summary>
         public static void DrawRoundedRectBeveled(this Graphics G, Pen pen, RectangleF rectangleF, float radius = -1, bool forcedRoundCorner = false, bool reverseBevel = false, RoundedCorners corners = RoundedCorners.All)
         {
@@ -483,73 +483,178 @@ namespace WinPaletter.TypesExtensions
 
             bool dark = Program.Style.DarkMode;
             bool useRoundedCorners = Program.Style.RoundedCorners || forcedRoundCorner;
-            if (radius == -1) radius = Program.Style.Radius;
+            if (radius < 0) radius = Program.Style.Radius;
 
-            // Clamp _radius to half of width/height to avoid overlapping arcs
+            // Clamp radius to prevent overlapping arcs
             radius = Math.Min(radius, Math.Min(rectangleF.Width, rectangleF.Height) / 2f);
 
             Color baseColor = pen.Brush is LinearGradientBrush lgb ? lgb.LinearColors[0] : pen.Color;
             Color bevelColor = baseColor.CB(dark ? 0.09f : -0.08f);
             bool drawTop = dark ^ reverseBevel;
 
-            // Draw the main rounded rectangle
             if (useRoundedCorners && radius > 0)
             {
                 using GraphicsPath path = rectangleF.Round((int)radius, corners);
                 G.DrawPath(pen, path);
-                DrawBevel(G, pen, rectangleF, radius, bevelColor, drawTop);
             }
             else
             {
                 G.DrawRectangle(pen, rectangleF.X, rectangleF.Y, rectangleF.Width, rectangleF.Height);
-                DrawBevel(G, pen, rectangleF, 0, bevelColor, drawTop);
             }
+
+            DrawBevel(G, pen.Width, rectangleF, useRoundedCorners ? radius : 0f, bevelColor, drawTop, reverseBevel);
         }
 
-        private static void DrawBevel(Graphics G, Pen pen, RectangleF rect, float radius, Color bevelColor, bool drawTop)
+        /// <summary>
+        /// Draws the 1px bevel highlight line.
+        /// When <paramref name="insetBevel"/> is false (default), the line sits flat on the border edge —
+        /// a straight segment capped between the two corner arc endpoints.
+        /// When true, the line is a concentric 3-sided open path inset by penWidth/2:
+        /// a left arc + straight horizontal segment + right arc, with endpoints touching the left/right borders.
+        /// </summary>
+        private static void DrawBevel(Graphics G, float penWidth, RectangleF rect, float radius, Color bevelColor, bool drawTop, bool insetBevel = true)
         {
-            float bevelY = drawTop ? rect.Top : rect.Bottom;
-            float x1 = rect.Left + radius;
-            float x2 = rect.Right - radius;
+            if (bevelColor.A == 0) return;
 
-            if (x1 >= x2) return; // Don't draw if rectangle is too narrow
-            if (bevelColor.A == 0) return; // Don't draw if bevel color has zero alpha
+            float inset = insetBevel ? penWidth / 2f : 0f;
+            float innerRadius = Math.Max(0f, radius - inset);
 
-            // Pre-calculate brush rectangle
-            RectangleF bevelRect = new(rect.Left, bevelY - 1, rect.Width, 2);
+            // Horizontal extent of the straight segment (between the two arc tangent points)
+            float x1 = rect.Left + radius;   // straight segment starts here (outer arc tangent)
+            float x2 = rect.Right - radius;  // straight segment ends here
 
-            using LinearGradientBrush bevelBrush = new(bevelRect, bevelColor, Color.Transparent, 90f)
+            if (x1 > x2) return; // rect too narrow to draw anything
+
+            float edgeY = drawTop ? rect.Top : rect.Bottom;
+            float bevelY = edgeY + (drawTop ? inset : -inset);
+
+            // Horizontal fade: solid center, 1px alpha falloff at each end
+            float lineLen = x2 - x1;
+
+            if (!insetBevel || radius <= 0f)
             {
-                InterpolationColors = new ColorBlend(3)
+                // Simple straight line between arc tangent points
+                if (x1 >= x2) return;
+
+                float fadeStop = lineLen > 0f ? Math.Min(2f / lineLen, 0.49f) : 0f;
+
+                RectangleF gradRect = new(x1, bevelY - 1f, Math.Max(lineLen, 1f), 2f);
+                using LinearGradientBrush brush = new(gradRect, Color.Transparent, Color.Transparent, 0f)
                 {
-                    Colors = [Color.Transparent, bevelColor, Color.Transparent],
-                    Positions = [0f, 0.5f, 1f]
-                }
-            };
-
-            using Pen bevelPen = new(bevelBrush, pen.Width)
+                    InterpolationColors = new ColorBlend(4)
+                    {
+                        Colors = [Color.Transparent, bevelColor, bevelColor, Color.Transparent],
+                        Positions = [0f, fadeStop, 1f - fadeStop, 1f]
+                    }
+                };
+                using Pen bevelPen = new(brush, 1f);
+                G.DrawLine(bevelPen, x1, bevelY, x2, bevelY);
+            }
+            else
             {
-                DashStyle = pen.DashStyle,
-                DashOffset = pen.DashOffset
-            };
+                // 3-sided open path: left arc → straight → right arc
+                // Arcs join the lateral (left/right) border lines to the horizontal bevel segment.
+                // Each arc sweeps only far enough to reach bevelY — no full quarter-circle,
+                // which prevents overlap with the border corner arcs.
 
-            G.DrawLine(bevelPen, x1, bevelY, x2, bevelY);
+                float arcDiam = innerRadius * 2f;
+
+                // Vertical distance from border edge to bevelY (always positive)
+                float dy = Math.Abs(bevelY - edgeY);
+
+                // Sweep angle: how far the arc rotates to drop/rise by dy within innerRadius
+                // Clamped to 90° max to guard against float error when dy ≈ innerRadius
+                float sweepDeg = dy > 0f && innerRadius > 0f ? Math.Min((float)(Math.Asin(Math.Min(dy / innerRadius, 1.0)) * (180.0 / Math.PI)), 90f) : 0f;
+
+                if (sweepDeg < 0.5f)
+                {
+                    // Arc too shallow to be worth drawing — fall back to straight line only
+                    float fallbackX1 = rect.Left + inset;
+                    float fallbackX2 = rect.Right - inset;
+                    float fallbackLen = Math.Max(fallbackX2 - fallbackX1, 1f);
+                    float fallbackFade = Math.Min(2f / fallbackLen, 0.49f);
+
+                    RectangleF fallbackRect = new(fallbackX1, bevelY - 1f, fallbackLen, 2f);
+                    using LinearGradientBrush fallbackBrush = new(fallbackRect, Color.Transparent, Color.Transparent, 0f)
+                    {
+                        InterpolationColors = new ColorBlend(4)
+                        {
+                            Colors = [Color.Transparent, bevelColor, bevelColor, Color.Transparent],
+                            Positions = [0f, fallbackFade, 1f - fallbackFade, 1f]
+                        }
+                    };
+                    using Pen fallbackPen = new(fallbackBrush, 1f);
+                    G.DrawLine(fallbackPen, fallbackX1, bevelY, fallbackX2, bevelY);
+                    return;
+                }
+
+                // Arc centers sit on the inner edge at the lateral border positions, at the same Y as the border corner arc centers (edgeY ± innerRadius)
+                float arcCenterY = drawTop ? edgeY + innerRadius : edgeY - innerRadius;
+
+                // GDI+ angles: 0° = 3-o'clock, clockwise positive
+                // Top bevel:
+                //   Left arc:  starts pointing left (180°), sweeps CW by sweepDeg → curves down-right to bevelY
+                //   Right arc: starts pointing up-right (270° + (90° - sweepDeg)), sweeps CW by sweepDeg → curves down-right to border
+                // Bottom bevel mirrors with negative sweeps
+                float leftStartAngle = drawTop ? 180f + (90f - sweepDeg) : 90f + (90f - sweepDeg);
+                float leftSweepAngle = drawTop ? sweepDeg : -sweepDeg;
+                float rightStartAngle = drawTop ? 270f : 90f;
+                float rightSweepAngle = drawTop ? sweepDeg : -sweepDeg;
+
+                // Arc box origins: centered on lateral border inner face
+                float arcBoxY = bevelY + (bevelY - (arcCenterY - innerRadius));
+                float arcLeftX = rect.Left + inset - innerRadius;
+                float arcRightX = rect.Right - inset - innerRadius;
+                float newBevelY = bevelY + (bevelY - bevelY);
+
+                using GraphicsPath path = new();
+
+                // Left arc
+                path.AddArc(arcLeftX, arcBoxY, arcDiam, arcDiam, leftStartAngle, leftSweepAngle);
+
+                // Straight segment: full inner width at bevel line
+                path.AddLine(rect.Left + inset, bevelY, rect.Right - inset, bevelY);
+
+                // Right arc
+                path.AddArc(arcRightX, arcBoxY, arcDiam, arcDiam, rightStartAngle, rightSweepAngle);
+
+                // Horizontal gradient: solid center, 2px fade at each lateral end
+                float pathX1 = rect.Left + inset;
+                float totalWidth = Math.Max((rect.Right - inset) - pathX1, 1f);
+                float fadeStop = Math.Min(2f / totalWidth, 0.49f);
+
+                RectangleF gradRect = new(pathX1, bevelY - 1f, totalWidth, 2f);
+                using LinearGradientBrush brush = new(gradRect, Color.Transparent, Color.Transparent, 0f)
+                {
+                    InterpolationColors = new ColorBlend(4)
+                    {
+                        Colors = [Color.Transparent, bevelColor, bevelColor, Color.Transparent],
+                        Positions = [0f, fadeStop, 1f - fadeStop, 1f]
+                    }
+                };
+
+                using (Pen bevelPen = new(brush))
+                {
+                    G.DrawPath(bevelPen, path);
+                }
+            }
         }
 
         public static void DrawRoundedRectBeveled(this Graphics G, Pen pen, Rectangle rectangle, float radius = -1, bool forcedRoundCorner = false, bool reverseBevel = false, RoundedCorners corners = RoundedCorners.All)
         {
-            DrawRoundedRectBeveled(G, pen, new RectangleF(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height), radius, forcedRoundCorner, reverseBevel, corners);
+            DrawRoundedRectBeveled(G, pen, (RectangleF)rectangle, radius, forcedRoundCorner, reverseBevel, corners);
         }
 
         public static void DrawRoundedRectBeveledReverse(this Graphics G, Pen pen, Rectangle rectangle, int radius = -1, bool forcedRoundCorner = false, RoundedCorners corners = RoundedCorners.All)
         {
-            DrawRoundedRectBeveled(G, pen, rectangle, radius, forcedRoundCorner, true, corners);
+            DrawRoundedRectBeveled(G, pen, rectangle, radius, forcedRoundCorner, reverseBevel: true, corners);
         }
 
         private static TextureBrush _noiseBrush;
         private static Bitmap _stamp;
         private static byte[] _radialAlpha;
         private static int _cachedHoverSize = -1;
+        private static float _noiseStrength = 1f;
 
         private static void EnsureCache(int hoverSize)
         {
@@ -579,44 +684,20 @@ namespace WinPaletter.TypesExtensions
             _cachedHoverSize = hoverSize;
         }
 
-        /// <summary>
-        /// Draws a circular hover highlight at the current cursor position onto the specified Graphics, clipped to the provided path.
-        /// </summary>
-        /// <remarks>Composes the effect into an offscreen stamp using layered fill and noise, applies a
-        /// per-pixel radial alpha, and draws the stamped image; temporarily modifies the Graphics clip and restores it
-        /// before returning.</remarks>
-        /// <param name="G">Graphics surface used for rendering the hover highlight.</param>
-        /// <param name="host">Control used to translate screen coordinates to client coordinates for the cursor position.</param>
-        /// <param name="path">GraphicsPath that specifies the clipping region for the hover effect.</param>
-        /// <param name="color">Base color of the hover; its alpha is combined with a radial alpha mask to produce the final transparency.</param>
-        /// <param name="hoverSize">Diameter in pixels of the hover circle.</param>
-        /// <param name="clipHeightOffset">Optional number of pixels to subtract from the path's bounding height before applying the clip.</param>
-        public static void DrawHover(this Graphics G, Control host, GraphicsPath path, Color color, int hoverSize, int clipHeightOffset = 0)
+        private static void DrawHoverCore(Graphics G, Region clipRegion, Rectangle circle, Color color, float noiseStrength = -1f)
         {
-            Point clientMousePos = host.PointToClient(Cursor.Position);
+            int hoverSize = circle.Width;
+            if (noiseStrength == -1f) noiseStrength = _noiseStrength;
 
-            using (GraphicsPath clipPath = new())
-            {
-                RectangleF bounds = path.GetBounds();
-                clipPath.AddRectangle(new RectangleF(bounds.X, bounds.Y, bounds.Width, bounds.Height - clipHeightOffset));
-
-                using (Region clipRegion = new(path))
-                {
-                    clipRegion.Intersect(clipPath.GetBounds());
-                    G.SetClip(clipRegion, CombineMode.Replace);
-                }
-            }
-
-            Rectangle circle = new(clientMousePos.X - hoverSize / 2, clientMousePos.Y - hoverSize / 2, hoverSize, hoverSize);
+            G.SetClip(clipRegion, CombineMode.Replace);
 
             EnsureCache(hoverSize);
 
             using (Graphics sg = Graphics.FromImage(_stamp))
             {
                 sg.Clear(Color.Transparent);
-                sg.CompositingMode = CompositingMode.SourceOver;
+                sg.CompositingMode = CompositingMode.SourceCopy;
 
-                // Layer 1: flat color fill clipped to ellipse, pixel loop handles fade
                 using (GraphicsPath gp = new())
                 {
                     gp.AddEllipse(0, 0, hoverSize, hoverSize);
@@ -629,39 +710,106 @@ namespace WinPaletter.TypesExtensions
                 }
 
                 sg.ResetClip();
-
-                // Layer 2: noise clipped to ellipse
-                using (GraphicsPath gp = new())
-                {
-                    gp.AddEllipse(0, 0, hoverSize, hoverSize);
-                    sg.SetClip(gp);
-                }
-
-                _noiseBrush.TranslateTransform(-circle.X, -circle.Y);
-                sg.FillRectangle(_noiseBrush, 0, 0, hoverSize, hoverSize);
-                _noiseBrush.ResetTransform();
-
-                sg.ResetClip();
             }
 
-            BitmapData stampData = _stamp.LockBits(new Rectangle(0, 0, hoverSize, hoverSize), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
-
-            unsafe
+            using (Bitmap noiseBmp = new(hoverSize, hoverSize, PixelFormat.Format32bppArgb))
             {
-                byte* sp = (byte*)stampData.Scan0;
-                int total = hoverSize * hoverSize;
-
-                for (int i = 0; i < total; i++)
+                using (Graphics ng = Graphics.FromImage(noiseBmp))
                 {
-                    int idx = i * 4;
-                    sp[idx + 3] = (byte)(sp[idx + 3] * _radialAlpha[i] * color.A / 65025);
-                }
-            }
+                    ng.Clear(Color.Transparent);
+                    ng.CompositingMode = CompositingMode.SourceCopy;
 
-            _stamp.UnlockBits(stampData);
+                    using (GraphicsPath gp = new())
+                    {
+                        gp.AddEllipse(0, 0, hoverSize, hoverSize);
+                        ng.SetClip(gp);
+                    }
+
+                    _noiseBrush.TranslateTransform(-circle.X, -circle.Y);
+                    ng.FillRectangle(_noiseBrush, 0, 0, hoverSize, hoverSize);
+                    _noiseBrush.ResetTransform();
+                }
+
+                BitmapData stampData = _stamp.LockBits(new Rectangle(0, 0, hoverSize, hoverSize), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+                BitmapData noiseData = noiseBmp.LockBits(new Rectangle(0, 0, hoverSize, hoverSize), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+
+                float clampedStrength = Math.Max(0f, Math.Min(1f, noiseStrength));
+
+                unsafe
+                {
+                    byte* sp = (byte*)stampData.Scan0;
+                    byte* np = (byte*)noiseData.Scan0;
+                    int total = hoverSize * hoverSize;
+
+                    for (int i = 0; i < total; i++)
+                    {
+                        int idx = i * 4;
+                        int baseAlpha = _radialAlpha[i] * color.A / 255;
+                        int noiseLum = (np[idx] + np[idx + 1] + np[idx + 2]) / 3;
+                        int noiseAlpha = (int)(noiseLum * _radialAlpha[i] / 255f * clampedStrength);
+                        sp[idx + 3] = (byte)Math.Min(baseAlpha + noiseAlpha, 255);
+                    }
+                }
+
+                _stamp.UnlockBits(stampData);
+                noiseBmp.UnlockBits(noiseData);
+            }
 
             G.DrawImage(_stamp, circle);
             G.ResetClip();
+        }
+
+        /// <summary>
+        /// Draws a circular hover highlight at the current cursor position onto the specified Graphics, clipped to the provided path.
+        /// </summary>
+        /// <param name="G">Graphics surface used for rendering the hover highlight.</param>
+        /// <param name="host">Control used to translate screen coordinates to client coordinates for the cursor position.</param>
+        /// <param name="path">GraphicsPath that specifies the clipping region for the hover effect.</param>
+        /// <param name="color">Base color of the hover; its alpha is combined with a radial alpha mask to produce the final transparency.</param>
+        /// <param name="hoverSize">Diameter in pixels of the hover circle.</param>
+        /// <param name="clipHeightOffset">Optional number of pixels to subtract from the path's bounding height before applying the clip.</param>
+        public static void DrawHover(this Graphics G, Control host, GraphicsPath path, Color color, int hoverSize, int clipHeightOffset = 0, float noiseStrength = -1f)
+        {
+            Point clientMousePos = host.PointToClient(Cursor.Position);
+            Rectangle circle = new(clientMousePos.X - hoverSize / 2, clientMousePos.Y - hoverSize / 2, hoverSize, hoverSize);
+            if (noiseStrength == -1f) noiseStrength = _noiseStrength;
+
+            using (GraphicsPath clipPath = new())
+            {
+                RectangleF bounds = path.GetBounds();
+                clipPath.AddRectangle(new RectangleF(bounds.X, bounds.Y, bounds.Width, bounds.Height - clipHeightOffset));
+
+                using (Region clipRegion = new(path))
+                {
+                    clipRegion.Intersect(clipPath.GetBounds());
+                    DrawHoverCore(G, clipRegion, circle, color, noiseStrength);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Draws a circular hover highlight with noise texture at the specified position, clipped to the control bounds.
+        /// </summary>
+        /// <param name="G">Graphics surface used for rendering the hover highlight.</param>
+        /// <param name="bounds">Bounding rectangle of the control; determines the clip region shape.</param>
+        /// <param name="hoverRect">Rectangle that defines the position and size of the hover circle.</param>
+        /// <param name="hoverPosition">Center point of the hover circle; used to anchor the noise texture.</param>
+        /// <param name="color">Base color of the hover; its alpha is combined with the radial alpha mask.</param>
+        public static void DrawHover(this Graphics G, Rectangle bounds, Rectangle hoverRect, Point hoverPosition, Color color, float noiseStrength = -1f)
+        {
+            int hoverSize = Math.Max(hoverRect.Width, hoverRect.Height);
+            Rectangle circle = new(hoverPosition.X - hoverSize / 2, hoverPosition.Y - hoverSize / 2, hoverSize, hoverSize);
+            if (noiseStrength == -1f) noiseStrength = _noiseStrength;
+
+            GraphicsPath path = Program.Style.RoundedCorners ? bounds.Round() : new();
+            if (!Program.Style.RoundedCorners) { path.AddRectangle(bounds); }
+
+            using (Region clipRegion = new(path))
+            {
+                DrawHoverCore(G, clipRegion, circle, color, noiseStrength);
+            }
+
+            path.Dispose();
         }
 
         /// <summary>
@@ -720,8 +868,8 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         /// <remarks>This method checks that all edges of the <paramref name="targetRect"/> (left, top, right, and bottom)
         /// are within the corresponding edges of the <paramref name="parentRect"/>.</remarks>
-        /// <param name="parentRect">The rectangle that serves as the boundary for containment.</param>
-        /// <param name="targetRect">The rectangle to check for containment within the <paramref name="parentRect"/>.</param>
+        /// <param name="parentRect">The bounds that serves as the boundary for containment.</param>
+        /// <param name="targetRect">The bounds to check for containment within the <paramref name="parentRect"/>.</param>
         /// <returns><see langword="true"/> if the <paramref name="targetRect"/> is fully contained within the <paramref
         /// name="parentRect"/>; otherwise, <see langword="false"/>.</returns>
         public static bool Contains_ButNotExceed(this Rectangle parentRect, Rectangle targetRect)
@@ -730,34 +878,34 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Determines whether the specified point lies within the border of the rectangle.
+        /// Determines whether the specified point lies within the border of the bounds.
         /// </summary>
-        /// <remarks>A point is considered to be within the border if it lies inside the rectangle but outside an inner
-        /// rectangle that is shrunk inward by the specified border width.</remarks>
-        /// <param name="rectangleF">The rectangle to check against.</param>
+        /// <remarks>A point is considered to be within the border if it lies inside the bounds but outside an inner
+        /// bounds that is shrunk inward by the specified border width.</remarks>
+        /// <param name="rectangleF">The bounds to check against.</param>
         /// <param name="pointToCheck">The point to evaluate.</param>
         /// <param name="borderWidth">The width of the border to consider, in pixels. Must be greater than 0. Defaults to 1.</param>
-        /// <returns><see langword="true"/> if the point is within the border of the rectangle; otherwise, <see langword="false"/>.</returns>
+        /// <returns><see langword="true"/> if the point is within the border of the bounds; otherwise, <see langword="false"/>.</returns>
         public static bool BordersContains(this RectangleF rectangleF, PointF pointToCheck, float borderWidth = 1f)
         {
             if (borderWidth <= 0f) return false;
 
-            // Inflate inward to shrink the rectangle by the border width
+            // Inflate inward to shrink the bounds by the border width
             RectangleF inner = RectangleF.Inflate(rectangleF, -borderWidth, -borderWidth);
 
-            // If the point is inside the rectangle but outside the inner shrunken rectangle, it's on the border
+            // If the point is inside the bounds but outside the inner shrunken bounds, it's on the border
             return rectangleF.Contains(pointToCheck) && !inner.Contains(pointToCheck);
         }
 
         /// <summary>
-        /// Determines whether the specified point lies within the border of the rectangle.
+        /// Determines whether the specified point lies within the border of the bounds.
         /// </summary>
-        /// <remarks>A point is considered to be within the border if it lies inside the rectangle but outside an inner
-        /// rectangle that is shrunk inward by the specified border width.</remarks>
-        /// <param name="rectangleF">The rectangle to check against.</param>
+        /// <remarks>A point is considered to be within the border if it lies inside the bounds but outside an inner
+        /// bounds that is shrunk inward by the specified border width.</remarks>
+        /// <param name="rectangleF">The bounds to check against.</param>
         /// <param name="pointToCheck">The point to evaluate.</param>
         /// <param name="borderWidth">The width of the border to consider, in pixels. Must be greater than 0. Defaults to 1.</param>
-        /// <returns><see langword="true"/> if the point is within the border of the rectangle; otherwise, <see langword="false"/>.</returns>
+        /// <returns><see langword="true"/> if the point is within the border of the bounds; otherwise, <see langword="false"/>.</returns>
         public static bool BordersContains(this RectangleF rectangleF, Point pointToCheck, float borderWidth = 1f)
         {
             return BordersContains(rectangleF, new PointF(pointToCheck.X, pointToCheck.Y), borderWidth);
@@ -765,14 +913,14 @@ namespace WinPaletter.TypesExtensions
 
 
         /// <summary>
-        /// Determines whether the specified point lies within the border of the rectangle.
+        /// Determines whether the specified point lies within the border of the bounds.
         /// </summary>
-        /// <remarks>A point is considered to be within the border if it lies inside the rectangle but outside an inner
-        /// rectangle that is shrunk inward by the specified border width.</remarks>
-        /// <param name="rectangle">The rectangle to check against.</param>
+        /// <remarks>A point is considered to be within the border if it lies inside the bounds but outside an inner
+        /// bounds that is shrunk inward by the specified border width.</remarks>
+        /// <param name="rectangle">The bounds to check against.</param>
         /// <param name="pointToCheck">The point to evaluate.</param>
         /// <param name="borderWidth">The width of the border to consider, in pixels. Must be greater than 0. Defaults to 1.</param>
-        /// <returns><see langword="true"/> if the point is within the border of the rectangle; otherwise, <see langword="false"/>.</returns>
+        /// <returns><see langword="true"/> if the point is within the border of the bounds; otherwise, <see langword="false"/>.</returns>
         public static bool BordersContains(this Rectangle rectangle, Point pointToCheck, float borderWidth = 1f)
         {
             return BordersContains(rectangle, new PointF(pointToCheck.X, pointToCheck.Y), borderWidth);
@@ -781,11 +929,11 @@ namespace WinPaletter.TypesExtensions
         /// <summary>
         /// Returns a new <see cref="Rectangle"/> that is inflated by the specified amount in all directions.
         /// </summary>
-        /// <remarks>The inflation is applied symmetrically to all sides of the rectangle. A positive
-        /// <paramref name="amount"/> increases the size of the rectangle, while a negative value decreases it. The
-        /// original rectangle remains unchanged.</remarks>
+        /// <remarks>The inflation is applied symmetrically to all sides of the bounds. A positive
+        /// <paramref name="amount"/> increases the size of the bounds, while a negative value decreases it. The
+        /// original bounds remains unchanged.</remarks>
         /// <param name="rect">The original <see cref="Rectangle"/> to be inflated.</param>
-        /// <param name="amount">The amount, in pixels, by which to inflate the rectangle. This value is added to both the width and height,
+        /// <param name="amount">The amount, in pixels, by which to inflate the bounds. This value is added to both the width and height,
         /// and subtracted from the X and Y coordinates.</param>
         /// <returns>A new <see cref="Rectangle"/> that is larger or smaller than the original, depending on the value of
         /// <paramref name="amount"/>.</returns>
@@ -797,13 +945,13 @@ namespace WinPaletter.TypesExtensions
         /// <summary>
         /// Returns a new <see cref="Rectangle"/> that is inflated by the specified horizontal and vertical amounts.
         /// </summary>
-        /// <remarks>The method adjusts the position and size of the rectangle by subtracting <paramref
+        /// <remarks>The method adjusts the position and size of the bounds by subtracting <paramref
         /// name="dx"/> and <paramref name="dy"/>  from the X and Y coordinates, respectively, and adding twice the
         /// values of <paramref name="dx"/> and <paramref name="dy"/>  to the width and height. Negative values for
-        /// <paramref name="dx"/> or <paramref name="dy"/> will shrink the rectangle.</remarks>
+        /// <paramref name="dx"/> or <paramref name="dy"/> will shrink the bounds.</remarks>
         /// <param name="rect">The original <see cref="Rectangle"/> to be inflated.</param>
-        /// <param name="dx">The amount to inflate the rectangle horizontally. Can be negative to deflate.</param>
-        /// <param name="dy">The amount to inflate the rectangle vertically. Can be negative to deflate.</param>
+        /// <param name="dx">The amount to inflate the bounds horizontally. Can be negative to deflate.</param>
+        /// <param name="dy">The amount to inflate the bounds vertically. Can be negative to deflate.</param>
         /// <returns>A new <see cref="Rectangle"/> that is larger or smaller than the original, depending on the specified
         /// inflation values.</returns>
         public static Rectangle InflateReturn(this Rectangle rect, int dx, int dy)
@@ -820,7 +968,7 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Creates a <see cref="GraphicsPath"/> representing a tab shape based on the specified rectangle, corner radius, and style.
+        /// Creates a <see cref="GraphicsPath"/> representing a tab shape based on the specified bounds, corner radius, and style.
         /// </summary>
         /// <param name="rectangle"></param>
         /// <param name="radius"></param>
@@ -1064,7 +1212,7 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Aligns the content of given size inside the container rectangle based on alignment.
+        /// Aligns the content of given size inside the container bounds based on alignment.
         /// </summary>
         private static RectangleF AlignIn(RectangleF container, SizeF content, ContentAlignment align)
         {

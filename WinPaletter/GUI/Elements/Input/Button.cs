@@ -55,9 +55,10 @@ namespace WinPaletter.UI.WP
 
         private readonly bool _ripple = true;
         private bool ForceUpdateImageGlyph = false;
+        private static Font marlett = new ("Marlett", 8f);
+        private static StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat();
 
         #endregion
-
 
         #region Cached GDI Resources
 
@@ -105,7 +106,6 @@ namespace WinPaletter.UI.WP
         }
 
         #endregion
-
 
         #region Properties
 
@@ -357,7 +357,6 @@ namespace WinPaletter.UI.WP
 
         #endregion
 
-
         #region Events / Overrides
 
         #region OnMouse
@@ -595,7 +594,6 @@ namespace WinPaletter.UI.WP
 
         #endregion
 
-
         #region Animator
 
         private void Animate()
@@ -645,7 +643,6 @@ namespace WinPaletter.UI.WP
         }
 
         #endregion
-
 
         #region Paint
 
@@ -718,31 +715,8 @@ namespace WinPaletter.UI.WP
             {
                 if (_ripple && CanAnimate && hoverRect.Width > 0 && hoverRect.Height > 0)
                 {
-                    GraphicsPath path = Program.Style.RoundedCorners ? Rect.Round() : new GraphicsPath();
-                    if (!Program.Style.RoundedCorners) { path.AddRectangle(Rect); }
-
-                    G.SetClip(path);
-
-                    GraphicsPath gp = new();
-                    gp.AddEllipse(hoverRect);
-
-                    PathGradientBrush pgb = new(gp)
-                    {
-                        CenterPoint = hoverPosition,
-                        CenterColor = Color.FromArgb(Math.Max(100, _alpha), _rippleColor),
-                        SurroundColors = [Color.Transparent]
-                    };
-
-                    G.FillEllipse(pgb, hoverRect);
-                    G.ResetClip();
-
-                    // Dispose after ResetClip so no GDI state is dangled
-                    pgb.Dispose();
-                    gp.Dispose();
-                    path.Dispose();
+                    G.DrawHover(Rect, Rectangle.Round(hoverRect), hoverPosition, Color.FromArgb(Math.Max(175, _alpha), _rippleColor));
                 }
-
-                G.FillRoundedRect(Noise, Rect);
             }
 
             // Split button splitter highlight
@@ -797,11 +771,9 @@ namespace WinPaletter.UI.WP
             // Split button dropdown arrow
             if (Menu.Items.Count > 0)
             {
-                using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
                 using (SolidBrush fc = new(ForeColor))
-                using (Font f = new("Marlett", 8f))
                 {
-                    G.DrawString("u", f, fc, Rect_Menu, sf);
+                    G.DrawString("u", marlett, fc, Rect_Menu, sf);
                 }
             }
 
