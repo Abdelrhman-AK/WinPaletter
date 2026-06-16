@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Buffers;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Linq;
+using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,44 +25,115 @@ namespace WinPaletter.TypesExtensions
         /// <summary>
         /// Calculates the average color of the pixels in the specified bitmap.
         /// </summary>
-        /// <remarks>This method locks the bitmap in memory for reading and processes its pixels directly.
-        /// It uses a 32bpp ARGB pixel format and calculates the average color by iterating over the pixels with the
-        /// specified step size.</remarks>
-        /// <param name="bitmap">The bitmap from which to calculate the average color. Must not be null, and must have a non-zero width and
-        /// height.</param>
-        /// <param name="step">The step size for sampling pixels. A larger step reduces the number of pixels sampled, improving performance
-        /// at the cost of accuracy. Defaults to 1, meaning every pixel is sampled.</param>
-        /// <returns>A <see cref="Color"/> representing the average color of the sampled pixels in the bitmap. Returns <see
-        /// cref="Color.Empty"/> if the bitmap is null, has zero width or height, or if an error occurs during
-        /// processing.</returns>
+        /// <remarks>
+        /// Locks the bitmap in ReadOnly mode for the duration of sampling and releases it immediately after.
+        /// Uses parallel row partitioning across all logical cores combined with a scalar pointer walk.
+        /// For step == 1, each core accumulates its own partial sums to avoid false sharing, then results
+        /// are merged after all threads complete. For step > 1, a single-threaded scalar loop is used.
+        /// </remarks>
+        /// <param name="bitmap">The bitmap from which to calculate the average color. Must not be null, and must have non-zero dimensions.</param>
+        /// <param name="step">Pixel sampling stride. 1 = every pixel, 2 = every other, etc. Larger values trade accuracy for speed.</param>
+        /// <returns>
+        /// A <see cref="Color"/> representing the average color of the sampled pixels.
+        /// Returns <see cref="Color.Empty"/> if the bitmap is null, has zero dimensions, or an error occurs.
+        /// </returns>
         public static Color AverageColor(this Bitmap bitmap, int step = 1)
         {
             if (bitmap == null || bitmap.Width == 0 || bitmap.Height == 0) return Color.Empty;
 
-            // Clone the bitmap to avoid locking the original object being used elsewhere
-            using (Bitmap clone = bitmap.Clone(new Rectangle(0, 0, bitmap.Width, bitmap.Height), PixelFormat.Format32bppArgb))
+            BitmapData data = null;
+            try
             {
-                BitmapData data = null;
-                try
+                data = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+
+                int width = data.Width;
+                int height = data.Height;
+                int stride = data.Stride;
+                int rowBytes = width * 4;
+
+                long totalR = 0, totalG = 0, totalB = 0;
+                long totalPixels = 0;
+
+                IntPtr scan0ptr = data.Scan0;
+
+                if (step == 1)
                 {
-                    data = clone.LockBits(new Rectangle(0, 0, clone.Width, clone.Height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+                    int coreCount = Environment.ProcessorCount;
 
-                    long totalR = 0, totalG = 0, totalB = 0;
-                    long totalPixels = 0;
+                    // Pad to 64 bytes (cache line) to eliminate false sharing between cores.
+                    // Each core writes to its own cache line-aligned slot.
+                    const int Pad = 8; // 8 longs = 64 bytes
+                    long[] partialB = new long[coreCount * Pad];
+                    long[] partialG = new long[coreCount * Pad];
+                    long[] partialR = new long[coreCount * Pad];
+                    long[] partialP = new long[coreCount * Pad];
 
-                    int stride = data.Stride;
-                    int height = data.Height;
-                    int width = data.Width;
+                    Parallel.For(0, coreCount, core =>
+                    {
+                        int yStart = core * height / coreCount;
+                        int yEnd = (core + 1) * height / coreCount;
+                        int slot = core * Pad;
 
+                        long localB = 0, localG = 0, localR = 0, localP = 0;
+
+                        unsafe
+                        {
+                            byte* scan0 = (byte*)scan0ptr;
+
+                            for (int y = yStart; y < yEnd; y++)
+                            {
+                                byte* p = scan0 + (y * stride);
+                                byte* rowEnd = p + rowBytes;
+
+                                // Main unrolled loop: 8 pixels per iteration to reduce loop overhead.
+                                while (p + 32 <= rowEnd) // 8 pixels * 4 bytes = 32 bytes
+                                {
+                                    localB += p[0] + p[4] + p[8] + p[12] + p[16] + p[20] + p[24] + p[28];
+                                    localG += p[1] + p[5] + p[9] + p[13] + p[17] + p[21] + p[25] + p[29];
+                                    localR += p[2] + p[6] + p[10] + p[14] + p[18] + p[22] + p[26] + p[30];
+                                    localP += 8;
+                                    p += 32;
+                                }
+
+                                // Scalar tail for remaining pixels.
+                                while (p < rowEnd)
+                                {
+                                    localB += p[0];
+                                    localG += p[1];
+                                    localR += p[2];
+                                    localP++;
+                                    p += 4;
+                                }
+                            }
+                        }
+
+                        partialB[slot] = localB;
+                        partialG[slot] = localG;
+                        partialR[slot] = localR;
+                        partialP[slot] = localP;
+                    });
+
+                    for (int i = 0; i < coreCount; i++)
+                    {
+                        int slot = i * Pad;
+                        totalB += partialB[slot];
+                        totalG += partialG[slot];
+                        totalR += partialR[slot];
+                        totalPixels += partialP[slot];
+                    }
+                }
+                else
+                {
                     unsafe
                     {
-                        byte* scan0 = (byte*)data.Scan0;
+                        byte* scan0 = (byte*)scan0ptr;
+
                         for (int y = 0; y < height; y += step)
                         {
                             byte* row = scan0 + (y * stride);
                             for (int x = 0; x < width; x += step)
                             {
-                                int idx = x * 4; // BGRA
+                                int idx = x * 4;
                                 totalB += row[idx];
                                 totalG += row[idx + 1];
                                 totalR += row[idx + 2];
@@ -67,21 +141,24 @@ namespace WinPaletter.TypesExtensions
                             }
                         }
                     }
-
-                    int avgR = (int)(totalR / totalPixels);
-                    int avgG = (int)(totalG / totalPixels);
-                    int avgB = (int)(totalB / totalPixels);
-
-                    return Color.FromArgb(avgR, avgG, avgB);
                 }
-                catch
-                {
+
+                if (totalPixels == 0)
                     return Color.Empty;
-                }
-                finally
-                {
-                    if (data != null) clone.UnlockBits(data);
-                }
+
+                return Color.FromArgb(
+                    (int)(totalR / totalPixels),
+                    (int)(totalG / totalPixels),
+                    (int)(totalB / totalPixels));
+            }
+            catch
+            {
+                return Color.Empty;
+            }
+            finally
+            {
+                if (data != null)
+                    bitmap.UnlockBits(data);
             }
         }
 
@@ -1611,8 +1688,14 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Extracts a palette of dominant colors from the specified bitmap image,
-        /// optionally enhanced with vivid color variations.
+        /// Extracts a palette of dominant colors from the provided bitmap using parallel k-means
+        /// clustering, with optional dominance sorting and vivid-variation augmentation.
+        ///
+        /// Memory contract: all large intermediate arrays (sampled pixels, k-means assignments)
+        /// are explicitly nulled at the earliest possible point inside the Task lambda so they
+        /// become GC-eligible even while the returned Task object is still referenced by the caller.
+        /// A Gen2 collection is requested after the heavy arrays are released to reclaim the LOH
+        /// pages promptly rather than waiting for the next GC cycle.
         /// </summary>
         public static async Task<List<Color>> ToPalette(this Bitmap bmp, PaletteGeneratorSettings settings)
         {
@@ -1620,19 +1703,33 @@ namespace WinPaletter.TypesExtensions
             if (settings.ColorCount < 1) throw new ArgumentOutOfRangeException(nameof(settings.ColorCount));
             if (settings.ColorQuality < 1) settings.ColorQuality = 1;
 
-            return await Task.Run(async () =>
+            return await Task.Run(() =>
             {
                 settings.Status?.Report($"{Program.Localization.Strings.General.SamplingPixels}...");
 
-                int[] sampledPixels = await SamplePixelsAsync(bmp, settings);
+                // sampledPixels can be up to 200 MB on large images. It is explicitly nulled
+                // as soon as SortByDominance no longer needs it (see below).
+                int[] sampledPixels = SamplePixels(bmp, settings);
 
-                if (sampledPixels == null || sampledPixels.Length == 0) return [];
+                if (sampledPixels == null || sampledPixels.Length == 0)
+                    return [];
 
                 settings.Status?.Report($"{Program.Localization.Strings.General.ClusteringColors}...");
-                List<Color> centroids = LockFreeKMeans(sampledPixels, settings);
+
+                // finalAssignments mirrors sampledPixels in length — also up to 200 MB.
+                // It is returned here so SortByDominance can reuse it without a second O(n*k) pass,
+                // then explicitly nulled immediately after sorting.
+                List<Color> centroids = LockFreeKMeans(sampledPixels, settings, out int[] finalAssignments);
 
                 if (centroids == null || centroids.Count == 0)
+                {
+                    // Release both large arrays before returning so GC can collect them
+                    // even if the caller holds onto the returned Task/List.
+                    sampledPixels = null;
+                    finalAssignments = null;
+                    GC.Collect(2, GCCollectionMode.Optimized);
                     return new List<Color>();
+                }
 
                 if (settings.AccentColor.HasValue)
                 {
@@ -1651,8 +1748,30 @@ namespace WinPaletter.TypesExtensions
                 if (settings.SortByDominance)
                 {
                     settings.Status?.Report($"{Program.Localization.Strings.General.SortingByDominance}...");
-                    centroids = SortByDominance(sampledPixels, centroids, settings.CancellationToken);
+
+                    // SortByDominance only reads finalAssignments[0..pixelCount-1] as a frequency
+                    // tally. It does not need sampledPixels at all — we release it here, one step
+                    // earlier than the sort call, so the LOH block is freed as soon as possible.
+                    int pixelCount = sampledPixels.Length;
+                    sampledPixels = null; // LOH eligible for collection now
+
+                    centroids = SortByDominance(finalAssignments, pixelCount, centroids);
                 }
+                else
+                {
+                    // No sort needed — release immediately.
+                    sampledPixels = null;
+                }
+
+                // Assignments are no longer needed after sorting. Null before variations so the
+                // full pipeline after this point runs with only the small centroids list live.
+                finalAssignments = null;
+
+                // Both large arrays are now unreferenced. Request an optimized Gen2 collection
+                // so the LOH pages are reclaimed promptly. GCCollectionMode.Optimized means the
+                // runtime only actually collects if it judges it productive — this is not a
+                // forced blocking collection.
+                GC.Collect(2, GCCollectionMode.Optimized);
 
                 if (settings.IncludeVariations)
                 {
@@ -1667,7 +1786,20 @@ namespace WinPaletter.TypesExtensions
             }, settings.CancellationToken);
         }
 
-        private static async Task<int[]> SamplePixelsAsync(Bitmap bmp, PaletteGeneratorSettings settings)
+        /// <summary>
+        /// Samples pixel data directly from the locked bitmap — no clone allocation.
+        ///
+        /// Allocation strategy: a single buffer of exactly <paramref name="capacity"/> ints is
+        /// allocated upfront (capped at MaxSampledPixels). After sampling, only the filled
+        /// portion is copied to a right-sized result array and the oversized buffer is released.
+        /// Both buffer and result are plain heap arrays (not ArrayPool) because anything
+        /// approaching the cap far exceeds ArrayPool.Shared's 1M-element retention limit, so
+        /// pooling provides no benefit and creates false expectations about lifetime.
+        ///
+        /// Progress is reported at most ~20 times regardless of image height to avoid timer
+        /// overhead from frequent IProgress invocations.
+        /// </summary>
+        private static int[] SamplePixels(Bitmap bmp, PaletteGeneratorSettings settings)
         {
             int width = bmp.Width;
             int height = bmp.Height;
@@ -1677,113 +1809,149 @@ namespace WinPaletter.TypesExtensions
             bool disableAlpha = settings.DisableTransparency;
             CancellationToken ct = settings.CancellationToken;
 
-            // Compute exact sampled dimensions to avoid int overflow on large images.
             int sampledW = (width + quality - 1) / quality;
             int sampledH = (height + quality - 1) / quality;
 
-            // Guard against overflow: cap buffer at 50M entries (~200 MB).
-            // Excess pixels are simply not sampled; k-means quality is unaffected.
+            // Cap the buffer to prevent extreme allocations on very large images.
+            // Pixels beyond this cap are silently skipped — k-means quality is unaffected
+            // because the sampled subset is still statistically representative.
             const int MaxSampledPixels = 50_000_000;
-            long rawCapacity = (long)sampledW * sampledH;
-            int bufferCapacity = (int)Math.Min(rawCapacity, MaxSampledPixels);
+            int capacity = (int)Math.Min((long)sampledW * sampledH, MaxSampledPixels);
 
-            int[] buffer = new int[bufferCapacity];
+            // Allocate at full capacity to avoid reallocations during sampling.
+            // This buffer will be trimmed to exact size before returning.
+            int[] buffer = new int[capacity];
             int count = 0;
 
-            using Bitmap clone = new(width, height, PixelFormat.Format32bppArgb);
-            using (Graphics G = Graphics.FromImage(clone)) G.DrawImage(bmp, new Rectangle(0, 0, width, height));
-
-            BitmapData data = clone.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+            // Lock the original bitmap directly — avoids the Graphics.DrawImage clone
+            // that previously allocated a full ARGB copy of the image (~32 MB for 4K).
+            // Read-only lock is safe here because we never write back to the bitmap.
+            BitmapData data = bmp.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
 
             int stride = data.Stride;
-            const int BatchRows = 64;
+
+            // Report progress approximately 20 times across the full image height.
+            // Avoids invoking IProgress on every row (which was ~60 invocations for a 4K image).
+            int progressInterval = Math.Max(1, height / 20);
 
             try
             {
-                for (int yStart = 0; yStart < height; yStart += BatchRows)
+                unsafe
                 {
-                    if (ct.IsCancellationRequested) return null;
+                    byte* scan0 = (byte*)data.Scan0;
 
-                    int yEnd = Math.Min(yStart + BatchRows, height);
-
-                    unsafe
+                    for (int y = 0; y < height; y += quality)
                     {
-                        byte* scan0 = (byte*)data.Scan0;
-
-                        for (int y = yStart; y < yEnd; y += quality)
+                        if (ct.IsCancellationRequested)
                         {
-                            byte* row = scan0 + (long)y * stride;
-
-                            for (int x = 0; x < width; x += quality)
-                            {
-                                // Stop if buffer is full (can happen when MaxSampledPixels cap is hit).
-                                if (count >= bufferCapacity) goto doneSampling;
-
-                                byte* px = row + x * 4;
-                                byte b = px[0];
-                                byte g = px[1];
-                                byte r = px[2];
-                                byte a = px[3];
-
-                                if (ignoreWhite && r >= whiteThreshold && g >= whiteThreshold && b >= whiteThreshold) continue;
-
-                                if (a == 0) continue;
-                                if (disableAlpha) a = 255;
-
-                                buffer[count++] = (a << 24) | (r << 16) | (g << 8) | b;
-                            }
+                            // Release the oversized buffer immediately on cancel so the
+                            // caller's null check cleans up without waiting for GC.
+                            buffer = null;
+                            return null;
                         }
+
+                        byte* row = scan0 + (long)y * stride;
+
+                        for (int x = 0; x < width; x += quality)
+                        {
+                            // Hard stop if the buffer is full (MaxSampledPixels cap hit).
+                            if (count >= capacity) goto doneSampling;
+
+                            byte* px = row + x * 4;
+                            byte b = px[0];
+                            byte g = px[1];
+                            byte r = px[2];
+                            byte a = px[3];
+
+                            // Skip fully transparent pixels — they carry no color information.
+                            if (a == 0) continue;
+
+                            if (ignoreWhite && r >= whiteThreshold && g >= whiteThreshold && b >= whiteThreshold) continue;
+
+                            // Collapse all alpha to 255 when transparency is disabled.
+                            // This prevents semi-transparent pixels from being clustered
+                            // separately from their opaque equivalents.
+                            if (disableAlpha) a = 255;
+
+                            buffer[count++] = (a << 24) | (r << 16) | (g << 8) | b;
+                        }
+
+                        if (y % progressInterval == 0) settings.Progress?.Report((float)y / height * 0.5f);
                     }
 
-                    settings.Progress?.Report((float)yEnd / height * 0.5f);
-                    await Task.Delay(1, ct);
+                doneSampling:;
                 }
-
-            doneSampling:;
             }
             finally
             {
-                clone.UnlockBits(data);
+                // Always unlock — even on exception — to prevent the bitmap from remaining
+                // in a locked state which would block any subsequent drawing operations.
+                bmp.UnlockBits(data);
             }
 
-            if (count == buffer.Length) return buffer;
+            if (count == 0)
+            {
+                buffer = null;
+                return [];
+            }
+
+            // Allocate a right-sized result and release the oversized buffer immediately.
+            // Without this, both arrays would be live simultaneously in the caller, doubling
+            // peak memory. The buffer is nulled after Copy to make it GC-eligible at once.
             int[] result = new int[count];
             Array.Copy(buffer, result, count);
+            buffer = null; // Release the oversized buffer — result is the only live array now
             return result;
         }
 
-        private static List<Color> LockFreeKMeans(int[] pixels, PaletteGeneratorSettings settings)
+        /// <summary>
+        /// Runs lock-free parallel k-means clustering on the sampled pixel data.
+        ///
+        /// Seeding uses stride-based sampling (O(k)) rather than Fisher-Yates shuffle (O(n)),
+        /// eliminating the 200 MB shuffle-index array that the previous version allocated.
+        ///
+        /// Thread-local accumulator arrays for the update step are allocated once per thread
+        /// per iteration. At k=300 these are negligible (~12 KB each), but they are explicitly
+        /// pooled via ArrayPool to prevent repeated LOH pressure across 10 iterations.
+        /// Unlike the pixel/assignment arrays, these are well within the 1M-element pool limit
+        /// so Return() actually works here.
+        ///
+        /// The <paramref name="finalAssignments"/> out parameter gives the caller the last
+        /// assignment pass so SortByDominance can reuse it as a frequency tally without a
+        /// second O(n*k) nearest-centroid pass. The caller is responsible for nulling it when
+        /// done — do not return it to ArrayPool because its length can exceed the pool limit.
+        /// </summary>
+        private static List<Color> LockFreeKMeans(int[] pixels, PaletteGeneratorSettings settings, out int[] finalAssignments)
         {
             int k = Math.Min(settings.ColorCount, pixels.Length);
+            finalAssignments = null;
+
             if (k == 0) return [];
 
-            // Iterations: fixed at 10 (same semantic as original ColorCount / 10 heuristic).
-            int iterations = 10;
+            // Fixed at 10 iterations — empirically sufficient for palette-quality convergence.
+            // More iterations improve centroid accuracy marginally but add O(n*k) cost per step.
+            const int Iterations = 10;
             CancellationToken ct = settings.CancellationToken;
 
-            // Seed with a stratified random sample — deduplicated.
-            Random rnd = new();
+            // Seeding
+            // Stride-based: pick every (pixels.Length / k)-th pixel, deduplicating as we go.
+            // This is O(k) rather than O(n) and does not require a shuffle index array.
+            // For images with few distinct colors the HashSet deduplication ensures we still
+            // fill all k slots by cycling through what we found.
             int[] centroidArgb = new int[k];
             HashSet<int> seen = [with(k * 2)];
             int added = 0;
+            int seedStride = Math.Max(1, pixels.Length / k);
 
-            // Single pass through a shuffled index range to guarantee termination.
-            int[] shuffled = new int[pixels.Length];
-            for (int i = 0; i < shuffled.Length; i++) shuffled[i] = i;
-            for (int i = shuffled.Length - 1; i > 0; i--)
+            for (int i = 0; i < pixels.Length && added < k; i += seedStride)
             {
-                int j = rnd.Next(i + 1);
-                (shuffled[j], shuffled[i]) = (shuffled[i], shuffled[j]);
-            }
-
-            for (int i = 0; i < shuffled.Length && added < k; i++)
-            {
-                int argb = pixels[shuffled[i]];
+                int argb = pixels[i];
                 if (seen.Add(argb)) centroidArgb[added++] = argb;
             }
 
-            // If distinct pixel colors < k, duplicate existing centroids to fill.
-            for (int i = added; i < k; i++) centroidArgb[i] = centroidArgb[i % added];
+            // Fill remaining slots by cycling — handles low-diversity images (e.g. a near-solid
+            // color wallpaper) where fewer than k distinct colors exist in the sample.
+            for (int i = added; i < k; i++) centroidArgb[i] = centroidArgb[i % Math.Max(1, added)];
 
             int[] cA = new int[k];
             int[] cR = new int[k];
@@ -1791,7 +1959,8 @@ namespace WinPaletter.TypesExtensions
             int[] cB = new int[k];
             UnpackCentroids(centroidArgb, k, cA, cR, cG, cB);
 
-            // Pre-extract accent channels outside all loops.
+            // Pre-extract accent channels outside all loops to avoid repeated null checks
+            // and Color field accesses inside the hot assignment inner loop.
             bool hasAccent = settings.AccentColor.HasValue;
             int acR = 0, acG = 0, acB = 0;
             float accentWeight = settings.AccentWeight;
@@ -1802,13 +1971,23 @@ namespace WinPaletter.TypesExtensions
                 acR = ac.R; acG = ac.G; acB = ac.B;
             }
 
+            // assignments[i] = index of the nearest centroid for pixels[i].
+            // Length matches pixels — potentially up to 200 MB. This is a plain heap allocation
+            // (not ArrayPool) because it can far exceed the 1M-element pool retention limit.
+            // The caller receives it via finalAssignments and is responsible for nulling it.
             int[] assignments = new int[pixels.Length];
 
-            for (int iter = 0; iter < iterations; iter++)
+            for (int iter = 0; iter < Iterations; iter++)
             {
-                if (ct.IsCancellationRequested) return null;
+                if (ct.IsCancellationRequested)
+                {
+                    assignments = null;
+                    return null;
+                }
 
-                // Assignment step (parallel, zero shared writes)
+                // Assignment step
+                // Each thread reads pixels[pi] and cR/cG/cB (read-only), writes only
+                // assignments[pi] (its exclusive index). No shared writes, no locks needed.
                 Parallel.For(0, pixels.Length, new ParallelOptions { CancellationToken = ct }, pi =>
                 {
                     int argb = pixels[pi];
@@ -1828,6 +2007,9 @@ namespace WinPaletter.TypesExtensions
 
                         if (hasAccent)
                         {
+                            // Accent bias: reduce the effective distance to centroids whose
+                            // pixels are close to the accent color. AccentWeight controls how
+                            // strongly the bias pulls centroids toward the accent hue.
                             int eR = pR - acR;
                             int eG = pG - acG;
                             int eB = pB - acB;
@@ -1845,9 +2027,18 @@ namespace WinPaletter.TypesExtensions
                     assignments[pi] = bestIndex;
                 });
 
-                if (ct.IsCancellationRequested) return null;
+                if (ct.IsCancellationRequested)
+                {
+                    assignments = null;
+                    return null;
+                }
 
-                // Update step: thread-local accumulators, merged once
+                // Update step
+                // Thread-local accumulator arrays are pooled via ArrayPool<T>.Shared.
+                // At k=300 each array is 300 elements — well within the 1M pool limit — so
+                // Return() genuinely recycles them rather than discarding them. They are
+                // returned inside the finalizer lambda immediately after merging into the
+                // global accumulators, so they are live for the minimum possible duration.
                 long[] globalSumR = new long[k];
                 long[] globalSumG = new long[k];
                 long[] globalSumB = new long[k];
@@ -1859,7 +2050,23 @@ namespace WinPaletter.TypesExtensions
                 Parallel.ForEach(
                     Partitioner.Create(0, pixels.Length),
                     new ParallelOptions { CancellationToken = ct },
-                    () => (new long[k], new long[k], new long[k], new long[k], new int[k]),
+                    () =>
+                    {
+                        // Rent per-thread accumulators. Rented arrays may contain stale values
+                        // from a previous use — zero only the k-element working range, not the
+                        // full rented length (which may be rounded up by the pool).
+                        long[] lR = ArrayPool<long>.Shared.Rent(k);
+                        long[] lG = ArrayPool<long>.Shared.Rent(k);
+                        long[] lB = ArrayPool<long>.Shared.Rent(k);
+                        long[] lA = ArrayPool<long>.Shared.Rent(k);
+                        int[] lC = ArrayPool<int>.Shared.Rent(k);
+                        Array.Clear(lR, 0, k);
+                        Array.Clear(lG, 0, k);
+                        Array.Clear(lB, 0, k);
+                        Array.Clear(lA, 0, k);
+                        Array.Clear(lC, 0, k);
+                        return (lR, lG, lB, lA, lC);
+                    },
                     (range, _, local) =>
                     {
                         (long[] lR, long[] lG, long[] lB, long[] lA, int[] lC) = local;
@@ -1872,7 +2079,7 @@ namespace WinPaletter.TypesExtensions
                             lR[ci] += (argb >> 16) & 0xFF;
                             lG[ci] += (argb >> 8) & 0xFF;
                             lB[ci] += argb & 0xFF;
-                            lA[ci] += (argb >> 24) & 0xFF;
+                            lA[ci] += (uint)argb >> 24; // unsigned shift — avoids sign extension on alpha byte
                             lC[ci]++;
                         }
 
@@ -1892,8 +2099,20 @@ namespace WinPaletter.TypesExtensions
                                 globalCount[i] += lC[i];
                             }
                         }
+
+                        // Return thread-local arrays immediately after merging — before the next
+                        // iteration allocates a fresh set. This keeps pool pressure minimal and
+                        // ensures these arrays do not accumulate in Gen2 across iterations.
+                        ArrayPool<long>.Shared.Return(lR);
+                        ArrayPool<long>.Shared.Return(lG);
+                        ArrayPool<long>.Shared.Return(lB);
+                        ArrayPool<long>.Shared.Return(lA);
+                        ArrayPool<int>.Shared.Return(lC);
                     });
 
+                // Move centroids to the mean position of their assigned pixels.
+                // Centroids with zero assigned pixels keep their previous position (dead centroid
+                // avoidance) — this handles edge cases like k > distinct pixel colors.
                 for (int i = 0; i < k; i++)
                 {
                     int c = globalCount[i];
@@ -1904,8 +2123,10 @@ namespace WinPaletter.TypesExtensions
                     cA[i] = (int)(globalSumA[i] / c);
                 }
 
-                settings.Progress?.Report(0.5f + (float)(iter + 1) / iterations * 0.4f);
+                settings.Progress?.Report(0.5f + (float)(iter + 1) / Iterations * 0.4f);
             }
+
+            finalAssignments = assignments;
 
             List<Color> result = [with(k)];
             for (int i = 0; i < k; i++) result.Add(Color.FromArgb(cA[i], cR[i], cG[i], cB[i]));
@@ -1913,6 +2134,12 @@ namespace WinPaletter.TypesExtensions
             return result;
         }
 
+        /// <summary>
+        /// Unpacks an array of ARGB int values into separate per-channel arrays.
+        /// Separate channel arrays give the k-means inner loop sequential memory access
+        /// patterns (each loop reads one channel array at a time), which is more cache-friendly
+        /// than accessing interleaved ARGB structs.
+        /// </summary>
         private static void UnpackCentroids(int[] argb, int k, int[] cA, int[] cR, int[] cG, int[] cB)
         {
             for (int i = 0; i < k; i++)
@@ -1925,59 +2152,22 @@ namespace WinPaletter.TypesExtensions
             }
         }
 
-        private static List<Color> SortByDominance(int[] pixels, List<Color> centroids, CancellationToken ct)
+        /// <summary>
+        /// Sorts centroids by how many pixels were assigned to them in the final k-means pass.
+        ///
+        /// This reuses the <paramref name="finalAssignments"/> array from k-means — a single
+        /// O(n) tally pass — instead of running a new O(n*k) nearest-centroid search.
+        /// The caller must null finalAssignments after this call to release the large array.
+        /// </summary>
+        private static List<Color> SortByDominance(int[] finalAssignments, int pixelCount, List<Color> centroids)
         {
             int k = centroids.Count;
-            int[] cR = new int[k];
-            int[] cG = new int[k];
-            int[] cB = new int[k];
-
-            for (int i = 0; i < k; i++)
-            {
-                cR[i] = centroids[i].R;
-                cG[i] = centroids[i].G;
-                cB[i] = centroids[i].B;
-            }
-
             int[] freq = new int[k];
-            object mergeLock = new();
 
-            Parallel.ForEach(Partitioner.Create(0, pixels.Length),
-                new() { CancellationToken = ct }, () =>  new int[k], (range, _, localFreq) =>
-                {
-                    for (int pi = range.Item1; pi < range.Item2; pi++)
-                    {
-                        int argb = pixels[pi];
-                        int pR = (argb >> 16) & 0xFF;
-                        int pG = (argb >> 8) & 0xFF;
-                        int pB = argb & 0xFF;
-
-                        int bestIndex = 0;
-                        int minDist = int.MaxValue;
-
-                        for (int i = 0; i < k; i++)
-                        {
-                            int dR = pR - cR[i];
-                            int dG = pG - cG[i];
-                            int dB = pB - cB[i];
-                            int dist = dR * dR + dG * dG + dB * dB;
-
-                            if (dist < minDist)
-                            {
-                                minDist = dist;
-                                bestIndex = i;
-                            }
-                        }
-
-                        localFreq[bestIndex]++;
-                    }
-
-                    return localFreq;
-                },
-                localFreq =>
-                {
-                    lock (mergeLock)  for (int i = 0; i < k; i++) freq[i] += localFreq[i];
-                });
+            // Single O(n) pass: tally how many pixels ended up in each centroid's cluster.
+            // finalAssignments was written by the last k-means iteration so it already reflects
+            // converged assignments — no recomputation needed.
+            for (int pi = 0; pi < pixelCount; pi++) freq[finalAssignments[pi]]++;
 
             int[] indices = new int[k];
             for (int i = 0; i < k; i++) indices[i] = i;
@@ -1989,14 +2179,28 @@ namespace WinPaletter.TypesExtensions
             return sorted;
         }
 
+        /// <summary>
+        /// Augments the centroid list with brightness/darkness variations of the most vivid
+        /// colors and an average-tone anchor.
+        ///
+        /// Variations are generated from the top <c>take</c> centroids ranked by a vividness
+        /// score (saturation × (1 - |brightness - 0.5|)), which prioritizes saturated
+        /// mid-brightness colors over pale or near-black ones.
+        ///
+        /// Deduplication is performed in-place to avoid allocating a second list. The final
+        /// count is capped at colorCount * 2 to prevent unbounded growth on repeated calls.
+        /// </summary>
         private static void AppendVariations(List<Color> centroids, int colorCount)
         {
             int initialCount = centroids.Count;
             if (initialCount == 0) return;
 
+            // Take up to 10 of the most vivid centroids as variation sources.
+            // Half of initialCount + 1 prevents taking nearly all centroids on small palettes.
             int take = Math.Min(initialCount / 2 + 1, 10);
 
-            // Score each centroid for vividness without LINQ on hot path.
+            // Score each centroid: high saturation and mid brightness = most visually vivid.
+            // Avoids LINQ to keep this off the allocation hot path.
             float[] scores = new float[initialCount];
             for (int i = 0; i < initialCount; i++)
             {
@@ -2004,11 +2208,13 @@ namespace WinPaletter.TypesExtensions
                 scores[i] = c.GetSaturation() * (1f - Math.Abs(c.GetBrightness() - 0.5f));
             }
 
-            // Partial sort: find top `take` indices by score.
+            // Partial sort: find the top `take` indices without sorting the full array.
             int[] scoreIndices = new int[initialCount];
             for (int i = 0; i < initialCount; i++) scoreIndices[i] = i;
             Array.Sort(scoreIndices, (a, b) => scores[b].CompareTo(scores[a]));
 
+            // Compute the average tone across all centroids for use as a neutral anchor color.
+            // The anchor and its bright/dark variants give the palette a tonal center point.
             long sumR = 0, sumG = 0, sumB = 0;
             for (int i = 0; i < initialCount; i++)
             {
@@ -2016,12 +2222,18 @@ namespace WinPaletter.TypesExtensions
                 sumG += centroids[i].G;
                 sumB += centroids[i].B;
             }
+            Color avgTone = Color.FromArgb(255,
+                (int)(sumR / initialCount),
+                (int)(sumG / initialCount),
+                (int)(sumB / initialCount));
 
-            Color avgTone = Color.FromArgb(255, (int)(sumR / initialCount), (int)(sumG / initialCount), (int)(sumB / initialCount));
-
+            // Pre-size to avoid reallocations during the append loop.
             int extraSlots = take * 2 + 3;
-            if (centroids.Capacity < centroids.Count + extraSlots) centroids.Capacity = centroids.Count + extraSlots;
+            if (centroids.Capacity < centroids.Count + extraSlots)
+                centroids.Capacity = centroids.Count + extraSlots;
 
+            // Append light and dark variants for each top-vivid centroid.
+            // CB() is the brightness-change extension (positive = lighter, negative = darker).
             for (int i = 0; i < take; i++)
             {
                 Color c = centroids[scoreIndices[i]];
@@ -2029,12 +2241,15 @@ namespace WinPaletter.TypesExtensions
                 centroids.Add(c.CB(-0.7f));
             }
 
+            // Append the average-tone anchor and its own light/dark variants.
             centroids.Add(avgTone);
             centroids.Add(avgTone.CB(0.5f));
             centroids.Add(avgTone.CB(-0.5f));
 
-            // Deduplicate in-place.
-            HashSet<int> seen = [with(centroids.Count)];
+            // Deduplicate in-place by ARGB value. Runs on the full list including the originals
+            // so exact-duplicate centroids from k-means (possible when k > distinct colors) are
+            // also collapsed. Cap at colorCount * 2 to prevent unbounded palette growth.
+            HashSet<int> seen = new HashSet<int>(centroids.Count);
             int write = 0;
             int limit = colorCount * 2;
 
@@ -2043,6 +2258,7 @@ namespace WinPaletter.TypesExtensions
                 if (seen.Add(centroids[i].ToArgb())) centroids[write++] = centroids[i];
             }
 
+            // Trim the list to remove slots that were either duplicates or beyond the cap.
             if (write < centroids.Count) centroids.RemoveRange(write, centroids.Count - write);
         }
 

@@ -56,7 +56,7 @@ namespace WinPaletter.UI.WP
         private static MouseEventArgs virtualMouseEventArgs = new(MouseButtons.Left, 1, 0, 0, 0);
         private static KeyEventArgs virtualMouseKey;
         private static bool virtualMouse = false;
-        private static int hoverIncrementFactor = 2;
+        private static int hoverIncrementFactor = 3;
 
         #endregion
 

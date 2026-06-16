@@ -70,7 +70,7 @@ namespace WinPaletter.TypesExtensions
             s = Regex.Replace(s, @"[,:;/]+", " ");
             s = Regex.Replace(s, @"\s+", " ").Trim();
 
-            // --- HEX ---
+            //HEX
             if (Regex.IsMatch(s, @"^#?[0-9a-f]{3,8}$"))
             {
                 string hex = s.TrimStart('#');
@@ -92,22 +92,18 @@ namespace WinPaletter.TypesExtensions
                         Convert.ToInt32(hex.Substring(6, 2), 16));
             }
 
-            // --- Known CSS color names ---
-            var known = Color.FromName(input.Trim());
-            if (known.IsKnownColor)
-                return known;
+            //Known CSS color names
+            Color known = Color.FromName(input.Trim());
+            if (known.IsKnownColor) return known;
 
-            // --- Decimal ARGB ---
+            //Decimal ARGB
             if (int.TryParse(s, out int dec))
             {
                 try { return Color.FromArgb(dec); } catch { }
             }
 
             // Extract numbers
-            var nums = Regex.Matches(s, @"\d+(\.\d+)?%?")
-                            .Cast<Match>()
-                            .Select(m => m.Value)
-                            .ToList();
+            List<string> nums = [.. Regex.Matches(s, @"\d+(\.\d+)?%?").Cast<Match>().Select(m => m.Value)];
 
             if (nums.Count > 0)
             {
