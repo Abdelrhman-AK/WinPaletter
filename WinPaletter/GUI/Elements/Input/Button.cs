@@ -38,7 +38,7 @@ namespace WinPaletter.UI.WP
         private bool CanAnimate => !DesignMode && Program.Style.Animations && this is not null && Visible && Parent is not null && Parent.Visible && FindForm() is not null && FindForm().Visible;
 
         public ContextMenuStrip Menu = new() { ShowImageMargin = true, AllowTransparency = true };
-        private readonly int MenuSplitterWidth = 15;
+        private static readonly int MenuSplitterWidth = 16;
         private Rectangle MenuSplitterRectangle;
         private bool isMouseOverMenuSplitter = false;
         private Color imageColor;
@@ -53,6 +53,10 @@ namespace WinPaletter.UI.WP
         private bool ForceUpdateImageGlyph = false;
         private static Font marlett = new("Marlett", 8f);
         private static StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat();
+        private static MouseEventArgs virtualMouseEventArgs = new(MouseButtons.Left, 1, 0, 0, 0);
+        private static KeyEventArgs virtualMouseKey;
+        private static bool virtualMouse = false;
+        private static int hoverIncrementFactor = 2;
 
         #endregion
 
@@ -261,14 +265,14 @@ namespace WinPaletter.UI.WP
                         break;
 
                     case MouseState.Down:
-                        resultColor = Flag == Flags.None ? scheme1.Colors.Button_Down : (hasRawImage ? imageColors.Back_Checked_Hover : accentColors.Back_Checked_Hover);
+                        resultColor = Flag == Flags.None ? scheme1.Colors.Button_Down : (hasRawImage ? imageColors.Back_Checked : accentColors.Back_Checked);
                         break;
                 }
             }
 
-            float coloringFactor_Circle_Over_Dark = 0.35f;
-            float coloringFactor_Circle_Over_Light = -0.08f;
+            float coloringFactor_Circle_Over_Dark = 0.2f;
             float coloringFactor_Circle_Down_Dark = 0.3f;
+            float coloringFactor_Circle_Over_Light = -0.08f;
             float coloringFactor_Circle_Down_Light = -0.1f;
 
             switch (State)
@@ -290,14 +294,13 @@ namespace WinPaletter.UI.WP
         {
             if (baseColor == default) baseColor = _color;
 
-            // Fixed: was Color.IsDark() which ignores the baseColor parameter entirely
             bool isDark = baseColor.IsDark();
 
             return State switch
             {
-                MouseState.None => baseColor.CB(isDark ? 0.01f : -0.07f),
-                MouseState.Over => baseColor.CB(isDark ? 0.07f : -0.1f),
-                MouseState.Down => baseColor.CB(isDark ? 0.1f : -0.08f),
+                MouseState.None => baseColor.CB(isDark ? 0.03f : -0.07f),
+                MouseState.Over => baseColor.CB(isDark ? 0.1f : -0.1f),
+                MouseState.Down => baseColor.CB(isDark ? 0.2f : -0.08f),
                 _ => baseColor.CB(isDark ? 0.02f : -0.04f),
             };
         }
@@ -361,6 +364,7 @@ namespace WinPaletter.UI.WP
         {
             State = MouseState.Over;
             isMouseOverMenuSplitter = Menu.Items.Count > 0 && MenuSplitterRectangle.Contains(PointToClient(MousePosition));
+            base.OnMouseEnter(e);
 
             Animate();
 
@@ -374,13 +378,12 @@ namespace WinPaletter.UI.WP
                 alpha = 255;
                 HoverSize = Math.Max(Width, Height);
             }
-
-            base.OnMouseEnter(e);
         }
 
         protected override void OnMouseLeave(EventArgs e)
         {
             State = MouseState.None;
+            base.OnMouseLeave(e);
 
             Animate();
 
@@ -394,39 +397,37 @@ namespace WinPaletter.UI.WP
                 alpha = 0;
                 HoverSize = 0;
             }
-
-            base.OnMouseLeave(e);
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
             State = MouseState.Down;
+            if (!virtualMouse) base.OnMouseDown(e); else base.OnKeyDown(virtualMouseKey);
 
             Animate();
 
             if (CanAnimate)
             {
                 Transition.With(this, nameof(alpha), 0).CriticalDamp(Program.AnimationSpan);
-                if (_ripple) Transition.With(this, nameof(HoverSize), Math.Max(Width, Height) * 5).CriticalDamp(Program.AnimationSpan);
+                if (_ripple) Transition.With(this, nameof(HoverSize), Math.Max(Width, Height) * hoverIncrementFactor).CriticalDamp(Program.AnimationSpan);
             }
             else
             {
                 alpha = 0;
-                HoverSize = Math.Max(Width, Height) * 5;
+                HoverSize = Math.Max(Width, Height) * hoverIncrementFactor;
             }
-
-            base.OnMouseDown(e);
         }
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
             State = ClientRectangle.Contains(e.Location) ? MouseState.Over : MouseState.None;
+            if (!virtualMouse) base.OnMouseUp(e); else base.OnKeyUp(virtualMouseKey);
 
             if (CanAnimate)
             {
                 bool focused = ContainsFocus && State == MouseState.Over;
                 Transition.With(this, nameof(alpha), focused ? 255 : 0).CriticalDamp(Program.AnimationSpan);
-                if (_ripple) Transition.With(this, nameof(HoverSize), focused ? Math.Max(Width, Height) : 0).CriticalDamp(Program.AnimationSpan_Quick);
+                if (_ripple) Transition.With(this, nameof(HoverSize), focused ? Math.Max(Width, Height) : 0).CriticalDamp(Program.AnimationSpan);
             }
             else
             {
@@ -434,8 +435,6 @@ namespace WinPaletter.UI.WP
                 alpha = focused ? 255 : 0;
                 HoverSize = focused ? Math.Max(Width, Height) : 0;
             }
-
-            base.OnMouseUp(e);
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
@@ -459,35 +458,20 @@ namespace WinPaletter.UI.WP
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
-            State = MouseState.Down;
-
-            Animate();
-
-            if (CanAnimate)
-            {
-                Transition.With(this, nameof(alpha), 0).CriticalDamp(Program.AnimationSpan);
-                if (_ripple) Transition.With(this, nameof(HoverSize), Math.Max(Width, Height) * 5).CriticalDamp(Program.AnimationSpan);
-            }
-            else
-            {
-                alpha = 0;
-                HoverSize = Math.Max(Width, Height) * 5;
-            }
-
-            base.OnKeyDown(e);
+            virtualMouseKey = e;
+            virtualMouse = true;
+            OnMouseDown(virtualMouseEventArgs);
+            virtualMouseKey = null;
+            virtualMouse = false;
         }
 
         protected override void OnKeyUp(KeyEventArgs e)
         {
-            State = MouseState.None;
-
-            _hoverSize = Math.Max(Width, Height);
-            hoverRect = new(hoverPosition.X - 0.5f * _hoverSize, hoverPosition.Y - 0.5f * _hoverSize, _hoverSize, _hoverSize);
-
-            if (CanAnimate) Transition.With(this, nameof(alpha), 255).CriticalDamp(Program.AnimationSpan);
-            else alpha = 255;
-
-            base.OnKeyUp(e);
+            virtualMouseKey = e;
+            virtualMouse = true;
+            OnMouseUp(virtualMouseEventArgs);
+            virtualMouseKey = null;
+            virtualMouse = false;
         }
 
         #endregion
@@ -665,7 +649,7 @@ namespace WinPaletter.UI.WP
             Rectangle RectInner = new(1, 1, Width - 3, Height - 3);
             Rectangle PaddingRect = Rectangle.FromLTRB(Padding.Left, Padding.Top, Padding.Right, Padding.Bottom);
             Rectangle TextAndImageRect = new(RectText.X + 3 + PaddingRect.X, RectText.Y + 3 + PaddingRect.Y, Width - 7 - PaddingRect.Width * 2 - RectText.X * 2 - MenuModifier, Height - 7 - PaddingRect.Height * 2 - RectText.Y * 2);
-            Rectangle Rect_Menu = new(Rect.Right - MenuModifier, 1, MenuModifier - 1, Height - 1);
+            Rectangle Rect_Menu = new(Rect.Right - MenuModifier, 0, MenuModifier, Height);
 
             // Rebuild GDI cache only if color/alpha changed
             RefreshCachedGdi();
@@ -711,27 +695,32 @@ namespace WinPaletter.UI.WP
             {
                 if (_ripple && CanAnimate && hoverRect.Width > 0 && hoverRect.Height > 0)
                 {
-                    G.DrawHover(State == MouseState.Over ? Rect : RectInner , Rectangle.Round(hoverRect), hoverPosition, Color.FromArgb(Math.Max(175, _alpha), _rippleColor));
+                    G.DrawHover(State == MouseState.None ? Rect : RectInner, Rectangle.Round(hoverRect), hoverPosition, Color.FromArgb(Math.Max(175, _alpha), _rippleColor));
                 }
-            }
-
-            // Split button splitter highlight
-            if (Menu.Items.Count > 0 && isMouseOverMenuSplitter && State != MouseState.None)
-            {
-                using (SolidBrush br = new(Color.FromArgb(255, scheme1.Colors.Back_Checked))) { G.FillRoundedRect(br, Rect_Menu); }
             }
 
             // Split button separator line
             if (Menu.Items.Count > 0)
             {
                 // Cached border pen — no allocation
-                G.DrawLine(_cachedBorderPen, Rect_Menu.Left - 1, RectInner.Y + 1, Rect_Menu.Left - 1, RectInner.Y + RectInner.Height - 1);
+                G.DrawLine(_cachedBorderPen, Rect_Menu.Left, RectInner.Y + 1, Rect_Menu.Left, RectInner.Y + RectInner.Height - 1);
             }
 
             // Outer border with alpha
             // Cached alpha pen — no allocation
             if (State == MouseState.Down) G.DrawRoundedRectBeveledReverse(_cachedAlphaPen, Rect);
             else G.DrawRoundedRectBeveled(_cachedAlphaPen, State == MouseState.Over ? Rect : RectInner);
+
+            // Split button splitter highlight
+            if (Menu.Items.Count > 0 && isMouseOverMenuSplitter && State != MouseState.None)
+            {
+                using (SolidBrush br = new(Color.FromArgb(255, scheme1.Colors.Back_Checked)))
+                using (Pen P = new(Color.FromArgb(255, scheme1.Colors.Line_Checked_Hover)))
+                {
+                    G.FillRoundedRect(br, Rect_Menu);
+                    G.DrawRoundedRectBeveledReverse(P, Rect_Menu);
+                }
+            }
 
             // Text and image
             this.GetTextAndImageRectangles(TextAndImageRect, out RectangleF imageRectF, out RectangleF textRectF);
