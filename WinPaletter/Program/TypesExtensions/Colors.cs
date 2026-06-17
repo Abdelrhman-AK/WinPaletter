@@ -1832,7 +1832,7 @@ namespace WinPaletter.TypesExtensions
 
         private static readonly Color[] MaterialExpressivePalette =
         {
-        // === Pink (Light) ===
+        // Pink (Light)
         ColorTranslator.FromHtml("#FCE4EC"), // 50
         ColorTranslator.FromHtml("#F8BBD0"), // 100
         ColorTranslator.FromHtml("#F48FB1"), // 200
@@ -1844,7 +1844,7 @@ namespace WinPaletter.TypesExtensions
         ColorTranslator.FromHtml("#AD1457"), // 800
         ColorTranslator.FromHtml("#880E4F"), // 900
 
-        // === Deep Purple (Light) ===
+        // Deep Purple (Light)
         ColorTranslator.FromHtml("#EDE7F6"), // 50
         ColorTranslator.FromHtml("#D1C4E9"), // 100
         ColorTranslator.FromHtml("#B39DDB"), // 200
@@ -1856,7 +1856,7 @@ namespace WinPaletter.TypesExtensions
         ColorTranslator.FromHtml("#4527A0"), // 800
         ColorTranslator.FromHtml("#311B92"), // 900
 
-        // === Cyan (Light) ===
+        // Cyan (Light)
         ColorTranslator.FromHtml("#E0F7FA"), // 50
         ColorTranslator.FromHtml("#B2EBF2"), // 100
         ColorTranslator.FromHtml("#80DEEA"), // 200
@@ -1868,7 +1868,7 @@ namespace WinPaletter.TypesExtensions
         ColorTranslator.FromHtml("#00838F"), // 800
         ColorTranslator.FromHtml("#006064"), // 900
 
-        // === Orange (Light) ===
+        // Orange (Light)
         ColorTranslator.FromHtml("#FFF3E0"), // 50
         ColorTranslator.FromHtml("#FFE0B2"), // 100
         ColorTranslator.FromHtml("#FFCC80"), // 200
@@ -1880,7 +1880,7 @@ namespace WinPaletter.TypesExtensions
         ColorTranslator.FromHtml("#EF6C00"), // 800
         ColorTranslator.FromHtml("#E65100"), // 900
 
-        // === Green (Light) ===
+        // Green (Light)
         ColorTranslator.FromHtml("#E8F5E9"), // 50
         ColorTranslator.FromHtml("#C8E6C9"), // 100
         ColorTranslator.FromHtml("#A5D6A7"), // 200
@@ -1892,7 +1892,7 @@ namespace WinPaletter.TypesExtensions
         ColorTranslator.FromHtml("#2E7D32"), // 800
         ColorTranslator.FromHtml("#1B5E20"), // 900
 
-        // === Pink (Dark) ===
+        // Pink (Dark)
         ColorTranslator.FromHtml("#AD1457"), // 800
         ColorTranslator.FromHtml("#880E4F"), // 900
         ColorTranslator.FromHtml("#C2185B"), // 700
@@ -1904,7 +1904,7 @@ namespace WinPaletter.TypesExtensions
         ColorTranslator.FromHtml("#F8BBD0"), // 100
         ColorTranslator.FromHtml("#FCE4EC"), // 50
 
-        // === Deep Purple (Dark) ===
+        // Deep Purple (Dark)
         ColorTranslator.FromHtml("#4527A0"), // 800
         ColorTranslator.FromHtml("#311B92"), // 900
         ColorTranslator.FromHtml("#512DA8"), // 700
@@ -1916,7 +1916,7 @@ namespace WinPaletter.TypesExtensions
         ColorTranslator.FromHtml("#D1C4E9"), // 100
         ColorTranslator.FromHtml("#EDE7F6"), // 50
 
-        // === Cyan (Dark) ===
+        // Cyan (Dark)
         ColorTranslator.FromHtml("#00838F"), // 800
         ColorTranslator.FromHtml("#006064"), // 900
         ColorTranslator.FromHtml("#0097A7"), // 700
@@ -1928,7 +1928,7 @@ namespace WinPaletter.TypesExtensions
         ColorTranslator.FromHtml("#B2EBF2"), // 100
         ColorTranslator.FromHtml("#E0F7FA"), // 50
 
-        // === Orange (Dark) ===
+        // Orange (Dark)
         ColorTranslator.FromHtml("#EF6C00"), // 800
         ColorTranslator.FromHtml("#E65100"), // 900
         ColorTranslator.FromHtml("#F57C00"), // 700
@@ -1940,7 +1940,7 @@ namespace WinPaletter.TypesExtensions
         ColorTranslator.FromHtml("#FFE0B2"), // 100
         ColorTranslator.FromHtml("#FFF3E0"), // 50
 
-        // === Green (Dark) ===
+        // Green (Dark)
         ColorTranslator.FromHtml("#2E7D32"), // 800
         ColorTranslator.FromHtml("#1B5E20"), // 900
         ColorTranslator.FromHtml("#388E3C"), // 700
@@ -1952,7 +1952,7 @@ namespace WinPaletter.TypesExtensions
         ColorTranslator.FromHtml("#C8E6C9"), // 100
         ColorTranslator.FromHtml("#E8F5E9"), // 50
 
-        // === Neutral Grayscale (Shared) ===
+        // Neutral Grayscale (Shared)
         ColorTranslator.FromHtml("#FFFFFF"), // White
         ColorTranslator.FromHtml("#FAFAFA"), // Gray 50
         ColorTranslator.FromHtml("#F5F5F5"), // Gray 100
@@ -2151,7 +2151,7 @@ namespace WinPaletter.TypesExtensions
             }
         }
 
-        static float PerceivedBrightness(Color c)
+        public static float PerceivedBrightness(Color c)
         {
             return (0.299f * c.R + 0.587f * c.G + 0.114f * c.B) / 255f;
         }
@@ -2240,6 +2240,21 @@ namespace WinPaletter.TypesExtensions
             // Weighted formula based on human perception
             // Source: Compuphase (http://www.compuphase.com/cmetric.htm)
             return (float)Math.Sqrt(((512 + rMean) * dR * dR >> 8) + 4 * dG * dG + ((767 - rMean) * dB * dB >> 8));
+        }
+
+        public static double Luminance(this Color c)
+        {
+            double r = Linear(c.R);
+            double g = Linear(c.G);
+            double b = Linear(c.B);
+
+            return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+        }
+
+        private static double Linear(byte v)
+        {
+            double x = v / 255.0;
+            return x <= 0.04045 ? x / 12.92 : Math.Pow((x + 0.055) / 1.055, 2.4);
         }
 
         /// <summary>

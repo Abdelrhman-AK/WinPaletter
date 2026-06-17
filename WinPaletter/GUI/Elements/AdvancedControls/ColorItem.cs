@@ -7,8 +7,6 @@ using System.Drawing;
 using System.Drawing.Design;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.Assets;
 using WinPaletter.NativeMethods;
@@ -20,85 +18,120 @@ namespace WinPaletter.UI.Controllers
     [DefaultEvent("Click")]
     public class ColorItem : Control
     {
-        WP.ContextMenuStrip contextMenu = new() { ShowImageMargin = true, AllowTransparency = true };
-        ToolStripMenuItem darken = new() { Image = ColorItemContextMenu.Darken };
-        ToolStripMenuItem lighten = new() { Image = ColorItemContextMenu.Lighten };
-        ToolStripMenuItem invert = new() { Image = ColorEffects.Invert_24 };
-        ToolStripMenuItem copy = new() { Image = ColorItemContextMenu.Copy };
-        ToolStripMenuItem paste = new();
-        ToolStripMenuItem cut = new() { Image = ColorItemContextMenu.Cut };
-        ToolStripMenuItem delete = new() { Image = ColorItemContextMenu.Delete };
-        ToolStripMenuItem reset = new() { Image = ColorItemContextMenu.Default };
-        ToolStripMenuItem blend = new();
-        ToolStripMenuItem someEffects = new() { Image = ColorItemContextMenu.Effects };
+        // Static shared context menu (one instance for the entire app)
+        private static readonly WP.ContextMenuStrip _sharedContextMenu;
+        private static readonly ToolStripMenuItem _darken;
+        private static readonly ToolStripMenuItem _lighten;
+        private static readonly ToolStripMenuItem _invert;
+        private static readonly ToolStripMenuItem _copy;
+        private static readonly ToolStripMenuItem _paste;
+        private static readonly ToolStripMenuItem _cut;
+        private static readonly ToolStripMenuItem _delete;
+        private static readonly ToolStripMenuItem _reset;
+        private static readonly ToolStripMenuItem _blend;
+        private static readonly ToolStripMenuItem _someEffects;
+        private static readonly ToolStripMenuItem _previousColor;
+        private static readonly ToolStripSeparator _sep0;
+        private static readonly ToolStripSeparator _sep1;
+        private static readonly ToolStripSeparator _sep2;
+        private static readonly ToolStripMenuItem _copyAsHex;
+        private static readonly ToolStripMenuItem _copyAsRGB;
+        private static readonly ToolStripMenuItem _copyAsHSL;
+        private static readonly ToolStripMenuItem _copyAsDecimal;
+        private static readonly ToolStripMenuItem _copyAsRGBPercent;
+        private static readonly ToolStripMenuItem _copyAsARGB;
+        private static readonly ToolStripMenuItem _copyAsHSLA;
+        private static readonly ToolStripMenuItem _copyAsHSV;
+        private static readonly ToolStripMenuItem _copyAsCMYK;
+        private static readonly ToolStripMenuItem _copyAsWin32;
+        private static readonly ToolStripMenuItem _copyAsKnownName;
+        private static readonly ToolStripMenuItem _copyAsCSS;
 
-        ToolStripMenuItem previousColor = new();
-        ToolStripSeparator toolStripSeparator0 = new();
-        ToolStripSeparator toolStripSeparator1 = new();
-        ToolStripSeparator toolStripSeparator2 = new();
-        ToolStripMenuItem copy_AsHex = new();
-        ToolStripMenuItem copy_AsRGB = new();
-        ToolStripMenuItem copy_AsHSL = new();
-        ToolStripMenuItem copy_AsDecimal = new();
-        ToolStripMenuItem copy_AsRGBPercent = new();
-        ToolStripMenuItem copy_AsARGB = new();
-        ToolStripMenuItem copy_AsHSLA = new();
-        ToolStripMenuItem copy_AsHSV = new();
-        ToolStripMenuItem copy_AsCMYK = new();
-        ToolStripMenuItem copy_AsWin32 = new();
-        ToolStripMenuItem copy_AsKnownName = new();
-        ToolStripMenuItem copy_AsCSS = new();
+        // Cached images
+        private static Image _pasteImageEnabled;
+        private static Image _pasteImageDisabled;
+        private static Image _blendImageEnabled;
+        private static Image _blendImageDisabled;
+        private static Image _prevColorImageEnabled;
+        private static Image _prevColorImageDisabled;
 
-        private static Font genericMonospacedFont = new(Fonts.FallbackConsoleFont, 8.5f, FontStyle.Regular);
+        // The ColorItem that most recently opened the shared menu
+        private static ColorItem _activeTarget;
 
-        public ColorItem()
+        // Static shared font
+        private static readonly Font _genericMonospacedFont;
+        private new Font Font => Program.Settings.NerdStats.UseWindowsMonospacedFont ? _genericMonospacedFont : Fonts.Console;
+
+        private static readonly StringFormat chevronSF = ContentAlignment.MiddleRight.ToStringFormat();
+        private static readonly StringFormat middleCenter = ContentAlignment.MiddleCenter.ToStringFormat();
+
+        // Static constructor
+        static ColorItem()
         {
-            SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor | ControlStyles.ResizeRedraw, true);
-            DoubleBuffered = true;
-            BackColor = Color.Transparent;
+            _genericMonospacedFont = new Font(Fonts.FallbackConsoleFont, 8.5f, FontStyle.Regular);
 
-            Rect = new(0, 0, Width - 1, Height - 1);
-            RectInner = new(1, 1, Width - 3, Height - 3);
-            Rect_DefColor = new(7, (Height - 7) / 2, 7, 7);
-            Rect_DefColor_MouseHoverFixer = new(Rect_DefColor.X - 3, Rect_DefColor.Y - 3, Rect_DefColor.Width + 6, Rect_DefColor.Height + 6);
-            Timer2 = new() { Enabled = false, Interval = 1 };
+            _sharedContextMenu = new WP.ContextMenuStrip { ShowImageMargin = true, AllowTransparency = true };
 
-            alpha = 0;
-            Timer2_factor = 0;
+            _copyAsHex = new();
+            _copyAsRGB = new();
+            _copyAsHSL = new();
+            _copyAsDecimal = new();
+            _copyAsRGBPercent = new();
+            _copyAsARGB = new();
+            _copyAsHSLA = new();
+            _copyAsHSV = new();
+            _copyAsCMYK = new();
+            _copyAsWin32 = new();
+            _copyAsKnownName = new();
+            _copyAsCSS = new();
 
-            Text = string.Empty;
-            ColorsHistory.Clear();
-            Timer2.Tick += Timer2_Tick;
+            _darken = new() { Image = ColorItemContextMenu.Darken };
+            _lighten = new() { Image = ColorItemContextMenu.Lighten };
+            _invert = new() { Image = ColorEffects.Invert_24 };
+            _cut = new() { Image = ColorItemContextMenu.Cut };
+            _delete = new() { Image = ColorItemContextMenu.Delete };
+            _reset = new() { Image = ColorItemContextMenu.Default };
+            _previousColor = new();
+            _paste = new();
+            _blend = new();
+            _someEffects = new() { Image = ColorItemContextMenu.Effects };
+            _sep0 = new();
+            _sep1 = new();
+            _sep2 = new();
 
-            copy.DropDown = new UI.WP.ContextMenuStrip() { ShowImageMargin = false };
-            copy.DropDownItems.Add(copy_AsHex);
-            copy.DropDownItems.Add(copy_AsRGB);
-            copy.DropDownItems.Add(copy_AsHSL);
-            copy.DropDownItems.Add(copy_AsDecimal);
-            copy.DropDownItems.Add(copy_AsRGBPercent);
-            copy.DropDownItems.Add(copy_AsARGB);
-            copy.DropDownItems.Add(copy_AsHSLA);
-            copy.DropDownItems.Add(copy_AsHSV);
-            copy.DropDownItems.Add(copy_AsCMYK);
-            copy.DropDownItems.Add(copy_AsWin32);
-            copy.DropDownItems.Add(copy_AsKnownName);
-            copy.DropDownItems.Add(copy_AsCSS);
+            _copy = new()
+            {
+                Image = ColorItemContextMenu.Copy,
+                DropDown = new UI.WP.ContextMenuStrip { ShowImageMargin = false }
+            };
+            _copy.DropDownItems.Add(_copyAsHex);
+            _copy.DropDownItems.Add(_copyAsRGB);
+            _copy.DropDownItems.Add(_copyAsHSL);
+            _copy.DropDownItems.Add(_copyAsDecimal);
+            _copy.DropDownItems.Add(_copyAsRGBPercent);
+            _copy.DropDownItems.Add(_copyAsARGB);
+            _copy.DropDownItems.Add(_copyAsHSLA);
+            _copy.DropDownItems.Add(_copyAsHSV);
+            _copy.DropDownItems.Add(_copyAsCMYK);
+            _copy.DropDownItems.Add(_copyAsWin32);
+            _copy.DropDownItems.Add(_copyAsKnownName);
+            _copy.DropDownItems.Add(_copyAsCSS);
 
-            contextMenu.Items.Add(cut);
-            contextMenu.Items.Add(copy);
-            contextMenu.Items.Add(paste);
-            contextMenu.Items.Add(blend);
-            contextMenu.Items.Add(toolStripSeparator0);
-            contextMenu.Items.Add(delete);
-            contextMenu.Items.Add(reset);
-            contextMenu.Items.Add(previousColor);
-            contextMenu.Items.Add(toolStripSeparator1);
-            contextMenu.Items.Add(darken);
-            contextMenu.Items.Add(lighten);
-            contextMenu.Items.Add(toolStripSeparator2);
-            contextMenu.Items.Add(invert);
+            _sharedContextMenu.Items.Add(_cut);
+            _sharedContextMenu.Items.Add(_copy);
+            _sharedContextMenu.Items.Add(_paste);
+            _sharedContextMenu.Items.Add(_blend);
+            _sharedContextMenu.Items.Add(_sep0);
+            _sharedContextMenu.Items.Add(_delete);
+            _sharedContextMenu.Items.Add(_reset);
+            _sharedContextMenu.Items.Add(_previousColor);
+            _sharedContextMenu.Items.Add(_sep1);
+            _sharedContextMenu.Items.Add(_darken);
+            _sharedContextMenu.Items.Add(_lighten);
+            _sharedContextMenu.Items.Add(_sep2);
+            _sharedContextMenu.Items.Add(_invert);
 
-            someEffects.DropDown = new WP.ContextMenuStrip();
+            _someEffects.DropDown = new WP.ContextMenuStrip();
 
             for (int i = 0; i < ColorEffect.RegisteredEffects.Count; i++)
             {
@@ -108,63 +141,139 @@ namespace WinPaletter.UI.Controllers
                 {
                     effect.Checked = true;
 
-                    ToolStripMenuItem item = new() { Text = effect.Name, Image = effect.SmallImage.Resize(20, 20), Tag = effect };
+                    ToolStripMenuItem item = new()
+                    {
+                        Text = effect.Name,
+                        Image = effect.SmallImage.Resize(20, 20),
+                        Tag = effect
+                    };
 
-                    item.Click += Item_Click;
-
-                    someEffects.DropDownItems.Add(item);
-                }
-                else
-                {
-                    //ToolStripMenuItem item = new()
-                    //{
-                    //    Text = effect.Name,
-                    //    Image = effect.SmallImage,
-                    //    DropDown = new UI.WP.ContextMenuStrip() { ShowImageMargin = false },
-                    //    Tag = effect
-                    //};
-
-                    //for (int i = (int)effect.ScrollbarMin; i <= effect.ScrollbarMax; i += (int)((effect.ScrollbarMax - effect.ScrollbarMin) / 10f))
-                    //{
-                    //    effect.Checked = true;
-                    //    effect.ScrollbarValue = i;
-
-                    //    ToolStripMenuItem subItem = new() { Text = i.ToString(), Tag = effect };
-                    //    subItem.Click += Item_Click;
-                    //    item.DropDownItems.Add(subItem);
-                    //}
-
-                    //someEffects.DropDownItems.Add(item);
+                    item.Click += Static_Item_Click;
+                    _someEffects.DropDownItems.Add(item);
                 }
             }
 
-            contextMenu.Items.Add(someEffects);
+            _sharedContextMenu.Items.Add(_someEffects);
 
-            copy.Click += Copy_Click;
-            cut.Click += Cut_Click;
-            paste.Click += Paste_Click;
-            blend.Click += Blend_Click;
-            delete.Click += Delete_Click;
-            darken.Click += Darken_Click;
-            lighten.Click += Lighten_Click;
-            invert.Click += Invert_Click;
-            reset.Click += Reset_Click;
-            previousColor.Click += PreviousColor_Click;
-            copy_AsHex.Click += Copy_AsHEX;
-            copy_AsRGB.Click += Copy_AsRGB;
-            copy_AsHSL.Click += Copy_AsHSL;
-            copy_AsDecimal.Click += Copy_AsDec;
-            copy_AsRGBPercent.Click += Copy_AsRGBPercent;
-            copy_AsARGB.Click += Copy_AsARGB;
-            copy_AsHSLA.Click += Copy_AsHSLA;
-            copy_AsHSV.Click += Copy_AsHSV;
-            copy_AsCMYK.Click += Copy_AsCMYK;
-            copy_AsWin32.Click += Copy_AsWin32;
-            copy_AsKnownName.Click += Copy_AsKnownName;
-            copy_AsCSS.Click += Copy_AsCSS;
+            _copy.Click += Static_Copy_Click;
+            _cut.Click += Static_Cut_Click;
+            _paste.Click += Static_Paste_Click;
+            _blend.Click += Static_Blend_Click;
+            _delete.Click += Static_Delete_Click;
+            _darken.Click += Static_Darken_Click;
+            _lighten.Click += Static_Lighten_Click;
+            _invert.Click += Static_Invert_Click;
+            _reset.Click += Static_Reset_Click;
+            _previousColor.Click += Static_PreviousColor_Click;
+            _copyAsHex.Click += Static_Copy_AsHEX;
+            _copyAsRGB.Click += Static_Copy_AsRGB;
+            _copyAsHSL.Click += Static_Copy_AsHSL;
+            _copyAsDecimal.Click += Static_Copy_AsDec;
+            _copyAsRGBPercent.Click += Static_Copy_AsRGBPercent;
+            _copyAsARGB.Click += Static_Copy_AsARGB;
+            _copyAsHSLA.Click += Static_Copy_AsHSLA;
+            _copyAsHSV.Click += Static_Copy_AsHSV;
+            _copyAsCMYK.Click += Static_Copy_AsCMYK;
+            _copyAsWin32.Click += Static_Copy_AsWin32;
+            _copyAsKnownName.Click += Static_Copy_AsKnownName;
+            _copyAsCSS.Click += Static_Copy_AsCSS;
+
+            _pasteImageEnabled = ColorItemContextMenu.Paste;
+            _pasteImageDisabled = ColorItemContextMenu.Paste.Grayscale();
+            _blendImageEnabled = ColorEffects.Blend_24;
+            _blendImageDisabled = ColorEffects.Blend_24.Grayscale();
+            _prevColorImageEnabled = ColorItemContextMenu.Reset;
+            _prevColorImageDisabled = ColorItemContextMenu.Reset.Grayscale();
         }
 
-        #region Variables
+        #region Static menu event handlers
+
+        private static void Static_Copy_Click(object sender, EventArgs e)
+        {
+            if (_activeTarget == null) return;
+            ColorClipboard.CopiedColor = _activeTarget.BackColor;
+            _activeTarget.CopyColor(_activeTarget.BackColor.ToString(Program.Settings.NerdStats.Type));
+            _sharedContextMenu.Close();
+        }
+
+        private static void Static_Copy_AsHEX(object sender, EventArgs e) => _activeTarget?.CopyColor(_activeTarget.BackColor.ToString(Formats.HEX));
+        private static void Static_Copy_AsRGB(object sender, EventArgs e) => _activeTarget?.CopyColor(_activeTarget.BackColor.ToString(Formats.RGB));
+        private static void Static_Copy_AsHSL(object sender, EventArgs e) => _activeTarget?.CopyColor(_activeTarget.BackColor.ToString(Formats.HSL));
+        private static void Static_Copy_AsDec(object sender, EventArgs e) => _activeTarget?.CopyColor(_activeTarget.BackColor.ToString(Formats.Dec));
+        private static void Static_Copy_AsRGBPercent(object sender, EventArgs e) => _activeTarget?.CopyColor(_activeTarget.BackColor.ToString(Formats.RGBPercent));
+        private static void Static_Copy_AsARGB(object sender, EventArgs e) => _activeTarget?.CopyColor(_activeTarget.BackColor.ToString(Formats.ARGB));
+        private static void Static_Copy_AsHSLA(object sender, EventArgs e) => _activeTarget?.CopyColor(_activeTarget.BackColor.ToString(Formats.HSLA));
+        private static void Static_Copy_AsHSV(object sender, EventArgs e) => _activeTarget?.CopyColor(_activeTarget.BackColor.ToString(Formats.HSV));
+        private static void Static_Copy_AsCMYK(object sender, EventArgs e) => _activeTarget?.CopyColor(_activeTarget.BackColor.ToString(Formats.CMYK));
+        private static void Static_Copy_AsWin32(object sender, EventArgs e) => _activeTarget?.CopyColor(_activeTarget.BackColor.ToString(Formats.Win32));
+        private static void Static_Copy_AsKnownName(object sender, EventArgs e) => _activeTarget?.CopyColor(_activeTarget.BackColor.ToString(Formats.KnownName));
+        private static void Static_Copy_AsCSS(object sender, EventArgs e) => _activeTarget?.CopyColor(_activeTarget.BackColor.ToString(Formats.CSS));
+
+        private static void Static_Cut_Click(object sender, EventArgs e)
+        {
+            if (_activeTarget == null) return;
+            ColorClipboard.CopiedColor = _activeTarget.BackColor;
+            _activeTarget.StartColorChangeAnimation(Color.Empty, sender);
+        }
+
+        private static void Static_Paste_Click(object sender, EventArgs e)
+        {
+            if (_activeTarget == null || ColorClipboard.CopiedColor == Color.Empty) return;
+            _activeTarget.StartColorChangeAnimation(ColorClipboard.CopiedColor, sender);
+        }
+
+        private static void Static_Delete_Click(object sender, EventArgs e)
+        {
+            _activeTarget?.StartColorChangeAnimation(Color.Empty, sender);
+        }
+
+        private static void Static_Reset_Click(object sender, EventArgs e)
+        {
+            _activeTarget?.StartColorChangeAnimation(_activeTarget.DefaultBackColor, sender);
+        }
+
+        private static void Static_PreviousColor_Click(object sender, EventArgs e)
+        {
+            if (_activeTarget == null || _activeTarget.ColorsHistory.Count <= 1) return;
+            _activeTarget.PauseColorsHistory = true;
+            Color prev = _activeTarget.ColorsHistory[_activeTarget.ColorsHistory.Count - 2];
+            _activeTarget.ColorsHistory.RemoveAt(_activeTarget.ColorsHistory.Count - 1);
+            _activeTarget.StartColorChangeAnimation(prev, sender);
+            _activeTarget.PauseColorsHistory = false;
+        }
+
+        private static void Static_Darken_Click(object sender, EventArgs e)
+        {
+            _activeTarget?.StartColorChangeAnimation(_activeTarget.BackColor.Dark(), sender);
+        }
+
+        private static void Static_Lighten_Click(object sender, EventArgs e)
+        {
+            _activeTarget?.StartColorChangeAnimation(_activeTarget.BackColor.Light(), sender);
+        }
+
+        private static void Static_Invert_Click(object sender, EventArgs e)
+        {
+            _activeTarget?.StartColorChangeAnimation(_activeTarget.BackColor.Invert(), sender);
+        }
+
+        private static void Static_Blend_Click(object sender, EventArgs e)
+        {
+            if (_activeTarget == null) return;
+            _activeTarget.StartColorChangeAnimation(_activeTarget.BackColor.Blend(ColorClipboard.CopiedColor, 0.5f), sender);
+        }
+
+        private static void Static_Item_Click(object sender, EventArgs e)
+        {
+            if (_activeTarget == null) return;
+            ColorEffect effect = (sender as ToolStripMenuItem).Tag as ColorEffect;
+            _activeTarget.StartColorChangeAnimation(effect.Apply(_activeTarget.BackColor), sender);
+        }
+
+        #endregion
+
+        #region Instance state
+
         private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
 
         public bool ColorPickerOpened = false;
@@ -172,10 +281,16 @@ namespace WinPaletter.UI.Controllers
         private Color LineColor;
         public bool PauseColorsHistory = false;
 
+        // Cached rectangles - updated only in OnSizeChanged
         private Rectangle Rect;
         private Rectangle RectInner;
         private Rectangle Rect_DefColor;
         private Rectangle Rect_DefColor_MouseHoverFixer;
+
+        // Cached graphics paths - updated only in OnSizeChanged
+        private GraphicsPath _roundedRectPath;
+        private GraphicsPath _roundedRectInnerPath;
+
         private PointF mousePosition;
 
         public MouseState State = MouseState.None;
@@ -189,15 +304,10 @@ namespace WinPaletter.UI.Controllers
 
         #endregion
 
-        #region Properties 
-        /// <summary>
-        /// Gets or sets the default background color.
-        /// </summary>
+        #region Properties
+
         public new Color DefaultBackColor { get; set; } = Color.Black;
 
-        /// <summary>
-        /// Gets or sets a value indicating whether the menu display should be canceled.
-        /// </summary>
         [DefaultValue(false)]
         public bool CancelShowingMenu { get; set; } = false;
 
@@ -214,6 +324,7 @@ namespace WinPaletter.UI.Controllers
         #endregion
 
         #region Drag and drop
+
         private bool SwapNotCopy = false;
         private bool InitializeDrag = false;
         private Point mousePosition_beforeDrag, mousePosition_afterDrag;
@@ -225,6 +336,8 @@ namespace WinPaletter.UI.Controllers
         private Color BeforeDropColor;
         private Point BeforeDropMousePosition;
         private bool HoverOverDefColorDot = false;
+        private Timer _animationTimer;
+        private int _animationFactor = 0;
 
         public enum AfterDropEffects
         {
@@ -248,8 +361,13 @@ namespace WinPaletter.UI.Controllers
 
             if (!DesignMode && Program.Settings.NerdStats.DotDefaultChangedIndicator)
             {
-                HoverOverDefColorDot = CanRaiseEventsForDefColorDot();
-                Invalidate();
+                bool hover = CanRaiseEventsForDefColorDot();
+
+                if (HoverOverDefColorDot != hover)
+                {
+                    HoverOverDefColorDot = hover;
+                    Invalidate();
+                }
             }
 
             base.OnMouseMove(e);
@@ -257,27 +375,25 @@ namespace WinPaletter.UI.Controllers
 
         protected override void OnDragDrop(DragEventArgs e)
         {
+            // Stop any existing animation before starting a new one
+            StopDropAnimation();
+
             if (AllowDrop && Program.Settings.NerdStats.DragAndDrop)
             {
                 BeforeDropColor = BackColor;
                 BeforeDropMousePosition = PointToClient(MousePosition);
-                Timer2_factor = 0;
-                MakeAfterDropEffect = true;
-                Timer2.Enabled = true;
-                Timer2.Start();
+                StartDropAnimation();
 
                 if (e.Data.GetData(typeof(ColorItem)) is not ColorItem draggedColorItem) return;
 
-                if (!SwapNotCopy) // Copy
+                if (!SwapNotCopy)
                 {
                     BackColor = ProcessDraggedColorEffect(draggedColorItem.DragDefaultColor ? draggedColorItem.DefaultBackColor : draggedColorItem.BackColor);
                 }
-                else // Swap
+                else
                 {
                     BackColor = draggedColorItem.BackColor;
-
                     draggedColorItem.BackColor = ProcessDraggedColorEffect(BeforeDropColor);
-
                     draggedColorItem.ContextMenuMadeColorChangeInvoker?.Invoke(draggedColorItem, new ContextMenuMadeColorChangeEventArgs(draggedColorItem, null));
                 }
 
@@ -305,7 +421,7 @@ namespace WinPaletter.UI.Controllers
             }
 
             DragDropMouseHovering = true;
-            UpdateDragState(e);   // evaluate keys on entry
+            UpdateDragState(e);
 
             if (e.Data.GetData(typeof(ColorItem)) is ColorItem item)
             {
@@ -330,9 +446,7 @@ namespace WinPaletter.UI.Controllers
                 DraggedColor = ProcessDraggedColorEffect(item.DragDefaultColor ? item.DefaultBackColor : item.BackColor);
             }
 
-            UpdateDragState(e);      // re-check modifiers every mouse-move
-
-            // Quick repaint for visual feedback
+            UpdateDragState(e);
             Invalidate();
 
             base.OnDragOver(e);
@@ -341,12 +455,11 @@ namespace WinPaletter.UI.Controllers
         protected override void OnDragLeave(EventArgs e)
         {
             base.OnDragLeave(e);
-
-            // Stop hover visuals and request a repaint
+            StopDropAnimation();
             DragDropMouseHovering = false;
             AfterDropEffect = AfterDropEffects.None;
             SwapNotCopy = false;
-            Invalidate();   // schedules repaint; no delay needed
+            Invalidate();
         }
 
         private void UpdateDragState(DragEventArgs e)
@@ -356,7 +469,6 @@ namespace WinPaletter.UI.Controllers
             const int MK_CTRL = 8;
             const int MK_ALT = 32;
 
-            // Defaults
             SwapNotCopy = false;
             AfterDropEffect = AfterDropEffects.None;
 
@@ -372,7 +484,6 @@ namespace WinPaletter.UI.Controllers
 
             if (rbtn) SwapNotCopy = true;
 
-            // Set the drag-drop cursor feedback
             e.Effect = SwapNotCopy ? DragDropEffects.Move : DragDropEffects.Copy;
         }
 
@@ -380,31 +491,63 @@ namespace WinPaletter.UI.Controllers
         {
             switch (AfterDropEffect)
             {
-                case AfterDropEffects.Invert:
-                    {
-                        return c.Invert();
-                    }
-
-                case AfterDropEffects.Darker:
-                    {
-                        return c.Dark();
-                    }
-
-                case AfterDropEffects.Lighter:
-                    {
-                        return c.Light();
-                    }
-
-                case AfterDropEffects.Mix:
-                    {
-                        return c.Blend(BeforeDropColor, 0.5f);
-                    }
-
-                default:
-                    {
-                        return c;
-                    }
+                case AfterDropEffects.Invert: return c.Invert();
+                case AfterDropEffects.Darker: return c.Dark();
+                case AfterDropEffects.Lighter: return c.Light();
+                case AfterDropEffects.Mix: return c.Blend(BeforeDropColor, 0.5f);
+                default: return c;
             }
+        }
+        #endregion
+
+        #region Constructor
+
+        public ColorItem()
+        {
+            SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor |
+                ControlStyles.ResizeRedraw | ControlStyles.OptimizedDoubleBuffer |
+                ControlStyles.AllPaintingInWmPaint, true);
+            DoubleBuffered = true;
+            BackColor = Color.Transparent;
+
+            _animationTimer = new Timer { Enabled = false, Interval = 1 };
+            _animationTimer.Tick += AnimationTimer_Tick;
+
+            // Initialize rectangles and paths
+            UpdateCachedRects();
+            UpdateCachedPaths();
+
+            alpha = 0;
+            Text = string.Empty;
+            ColorsHistory.Clear();
+        }
+
+        private void UpdateCachedRects()
+        {
+            Rect = new Rectangle(0, 0, Width - 1, Height - 1);
+            RectInner = new Rectangle(1, 1, Width - 3, Height - 3);
+            Rect_DefColor = new Rectangle(7, (Height - 7) / 2, 7, 7);
+            Rect_DefColor_MouseHoverFixer = new Rectangle(Rect_DefColor.X - 3, Rect_DefColor.Y - 3,
+                Rect_DefColor.Width + 6, Rect_DefColor.Height + 6);
+        }
+
+        private void UpdateCachedPaths()
+        {
+            DisposeCachedPaths();
+
+            if (Width > 0 && Height > 0)
+            {
+                _roundedRectPath = Rect.Round(Program.Style.Radius);
+                _roundedRectInnerPath = RectInner.Round(Program.Style.Radius);
+            }
+        }
+
+        private void DisposeCachedPaths()
+        {
+            _roundedRectPath?.Dispose();
+            _roundedRectInnerPath?.Dispose();
+            _roundedRectPath = null;
+            _roundedRectInnerPath = null;
         }
 
         #endregion
@@ -413,17 +556,21 @@ namespace WinPaletter.UI.Controllers
 
         public void UpdateColorsHistory()
         {
-            if (!PauseColorsHistory)
+            if (PauseColorsHistory) return;
+
+            List<Color> h = ColorsHistory;
+            int count = h.Count;
+
+            if (count > 0)
             {
-                if (ColorsHistory.Count > 0)
-                {
-                    if (ColorsHistory.Last() != BackColor) ColorsHistory.Add(BackColor);
-                }
-                else
-                {
-                    ColorsHistory.Add(BackColor);
-                }
+                if (h[count - 1] != BackColor) h.Add(BackColor);
             }
+            else
+            {
+                h.Add(BackColor);
+            }
+
+            if (h.Count > 50) h.RemoveAt(0);
         }
 
         public static Size GetMiniColorItemSize()
@@ -433,192 +580,148 @@ namespace WinPaletter.UI.Controllers
 
         public bool CanRaiseEventsForDefColorDot()
         {
-            return Program.Settings.NerdStats.DotDefaultChangedIndicator && DefaultBackColor != Color.Empty && DefaultBackColor != Color.Transparent && Rect_DefColor_MouseHoverFixer.Contains(PointToClient(MousePosition)) && BackColor != DefaultBackColor;
+            return Program.Settings.NerdStats.DotDefaultChangedIndicator &&
+                DefaultBackColor != Color.Empty && DefaultBackColor != Color.Transparent &&
+                Rect_DefColor_MouseHoverFixer.Contains(PointToClient(MousePosition)) &&
+                BackColor != DefaultBackColor;
         }
 
         #endregion
 
-        #region Events/Overrides
+        #region Animation Timer
 
-        /// <summary>
-        /// Represents the method that will handle an event when a context menu triggers a color change.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">An object that contains the event data, including details about the color change.</param>
+        private void StartDropAnimation()
+        {
+            // Stop any existing animation first to prevent multiple simultaneous animations
+            StopDropAnimation();
+
+            _animationFactor = 0;
+            MakeAfterDropEffect = true;
+            _animationTimer.Start();
+        }
+
+        private void StopDropAnimation()
+        {
+            _animationFactor = 0;
+            MakeAfterDropEffect = false;
+            _animationTimer.Stop();
+        }
+
+        private void AnimationTimer_Tick(object sender, EventArgs e)
+        {
+            // Early exit if in design mode or animation should not be running
+            if (DesignMode || !MakeAfterDropEffect)
+            {
+                StopDropAnimation();
+                return;
+            }
+
+            _animationFactor = (int)(_animationFactor + Math.Min(Width, Height) * 3.5f);
+
+            // Calculate the hover rectangle dimensions
+            int i = Math.Max(Width, Height) + _animationFactor;
+            Rectangle hoverRect = new(
+                BeforeDropMousePosition.X - i / 2,
+                BeforeDropMousePosition.Y - i / 2,
+                i,
+                i);
+
+            // Check if the hover circle completely covers the control
+            // The animation is complete when the circle's bounding box
+            // completely encloses the control's rectangle
+            bool animationComplete = hoverRect.Contains(RectInner);
+
+            if (animationComplete)
+            {
+                StopDropAnimation();
+                return;
+            }
+
+            // Only invalidate if animation is still in progress
+            Invalidate();
+        }
+
+        #endregion
+
+        #region Events / Overrides
+
         public delegate void ContextMenuMadeColorChange(object sender, ContextMenuMadeColorChangeEventArgs e);
 
-        /// <summary>
-        /// Occurs when a color change is triggered by the context menu.
-        /// </summary>
-        /// <remarks>This event is raised to notify subscribers that a color change has been made through
-        /// the context menu. Subscribers can handle this event to perform actions in response to the color
-        /// change.</remarks>
         public event ContextMenuMadeColorChange ContextMenuMadeColorChangeInvoker;
 
-        /// <summary>
-        /// Provides data for the event that occurs when a context menu action results in a color change.
-        /// </summary>
-        /// <remarks>This event argument contains information about the selected color and the item that
-        /// was clicked in the context menu. It is typically used in scenarios where a user selects a color from a
-        /// context menu, and the application needs to respond to the selection.</remarks>
-        /// <param name="colorItem"></param>
-        /// <param name="clickedItem"></param>
-        public class ContextMenuMadeColorChangeEventArgs(ColorItem colorItem, object clickedItem) : EventArgs
+        public class ContextMenuMadeColorChangeEventArgs : EventArgs
         {
-            /// <summary>
-            /// Gets or sets the item that was clicked.
-            /// </summary>
-            public object ClickedItem { get; set; } = clickedItem;
+            public ContextMenuMadeColorChangeEventArgs(ColorItem colorItem, object clickedItem)
+            {
+                ColorItem = colorItem;
+                ClickedItem = clickedItem;
+            }
 
-            /// <summary>
-            /// Gets the color item associated with this instance.
-            /// </summary>
-            public ColorItem ColorItem { get; } = colorItem;
-
-            /// <summary>
-            /// Gets the background color associated with the current item.
-            /// </summary>
+            public object ClickedItem { get; set; }
+            public ColorItem ColorItem { get; }
             public Color Color => ColorItem?.BackColor ?? Color.Empty;
         }
 
-        /// <summary>
-        /// Processes Windows messages sent to the control, including handling custom behavior for the right mouse
-        /// button release.
-        /// </summary>
-        /// <remarks>This method overrides the default message processing to display a custom context menu
-        /// when the right mouse button is released. If the message is not handled, it is passed to the base
-        /// implementation.</remarks>
-        /// <param name="m">A <see cref="Message"/> object that represents the Windows message to process.</param>
         protected override void WndProc(ref Message m)
         {
             const int WM_RBUTTONUP = 0x0205;
 
             if (m.Msg == WM_RBUTTONUP && !CancelShowingMenu)
             {
-                // Custom context menu implementation
-                copy_AsHex.Text = Program.Localization.Strings.General.Copy_HEX;
-                copy_AsRGB.Text = Program.Localization.Strings.General.Copy_RGB;
-                copy_AsHSL.Text = Program.Localization.Strings.General.Copy_HSL;
-                copy_AsDecimal.Text = Program.Localization.Strings.General.Copy_Decimal;
-                copy_AsRGBPercent.Text = Program.Localization.Strings.General.Copy_RGBPercent;
-                copy_AsARGB.Text = Program.Localization.Strings.General.Copy_ARGB;
-                copy_AsHSLA.Text = Program.Localization.Strings.General.Copy_HSLA;
-                copy_AsHSV.Text = Program.Localization.Strings.General.Copy_HSV;
-                copy_AsCMYK.Text = Program.Localization.Strings.General.Copy_CMYK;
-                copy_AsWin32.Text = Program.Localization.Strings.General.Copy_Win32;
-                copy_AsKnownName.Text = Program.Localization.Strings.General.Copy_KnownName;
-                copy_AsCSS.Text = Program.Localization.Strings.General.Copy_CSS;
+                _activeTarget = this;
 
-                copy.Text = Program.Localization.Strings.General.Copy;
-                cut.Text = Program.Localization.Strings.General.Cut;
-                paste.Text = Program.Localization.Strings.General.Paste;
-                blend.Text = Program.Localization.Strings.General.PasteByBlending;
-                delete.Text = Program.Localization.Strings.General.Delete;
-                reset.Text = Program.Localization.Strings.General.Default + " (" + OS.Name + ")";
-                darken.Text = Program.Localization.Strings.General.Darken;
-                lighten.Text = Program.Localization.Strings.General.Lighten;
-                invert.Text = Program.Localization.Strings.General.Invert;
-                previousColor.Text = Program.Localization.Strings.General.PreviousColor;
-                someEffects.Text = Program.Localization.Strings.ColorEffects.SomeEffects;
+                // Update localised text
+                _copyAsHex.Text = Program.Localization.Strings.General.Copy_HEX;
+                _copyAsRGB.Text = Program.Localization.Strings.General.Copy_RGB;
+                _copyAsHSL.Text = Program.Localization.Strings.General.Copy_HSL;
+                _copyAsDecimal.Text = Program.Localization.Strings.General.Copy_Decimal;
+                _copyAsRGBPercent.Text = Program.Localization.Strings.General.Copy_RGBPercent;
+                _copyAsARGB.Text = Program.Localization.Strings.General.Copy_ARGB;
+                _copyAsHSLA.Text = Program.Localization.Strings.General.Copy_HSLA;
+                _copyAsHSV.Text = Program.Localization.Strings.General.Copy_HSV;
+                _copyAsCMYK.Text = Program.Localization.Strings.General.Copy_CMYK;
+                _copyAsWin32.Text = Program.Localization.Strings.General.Copy_Win32;
+                _copyAsKnownName.Text = Program.Localization.Strings.General.Copy_KnownName;
+                _copyAsCSS.Text = Program.Localization.Strings.General.Copy_CSS;
+                _copy.Text = Program.Localization.Strings.General.Copy;
+                _cut.Text = Program.Localization.Strings.General.Cut;
+                _paste.Text = Program.Localization.Strings.General.Paste;
+                _blend.Text = Program.Localization.Strings.General.PasteByBlending;
+                _delete.Text = Program.Localization.Strings.General.Delete;
+                _reset.Text = Program.Localization.Strings.General.Default + " (" + OS.Name + ")";
+                _darken.Text = Program.Localization.Strings.General.Darken;
+                _lighten.Text = Program.Localization.Strings.General.Lighten;
+                _invert.Text = Program.Localization.Strings.General.Invert;
+                _previousColor.Text = Program.Localization.Strings.General.PreviousColor;
+                _someEffects.Text = Program.Localization.Strings.ColorEffects.SomeEffects;
 
-                blend.Enabled = ColorClipboard.CopiedColor != Color.Empty;
-                blend.Image = blend.Enabled
-                    ? ColorEffects.Blend_24
-                    : ColorEffects.Blend_24.Grayscale();
+                // Enable/disable items
+                bool blendEnabled = ColorClipboard.CopiedColor != Color.Empty;
+                _blend.Enabled = blendEnabled;
+                _blend.Image = blendEnabled ? _blendImageEnabled : _blendImageDisabled;
 
                 string clipBoard = Clipboard.GetText();
                 bool clipBoardHasColor = clipBoard?.IsHexColor() ?? false;
-                ColorClipboard.CopiedColor = ColorClipboard.CopiedColor == Color.Empty && clipBoardHasColor ? clipBoard.ToColor() : ColorClipboard.CopiedColor;
+                if (ColorClipboard.CopiedColor == Color.Empty && clipBoardHasColor)
+                    ColorClipboard.CopiedColor = clipBoard.ToColor();
 
-                paste.Enabled = ColorClipboard.CopiedColor != Color.Empty;
-                paste.Image = paste.Enabled
-                    ? ColorItemContextMenu.Paste
-                    : ColorItemContextMenu.Paste.Grayscale();
+                bool pasteEnabled = ColorClipboard.CopiedColor != Color.Empty;
+                _paste.Enabled = pasteEnabled;
+                _paste.Image = pasteEnabled ? _pasteImageEnabled : _pasteImageDisabled;
 
-                previousColor.Enabled = ColorsHistory.Count > 2;
-                previousColor.Image = previousColor.Enabled
-                    ? ColorItemContextMenu.Reset
-                    : ColorItemContextMenu.Reset.Grayscale();
+                bool prevEnabled = ColorsHistory.Count > 2;
+                _previousColor.Enabled = prevEnabled;
+                _previousColor.Image = prevEnabled ? _prevColorImageEnabled : _prevColorImageDisabled;
 
-                // Screen coordinates
                 Point screenPoint = new((short)(m.LParam.ToInt32() & 0xFFFF), (short)(m.LParam.ToInt32() >> 16));
 
-                // release mouse capture so the menu can take focus
                 User32.ReleaseCapture();
-
-                contextMenu.Show(this, screenPoint);
+                _sharedContextMenu.Show(this, screenPoint);
 
                 return;
             }
 
             base.WndProc(ref m);
-        }
-
-        private void Copy_Click(object sender, EventArgs e)
-        {
-            ColorClipboard.CopiedColor = BackColor;
-            CopyColor(BackColor.ToString(Program.Settings.NerdStats.Type));
-            contextMenu.Close();
-        }
-
-        private void Copy_AsHEX(object sender, EventArgs e)
-        {
-            CopyColor(BackColor.ToString(Formats.HEX));
-        }
-
-        private void Copy_AsRGB(object sender, EventArgs e)
-        {
-            CopyColor(BackColor.ToString(Formats.RGB));
-        }
-
-        private void Copy_AsHSL(object sender, EventArgs e)
-        {
-            CopyColor(BackColor.ToString(Formats.HSL));
-        }
-
-        private void Copy_AsDec(object sender, EventArgs e)
-        {
-            CopyColor(BackColor.ToString(Formats.Dec));
-        }
-
-        private void Copy_AsRGBPercent(object sender, EventArgs e)
-        {
-            CopyColor(BackColor.ToString(Formats.RGBPercent));
-        }
-
-        private void Copy_AsARGB(object sender, EventArgs e)
-        {
-            CopyColor(BackColor.ToString(Formats.ARGB));
-        }
-
-        private void Copy_AsHSLA(object sender, EventArgs e)
-        {
-            CopyColor(BackColor.ToString(Formats.HSLA));
-        }
-
-        private void Copy_AsHSV(object sender, EventArgs e)
-        {
-            CopyColor(BackColor.ToString(Formats.HSV));
-        }
-
-        private void Copy_AsCMYK(object sender, EventArgs e)
-        {
-            CopyColor(BackColor.ToString(Formats.CMYK));
-        }
-
-        private void Copy_AsWin32(object sender, EventArgs e)
-        {
-            CopyColor(BackColor.ToString(Formats.Win32));
-        }
-
-        private void Copy_AsKnownName(object sender, EventArgs e)
-        {
-            CopyColor(BackColor.ToString(Formats.KnownName));
-        }
-
-        private void Copy_AsCSS(object sender, EventArgs e)
-        {
-            CopyColor(BackColor.ToString(Formats.CSS));
         }
 
         private void CopyColor(string text)
@@ -627,164 +730,27 @@ namespace WinPaletter.UI.Controllers
             ColorClipboard.CopiedColor = BackColor;
         }
 
-        private void Cut_Click(object sender, EventArgs e)
-        {
-            ColorClipboard.CopiedColor = BackColor;
-
-            BeforeDropColor = BackColor;
-            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
-            Timer2_factor = 0;
-            MakeAfterDropEffect = true;
-            Timer2.Enabled = true;
-            Timer2.Start();
-            BackColor = Color.Empty;
-
-            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
-        }
-
-        private void Paste_Click(object sender, EventArgs e)
-        {
-            if (ColorClipboard.CopiedColor != Color.Empty)
-            {
-                BeforeDropColor = BackColor;
-                BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
-                Timer2_factor = 0;
-                MakeAfterDropEffect = true;
-                Timer2.Enabled = true;
-                Timer2.Start();
-                BackColor = ColorClipboard.CopiedColor;
-
-                if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
-            }
-        }
-
-        private void Delete_Click(object sender, EventArgs e)
+        private void StartColorChangeAnimation(Color newColor, object sender)
         {
             BeforeDropColor = BackColor;
-            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
-            Timer2_factor = 0;
-            MakeAfterDropEffect = true;
-            Timer2.Enabled = true;
-            Timer2.Start();
-            BackColor = Color.Empty;
+            BeforeDropMousePosition = PointToClient(new Point(_sharedContextMenu.Left, _sharedContextMenu.Top));
+            StartDropAnimation();
+            BackColor = newColor;
 
-            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
-        }
-
-        private void Reset_Click(object sender, EventArgs e)
-        {
-            BeforeDropColor = BackColor;
-            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
-            Timer2_factor = 0;
-            MakeAfterDropEffect = true;
-            Timer2.Enabled = true;
-            Timer2.Start();
-            BackColor = DefaultBackColor;
-
-            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
-        }
-
-        private void PreviousColor_Click(object sender, EventArgs e)
-        {
-            if (ColorsHistory.Count > 1)
-            {
-                PauseColorsHistory = true;
-
-                BeforeDropColor = BackColor;
-                BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
-                Timer2_factor = 0;
-                MakeAfterDropEffect = true;
-                Timer2.Enabled = true;
-                Timer2.Start();
-                BackColor = ColorsHistory[ColorsHistory.Count - 2];
-
-                ColorsHistory.RemoveAt(ColorsHistory.Count - 1);
-                PauseColorsHistory = false;
-                if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
-            }
-        }
-
-        private void Darken_Click(object sender, EventArgs e)
-        {
-            BeforeDropColor = BackColor;
-            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
-            Timer2_factor = 0;
-            MakeAfterDropEffect = true;
-            Timer2.Enabled = true;
-            Timer2.Start();
-            BackColor = BackColor.Dark();
-
-            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
-        }
-
-        private void Lighten_Click(object sender, EventArgs e)
-        {
-            BeforeDropColor = BackColor;
-            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
-            Timer2_factor = 0;
-            MakeAfterDropEffect = true;
-            Timer2.Enabled = true;
-            Timer2.Start();
-            BackColor = BackColor.Light();
-
-            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
-        }
-
-        private void Invert_Click(object sender, EventArgs e)
-        {
-            BeforeDropColor = BackColor;
-            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
-            Timer2_factor = 0;
-            MakeAfterDropEffect = true;
-            Timer2.Enabled = true;
-            Timer2.Start();
-            BackColor = BackColor.Invert();
-
-            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
-        }
-
-        private void Blend_Click(object sender, EventArgs e)
-        {
-            BeforeDropColor = BackColor;
-            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
-            Timer2_factor = 0;
-            MakeAfterDropEffect = true;
-            Timer2.Enabled = true;
-            Timer2.Start();
-            BackColor = BackColor.Blend(ColorClipboard.CopiedColor, 0.5f);
-
-            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
-        }
-
-        private void Item_Click(object sender, EventArgs e)
-        {
-            BeforeDropColor = BackColor;
-            BeforeDropMousePosition = PointToClient(new(contextMenu.Left, contextMenu.Top));
-            Timer2_factor = 0;
-            MakeAfterDropEffect = true;
-            Timer2.Enabled = true;
-            Timer2.Start();
-
-            ColorEffect effect = (sender as ToolStripMenuItem).Tag as ColorEffect;
-            BackColor = effect.Apply(BeforeDropColor);
-
-            if (BeforeDropColor != BackColor) ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
+            if (BeforeDropColor != BackColor)
+                ContextMenuMadeColorChangeInvoker?.Invoke(this, new ContextMenuMadeColorChangeEventArgs(this, sender));
         }
 
         protected override void OnSizeChanged(EventArgs e)
         {
-            Rect = new(0, 0, Width - 1, Height - 1);
-            RectInner = new(1, 1, Width - 3, Height - 3);
-            Rect_DefColor = new(7, (Height - 7) / 2, 7, 7);
-            Rect_DefColor_MouseHoverFixer = new(Rect_DefColor.X - 3, Rect_DefColor.Y - 3, Rect_DefColor.Width + 6, Rect_DefColor.Height + 6);
-
+            UpdateCachedRects();
+            UpdateCachedPaths();
             base.OnSizeChanged(e);
         }
 
         protected override void OnBackColorChanged(EventArgs e)
         {
             UpdateColorsHistory();
-
             base.OnBackColorChanged(e);
         }
 
@@ -804,9 +770,9 @@ namespace WinPaletter.UI.Controllers
         {
             InitializeDrag = false;
             State = MouseState.Over;
-            bool MouseOver = ClientRectangle.Contains(e.Location);
-            if (CanAnimate) { Transition.With(this, nameof(alpha), ContainsFocus || MouseOver ? 255 : 0).CriticalDamp(Program.AnimationSpan); }
-            else { alpha = ContainsFocus || MouseOver ? 255 : 0; }
+            bool mouseOver = ClientRectangle.Contains(e.Location);
+            if (CanAnimate) { Transition.With(this, nameof(alpha), ContainsFocus || mouseOver ? 255 : 0).CriticalDamp(Program.AnimationSpan); }
+            else { alpha = ContainsFocus || mouseOver ? 255 : 0; }
 
             base.OnMouseUp(e);
         }
@@ -835,68 +801,58 @@ namespace WinPaletter.UI.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            base.Dispose(disposing);
+            if (disposing)
+            {
+                if (_activeTarget == this) _activeTarget = null;
 
-            Timer2?.Dispose();
+                StopDropAnimation();
+                _animationTimer?.Dispose();
+
+                DisposeCachedPaths();
+            }
+            base.Dispose(disposing);
         }
 
-        int parentLevel = 0;
+        private int parentLevel = 0;
+
         protected override void OnParentChanged(EventArgs e)
         {
             base.OnParentChanged(e);
-
             parentLevel = this.Level();
         }
-
         #endregion
 
         #region Animator
+
         private int _alpha = 0;
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
         public int alpha
         {
             get => _alpha;
-            set { _alpha = value; Invalidate(); }
-        }
-
-        private readonly Timer Timer2;
-        private int Timer2_factor = 0;
-
-        private async void Timer2_Tick(object sender, EventArgs e)
-        {
-            if (!DesignMode && MakeAfterDropEffect)
+            set
             {
-                Timer2_factor = (int)(Timer2_factor + Math.Min(Width, Height) * 3.5f);
-                await Task.Delay(1);
+                if (_alpha == value) return;
+                _alpha = value;
                 Invalidate();
             }
-            else
-            {
-                Timer2_factor = 0;
-                MakeAfterDropEffect = false;
-                await Task.Delay(1);
-                Invalidate();
-                Timer2.Enabled = false;
-                Timer2.Stop();
-            }
         }
+
         #endregion
 
         protected override void OnPaintBackground(PaintEventArgs pevent)
         {
-            //Leave it empty to make control background transparent
+            // Left empty intentionally
             base.OnPaintBackground(pevent);
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics G = e.Graphics;
+            SmoothingMode oldSmoothingMode = G.SmoothingMode;
             G.SmoothingMode = SmoothingMode.AntiAlias;
 
-            //Makes background drawn properly, and transparent
             InvokePaintBackground(this, e);
-
             G.Clear(this.GetParentColor());
 
             if (Enabled)
@@ -908,191 +864,190 @@ namespace WinPaletter.UI.Controllers
 
                 if (BackColor.A < 255)
                 {
-                    using (TextureBrush br = new(Resources.BackgroundOpacity)) { G.FillRoundedRect(br, RectInner); }
-                    using (Bitmap b = Resources.BackgroundOpacity.Fade(alpha / 255f))
-                    using (TextureBrush br = new(b))
+                    if (_roundedRectInnerPath != null)
                     {
-                        G.FillRoundedRect(br, Rect);
+                        using (TextureBrush br = new(Resources.BackgroundOpacity))
+                        {
+                            G.FillPath(br, _roundedRectInnerPath);
+                        }
+                    }
+
+                    if (_roundedRectPath != null)
+                    {
+                        using (Bitmap b = Resources.BackgroundOpacity.Fade(alpha / 255f))
+                        using (TextureBrush br = new(b))
+                        {
+                            G.FillPath(br, _roundedRectPath);
+                        }
                     }
                 }
 
                 if (!DesignMode && MakeAfterDropEffect && CanAnimate)
                 {
-                    // Make ripple effect on dropping a color
-                    using (SolidBrush br = new(BeforeDropColor))
+                    if (_roundedRectInnerPath != null)
                     {
-                        G.FillRoundedRect(br, RectInner);
-                    }
-
-                    using (GraphicsPath path = Program.Style.RoundedCorners ? RectInner.Round(Program.Style.Radius) : new GraphicsPath())
-                    {
-                        if (!Program.Style.RoundedCorners) { path.AddRectangle(RectInner); }
+                        using (SolidBrush br = new(BeforeDropColor))
                         {
-                            int i = Math.Max(Width, Height) + Timer2_factor;
-
-                            using (Region reg = new(path))
-                            using (GraphicsPath gp = new())
-                            {
-                                G.Clip = reg;
-                                Point px = BeforeDropMousePosition;
-                                RectangleF MouseCircle = new(px.X - 0.5f * i, px.Y - 0.5f * i, i, i);
-                                gp.AddEllipse(MouseCircle);
-                                using (PathGradientBrush pgb = new(gp)
-                                {
-                                    CenterPoint = px,
-                                    CenterColor = BackColor,
-                                    SurroundColors = [Color.Transparent]
-                                })
-                                { G.FillEllipse(pgb, MouseCircle); }
-                                G.ResetClip();
-                            }
-
-                            if (i / 2d > Width * Height)
-                            {
-                                Timer2.Enabled = false;
-                                Timer2.Stop();
-                                Timer2_factor = 0;
-                                MakeAfterDropEffect = false;
-                                Invalidate();
-                            }
+                            G.FillPath(br, _roundedRectInnerPath);
                         }
                     }
 
-                    using (Pen P = new(LineColor)) { G.DrawRoundedRectBeveled(P, RectInner); }
-                }
+                    int i = Math.Max(Width, Height) + _animationFactor;
+                    Rectangle hoverRect = new(BeforeDropMousePosition.X - i / 2, BeforeDropMousePosition.Y - i / 2, i, i);
+                    G.DrawHover(RectInner, hoverRect, BeforeDropMousePosition, BackColor);
 
+                    if (_roundedRectInnerPath != null)
+                    {
+                        using (Pen P = new(LineColor))
+                        {
+                            G.DrawPath(P, _roundedRectInnerPath);
+                        }
+                    }
+                }
                 else if (!DesignMode && DragDropMouseHovering && CanAnimate)
                 {
-                    // Make circle hover effect on dragging over a color
-
-                    using (SolidBrush br = new(BackColor)) { G.FillRoundedRect(br, Rect); }
-
-                    using (GraphicsPath path = Rect.Round(Program.Style.Radius))
-                    using (Region reg = new(path))
-                    using (GraphicsPath gp = new())
+                    if (_roundedRectPath != null)
                     {
-                        G.Clip = reg;
+                        using (SolidBrush br = new(BackColor))
+                        {
+                            G.FillPath(br, _roundedRectPath);
+                        }
+
                         int i = Math.Max(Width, Height);
                         Point px = PointToClient(MousePosition);
-                        RectangleF MouseCircle = new(px.X - 0.5f * i, px.Y - 0.5f * i, i, i);
-                        gp.AddEllipse(MouseCircle);
-                        using (PathGradientBrush pgb = new(gp)
+                        G.DrawHover(this, _roundedRectPath, DraggedColor, i);
+
+                        using (Pen P = new(base.BackColor.IsDark() ? Color.White : Color.Black, 1.5f) { DashStyle = DashStyle.Dot })
                         {
-                            CenterPoint = px,
-                            CenterColor = DraggedColor,
-                            SurroundColors = [Color.Transparent]
-                        })
-                        {
-                            G.FillEllipse(pgb, MouseCircle);
+                            G.DrawPath(P, _roundedRectPath);
                         }
-                        G.ResetClip();
                     }
-
-                    using (Pen P = new(base.BackColor.IsDark() ? Color.White : Color.Black, 1.5f) { DashStyle = DashStyle.Dot }) { G.DrawRoundedRectBeveled(P, Rect); }
                 }
-
                 else
                 {
-                    // Normal appearance
+                    if (_roundedRectInnerPath != null)
+                    {
+                        using (SolidBrush br = new(BackColor))
+                        {
+                            G.FillPath(br, _roundedRectInnerPath);
+                        }
+                    }
 
-                    using (SolidBrush br = new(BackColor)) { G.FillRoundedRect(br, RectInner); }
+                    if (_roundedRectPath != null)
+                    {
+                        using (SolidBrush br = new(Color.FromArgb((int)(alpha / 255f * BackColor.A), BackColor)))
+                        {
+                            G.FillPath(br, _roundedRectPath);
+                        }
+                    }
 
-                    using (SolidBrush br = new(Color.FromArgb((int)(alpha / 255f * BackColor.A), BackColor))) { G.FillRoundedRect(br, Rect); }
+                    if (_roundedRectInnerPath != null)
+                    {
+                        using (Pen P = new(Color.FromArgb((int)((255f - alpha) / 255f * LineColor.A), LineColor)))
+                        {
+                            G.DrawPath(P, _roundedRectInnerPath);
+                        }
+                    }
 
-                    using (Pen P = new(Color.FromArgb((int)((255f - alpha) / 255f * LineColor.A), LineColor))) { G.DrawRoundedRectBeveled(P, RectInner); }
-
-                    using (Pen P = new(Color.FromArgb((int)(alpha / 255f * LineColor.A), LineColor))) { G.DrawRoundedRectBeveled(P, Rect); }
+                    if (_roundedRectPath != null)
+                    {
+                        using (Pen P = new(Color.FromArgb((int)(alpha / 255f * LineColor.A), LineColor)))
+                        {
+                            G.DrawPath(P, _roundedRectPath);
+                        }
+                    }
                 }
 
                 if (!DesignMode && Program.Settings.NerdStats.DotDefaultChangedIndicator)
                 {
                     using (SolidBrush br = new(DefaultBackColor))
                     {
-                        float L = 7f;
+                        const float L = 7f;
                         float Y = RectInner.Y + (RectInner.Height - L) / 2f;
-                        RectangleF DefDotRect;
+                        RectangleF defDotRect = HoverOverDefColorDot
+                            ? new RectangleF(L - 1, Y - 1, L + 2, L + 2)
+                            : new RectangleF(L, Y, L, L);
 
-                        if (!HoverOverDefColorDot) { DefDotRect = new(L, Y, L, L); }
-                        else { DefDotRect = new(L - 1, Y - 1, L + 2, L + 2); }
-
-                        G.FillEllipse(br, DefDotRect);
+                        G.FillEllipse(br, defDotRect);
                     }
                 }
             }
-
             else
             {
-                using (SolidBrush br = new(Program.Style.Schemes.Disabled.Colors.Back(parentLevel)))
+                if (_roundedRectInnerPath != null)
                 {
-                    G.FillRoundedRect(br, RectInner);
+                    using (SolidBrush br = new(Program.Style.Schemes.Disabled.Colors.Back(parentLevel)))
+                    {
+                        G.FillPath(br, _roundedRectInnerPath);
+                    }
                 }
             }
 
-            if (!DesignMode)
+            if (!DesignMode && Program.Settings.NerdStats.Enabled && !DontShowInfo)
             {
-                if (Program.Settings.NerdStats.Enabled & !DontShowInfo)
+                G.TextRenderingHint = Program.Style.TextRenderingHint;
+
+                Color targetColor = Enabled
+                    ? (!HoverOverDefColorDot | !Program.Settings.NerdStats.DotDefaultChangedIndicator ? BackColor : DefaultBackColor)
+                    : Program.Style.Schemes.Disabled.Colors.Line(parentLevel);
+
+                Color fc0 = targetColor.IsDark() ? LineColor.LightLight() : LineColor.Dark(0.9f);
+                Color fc1 = fc0;
+
+                fc0 = Color.FromArgb(Program.Settings.NerdStats.MoreLabelTransparency ? 75 : 125, fc0);
+                fc1 = Color.FromArgb(alpha, fc1);
+
+                Rectangle rectX = Rect;
+                rectX.Y += 1;
+
+                string s;
+                if (AfterDropEffect != AfterDropEffects.None)
                 {
-                    G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
+                    s = AfterDropEffect == AfterDropEffects.Invert ? Program.Localization.Strings.General.Invert :
+                        AfterDropEffect == AfterDropEffects.Darker ? Program.Localization.Strings.General.Darken :
+                        AfterDropEffect == AfterDropEffects.Lighter ? Program.Localization.Strings.General.Lighten :
+                        Program.Localization.Strings.General.Blend;
+                }
+                else
+                {
+                    s = Enabled
+                        ? targetColor.ToString(default, Program.Settings.NerdStats.ShowHexHash, true)
+                        : Program.Localization.Strings.General.Disabled;
+                }
 
-                    Color TargetColor = Enabled ? (!HoverOverDefColorDot | !Program.Settings.NerdStats.DotDefaultChangedIndicator ? BackColor : DefaultBackColor) : Program.Style.Schemes.Disabled.Colors.Line(parentLevel);
-                    Color FC0 = TargetColor.IsDark() ? LineColor.LightLight() : LineColor.Dark(0.9f);
-                    Color FC1 = TargetColor.IsDark() ? LineColor.LightLight() : LineColor.Dark(0.9f);
+                using (SolidBrush br = new(fc0)) { G.DrawString(s, Font, br, rectX, middleCenter); }
+                using (SolidBrush br = new(fc1)) { G.DrawString(s, Font, br, rectX, middleCenter); }
 
-                    FC0 = Color.FromArgb(Program.Settings.NerdStats.MoreLabelTransparency ? 75 : 125, FC0);
-                    FC1 = Color.FromArgb(alpha, FC1);
-
-                    Rectangle RectX = Rect; RectX.Y += 1;
-
-                    string S;
-                    if (AfterDropEffect != AfterDropEffects.None)
+                if (!DesignMode && DragDropMouseHovering && CanAnimate)
+                {
+                    if (_roundedRectPath != null)
                     {
-                        S = AfterDropEffect == AfterDropEffects.Invert ? Program.Localization.Strings.General.Invert :
-                            AfterDropEffect == AfterDropEffects.Darker ? Program.Localization.Strings.General.Darken :
-                            AfterDropEffect == AfterDropEffects.Lighter ? Program.Localization.Strings.General.Lighten :
-                            Program.Localization.Strings.General.Blend;
-                    }
-                    else
-                    {
-                        S = Enabled ? TargetColor.ToString(default, Program.Settings.NerdStats.ShowHexHash, true) : Program.Localization.Strings.General.Disabled;
-                    }
-
-                    Font F = Program.Settings.NerdStats.UseWindowsMonospacedFont ? genericMonospacedFont : Fonts.Console;
-
-                    using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
-                    {
-                        using (SolidBrush br = new(FC0)) { G.DrawString(S, F, br, RectX, sf); }
-                        using (SolidBrush br = new(FC1)) { G.DrawString(S, F, br, RectX, sf); }
-                    }
-
-                    if (!DesignMode && DragDropMouseHovering && CanAnimate)
-                    {
-                        using (GraphicsPath path = Rect.Round(Program.Style.Radius))
-                        using (Region reg = new(path))
                         using (GraphicsPath gp = new())
                         {
                             float i = Math.Max(Width, Height);
-                            RectangleF MouseCircle = new(mousePosition.X - 0.5f * i, mousePosition.Y - 0.5f * i, i, i);
-                            gp.AddEllipse(MouseCircle);
+                            RectangleF mouseCircle = new(mousePosition.X - 0.5f * i, mousePosition.Y - 0.5f * i, i, i);
+                            gp.AddEllipse(mouseCircle);
 
                             G.SetClip(gp);
 
-                            using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
+                            using (SolidBrush br = new(DraggedColor.IsDark() ? DraggedColor.Light() : DraggedColor.Dark()))
                             {
-                                using (SolidBrush br = new(DraggedColor.IsDark() ? DraggedColor.Light() : DraggedColor.Dark())) { G.DrawString(S, F, br, RectX, sf); }
+                                G.DrawString(s, Font, br, rectX, middleCenter);
                             }
 
                             G.ResetClip();
                         }
                     }
-
-                    using (StringFormat sf = ContentAlignment.MiddleRight.ToStringFormat())
-                    {
-                        using (SolidBrush br = new(FC0)) { G.DrawString(ColorPickerOpened ? "▼" : string.Empty, F, br, new Rectangle(RectX.X, RectX.Y, RectX.Width - 5, RectX.Height), sf); }
-                        using (SolidBrush br = new(FC1)) { G.DrawString(ColorPickerOpened ? "▼" : string.Empty, F, br, new Rectangle(RectX.X, RectX.Y, RectX.Width - 5, RectX.Height), sf); }
-                    }
                 }
+
+                Rectangle chevronRect = new(rectX.X, rectX.Y, rectX.Width - 5, rectX.Height);
+                string chevron = ColorPickerOpened ? "▼" : string.Empty;
+
+                using (SolidBrush br = new(fc0)) { G.DrawString(chevron, Font, br, chevronRect, chevronSF); }
+                using (SolidBrush br = new(fc1)) { G.DrawString(chevron, Font, br, chevronRect, chevronSF); }
             }
 
+            G.SmoothingMode = oldSmoothingMode;
             base.OnPaint(e);
         }
     }

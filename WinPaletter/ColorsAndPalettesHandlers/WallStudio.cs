@@ -16,6 +16,7 @@ using WinPaletter.UI.Simulation;
 using WinPaletter.UI.WP;
 using static WinPaletter.PreviewHelpers;
 using static WinPaletter.TypesExtensions.BitmapExtensions;
+using static WinPaletter.TypesExtensions.ColorsExtensions;
 
 namespace WinPaletter
 {
@@ -184,10 +185,14 @@ namespace WinPaletter
 
                 try
                 {
+                    // 1. Load source image
                     using Bitmap bmp_src = BitmapMgr.Load(textBox1.Text);
+
+                    // If PreviewSize is small (e.g., 256x256), memory usage will already drop drastically
                     using Bitmap bmp = bmp_src.Resize(Program.PreviewSize);
 
-                    Palette?.Clear();
+                    // Create a local list to hold everything safely before updating the UI state
+                    List<Color> temporaryList = null;
 
                     // Prepare palette generation settings
                     PaletteGeneratorSettings settings = new()
@@ -198,26 +203,36 @@ namespace WinPaletter
                         AccentColor = checkBox2.Checked ? colorItem1.BackColor : null
                     };
 
-                    // Generate palette asynchronously (non-blocking)
+                    // Generate first palette asynchronously
                     List<Color> palette = await bmp.ToPalette(settings);
 
-                    // Sort in parallel (still non-blocking)
-                    Palette = palette.AsParallel().OrderBy(c => c, new RGBColorComparer()).ToList();
+                    // Sort using PLINQ directly into our temporary container
+                    temporaryList = palette.AsParallel().OrderBy(c => c, new RGBColorComparer()).ToList();
 
-                    if (checkBox1.Checked && File.Exists(textBox2.Text) && textBox2.Text.ToLower().Trim() != textBox1.Text.ToLower().Trim())
+                    // Handle the secondary lock screen image if needed
+                    if (checkBox1.Checked && File.Exists(textBox2.Text) && textBox1.Text.Trim().ToLower() != textBox2.Text.Trim().ToLower())
                     {
                         using Bitmap bmp_lock_src = BitmapMgr.Load(textBox2.Text);
                         using Bitmap bmp_lock = bmp_lock_src.Resize(Program.PreviewSize);
-                        {
-                            // Generate palette asynchronously
-                            List<Color> palette_lockScreen = await bmp_lock.ToPalette(settings);
 
-                            Palette.AddRange(palette_lockScreen);
+                        List<Color> palette_lockScreen = await bmp_lock.ToPalette(settings);
 
-                            // Sort in parallel (still non-blocking)
-                            Palette = Palette.AsParallel().OrderBy(c => c, new RGBColorComparer()).ToList();
-                        }
+                        // Combine them safely in memory
+                        temporaryList.AddRange(palette_lockScreen);
+
+                        // Re-sort the combined collection
+                        temporaryList = temporaryList.AsParallel().OrderBy(c => c, new RGBColorComparer()).ToList();
                     }
+
+                    // 2. SWAP THE REFERENCE SAFELY 
+                    // Clear the old instance to break any bindings, then point to the new collection
+                    Palette?.Clear();
+                    Palette = temporaryList;
+
+                    // 3. OPTIONAL: Force unmanaged GDI+ release if you still see RAM creeping up
+                    // Since Bitmaps use unmanaged memory, forcing a collection here kills the native handles.
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
 
                     // Update UI safely
                     ImgPaletteContainer.Controls.Clear();
@@ -658,6 +673,58 @@ namespace WinPaletter
             }
         }
 
+        private Color MapThemeColor(Color original)
+        {
+            HSL hsl = original.Grayscale().ToHSL();
+
+            if (hsl.L < 0.5f)
+                hsl.L *= 0.75f;
+            else
+                hsl.L += (1f - hsl.L) * 0.15f;
+
+            float targetL = hsl.L;
+
+            Color best = default;
+            double bestScore = double.MaxValue;
+
+            foreach (Color c in Palette)
+            {
+                HSL ph = c.ToHSL();
+
+                float dl = Math.Abs(PerceivedBrightness(c) - targetL);
+
+                // chroma penalty (prevents wrong hue replacement)
+                float ds = Math.Abs(ph.S - hsl.S);
+
+                // hue drift penalty (prevents red→green swaps)
+                float dh = original.Distance(c);
+
+                // accessibility penalty (contrast vs target luminance)
+                float contrastPenalty = Math.Abs((float)ContrastRatio(c, original));
+
+                double score =
+                    dl * 1.0 +
+                    ds * 0.6 +
+                    dh * 0.8 +
+                    contrastPenalty * 1.5;
+
+                if (score < bestScore)
+                {
+                    bestScore = score;
+                    best = c;
+                }
+            }
+
+            return best;
+        }
+
+        public static double ContrastRatio(Color c1, Color c2)
+        {
+            double l1 = c1.Luminance() + 0.05;
+            double l2 = c2.Luminance() + 0.05;
+            return l1 > l2 ? l1 / l2 : l2 / l1;
+        }
+
         void AdjustTM(bool altNearing = false, bool skipEffects = true)
         {
             TM = radioImage1.Checked ? Default.FromOS(Program.WindowStyle) : Program.TM.Clone();
@@ -732,74 +799,74 @@ namespace WinPaletter
 
             foreach (PropertyInfo prop in ReflectionCache.Windows10xProps)
             {
-                prop.SetValue(TM.Windows12, ApplyEffect(((Color)prop.GetValue(TM.Windows12)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
-                prop.SetValue(TM.Windows11, ApplyEffect(((Color)prop.GetValue(TM.Windows11)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
-                prop.SetValue(TM.Windows10, ApplyEffect(((Color)prop.GetValue(TM.Windows10)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+                prop.SetValue(TM.Windows12, ApplyEffect(MapThemeColor((Color)prop.GetValue(TM.Windows12)).GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+                prop.SetValue(TM.Windows11, ApplyEffect(MapThemeColor((Color)prop.GetValue(TM.Windows11)).GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+                prop.SetValue(TM.Windows10, ApplyEffect(MapThemeColor((Color)prop.GetValue(TM.Windows10)).GetNearestColorFromPalette(Palette, altNearing), skipEffects));
             }
 
             foreach (PropertyInfo prop in ReflectionCache.Windows81Props)
             {
-                prop.SetValue(TM.Windows81, ApplyEffect(((Color)prop.GetValue(TM.Windows81)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+                prop.SetValue(TM.Windows81, ApplyEffect(MapThemeColor((Color)prop.GetValue(TM.Windows81)).GetNearestColorFromPalette(Palette, altNearing), skipEffects));
             }
 
             foreach (PropertyInfo prop in ReflectionCache.Windows8Props)
             {
-                prop.SetValue(TM.Windows8, ApplyEffect(((Color)prop.GetValue(TM.Windows8)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+                prop.SetValue(TM.Windows8, ApplyEffect(MapThemeColor((Color)prop.GetValue(TM.Windows8)).GetNearestColorFromPalette(Palette, altNearing), skipEffects));
             }
 
             foreach (PropertyInfo prop in ReflectionCache.Windows7Props)
             {
-                prop.SetValue(TM.Windows7, ApplyEffect(((Color)prop.GetValue(TM.Windows7)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+                prop.SetValue(TM.Windows7, ApplyEffect(MapThemeColor((Color)prop.GetValue(TM.Windows7)).GetNearestColorFromPalette(Palette, altNearing), skipEffects));
             }
 
             foreach (PropertyInfo prop in ReflectionCache.WindowsVistaProps)
             {
-                prop.SetValue(TM.WindowsVista, ApplyEffect(((Color)prop.GetValue(TM.WindowsVista)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+                prop.SetValue(TM.WindowsVista, ApplyEffect(MapThemeColor((Color)prop.GetValue(TM.WindowsVista)).GetNearestColorFromPalette(Palette, altNearing), skipEffects));
             }
 
             foreach (PropertyInfo prop in ReflectionCache.Win32UIProps)
             {
-                prop.SetValue(TM.Win32, ApplyEffect(((Color)prop.GetValue(TM.Win32)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+                prop.SetValue(TM.Win32, ApplyEffect(MapThemeColor((Color)prop.GetValue(TM.Win32)).GetNearestColorFromPalette(Palette, altNearing), skipEffects));
             }
 
             foreach (PropertyInfo prop in ReflectionCache.ConsoleProps)
             {
-                prop.SetValue(TM.CommandPrompt, ApplyEffect(((Color)prop.GetValue(TM.CommandPrompt)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
-                prop.SetValue(TM.PowerShellx86, ApplyEffect(((Color)prop.GetValue(TM.PowerShellx86)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
-                prop.SetValue(TM.PowerShellx64, ApplyEffect(((Color)prop.GetValue(TM.PowerShellx64)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+                prop.SetValue(TM.CommandPrompt, ApplyEffect(MapThemeColor((Color)prop.GetValue(TM.CommandPrompt)).GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+                prop.SetValue(TM.PowerShellx86, ApplyEffect(MapThemeColor((Color)prop.GetValue(TM.PowerShellx86)).GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+                prop.SetValue(TM.PowerShellx64, ApplyEffect(MapThemeColor((Color)prop.GetValue(TM.PowerShellx64)).GetNearestColorFromPalette(Palette, altNearing), skipEffects));
             }
 
             foreach (PropertyInfo prop in ReflectionCache.InfoProps)
             {
-                prop.SetValue(TM.Info, ApplyEffect(((Color)prop.GetValue(TM.Info)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+                prop.SetValue(TM.Info, ApplyEffect(MapThemeColor((Color)prop.GetValue(TM.Info)).GetNearestColorFromPalette(Palette, altNearing), skipEffects));
             }
 
             foreach (PropertyInfo prop in ReflectionCache.CursorProps)
             {
-                prop.SetValue(TM.Cursors.Cursor_Arrow, ApplyEffect(((Color)prop.GetValue(TM.Cursors.Cursor_Arrow)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
-                prop.SetValue(TM.Cursors.Cursor_Help, ApplyEffect(((Color)prop.GetValue(TM.Cursors.Cursor_Help)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
-                prop.SetValue(TM.Cursors.Cursor_AppLoading, ApplyEffect(((Color)prop.GetValue(TM.Cursors.Cursor_AppLoading)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
-                prop.SetValue(TM.Cursors.Cursor_Busy, ApplyEffect(((Color)prop.GetValue(TM.Cursors.Cursor_Busy)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
-                prop.SetValue(TM.Cursors.Cursor_Move, ApplyEffect(((Color)prop.GetValue(TM.Cursors.Cursor_Move)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
-                prop.SetValue(TM.Cursors.Cursor_NS, ApplyEffect(((Color)prop.GetValue(TM.Cursors.Cursor_NS)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
-                prop.SetValue(TM.Cursors.Cursor_EW, ApplyEffect(((Color)prop.GetValue(TM.Cursors.Cursor_EW)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
-                prop.SetValue(TM.Cursors.Cursor_NESW, ApplyEffect(((Color)prop.GetValue(TM.Cursors.Cursor_NESW)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
-                prop.SetValue(TM.Cursors.Cursor_NWSE, ApplyEffect(((Color)prop.GetValue(TM.Cursors.Cursor_NWSE)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
-                prop.SetValue(TM.Cursors.Cursor_Up, ApplyEffect(((Color)prop.GetValue(TM.Cursors.Cursor_Up)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
-                prop.SetValue(TM.Cursors.Cursor_Pen, ApplyEffect(((Color)prop.GetValue(TM.Cursors.Cursor_Pen)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
-                prop.SetValue(TM.Cursors.Cursor_None, ApplyEffect(((Color)prop.GetValue(TM.Cursors.Cursor_None)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
-                prop.SetValue(TM.Cursors.Cursor_Link, ApplyEffect(((Color)prop.GetValue(TM.Cursors.Cursor_Link)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
-                prop.SetValue(TM.Cursors.Cursor_Pin, ApplyEffect(((Color)prop.GetValue(TM.Cursors.Cursor_Pin)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
-                prop.SetValue(TM.Cursors.Cursor_Person, ApplyEffect(((Color)prop.GetValue(TM.Cursors.Cursor_Person)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
-                prop.SetValue(TM.Cursors.Cursor_IBeam, ApplyEffect(((Color)prop.GetValue(TM.Cursors.Cursor_IBeam)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
-                prop.SetValue(TM.Cursors.Cursor_Cross, ApplyEffect(((Color)prop.GetValue(TM.Cursors.Cursor_Cross)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+                prop.SetValue(TM.Cursors.Cursor_Arrow, ApplyEffect(MapThemeColor((Color)prop.GetValue(TM.Cursors.Cursor_Arrow)).GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+                prop.SetValue(TM.Cursors.Cursor_Help, ApplyEffect(MapThemeColor((Color)prop.GetValue(TM.Cursors.Cursor_Help)).GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+                prop.SetValue(TM.Cursors.Cursor_AppLoading, ApplyEffect(MapThemeColor((Color)prop.GetValue(TM.Cursors.Cursor_AppLoading)).GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+                prop.SetValue(TM.Cursors.Cursor_Busy, ApplyEffect(MapThemeColor((Color)prop.GetValue(TM.Cursors.Cursor_Busy)).GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+                prop.SetValue(TM.Cursors.Cursor_Move, ApplyEffect(MapThemeColor((Color)prop.GetValue(TM.Cursors.Cursor_Move)).GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+                prop.SetValue(TM.Cursors.Cursor_NS, ApplyEffect(MapThemeColor((Color)prop.GetValue(TM.Cursors.Cursor_NS)).GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+                prop.SetValue(TM.Cursors.Cursor_EW, ApplyEffect(MapThemeColor((Color)prop.GetValue(TM.Cursors.Cursor_EW)).GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+                prop.SetValue(TM.Cursors.Cursor_NESW, ApplyEffect(MapThemeColor((Color)prop.GetValue(TM.Cursors.Cursor_NESW)).GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+                prop.SetValue(TM.Cursors.Cursor_NWSE, ApplyEffect(MapThemeColor((Color)prop.GetValue(TM.Cursors.Cursor_NWSE)).GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+                prop.SetValue(TM.Cursors.Cursor_Up, ApplyEffect(MapThemeColor((Color)prop.GetValue(TM.Cursors.Cursor_Up)).GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+                prop.SetValue(TM.Cursors.Cursor_Pen, ApplyEffect(MapThemeColor((Color)prop.GetValue(TM.Cursors.Cursor_Pen)).GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+                prop.SetValue(TM.Cursors.Cursor_None, ApplyEffect(MapThemeColor((Color)prop.GetValue(TM.Cursors.Cursor_None)).GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+                prop.SetValue(TM.Cursors.Cursor_Link, ApplyEffect(MapThemeColor((Color)prop.GetValue(TM.Cursors.Cursor_Link)).GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+                prop.SetValue(TM.Cursors.Cursor_Pin, ApplyEffect(MapThemeColor((Color)prop.GetValue(TM.Cursors.Cursor_Pin)).GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+                prop.SetValue(TM.Cursors.Cursor_Person, ApplyEffect(MapThemeColor((Color)prop.GetValue(TM.Cursors.Cursor_Person)).GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+                prop.SetValue(TM.Cursors.Cursor_IBeam, ApplyEffect(MapThemeColor((Color)prop.GetValue(TM.Cursors.Cursor_IBeam)).GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+                prop.SetValue(TM.Cursors.Cursor_Cross, ApplyEffect(MapThemeColor((Color)prop.GetValue(TM.Cursors.Cursor_Cross)).GetNearestColorFromPalette(Palette, altNearing), skipEffects));
             }
 
             foreach (Theme.Structures.WinTerminal.Types.Scheme scheme in TM.Terminal.Schemes)
             {
                 foreach (PropertyInfo prop in ReflectionCache.SchemeProps)
                 {
-                    prop.SetValue(scheme, ApplyEffect(((Color)prop.GetValue(scheme)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+                    prop.SetValue(scheme, ApplyEffect(MapThemeColor((Color)prop.GetValue(scheme)).GetNearestColorFromPalette(Palette, altNearing), skipEffects));
                 }
             }
 
@@ -807,7 +874,7 @@ namespace WinPaletter
             {
                 foreach (PropertyInfo prop in ReflectionCache.SchemeProps)
                 {
-                    prop.SetValue(scheme, ApplyEffect(((Color)prop.GetValue(scheme)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+                    prop.SetValue(scheme, ApplyEffect(MapThemeColor((Color)prop.GetValue(scheme)).GetNearestColorFromPalette(Palette, altNearing), skipEffects));
                 }
             }
 
@@ -861,7 +928,7 @@ namespace WinPaletter
 
             foreach (PropertyInfo prop in ReflectionCache.AppThemeProps)
             {
-                prop.SetValue(TM.AppTheme, ApplyEffect(((Color)prop.GetValue(TM.AppTheme)).Grayscale().GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+                prop.SetValue(TM.AppTheme, ApplyEffect(MapThemeColor((Color)prop.GetValue(TM.AppTheme)).GetNearestColorFromPalette(Palette, altNearing), skipEffects));
             }
         }
 
