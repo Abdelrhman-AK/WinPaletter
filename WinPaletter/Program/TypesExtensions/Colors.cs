@@ -2156,7 +2156,7 @@ namespace WinPaletter.TypesExtensions
             return (0.299f * c.R + 0.587f * c.G + 0.114f * c.B) / 255f;
         }
 
-        private static double DistanceLAB(Color c1, Color c2)
+        public static double DistanceLAB(Color c1, Color c2)
         {
             var lab1 = ToLAB(c1);
             var lab2 = ToLAB(c2);

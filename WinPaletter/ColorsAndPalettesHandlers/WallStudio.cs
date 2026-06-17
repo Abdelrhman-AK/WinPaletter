@@ -24,7 +24,9 @@ namespace WinPaletter
     {
         private static class ReflectionCache
         {
-            public static readonly PropertyInfo[] Windows10xProps = [.. typeof(Windows10x).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.PropertyType == typeof(Color) && p.CanRead && p.CanWrite)];
+            public static readonly PropertyInfo[] Windows12Props = [.. typeof(Windows12).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.PropertyType == typeof(Color) && p.CanRead && p.CanWrite)];
+            public static readonly PropertyInfo[] Windows11Props = [.. typeof(Windows11).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.PropertyType == typeof(Color) && p.CanRead && p.CanWrite)];
+            public static readonly PropertyInfo[] Windows10Props = [.. typeof(Windows10).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.PropertyType == typeof(Color) && p.CanRead && p.CanWrite)];
             public static readonly PropertyInfo[] Windows81Props = [.. typeof(Windows81).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.PropertyType == typeof(Color) && p.CanRead && p.CanWrite)];
             public static readonly PropertyInfo[] Windows8Props = [.. typeof(Windows8).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.PropertyType == typeof(Color) && p.CanRead && p.CanWrite)];
             public static readonly PropertyInfo[] Windows7Props = [.. typeof(Windows7).GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(p => p.PropertyType == typeof(Color) && p.CanRead && p.CanWrite)];
@@ -673,59 +675,190 @@ namespace WinPaletter
             }
         }
 
-        private Color MapThemeColor(Color original)
+        /// <summary>
+        /// Pre-built mapping from source colors to palette colors.
+        /// Call BuildColorMapping() once before iterating over TM properties.
+        /// </summary>
+        private Dictionary<Color, Color> _colorMapping = [];
+
+        /// <summary>
+        /// Builds a perceptually balanced, contrast-aware color mapping from a set of
+        /// source colors to the current Palette.
+        ///
+        /// The algorithm:
+        ///   1. Partitions source and palette into three lightness bands (dark/mid/light)
+        ///      so UI hierarchy is preserved — dark backgrounds never steal light slots.
+        ///   2. Within each band, sorts by a combined saturation+luminance key and
+        ///      distributes proportionally to maximize palette spread.
+        ///   3. After assignment, applies a contrast-enhancement nudge: colors that were
+        ///      dark get pushed slightly darker, colors that were light get pushed slightly
+        ///      lighter, widening the gap between the two poles.
+        ///   4. Validates WCAG contrast ratio between every assigned color and its
+        ///      estimated background. If the ratio falls below the threshold, the lightest
+        ///      or darkest palette alternative in the same band is tried instead.
+        /// </summary>
+        private void BuildColorMapping(IEnumerable<Color> sourceColors)
         {
-            HSL hsl = original.Grayscale().ToHSL();
+            _colorMapping.Clear();
 
-            if (hsl.L < 0.5f)
-                hsl.L *= 0.75f;
-            else
-                hsl.L += (1f - hsl.L) * 0.15f;
+            List<Color> sources = sourceColors.Distinct().ToList();
 
-            float targetL = hsl.L;
+            if (sources.Count == 0 || Palette == null || Palette.Count == 0) return;
 
-            Color best = default;
-            double bestScore = double.MaxValue;
+            const float darkCutoff = 0.35f;
+            const float lightCutoff = 0.65f;
 
-            foreach (Color c in Palette)
+            List<Color> srcDark = [];
+            List<Color> srcMid = [];
+            List<Color> srcLight = [];
+
+            foreach (Color c in sources)
             {
-                HSL ph = c.ToHSL();
-
-                float dl = Math.Abs(PerceivedBrightness(c) - targetL);
-
-                // chroma penalty (prevents wrong hue replacement)
-                float ds = Math.Abs(ph.S - hsl.S);
-
-                // hue drift penalty (prevents red→green swaps)
-                float dh = original.Distance(c);
-
-                // accessibility penalty (contrast vs target luminance)
-                float contrastPenalty = Math.Abs((float)ContrastRatio(c, original));
-
-                double score =
-                    dl * 1.0 +
-                    ds * 0.6 +
-                    dh * 0.8 +
-                    contrastPenalty * 1.5;
-
-                if (score < bestScore)
-                {
-                    bestScore = score;
-                    best = c;
-                }
+                float l = c.ToHSL().L;
+                if (l < darkCutoff) srcDark.Add(c);
+                else if (l < lightCutoff) srcMid.Add(c);
+                else srcLight.Add(c);
             }
 
-            return best;
+            List<Color> palDark = [.. Palette.Where(c => c.ToHSL().L < darkCutoff)];
+            List<Color> palMid = [.. Palette.Where(c => { float l = c.ToHSL().L; return l >= darkCutoff && l < lightCutoff; })];
+            List<Color> palLight = [.. Palette.Where(c => c.ToHSL().L >= lightCutoff)];
+
+            if (palDark.Count == 0) palDark = [.. Palette];
+            if (palMid.Count == 0) palMid = [.. Palette];
+            if (palLight.Count == 0) palLight = [.. Palette];
+
+            AssignBand(srcDark, palDark, darkPole: true);
+            AssignBand(srcMid, palMid, darkPole: false);
+            AssignBand(srcLight, palLight, darkPole: false);
+
+            // Post-pass: contrast nudge.
+            // For colors in the dark band, push the assigned palette color slightly darker.
+            // For colors in the light band, push it slightly lighter.
+            // This widens the luminance gap between poles, improving legibility without
+            // changing which palette color was chosen.
+            foreach (Color src in srcDark)
+            {
+                if (_colorMapping.TryGetValue(src, out Color assigned))
+                    _colorMapping[src] = NudgeLuminance(assigned, targetDarker: true);
+            }
+
+            foreach (Color src in srcLight)
+            {
+                if (_colorMapping.TryGetValue(src, out Color assigned))
+                    _colorMapping[src] = NudgeLuminance(assigned, targetDarker: false);
+            }
         }
 
-        public static double ContrastRatio(Color c1, Color c2)
+        /// <summary>
+        /// Assigns source colors to palette colors within one lightness band.
+        /// Sorting key is a weighted combination of saturation (primary) and
+        /// perceived brightness (secondary), giving a richer spread than saturation alone.
+        /// A ±1 LAB window provides local perceptual refinement without cross-band drift.
+        /// After the greedy assignment, a WCAG contrast check promotes low-contrast
+        /// assignments to the most contrasting alternative in the palette band.
+        /// </summary>
+        private void AssignBand(List<Color> sources, List<Color> palette, bool darkPole)
         {
-            double l1 = c1.Luminance() + 0.05;
-            double l2 = c2.Luminance() + 0.05;
-            return l1 > l2 ? l1 / l2 : l2 / l1;
+            if (sources.Count == 0) return;
+
+            // Sort key: saturation weighted 60%, perceived brightness 40%.
+            // This separates near-identical-saturation colors (e.g. two grays at
+            // different brightnesses) that would otherwise collapse to the same slot.
+            List<Color> sortedSrc = [.. sources.OrderBy(c => c.ToHSL().S * 0.6f + PerceivedBrightness(c) * 0.4f)];
+
+            List<Color> sortedPal = [.. palette.OrderBy(c => c.ToHSL().S * 0.6f + PerceivedBrightness(c) * 0.4f)];
+
+            int palCount = sortedPal.Count;
+
+            for (int i = 0; i < sortedSrc.Count; i++)
+            {
+                int palIdx = sortedSrc.Count == 1 ? 0 : (int)Math.Round((float)i / (sortedSrc.Count - 1) * (palCount - 1));
+
+                palIdx = Math.Max(0, Math.Min(palCount - 1, palIdx));
+
+                // ±1 local LAB window for perceptual refinement.
+                int lo = Math.Max(0, palIdx - 1);
+                int hi = Math.Min(palCount - 1, palIdx + 1);
+
+                Color best = sortedPal[palIdx];
+                double bestDist = double.MaxValue;
+
+                for (int p = lo; p <= hi; p++)
+                {
+                    double dist = DistanceLAB(sortedSrc[i], sortedPal[p]);
+                    if (dist < bestDist)
+                    {
+                        bestDist = dist;
+                        best = sortedPal[p];
+                    }
+                }
+
+                // WCAG contrast check: compute the ratio against an inferred background.
+                // Dark band text is typically on a light background, and vice versa.
+                // Mid-band colors are UI chrome — use the opposite-luminance extreme.
+                Color inferredBg = darkPole ? Color.White : Color.Black;
+                double ratio = WcagContrastRatio(best, inferredBg);
+
+                // WCAG AA threshold for normal text = 4.5 : 1.
+                // We use a relaxed 3.0 : 1 here because many palette colors are decorative
+                // (borders, icons, highlights) and strict 4.5 would over-constrain them.
+                // For text-heavy roles the caller can tighten this by post-filtering.
+                const double minRatio = 3.0;
+
+                if (ratio < minRatio)
+                {
+                    // Find the palette entry in this band with the highest contrast against
+                    // the inferred background, as a fallback.
+                    Color contrastFallback = sortedPal.OrderByDescending(c => WcagContrastRatio(c, inferredBg)).First();
+
+                    // Only replace if the fallback genuinely improves contrast, so we
+                    // do not degrade already-acceptable assignments.
+                    if (WcagContrastRatio(contrastFallback, inferredBg) > ratio) best = contrastFallback;
+                }
+
+                _colorMapping[sortedSrc[i]] = best;
+            }
         }
 
-        void AdjustTM(bool altNearing = false, bool skipEffects = true)
+        /// <summary>
+        /// Nudges a color's lightness slightly toward a pole to widen the luminance gap
+        /// between dark and light extremes, improving overall contrast without hue change.
+        /// The nudge is mild (15% toward the pole) so the palette character is preserved.
+        /// </summary>
+        private Color NudgeLuminance(Color color, bool targetDarker)
+        {
+            HSL hsl = color.ToHSL();
+            hsl.L = targetDarker
+                ? hsl.L * 0.85f                         // push 15% darker
+                : hsl.L + (1f - hsl.L) * 0.15f;         // push 15% toward white
+            return hsl.ToRGB();
+        }
+
+        /// <summary>
+        /// Computes the WCAG 2.1 contrast ratio between two colors.
+        /// Returns a value in [1, 21]. 4.5+ passes AA for normal text; 3.0+ passes AA large text.
+        /// </summary>
+        private double WcagContrastRatio(Color a, Color b)
+        {
+            double la = a.Luminance() + 0.05;
+            double lb = b.Luminance() + 0.05;
+            return la > lb ? la / lb : lb / la;
+        }
+
+        /// <summary>
+        /// Returns the mapped palette color for a given source color.
+        /// Falls back to a direct LAB nearest-neighbor search if the color
+        /// was not pre-registered.
+        /// </summary>
+        private Color MapThemeColor(Color original)
+        {
+            if (_colorMapping.TryGetValue(original, out Color mapped)) return mapped;
+
+            return Palette.OrderBy(c => DistanceLAB(original, c)).First();
+        }
+
+        private void AdjustTM(bool altNearing = false, bool skipEffects = true)
         {
             TM = radioImage1.Checked ? Default.FromOS(Program.WindowStyle) : Program.TM.Clone();
 
@@ -797,10 +930,40 @@ namespace WinPaletter
             TM.Cursors.Cursor_IBeam.UseFromFile = false;
             TM.Cursors.Cursor_Cross.UseFromFile = false;
 
-            foreach (PropertyInfo prop in ReflectionCache.Windows10xProps)
+            // Collect every Color property that will be remapped, so BuildColorMapping sees the full picture before any assignment is made.
+            List<Color> allSourceColors = [];
+
+            foreach (PropertyInfo prop in ReflectionCache.Windows12Props) allSourceColors.Add((Color)prop.GetValue(TM.Windows12));
+            foreach (PropertyInfo prop in ReflectionCache.Windows11Props) allSourceColors.Add((Color)prop.GetValue(TM.Windows11));
+            foreach (PropertyInfo prop in ReflectionCache.Windows10Props) allSourceColors.Add((Color)prop.GetValue(TM.Windows10));
+            foreach (PropertyInfo prop in ReflectionCache.Windows81Props) allSourceColors.Add((Color)prop.GetValue(TM.Windows81));
+            foreach (PropertyInfo prop in ReflectionCache.Windows8Props) allSourceColors.Add((Color)prop.GetValue(TM.Windows8));
+            foreach (PropertyInfo prop in ReflectionCache.Windows7Props) allSourceColors.Add((Color)prop.GetValue(TM.Windows7));
+            foreach (PropertyInfo prop in ReflectionCache.WindowsVistaProps) allSourceColors.Add((Color)prop.GetValue(TM.WindowsVista));
+            foreach (PropertyInfo prop in ReflectionCache.Win32UIProps) allSourceColors.Add((Color)prop.GetValue(TM.Win32));
+            foreach (PropertyInfo prop in ReflectionCache.ConsoleProps) allSourceColors.Add((Color)prop.GetValue(TM.CommandPrompt));
+            foreach (PropertyInfo prop in ReflectionCache.AppThemeProps) allSourceColors.Add((Color)prop.GetValue(TM.AppTheme));
+            foreach (PropertyInfo prop in ReflectionCache.InfoProps) allSourceColors.Add((Color)prop.GetValue(TM.Info));
+            foreach (PropertyInfo prop in ReflectionCache.CursorProps) allSourceColors.Add((Color)prop.GetValue(TM.Cursors.Cursor_Arrow));
+
+            foreach (Theme.Structures.WinTerminal.Types.Scheme scheme in TM.Terminal.Schemes)
+                foreach (PropertyInfo prop in ReflectionCache.SchemeProps)
+                    allSourceColors.Add((Color)prop.GetValue(scheme));
+
+            BuildColorMapping(allSourceColors);
+
+            foreach (PropertyInfo prop in ReflectionCache.Windows12Props)
             {
                 prop.SetValue(TM.Windows12, ApplyEffect(MapThemeColor((Color)prop.GetValue(TM.Windows12)).GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+            }
+
+            foreach (PropertyInfo prop in ReflectionCache.Windows11Props)
+            {
                 prop.SetValue(TM.Windows11, ApplyEffect(MapThemeColor((Color)prop.GetValue(TM.Windows11)).GetNearestColorFromPalette(Palette, altNearing), skipEffects));
+            }
+
+            foreach (PropertyInfo prop in ReflectionCache.Windows10Props)
+            {
                 prop.SetValue(TM.Windows10, ApplyEffect(MapThemeColor((Color)prop.GetValue(TM.Windows10)).GetNearestColorFromPalette(Palette, altNearing), skipEffects));
             }
 
