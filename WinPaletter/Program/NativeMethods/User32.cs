@@ -230,6 +230,17 @@ namespace WinPaletter.NativeMethods
         public static extern IntPtr FindWindowEx(IntPtr parent, IntPtr childAfter, string className, string windowTitle);
 
         /// <summary>
+        /// Enumerates all non-child windows associated with a specified thread by passing the handle of each window to a callback function.
+        /// </summary>
+        /// <param name="dwThreadId"></param>
+        /// <param name="lpfn"></param>
+        /// <param name="lParam"></param>
+        /// <returns></returns>
+        [DllImport("user32.dll")]
+        public static extern bool EnumThreadWindows(int dwThreadId, EnumThreadWndProc lpfn, IntPtr lParam);
+        public delegate bool EnumThreadWndProc(IntPtr hWnd, IntPtr lParam);
+
+        /// <summary>
         /// Finds the handle of the edit control associated with a specified list view control.
         /// </summary>
         /// <remarks>This method is typically used to obtain the handle of the in-place edit control that

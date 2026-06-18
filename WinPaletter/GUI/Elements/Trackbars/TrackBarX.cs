@@ -19,6 +19,10 @@ namespace WinPaletter.UI.Controllers
             textBox1.Font = Fonts.ConsoleMedium;
 
             AdjustLayout();
+
+            Program.ToolTip.SetToolTip(value_btn, Program.Localization.Strings.Tips.ClickToEdit);
+            Program.ToolTip.SetToolTip(reset, Program.Localization.Strings.Tips.ClickToReset);
+            Program.ToolTip.SetToolTip(textBox1, $"• {Program.Localization.Strings.Tips.PressEnterToUseValue}\r\n• {Program.Localization.Strings.Tips.PressEscToDismissEditing}");
         }
 
         public event EventHandler ValueChanged;
@@ -168,36 +172,6 @@ namespace WinPaletter.UI.Controllers
         {
             textBox1.Left = reset.Left;
             textBox1.Width = value_btn.Right - textBox1.Left;
-        }
-
-        private void reset_MouseEnter(object sender, EventArgs e)
-        {
-            Program.ToolTip.Show(sender as WP.Button, string.Empty, Program.Localization.Strings.Tips.ClickToReset, null, new Point(0, (sender as WP.Button).Height + 2));
-        }
-
-        private void reset_MouseLeave(object sender, EventArgs e)
-        {
-            Program.ToolTip.Hide(sender as WP.Button);
-        }
-
-        private void value_btn_MouseEnter(object sender, EventArgs e)
-        {
-            Program.ToolTip.Show(sender as WP.Button, string.Empty, Program.Localization.Strings.Tips.ClickToEdit, null, new Point(0, (sender as WP.Button).Height + 2));
-        }
-
-        private void value_btn_MouseLeave(object sender, EventArgs e)
-        {
-            Program.ToolTip.Hide(sender as WP.Button);
-        }
-
-        private void textBox1_MouseEnter(object sender, EventArgs e)
-        {
-            Program.ToolTip.Show(sender as WP.TextBox, string.Empty, $"• {Program.Localization.Strings.Tips.PressEnterToUseValue}\r\n• {Program.Localization.Strings.Tips.PressEscToDismissEditing}", null, new Point(0, (sender as WP.TextBox).Height + 2));
-        }
-
-        private void textBox1_MouseLeave(object sender, EventArgs e)
-        {
-            Program.ToolTip.Hide(sender as WP.TextBox);
         }
 
         private void TrackBarX_Load(object sender, EventArgs e)

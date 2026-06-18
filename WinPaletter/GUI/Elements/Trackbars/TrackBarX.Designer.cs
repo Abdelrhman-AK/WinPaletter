@@ -68,8 +68,6 @@
             this.reset.UseVisualStyleBackColor = false;
             this.reset.LocationChanged += new System.EventHandler(this.reset_LocationChanged);
             this.reset.Click += new System.EventHandler(this.reset_Click);
-            this.reset.MouseEnter += new System.EventHandler(this.reset_MouseEnter);
-            this.reset.MouseLeave += new System.EventHandler(this.reset_MouseLeave);
             // 
             // value_btn
             // 
@@ -89,8 +87,6 @@
             this.value_btn.UseVisualStyleBackColor = false;
             this.value_btn.TextChanged += new System.EventHandler(this.value_btn_TextChanged);
             this.value_btn.Click += new System.EventHandler(this.value_btn_Click);
-            this.value_btn.MouseEnter += new System.EventHandler(this.value_btn_MouseEnter);
-            this.value_btn.MouseLeave += new System.EventHandler(this.value_btn_MouseLeave);
             // 
             // textBox1
             // 
@@ -112,8 +108,6 @@
             this.textBox1.Visible = false;
             this.textBox1.WordWrap = true;
             this.textBox1.KeyboardPress += new WinPaletter.UI.WP.TextBox.KeyboardPressEventHandler(this.textBox1_KeyboardPress);
-            this.textBox1.MouseEnter += new System.EventHandler(this.textBox1_MouseEnter);
-            this.textBox1.MouseLeave += new System.EventHandler(this.textBox1_MouseLeave);
             // 
             // TrackBarX
             // 

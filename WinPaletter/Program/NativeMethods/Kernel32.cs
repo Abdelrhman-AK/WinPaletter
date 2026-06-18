@@ -72,6 +72,13 @@ namespace WinPaletter.NativeMethods
         public static extern bool CloseHandle(IntPtr hObject);
 
         /// <summary>
+        /// Get the thread identifier of the calling thread.
+        /// </summary>
+        /// <returns></returns>
+        [DllImport("kernel32.dll")]
+        public static extern int GetCurrentThreadId();
+
+        /// <summary>
         /// Enumerates process access flags.
         /// </summary>
         [Flags]
