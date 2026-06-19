@@ -268,7 +268,7 @@ namespace WinPaletter
                 // If theme backup option is enabled, backup it before throwing error
                 if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnExError && Program.TM is not null)
                 {
-                    string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnExceptionError", $"{Program.TM.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
+                    string filename = Program.GetUniqueFileName(SysPaths.ThemesBackup_OnExceptionError, $"{Program.TM.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
                     Program.TM.Save(Manager.Source.File, filename);
                 }
             }

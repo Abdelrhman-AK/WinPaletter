@@ -38,6 +38,21 @@ namespace WinPaletter.UI.WP
 
         //public new bool DesignMode => base.DesignMode || LicenseManager.UsageMode == LicenseUsageMode.Designtime;
 
+        /// <summary>
+        /// Event that is raised after localization is applied. Can be used to perform additional adjustments or translations on the form after the main localization process is complete.
+        /// </summary>
+        public event Action Localized;
+
+        /// <summary>
+        /// Event that is raised when the form's tab is pinned. This can be used to perform actions or updates when the form is pinned in a tabbed interface.
+        /// </summary>
+        public event EventHandler FormTabPinned;
+
+        /// <summary>
+        /// Event that is raised when the form's tab is unpinned. This can be used to perform actions or updates when the form is unpinned in a tabbed interface.
+        /// </summary>
+        public event EventHandler FormTabUnpinned;
+
         public Form()
         {
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
@@ -52,7 +67,8 @@ namespace WinPaletter.UI.WP
 
             _shown = false;
             ApplyStyle(this);
-            this.Localize();
+            Localize();
+            if (this is not null && IsHandleCreated) Localized?.Invoke();
             this.DoubleBuffer();
 
             if (!_showIconAndCaptionText) NativeMethods.Helpers.SetFormTitlebarTextAndIcon(Handle, !_showIconAndCaptionText);
@@ -149,7 +165,22 @@ namespace WinPaletter.UI.WP
             }
         }
 
+        internal void OnTabPinnedStatusChanged(bool pinned)
+        {
+            (pinned ? FormTabPinned : FormTabUnpinned)?.Invoke(this, EventArgs.Empty);
+        }
+
+        internal void OnLocalized()
+        {
+            Localized?.Invoke();
+        }
+
         public JObject JObject => LocalizerExtensions.JObject(this);
+
+        /// <summary>
+        /// The parent form of container holding this form to appear in a tabbed interface. Returns null if the form is not contained in a tabbed interface.
+        /// </summary>
+        public new UI.WP.Form ParentForm => this.Parent.FindForm() as UI.WP.Form;
 
         protected override void OnFormClosed(FormClosedEventArgs e)
         {

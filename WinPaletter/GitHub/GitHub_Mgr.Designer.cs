@@ -2261,7 +2261,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "GitHub Manager";
             this.Load += new System.EventHandler(this.GitHub_Mgr_Load);
-            this.ParentChanged += new System.EventHandler(this.GitHub_Mgr_ParentChanged);
             this.tablessControl1.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);

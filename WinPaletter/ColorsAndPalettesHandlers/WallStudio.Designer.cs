@@ -127,7 +127,7 @@
             this.banner3 = new WinPaletter.UI.WP.Banner();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.separatorH4 = new WinPaletter.UI.WP.SeparatorH();
-            this.CheckedListBox1 = new UI.WP.CheckedListBox();
+            this.CheckedListBox1 = new WinPaletter.UI.WP.CheckedListBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.button7 = new WinPaletter.UI.WP.Button();
             this.button9 = new WinPaletter.UI.WP.Button();
@@ -2211,10 +2211,14 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.CheckedListBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.CheckedListBox1.CheckOnClick = true;
+            this.CheckedListBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.CheckedListBox1.ForeColor = System.Drawing.Color.White;
             this.CheckedListBox1.FormattingEnabled = true;
+            this.CheckedListBox1.ItemHeight = 24;
             this.CheckedListBox1.Location = new System.Drawing.Point(8, 117);
             this.CheckedListBox1.Name = "CheckedListBox1";
-            this.CheckedListBox1.Size = new System.Drawing.Size(785, 414);
+            this.CheckedListBox1.Size = new System.Drawing.Size(785, 408);
             this.CheckedListBox1.TabIndex = 11;
             // 
             // panel3

@@ -30,7 +30,7 @@ namespace WinPaletter.Tabs
         /// <summary>
         /// Tracks active animations per-property so they can be cancelled or replaced.
         /// </summary>
-        private readonly Dictionary<string, FluentTransitions.TransitionDefinition> activeTransitions = new();
+        private readonly Dictionary<string, FluentTransitions.TransitionDefinition> activeTransitions = [];
 
         /// <summary>
         /// Reference to the associated form's title bar extender.

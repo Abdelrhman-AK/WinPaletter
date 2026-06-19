@@ -89,7 +89,7 @@ namespace WinPaletter
             {
                 using (Manager TMx = new(Manager.Source.Registry))
                 {
-                    string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply", $"{TMx.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
+                    string filename = Program.GetUniqueFileName(SysPaths.ThemesBackup_OnAspectApply, $"{TMx.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
                     TMx.Save(Manager.Source.File, filename);
                 }
             }
@@ -337,18 +337,6 @@ namespace WinPaletter
         private void pin_button_Click(object sender, EventArgs e)
         {
             Forms.MainForm.AddTab(this);
-        }
-
-        private void EditInfo_ParentChanged(object sender, EventArgs e)
-        {
-            if (Parent != null && Parent is TabPage)
-            {
-                pin_button.Visible = false;
-            }
-            else
-            {
-                pin_button.Visible = true;
-            }
         }
 
         private void trackBarX1_ValueChanged(object sender, EventArgs e)

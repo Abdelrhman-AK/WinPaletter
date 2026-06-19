@@ -201,7 +201,6 @@
             this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(3, 5, 3, 3);
             this.flowLayoutPanel1.Size = new System.Drawing.Size(1176, 556);
             this.flowLayoutPanel1.TabIndex = 153;
-            this.flowLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.flowLayoutPanel1_Paint);
             // 
             // card1
             // 
@@ -979,10 +978,10 @@
             this.Name = "Home";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "WinPaletter";
+            this.Localized += new System.Action(this.Home_Localized);
             this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.Home_HelpButtonClicked);
             this.Load += new System.EventHandler(this.Home_Load);
             this.Shown += new System.EventHandler(this.Dashboard_Shown);
-            this.ParentChanged += new System.EventHandler(this.Dashboard_ParentChanged);
             this.panel1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

@@ -2091,7 +2091,6 @@ namespace WinPaletter
             this.pin_button.UseVisualStyleBackColor = false;
             this.pin_button.Visible = false;
             this.pin_button.Click += new System.EventHandler(this.pin_button_Click);
-            this.pin_button.ParentChanged += new System.EventHandler(this.pin_button_ParentChanged);
             // 
             // btn_import
             // 

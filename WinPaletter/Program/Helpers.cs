@@ -276,7 +276,7 @@ namespace WinPaletter
             {
                 Log?.Write(LogEventLevel.Information, $"Creating a backup of the current theme on application open.");
 
-                string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnAppOpen", $"{TM.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
+                string filename = Program.GetUniqueFileName(SysPaths.ThemesBackup_OnAppOpen, $"{TM.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
                 TM.Save(Source.File, filename);
             }
         }

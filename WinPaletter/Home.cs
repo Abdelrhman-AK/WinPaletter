@@ -24,6 +24,12 @@ namespace WinPaletter
     /// </summary>
     public partial class Home : UI.WP.Form
     {
+        private static Size _card_Expanded = new(277, 130);
+        private static Size _card_Compact = new(277, 130);
+        private static Size _form_Compact_Minimum = new(925, 660);
+        private static Size _avatar_Big = new(32, 32);
+        private static Size _avatar_Small = new(16, 16);
+
         private bool isLoggedIn = false;
 
         /// <summary>
@@ -79,18 +85,39 @@ namespace WinPaletter
             // Load theme data from the theme manager.
             LoadFromTM(Program.TM);
 
-            // Add animations to toolbar buttons and cards.
-            foreach (UI.WP.Button button in titlebarExtender2.GetAllControls().OfType<UI.WP.Button>())
-            {
-                button.MouseEnter += (s, e) => Transition.With(tip_label, nameof(tip_label.Text), ((s as UI.WP.Button).Tag ?? string.Empty).ToString()).CriticalDamp(Program.AnimationSpan_Quick);
-                button.MouseLeave += (s, e) => Transition.With(tip_label, nameof(tip_label.Text), string.Empty).CriticalDamp(Program.AnimationSpan_Quick);
-            }
-
             foreach (Card card in flowLayoutPanel1.Controls.OfType<Card>())
             {
                 card.MouseEnter += (s, e) => Transition.With(panel1, nameof(panel1.BackColor), Program.Style.DarkMode ? (s as Card).Color.Dark(0.7f) : (s as Card).Color.CB(0.7f)).CriticalDamp(Program.AnimationSpan);
                 card.MouseLeave += (s, e) => Transition.With(panel1, nameof(panel1.BackColor), BackColor).CriticalDamp(Program.AnimationSpan);
             }
+        }
+
+        private void Home_Localized()
+        {
+            var T = Program.Localization.Strings.Tips;
+
+            Program.ToolTip.SetToolTip(pin_button, string.Format(T.PinToTabs_Title, Text), T.PinToTabs_Desc, pin_button.Image);
+            Program.ToolTip.SetToolTip(Button3, T.NewTheme_Title, T.NewTheme_Desc, Button3.ImageGlyph);
+            Program.ToolTip.SetToolTip(Button20, T.RestoreDefault_Title, T.RestoreDefault_Desc, Button20.ImageGlyph);
+            Program.ToolTip.SetToolTip(Button2, T.OpenTheme_Title, T.OpenTheme_Desc, Button2.ImageGlyph);
+            Program.ToolTip.SetToolTip(Button7, T.SaveTheme_Title, T.SaveTheme_Desc, Button7.ImageGlyph);
+            Program.ToolTip.SetToolTip(Button9, T.SaveAsTheme_Title, T.SaveAsTheme_Desc, Button9.ImageGlyph);
+            Program.ToolTip.SetToolTip(Button10, T.EditThemeInfo_Title, T.EditThemeInfo_Desc, Button10.ImageGlyph);
+            Program.ToolTip.SetToolTip(btn_history, T.Backups_Title, T.Backups_Desc, btn_history.ImageGlyph);
+            Program.ToolTip.SetToolTip(button14, T.WallStudio_Title, T.WallStudio_Desc, button14.ImageGlyph);
+            Program.ToolTip.SetToolTip(Button11, T.Settings_Title, T.Settings_Desc, Button11.ImageGlyph);
+            Program.ToolTip.SetToolTip(Button5, T.Updates_Title, T.Updates_Desc, Button5.ImageGlyph);
+            Program.ToolTip.SetToolTip(Button31, T.Store_Title, T.Store_Desc, Button31.ImageGlyph);
+            Program.ToolTip.SetToolTip(button15, T.GitHubManager_Title, T.GitHubManager_Desc, button15.ImageGlyph);
+            Program.ToolTip.SetToolTip(button8, T.SOS_Title, T.SOS_Desc, button8.ImageGlyph);
+            Program.ToolTip.SetToolTip(button1, T.LayoutToggle_Title, T.LayoutToggle_Desc, button1.ImageGlyph);
+            Program.ToolTip.SetToolTip(Button39, T.Wiki_Title, T.Wiki_Desc, Button39.ImageGlyph);
+            Program.ToolTip.SetToolTip(Button6, T.Releases_Title, T.Releases_Desc, Button6.ImageGlyph);
+            Program.ToolTip.SetToolTip(button4, T.Logs_Title, T.Logs_Desc, button4.ImageGlyph);
+            Program.ToolTip.SetToolTip(Button12, T.About_Title, T.About_Desc, Button12.ImageGlyph);
+
+            LoadOSData_ToolTip();
+            LoadData(true);
         }
 
         private void User_GitHubUserSwitch(GitHub.Events.GitHubUserChangeEventArgs e)
@@ -113,10 +140,10 @@ namespace WinPaletter
             foreach (Card card in flowLayoutPanel1.Controls.OfType<Card>())
             {
                 card.Compact = Program.Settings.General.CompactAspects;
-                card.Size = card.Compact ? new(144, 130) : new(277, 130);
+                card.Size = card.Compact ? _card_Compact : _card_Expanded;
             }
 
-            Forms.MainForm.MinimumSize = Program.Settings.General.CompactAspects ? new(925, 660) : oldMainFormMinSize;
+            Forms.MainForm.MinimumSize = Program.Settings.General.CompactAspects ? _form_Compact_Minimum : oldMainFormMinSize;
 
             button1.ImageGlyph = Program.Settings.General.CompactAspects ? Resources.Glyph_Expand : Resources.Glyph_Compact;
         }
@@ -165,8 +192,8 @@ namespace WinPaletter
         {
             if (avatar == null) return null;
 
-            using (Bitmap resizedAvatar = avatar.Resize(32, 32))
-            using (Bitmap resizedUser = userProfilePicture?.Resize(16, 16))
+            using (Bitmap resizedAvatar = avatar.Resize(_avatar_Big))
+            using (Bitmap resizedUser = userProfilePicture?.Resize(_avatar_Small))
             {
                 if (resizedAvatar == null) return null;
 
@@ -216,8 +243,11 @@ namespace WinPaletter
         /// <summary>
         /// Load the user data to the user button.
         /// </summary>
-        public void LoadData()
+        public void LoadData(bool localizationReload = false)
         {
+            string namePart;
+            string descPart = Program.Localization.Strings.Tips.UserButton_Desc;
+
             if (isLoggedIn)
             {
                 Task.Run(() =>
@@ -229,19 +259,27 @@ namespace WinPaletter
                     Transition.With(tip_label, nameof(tip_label.Text), string.Empty).CriticalDamp(Program.AnimationSpan_Quick);
                 });
 
-                userButton.Tag = User.GitHub.Login + " > " + User.Name;
+                namePart = $"{User.GitHub.Login}@{User.Name}";
+                descPart = $"\r\n•{Program.Localization.Strings.Tips.UserButton_WinAccountPart}: {User.Name}\r\n•{Program.Localization.Strings.Tips.UserButton_GitHubPart}: {User.GitHub.Login}\r\n\r\n{descPart}";
 
-                UpdateUserButtonAvatar(null, null);
+                if (!localizationReload) UpdateUserButtonAvatar(null, null);
             }
             else
             {
-                userButton.Tag = User.Name;
+                namePart = User.Name;
 
-                using (Bitmap resized = User.ProfilePicture?.Resize(32, 32))
+                if (!localizationReload)
                 {
-                    userButton.Image = resized?.ToCircular();
+                    using (Bitmap resized = User.ProfilePicture?.Resize(32, 32))
+                    {
+                        Image oldImage = userButton.Image;
+                        userButton.Image = resized?.ToCircular();
+                        oldImage?.Dispose();
+                    }
                 }
             }
+
+            Invoke(() => Program.ToolTip.SetToolTip(userButton, namePart, descPart, userButton.Image));
         }
 
         /// <summary>
@@ -257,7 +295,6 @@ namespace WinPaletter
                     card3.Text = Program.Localization.Strings.Aspects.LockScreen;
                     card3.Tag = Program.Localization.Strings.Aspects.LockScreen_Description;
                     winEdition.Image = WinLogos.Win12;
-                    winEdition.Tag = string.Format(Program.Localization.Strings.Tips.OS_PreviewingAs, Program.Localization.Strings.Windows.W12);
                     break;
 
                 case WindowStyle.W11:
@@ -266,7 +303,6 @@ namespace WinPaletter
                     card3.Text = Program.Localization.Strings.Aspects.LockScreen;
                     card3.Tag = Program.Localization.Strings.Aspects.LockScreen_Description;
                     winEdition.Image = WinLogos.Win11;
-                    winEdition.Tag = string.Format(Program.Localization.Strings.Tips.OS_PreviewingAs, Program.Localization.Strings.Windows.W11);
                     break;
 
                 case WindowStyle.W10:
@@ -275,7 +311,6 @@ namespace WinPaletter
                     card3.Text = Program.Localization.Strings.Aspects.LockScreen;
                     card3.Tag = Program.Localization.Strings.Aspects.LockScreen_Description;
                     winEdition.Image = WinLogos.Win10;
-                    winEdition.Tag = string.Format(Program.Localization.Strings.Tips.OS_PreviewingAs, Program.Localization.Strings.Windows.W10);
                     break;
 
                 case WindowStyle.W81:
@@ -284,7 +319,6 @@ namespace WinPaletter
                     card3.Text = Program.Localization.Strings.Aspects.LockScreen;
                     card3.Tag = Program.Localization.Strings.Aspects.LockScreen_Description;
                     winEdition.Image = WinLogos.Win8_1;
-                    winEdition.Tag = string.Format(Program.Localization.Strings.Tips.OS_PreviewingAs, Program.Localization.Strings.Windows.W81);
                     break;
 
                 case WindowStyle.W8:
@@ -293,7 +327,6 @@ namespace WinPaletter
                     card3.Text = Program.Localization.Strings.Aspects.LockScreen;
                     card3.Tag = Program.Localization.Strings.Aspects.LockScreen_Description;
                     winEdition.Image = WinLogos.Win8;
-                    winEdition.Tag = string.Format(Program.Localization.Strings.Tips.OS_PreviewingAs, Program.Localization.Strings.Windows.W8);
                     break;
 
                 case WindowStyle.W7:
@@ -302,7 +335,6 @@ namespace WinPaletter
                     card3.Text = Program.Localization.Strings.Aspects.LogonUI;
                     card3.Tag = Program.Localization.Strings.Aspects.LogonUI_Description;
                     winEdition.Image = WinLogos.Win7;
-                    winEdition.Tag = string.Format(Program.Localization.Strings.Tips.OS_PreviewingAs, Program.Localization.Strings.Windows.W7);
                     break;
 
                 case WindowStyle.WVista:
@@ -311,7 +343,6 @@ namespace WinPaletter
                     card3.Text = Program.Localization.Strings.Aspects.LogonUI;
                     card3.Tag = Program.Localization.Strings.Aspects.LogonUI_Description;
                     winEdition.Image = WinLogos.WinVista;
-                    winEdition.Tag = string.Format(Program.Localization.Strings.Tips.OS_PreviewingAs, Program.Localization.Strings.Windows.WVista);
                     break;
 
                 case WindowStyle.WXP:
@@ -320,7 +351,6 @@ namespace WinPaletter
                     card3.Text = Program.Localization.Strings.Aspects.LogonUI;
                     card3.Tag = Program.Localization.Strings.Aspects.LogonUI_Description;
                     winEdition.Image = WinLogos.WinXP;
-                    winEdition.Tag = string.Format(Program.Localization.Strings.Tips.OS_PreviewingAs, Program.Localization.Strings.Windows.WXP);
                     break;
 
                 default:
@@ -329,13 +359,60 @@ namespace WinPaletter
                     card3.Text = Program.Localization.Strings.Aspects.LockScreen;
                     card3.Tag = Program.Localization.Strings.Aspects.LockScreen_Description;
                     winEdition.Image = WinLogos.Win11;
-                    winEdition.Tag = string.Format(Program.Localization.Strings.Tips.OS_PreviewingAs, Program.Localization.Strings.Windows.W11);
                     break;
             }
 
             card12.Visible = Program.WindowStyle != WindowStyle.WXP && Program.WindowStyle != WindowStyle.WVista;
             card3.Visible = Program.WindowStyle != WindowStyle.WVista && Program.WindowStyle != WindowStyle.W8;
             //card14.Visible = Program.WindowStyle != WindowStyle.WXP;
+
+            LoadOSData_ToolTip();
+        }
+
+        private void LoadOSData_ToolTip()
+        {
+            string OS;
+
+            switch (Program.WindowStyle)
+            {
+                case WindowStyle.W12:
+                    OS = Program.Localization.Strings.Windows.W12;
+                    break;
+
+                case WindowStyle.W11:
+                    OS = Program.Localization.Strings.Windows.W11;
+                    break;
+
+                case WindowStyle.W10:
+                    OS = Program.Localization.Strings.Windows.W10;
+                    break;
+
+                case WindowStyle.W81:
+                    OS = Program.Localization.Strings.Windows.W81;
+                    break;
+
+                case WindowStyle.W8:
+                    OS = Program.Localization.Strings.Windows.W8;
+                    break;
+
+                case WindowStyle.W7:
+                    OS = Program.Localization.Strings.Windows.W7;
+                    break;
+
+                case WindowStyle.WVista:
+                    OS = Program.Localization.Strings.Windows.WVista;
+                    break;
+
+                case WindowStyle.WXP:
+                    OS = Program.Localization.Strings.Windows.WXP;
+                    break;
+
+                default:
+                    OS = Program.Localization.Strings.Windows.W11;
+                    break;
+            }
+
+            Program.ToolTip.SetToolTip(winEdition, OS, string.Format(Program.Localization.Strings.Tips.OS_PreviewingAs, OS), winEdition.Image);
         }
 
         /// <summary>
@@ -367,7 +444,7 @@ namespace WinPaletter
                 {
                     using DownloadManager DM = new();
                     string response = await DM.ReadStringAsync(Links.Updates);
-                    string[] lines = response.Split(new[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+                    string[] lines = response.Split([" ", "\n"], StringSplitOptions.RemoveEmptyEntries);
 
                     Settings.Structures.Updates.Channels targetChannel = Program.Settings.Updates.Channel;
 
@@ -405,12 +482,8 @@ namespace WinPaletter
                         NotifyUpdates.Visible = true;
                         Button5.ImageGlyph = Resources.Glyph_Update_Dot;
 
-                        NotifyUpdates.ShowBalloonTip(
-                            10000,
-                            Application.ProductName,
-                            $"{Program.Localization.Strings.Updates.NewUpdate} ({Program.Localization.Strings.General.Version} {latestUpdate.Version})",
-                            ToolTipIcon.Info
-                        );
+                        NotifyUpdates.ShowBalloonTip(10000, Application.ProductName,
+                            $"{Program.Localization.Strings.Updates.NewUpdate} ({Program.Localization.Strings.General.Version} {latestUpdate.Version})", ToolTipIcon.Info);
                     }
                 });
             }
@@ -516,7 +589,6 @@ namespace WinPaletter
 
         private void card3_Click(object sender, EventArgs e)
         {
-
             if (Program.WindowStyle == WindowStyle.W12 || Program.WindowStyle == WindowStyle.W11 || Program.WindowStyle == WindowStyle.W10)
             {
                 Forms.MainForm.BackgroundImage = (sender as Card).Image;
@@ -683,7 +755,7 @@ namespace WinPaletter
                     {
                         if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnThemeLoad)
                         {
-                            string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeOpen", $"{Program.TM.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
+                            string filename = Program.GetUniqueFileName(SysPaths.ThemesBackup_OnThemeOpen, $"{Program.TM.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
                             Program.TM.Save(Source.File, filename);
                         }
 
@@ -825,11 +897,6 @@ namespace WinPaletter
             Process.Start(SysPaths.LogsDir);
         }
 
-        private void flowLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         private void button14_Click(object sender, EventArgs e)
         {
             Forms.WallStudio.ShowDialog();
@@ -843,19 +910,6 @@ namespace WinPaletter
         private void pin_button_Click(object sender, EventArgs e)
         {
             Forms.MainForm.AddTab(this);
-        }
-
-        // When the parent of the dashboard is changed, check if it is a tab page to hide the pin button.
-        private void Dashboard_ParentChanged(object sender, EventArgs e)
-        {
-            if (Parent != null && Parent is TabPage)
-            {
-                pin_button.Visible = false;
-            }
-            else
-            {
-                pin_button.Visible = true;
-            }
         }
     }
 }

@@ -1761,18 +1761,6 @@ namespace WinPaletter
             Forms.MainForm.AddTab(this);
         }
 
-        private void pin_button_ParentChanged(object sender, EventArgs e)
-        {
-            if (Parent != null && Parent is TabPage)
-            {
-                pin_button.Visible = false;
-            }
-            else
-            {
-                pin_button.Visible = true;
-            }
-        }
-
         private void CMD_AccentForegroundBar_DragDrop(object sender, DragEventArgs e)
         {
             ColorItem colorItem = e.Data.GetData(typeof(ColorItem).FullName) as ColorItem;

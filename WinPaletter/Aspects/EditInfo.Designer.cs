@@ -1250,7 +1250,6 @@ namespace WinPaletter
             this.Text = "Edit info";
             this.HelpButtonClicked += new System.ComponentModel.CancelEventHandler(this.Form_HelpButtonClicked);
             this.Load += new System.EventHandler(this.EditInfo_Load);
-            this.ParentChanged += new System.EventHandler(this.EditInfo_ParentChanged);
             this.Controls.SetChildIndex(this.TabControl1, 0);
             this.Controls.SetChildIndex(this.titlebarExtender1, 0);
             this.TabControl1.ResumeLayout(false);

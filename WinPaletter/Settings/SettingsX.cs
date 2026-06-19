@@ -1061,19 +1061,7 @@ namespace WinPaletter
 
         private void button27_Click(object sender, EventArgs e)
         {
-            Read(new Settings(Settings.Source.Empty));
-        }
-
-        private void SettingsX_ParentChanged(object sender, EventArgs e)
-        {
-            if (Parent != null && Parent is TabPage)
-            {
-                pin_button.Visible = false;
-            }
-            else
-            {
-                pin_button.Visible = true;
-            }
+            Read(new(Settings.Source.Empty));
         }
 
         private void toggle4_CheckedChanged(object sender, EventArgs e)

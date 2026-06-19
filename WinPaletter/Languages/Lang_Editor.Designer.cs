@@ -1359,7 +1359,6 @@ namespace WinPaletter
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Lang_JSON_GUI_FormClosing);
             this.Load += new System.EventHandler(this.Lang_JSON_GUI_Load);
-            this.ParentChanged += new System.EventHandler(this.Lang_JSON_GUI_ParentChanged);
             this.titlebarExtender1.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.TabControl1.ResumeLayout(false);

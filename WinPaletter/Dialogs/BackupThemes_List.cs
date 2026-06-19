@@ -47,26 +47,26 @@ namespace WinPaletter
             // Set the ImageList for the ListView
             listView1.SmallImageList = imageList1;
 
-            if (!Directory.Exists($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeApply"))
-                Directory.CreateDirectory($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeApply");
+            if (!Directory.Exists(SysPaths.ThemesBackup_OnThemeApply))
+                Directory.CreateDirectory(SysPaths.ThemesBackup_OnThemeApply);
 
-            if (!Directory.Exists($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply"))
-                Directory.CreateDirectory($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply");
+            if (!Directory.Exists(SysPaths.ThemesBackup_OnAspectApply))
+                Directory.CreateDirectory(SysPaths.ThemesBackup_OnAspectApply);
 
-            if (!Directory.Exists($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeOpen"))
-                Directory.CreateDirectory($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeOpen");
+            if (!Directory.Exists(SysPaths.ThemesBackup_OnThemeOpen))
+                Directory.CreateDirectory(SysPaths.ThemesBackup_OnThemeOpen);
 
-            if (!Directory.Exists($"{Program.Settings.BackupTheme.BackupPath}\\OnAppOpen"))
-                Directory.CreateDirectory($"{Program.Settings.BackupTheme.BackupPath}\\OnAppOpen");
+            if (!Directory.Exists(SysPaths.ThemesBackup_OnAppOpen))
+                Directory.CreateDirectory(SysPaths.ThemesBackup_OnAppOpen);
 
-            if (!Directory.Exists($"{Program.Settings.BackupTheme.BackupPath}\\OnExceptionError"))
-                Directory.CreateDirectory($"{Program.Settings.BackupTheme.BackupPath}\\OnExceptionError");
+            if (!Directory.Exists(SysPaths.ThemesBackup_OnExceptionError))
+                Directory.CreateDirectory(SysPaths.ThemesBackup_OnExceptionError);
 
-            string[] themes_onThemeApply = [.. Directory.GetFiles($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeApply", "*.wpth").OrderByDescending(file => new FileInfo(file).CreationTime)];
-            string[] themes_onAspectApply = [.. Directory.GetFiles($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply", "*.wpth").OrderByDescending(file => new FileInfo(file).CreationTime)];
-            string[] themes_onThemeOpen = [.. Directory.GetFiles($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeOpen", "*.wpth").OrderByDescending(file => new FileInfo(file).CreationTime)];
-            string[] themes_onAppOpen = [.. Directory.GetFiles($"{Program.Settings.BackupTheme.BackupPath}\\OnAppOpen", "*.wpth").OrderByDescending(file => new FileInfo(file).CreationTime)];
-            string[] themes_onExErrors = [.. Directory.GetFiles($"{Program.Settings.BackupTheme.BackupPath}\\OnExceptionError", "*.wpth").OrderByDescending(file => new FileInfo(file).CreationTime)];
+            string[] themes_onThemeApply = [.. Directory.GetFiles(SysPaths.ThemesBackup_OnThemeApply, "*.wpth").OrderByDescending(file => new FileInfo(file).CreationTime)];
+            string[] themes_onAspectApply = [.. Directory.GetFiles(SysPaths.ThemesBackup_OnAspectApply, "*.wpth").OrderByDescending(file => new FileInfo(file).CreationTime)];
+            string[] themes_onThemeOpen = [.. Directory.GetFiles(SysPaths.ThemesBackup_OnThemeOpen, "*.wpth").OrderByDescending(file => new FileInfo(file).CreationTime)];
+            string[] themes_onAppOpen = [.. Directory.GetFiles(SysPaths.ThemesBackup_OnAppOpen, "*.wpth").OrderByDescending(file => new FileInfo(file).CreationTime)];
+            string[] themes_onExErrors = [.. Directory.GetFiles(SysPaths.ThemesBackup_OnExceptionError, "*.wpth").OrderByDescending(file => new FileInfo(file).CreationTime)];
 
             // Create groups
             ListViewGroup group1 = new(Program.Localization.Strings.Backup.Group_ThemeApply, HorizontalAlignment.Center);
@@ -253,11 +253,11 @@ namespace WinPaletter
             if (MsgBox(Program.Localization.Strings.Backup.DeleteAllQuestion, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 Program.Animator.HideSync(windowsDesktop1);
-                Directory.Delete($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeApply", true);
-                Directory.Delete($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply", true);
-                Directory.Delete($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeOpen", true);
-                Directory.Delete($"{Program.Settings.BackupTheme.BackupPath}\\OnAppOpen", true);
-                Directory.Delete($"{Program.Settings.BackupTheme.BackupPath}\\OnExceptionError", true);
+                Directory.Delete(SysPaths.ThemesBackup_OnThemeApply, true);
+                Directory.Delete(SysPaths.ThemesBackup_OnAspectApply, true);
+                Directory.Delete(SysPaths.ThemesBackup_OnThemeOpen, true);
+                Directory.Delete(SysPaths.ThemesBackup_OnAppOpen, true);
+                Directory.Delete(SysPaths.ThemesBackup_OnExceptionError, true);
                 PopulateThemesBackups();
             }
 
@@ -301,18 +301,6 @@ namespace WinPaletter
         private void pin_button_Click(object sender, EventArgs e)
         {
             Forms.MainForm.AddTab(this);
-        }
-
-        private void BackupThemes_List_ParentChanged(object sender, EventArgs e)
-        {
-            if (Parent != null && Parent is TabPage)
-            {
-                pin_button.Visible = false;
-            }
-            else
-            {
-                pin_button.Visible = true;
-            }
         }
     }
 }

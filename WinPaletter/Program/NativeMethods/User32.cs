@@ -17,6 +17,8 @@ namespace WinPaletter.NativeMethods
     /// are marked as <c>internal</c> and are not intended for public use. </para></remarks>
     public partial class User32
     {
+        private const string _user32 = "user32.dll";
+
         /// <summary>
         /// Retrieves the dimensions of the bounding rectangle of the specified window.
         /// </summary>
@@ -27,7 +29,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="lpRect">When this method returns, contains a RECT structure that receives the screen coordinates of the upper-left
         /// and lower-right corners of the window.</param>
         /// <returns>true if the function succeeds; otherwise, false.</returns>
-        [DllImport("user32.dll")]
+        [DllImport(_user32)]
         public static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
 
         /// <summary>
@@ -41,8 +43,16 @@ namespace WinPaletter.NativeMethods
         /// <param name="cy"></param>
         /// <param name="uFlags"></param>
         /// <returns></returns>
-        [DllImport("user32.dll", SetLastError = true)]
+        [DllImport(_user32, SetLastError = true)]
         public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
+
+        /// <summary>
+        /// Retrieves a value indicating whether the specified window is visible.
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <returns></returns>
+        [DllImport(_user32, SetLastError = true)]
+        public static extern bool IsWindowVisible(IntPtr hWnd);
 
         /// <summary>
         /// Retrieves the specified system metric or system configuration setting.
@@ -55,7 +65,7 @@ namespace WinPaletter.NativeMethods
         /// Windows API documentation for a complete list of valid indices.</param>
         /// <returns>The value of the specified system metric or configuration setting. The meaning of the return value depends on the
         /// <paramref name="nIndex"/> provided.</returns>
-        [DllImport("user32.dll")]
+        [DllImport(_user32)]
         public static extern int GetSystemMetrics(int nIndex);
 
         /// <summary>
@@ -70,7 +80,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="lpsi">A reference to a SCROLLINFO structure that, on input, specifies the scroll bar parameters to retrieve, and
         /// on output, receives the scroll bar information.</param>
         /// <returns>true if the function retrieves any values; otherwise, false.</returns>
-        [DllImport("user32.dll")]
+        [DllImport(_user32)]
         public static extern bool GetScrollInfo(IntPtr hwnd, int fnBar, ref SCROLLINFO lpsi);
 
         /// <summary>
@@ -79,7 +89,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="hWnd"></param>
         /// <param name="nCmdShow"></param>
         /// <returns></returns>
-        [DllImport("user32.dll")]
+        [DllImport(_user32)]
         public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
         /// <summary>
@@ -92,7 +102,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="lpCursorName">The identifier or name of the cursor resource to load. Use predefined values for system cursors (e.g., <see
         /// langword="32512"/> for the standard arrow cursor).</param>
         /// <returns>A handle to the loaded cursor if successful; otherwise, 0 if the operation fails.</returns>
-        [DllImport("user32.dll")]
+        [DllImport(_user32)]
         public static extern int LoadCursor(int hInstance, int lpCursorName);
 
         /// <summary>
@@ -102,7 +112,7 @@ namespace WinPaletter.NativeMethods
         /// responsible for ensuring that the provided cursor handle is valid.</remarks>
         /// <param name="hCursor">The handle to the cursor to set. This value must be a valid cursor handle.</param>
         /// <returns>An integer indicating the previous cursor handle. If the function fails, the return value is zero.</returns>
-        [DllImport("user32.dll")]
+        [DllImport(_user32)]
         public static extern int SetCursor(int hCursor);
 
         /// <summary>
@@ -110,7 +120,7 @@ namespace WinPaletter.NativeMethods
         /// </summary>
         /// <param name="hWnd"></param>
         /// <returns></returns>
-        [DllImport("user32.dll")]
+        [DllImport(_user32)]
         public static extern bool SetForegroundWindow(IntPtr hWnd);
 
         /// <summary>
@@ -123,7 +133,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="time">The duration of the animation, in milliseconds.</param>
         /// <param name="flags">A combination of <see cref="AnimateWindowFlags"/> values that specify the type of animation to apply.</param>
         /// <returns><see langword="true"/> if the animation is successfully applied; otherwise, <see langword="false"/>.</returns>
-        [DllImport("user32.dll")]
+        [DllImport(_user32)]
         public static extern bool AnimateWindow(IntPtr hWnd, int time, AnimateWindowFlags flags);
 
         /// <summary>
@@ -143,7 +153,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="flags">A set of flags that control the update operation. These flags specify options such as whether to erase the
         /// background, whether to send a paint message, and whether to update child windows.</param>
         /// <returns>true if the function succeeds; otherwise, false.</returns>
-        [DllImport("user32.dll")]
+        [DllImport(_user32)]
         public static extern bool RedrawWindow(IntPtr hWnd, IntPtr lprcUpdate, IntPtr hrgnUpdate, uint flags);
 
         /// <summary>
@@ -160,7 +170,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="uState">The state of the frame control to draw. This parameter must be a combination of state values appropriate for
         /// the specified control type.</param>
         /// <returns>true if the function succeeds; otherwise, false.</returns>
-        [DllImport("user32.dll")]
+        [DllImport(_user32)]
         public static extern bool DrawFrameControl(IntPtr hdc, ref RECT lprc, uint uType, uint uState);
 
         /// <summary>
@@ -171,7 +181,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="hIcon">A handle to the icon to be destroyed. This handle must have been obtained from a previous call to a function
         /// that creates or loads icons.</param>
         /// <returns>true if the function succeeds; otherwise, false.</returns>
-        [DllImport("user32.dll", EntryPoint = "DestroyIcon")]
+        [DllImport(_user32, EntryPoint = "DestroyIcon")]
         public static extern bool DestroyIcon(IntPtr hIcon);
 
         /// <summary>
@@ -192,7 +202,7 @@ namespace WinPaletter.NativeMethods
         /// if not used.</param>
         /// <returns>The identifier of the selected menu item if a command item is chosen; otherwise, zero if no item is selected
         /// or if an error occurs.</returns>
-        [DllImport("user32.dll", SetLastError = true, ExactSpelling = true)]
+        [DllImport(_user32, SetLastError = true, ExactSpelling = true)]
         public static extern uint TrackPopupMenuEx(IntPtr hMenu, uint uFlags, int x, int y, IntPtr hWnd, IntPtr lptpm);
 
         /// <summary>
@@ -209,7 +219,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="lpaRgbValues">An array of unsigned integers specifying the new RGB color values for the corresponding elements in
         /// lpaElements. Each value is a COLORREF value representing a color.</param>
         /// <returns>true if the function succeeds; otherwise, false.</returns>
-        [DllImport("user32.dll")]
+        [DllImport(_user32)]
         public static extern bool SetSysColors(int cElements, int[] lpaElements, uint[] lpaRgbValues);
 
         /// <summary>
@@ -226,7 +236,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="className">The class name of the window to search for. This parameter can be null to match any class name.</param>
         /// <param name="windowTitle">The window name (title) to search for. This parameter can be null to match any window name.</param>
         /// <returns>A handle to the window that matches the specified criteria if found; otherwise, IntPtr.Zero.</returns>
-        [DllImport("user32.dll")]
+        [DllImport(_user32)]
         public static extern IntPtr FindWindowEx(IntPtr parent, IntPtr childAfter, string className, string windowTitle);
 
         /// <summary>
@@ -236,7 +246,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="lpfn"></param>
         /// <param name="lParam"></param>
         /// <returns></returns>
-        [DllImport("user32.dll")]
+        [DllImport(_user32)]
         public static extern bool EnumThreadWindows(int dwThreadId, EnumThreadWndProc lpfn, IntPtr lParam);
         public delegate bool EnumThreadWndProc(IntPtr hWnd, IntPtr lParam);
 
@@ -285,7 +295,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="nIndex">The zero-based offset to the value to be set. This specifies which class attribute to modify.</param>
         /// <param name="dwNewLong">The new value to assign to the specified class attribute.</param>
         /// <returns>The previous value of the specified class attribute. If the function fails, the return value is zero.</returns>
-        [DllImport("user32.dll", EntryPoint = "SetClassLong")]
+        [DllImport(_user32, EntryPoint = "SetClassLong")]
         private static extern int SetClassLong32(IntPtr hWnd, int nIndex, int dwNewLong);
 
         /// <summary>
@@ -299,7 +309,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="dwNewLong">The new value to assign to the specified class attribute.</param>
         /// <returns>The previous value of the specified class attribute if successful; otherwise, <see cref="IntPtr.Zero"/> if
         /// the operation fails.</returns>
-        [DllImport("user32.dll", EntryPoint = "SetClassLongPtr")]
+        [DllImport(_user32, EntryPoint = "SetClassLongPtr")]
         private static extern IntPtr SetClassLongPtr64(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
 
         /// <summary>
@@ -331,7 +341,7 @@ namespace WinPaletter.NativeMethods
         /// <returns>The red, green, and blue (RGB) color value of the specified display element.  The value is a 32-bit integer
         /// where the least significant byte represents the blue component,  the next byte represents the green
         /// component, and the third byte represents the red component.</returns>
-        [DllImport("user32.dll")]
+        [DllImport(_user32)]
         public static extern int GetSysColor(int nIndex);
 
         /// <summary>
@@ -346,7 +356,7 @@ namespace WinPaletter.NativeMethods
         /// messages.</param>
         /// <returns>A message identifier that can be used to send or receive the registered message. Returns zero if the
         /// function fails.</returns>
-        [DllImport("user32.dll", SetLastError = true)]
+        [DllImport(_user32, SetLastError = true)]
         public static extern uint RegisterWindowMessage(string lpString);
 
         /// <summary>
@@ -359,7 +369,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="lpWindowName">The window name (title) to search for. Specify <see langword="null"/> to match any window name.</param>
         /// <returns>An <see cref="IntPtr"/> that represents the handle to the window if found; otherwise, <see
         /// cref="IntPtr.Zero"/> if no matching window is found.</returns>
-        [DllImport("user32.dll", SetLastError = true)]
+        [DllImport(_user32, SetLastError = true)]
         public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
         /// <summary>
@@ -380,7 +390,7 @@ namespace WinPaletter.NativeMethods
         /// Msg parameter.</param>
         /// <returns>The result of the message processing, which depends on the message sent. If the function fails, the return
         /// value is IntPtr.Zero.</returns>
-        [DllImport("user32.dll", SetLastError = true)]
+        [DllImport(_user32, SetLastError = true)]
         public static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 
         /// <summary>
@@ -401,7 +411,7 @@ namespace WinPaletter.NativeMethods
         /// the Msg parameter.</param>
         /// <returns>true if the function succeeds; otherwise, false. To obtain extended error information, call
         /// Marshal.GetLastWin32Error.</returns>
-        [DllImport("user32.dll", SetLastError = true)]
+        [DllImport(_user32, SetLastError = true)]
         public static extern bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 
         /// <summary>
@@ -414,7 +424,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="data">A reference to a structure that specifies the composition attribute to set and its associated data.</param>
         /// <returns>An integer value that indicates whether the operation succeeded. Returns zero if the operation fails;
         /// otherwise, returns a nonzero value.</returns>
-        [DllImport("user32.dll")]
+        [DllImport(_user32)]
         internal static extern int SetWindowCompositionAttribute(IntPtr hwnd, ref WindowCompositionAttributeData data);
 
         /// <summary>
@@ -423,7 +433,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="hWnd">A handle to the window whose information is to be retrieved.</param>
         /// <param name="nIndex">The zero-based offset to the value to be retrieved, such as GWL_STYLE or GWL_EXSTYLE.</param>
         /// <returns>The requested window attribute as an integer. Returns zero on failure.</returns>
-        [DllImport("user32.dll", EntryPoint = "GetWindowLong")]
+        [DllImport(_user32, EntryPoint = "GetWindowLong")]
         private static extern int GetWindowLong32(IntPtr hWnd, int nIndex);
 
         /// <summary>
@@ -433,7 +443,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="nIndex">The zero-based offset of the attribute to set, such as GWL_STYLE or GWL_EXSTYLE.</param>
         /// <param name="dwNewLong">The new value to assign to the specified window attribute.</param>
         /// <returns>The previous value of the specified attribute. Returns zero on failure.</returns>
-        [DllImport("user32.dll", EntryPoint = "SetWindowLong")]
+        [DllImport(_user32, EntryPoint = "SetWindowLong")]
         private static extern int SetWindowLong32(IntPtr hWnd, int nIndex, int dwNewLong);
 
         /// <summary>
@@ -442,7 +452,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="hWnd">A handle to the window whose information is to be retrieved.</param>
         /// <param name="nIndex">The zero-based offset to the value to be retrieved, such as GWL_STYLE or GWL_EXSTYLE.</param>
         /// <returns>The requested window attribute as an <see cref="IntPtr"/>. Returns zero on failure.</returns>
-        [DllImport("user32.dll", EntryPoint = "GetWindowLongPtr")]
+        [DllImport(_user32, EntryPoint = "GetWindowLongPtr")]
         private static extern IntPtr GetWindowLongPtr64(IntPtr hWnd, int nIndex);
 
         /// <summary>
@@ -452,7 +462,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="nIndex">The zero-based offset of the attribute to set, such as GWL_STYLE or GWL_EXSTYLE.</param>
         /// <param name="dwNewLong">The new value to assign to the specified window attribute.</param>
         /// <returns>The previous value of the specified attribute as an <see cref="IntPtr"/>. Returns zero on failure.</returns>
-        [DllImport("user32.dll", EntryPoint = "SetWindowLongPtr")]
+        [DllImport(_user32, EntryPoint = "SetWindowLongPtr")]
         private static extern IntPtr SetWindowLongPtr64(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
 
         /// <summary>
@@ -520,7 +530,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="bRevert">true to reset the window's system menu to its default state; false to retrieve the current system menu.</param>
         /// <returns>A handle to the system menu of the specified window. Returns IntPtr.Zero if the window does not have a
         /// system menu.</returns>
-        [DllImport("user32.dll")]
+        [DllImport(_user32)]
         public static extern IntPtr GetSystemMenu(IntPtr hWnd, bool bRevert);
 
         /// <summary>
@@ -535,7 +545,7 @@ namespace WinPaletter.NativeMethods
         /// MF_GRAYED to gray the item. This parameter can also include MF_BYCOMMAND or MF_BYPOSITION to indicate how
         /// uIDEnableItem is interpreted.</param>
         /// <returns>true if the function succeeds; otherwise, false.</returns>
-        [DllImport("user32.dll")]
+        [DllImport(_user32)]
         public static extern bool EnableMenuItem(IntPtr hMenu, uint uIDEnableItem, uint uEnable);
 
         /// <summary>
@@ -554,25 +564,25 @@ namespace WinPaletter.NativeMethods
         /// langword="LWA_COLORKEY"/> and <see langword="LWA_ALPHA"/>.</param>
         /// <returns><see langword="true"/> if the function succeeds; otherwise, <see langword="false"/>.  Call <see
         /// cref="Marshal.GetLastWin32Error"/> to retrieve extended error information if the function fails.</returns>
-        [DllImport("user32.dll", SetLastError = true)]
+        [DllImport(_user32, SetLastError = true)]
         public static extern bool SetLayeredWindowAttributes(IntPtr hwnd, uint crKey, byte bAlpha, uint dwFlags);
 
         /// <summary>
         /// Loads the specified cursor resource from a File.
         /// </summary>
-        [DllImport("user32.dll", EntryPoint = "LoadCursorFromFileA")]
+        [DllImport(_user32, EntryPoint = "LoadCursorFromFileA")]
         public static extern IntPtr LoadCursorFromFile(string lpFileName);
 
         /// <summary>
         /// Sends the specified message to a window or windows.
         /// </summary>
-        [DllImport("user32.dll")]
+        [DllImport(_user32)]
         public static extern IntPtr SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
 
         /// <summary>
         /// Sends the specified message to a window or windows.
         /// </summary>
-        [DllImport("user32.dll", SetLastError = true)]
+        [DllImport(_user32, SetLastError = true)]
         public static extern IntPtr SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
 
         /// <summary>
@@ -605,7 +615,7 @@ namespace WinPaletter.NativeMethods
         /// behavior or broken window functionality.
         /// </remarks>
         /// <seealso href="https://learn.microsoft.com/windows/win32/api/winuser/nf-winuser-callwindowprocw"/>
-        [DllImport("user32.dll")]
+        [DllImport(_user32)]
         public static extern IntPtr CallWindowProc(IntPtr lpPrevWndFunc, IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
 
         /// <summary>
@@ -656,7 +666,7 @@ namespace WinPaletter.NativeMethods
         /// that the window needs repainting, which results in a <c>WM_PAINT</c> message being posted to the window.
         /// </remarks>
         /// <seealso href="https://learn.microsoft.com/windows/win32/api/winuser/nf-winuser-invalidaterect"/>
-        [DllImport("user32.dll")]
+        [DllImport(_user32)]
         public static extern bool InvalidateRect(IntPtr hWnd, IntPtr lpRect, bool bErase);
 
         /// <summary>
@@ -677,7 +687,7 @@ namespace WinPaletter.NativeMethods
         /// The returned coordinates are expressed in client coordinates, not screen coordinates.
         /// </remarks>
         /// <seealso href="https://learn.microsoft.com/windows/win32/api/winuser/nf-winuser-getclientrect"/>
-        [DllImport("user32.dll")]
+        [DllImport(_user32)]
         public static extern bool GetClientRect(IntPtr hWnd, out RECT lpRect);
 
         /// <summary>
@@ -691,7 +701,7 @@ namespace WinPaletter.NativeMethods
         /// update; <see langword="false"/> performs the update only if necessary.</param>
         /// <returns><see langword="true"/> if the system parameters were successfully updated; otherwise, <see
         /// langword="false"/>.</returns>
-        [DllImport("user32.dll", SetLastError = true)]
+        [DllImport(_user32, SetLastError = true)]
         public static extern bool UpdatePerUserSystemParameters(uint flags, bool force);
 
         /// <summary>
@@ -718,7 +728,7 @@ namespace WinPaletter.NativeMethods
         /// the callback.</param>
         /// <returns><see langword="true"/> if the enumeration succeeds; otherwise, <see langword="false"/>. If the function
         /// fails, call <see cref="Marshal.GetLastWin32Error"/> to retrieve the error code.</returns>
-        [DllImport("user32.dll")]
+        [DllImport(_user32)]
         public static extern bool EnumChildWindows(IntPtr hwndParent, EnumWindowsProc lpEnumFunc, IntPtr lParam);
 
         /// <summary>
@@ -759,7 +769,7 @@ namespace WinPaletter.NativeMethods
         /// langword="IntPtr.Zero"/>,  the device context for the entire screen is retrieved.</param>
         /// <returns>A handle to the device context for the specified window or screen. If the function fails, the return value
         /// is <see langword="IntPtr.Zero"/>.</returns>
-        [DllImport("user32.dll")]
+        [DllImport(_user32)]
         public static extern IntPtr GetDC(IntPtr hWnd);
 
         /// <summary>
@@ -772,7 +782,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="hDC">A handle to the device context to be released.</param>
         /// <returns>A value indicating whether the device context was successfully released.  Returns 1 if the DC was released
         /// successfully; otherwise, returns 0.</returns>
-        [DllImport("user32.dll")]
+        [DllImport(_user32)]
         public static extern int ReleaseDC(IntPtr hWnd, IntPtr hDC);
 
         /// <summary>
@@ -784,7 +794,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="crColor">The new background color, specified as a COLORREF value. The COLORREF value is a 32-bit integer that specifies the
         /// RGB color.</param>
         /// <returns>The previous background color as a COLORREF value if successful; otherwise, returns CLR_INVALID (0xFFFFFFFF).</returns>
-        [DllImport("user32.dll")]
+        [DllImport(_user32)]
         public static extern uint SetBkColor(IntPtr hdc, int crColor);
 
         /// <summary>
@@ -798,7 +808,7 @@ namespace WinPaletter.NativeMethods
         /// low-order byte specifies the intensity of red, the second byte specifies the intensity of green, and the
         /// third byte specifies the intensity of blue.</param>
         /// <returns>The previous text color as a COLORREF value, or 0xFFFFFFFF if an error occurs.</returns>
-        [DllImport("user32.dll")]
+        [DllImport(_user32)]
         public static extern uint SetTextColor(IntPtr hdc, int crColor);
 
         /// <summary>
@@ -812,7 +822,7 @@ namespace WinPaletter.NativeMethods
         /// character.</param>
         /// <returns>The length of the class name string, in characters, not including the null-terminating character, if
         /// successful; otherwise, 0 if the function fails.</returns>
-        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        [DllImport(_user32, SetLastError = true, CharSet = CharSet.Auto)]
         public static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
 
         /// <summary>
@@ -820,7 +830,7 @@ namespace WinPaletter.NativeMethods
         /// </summary>
         /// <param name="hWnd"></param>
         /// <returns></returns>
-        [DllImport("user32.dll", SetLastError = false)]
+        [DllImport(_user32, SetLastError = false)]
         public static extern bool IsWindow(IntPtr hWnd);
 
         /// <summary>
@@ -833,7 +843,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="dwThreadId">The identifier of the thread with which the hook procedure is to be associated.</param>
         /// <returns>If the function succeeds, the return value is the handle to the hook procedure.
         /// If the function fails, the return value is IntPtr.Zero.</returns>
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        [DllImport(_user32, CharSet = CharSet.Auto, SetLastError = true)]
         public static extern IntPtr SetWindowsHookEx(int idHook, LowLevelMouseProc lpfn, IntPtr hMod, uint dwThreadId);
 
         /// <summary>
@@ -842,7 +852,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="hhk">A handle to the hook to be removed.</param>
         /// <returns>If the function succeeds, the return value is true.
         /// If the function fails, the return value is false.</returns>
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        [DllImport(_user32, CharSet = CharSet.Auto, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool UnhookWindowsHookEx(IntPtr hhk);
 
@@ -855,7 +865,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="lParam">The lParam value passed to the current hook procedure.</param>
         /// <returns>If the function succeeds, the return value is the result value returned by the next hook procedure in the chain.
         /// If the function fails, the return value is IntPtr.Zero.</returns>
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        [DllImport(_user32, CharSet = CharSet.Auto, SetLastError = true)]
         public static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
 
         /// <summary>
@@ -881,7 +891,7 @@ namespace WinPaletter.NativeMethods
         /// <returns>If the function succeeds, the return value is a handle to the window that processed the message. If the
         /// function times out or encounters an error, the return value is <see langword="IntPtr.Zero"/>. Call
         /// <c>Marshal.GetLastWin32Error</c> to retrieve extended error information.</returns>
-        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        [DllImport(_user32, SetLastError = true, CharSet = CharSet.Auto)]
         public static extern IntPtr SendMessageTimeout(IntPtr hWnd, uint Msg, UIntPtr wParam, string lParam, uint fuFlags, uint uTimeout, out UIntPtr lpdwResult);
 
         /// <summary>
@@ -903,7 +913,7 @@ namespace WinPaletter.NativeMethods
         /// <remarks>This method is a wrapper for the native <c>ReleaseCapture</c> function in the Windows
         /// API.  It is typically used to release mouse capture when a window has captured the mouse input.</remarks>
         /// <returns><see langword="true"/> if the mouse capture was successfully released; otherwise, <see langword="false"/>.</returns>
-        [DllImport("user32.dll")]
+        [DllImport(_user32)]
         public static extern bool ReleaseCapture();
 
         /// <summary>
@@ -943,11 +953,11 @@ namespace WinPaletter.NativeMethods
         /// If the function succeeds, the return value is true.
         /// If the function fails, the return value is false.
         /// </returns>
-        [DllImport("user32.dll", SetLastError = true)]
+        [DllImport(_user32, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool DrawIconEx(IntPtr hdc, int xLeft, int yTop, IntPtr hIcon, int cxWidth, int cyHeight, int istepIfAniCur, IntPtr hbrFlickerFreeDraw, int diFlags);
 
-        [DllImport("user32.dll")]
+        [DllImport(_user32)]
         public static extern bool SetWindowDisplayAffinity(IntPtr hwnd, uint affinity);
 
         /// <summary>

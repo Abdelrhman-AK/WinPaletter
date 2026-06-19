@@ -107,6 +107,17 @@ namespace WinPaletter.GlobalVariables
         /// WinPaletter cursors directory (that cursors are rendered into)
         /// </summary>
         public static string CursorsWP => $"{appData}\\Cursors";
+
+        public static string ThemesBackup_OnThemeApply => $"{Program.Settings.BackupTheme.BackupPath}\\OnThemeApply";
+
+        public static string ThemesBackup_OnAspectApply => $"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply";
+
+        public static string ThemesBackup_OnThemeOpen => $"{Program.Settings.BackupTheme.BackupPath}\\OnThemeOpen";
+
+        public static string ThemesBackup_OnAppOpen => $"{Program.Settings.BackupTheme.BackupPath}\\OnAppOpen";
+
+        public static string ThemesBackup_OnExceptionError => $"{Program.Settings.BackupTheme.BackupPath}\\OnExceptionError";
+
         #endregion
 
         #region System processes

@@ -19,8 +19,10 @@ namespace WinPaletter.UI.WP
         private int _activeDuration;
         private bool _relocatingTooltip;
         private const int _relocationThreshold = 5;
+        private const int DefaultMaxWidth = 320;
         private readonly List<Control> _trackedAncestors = [];
         private Point _activeOffset;          // offset from control's top-left in screen coordinates
+        private bool _explicitPlacement;      // true only for the one popup immediately following an explicit Show() call
         private Point _lastTooltipScreen;     // last known screen position
         private IntPtr _tooltipHwnd = IntPtr.Zero;
         private Bitmap _blurBackground;
@@ -29,6 +31,7 @@ namespace WinPaletter.UI.WP
         private Rectangle _rectText = Rectangle.Empty;
         private Size _cachedSize = Size.Empty;
         private bool _layoutDirty = true;
+        private int _maxWidth = DefaultMaxWidth;
 
         internal sealed class ToolTipControlData
         {
@@ -90,22 +93,11 @@ namespace WinPaletter.UI.WP
             _activeDuration = duration > 0 ? duration : AutoPopDelay;
             if (_activeDuration <= 0) _activeDuration = 5000;
 
-            // Store the explicit location offset
+            // Store the explicit location offset. OnTooltipPopup fires synchronously inside
+            // base.Show() below, consumes this offset once, captures the blur snapshot and
+            // starts tracking - so none of that needs to be duplicated here.
             _activeOffset = locationRelativeToControl;
-
-            // Take blur snapshot before showing
-            if (CanAnimate)
-            {
-                EnsureLayout();
-                Point screenTip = control.PointToScreen(_activeOffset);
-                CaptureBlur(new Rectangle(screenTip, _cachedSize));
-            }
-
-            // Calculate screen position for tracking
-            _lastTooltipScreen = control.PointToScreen(_activeOffset);
-
-            // Start tracking form movement
-            StartFollowingControl(control);
+            _explicitPlacement = true;
 
             base.Show(".", control, locationRelativeToControl.X, locationRelativeToControl.Y, _activeDuration);
         }
@@ -124,22 +116,11 @@ namespace WinPaletter.UI.WP
             _activeDuration = duration > 0 ? duration : AutoPopDelay;
             if (_activeDuration <= 0) _activeDuration = 5000;
 
-            // Store the explicit location offset
+            // Store the explicit location offset. OnTooltipPopup fires synchronously inside
+            // base.Show() below, consumes this offset once, captures the blur snapshot and
+            // starts tracking - so none of that needs to be duplicated here.
             _activeOffset = locationRelativeToControl;
-
-            // Take blur snapshot before showing
-            if (CanAnimate)
-            {
-                EnsureLayout();
-                Point screenTip = control.PointToScreen(_activeOffset);
-                CaptureBlur(new Rectangle(screenTip, _cachedSize));
-            }
-
-            // Calculate screen position for tracking
-            _lastTooltipScreen = control.PointToScreen(_activeOffset);
-
-            // Start tracking form movement
-            StartFollowingControl(control);
+            _explicitPlacement = true;
 
             base.Show(".", control, locationRelativeToControl.X, locationRelativeToControl.Y, _activeDuration);
         }
@@ -265,6 +246,14 @@ namespace WinPaletter.UI.WP
         {
             if (_relocatingTooltip) return;
 
+            // Nothing to relocate if the tooltip was never shown, or it is not currently
+            // visible (already auto-hidden, dismissed, etc). Bails out before doing any
+            // PointToScreen/Hide/Show work, which also avoids needless blur recapture.
+            if (_tooltipHwnd == IntPtr.Zero || !NativeMethods.User32.IsWindowVisible(_tooltipHwnd))
+            {
+                return;
+            }
+
             _relocatingTooltip = true;
 
             try
@@ -370,13 +359,30 @@ namespace WinPaletter.UI.WP
             _layoutDirty = false;
 
             const int pad = 2;
+            const TextFormatFlags measureFlags = TextFormatFlags.WordBreak | TextFormatFlags.Left | TextFormatFlags.NoPrefix;
 
-            SizeF sizeTitle = string.IsNullOrWhiteSpace(ToolTipTitle) ? SizeF.Empty : ToolTipTitle.Measure(_font_Title);
-            SizeF sizeText = string.IsNullOrWhiteSpace(ToolTipText) ? SizeF.Empty : ToolTipText.Measure(_font);
+            bool hasImage = _image != null;
+            bool hasBadge = !hasImage && _badgeColor != Color.Empty;
 
-            _rectTitle = sizeTitle == SizeF.Empty ? Rectangle.Empty : new(pad, pad, (int)sizeTitle.Width, (int)sizeTitle.Height);
+            int iconColumnWidth = 0;
+            if (hasImage || hasBadge)
+            {
+                int iconW = hasImage ? _image.Width : 24;
+                iconColumnWidth = iconW + pad * 2 + pad * 3;
+            }
 
-            _rectText = sizeText == SizeF.Empty ? Rectangle.Empty : new(pad, pad, (int)sizeText.Width, (int)sizeText.Height);
+            // Cap the text measurement box to MaxWidth (minus room for the icon column),
+            // so long strings wrap onto multiple lines instead of stretching the tooltip.
+            int availableTextWidth = Math.Max(40, _maxWidth - iconColumnWidth - pad * 2);
+            Size proposedSize = new(availableTextWidth, int.MaxValue);
+
+            Size sizeTitle = string.IsNullOrWhiteSpace(_toolTipTitle) ? Size.Empty : TextRenderer.MeasureText(_toolTipTitle, _font_Title, proposedSize, measureFlags);
+            Size sizeText = string.IsNullOrWhiteSpace(_toolTipText) ? Size.Empty : TextRenderer.MeasureText(_toolTipText, _font, proposedSize, measureFlags);
+
+            int textBlockWidth = Math.Min(availableTextWidth, Math.Max(sizeTitle.Width, sizeText.Width));
+
+            _rectTitle = sizeTitle == Size.Empty ? Rectangle.Empty : new(pad, pad, textBlockWidth, sizeTitle.Height);
+            _rectText = sizeText == Size.Empty ? Rectangle.Empty : new(pad, pad, textBlockWidth, sizeText.Height);
 
             if (!_rectTitle.IsEmpty && !_rectText.IsEmpty) _rectText.Y = _rectTitle.Bottom;
 
@@ -385,9 +391,6 @@ namespace WinPaletter.UI.WP
             else if (_rectTitle.IsEmpty) combined = _rectText;
             else if (_rectText.IsEmpty) combined = _rectTitle;
             else combined = Rectangle.Union(_rectTitle, _rectText);
-
-            bool hasImage = _image != null;
-            bool hasBadge = !hasImage && _badgeColor != Color.Empty;
 
             if (hasImage || hasBadge)
             {
@@ -411,6 +414,7 @@ namespace WinPaletter.UI.WP
             }
 
             combined.Height += pad * 2;
+            combined.Width = Math.Min(combined.Width, _maxWidth);
 
             if (!_rectTitle.IsEmpty && _rectText.IsEmpty) { _rectTitle.Y = 0; _rectTitle.Height = combined.Height; }
             else if (_rectTitle.IsEmpty && !_rectText.IsEmpty) { _rectText.Y = 0; _rectText.Height = combined.Height; }
@@ -452,6 +456,20 @@ namespace WinPaletter.UI.WP
         {
             get => _badgeColor;
             set { if (value == _badgeColor) return; _badgeColor = value; InvalidateLayout(); }
+        }
+
+        [DefaultValue(DefaultMaxWidth)]
+        [Category("Appearance")]
+        public int MaxWidth
+        {
+            get => _maxWidth;
+            set
+            {
+                int v = value > 0 ? value : DefaultMaxWidth;
+                if (v == _maxWidth) return;
+                _maxWidth = v;
+                InvalidateLayout();
+            }
         }
 
         private Font _font;
@@ -513,23 +531,29 @@ namespace WinPaletter.UI.WP
                 _activeDuration = AutoPopDelay > 0 ? AutoPopDelay : 5000;
             }
 
-            // Store the offset from control's screen position to where tooltip should appear
-            if (_activeControl != null && _activeOffset.IsEmpty)
+            // Resolve the screen offset for THIS popup. _explicitPlacement is true only for the
+            // single popup that immediately follows a call to Show(); every other popup (normal
+            // hover tooltips, and any popup after that) recomputes the cursor-relative offset
+            // from scratch, instead of reusing whatever was left over from a previous session.
+            if (_activeControl != null)
             {
-                // Only calculate if not already set by Show() method
-                // Get control's current screen position
-                Point controlScreenPos = _activeControl.PointToScreen(Point.Empty);
-
-                // Get cursor position plus padding
-                Point targetScreenPos = new(Cursor.Position.X + 16, Cursor.Position.Y + 16);
-
-                // Store offset as difference between target and control positions
-                _activeOffset = new(targetScreenPos.X - controlScreenPos.X, targetScreenPos.Y - controlScreenPos.Y);
+                if (_explicitPlacement)
+                {
+                    _explicitPlacement = false;
+                }
+                else
+                {
+                    Point controlScreenPos = _activeControl.PointToScreen(Point.Empty);
+                    Point targetScreenPos = new(Cursor.Position.X + 16, Cursor.Position.Y + 16);
+                    _activeOffset = new(targetScreenPos.X - controlScreenPos.X, targetScreenPos.Y - controlScreenPos.Y);
+                }
             }
 
             EnsureLayout();
 
-            // Capture the software-blur snapshot before the tooltip window paints over the screen content.
+            // Capture the software-blur snapshot before the tooltip window paints over the screen
+            // content. This runs on every popup (not only the first), so the backdrop always
+            // matches what is actually behind the tooltip right now.
             if (CanAnimate)
             {
                 Point screenTip;
@@ -547,8 +571,10 @@ namespace WinPaletter.UI.WP
 
             e.ToolTipSize = _cachedSize;
 
-            // Grab our tooltip HWND now (it is created when Popup fires).
-            _tooltipHwnd = FindTooltipHwnd();
+            // The native tooltip HWND is created once and reused for the lifetime of this
+            // component, so only enumerate thread windows to find it when we don't already
+            // have it cached - avoids a full EnumThreadWindows pass on every single popup.
+            if (_tooltipHwnd == IntPtr.Zero) _tooltipHwnd = FindTooltipHwnd();
 
             if (_activeControl != null)
             {
@@ -656,7 +682,7 @@ namespace WinPaletter.UI.WP
 
         private void DrawTextContent(Graphics G, Color foreColor)
         {
-            const TextFormatFlags flags = TextFormatFlags.Left | TextFormatFlags.VerticalCenter;
+            const TextFormatFlags flags = TextFormatFlags.Left | TextFormatFlags.WordBreak | TextFormatFlags.NoPrefix;
 
             bool hasTitle = !string.IsNullOrWhiteSpace(_toolTipTitle) && !_rectTitle.IsEmpty;
             bool hasText = !string.IsNullOrWhiteSpace(_toolTipText) && !_rectText.IsEmpty;

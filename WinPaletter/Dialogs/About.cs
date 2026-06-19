@@ -108,18 +108,6 @@ namespace WinPaletter
             Forms.MainForm.AddTab(this);
         }
 
-        private void About_ParentChanged(object sender, EventArgs e)
-        {
-            if (Parent != null && Parent is TabPage)
-            {
-                pin_button.Visible = false;
-            }
-            else
-            {
-                pin_button.Visible = true;
-            }
-        }
-
         private void linkLabel16_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start("https://en.wikipedia.org/wiki/Desktop_Architect");

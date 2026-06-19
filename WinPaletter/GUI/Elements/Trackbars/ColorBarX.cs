@@ -14,6 +14,10 @@ namespace WinPaletter.UI.WP
             InitializeComponent();
             ResetMaxMin();
             value_btn.Text = Value.ToString();
+
+            Program.ToolTip.SetToolTip(value_btn, Program.Localization.Strings.Tips.ClickToEdit);
+            Program.ToolTip.SetToolTip(reset, Program.Localization.Strings.Tips.ClickToReset);
+            Program.ToolTip.SetToolTip(textBox1, $"• {Program.Localization.Strings.Tips.PressEnterToUseValue}\r\n• {Program.Localization.Strings.Tips.PressEscToDismissEditing}");
         }
 
         public event EventHandler ValueChanged;
@@ -153,36 +157,6 @@ namespace WinPaletter.UI.WP
                     }
                 }
             }
-        }
-
-        private void reset_MouseEnter(object sender, EventArgs e)
-        {
-            Program.ToolTip.Show(sender as Button, string.Empty, Program.Localization.Strings.Tips.ClickToReset, null, new Point(0, (sender as Button).Height + 2));
-        }
-
-        private void reset_MouseLeave(object sender, EventArgs e)
-        {
-            Program.ToolTip.Hide(sender as Button);
-        }
-
-        private void value_btn_MouseEnter(object sender, EventArgs e)
-        {
-            Program.ToolTip.Show(sender as Button, string.Empty, Program.Localization.Strings.Tips.ClickToEdit, null, new Point(0, (sender as Button).Height + 2));
-        }
-
-        private void value_btn_MouseLeave(object sender, EventArgs e)
-        {
-            Program.ToolTip.Hide(sender as Button);
-        }
-
-        private void textBox1_MouseEnter(object sender, EventArgs e)
-        {
-            Program.ToolTip.Show(sender as TextBox, string.Empty, $"• {Program.Localization.Strings.Tips.PressEnterToUseValue}\r\n• {Program.Localization.Strings.Tips.PressEscToDismissEditing}", null, new Point(0, (sender as TextBox).Height + 2));
-        }
-
-        private void textBox1_MouseLeave(object sender, EventArgs e)
-        {
-            Program.ToolTip.Hide(sender as TextBox);
         }
     }
 }

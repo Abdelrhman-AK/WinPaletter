@@ -8,7 +8,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
-using WinPaletter.UI.Controllers;
 using WinPaletter.Properties;
 using static WinPaletter.UI.Style.Config;
 
@@ -372,6 +371,8 @@ namespace WinPaletter.Tabs
                 });
             }
 
+            TriggerFormTabPinnedStatusChange(form, true);
+
             TP.Controls.Add(form);
             form.Show();
             form.Opacity = 1;
@@ -542,52 +543,6 @@ namespace WinPaletter.Tabs
             NormalizeSelectionAlpha();
 
             isMovingTab = false;
-
-            ResetModifiersToNull();
-
-            Refresh();
-        }
-
-        private void MoveToLast(int from)
-        {
-            if (TabDataList == null) return;
-
-            TabData item = TabDataList[from];
-
-            if (item == null || item.IsRemoving) return;
-
-            TabDataList.RemoveAt(from);
-            TabDataList.Add(item);
-
-            forceChangeSelectedIndex = true;
-            SelectedIndex = TabDataList.Count - 1;
-
-            UpdateTabPositions(TabDataList, preserveSelectionAlpha: true, animateWidth: false, animateSelection: false);
-
-            NormalizeSelectionAlpha();
-
-            ResetModifiersToNull();
-
-            Refresh();
-        }
-
-        private void MoveToFirst(int from)
-        {
-            if (TabDataList == null) return;
-
-            TabData item = TabDataList[from];
-
-            if (item == null || item.IsRemoving) return;
-
-            TabDataList.RemoveAt(from);
-            TabDataList.Insert(0, item);
-
-            forceChangeSelectedIndex = true;
-            SelectedIndex = 0;
-
-            UpdateTabPositions(TabDataList, preserveSelectionAlpha: true, animateWidth: false, animateSelection: false);
-
-            NormalizeSelectionAlpha();
 
             ResetModifiersToNull();
 
@@ -1375,6 +1330,13 @@ namespace WinPaletter.Tabs
             FindForm()?.Location = locationNewPoint;
         }
 
+        private void TriggerFormTabPinnedStatusChange(System.Windows.Forms.Form form, bool pinned)
+        {
+            form.GetAllControls().OfType<UI.WP.Button>().Where(n => n.Name.Equals("pin_button", StringComparison.OrdinalIgnoreCase)).ToList().ForEach(n => n.Visible = !pinned);
+
+            if (form is UI.WP.Form wpForm) wpForm.OnTabPinnedStatusChanged(pinned);
+        }
+
         private void CloseAllTabsButThis()
         {
             if (TabDataList.Count <= 1) return;
@@ -1435,6 +1397,8 @@ namespace WinPaletter.Tabs
             RemoveTab(tabData, false);
 
             if (TabDataList.Count == 0 && FindForm() is not null) TabControl.FindForm().Visible = false;
+
+            TriggerFormTabPinnedStatusChange(tabData.Form, false);
 
             tabData.Form.Visible = true;
         }
@@ -2190,7 +2154,7 @@ namespace WinPaletter.Tabs
                 {
                     e.Effect = DragDropEffects.Move;
                 }
-                else if (e.Data.GetDataPresent(typeof(ColorItem)))
+                else if (e.Data.GetDataPresent(typeof(UI.Controllers.ColorItem)))
                 {
                     e.Effect = DragDropEffects.Copy;
                 }
@@ -2207,7 +2171,7 @@ namespace WinPaletter.Tabs
         {
             if (!IsBusy)
             {
-                if (e.Data.GetData(typeof(ColorItem).FullName) is ColorItem)
+                if (e.Data.GetData(typeof(UI.Controllers.ColorItem).FullName) is UI.Controllers.ColorItem)
                 {
                     Point MousePosition = new(e.X, e.Y);
 

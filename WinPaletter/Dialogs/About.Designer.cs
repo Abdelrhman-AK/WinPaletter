@@ -808,7 +808,6 @@ namespace WinPaletter
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "About";
             this.Load += new System.EventHandler(this.About_Load);
-            this.ParentChanged += new System.EventHandler(this.About_ParentChanged);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox5)).EndInit();

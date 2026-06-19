@@ -530,18 +530,6 @@ namespace WinPaletter
             Program.ToolTip.Hide(checker_img);
         }
 
-        private void AspectsTemplate_ParentChanged(object sender, EventArgs e)
-        {
-            if (Parent != null && Parent is TabPage)
-            {
-                pin_button.Visible = false;
-            }
-            else
-            {
-                pin_button.Visible = true;
-            }
-        }
-
         private void pin_button_Click(object sender, EventArgs e)
         {
             Forms.MainForm.AddTab(this);

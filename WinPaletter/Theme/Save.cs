@@ -45,7 +45,7 @@ namespace WinPaletter.Theme
                         // If theme backup option is enabled, backup it before applying
                         if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApply)
                         {
-                            string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnThemeApply", $"{Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
+                            string filename = Program.GetUniqueFileName(SysPaths.ThemesBackup_OnThemeApply, $"{Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
 
                             Program.Log?.Write(LogEventLevel.Information, $"Backing up WinPaletter theme before applying it as `{filename}`.");
 

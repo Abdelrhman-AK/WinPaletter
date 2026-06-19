@@ -559,18 +559,6 @@ namespace WinPaletter
             DM?.Dispose();
         }
 
-        private void Store_ParentChanged(object sender, EventArgs e)
-        {
-            if (Parent != null && Parent is TabPage)
-            {
-                pin_button.Visible = false;
-            }
-            else
-            {
-                pin_button.Visible = true;
-            }
-        }
-
         #endregion
 
         #region Backgroundworkers to load Store themes managers

@@ -7794,7 +7794,6 @@ namespace WinPaletter
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Settings";
             this.Load += new System.EventHandler(this.SettingsX_Load);
-            this.ParentChanged += new System.EventHandler(this.SettingsX_ParentChanged);
             this.titlebarExtender1.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);
             this.TabControl1.ResumeLayout(false);

@@ -328,7 +328,6 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AspectsTemplate_FormClosing);
             this.Load += new System.EventHandler(this.AspectsTemplate_Load);
             this.Shown += new System.EventHandler(this.AspectsTemplate_Shown);
-            this.ParentChanged += new System.EventHandler(this.AspectsTemplate_ParentChanged);
             this.bottom_buttons.ResumeLayout(false);
             this.titlebarExtender1.ResumeLayout(false);
             this.flowLayoutPanel1.ResumeLayout(false);

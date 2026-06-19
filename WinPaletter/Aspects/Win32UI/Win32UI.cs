@@ -131,7 +131,7 @@ namespace WinPaletter
             {
                 using (Manager TMx = new(Manager.Source.Registry))
                 {
-                    string filename = Program.GetUniqueFileName($"{Program.Settings.BackupTheme.BackupPath}\\OnAspectApply", $"{TMx.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
+                    string filename = Program.GetUniqueFileName(SysPaths.ThemesBackup_OnAspectApply, $"{TMx.Info.ThemeName}_{DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}.wpth");
                     TMx.Save(Manager.Source.File, filename);
                 }
             }

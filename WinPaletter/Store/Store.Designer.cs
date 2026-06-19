@@ -2873,7 +2873,6 @@ namespace WinPaletter
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Store_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Store_FormClosed);
             this.Load += new System.EventHandler(this.Store_Load);
-            this.ParentChanged += new System.EventHandler(this.Store_ParentChanged);
             this.Tabs.ResumeLayout(false);
             this.TabPage1.ResumeLayout(false);
             this.TabPage3.ResumeLayout(false);

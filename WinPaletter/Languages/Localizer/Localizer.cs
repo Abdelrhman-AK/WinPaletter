@@ -18,7 +18,7 @@ namespace WinPaletter
     {
         private Dictionary<string, List<FormStringEntry>> _treeByForm = [with(StringComparer.OrdinalIgnoreCase)];
         private static readonly Regex SingleLetterWithPunctuationRegex = new(@"^[\p{P}]*[A-Za-z][\p{P}]*$", RegexOptions.Compiled);
-        private static readonly Regex VersionRegex = new Regex(@"^\d+(\.\d+){1,3}$", RegexOptions.Compiled);
+        private static readonly Regex VersionRegex = new(@"^\d+(\.\d+){1,3}$", RegexOptions.Compiled);
 
         // Opcode byte values used in IL parsing (single-byte opcodes only needed here)
         private const byte OP_LDSTR = 0x72; // ldstr
@@ -40,39 +40,24 @@ namespace WinPaletter
         /// Represents a single localizable string entry from a form or control.
         /// Immutable value type for performance and clarity.
         /// </summary>
-        public readonly struct FormStringEntry
+        public readonly struct FormStringEntry(string controlName, string propertyName, string value)
         {
-            public string ControlName { get; }
-            public string PropertyName { get; }
-            public string Value { get; }
-
-            public FormStringEntry(string controlName, string propertyName, string value)
-            {
-                ControlName = controlName ?? string.Empty;
-                PropertyName = propertyName ?? "Text";
-                Value = value ?? string.Empty;
-            }
+            public string ControlName { get; } = controlName ?? string.Empty;
+            public string PropertyName { get; } = propertyName ?? "Text";
+            public string Value { get; } = value ?? string.Empty;
 
             public bool IsFormEntry => string.IsNullOrEmpty(ControlName);
             public bool IsControlEntry => !string.IsNullOrEmpty(ControlName);
 
-            public static FormStringEntry FormEntry(string propertyName, string value)
-                => new FormStringEntry(string.Empty, propertyName, value);
+            public static FormStringEntry FormEntry(string propertyName, string value) => new(string.Empty, propertyName, value);
 
-            public static FormStringEntry ControlEntry(string controlName, string propertyName, string value)
-                => new FormStringEntry(controlName, propertyName, value);
+            public static FormStringEntry ControlEntry(string controlName, string propertyName, string value) => new(controlName, propertyName, value);
 
-            public override string ToString()
-                => IsFormEntry ? $"Form.{PropertyName}: {Value}" : $"{ControlName}.{PropertyName}: {Value}";
+            public override string ToString() => IsFormEntry ? $"Form.{PropertyName}: {Value}" : $"{ControlName}.{PropertyName}: {Value}";
 
-            public override bool Equals(object obj)
-                => obj is FormStringEntry other
-                    && ControlName == other.ControlName
-                    && PropertyName == other.PropertyName
-                    && Value == other.Value;
+            public override bool Equals(object obj) => obj is FormStringEntry other && ControlName == other.ControlName && PropertyName == other.PropertyName && Value == other.Value;
 
-            public override int GetHashCode()
-                => HashCode.Combine(ControlName, PropertyName, Value);
+            public override int GetHashCode() => HashCode.Combine(ControlName, PropertyName, Value);
 
             public static bool operator ==(FormStringEntry left, FormStringEntry right) => left.Equals(right);
             public static bool operator !=(FormStringEntry left, FormStringEntry right) => !left.Equals(right);
@@ -587,10 +572,14 @@ namespace WinPaletter
         {
             if (form == null) return;
 
-            if (!_treeByForm.TryGetValue(form.Name, out List<FormStringEntry> entries))
-                return;
+            if (!_treeByForm.TryGetValue(form.Name, out List<FormStringEntry> entries)) return;
 
             ApplyEntries(entries, form);
+
+            if (form is UI.WP.Form wpForm && wpForm.IsHandleCreated)
+            {
+                wpForm?.OnLocalized();
+            }
         }
 
         public void ApplyLocalization(System.Windows.Forms.Form form, JObject localizationJson)
@@ -599,6 +588,11 @@ namespace WinPaletter
 
             List<FormStringEntry> entries = DeserializeFormJObjectIntoEntries(localizationJson);
             ApplyEntries(entries, form);
+
+            if (form is UI.WP.Form wpForm && wpForm.IsHandleCreated)
+            {
+                wpForm?.OnLocalized();
+            }
         }
 
         /// <summary>
@@ -823,8 +817,8 @@ namespace WinPaletter
         {
             if (Forms.IExclude.Contains(form.GetType())) return null;
 
-            JObject jControl = new JObject();
-            JObject jChildren = new JObject();
+            JObject jControl = [];
+            JObject jChildren = [];
 
             jControl.Add(nameof(form.Text), form.Text);
 
@@ -851,7 +845,7 @@ namespace WinPaletter
 
             foreach (var tabControl in allControls.OfType<UI.WP.TablessControl>())
             {
-                handleSet ??= new HashSet<IntPtr>();
+                handleSet ??= [];
 
                 foreach (TabPage tabPage in tabControl.TabPages)
                 {

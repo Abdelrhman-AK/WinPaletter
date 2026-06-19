@@ -1095,18 +1095,6 @@ Generated automatically by WinPaletter. Please review the changes before merging
             branchesView.Cursor = Cursors.Default;
         }
 
-        private void GitHub_Mgr_ParentChanged(object sender, EventArgs e)
-        {
-            if (Parent != null && Parent is TabPage)
-            {
-                pin_button.Visible = false;
-            }
-            else
-            {
-                pin_button.Visible = true;
-            }
-        }
-
         string ImageKey(Branch branch, bool updated)
         {
             if (branch.Protected && updated)

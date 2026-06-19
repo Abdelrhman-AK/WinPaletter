@@ -1451,18 +1451,6 @@ namespace WinPaletter
             Forms.MainForm.AddTab(this);
         }
 
-        private void Lang_JSON_GUI_ParentChanged(object sender, EventArgs e)
-        {
-            if (Parent != null && Parent is TabPage)
-            {
-                pin_button.Visible = false;
-            }
-            else
-            {
-                pin_button.Visible = true;
-            }
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
             TextBox8.Text = Forms.Lang_ReplaceText.Replace(data, 1, TextBox8.Text);
