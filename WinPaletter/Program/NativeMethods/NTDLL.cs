@@ -5,6 +5,8 @@ namespace WinPaletter.NativeMethods
 {
     public static class NTDLL
     {
+        private const string _ntdll = "ntdll.dll";
+
         /// <summary>
         /// Opens a handle to a section object in the Windows NT kernel namespace.
         /// </summary>
@@ -12,7 +14,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="DesiredAccess">The access mask requested (e.g., READ_CONTROL or WRITE_DAC).</param>
         /// <param name="ObjectAttributes">A reference to an <see cref="OBJECT_ATTRIBUTES"/> structure describing the object.</param>
         /// <returns>NTSTATUS code indicating success or failure.</returns>
-        [DllImport("ntdll.dll")]
+        [DllImport(_ntdll)]
         public static extern int NtOpenSection(out IntPtr SectionHandle, uint DesiredAccess, ref OBJECT_ATTRIBUTES ObjectAttributes);
 
         /// <summary>
@@ -25,7 +27,7 @@ namespace WinPaletter.NativeMethods
         /// </param>
         /// <param name="SecurityDescriptor">Pointer to the security descriptor in memory.</param>
         /// <returns>NTSTATUS code indicating success or failure.</returns>
-        [DllImport("ntdll.dll")]
+        [DllImport(_ntdll)]
         public static extern int NtSetSecurityObject(IntPtr Handle, uint SecurityInformation, IntPtr SecurityDescriptor);
 
         /// <summary>
@@ -38,7 +40,7 @@ namespace WinPaletter.NativeMethods
         /// </param>
         /// <param name="SecurityDescriptor">Outputs a pointer to the security descriptor.</param>
         /// <returns>NTSTATUS code indicating success or failure.</returns>
-        [DllImport("ntdll.dll")]
+        [DllImport(_ntdll)]
         public static extern int NtQuerySecurityObject(IntPtr Handle, uint SecurityInformation, out IntPtr SecurityDescriptor);
 
         /// <summary>
@@ -46,7 +48,7 @@ namespace WinPaletter.NativeMethods
         /// </summary>
         /// <param name="Handle">Handle to close.</param>
         /// <returns>NTSTATUS code indicating success or failure.</returns>
-        [DllImport("ntdll.dll")]
+        [DllImport(_ntdll)]
         public static extern int NtClose(IntPtr Handle);
 
         /// <summary>
@@ -124,7 +126,7 @@ namespace WinPaletter.NativeMethods
         /// <summary>Security information flag to indicate that the DACL should be read or set.</summary>
         public const uint DACL_SECURITY_INFORMATION = 0x00000004;
 
-        [DllImport("ntdll.dll", CharSet = CharSet.Unicode)]
+        [DllImport(_ntdll, CharSet = CharSet.Unicode)]
         public static extern int RtlGetVersion(ref OSVERSIONINFOEX lpVersionInformation);
 
         [StructLayout(LayoutKind.Sequential)]

@@ -7,6 +7,8 @@ namespace WinPaletter.NativeMethods
     /// </summary>
     public class Dnsapi
     {
+        private const string _dnsapi = "dnsapi.dll";
+
         /// <summary>
         /// Flushes the resolver cache for DNS client.
         /// </summary>
@@ -15,7 +17,7 @@ namespace WinPaletter.NativeMethods
         /// If the function succeeds, the return value is ERROR_SUCCESS.
         /// If the function fails, the return value is a nonzero error code.
         /// </returns>
-        [DllImport("dnsapi.dll", EntryPoint = "DnsFlushResolverCache")]
+        [DllImport(_dnsapi, EntryPoint = "DnsFlushResolverCache")]
         public static extern uint DnsFlushResolverCache();
     }
 }

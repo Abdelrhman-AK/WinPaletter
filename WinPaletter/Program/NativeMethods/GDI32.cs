@@ -8,6 +8,8 @@ namespace WinPaletter.NativeMethods
     /// </summary>
     public class GDI32
     {
+        private const string _gdi32 = "gdi32.dll";
+
         /// <summary>
         /// Represents a logical font used for text rendering.
         /// </summary>
@@ -300,7 +302,7 @@ namespace WinPaletter.NativeMethods
         /// If the function succeeds, the return value is a handle to the font added.
         /// If the function fails, the return value is IntPtr.Zero.
         /// </returns>
-        [DllImport("gdi32.dll")]
+        [DllImport(_gdi32)]
         public static extern IntPtr AddFontMemResourceEx(IntPtr pbFont, uint cbFont, IntPtr pdv, [In] ref uint pcFonts);
 
         /// <summary>
@@ -309,7 +311,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="hDC">A handle to the DC.</param>
         /// <param name="nIndex">The item to be returned.</param>
         /// <returns>The value of the specified capability.</returns>
-        [DllImport("gdi32.dll", CharSet = CharSet.Auto, SetLastError = true, ExactSpelling = true)]
+        [DllImport(_gdi32, CharSet = CharSet.Auto, SetLastError = true, ExactSpelling = true)]
         public static extern int GetDeviceCaps(IntPtr hDC, int nIndex);
 
         /// <summary>
@@ -321,7 +323,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="hdc">A handle to an existing device context. If this parameter is IntPtr.Zero, the function creates a memory DC
         /// compatible with the application's current screen.</param>
         /// <returns>A handle to the compatible memory device context. Returns IntPtr.Zero if the function fails.</returns>
-        [DllImport("gdi32.dll")]
+        [DllImport(_gdi32)]
         public static extern IntPtr CreateCompatibleDC(IntPtr hdc);
 
         /// <summary>
@@ -333,7 +335,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="hdc">A handle to the device context to be deleted. This handle must have been created by a previous call to a
         /// device context creation function such as CreateCompatibleDC or CreateDC.</param>
         /// <returns>true if the device context is successfully deleted; otherwise, false.</returns>
-        [DllImport("gdi32.dll")]
+        [DllImport(_gdi32)]
         public static extern bool DeleteDC(IntPtr hdc);
 
         /// <summary>
@@ -348,7 +350,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="h">A handle to the graphics object to be selected. This can be a pen, brush, font, bitmap, or region.</param>
         /// <returns>If the function succeeds, the return value is a handle to the object being replaced. If the function fails,
         /// the return value is zero or HGDI_ERROR, depending on the object type.</returns>
-        [DllImport("gdi32.dll")]
+        [DllImport(_gdi32)]
         public static extern IntPtr SelectObject(IntPtr hdc, IntPtr h);
 
         /// <summary>
@@ -360,7 +362,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="ho">A handle to the GDI object to be deleted. This handle must have been created by a GDI function and must not
         /// be used after deletion.</param>
         /// <returns>true if the object was deleted successfully; otherwise, false.</returns>
-        [DllImport("gdi32.dll")]
+        [DllImport(_gdi32)]
         public static extern bool DeleteObject(IntPtr ho);
 
         /// <summary>
@@ -371,7 +373,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="crColor">The color value of the brush, specified as a COLORREF value. The low-order byte contains the red component,
         /// the next byte contains the green component, and the third byte contains the blue component.</param>
         /// <returns>A handle to the created logical brush. Returns IntPtr.Zero if the function fails.</returns>
-        [DllImport("gdi32.dll", SetLastError = true)]
+        [DllImport(_gdi32, SetLastError = true)]
         public static extern IntPtr CreateSolidBrush(int crColor);
 
         /// <summary>
@@ -383,7 +385,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="hdc">A handle to the device context whose background color is to be set.</param>
         /// <param name="crColor">The new background color value. This parameter must be a COLORREF value.</param>
         /// <returns>The previous background color as a COLORREF value if successful; otherwise, CLR_INVALID.</returns>
-        [DllImport("gdi32.dll", SetLastError = true)]
+        [DllImport(_gdi32, SetLastError = true)]
         public static extern int SetBkColor(IntPtr hdc, int crColor);
 
         /// <summary>
@@ -395,7 +397,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="hdc">A handle to the device context whose text color is to be set.</param>
         /// <param name="crColor">The new text color, specified as a COLORREF value. The color value must be in 0x00bbggrr format.</param>
         /// <returns>The previous text color as a COLORREF value if successful; otherwise, –1 to indicate failure.</returns>
-        [DllImport("gdi32.dll", SetLastError = true)]
+        [DllImport(_gdi32, SetLastError = true)]
         public static extern int SetTextColor(IntPtr hdc, int crColor);
 
         /// <summary>
@@ -418,7 +420,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="offset">The offset, in bytes, from the beginning of the file mapping object referenced by hSection. This value is
         /// ignored if hSection is IntPtr.Zero.</param>
         /// <returns>A handle to the created device-independent bitmap (DIB) if successful; otherwise, IntPtr.Zero.</returns>
-        [DllImport("gdi32.dll")]
+        [DllImport(_gdi32)]
         public static extern IntPtr CreateDIBSection(IntPtr hdc, ref BITMAPINFO pbmi, uint usage, out IntPtr ppvBits, IntPtr hSection, uint offset);
 
         /// <summary>
@@ -438,7 +440,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="y1">The y-coordinate, in logical units, of the upper-left corner of the source rectangle.</param>
         /// <param name="rop">A raster-operation code that defines how the color data is combined between the source and destination.</param>
         /// <returns>true if the operation succeeds; otherwise, false.</returns>
-        [DllImport("gdi32.dll")]
+        [DllImport(_gdi32)]
         public static extern bool BitBlt(IntPtr hdcDest, int x, int y, int cx, int cy, IntPtr hdcSrc, int x1, int y1, uint rop);
 
         /// <summary>

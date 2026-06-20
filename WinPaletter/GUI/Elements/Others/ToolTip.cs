@@ -19,12 +19,12 @@ namespace WinPaletter.UI.WP
         private int _activeDuration;
         private bool _relocatingTooltip;
         private const int _relocationThreshold = 5;
-        private const int DefaultMaxWidth = 320;
+        private const int DefaultMaxWidth = 400;
         private readonly List<Control> _trackedAncestors = [];
-        private Point _activeOffset;          // offset from control's top-left in screen coordinates
-        private bool _explicitPlacement;      // true only for the one popup immediately following an explicit Show() call
-        private Point _lastTooltipScreen;     // last known screen position
-        private IntPtr _tooltipHwnd = IntPtr.Zero;
+        private Point _activeOffset;                        // offset from control's top-left in screen coordinates
+        private bool _explicitPlacement;                    // true only for the one popup immediately following an explicit Show() call
+        private Point _lastTooltipScreen;                   // last known screen position
+        private bool _blurPendingForCurrentPopup;           // true once a popup has been requested and the blur backdrop still needs (re)capturing
         private Bitmap _blurBackground;
         private Rectangle _rectImageSide = Rectangle.Empty;
         private Rectangle _rectTitle = Rectangle.Empty;
@@ -32,6 +32,26 @@ namespace WinPaletter.UI.WP
         private Size _cachedSize = Size.Empty;
         private bool _layoutDirty = true;
         private int _maxWidth = DefaultMaxWidth;
+
+        // System.Windows.Forms.ToolTip does not expose its native common-control window handle publicly - the "Handle" property on the base class is private, so it isn't visible
+        // from a derived class. Reflection is the only way to reach it; reading the private property (rather than the underlying field) also preserves its create-on-demand
+        // behaviour, the same way Control.Handle would.
+        private static readonly System.Reflection.PropertyInfo _nativeHandleProperty = typeof(System.Windows.Forms.ToolTip).GetProperty("Handle", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+
+        private IntPtr Handle
+        {
+            get
+            {
+                try
+                {
+                    return _nativeHandleProperty != null ? (IntPtr)_nativeHandleProperty.GetValue(this, null) : IntPtr.Zero;
+                }
+                catch
+                {
+                    return IntPtr.Zero;
+                }
+            }
+        }
 
         internal sealed class ToolTipControlData
         {
@@ -60,6 +80,15 @@ namespace WinPaletter.UI.WP
         public new void SetToolTip(Control control, string caption)
         {
             if (control == null) return;
+
+            // Marshal to the UI thread - GDI/window operations triggered downstream (Popup, Draw, blur capture) require it, and calling in from a background thread without
+            // this guard is what produces a blank/empty tooltip.
+            if (control.IsHandleCreated && control.InvokeRequired)
+            {
+                control.Invoke(new Action(() => SetToolTip(control, caption)));
+                return;
+            }
+
             EnsureControlData(control).Text = caption ?? string.Empty;
             base.SetToolTip(control, string.IsNullOrWhiteSpace(caption) ? string.Empty : ".");
             if (control is UI.WP.TextBox tb) SetToolTip(tb.TB, caption);
@@ -68,6 +97,13 @@ namespace WinPaletter.UI.WP
         public void SetToolTip(Control control, string title, string text, Image image = null, Color badgeColor = default, int duration = 0)
         {
             if (control == null) return;
+
+            if (control.IsHandleCreated && control.InvokeRequired)
+            {
+                control.Invoke(new Action(() => SetToolTip(control, title, text, image, badgeColor, duration)));
+                return;
+            }
+
             ToolTipControlData d = EnsureControlData(control);
             d.Title = title ?? string.Empty;
             d.Text = text ?? string.Empty;
@@ -83,6 +119,12 @@ namespace WinPaletter.UI.WP
         {
             if (control == null) return;
 
+            if (control.IsHandleCreated && control.InvokeRequired)
+            {
+                control.Invoke(new Action(() => Show(control, title, text, image, locationRelativeToControl, duration)));
+                return;
+            }
+
             ToolTipTitle = title ?? string.Empty;
             ToolTipText = text ?? string.Empty;
             Image = image;
@@ -93,8 +135,7 @@ namespace WinPaletter.UI.WP
             _activeDuration = duration > 0 ? duration : AutoPopDelay;
             if (_activeDuration <= 0) _activeDuration = 5000;
 
-            // Store the explicit location offset. OnTooltipPopup fires synchronously inside
-            // base.Show() below, consumes this offset once, captures the blur snapshot and
+            // Store the explicit location offset. OnTooltipPopup fires synchronously inside base.Show() below, consumes this offset once, captures the blur snapshot and
             // starts tracking - so none of that needs to be duplicated here.
             _activeOffset = locationRelativeToControl;
             _explicitPlacement = true;
@@ -106,6 +147,12 @@ namespace WinPaletter.UI.WP
         {
             if (control == null) return;
 
+            if (control.IsHandleCreated && control.InvokeRequired)
+            {
+                control.Invoke(new Action(() => Show(control, title, text, badgeColor, locationRelativeToControl, duration)));
+                return;
+            }
+
             ToolTipTitle = title ?? string.Empty;
             ToolTipText = text ?? string.Empty;
             Image = null;
@@ -116,8 +163,7 @@ namespace WinPaletter.UI.WP
             _activeDuration = duration > 0 ? duration : AutoPopDelay;
             if (_activeDuration <= 0) _activeDuration = 5000;
 
-            // Store the explicit location offset. OnTooltipPopup fires synchronously inside
-            // base.Show() below, consumes this offset once, captures the blur snapshot and
+            // Store the explicit location offset. OnTooltipPopup fires synchronously inside base.Show() below, consumes this offset once, captures the blur snapshot and
             // starts tracking - so none of that needs to be duplicated here.
             _activeOffset = locationRelativeToControl;
             _explicitPlacement = true;
@@ -165,26 +211,6 @@ namespace WinPaletter.UI.WP
             if (_activeDuration <= 0) _activeDuration = 5000;
         }
 
-        private IntPtr FindTooltipHwnd()
-        {
-            IntPtr found = IntPtr.Zero;
-            int tid = NativeMethods.Kernel32.GetCurrentThreadId();
-
-            NativeMethods.User32.EnumThreadWindows(tid, (hWnd, _) =>
-            {
-                System.Text.StringBuilder cls = new(64);
-                NativeMethods.User32.GetClassName(hWnd, cls, 64);
-                if (cls.ToString() == "tooltips_class32")
-                {
-                    found = hWnd;
-                    return false;   // stop enumeration — we want our only tooltip
-                }
-                return true;
-            }, IntPtr.Zero);
-
-            return found;
-        }
-
         private void StartFollowingControl(Control control)
         {
             StopFollowingControl();
@@ -201,7 +227,20 @@ namespace WinPaletter.UI.WP
                 c = c.Parent;
             }
 
+            // control.FindForm() only walks the managed Parent chain. When a "child" form is embedded into a TabPage by reparenting its native window directly (SetParent)
+            // rather than through the WinForms Parent property, that managed chain stops at the embedded form and never reaches the real outer/main form, so the outer
+            // form's Move/Resize never gets hooked and the tooltip stops following it. Resolving the true top-level window through the native ancestor chain and
+            // mapping it back to its managed Control sidesteps that, since GetAncestor always reflects the real Win32 parent/child relationship regardless of how it was set.
             System.Windows.Forms.Form form = control.FindForm();
+
+            if (control.IsHandleCreated)
+            {
+                IntPtr rootHwnd = NativeMethods.User32.GetAncestor(control.Handle, NativeMethods.User32.GA_ROOT);
+                if (rootHwnd != IntPtr.Zero && Control.FromHandle(rootHwnd) is System.Windows.Forms.Form rootForm)
+                {
+                    form = rootForm;
+                }
+            }
 
             if (form != null)
             {
@@ -246,10 +285,9 @@ namespace WinPaletter.UI.WP
         {
             if (_relocatingTooltip) return;
 
-            // Nothing to relocate if the tooltip was never shown, or it is not currently
-            // visible (already auto-hidden, dismissed, etc). Bails out before doing any
+            // Nothing to relocate if the tooltip was never shown, or it is not currently visible (already auto-hidden, dismissed, etc). Bails out before doing any
             // PointToScreen/Hide/Show work, which also avoids needless blur recapture.
-            if (_tooltipHwnd == IntPtr.Zero || !NativeMethods.User32.IsWindowVisible(_tooltipHwnd))
+            if (Handle == IntPtr.Zero || !NativeMethods.User32.IsWindowVisible(Handle))
             {
                 return;
             }
@@ -272,8 +310,7 @@ namespace WinPaletter.UI.WP
                     return;
                 }
 
-                // Only relocate if the tooltip moved more than the threshold distance.
-                // This prevents shuttering from tiny position changes during form dragging.
+                // Only relocate if the tooltip moved more than the threshold distance. This prevents shuttering from tiny position changes during form dragging.
                 int deltaX = Math.Abs(newScreen.X - _lastTooltipScreen.X);
                 int deltaY = Math.Abs(newScreen.Y - _lastTooltipScreen.Y);
 
@@ -288,14 +325,11 @@ namespace WinPaletter.UI.WP
                 // Hide current tooltip
                 Hide(_activeControl);
 
-                // Recapture blur for new position
-                if (CanAnimate)
-                {
-                    EnsureLayout();
-                    CaptureBlur(new Rectangle(newScreen, _cachedSize));
-                }
-
-                // Show tooltip at new position with valid duration
+                // Re-show at the same anchored offset. Mark this as an explicit placement so the upcoming Popup keeps the exact offset instead of recomputing one from
+                // the current cursor position (which is what was making the tooltip drift to the wrong place instead of cleanly following the form). The blur backdrop is
+                // recaptured from the Draw handler once the window has actually moved to its new screen position.
+                _explicitPlacement = true;
+                _blurPendingForCurrentPopup = true;
                 base.Show(".", _activeControl, _activeOffset.X, _activeOffset.Y, duration);
             }
             finally
@@ -310,7 +344,6 @@ namespace WinPaletter.UI.WP
             {
                 Hide(_activeControl ?? c);
                 StopFollowingControl();
-                _tooltipHwnd = IntPtr.Zero;
             }
         }
 
@@ -337,7 +370,7 @@ namespace WinPaletter.UI.WP
 
                         using (Bitmap blurred = small.Blur(3))
                         {
-                            _blurBackground = new Bitmap(capture.Width, capture.Height);
+                            _blurBackground = new(capture.Width, capture.Height);
                             using (Graphics gOut = Graphics.FromImage(_blurBackground))
                             {
                                 gOut.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
@@ -359,67 +392,86 @@ namespace WinPaletter.UI.WP
             _layoutDirty = false;
 
             const int pad = 2;
+            const int vPad = 4; // breathing room above the first text line and below the last one
+            const int titleTextGap = 2; // small extra gap between title and text when both are present
             const TextFormatFlags measureFlags = TextFormatFlags.WordBreak | TextFormatFlags.Left | TextFormatFlags.NoPrefix;
 
             bool hasImage = _image != null;
             bool hasBadge = !hasImage && _badgeColor != Color.Empty;
+            bool hasTitleText = !string.IsNullOrWhiteSpace(_toolTipTitle);
+            bool hasBodyText = !string.IsNullOrWhiteSpace(_toolTipText);
+            bool hasAnyText = hasTitleText || hasBodyText;
+            bool hasIcon = hasImage || hasBadge;
 
-            int iconColumnWidth = 0;
-            if (hasImage || hasBadge)
-            {
-                int iconW = hasImage ? _image.Width : 24;
-                iconColumnWidth = iconW + pad * 2 + pad * 3;
-            }
+            int iconW = hasImage ? _image.Width : 24;
+            int iconH = hasImage ? _image.Height : 24;
+            int iconColumnWidth = hasIcon ? iconW + pad * 2 + pad * 3 : 0;
 
-            // Cap the text measurement box to MaxWidth (minus room for the icon column),
-            // so long strings wrap onto multiple lines instead of stretching the tooltip.
+            // Cap the text measurement box to MaxWidth (minus room for the icon column), so long strings wrap onto multiple lines instead of stretching the tooltip.
             int availableTextWidth = Math.Max(40, _maxWidth - iconColumnWidth - pad * 2);
             Size proposedSize = new(availableTextWidth, int.MaxValue);
 
-            Size sizeTitle = string.IsNullOrWhiteSpace(_toolTipTitle) ? Size.Empty : TextRenderer.MeasureText(_toolTipTitle, _font_Title, proposedSize, measureFlags);
-            Size sizeText = string.IsNullOrWhiteSpace(_toolTipText) ? Size.Empty : TextRenderer.MeasureText(_toolTipText, _font, proposedSize, measureFlags);
+            Size sizeTitle = hasTitleText ? TextRenderer.MeasureText(_toolTipTitle, _font_Title, proposedSize, measureFlags) : Size.Empty;
+            Size sizeText = hasBodyText ? TextRenderer.MeasureText(_toolTipText, _font, proposedSize, measureFlags) : Size.Empty;
 
             int textBlockWidth = Math.Min(availableTextWidth, Math.Max(sizeTitle.Width, sizeText.Width));
+            int textX = pad + iconColumnWidth;
 
-            _rectTitle = sizeTitle == Size.Empty ? Rectangle.Empty : new(pad, pad, textBlockWidth, sizeTitle.Height);
-            _rectText = sizeText == Size.Empty ? Rectangle.Empty : new(pad, pad, textBlockWidth, sizeText.Height);
+            // Stack title above text. Each rect is sized to exactly its own measured height, and the whole block is padded by vPad above the first line
+            // and below the last one - so the gap stays identical whether there's a title only, text only, or both. Previously a single-line tooltip stretched its rect
+            // to the full tooltip height with zero top padding, dumping all the slack as a gap underneath the text - that inconsistency is what this fixes.
+            int cursorY = vPad;
 
-            if (!_rectTitle.IsEmpty && !_rectText.IsEmpty) _rectText.Y = _rectTitle.Bottom;
-
-            Rectangle combined;
-            if (_rectTitle.IsEmpty && _rectText.IsEmpty) combined = new(pad, pad, 10, 10);
-            else if (_rectTitle.IsEmpty) combined = _rectText;
-            else if (_rectText.IsEmpty) combined = _rectTitle;
-            else combined = Rectangle.Union(_rectTitle, _rectText);
-
-            if (hasImage || hasBadge)
+            if (hasTitleText)
             {
-                int iconW = hasImage ? _image.Width : 24;
-                int iconH = hasImage ? _image.Height : 24;
+                _rectTitle = new Rectangle(textX, cursorY, textBlockWidth, sizeTitle.Height);
+                cursorY = _rectTitle.Bottom;
 
+                if (hasBodyText) cursorY += titleTextGap;
+            }
+            else
+            {
+                _rectTitle = Rectangle.Empty;
+            }
+
+            if (hasBodyText)
+            {
+                _rectText = new Rectangle(textX, cursorY, textBlockWidth, sizeText.Height);
+                cursorY = _rectText.Bottom;
+            }
+            else
+            {
+                _rectText = Rectangle.Empty;
+            }
+
+            int textContentHeight = cursorY + vPad;
+
+            if (hasIcon)
+            {
                 _rectImageSide = new(pad, pad, iconW + pad * 2, iconH + pad * 2);
-
-                int textX = _rectImageSide.Right + pad * 3;
-                combined.X = textX;
-                _rectTitle.X = textX;
-                _rectText.X = textX;
-
-                combined.Height = Math.Max(combined.Height, _rectImageSide.Height);
-                combined = Rectangle.Union(combined, _rectImageSide);
-                combined.Width += pad;
             }
             else
             {
                 _rectImageSide = Rectangle.Empty;
             }
 
-            combined.Height += pad * 2;
-            combined.Width = Math.Min(combined.Width, _maxWidth);
+            int minHeightForIcon = hasIcon ? iconH + pad * 4 : 0;
+            int contentHeight = hasAnyText ? Math.Max(textContentHeight, minHeightForIcon) : Math.Max(10 + vPad * 2, minHeightForIcon);
+            int contentWidth = textX + textBlockWidth + pad;
 
-            if (!_rectTitle.IsEmpty && _rectText.IsEmpty) { _rectTitle.Y = 0; _rectTitle.Height = combined.Height; }
-            else if (_rectTitle.IsEmpty && !_rectText.IsEmpty) { _rectText.Y = 0; _rectText.Height = combined.Height; }
+            // If the icon column is taller than the text block, center the text vertically
+            // within the extra space instead of leaving it pinned to the top.
+            if (hasAnyText && contentHeight > textContentHeight)
+            {
+                int extra = (contentHeight - textContentHeight) / 2;
+                if (!_rectTitle.IsEmpty) _rectTitle.Y += extra;
+                if (!_rectText.IsEmpty) _rectText.Y += extra;
+            }
 
-            _cachedSize = combined.Size;
+            if (contentWidth < 10) contentWidth = 10;
+            if (contentHeight < 10) contentHeight = 10;
+
+            _cachedSize = new Size(Math.Min(contentWidth, _maxWidth), contentHeight);
         }
 
         [Browsable(false)]
@@ -531,10 +583,9 @@ namespace WinPaletter.UI.WP
                 _activeDuration = AutoPopDelay > 0 ? AutoPopDelay : 5000;
             }
 
-            // Resolve the screen offset for THIS popup. _explicitPlacement is true only for the
-            // single popup that immediately follows a call to Show(); every other popup (normal
-            // hover tooltips, and any popup after that) recomputes the cursor-relative offset
-            // from scratch, instead of reusing whatever was left over from a previous session.
+            // Resolve the screen offset for THIS popup. _explicitPlacement is true only for the single popup that immediately follows a call to Show() (or a follow-the-form
+            // relocation), every other popup (normal hover tooltips) recomputes the cursor-relative offset from scratch, instead of reusing whatever was left over
+            // from a previous session.
             if (_activeControl != null)
             {
                 if (_explicitPlacement)
@@ -551,30 +602,12 @@ namespace WinPaletter.UI.WP
 
             EnsureLayout();
 
-            // Capture the software-blur snapshot before the tooltip window paints over the screen
-            // content. This runs on every popup (not only the first), so the backdrop always
-            // matches what is actually behind the tooltip right now.
-            if (CanAnimate)
-            {
-                Point screenTip;
-                if (_activeControl != null)
-                {
-                    Point controlScreenPos = _activeControl.PointToScreen(Point.Empty);
-                    screenTip = new Point(controlScreenPos.X + _activeOffset.X, controlScreenPos.Y + _activeOffset.Y);
-                }
-                else
-                {
-                    screenTip = new Point(Cursor.Position.X + 16, Cursor.Position.Y + 16);
-                }
-                CaptureBlur(new Rectangle(screenTip, _cachedSize));
-            }
-
             e.ToolTipSize = _cachedSize;
 
-            // The native tooltip HWND is created once and reused for the lifetime of this
-            // component, so only enumerate thread windows to find it when we don't already
-            // have it cached - avoids a full EnumThreadWindows pass on every single popup.
-            if (_tooltipHwnd == IntPtr.Zero) _tooltipHwnd = FindTooltipHwnd();
+            // The blur snapshot can only be captured accurately once the tooltip window has actually been moved/resized to its final on-screen position (which happens
+            // after this handler returns, and can additionally be clamped by the OS to stay within the screen edges - something this handler cannot predict). The real
+            // capture is deferred to the first Draw call for this popup, where GetWindowRect reflects the true final bounds.
+            _blurPendingForCurrentPopup = true;
 
             if (_activeControl != null)
             {
@@ -593,17 +626,48 @@ namespace WinPaletter.UI.WP
                     ToolTipText = native;
             }
 
-            // If Popup didn't manage to grab the HWND (race), try again here.
-            if (_tooltipHwnd == IntPtr.Zero) _tooltipHwnd = FindTooltipHwnd();
-
             EnsureLayout();
+
+            // Capture the blur backdrop exactly once per popup, now that the tooltip window has been moved/sized to its real final screen position. Briefly hiding our own
+            // window around the capture guarantees the screenshot shows the real desktop/app content behind it rather than our own (not-yet-painted) tooltip surface.
+            // SWP_NOACTIVATE is essential here - plain ShowWindow activates the window by default, which steals focus from its owner (the parent/main form) and was
+            // causing it to visibly deactivate then reactivate on every popup.
+
+            // SWP_NOACTIVATE is the important one here - without it, hiding/showing the tooltip's native window steals activation from its owner (the parent/main form), which is what
+            // was causing the owner to visibly deactivate then reactivate on every popup.
+
+            if (CanAnimate && _blurPendingForCurrentPopup)
+            {
+                _blurPendingForCurrentPopup = false;
+
+                if (NativeMethods.User32.GetWindowRect(Handle, out NativeMethods.UxTheme.RECT r))
+                {
+                    bool wasVisible = NativeMethods.User32.IsWindowVisible(Handle);
+
+                    if (wasVisible)
+                    {
+                        NativeMethods.User32.SetWindowPos(Handle, IntPtr.Zero, 0, 0, 0, 0, NativeMethods.User32.SWP_NOACTIVATE | NativeMethods.User32.SWP_NOMOVE | NativeMethods.User32.SWP_NOSIZE | NativeMethods.User32.SWP_NOZORDER | NativeMethods.User32.SWP_HIDEWINDOW);
+                    }
+
+                    CaptureBlur(Rectangle.FromLTRB(r.left, r.top, r.right, r.bottom));
+
+                    if (wasVisible)
+                    {
+                        NativeMethods.User32.SetWindowPos(Handle, IntPtr.Zero, 0, 0, 0, 0, NativeMethods.User32.SWP_NOACTIVATE | NativeMethods.User32.SWP_NOMOVE | NativeMethods.User32.SWP_NOSIZE | NativeMethods.User32.SWP_NOZORDER | NativeMethods.User32.SWP_SHOWWINDOW);
+                    }
+                }
+            }
+            else
+            {
+                _blurPendingForCurrentPopup = false;
+            }
 
             Graphics G = e.Graphics;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
 
             // Resolve colours — if blur is on, alpha < 255 so the blurred background shows through the fill.
-            int fillAlpha = CanAnimate ? 125 : 255;
-            int borderAlpha = CanAnimate ? 180 : 255;
+            int fillAlpha = CanAnimate ? 150 : 255;
+            int borderAlpha = CanAnimate ? 200 : 255;
 
             Color backColor;
             Color foreColor;

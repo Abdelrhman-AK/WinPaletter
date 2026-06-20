@@ -9,6 +9,8 @@ namespace WinPaletter.NativeMethods
     /// </summary>
     public class ADVAPI
     {
+        private const string _advapi = "advapi32.dll";
+
         #region Users
         /// <summary>
         /// Logon as a user on the local machine
@@ -60,7 +62,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="dwLogonProvider">The logon provider.</param>
         /// <param name="phToken">A handle to the newly created access token.</param>
         /// <returns>True if the function succeeds; otherwise, false.</returns>
-        [DllImport("advapi32.dll", SetLastError = true, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        [DllImport(_advapi, SetLastError = true, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool LogonUser([MarshalAs(UnmanagedType.LPStr)] string pszUserName, [MarshalAs(UnmanagedType.LPStr)] string pszDomain, [MarshalAs(UnmanagedType.LPStr)] string pszPassword, int dwLogonType, int dwLogonProvider, ref IntPtr phToken);
 
@@ -69,14 +71,14 @@ namespace WinPaletter.NativeMethods
         /// </summary>
         /// <param name="hToken">A handle to a primary or impersonation access token.</param>
         /// <returns>True if the function succeeds; otherwise, false.</returns>
-        [DllImport("advapi32.dll", SetLastError = true)]
+        [DllImport(_advapi, SetLastError = true)]
         public static extern bool ImpersonateLoggedOnUser(IntPtr hToken);
 
         /// <summary>
         /// Ends the impersonation of a client.
         /// </summary>
         /// <returns>True if the function succeeds; otherwise, false.</returns>
-        [DllImport("advapi32.dll", SetLastError = true)]
+        [DllImport(_advapi, SetLastError = true)]
         public static extern bool RevertToSelf();
         #endregion
 
@@ -102,7 +104,7 @@ namespace WinPaletter.NativeMethods
         /// <returns>
         /// True if the conversion succeeds; otherwise, false. Use <see cref="Marshal.GetLastWin32Error"/> to get error information.
         /// </returns>
-        [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        [DllImport(_advapi, SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern bool ConvertStringSecurityDescriptorToSecurityDescriptor(string StringSecurityDescriptor, int StringSDRevision, out IntPtr SecurityDescriptor, out int SecurityDescriptorSize);
 
         /// <summary>
@@ -127,7 +129,7 @@ namespace WinPaletter.NativeMethods
         /// <returns>
         /// True if the conversion succeeds; otherwise, false. Use <see cref="Marshal.GetLastWin32Error"/> for error information.
         /// </returns>
-        [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        [DllImport(_advapi, SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern bool ConvertSecurityDescriptorToStringSecurityDescriptor(IntPtr SecurityDescriptor, int RequestedStringSDRevision, uint SecurityInformation, out IntPtr StringSecurityDescriptor, out int StringSecurityDescriptorLen);
 
         internal const int SE_PRIVILEGE_ENABLED = 2;
@@ -167,7 +169,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="prev"></param>
         /// <param name="relen"></param>
         /// <returns></returns>
-        [DllImport("advapi32.dll", SetLastError = true)]
+        [DllImport(_advapi, SetLastError = true)]
         public static extern bool AdjustTokenPrivileges(IntPtr htok, bool disall, ref TokPriv1Luid newst, int len, IntPtr prev, IntPtr relen);
 
         /// <summary>
@@ -177,7 +179,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="acc"></param>
         /// <param name="phtok"></param>
         /// <returns></returns>
-        [DllImport("advapi32.dll", SetLastError = true)]
+        [DllImport(_advapi, SetLastError = true)]
         public static extern bool OpenProcessToken(IntPtr h, int acc, ref IntPtr phtok);
 
         /// <summary>
@@ -187,7 +189,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="name"></param>
         /// <param name="pluid"></param>
         /// <returns></returns>
-        [DllImport("advapi32.dll", SetLastError = true)]
+        [DllImport(_advapi, SetLastError = true)]
         public static extern bool LookupPrivilegeValue(string host, string name, ref long pluid);
 
         /// <summary>
@@ -329,7 +331,7 @@ namespace WinPaletter.NativeMethods
         /// <remarks>
         /// Use <see cref="Marshal.GetLastWin32Error"/> to retrieve the error code if the call fails.
         /// </remarks>
-        [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        [DllImport(_advapi, SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern bool CredWrite([In] ref CREDENTIAL userCredential, [In] uint flags);
 
         /// <summary>
@@ -343,14 +345,14 @@ namespace WinPaletter.NativeMethods
         /// <remarks>
         /// The returned pointer must be freed using <see cref="CredFree"/> to avoid memory leaks.
         /// </remarks>
-        [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        [DllImport(_advapi, SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern bool CredRead(string target, int type, int reservedFlag, out IntPtr credentialPtr);
 
         /// <summary>
         /// Frees unmanaged memory allocated by <see cref="CredRead"/>.
         /// </summary>
         /// <param name="buffer">Pointer to the credential struct returned by <see cref="CredRead"/>.</param>
-        [DllImport("advapi32.dll", SetLastError = true)]
+        [DllImport(_advapi, SetLastError = true)]
         public static extern void CredFree([In] IntPtr buffer);
 
         /// <summary>
@@ -363,7 +365,7 @@ namespace WinPaletter.NativeMethods
         /// <remarks>
         /// Use <see cref="Marshal.GetLastWin32Error"/> to retrieve the error code if the call fails.
         /// </remarks>
-        [DllImport("advapi32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        [DllImport(_advapi, SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern bool CredDelete(string target, int type, int flags);
 
         #endregion

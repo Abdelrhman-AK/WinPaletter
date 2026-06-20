@@ -462,16 +462,7 @@ namespace WinPaletter
             IntPtr[] largeIcons = new IntPtr[1];
 
             // Extract the icon at the requested size
-            uint result = Shell32.PrivateExtractIcons(
-                dllPath,
-                iconIndex,
-                desiredSize, // request width
-                desiredSize, // request height
-                largeIcons,
-                null,
-                1,
-                0
-            );
+            uint result = User32.PrivateExtractIcons(dllPath, iconIndex, desiredSize, desiredSize, largeIcons, null, 1, 0);
 
             if (result > 0 && largeIcons[0] != IntPtr.Zero)
             {
@@ -483,7 +474,7 @@ namespace WinPaletter
                 }
                 finally
                 {
-                    Shell32.DestroyIcon(largeIcons[0]);
+                    User32.DestroyIcon(largeIcons[0]);
                 }
             }
 

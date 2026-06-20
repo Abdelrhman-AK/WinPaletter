@@ -9,6 +9,8 @@ namespace WinPaletter.NativeMethods
     /// </summary>
     public class DWMAPI
     {
+        private const string _dwmapi = "dwmapi.dll";
+
         #region Constants
         /// <summary>
         /// Represents a constant value for enabling drop shadow in a window.
@@ -92,7 +94,7 @@ namespace WinPaletter.NativeMethods
         /// </summary>
         /// <param name="hWnd">A handle to the window.</param>
         /// <param name="pBlurBehind">A pointer to a DWM_BLURBEHIND structure that describes the blur-behind area.</param>
-        [DllImport("dwmapi.dll", PreserveSig = false)]
+        [DllImport(_dwmapi, PreserveSig = false)]
         public static extern void DwmEnableBlurBehindWindow(IntPtr hWnd, DWM_BLURBEHIND pBlurBehind);
 
         /// <summary>
@@ -100,7 +102,7 @@ namespace WinPaletter.NativeMethods
         /// </summary>
         /// <param name="isEnabled">Receives the current composition state. True if composition is enabled; otherwise, false.</param>
         /// <returns>Returns S_OK if successful; otherwise, an HRESULT error code.</returns>
-        [DllImport("dwmapi.dll")]
+        [DllImport(_dwmapi)]
         public static extern int DwmIsCompositionEnabled(out bool isEnabled);
 
         /// <summary>
@@ -114,7 +116,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="pvAttribute">Out parameter that receives the attribute value as a RECT; the actual data depends on dwAttribute.</param>
         /// <param name="cbAttribute">Size, in bytes, of the structure pointed to by pvAttribute; typically Marshal.SizeOf(typeof(RECT)).</param>
         /// <returns>HRESULT code: S_OK (0) on success; otherwise an error code indicating failure.</returns>
-        [DllImport("dwmapi.dll")]
+        [DllImport(_dwmapi)]
         public static extern int DwmGetWindowAttribute(IntPtr hwnd, int dwAttribute, out RECT pvAttribute, int cbAttribute);
 
         /// <summary>
@@ -123,7 +125,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="hWnd">A handle to the window.</param>
         /// <param name="pMarInset">A pointer to a MARGINS structure that describes the margins to use when extending the frame into the client area.</param>
         /// <returns>Returns S_OK if successful; otherwise, an HRESULT error code.</returns>
-        [DllImport("dwmapi.dll")]
+        [DllImport(_dwmapi)]
         public static extern int DwmExtendFrameIntoClientArea(IntPtr hWnd, ref MARGINS pMarInset);
 
         /// <summary>
@@ -134,7 +136,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="attrValue">The value to set.</param>
         /// <param name="attrSize">The size of the value being set.</param>
         /// <returns>Returns S_OK if successful; otherwise, an HRESULT error code.</returns>
-        [DllImport("dwmapi.dll")]
+        [DllImport(_dwmapi)]
         internal static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
 
         /// <summary>
@@ -145,7 +147,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="pvAttribute">The value to set.</param>
         /// <param name="cbAttribute">The size, in bytes, of the pvAttribute value.</param>
         /// <returns>Returns S_OK if successful; otherwise, an HRESULT error code.</returns>
-        [DllImport("dwmapi.dll")]
+        [DllImport(_dwmapi)]
         internal static extern int DwmSetWindowAttribute(IntPtr hwnd, DWMWINDOWATTRIBUTE dwAttribute, ref int pvAttribute, int cbAttribute);
 
         /// <summary>
@@ -154,18 +156,18 @@ namespace WinPaletter.NativeMethods
         /// <param name="parameters">A pointer to a DWM_COLORIZATION_PARAMS structure that specifies the colorization parameters.</param>
         /// <param name="unknown">Unknown parameter.</param>
         /// <returns>Returns S_OK if successful; otherwise, an HRESULT error code.</returns>
-        [DllImport("dwmapi.dll", EntryPoint = "#131", PreserveSig = false)]
+        [DllImport(_dwmapi, EntryPoint = "#131", PreserveSig = false)]
         public static extern void DwmSetColorizationParameters(ref DWM_COLORIZATION_PARAMS parameters, bool unknown);
 
         /// <summary>
         /// Retrieves the current colorization parameters used by the Desktop Window Manager (DWM).
         /// </summary>
         /// <remarks>This method is a P/Invoke wrapper for the DWM API function and requires the
-        /// "dwmapi.dll" library. It does not set the last error, so error handling should be implemented based on the
+        /// _dwmapi library. It does not set the last error, so error handling should be implemented based on the
         /// context of usage.</remarks>
         /// <param name="parameters">When this method returns, contains the <see cref="DWM_COLORIZATION_PARAMS"/> structure with the current
         /// colorization settings. This parameter is passed uninitialized.</param>
-        [DllImport("dwmapi.dll", EntryPoint = "#127", SetLastError = false)]
+        [DllImport(_dwmapi, EntryPoint = "#127", SetLastError = false)]
         public static extern void DwmGetColorizationParameters(out DWM_COLORIZATION_PARAMS parameters);
 
         /// <summary>

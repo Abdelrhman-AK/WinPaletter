@@ -47,6 +47,15 @@ namespace WinPaletter.NativeMethods
         public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
 
         /// <summary>
+        /// Get a handle to the ancestor of the specified window. The ancestor window is determined based on the specified flags, which can indicate a parent, root, or root owner window. This method is useful for navigating the window hierarchy and retrieving related windows based on their relationships.
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <param name="gaFlags"></param>
+        /// <returns></returns>
+        [DllImport(_user32)]
+        public static extern IntPtr GetAncestor(IntPtr hWnd, uint gaFlags);
+
+        /// <summary>
         /// Retrieves a value indicating whether the specified window is visible.
         /// </summary>
         /// <param name="hWnd"></param>
@@ -172,6 +181,21 @@ namespace WinPaletter.NativeMethods
         /// <returns>true if the function succeeds; otherwise, false.</returns>
         [DllImport(_user32)]
         public static extern bool DrawFrameControl(IntPtr hdc, ref RECT lprc, uint uType, uint uState);
+
+        /// <summary>
+        /// Retrieves information about icons or icon-sized images from a specified File.
+        /// </summary>
+        /// <param name="lpszFile">The name of the File that contains the icon or icon-sized image.</param>
+        /// <param name="nIconIndex">The zero-based index of the icon or image.</param>
+        /// <param name="cxIcon">The desired width of the icon in pixels. The function uses this value to create a monochrome icon of the desired width.</param>
+        /// <param name="cyIcon">The desired height of the icon in pixels. The function uses this value to create a monochrome icon of the desired height.</param>
+        /// <param name="phicon">An array of icon or image handles to be filled by this function. The array should be pre-allocated to hold at least <paramref name="nIcons"/> elements.</param>
+        /// <param name="piconid">An array of icon IDs. This parameter can be <see langword="null"/>.</param>
+        /// <param name="nIcons">The number of icons to extract. This value is limited to the number of image bits in the icon resource.</param>
+        /// <param name="flags">A combination of flags that specify the dimensions and behavior of the function.</param>
+        /// <returns>The number of icons successfully extracted, or zero if the function fails.</returns>
+        [DllImport(_user32, SetLastError = true, CharSet = CharSet.Unicode)]
+        public static extern uint PrivateExtractIcons(string lpszFile, int nIconIndex, int cxIcon, int cyIcon, IntPtr[] phicon, uint[] piconid, uint nIcons, uint flags);
 
         /// <summary>
         /// Destroys an icon and frees any associated system resources.
@@ -1000,6 +1024,9 @@ namespace WinPaletter.NativeMethods
         public const int EM_SETSEL = 0x00B1;
         public const int SW_HIDE = 0;
         public const int SW_SHOWNA = 8; // Show without activating, preserving position/size
+        public const uint SWP_SHOWWINDOW = 0x0040;
+        public const uint SWP_HIDEWINDOW = 0x0080;
+        public const uint GA_ROOT = 2;
 
         /// <summary>
         /// Contains information that an application uses to calculate the size, position, and valid client area of a

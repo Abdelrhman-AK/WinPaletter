@@ -10,6 +10,8 @@ namespace WinPaletter.NativeMethods
     /// </summary>
     public partial class UxTheme
     {
+        private const string _uxtheme = "uxtheme.dll";
+
         /// <summary>
         /// Sets the theme for a specified window.
         /// </summary>
@@ -17,7 +19,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="pszSubAppName">A pointer to a string that contains the name of the application.</param>
         /// <param name="pszSubIdList">A pointer to a string that contains a semicolon-separated list of CLSID names for classes.</param>
         /// <returns>Returns zero if successful; otherwise, returns a non-zero error code.</returns>
-        [DllImport("uxtheme.dll", ExactSpelling = true, CharSet = CharSet.Unicode)]
+        [DllImport(_uxtheme, ExactSpelling = true, CharSet = CharSet.Unicode)]
         public static extern int SetWindowTheme(IntPtr hwnd, string pszSubAppName, string pszSubIdList);
 
         /// <summary>
@@ -28,7 +30,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="attributes">The Attributes to Add/Remove</param>
         /// <param name="size">The Size of the Attributes Struct</param>
         /// <returns>If The Call Was Successful or Not</returns>
-        [DllImport("UxTheme.dll")]
+        [DllImport(_uxtheme)]
         public static extern int SetWindowThemeAttribute(IntPtr hWnd, WindowThemeAttributeType wtype, ref WTA_OPTIONS attributes, uint size);
 
         /// <summary>
@@ -36,7 +38,7 @@ namespace WinPaletter.NativeMethods
         /// </summary>
         /// <param name="preferredAppMode"></param>
         /// <returns></returns>
-        [DllImport("uxtheme.dll", EntryPoint = "#135", SetLastError = true, CharSet = CharSet.Unicode)]
+        [DllImport(_uxtheme, EntryPoint = "#135", SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern int SetPreferredAppMode(PreferredAppMode preferredAppMode);
 
         /// <summary>

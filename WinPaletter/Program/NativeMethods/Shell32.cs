@@ -12,6 +12,8 @@ namespace WinPaletter.NativeMethods
     /// </summary>
     public class Shell32
     {
+        private const string _shell32 = "shell32.dll";
+
         /// <summary>
         /// Extracts the icon associated with a File.
         /// </summary>
@@ -21,31 +23,8 @@ namespace WinPaletter.NativeMethods
         /// <param name="phiconSmall"></param>
         /// <param name="nIcons"></param>
         /// <returns></returns>
-        [DllImport("shell32.dll", CharSet = CharSet.Auto)]
+        [DllImport(_shell32, CharSet = CharSet.Auto)]
         public static extern uint ExtractIconEx(string szFileName, int nIconIndex, IntPtr[] phiconLarge, IntPtr[] phiconSmall, uint nIcons);
-
-        /// <summary>
-        /// Retrieves information about icons or icon-sized images from a specified File.
-        /// </summary>
-        /// <param name="lpszFile">The name of the File that contains the icon or icon-sized image.</param>
-        /// <param name="nIconIndex">The zero-based index of the icon or image.</param>
-        /// <param name="cxIcon">The desired width of the icon in pixels. The function uses this value to create a monochrome icon of the desired width.</param>
-        /// <param name="cyIcon">The desired height of the icon in pixels. The function uses this value to create a monochrome icon of the desired height.</param>
-        /// <param name="phicon">An array of icon or image handles to be filled by this function. The array should be pre-allocated to hold at least <paramref name="nIcons"/> elements.</param>
-        /// <param name="piconid">An array of icon IDs. This parameter can be <see langword="null"/>.</param>
-        /// <param name="nIcons">The number of icons to extract. This value is limited to the number of image bits in the icon resource.</param>
-        /// <param name="flags">A combination of flags that specify the dimensions and behavior of the function.</param>
-        /// <returns>The number of icons successfully extracted, or zero if the function fails.</returns>
-        [DllImport("User32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
-        public static extern uint PrivateExtractIcons(string lpszFile, int nIconIndex, int cxIcon, int cyIcon, IntPtr[] phicon, uint[] piconid, uint nIcons, uint flags);
-
-        /// <summary>
-        /// Dispose (destroy) an icon handle.
-        /// </summary>
-        /// <param name="handle"></param>
-        /// <returns></returns>
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        public static extern bool DestroyIcon(IntPtr handle);
 
         /// <summary>
         /// Hide default Windows icon picker dialog.
@@ -55,7 +34,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="nMaxFile"></param>
         /// <param name="lpdwIconIndex"></param>
         /// <returns></returns>
-        [DllImport("shell32.dll", CharSet = CharSet.Auto)]
+        [DllImport(_shell32, CharSet = CharSet.Auto)]
         public static extern int PickIconDlg(IntPtr hwndOwner, StringBuilder lpstrFile, int nMaxFile, ref int lpdwIconIndex);
 
         /// <summary>
@@ -65,7 +44,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="uFlags">Flags that indicate the meaning of the dwItem1 and dwItem2 parameters.</param>
         /// <param name="dwItem1">First event-dependent value.</param>
         /// <param name="dwItem2">Second event-dependent value.</param>
-        [DllImport("shell32.dll")]
+        [DllImport(_shell32)]
         public static extern void SHChangeNotify(int wEventId, int uFlags, int dwItem1, int dwItem2);
 
         /// <summary>
@@ -78,7 +57,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="phiconSmall">A pointer to the handle of the small icon.</param>
         /// <param name="nIconSize">The size of the icon.</param>
         /// <returns>Returns S_OK if successful; otherwise, an HRESULT error code.</returns>
-        [DllImport("Shell32.dll", EntryPoint = "SHDefExtractIconW")]
+        [DllImport(_shell32, EntryPoint = "SHDefExtractIconW")]
         public static extern int SHDefExtractIconW([MarshalAs(UnmanagedType.LPTStr)] string pszIconFile, int iIndex, uint uFlags, ref IntPtr phiconLarge, ref IntPtr phiconSmall, uint nIconSize);
 
         /// <summary>
@@ -88,10 +67,10 @@ namespace WinPaletter.NativeMethods
         /// <param name="uFlags">A combination of flags that specify which information to retrieve.</param>
         /// <param name="psii">A pointer to a SHSTOCKICONINFO structure that receives the icon information.</param>
         /// <returns>Returns S_OK if successful; otherwise, an HRESULT error code.</returns>
-        [DllImport("shell32.dll", SetLastError = false)]
+        [DllImport(_shell32, SetLastError = false)]
         public static extern int SHGetStockIconInfo(SHSTOCKICONID siid, SHGSI uFlags, ref SHSTOCKICONINFO psii);
 
-        [DllImport("shell32.dll")]
+        [DllImport(_shell32)]
         public static extern int SHGetImageList(int iImageList, ref Guid riid, out IImageList ppv);
 
         [StructLayout(LayoutKind.Sequential)]
@@ -106,7 +85,7 @@ namespace WinPaletter.NativeMethods
             public string szTypeName;
         }
 
-        [DllImport("shell32.dll", CharSet = CharSet.Auto)]
+        [DllImport(_shell32, CharSet = CharSet.Auto)]
         private static extern IntPtr SHGetFileInfo(string pszPath, uint dwFileAttributes, out SHFILEINFO psfi, uint cbFileInfo, uint uFlags);
 
         /// <summary>
@@ -155,7 +134,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="whatever">Reserved. Must be 0x80000000.</param>
         /// <param name="picpath">A StringBuilder that receives the path to the user's account picture.</param>
         /// <param name="maxLength">The maximum length of the Buffer pointed to by picpath.</param>
-        [DllImport("shell32.dll", EntryPoint = "#261", CharSet = CharSet.Unicode, PreserveSig = false)]
+        [DllImport(_shell32, EntryPoint = "#261", CharSet = CharSet.Unicode, PreserveSig = false)]
         public static extern void GetUserTilePath(string username, UInt32 whatever, StringBuilder picpath, int maxLength);
 
         /// <summary>
@@ -767,8 +746,8 @@ namespace WinPaletter.NativeMethods
 
                 if (sfi.hIcon == IntPtr.Zero) return null;
 
-                Icon small = (Icon)Icon.FromHandle(sfi.hIcon).Clone();
-                DestroyIcon(sfi.hIcon);
+                Icon small = Icon.FromHandle(sfi.hIcon).Clone() as Icon;
+                User32.DestroyIcon(sfi.hIcon);
                 return small;
             }
 
@@ -789,8 +768,8 @@ namespace WinPaletter.NativeMethods
 
             list.GetIcon(info.iIcon, 0, out IntPtr hIcon);
 
-            Icon large = (Icon)Icon.FromHandle(hIcon).Clone();
-            DestroyIcon(hIcon);
+            Icon large = Icon.FromHandle(hIcon).Clone() as Icon;
+            User32.DestroyIcon(hIcon);
             return large;
         }
     }

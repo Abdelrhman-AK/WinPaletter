@@ -7,6 +7,8 @@ namespace WinPaletter.NativeMethods
 {
     internal class Credui
     {
+        private const string _credui = "credui.dll";
+
         /// <summary>
         /// Struct to hold credential UI information.
         /// </summary>
@@ -86,7 +88,7 @@ namespace WinPaletter.NativeMethods
         /// <returns>A <see cref="CredUIReturnCodes"/> value indicating the result of the operation. Possible values include <see
         /// cref="CredUIReturnCodes.NO_ERROR"/> if the user successfully entered credentials, or other error codes if
         /// the operation failed or was canceled.</returns>
-        [DllImport("credui.dll", CharSet = CharSet.Unicode)]
+        [DllImport(_credui, CharSet = CharSet.Unicode)]
         public static extern CredUIReturnCodes CredUIPromptForCredentials(ref CREDUI_INFO pUiInfo, string pszTargetName, IntPtr Reserved, int dwAuthError, StringBuilder pszUserName, int ulUserNameMaxChars, StringBuilder pszPassword, int ulPasswordMaxChars, [MarshalAs(UnmanagedType.Bool)] ref bool pfSave, int dwFlags);
 
         /// <summary>
@@ -112,7 +114,7 @@ namespace WinPaletter.NativeMethods
         /// CredUIPromptForWindowsCredentials documentation for valid flag values.</param>
         /// <returns>A <see cref="CredUIReturnCodes"/> value indicating the result of the operation. Possible values include <see
         /// cref="CredUIReturnCodes.NO_ERROR"/> for success or other error codes for failure.</returns>
-        [DllImport("credui.dll", CharSet = CharSet.Unicode)]
+        [DllImport(_credui, CharSet = CharSet.Unicode)]
         public static extern CredUIReturnCodes CredUIPromptForWindowsCredentials(ref CREDUI_INFO notUsedHere, int authError, ref uint authPackage, IntPtr inAuthBuffer, uint inAuthBufferSize, out IntPtr outAuthBuffer, out uint outAuthBufferSize, ref bool save, int flags);
 
         /// <summary>
@@ -144,7 +146,7 @@ namespace WinPaletter.NativeMethods
         /// terminator.</param>
         /// <returns><see langword="true"/> if the function succeeds; otherwise, <see langword="false"/>. If the function fails,
         /// use <c>Marshal.GetLastWin32Error</c> to retrieve the error code.</returns>
-        [DllImport("credui.dll", CharSet = CharSet.Unicode)]
+        [DllImport(_credui, CharSet = CharSet.Unicode)]
         public static extern bool CredUnPackAuthenticationBuffer(int dwFlags, IntPtr pAuthBuffer, uint cbAuthBuffer, StringBuilder pszUserName, ref int pcchMaxUserName, StringBuilder pszDomainName, ref int pcchMaxDomainName, StringBuilder pszPassword, ref int pcchMaxPassword);
 
         /// <summary>
@@ -161,7 +163,7 @@ namespace WinPaletter.NativeMethods
         /// output, receives the size, in bytes, of the packed credentials.</param>
         /// <returns><see langword="true"/> if the credentials were successfully packed; otherwise, <see langword="false"/>. Call <see
         /// cref="Marshal.GetLastWin32Error"/> to retrieve extended error information if the function fails.</returns>
-        [DllImport("credui.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        [DllImport(_credui, CharSet = CharSet.Unicode, SetLastError = true)]
         public static extern bool CredPackAuthenticationBuffer(int dwFlags, string pszUserName, string pszPassword, IntPtr pPackedCredentials, ref int pcbPackedCredentials);
 
         /// <summary>
