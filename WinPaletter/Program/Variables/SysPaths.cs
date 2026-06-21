@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using Application = System.Windows.Forms.Application;
+using System.Windows.Forms;
 
 namespace WinPaletter.GlobalVariables
 {
@@ -14,44 +14,49 @@ namespace WinPaletter.GlobalVariables
         /// <summary>
         /// Windows directory
         /// </summary>
-        public static readonly string Windows = Environment.GetFolderPath(Environment.SpecialFolder.Windows).Replace("WINDOWS", "Windows");
+        public static string Windows { get; } = Environment.GetFolderPath(Environment.SpecialFolder.Windows).Replace("WINDOWS", "Windows");
 
         /// <summary>
         /// System32 directory
         /// </summary>
-        public static readonly string System32 = $"{Windows}\\System32";
+        public static string System32 { get; } = $"{Windows}\\System32";
 
         /// <summary>
         /// SysWOW64 directory
         /// </summary>
-        public static readonly string SysWOW64 = $"{Windows}\\SysWOW64";
+        public static string SysWOW64 { get; } = $"{Windows}\\SysWOW64";
+
+        /// <summary>
+        /// System resources directory for storing assets should be in *.dll in Windows 10\11 in System32 and SysWOW64, but in lower versions of Windows, it's in System32 directory.
+        /// </summary>
+        public static string SystemResources { get; } = $"{Windows}\\SystemResources";
 
         /// <summary>
         /// User profile directory
         /// </summary>
-        public static string UserProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+        public static string UserProfile { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
 
         /// <summary>
         /// Local app data directory
         /// </summary>
-        public static string LocalAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        public static string LocalAppData { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
         /// <summary>
         /// Program files directory
         /// </summary>
-        public static readonly string ProgramFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+        public static string ProgramFiles { get; } = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
 
         /// <summary>
         /// Program files directory
         /// </summary>
-        public static readonly string ProgramFilesX86 = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
+        public static string ProgramFilesX86 { get; } = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
         #endregion
 
         #region WinPaletter
         /// <summary>
         /// WinPaletter application data folder
         /// </summary>
-        public static string appData = Directory.GetParent(Application.LocalUserAppDataPath).FullName;
+        public static string appData { get; set; } = Directory.GetParent(Application.LocalUserAppDataPath).FullName;
 
         /// <summary>
         /// WinPaletter application data folder
@@ -124,24 +129,24 @@ namespace WinPaletter.GlobalVariables
         /// <summary>
         /// Explorer process File path
         /// </summary>
-        public static readonly string Explorer = $"{Windows}\\explorer.exe";
+        public static string Explorer { get; } = $"{Windows}\\explorer.exe";
 
         /// <summary>
         /// Task Scheduler command process File path
         /// </summary>
-        public static readonly string SchTasks = $"{System32}\\schtasks.exe";
+        public static string SchTasks { get; } = $"{System32}\\schtasks.exe";
 
         /// <summary>
         /// Take ownership command process File path
         /// </summary>
-        public static readonly string TakeOwn = $"{System32}\\takeown.exe";
+        public static string TakeOwn { get; } = $"{System32}\\takeown.exe";
         #endregion
 
         #region System PE files
         /// <summary>
         /// Imageres.dll PE File
         /// </summary>
-        public static readonly string imageres = $"{System32}\\imageres.dll";
+        public static string imageres { get; } = $"{System32}\\imageres.dll";
         #endregion
 
         #region Windows themes
@@ -173,17 +178,17 @@ namespace WinPaletter.GlobalVariables
         /// <summary>
         /// Represents the file path to the Aero theme's .msstyles file.
         /// </summary>
-        public static string MSSTYLES_Aero_Win = $"{Windows}\\Resources\\Themes\\aero\\aero.msstyles";
+        public static string MSSTYLES_Aero_Win { get; } = $"{Windows}\\Resources\\Themes\\aero\\aero.msstyles";
 
         /// <summary>
         /// Gets the file path to the Aero Lite theme's .msstyles file.
         /// </summary>
-        public static string MSSTYLES_AeroLite_Win = $"{Windows}\\Resources\\Themes\\aero\\aerolite.msstyles";
+        public static string MSSTYLES_AeroLite_Win { get; } = $"{Windows}\\Resources\\Themes\\aero\\aerolite.msstyles";
 
         /// <summary>
         /// Represents the file path to the Luna theme's .msstyles file.
         /// </summary>
-        public static string MSSTYLES_Luna_Win = $"{Windows}\\Resources\\Themes\\Luna\\Luna.msstyles";
+        public static string MSSTYLES_Luna_Win { get; } = $"{Windows}\\Resources\\Themes\\Luna\\Luna.msstyles";
 
         #endregion
 
@@ -191,37 +196,37 @@ namespace WinPaletter.GlobalVariables
         /// <summary>
         /// Command Prompt process File path
         /// </summary>
-        public static readonly string CMD = $"{System32}\\cmd.exe";
+        public static string CMD { get; } = $"{System32}\\cmd.exe";
 
         /// <summary>
         /// PowerShell x86 process File directory
         /// </summary>
-        public static readonly string PS86_dir = $"{System32}\\WindowsPowerShell\\v1.0";
+        public static string PS86_dir { get; } = $"{System32}\\WindowsPowerShell\\v1.0";
 
         /// <summary>
         /// PowerShell x86 process File path
         /// </summary>
-        public static readonly string PS86_app = $"{PS86_dir}\\powershell.exe";
+        public static string PS86_app { get; } = $"{PS86_dir}\\powershell.exe";
 
         /// <summary>
         /// PowerShell x64 process File directory
         /// </summary>
-        public static readonly string PS64_dir = $"{SysWOW64}\\WindowsPowerShell\\v1.0";
+        public static string PS64_dir { get; } = $"{SysWOW64}\\WindowsPowerShell\\v1.0";
 
         /// <summary>
         /// PowerShell x64 process File path
         /// </summary>
-        public static readonly string PS64_app = $"{PS64_dir}\\powershell.exe";
+        public static string PS64_app { get; } = $"{PS64_dir}\\powershell.exe";
 
         /// <summary>
         /// PowerShell x86 registry key path
         /// </summary>
-        public static readonly string PS86_reg = $"{PS86_dir.Replace(Windows, "%SystemRoot%").Replace("\"", "_")}_powershell.exe";
+        public static string PS86_reg { get; } = $"{PS86_dir.Replace(Windows, "%SystemRoot%").Replace("\"", "_")}_powershell.exe";
 
         /// <summary>
         /// PowerShell x64 registry key path
         /// </summary>
-        public static readonly string PS64_reg = $"{PS64_dir.Replace(Windows, "%SystemRoot%").Replace("\"", "_")}_powershell.exe";
+        public static string PS64_reg { get; } = $"{PS64_dir.Replace(Windows, "%SystemRoot%").Replace("\"", "_")}_powershell.exe";
 
         /// <summary>
         /// Microsoft Terminal JSON settings File

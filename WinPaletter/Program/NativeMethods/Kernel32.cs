@@ -36,7 +36,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="val">The string to be written.</param>
         /// <param name="filePath">The name of the initialization File.</param>
         /// <returns>Returns nonzero if the function succeeds; otherwise, zero.</returns>
-        [DllImport("kernel32")]
+        [DllImport(_kernel32)]
         public static extern long WritePrivateProfileString(string section, string key, string val, string filePath);
 
         /// <summary>
@@ -59,6 +59,11 @@ namespace WinPaletter.NativeMethods
         /// <returns>Returns true if the function succeeds; otherwise, false.</returns>
         [DllImport(_kernel32)]
         public static extern bool CloseHandle(IntPtr hObject);
+
+        [DllImport(_kernel32, CharSet = CharSet.Unicode, SetLastError = true)]
+        public static extern bool MoveFileEx(string lpExistingFileName, string lpNewFileName, int dwFlags);
+
+        public const int MOVEFILE_WRITE_THROUGH = 0x8;
 
         /// <summary>
         /// Enumerates process access flags.
