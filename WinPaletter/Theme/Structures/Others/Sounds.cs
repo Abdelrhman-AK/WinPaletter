@@ -515,7 +515,10 @@ namespace WinPaletter.Theme.Structures
 
                         // Restore Windows startup sound by an alternative method using SFC
                         if (Program.Settings.ThemeApplyingBehavior.SFC_on_restoring_StartupSound)
+                        {
                             SFC(SysPaths.imageres);
+                            SFC(SysPaths.imageres_mun);
+                        }
                     }
                 }
 

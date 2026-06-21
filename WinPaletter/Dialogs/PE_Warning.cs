@@ -104,8 +104,17 @@ namespace WinPaletter
         private void Button4_Click(object sender, EventArgs e)
         {
             Cursor = Cursors.WaitCursor;
-            Reg_IO.SFC(PE_File);
+
+            SFC(PE_File);
+
+            string MunFile = Path.Combine(SysPaths.SystemResources, Path.GetFileName(PE_File) + ".mun");
+            if (File.Exists(MunFile))
+            {
+                SFC(MunFile);
+            }
+
             MsgBox($"{Program.Localization.Strings.General.Done}. {Program.Localization.Strings.PE.DontForgetToRestart}.", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             Cursor = Cursors.Default;
         }
     }

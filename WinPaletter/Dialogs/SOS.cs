@@ -95,7 +95,11 @@ namespace WinPaletter.Dialogs
         {
             if (!OS.WXP)
             {
-                Task.Run(new Action(() => { SFC(SysPaths.imageres, false, false); }));
+                Task.Run(new Action(() => 
+                { 
+                    SFC(SysPaths.imageres, false, false);
+                    SFC(SysPaths.imageres_mun, false, false);
+                }));
             }
         }
 

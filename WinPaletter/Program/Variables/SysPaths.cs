@@ -143,10 +143,17 @@ namespace WinPaletter.GlobalVariables
         #endregion
 
         #region System PE files
+
         /// <summary>
         /// Imageres.dll PE File
         /// </summary>
         public static string imageres { get; } = $"{System32}\\imageres.dll";
+
+        /// <summary>
+        /// Imageres.dll.mun PE File located in SystemResources directory (for Windows 10/11)
+        /// </summary>
+        public static string imageres_mun { get; } = $"{SystemResources}\\imageres.dll.mun";
+
         #endregion
 
         #region Windows themes
