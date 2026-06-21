@@ -25,7 +25,7 @@ namespace WinPaletter
     public partial class Home : UI.WP.Form
     {
         private static Size _card_Expanded = new(277, 130);
-        private static Size _card_Compact = new(277, 130);
+        private static Size _card_Compact = new(144, 130);
         private static Size _form_Compact_Minimum = new(925, 660);
         private static Size _avatar_Big = new(32, 32);
         private static Size _avatar_Small = new(16, 16);
