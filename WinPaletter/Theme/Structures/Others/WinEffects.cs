@@ -225,74 +225,110 @@ namespace WinPaletter.Theme.Structures
             bool windowShadow = WindowShadow;
             if (!SystemParametersInfo(SPI.SPI_GETDROPSHADOW, 0, ref windowShadow, SPIF.SPIF_NONE))
                 WindowShadow = @default.WindowShadow;
+            else
+                WindowShadow = windowShadow;
 
             bool windowUIEffects = WindowUIEffects;
             if (!SystemParametersInfo(SPI.SPI_GETUIEFFECTS, 0, ref windowUIEffects, SPIF.SPIF_NONE))
                 WindowUIEffects = @default.WindowUIEffects;
+            else
+                WindowUIEffects = windowUIEffects;
 
             bool animateControlsInsideWindow = AnimateControlsInsideWindow;
             if (!OS.WXP && !SystemParametersInfo(SPI.SPI_GETCLIENTAREAANIMATION, 0, ref animateControlsInsideWindow, SPIF.SPIF_NONE))
                 AnimateControlsInsideWindow = @default.AnimateControlsInsideWindow;
+            else
+                AnimateControlsInsideWindow = animateControlsInsideWindow;
 
             bool menuAnimation = MenuAnimation;
             if (!SystemParametersInfo(SPI.SPI_GETMENUANIMATION, 0, ref menuAnimation, SPIF.SPIF_NONE))
                 MenuAnimation = @default.MenuAnimation;
+            else
+                MenuAnimation = menuAnimation;
 
             bool menuSelectionFade = MenuSelectionFade;
             if (!SystemParametersInfo(SPI.SPI_GETSELECTIONFADE, 0, ref menuSelectionFade, SPIF.SPIF_NONE))
                 MenuSelectionFade = @default.MenuSelectionFade;
+            else
+                MenuSelectionFade = menuSelectionFade;
 
             uint menuShowDelay = MenuShowDelay;
             if (!SystemParametersInfo(SPI.SPI_GETMENUSHOWDELAY, 0, ref menuShowDelay, SPIF.SPIF_NONE))
                 MenuShowDelay = @default.MenuShowDelay;
+            else
+                MenuShowDelay = menuShowDelay;
 
             bool comboBoxAnimation = ComboBoxAnimation;
             if (!SystemParametersInfo(SPI.SPI_GETCOMBOBOXANIMATION, 0, ref comboBoxAnimation, SPIF.SPIF_NONE))
                 ComboBoxAnimation = @default.ComboBoxAnimation;
+            else
+                ComboBoxAnimation = comboBoxAnimation;
 
             bool listBoxSmoothScrolling = ListBoxSmoothScrolling;
             if (!SystemParametersInfo(SPI.SPI_GETLISTBOXSMOOTHSCROLLING, 0, ref listBoxSmoothScrolling, SPIF.SPIF_NONE))
                 ListBoxSmoothScrolling = @default.ListBoxSmoothScrolling;
+            else
+                ListBoxSmoothScrolling = listBoxSmoothScrolling;
 
             bool tooltipAnimation = TooltipAnimation;
             if (!SystemParametersInfo(SPI.SPI_GETTOOLTIPANIMATION, 0, ref tooltipAnimation, SPIF.SPIF_NONE))
                 TooltipAnimation = @default.TooltipAnimation;
+            else
+                TooltipAnimation = tooltipAnimation;
 
             bool showWinContentDrag = ShowWinContentDrag;
             if (!SystemParametersInfo(SPI.SPI_GETDRAGFULLWINDOWS, 0, ref showWinContentDrag, SPIF.SPIF_NONE))
                 ShowWinContentDrag = @default.ShowWinContentDrag;
+            else
+                ShowWinContentDrag = showWinContentDrag;
 
             bool keyboardUnderline = KeyboardUnderline;
             if (!SystemParametersInfo(SPI.SPI_GETMENUUNDERLINES, 0, ref keyboardUnderline, SPIF.SPIF_NONE))
                 KeyboardUnderline = @default.KeyboardUnderline;
+            else
+                KeyboardUnderline = keyboardUnderline;
 
             uint focusRectWidth = FocusRectWidth;
             if (!SystemParametersInfo(SPI.SPI_GETFOCUSBORDERWIDTH, 0, ref focusRectWidth, SPIF.SPIF_NONE))
                 FocusRectWidth = @default.FocusRectWidth;
+            else
+                FocusRectWidth = focusRectWidth;
 
             uint focusRectHeight = FocusRectHeight;
             if (!SystemParametersInfo(SPI.SPI_GETFOCUSBORDERHEIGHT, 0, ref focusRectHeight, SPIF.SPIF_NONE))
                 FocusRectHeight = @default.FocusRectHeight;
+            else
+                FocusRectHeight = focusRectHeight;
 
             uint caret = Caret;
             if (!SystemParametersInfo(SPI.SPI_GETCARETWIDTH, 0, ref caret, SPIF.SPIF_NONE))
                 Caret = @default.Caret;
+            else
+                Caret = caret;
 
             bool aWT_Enabled = AWT_Enabled;
             if (!SystemParametersInfo(SPI.SPI_GETACTIVEWINDOWTRACKING, 0, ref aWT_Enabled, SPIF.SPIF_NONE))
                 AWT_Enabled = @default.AWT_Enabled;
+            else
+                AWT_Enabled = aWT_Enabled;
 
             bool aWT_BringActivatedWindowToTop = AWT_BringActivatedWindowToTop;
             if (!SystemParametersInfo(SPI.SPI_GETACTIVEWNDTRKZORDER, 0, ref aWT_BringActivatedWindowToTop, SPIF.SPIF_NONE))
                 AWT_BringActivatedWindowToTop = @default.AWT_BringActivatedWindowToTop;
+            else
+                AWT_BringActivatedWindowToTop = aWT_BringActivatedWindowToTop;
 
             int aWT_Delay = AWT_Delay;
             if (!SystemParametersInfo(SPI.SPI_GETACTIVEWNDTRKTIMEOUT, 0, ref aWT_Delay, SPIF.SPIF_NONE))
                 AWT_Delay = @default.AWT_Delay;
+            else
+                AWT_Delay = aWT_Delay;
 
             bool snapCursorToDefButton = SnapCursorToDefButton;
             if (!SystemParametersInfo(SPI.SPI_GETSNAPTODEFBUTTON, 0, ref snapCursorToDefButton, SPIF.SPIF_NONE))
                 SnapCursorToDefButton = @default.SnapCursorToDefButton;
+            else
+                SnapCursorToDefButton = snapCursorToDefButton;
 
             ANIMATIONINFO anim = new();
             anim.cbSize = (uint)Marshal.SizeOf(anim);
@@ -408,8 +444,8 @@ namespace WinPaletter.Theme.Structures
                         anim.IMinAnimate = WE.WindowAnimation ? 1 : 0;
 
                         SystemParametersInfo(treeView, SPI.SPI_SETANIMATION, (int)anim.cbSize, ref anim, SPIF.SPIF_UPDATEINIFILE);
-                        SystemParametersInfo(treeView, SPI.SPI_SETDROPSHADOW, 0, WE.WindowShadow, SPIF.SPIF_UPDATEINIFILE);
                         SystemParametersInfo(treeView, SPI.SPI_SETUIEFFECTS, 0, WE.WindowUIEffects, SPIF.SPIF_UPDATEINIFILE);
+                        SystemParametersInfo(treeView, SPI.SPI_SETDROPSHADOW, 0, WE.WindowShadow, SPIF.SPIF_UPDATEINIFILE);
 
                         if (!OS.WXP) SystemParametersInfo(treeView, SPI.SPI_SETCLIENTAREAANIMATION, 0, WE.AnimateControlsInsideWindow, SPIF.SPIF_UPDATEINIFILE);
 

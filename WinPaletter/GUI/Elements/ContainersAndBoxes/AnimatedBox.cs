@@ -30,11 +30,6 @@ namespace WinPaletter.UI.WP
         private float _Angle = 0f;
         private bool _Focused = true;
         private static readonly TextureBrush Noise = new(Resources.Noise.Fade(0.9f));
-
-        // Cache for radial alpha mask (faded at peripheries)
-        private static byte[] _radialAlphaMask;
-        private static int _cachedMaskSize = -1;
-
         public enum Styles
         {
             SwapColors,
@@ -439,33 +434,6 @@ namespace WinPaletter.UI.WP
 
         #endregion
 
-        #region Radial Alpha Mask Cache
-        private void EnsureRadialMask(int size)
-        {
-            if (_cachedMaskSize == size && _radialAlphaMask != null) return;
-
-            int total = size * size;
-            _radialAlphaMask = new byte[total];
-            float center = size / 2f;
-            float maxRadius = center;
-
-            for (int y = 0; y < size; y++)
-            {
-                for (int x = 0; x < size; x++)
-                {
-                    float dx = x - center;
-                    float dy = y - center;
-                    float dist = (float)Math.Sqrt(dx * dx + dy * dy);
-                    float t = 1f - Math.Min(dist / maxRadius, 1f);
-                    // Square the falloff for smoother fade at edges
-                    _radialAlphaMask[y * size + x] = (byte)(t * t * 255f);
-                }
-            }
-
-            _cachedMaskSize = size;
-        }
-        #endregion
-
         protected override void OnPaintBackground(PaintEventArgs pevent)
         {
             //Leave it empty to make control background transparent
@@ -483,168 +451,41 @@ namespace WinPaletter.UI.WP
             {
                 if (_Focused)
                 {
-                    if (Style == Styles.MixedColors)
-                    {
-                        // MixedColors: fill whole control with gradient and full noise overlay
-                        using (LinearGradientBrush l = new(Rect, C1, C2, _Angle, false))
-                        {
-                            l.WrapMode = WrapMode.TileFlipXY;
+                    Color Cx2 = Style == Styles.SwapColors ? BackColor : C2;
 
-                            if (Dock == DockStyle.None)
+                    using (LinearGradientBrush l = new(Rect, Color, Cx2, _Angle, false))
+                    {
+                        l.WrapMode = WrapMode.TileFlipXY;
+
+                        if (Dock == DockStyle.None)
+                        {
+                            G.FillRoundedRect(l, Rect);
+                            G.FillRoundedRect(Noise, Rect);
+                            using (Pen P = new(LineColor))
                             {
-                                G.FillRoundedRect(l, Rect);
-                                G.FillRoundedRect(Noise, Rect);
-                                using (Pen P = new(LineColor))
-                                {
-                                    G.DrawRoundedRect(P, BorderRect);
-                                }
-                            }
-                            else
-                            {
-                                G.FillRectangle(l, Rect);
-                                G.FillRectangle(Noise, Rect);
+                                G.DrawRoundedRect(P, BorderRect);
                             }
                         }
-                    }
-                    else // SwapColors
-                    {
-                        // SwapColors: gradient with noise following gradient's alpha pattern
-                        Color Cx2 = BackColor;
-
-                        using (LinearGradientBrush l = new(Rect, Color, Cx2, _Angle, false))
+                        else
                         {
-                            l.WrapMode = WrapMode.TileFlipXY;
-
-                            if (Dock == DockStyle.None)
-                            {
-                                G.FillRoundedRect(l, Rect);
-
-                                // Apply noise that follows the gradient's alpha pattern
-                                DrawFadedNoise(G, Rect, Noise, Color, Cx2, _Angle);
-
-                                using (Pen P = new(LineColor))
-                                {
-                                    G.DrawRoundedRect(P, BorderRect);
-                                }
-                            }
-                            else
-                            {
-                                G.FillRectangle(l, Rect);
-                                DrawFadedNoise(G, Rect, Noise, Color, Cx2, _Angle);
-                            }
+                            G.FillRectangle(l, Rect);
                         }
                     }
                 }
 
-                // Apply texture pattern
+                try
+                {
+                    if (Noise.IsValid()) G.FillRectangle(Noise, Rect);
+                }
+                catch { }
+
                 using (TextureBrush tb = new(Program.Style.Texture ?? Assets.Store.Pattern1))
                 {
                     G.FillRectangle(tb, Rect);
                 }
             }
-        }
 
-        /// <summary>
-        /// Draws noise texture faded according to the gradient's alpha pattern.
-        /// The noise is opaque where the gradient is opaque, and transparent where the gradient is transparent.
-        /// </summary>
-        private void DrawFadedNoise(Graphics g, Rectangle rect, TextureBrush noiseBrush, Color color1, Color color2, float angle)
-        {
-            int w = rect.Width;
-            int h = rect.Height;
-
-            // Create a temporary bitmap for the noise
-            using (Bitmap noiseBmp = new(w, h, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
-            {
-                // First, create the noise image at full opacity
-                using (Bitmap fullNoise = new(w, h, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
-                {
-                    using (Graphics ng = Graphics.FromImage(fullNoise))
-                    {
-                        ng.Clear(Color.Transparent);
-                        noiseBrush.TranslateTransform(rect.X, rect.Y);
-                        ng.FillRectangle(noiseBrush, 0, 0, w, h);
-                        noiseBrush.ResetTransform();
-                    }
-
-                    // Create a bitmap to hold the gradient's alpha values
-                    using (Bitmap gradientAlpha = new(w, h, System.Drawing.Imaging.PixelFormat.Format32bppArgb))
-                    {
-                        // Draw the gradient to extract its alpha pattern
-                        using (Graphics gg = Graphics.FromImage(gradientAlpha))
-                        {
-                            gg.Clear(Color.Transparent);
-                            using (LinearGradientBrush l = new(rect, color1, color2, angle, false))
-                            {
-                                l.WrapMode = WrapMode.TileFlipXY;
-                                gg.FillRectangle(l, rect);
-                            }
-                        }
-
-                        // Lock bits for all three bitmaps
-                        System.Drawing.Imaging.BitmapData noiseData = fullNoise.LockBits(
-                            new Rectangle(0, 0, w, h),
-                            System.Drawing.Imaging.ImageLockMode.ReadOnly,
-                            System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-
-                        System.Drawing.Imaging.BitmapData gradientData = gradientAlpha.LockBits(
-                            new Rectangle(0, 0, w, h),
-                            System.Drawing.Imaging.ImageLockMode.ReadOnly,
-                            System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-
-                        System.Drawing.Imaging.BitmapData dstData = noiseBmp.LockBits(
-                            new Rectangle(0, 0, w, h),
-                            System.Drawing.Imaging.ImageLockMode.WriteOnly,
-                            System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-
-                        try
-                        {
-                            int stride = noiseData.Stride;
-
-                            unsafe
-                            {
-                                byte* noisePtr = (byte*)noiseData.Scan0;
-                                byte* gradientPtr = (byte*)gradientData.Scan0;
-                                byte* dstPtr = (byte*)dstData.Scan0;
-
-                                for (int y = 0; y < h; y++)
-                                {
-                                    for (int x = 0; x < w; x++)
-                                    {
-                                        int index = y * stride + x * 4;
-
-                                        // Copy RGB from noise
-                                        dstPtr[index] = noisePtr[index];         // B
-                                        dstPtr[index + 1] = noisePtr[index + 1]; // G
-                                        dstPtr[index + 2] = noisePtr[index + 2]; // R
-
-                                        // Use gradient's alpha to modulate noise alpha
-                                        float gradientAlphaX = gradientPtr[index + 3] / 255f;
-                                        float noiseAlpha = noisePtr[index + 3] / 255f;
-
-                                        // Noise alpha follows gradient alpha
-                                        float finalAlpha = noiseAlpha * gradientAlphaX;
-
-                                        // Boost visibility slightly
-                                        finalAlpha = Math.Min(finalAlpha * 1.5f, 1f);
-
-                                        dstPtr[index + 3] = (byte)(finalAlpha * 255f);
-                                    }
-                                }
-                            }
-                        }
-                        finally
-                        {
-                            fullNoise.UnlockBits(noiseData);
-                            gradientAlpha.UnlockBits(gradientData);
-                            noiseBmp.UnlockBits(dstData);
-                        }
-                    }
-                }
-
-                // Draw the processed noise bitmap
-                g.DrawImage(noiseBmp, rect);
-            }
+            //base.OnPaint(e);
         }
     }
 }

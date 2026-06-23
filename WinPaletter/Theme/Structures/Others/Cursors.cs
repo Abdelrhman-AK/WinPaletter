@@ -142,16 +142,19 @@ namespace WinPaletter.Theme.Structures
             Enabled = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Cursors", string.Empty, @default.Enabled);
 
             bool shadow = Shadow;
-            if (!SystemParametersInfo(SPI.SPI_GETCURSORSHADOW, 0, ref shadow, SPIF.SPIF_NONE))
-                Shadow = @default.Shadow;
+            if (SystemParametersInfo(SPI.SPI_GETCURSORSHADOW, 0, ref shadow, SPIF.SPIF_NONE))
+                Shadow = shadow;
+            else Shadow = @default.Shadow;
 
             int trails = Trails;
-            if (!SystemParametersInfo(SPI.SPI_GETMOUSETRAILS, 0, ref trails, SPIF.SPIF_NONE))
-                Trails = @default.Trails;
+            if (SystemParametersInfo(SPI.SPI_GETMOUSETRAILS, 0, ref trails, SPIF.SPIF_NONE))
+                Trails = trails;
+            else Trails = @default.Trails;
 
             bool sonar = Sonar;
-            if (!SystemParametersInfo(SPI.SPI_GETMOUSESONAR, 0, ref sonar, SPIF.SPIF_NONE))
-                Sonar = @default.Sonar;
+            if (SystemParametersInfo(SPI.SPI_GETMOUSESONAR, 0, ref sonar, SPIF.SPIF_NONE))
+                Sonar = sonar;
+            else Sonar = @default.Sonar;
 
             Size = ReadReg(@"HKEY_CURRENT_USER\Control Panel\Cursors", "CursorBaseSize", @default.Size);
 
