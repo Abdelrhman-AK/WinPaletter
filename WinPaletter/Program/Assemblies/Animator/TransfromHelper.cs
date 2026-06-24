@@ -59,6 +59,88 @@ namespace AnimatorNS
                 pixels[i] = (byte)(pixels[i] * opacity);
         }
 
+        /// <summary>
+        /// Applies zoom transformation to the pixels - Optimized for performance
+        /// For Show: zoom in from larger to normal (scale decreases from MaxZoomScale to 1)
+        /// For Hide: zoom out from normal to larger (scale increases from 1 to MaxZoomScale)
+        /// Both animations keep image ≥ 100% size and centered
+        /// </summary>
+        public static void DoZoom(NonLinearTransfromNeededEventArg e, Animation animation, AnimateMode mode)
+        {
+            if (animation.ZoomCoeff == 0f || e.SourcePixels == null)
+                return;
+
+            float easedProgress = Easing.Apply(animation.EasingFunction, e.CurrentTime);
+
+            // Calculate scale based on mode
+            float scale;
+            if (mode == AnimateMode.Show || mode == AnimateMode.BeginUpdate)
+            {
+                // Show: zoom IN from larger to normal
+                scale = 1f + (animation.MaxZoomScale - 1f) * easedProgress;
+            }
+            else // Hide or Update
+            {
+                // Hide: zoom OUT from normal to larger
+                scale = 1f + (animation.MaxZoomScale - 1f) * easedProgress;
+            }
+
+            // Apply zoom coefficient to control intensity
+            if (animation.ZoomCoeff < 1f)
+            {
+                scale = 1f + (scale - 1f) * animation.ZoomCoeff;
+            }
+
+            // Clamp scale to prevent extreme values
+            scale = Math.Max(0.5f, Math.Min(2.5f, scale));
+
+            // If scale is 1, no need to transform
+            if (Math.Abs(scale - 1f) < 0.001f) return;
+
+            var pixels = e.Pixels;
+            var sourcePixels = e.SourcePixels;
+            int sx = e.ClientRectangle.Width;
+            int sy = e.ClientRectangle.Height;
+            int stride = e.Stride;
+
+            // Clear destination pixels
+            Array.Clear(pixels, 0, pixels.Length);
+
+            // Pre-calculate center and scale factor
+            float centerX = sx / 2f;
+            float centerY = sy / 2f;
+            float invScale = 1f / scale;
+
+            // For each pixel in the destination, find the corresponding source pixel
+            for (int y = 0; y < sy; y++)
+            {
+                int destRow = y * stride;
+
+                // Calculate source Y position centered (pre-calculated for this row)
+                float srcYf = (y - centerY) * invScale + centerY;
+                int srcY = (int)srcYf;
+                srcY = srcY < 0 ? 0 : (srcY >= sy ? sy - 1 : srcY);
+                int srcRow = srcY * stride;
+
+                for (int x = 0; x < sx; x++)
+                {
+                    int destIdx = destRow + (x << 2); // x * 4 (bytesPerPixel)
+
+                    // Calculate source X position centered
+                    float srcXf = (x - centerX) * invScale + centerX;
+                    int srcX = (int)srcXf;
+                    srcX = srcX < 0 ? 0 : (srcX >= sx ? sx - 1 : srcX);
+                    int srcIdx = srcRow + (srcX << 2); // srcX * 4
+
+                    // Copy from source pixels - 4 bytes at once
+                    pixels[destIdx] = sourcePixels[srcIdx];
+                    pixels[destIdx + 1] = sourcePixels[srcIdx + 1];
+                    pixels[destIdx + 2] = sourcePixels[srcIdx + 2];
+                    pixels[destIdx + 3] = sourcePixels[srcIdx + 3];
+                }
+            }
+        }
+
         public static void CalcDifference(Bitmap bmp1, Bitmap bmp2)
         {
             PixelFormat pxf = PixelFormat.Format32bppArgb;

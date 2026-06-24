@@ -30,11 +30,9 @@ namespace AnimatorNS
         protected override void OnSelecting(TabControlCancelEventArgs e)
         {
             base.OnSelecting(e);
-            // Avoid unnecessary BeginUpdate/EndUpdate if not visible
             if (Visible && TabCount > 0)
             {
-                var clipRect = new Rectangle(0, ItemSize.Height + 3, Width, Height - ItemSize.Height - 3);
-                animator.BeginUpdate(this, false, null, clipRect);
+                animator.BeginUpdate(this, false, null, DisplayRectangle);
                 BeginInvoke((MethodInvoker)(() => animator.EndUpdate(this)));
             }
         }

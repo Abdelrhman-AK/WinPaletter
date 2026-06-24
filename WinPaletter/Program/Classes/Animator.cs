@@ -14,8 +14,8 @@ namespace WinPaletter
             {
                 Interval = 15,
                 TimeStep = 0.05f,
-                DefaultAnimation = Animation.Fade,
-                AnimationType = AnimationType.Fade
+                DefaultAnimation = Animation.FadeZoom,
+                AnimationType = AnimationType.FadeZoom
             };
         }
 

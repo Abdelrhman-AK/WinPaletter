@@ -523,6 +523,11 @@ namespace AnimatorNS
                 if (e.UseDefaultTransform)
                 {
                     TransfromHelper.DoBlind(e, animation);
+
+                    // Apply zoom FIRST (using source pixels as reference)
+                    TransfromHelper.DoZoom(e, animation, mode);
+
+                    // Apply transparency AFTER zoom (so it affects the zoomed pixels)
                     TransfromHelper.DoTransparent(e, animation);
                 }
 

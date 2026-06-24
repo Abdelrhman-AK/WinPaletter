@@ -426,6 +426,7 @@ namespace AnimatorNS
                 case AnimationType.HorizSlide: DefaultAnimation = Animation.HorizSlide; break;
                 case AnimationType.VertSlide: DefaultAnimation = Animation.VertSlide; break;
                 case AnimationType.Fade: DefaultAnimation = Animation.Fade; break;
+                case AnimationType.FadeZoom: DefaultAnimation = Animation.FadeZoom; break;
                 case AnimationType.VertBlind: DefaultAnimation = Animation.VertBlind; break;
                 case AnimationType.HorizBlind: DefaultAnimation = Animation.HorizBlind; break;
             }
