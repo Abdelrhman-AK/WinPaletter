@@ -694,6 +694,14 @@ namespace WinPaletter.NativeMethods
         public static extern bool InvalidateRect(IntPtr hWnd, IntPtr lpRect, bool bErase);
 
         /// <summary>
+        /// Updates the client area of the specified window by sending a <c>WM_PAINT</c> message to the window procedure.
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <returns></returns>
+        [DllImport(_user32)]
+        public static extern bool UpdateWindow(IntPtr hWnd);
+
+        /// <summary>
         /// Retrieves the coordinates of a window's client area.
         /// </summary>
         /// <param name="hWnd">

@@ -8,6 +8,8 @@ using System.Drawing.Drawing2D;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using WinPaletter.NativeMethods;
+using WinPaletter.UI.WP;
 using Timer = System.Windows.Forms.Timer;
 
 namespace AnimatorNS
@@ -96,6 +98,77 @@ namespace AnimatorNS
         }
 
         /// <summary>
+        /// Forces strict cleanup of all fake controls
+        /// </summary>
+        public void ForceCleanupFakeControls()
+        {
+            try
+            {
+                List<QueueItem> items;
+                lock (queue)
+                {
+                    items = new List<QueueItem>(queue);
+                }
+
+                foreach (var item in items)
+                {
+                    if (item.controller != null)
+                    {
+                        try { item.controller.Dispose(); } catch { }
+                        item.controller = null;
+                    }
+
+                    if (item.control != null && !item.control.IsDisposed)
+                    {
+                        if (item.control is IFakeControl ||
+                            item.control is DoubleBitmapControl ||
+                            item.control is DoubleBitmapForm)
+                        {
+                            try
+                            {
+                                if (item.control.Parent != null && !item.control.Parent.IsDisposed)
+                                {
+                                    // Remove from parent
+                                    item.control.Parent.Controls.Remove(item.control);
+
+                                    // If parent is TablessControl, force repaint
+                                    if (item.control.Parent is WinPaletter.UI.WP.TablessControl tablessParent)
+                                    {
+                                        tablessParent.Invalidate();
+                                        tablessParent.Update();
+                                        tablessParent.Refresh();
+                                        try
+                                        {
+                                            User32.InvalidateRect(tablessParent.Handle, IntPtr.Zero, true);
+                                            User32.UpdateWindow(tablessParent.Handle);
+                                        }
+                                        catch { }
+                                    }
+                                }
+                                item.control.Visible = false;
+                                item.control.Dispose();
+                            }
+                            catch { }
+                        }
+                    }
+                }
+
+                // Clear queue
+                lock (queue)
+                {
+                    queue.Clear();
+                }
+
+                // Clear requests
+                lock (requests)
+                {
+                    requests.Clear();
+                }
+            }
+            catch { }
+        }
+
+        /// <summary>
         /// Ensures the worker thread, timer, and helper control are all
         /// cleaned up to avoid leaks and unnecessary GC pressure.
         /// </summary>
@@ -105,6 +178,9 @@ namespace AnimatorNS
             {
                 // Stop worker loop
                 running = false;
+
+                // Force cleanup of all fake controls
+                ForceCleanupFakeControls();
 
                 // Clear any pending animations
                 ClearQueue();
@@ -135,6 +211,12 @@ namespace AnimatorNS
                     try { invokerControl.Dispose(); } catch { /* ignore */ }
                     invokerControl = null;
                 }
+
+                // Clear bitmap cache
+                try { BitmapCache.Clear(); } catch { }
+
+                // Clear object pools
+                try { AnimatorPools.ClearAll(); } catch { }
             }
 
             base.Dispose(disposing);
@@ -315,6 +397,14 @@ namespace AnimatorNS
                     {
                         item.controller = CreateDoubleBitmap(item.control, item.mode, item.animation, item.clipRectangle);
                     }
+
+                    // Additional check: if controller was created but DoubleBitmap is null, handle gracefully
+                    if (item.controller != null && item.controller.DoubleBitmap == null)
+                    {
+                        OnCompleted(item);
+                        return;
+                    }
+
                     if (item.controller.IsCompleted)
                         return;
                     item.controller.BuildNextFrame();
@@ -436,9 +526,74 @@ namespace AnimatorNS
         {
             if (item.controller != null)
             {
-                item.controller.Dispose();
-                item.controller = null; // Release reference
+                try
+                {
+                    if (item.control != null && !item.control.IsDisposed && item.control.IsHandleCreated)
+                    {
+                        if (item.mode == AnimateMode.Show && !item.control.Visible)
+                        {
+                            item.control.Visible = true;
+                            item.control.Invalidate();
+                            item.control.Update();
+                        }
+                        else if (item.mode == AnimateMode.Hide && item.control.Visible)
+                        {
+                            item.control.Visible = false;
+                        }
+
+                        if (item.control.Parent != null && !item.control.Parent.IsDisposed)
+                        {
+                            // Check for TablessControl in parent hierarchy
+                            Control tablessControl = null;
+                            Control current = item.control.Parent;
+                            while (current != null)
+                            {
+                                if (current is WinPaletter.UI.WP.TablessControl)
+                                {
+                                    tablessControl = current;
+                                    break;
+                                }
+                                current = current.Parent;
+                            }
+
+                            if (tablessControl != null)
+                            {
+                                // Force TablessControl to repaint
+                                try
+                                {
+                                    User32.InvalidateRect(tablessControl.Handle, IntPtr.Zero, true);
+                                    User32.UpdateWindow(tablessControl.Handle);
+                                }
+                                catch { }
+
+                                tablessControl.Invalidate();
+                                tablessControl.Update();
+                                tablessControl.Refresh();
+
+                                foreach (Control ctrl in tablessControl.Controls)
+                                {
+                                    if (!ctrl.IsDisposed && ctrl != item.control)
+                                    {
+                                        ctrl.Invalidate();
+                                        ctrl.Update();
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                item.control.Parent.Invalidate(item.control.Bounds);
+                                item.control.Parent.Update();
+                            }
+                        }
+                    }
+
+                    item.controller.Dispose();
+                }
+                catch { }
+
+                item.controller = null;
             }
+
             lock (queue)
                 queue.Remove(item);
 
@@ -456,7 +611,44 @@ namespace AnimatorNS
                 return;
             }
 
+            // Check if control is disposed or being disposed
+            if (control.IsDisposed || !control.IsHandleCreated)
+            {
+                OnCompleted(new QueueItem { control = control, mode = mode });
+                return;
+            }
+
+            // IMPORTANT: Clean up any existing fake controls for this control
+            // This is critical for TablessControl scenarios
+            CleanupExistingFakeControls(control);
+
             var item = new QueueItem() { animation = animation, control = control, IsActive = parallel, mode = mode, clipRectangle = clipRectangle };
+
+            // Check if there's already an animation for this control in the queue
+            lock (queue)
+            {
+                foreach (var existing in queue)
+                {
+                    if (existing.control == control)
+                    {
+                        lock (requests)
+                        {
+                            requests.Remove(existing);
+                        }
+                        if (existing.controller != null)
+                        {
+                            try
+                            {
+                                existing.controller.Dispose();
+                            }
+                            catch { }
+                            existing.controller = null;
+                        }
+                        queue.Remove(existing);
+                        break;
+                    }
+                }
+            }
 
             switch (mode)
             {
@@ -480,6 +672,108 @@ namespace AnimatorNS
                 queue.Add(item);
             lock (requests)
                 requests.Add(item);
+        }
+
+        /// <summary>
+        /// Cleans up any existing fake controls for a given control
+        /// </summary>
+        private void CleanupExistingFakeControls(Control control)
+        {
+            try
+            {
+                if (control == null || control.IsDisposed)
+                    return;
+
+                // Check the parent (which could be TablessControl)
+                Control parent = control.Parent;
+                if (parent == null || parent.IsDisposed)
+                    return;
+
+                // Look for any DoubleBitmapControl or IFakeControl in the parent's children
+                List<Control> toRemove = new List<Control>();
+                foreach (Control child in parent.Controls)
+                {
+                    if (child is DoubleBitmapControl || child is DoubleBitmapForm || child is IFakeControl)
+                    {
+                        // Check if this fake control was created for our control
+                        // We check bounds or other properties to identify it
+                        if (child is DoubleBitmapControl dbc)
+                        {
+                            // Check if this fake control covers the same area as our control
+                            Rectangle controlBounds = new Rectangle(
+                                control.Left,
+                                control.Top,
+                                control.Width,
+                                control.Height);
+
+                            // If the fake control overlaps with our control, remove it
+                            if (child.Bounds.IntersectsWith(controlBounds))
+                            {
+                                toRemove.Add(child);
+                            }
+                        }
+                        else if (child is IFakeControl)
+                        {
+                            // For other fake controls, check if they overlap
+                            if (child.Bounds.IntersectsWith(control.Bounds))
+                            {
+                                toRemove.Add(child);
+                            }
+                        }
+                    }
+                }
+
+                // Remove and dispose fake controls
+                foreach (Control fake in toRemove)
+                {
+                    try
+                    {
+                        if (!fake.IsDisposed)
+                        {
+                            fake.Visible = false;
+                            parent.Controls.Remove(fake);
+                            fake.Dispose();
+                        }
+                    }
+                    catch { }
+                }
+
+                // Also check if there are any fake controls in the queue that need cleanup
+                lock (queue)
+                {
+                    List<QueueItem> itemsToRemove = new List<QueueItem>();
+                    foreach (var item in queue)
+                    {
+                        if (item.control == control && item.controller != null)
+                        {
+                            try
+                            {
+                                if (item.controller.DoubleBitmap != null &&
+                                    !item.controller.DoubleBitmap.IsDisposed)
+                                {
+                                    // This fake control is still in the queue, force cleanup
+                                    if (item.controller.DoubleBitmap.Parent != null &&
+                                        !item.controller.DoubleBitmap.Parent.IsDisposed)
+                                    {
+                                        item.controller.DoubleBitmap.Parent.Controls.Remove(
+                                            item.controller.DoubleBitmap);
+                                    }
+                                    item.controller.DoubleBitmap.Dispose();
+                                }
+                                item.controller.Dispose();
+                            }
+                            catch { }
+                            item.controller = null;
+                            itemsToRemove.Add(item);
+                        }
+                    }
+                    foreach (var item in itemsToRemove)
+                    {
+                        queue.Remove(item);
+                    }
+                }
+            }
+            catch { }
         }
 
         private Controller CreateDoubleBitmap(Control control, AnimateMode mode, Animation animation, Rectangle clipRect)
@@ -545,42 +839,126 @@ namespace AnimatorNS
                 {
                     try
                     {
+                        // Ensure control state is restored before disposing
+                        if (item.control != null && !item.control.IsDisposed)
+                        {
+                            if (item.mode == AnimateMode.Hide && !item.control.Visible)
+                            {
+                                // Already hidden
+                            }
+                            else if (item.mode == AnimateMode.Show && item.control.Visible)
+                            {
+                                // Already visible
+                            }
+                            else if (item.mode == AnimateMode.Hide)
+                            {
+                                // Force hide for Hide animations
+                                if (item.control.InvokeRequired)
+                                {
+                                    item.control.Invoke(new MethodInvoker(() =>
+                                    {
+                                        try
+                                        {
+                                            if (!item.control.IsDisposed)
+                                                item.control.Visible = false;
+                                        }
+                                        catch { }
+                                    }));
+                                }
+                                else
+                                {
+                                    try
+                                    {
+                                        if (!item.control.IsDisposed)
+                                            item.control.Visible = false;
+                                    }
+                                    catch { }
+                                }
+                            }
+                            else if (item.mode == AnimateMode.Show || item.mode == AnimateMode.Update)
+                            {
+                                // Force show for Show/Update animations
+                                if (item.control.InvokeRequired)
+                                {
+                                    item.control.Invoke(new MethodInvoker(() =>
+                                    {
+                                        try
+                                        {
+                                            if (!item.control.IsDisposed)
+                                                item.control.Visible = true;
+                                        }
+                                        catch { }
+                                    }));
+                                }
+                                else
+                                {
+                                    try
+                                    {
+                                        if (!item.control.IsDisposed)
+                                            item.control.Visible = true;
+                                    }
+                                    catch { }
+                                }
+                            }
+                        }
+
                         item.controller.Dispose();
                     }
                     catch { }
                     item.controller = null;
                 }
-
-                if (item.control != null)
+                else
                 {
-                    try
+                    // If controller is null, we still need to restore the control state
+                    if (item.control != null && !item.control.IsDisposed)
                     {
-                        if (item.control.InvokeRequired)
+                        try
                         {
-                            item.control.Invoke(new MethodInvoker(() =>
+                            if (item.control.InvokeRequired)
                             {
-                                try
+                                item.control.Invoke(new MethodInvoker(() =>
                                 {
-                                    switch (item.mode)
+                                    try
                                     {
-                                        case AnimateMode.Hide: item.control.Visible = false; break;
-                                        case AnimateMode.Show: item.control.Visible = true; break;
+                                        if (!item.control.IsDisposed)
+                                        {
+                                            switch (item.mode)
+                                            {
+                                                case AnimateMode.Hide:
+                                                    if (item.control.Visible)
+                                                        item.control.Visible = false;
+                                                    break;
+                                                case AnimateMode.Show:
+                                                case AnimateMode.Update:
+                                                    if (!item.control.Visible)
+                                                        item.control.Visible = true;
+                                                    break;
+                                            }
+                                        }
                                     }
-                                }
-                                catch { }
-                            }));
-                        }
-                        else
-                        {
-                            switch (item.mode)
+                                    catch { }
+                                }));
+                            }
+                            else
                             {
-                                case AnimateMode.Hide: item.control.Visible = false; break;
-                                case AnimateMode.Show: item.control.Visible = true; break;
+                                switch (item.mode)
+                                {
+                                    case AnimateMode.Hide:
+                                        if (item.control.Visible)
+                                            item.control.Visible = false;
+                                        break;
+                                    case AnimateMode.Show:
+                                    case AnimateMode.Update:
+                                        if (!item.control.Visible)
+                                            item.control.Visible = true;
+                                        break;
+                                }
                             }
                         }
+                        catch { }
                     }
-                    catch { }
                 }
+
                 OnAnimationCompleted(new AnimationCompletedEventArg { Animation = item.animation, Control = item.control, Mode = item.mode });
             }
 
@@ -590,14 +968,162 @@ namespace AnimatorNS
 
         protected virtual void OnAnimationCompleted(AnimationCompletedEventArg e)
         {
-            if (AnimationCompleted != null)
-                AnimationCompleted(this, e);
+            // Strict cleanup: Ensure any fake controls are properly disposed
+            if (e.Control != null && !e.Control.IsDisposed)
+            {
+                // Check if this is a fake control that wasn't properly cleaned up
+                if (e.Control is IFakeControl fakeControl)
+                {
+                    try
+                    {
+                        // Force cleanup of fake control
+                        if (e.Control.Parent != null && !e.Control.Parent.IsDisposed)
+                        {
+                            // Remove from parent
+                            e.Control.Parent.Controls.Remove(e.Control);
+                        }
+
+                        // Hide and dispose
+                        e.Control.Visible = false;
+                        e.Control.Dispose();
+                    }
+                    catch { }
+                }
+
+                // If the control is a DoubleBitmapControl or DoubleBitmapForm, ensure it's disposed
+                if (e.Control is DoubleBitmapControl || e.Control is DoubleBitmapForm)
+                {
+                    try
+                    {
+                        if (!e.Control.IsDisposed)
+                        {
+                            e.Control.Visible = false;
+                            if (e.Control.Parent != null && !e.Control.Parent.IsDisposed)
+                            {
+                                e.Control.Parent.Controls.Remove(e.Control);
+                            }
+                            e.Control.Dispose();
+                        }
+                    }
+                    catch { }
+                }
+
+                // Ensure TablessControl parent is properly repainted
+                if (e.Control.Parent is WinPaletter.UI.WP.TablessControl tablessParent)
+                {
+                    try
+                    {
+                        if (!tablessParent.IsDisposed)
+                        {
+                            tablessParent.Invalidate();
+                            tablessParent.Update();
+                            tablessParent.Refresh();
+
+                            // Force repaint of all child controls
+                            foreach (Control ctrl in tablessParent.Controls)
+                            {
+                                if (!ctrl.IsDisposed && ctrl != e.Control)
+                                {
+                                    ctrl.Invalidate();
+                                    ctrl.Update();
+                                }
+                            }
+
+                            // Use Win32 to force full redraw
+                            try
+                            {
+                                User32.InvalidateRect(tablessParent.Handle, IntPtr.Zero, true);
+                                User32.UpdateWindow(tablessParent.Handle);
+                            }
+                            catch { }
+                        }
+                    }
+                    catch { }
+                }
+            }
+
+            // Fire the event
+            AnimationCompleted?.Invoke(this, e);
         }
 
         protected virtual void OnAllAnimationsCompleted()
         {
-            if (AllAnimationsCompleted != null)
-                AllAnimationsCompleted(this, EventArgs.Empty);
+            // Strict cleanup: Force disposal of any remaining fake controls
+            try
+            {
+                // Check all controls in the queue for any remaining fake controls
+                List<QueueItem> itemsToCleanup = new List<QueueItem>();
+                lock (queue)
+                {
+                    itemsToCleanup.AddRange(queue);
+                }
+
+                foreach (var item in itemsToCleanup)
+                {
+                    if (item.controller != null)
+                    {
+                        try
+                        {
+                            // Force dispose of controller which will clean up fake controls
+                            item.controller.Dispose();
+                        }
+                        catch { }
+                        item.controller = null;
+                    }
+
+                    // Check if the control is a fake control that needs cleanup
+                    if (item.control != null && !item.control.IsDisposed)
+                    {
+                        if (item.control is IFakeControl ||
+                            item.control is DoubleBitmapControl ||
+                            item.control is DoubleBitmapForm)
+                        {
+                            try
+                            {
+                                // Force cleanup of fake control
+                                if (item.control.Parent != null && !item.control.Parent.IsDisposed)
+                                {
+                                    item.control.Parent.Controls.Remove(item.control);
+                                }
+                                item.control.Visible = false;
+                                item.control.Dispose();
+                            }
+                            catch { }
+                        }
+                    }
+                }
+
+                // Clean up requests list as well
+                lock (requests)
+                {
+                    foreach (var item in requests)
+                    {
+                        if (item.control != null && !item.control.IsDisposed)
+                        {
+                            if (item.control is IFakeControl ||
+                                item.control is DoubleBitmapControl ||
+                                item.control is DoubleBitmapForm)
+                            {
+                                try
+                                {
+                                    if (item.control.Parent != null && !item.control.Parent.IsDisposed)
+                                    {
+                                        item.control.Parent.Controls.Remove(item.control);
+                                    }
+                                    item.control.Visible = false;
+                                    item.control.Dispose();
+                                }
+                                catch { }
+                            }
+                        }
+                    }
+                    requests.Clear();
+                }
+            }
+            catch { }
+
+            // Fire the event
+            AllAnimationsCompleted?.Invoke(this, EventArgs.Empty);
         }
 
         protected class QueueItem

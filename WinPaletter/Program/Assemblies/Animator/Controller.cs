@@ -4,6 +4,7 @@ using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
+using WinPaletter.NativeMethods;
 
 namespace AnimatorNS
 {
@@ -88,74 +89,128 @@ namespace AnimatorNS
             if (DoubleBitmap != null)
             {
                 Control db = DoubleBitmap;
-                DoubleBitmap = null; // Clear reference immediately to prevent re-entry
+                Control originalControl = AnimatedControl;
+                AnimateMode originalMode = mode;
+                Control parent = db.Parent;
+                Rectangle bounds = db.Bounds;
+
+                DoubleBitmap = null;
 
                 try
                 {
-                    // Always use synchronous disposal to ensure overlay is removed immediately
+                    // Force immediate cleanup on UI thread
                     if (db.InvokeRequired)
                     {
-                        // We're on a background thread - use Invoke for synchronous removal
                         try
                         {
                             db.Invoke(new MethodInvoker(() =>
                             {
                                 try
                                 {
-                                    if (!db.IsDisposed && db.IsHandleCreated)
+                                    // Remove from parent first
+                                    if (db.Parent != null && !db.Parent.IsDisposed)
                                     {
-                                        if (db.Visible) db.Hide();
-                                        db.Parent = null;
-                                        // Force immediate invalidation to clear visual artifacts
-                                        db.Invalidate();
-                                        db.Update();
-                                        // Force immediate repaint of parent area
-                                        if (db.Parent != null && !db.Parent.IsDisposed)
-                                        {
-                                            db.Parent.Invalidate(db.Bounds);
-                                            db.Parent.Update();
-                                        }
+                                        db.Parent.Controls.Remove(db);
                                     }
-                                    // Dispose the temporary double-buffer control/form on the UI thread
-                                    // to release Win32 handles and detach event handlers promptly.
+
+                                    // Restore original control
+                                    if (originalControl != null && !originalControl.IsDisposed)
+                                    {
+                                        if (originalMode == AnimateMode.Hide)
+                                            originalControl.Visible = false;
+                                        else if (originalMode == AnimateMode.Show || originalMode == AnimateMode.Update)
+                                            if (!originalControl.Visible)
+                                                originalControl.Visible = true;
+                                    }
+
+                                    // Hide and dispose
                                     if (!db.IsDisposed)
+                                    {
+                                        db.Visible = false;
                                         db.Dispose();
+                                    }
                                 }
                                 catch { }
                             }));
                         }
-                        catch
-                        {
-                            // If Invoke fails, try synchronous disposal as fallback
-                            try
-                            {
-                                if (!db.IsDisposed)
-                                    db.Dispose();
-                            }
-                            catch { }
-                        }
+                        catch { }
                     }
                     else
                     {
-                        // We're on the UI thread - hide synchronously
                         try
                         {
-                            if (!db.IsDisposed && db.IsHandleCreated)
+                            // Remove from parent first
+                            if (db.Parent != null && !db.Parent.IsDisposed)
                             {
-                                if (db.Visible) db.Hide();
-                                db.Parent = null;
-                                // Force immediate invalidation to clear visual artifacts
-                                db.Invalidate();
-                                db.Update();
-                                // Force immediate repaint of parent area
-                                if (db.Parent != null && !db.Parent.IsDisposed)
+                                db.Parent.Controls.Remove(db);
+                            }
+
+                            // Restore original control
+                            if (originalControl != null && !originalControl.IsDisposed)
+                            {
+                                if (originalMode == AnimateMode.Hide)
+                                    originalControl.Visible = false;
+                                else if (originalMode == AnimateMode.Show || originalMode == AnimateMode.Update)
+                                    if (!originalControl.Visible)
+                                        originalControl.Visible = true;
+                            }
+
+                            // Hide and dispose
+                            if (!db.IsDisposed)
+                            {
+                                db.Visible = false;
+                                db.Dispose();
+                            }
+                        }
+                        catch { }
+                    }
+
+                    // Force parent repaint
+                    if (parent != null && !parent.IsDisposed)
+                    {
+                        try
+                        {
+                            if (parent.InvokeRequired)
+                            {
+                                parent.Invoke(new MethodInvoker(() =>
                                 {
-                                    db.Parent.Invalidate(db.Bounds);
-                                    db.Parent.Update();
+                                    if (!parent.IsDisposed)
+                                    {
+                                        parent.Invalidate(bounds);
+                                        parent.Update();
+
+                                        if (parent is WinPaletter.UI.WP.TablessControl)
+                                        {
+                                            parent.Refresh();
+                                            try
+                                            {
+                                                User32.InvalidateRect(parent.Handle, IntPtr.Zero, true);
+                                                User32.UpdateWindow(parent.Handle);
+                                            }
+                                            catch { }
+                                        }
+                                    }
+                                }));
+                            }
+                            else
+                            {
+                                if (!parent.IsDisposed)
+                                {
+                                    parent.Invalidate(bounds);
+                                    parent.Update();
+
+                                    if (parent is WinPaletter.UI.WP.TablessControl)
+                                    {
+                                        parent.Refresh();
+                                        try
+                                        {
+                                            User32.InvalidateRect(parent.Handle, IntPtr.Zero, true);
+                                            User32.UpdateWindow(parent.Handle);
+                                        }
+                                        catch { }
+                                    }
                                 }
                             }
-                            if (!db.IsDisposed)
-                                db.Dispose();
                         }
                         catch { }
                     }
@@ -188,6 +243,17 @@ namespace AnimatorNS
                 DoubleBitmap = new DoubleBitmapForm();
             else
                 DoubleBitmap = new DoubleBitmapControl();
+
+            // Store the animated control reference in the fake control's Tag
+            // so we can identify which control this fake belongs to
+            DoubleBitmap.Tag = control;
+
+            // Store the mode for later reference
+            if (DoubleBitmap is DoubleBitmapControl dbc)
+            {
+                // We can use the Name property to identify this fake control
+                dbc.Name = $"FakeControl_{control.GetHashCode()}";
+            }
 
             (DoubleBitmap as IFakeControl).FramePainting += OnFramePainting;
             (DoubleBitmap as IFakeControl).FramePainted += OnFramePainting;
