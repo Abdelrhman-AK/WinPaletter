@@ -43,16 +43,18 @@ namespace WinPaletter
 
         private void LoadFromCurrent(object sender, EventArgs e)
         {
-            using (Manager TMx = new(Manager.Source.Registry))
+            using (Manager TMx = Program.TM.Clone())
             {
+                TMx.LogonUI7.Load(Default.FromOS(Program.WindowStyle).LogonUI7);
                 LoadFromTM(TMx);
             }
         }
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.FromOS(Program.WindowStyle))
+            using (Manager TMx = Program.TM.Clone())
             {
+                TMx.LogonUI7 = Default.FromOS(Program.WindowStyle).LogonUI7;
                 LoadFromTM(TMx);
             }
         }

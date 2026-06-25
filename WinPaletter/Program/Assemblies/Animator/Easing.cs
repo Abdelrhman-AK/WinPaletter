@@ -3,64 +3,84 @@ using System;
 namespace AnimatorNS
 {
     /// <summary>
-    /// Simplified easing functions for smooth animations
+    /// Optimized easing functions for smooth animations.
     /// </summary>
     public static class Easing
     {
-        /// <summary>
-        /// Applies easing to a linear progress value (0-1)
-        /// </summary>
         public delegate float EasingFunction(float progress);
 
-        /// <summary>
-        /// Linear interpolation (no easing)
-        /// </summary>
+        private const float PiOverTwo = (float)Math.PI / 2f;
+
         public static readonly EasingFunction Linear = p => p;
-        
-        /// <summary>
-        /// Critical damp function for smooth, natural animations
-        /// </summary>
-        public static readonly EasingFunction Damp = p => 1f - (float)Math.Cos(p * Math.PI / 2f);
-        
-        /// <summary>
-        /// Cubic easing - Best for Windows 11 WinUI-like animations
-        /// </summary>
-        public static readonly EasingFunction CubicInOut = p => p < 0.5f ? 4f * p * p * p : 1f - (float)Math.Pow(-2f * p + 2f, 3) / 2f;
 
         /// <summary>
-        /// Applies easing function with clamping
+        /// Smooth acceleration/deceleration.
+        /// </summary>
+        public static readonly EasingFunction Damp = p => 1f - (float)Math.Cos(p * PiOverTwo);
+
+        /// <summary>
+        /// Fast start, smooth end (Fluent/WinUI style).
+        /// </summary>
+        public static readonly EasingFunction CubicInOut = p => p < 0.5f ? 4f * p * p * p : 1f - 4f * (1f - p) * (1f - p) * (1f - p);
+
+        /// <summary>
+        /// More natural smooth acceleration/deceleration.
+        /// </summary>
+        public static readonly EasingFunction QuinticInOut = p => p < 0.5f ? 16f * p * p * p * p * p : 1f - 16f * (1f - p) * (1f - p) * (1f - p) * (1f - p) * (1f - p);
+
+        /// <summary>
+        /// Similar to Windows animations.
+        /// </summary>
+        public static readonly EasingFunction FastOutSlowIn = p =>
+        {
+            float t = 1f - p;
+            return 1f - t * t * t;
+        };
+
+        /// <summary>
+        /// Smoothstep interpolation.
+        /// </summary>
+        public static readonly EasingFunction SmoothStep = p => p * p * (3f - 2f * p);
+
+        /// <summary>
+        /// Applies easing with optimized clamping.
         /// </summary>
         public static float Apply(EasingFunction easing, float progress)
         {
-            progress = Math.Max(0f, Math.Min(1f, progress));
-            return easing?.Invoke(progress) ?? progress;
+            if (progress <= 0f) return 0f;
+
+            if (progress >= 1f) return 1f;
+
+            return easing == null ? progress : easing(progress);
         }
     }
 
-    /// <summary>
-    /// Simplified easing types for animations
-    /// </summary>
+
     public enum EasingType
     {
         Linear,
         Damp,
-        CubicInOut
+        CubicInOut,
+        QuinticInOut,
+        FastOutSlowIn,
+        SmoothStep
     }
 
-    /// <summary>
-    /// Extension methods for easing
-    /// </summary>
+
     public static class EasingExtensions
     {
         public static Easing.EasingFunction ToEasingFunction(this EasingType type)
         {
-            switch (type)
+            return type switch
             {
-                case EasingType.Linear: return Easing.Linear;
-                case EasingType.Damp: return Easing.Damp;
-                case EasingType.CubicInOut: return Easing.CubicInOut;
-                default: return Easing.Linear;
-            }
+                EasingType.Linear => Easing.Linear,
+                EasingType.Damp => Easing.Damp,
+                EasingType.CubicInOut => Easing.CubicInOut,
+                EasingType.QuinticInOut => Easing.QuinticInOut,
+                EasingType.FastOutSlowIn => Easing.FastOutSlowIn,
+                EasingType.SmoothStep => Easing.SmoothStep,
+                _ => Easing.QuinticInOut
+            };
         }
     }
 }

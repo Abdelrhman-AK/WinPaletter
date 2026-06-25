@@ -50,18 +50,72 @@ namespace WinPaletter
 
         private void LoadFromCurrent(object sender, EventArgs e)
         {
-            Manager TMx = new(Manager.Source.Registry);
-            _Terminal = Mode == WinTerminal.Version.Stable ? TMx.Terminal : TMx.TerminalPreview;
-            Load_FromTerminal();
-            TMx.Dispose();
+            using (Manager TMx = Program.TM.Clone())
+            {
+                if (Mode == WinTerminal.Version.Stable)
+                {
+                    string TerDir;
+
+                    // Check if the user has enabled the path redirection feature or not
+                    if (!Program.Settings.WindowsTerminals.Path_Deflection)
+                    {
+                        TerDir = SysPaths.TerminalJSON;
+                    }
+                    else
+                    {
+                        if (System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Stable_Path))
+                        { TerDir = Program.Settings.WindowsTerminals.Terminal_Stable_Path; }
+                        else { TerDir = SysPaths.TerminalJSON; }
+                    }
+
+                    if (System.IO.File.Exists(TerDir)) { TMx.Terminal = new(TerDir, WinTerminal.Mode.JSONFile); }
+                    else { TMx.Terminal = new(string.Empty, WinTerminal.Mode.Empty); }
+
+                    _Terminal = TMx.Terminal;
+                }
+                else
+                {
+                    string TerPreDir;
+
+                    // Check if the user has enabled the path redirection feature or not
+                    if (!Program.Settings.WindowsTerminals.Path_Deflection)
+                    {
+                        TerPreDir = SysPaths.TerminalPreviewJSON;
+                    }
+                    else
+                    {
+                        if (System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Preview_Path))
+                        { TerPreDir = Program.Settings.WindowsTerminals.Terminal_Preview_Path; }
+                        else { TerPreDir = SysPaths.TerminalPreviewJSON; }
+                    }
+
+                    if (System.IO.File.Exists(TerPreDir)) { TMx.TerminalPreview = new(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview); }
+                    else { TMx.TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty, WinTerminal.Version.Preview); }
+
+                    _Terminal = TMx.TerminalPreview;
+                }
+
+                Load_FromTerminal();
+            }
         }
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            Manager TMx = Default.FromOS(Program.WindowStyle);
-            _Terminal = Mode == WinTerminal.Version.Stable ? TMx.Terminal : TMx.TerminalPreview;
-            Load_FromTerminal();
-            TMx.Dispose();
+            using (Manager TMx = Program.TM.Clone())
+            {
+                if (Mode == WinTerminal.Version.Stable)
+                {
+                    TMx.Terminal = Default.FromOS(Program.WindowStyle).Terminal;
+                    _Terminal = TMx.Terminal;
+                }
+                else
+                {
+                    TMx.TerminalPreview = Default.FromOS(Program.WindowStyle).TerminalPreview;
+                    _Terminal = TMx.TerminalPreview;
+                }
+
+                Load_FromTerminal();
+            }
         }
 
         private void LoadIntoCurrentTheme(object sender, EventArgs e)

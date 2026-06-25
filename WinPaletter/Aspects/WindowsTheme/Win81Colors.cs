@@ -44,12 +44,20 @@ namespace WinPaletter
 
         private void LoadFromCurrent(object sender, EventArgs e)
         {
-            using (Manager TMx = new(Manager.Source.Registry)) { LoadFromTM(TMx); }
+            using (Manager TMx = Program.TM.Clone())
+            {
+                TMx.Windows81.Load(Default.FromOS(Program.WindowStyle).Windows81);
+                LoadFromTM(TMx);
+            }
         }
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.FromOS(Program.WindowStyle)) { LoadFromTM(TMx); }
+            using (Manager TMx = Program.TM.Clone())
+            {
+                TMx.Windows81 = Default.FromOS(Program.WindowStyle).Windows81;
+                LoadFromTM(TMx);
+            }
         }
 
         private void LoadIntoCurrentTheme(object sender, EventArgs e)

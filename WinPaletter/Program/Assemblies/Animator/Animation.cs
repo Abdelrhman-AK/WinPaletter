@@ -9,6 +9,8 @@ namespace AnimatorNS
     /// </summary>
     public class Animation
     {
+        private static EasingType _defaultEasingType = EasingType.QuinticInOut;
+
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible), EditorBrowsable(EditorBrowsableState.Advanced), TypeConverter(typeof(PointFConverter))]
         public PointF SlideCoeff { get; set; } = PointF.Empty;
         public float TransparencyCoeff { get; set; }
@@ -39,8 +41,8 @@ namespace AnimatorNS
         public Padding Padding { get; set; } = new Padding(0);
         public bool AnimateOnlyDifferences { get; set; } = true;
 
-        [DefaultValue(EasingType.CubicInOut)]
-        public EasingType EasingType { get; set; } = EasingType.CubicInOut;
+        [DefaultValue(EasingType.QuinticInOut)]
+        public EasingType EasingType { get; set; } = _defaultEasingType;
 
         /// <summary>
         /// Gets the easing function for this animation
@@ -55,13 +57,8 @@ namespace AnimatorNS
             }
         }
 
-        public Animation Clone()
-        {
-            return (Animation)MemberwiseClone();
-        }
-
-        public static readonly Animation HorizSlide = new() { SlideCoeff = new PointF(1, 0), EasingType = EasingType.CubicInOut };
-        public static readonly Animation VertSlide = new() { SlideCoeff = new PointF(0, 1), EasingType = EasingType.CubicInOut };
+        public static readonly Animation HorizSlide = new() { SlideCoeff = new PointF(1, 0), EasingType = _defaultEasingType };
+        public static readonly Animation VertSlide = new() { SlideCoeff = new PointF(0, 1), EasingType = _defaultEasingType };
 
         /// <summary>
         /// Fade animation without zoom (original behavior)
@@ -70,25 +67,24 @@ namespace AnimatorNS
         {
             TransparencyCoeff = 1,
             ZoomCoeff = 0f,
-            EasingType = EasingType.Damp
+            EasingType = _defaultEasingType
         };
 
         /// <summary>
         /// Fade animation with zoom effect
-        /// Show: zoom in from 120% to 100% while fading in
-        /// Hide: zoom out from 100% to 120% while fading out
-        /// Both animations keep image ≥ 100% size and centered
+        /// Show: zoom in from 105% to 100% while fading in
+        /// Hide: zoom out from 100% to 105% while fading out
         /// </summary>
         public static readonly Animation FadeZoom = new()
         {
             TransparencyCoeff = 1,
             ZoomCoeff = 1f,
             MaxZoomScale = 1.05f,
-            EasingType = EasingType.CubicInOut
+            EasingType = _defaultEasingType
         };
 
-        public static readonly Animation VertBlind = new() { BlindCoeff = new PointF(0f, 1f), EasingType = EasingType.CubicInOut };
-        public static readonly Animation HorizBlind = new() { BlindCoeff = new PointF(1f, 0f), EasingType = EasingType.CubicInOut };
+        public static readonly Animation VertBlind = new() { BlindCoeff = new PointF(0f, 1f), EasingType = _defaultEasingType };
+        public static readonly Animation HorizBlind = new() { BlindCoeff = new PointF(1f, 0f), EasingType = _defaultEasingType };
     }
 
     public enum AnimationType

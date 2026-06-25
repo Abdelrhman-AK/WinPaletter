@@ -42,7 +42,7 @@ namespace WinPaletter
         }
 
         private bool _Shown = false;
-        private Font F_cmd = new("Consolas", 18f, FontStyle.Regular);
+        private static Font F_cmd = new("Consolas", 18f, FontStyle.Regular);
 
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
         {
@@ -567,12 +567,14 @@ namespace WinPaletter
                         lfWeight = fw
                     };
 
+                    F_cmd?.Dispose();
                     F_cmd = Font.FromLogFont(logFont);
 
                     CMD_FontPxHeight.Value = Math.Abs(logFont.lfHeight);
                 }
 
                 FontName.Text = F_cmd.Name;
+                FontName.Font.Dispose();
                 FontName.Font = new(F_cmd.Name, 9f, F_cmd.Style);
 
                 if (PixelWidth == 4 && PixelHeight == 6) RasterList.SelectedItem = "4x6";
@@ -851,7 +853,11 @@ namespace WinPaletter
             logFont.lfHeight = -(int)CMD_FontPxHeight.Value;
             logFont.lfWidth = 0;
             logFont.lfWeight = CMD_FontWeightBox.SelectedIndex * 100;
+
+            F_cmd?.Dispose();
             F_cmd = Font.FromLogFont(logFont);
+
+            CMD_Preview.Font?.Dispose();
             CMD_Preview.Font = F_cmd;
 
             ApplyPreview();
@@ -1136,7 +1142,10 @@ namespace WinPaletter
             }
 
             FontName.Text = F_cmd.Name;
+            FontName.Font.Dispose();
             FontName.Font = new(F_cmd.Name, 9f, F_cmd.Style);
+
+            CMD_Preview.Font?.Dispose();
             CMD_Preview.Font = F_cmd;
             CMD_Preview.Alpha = (int)CMD_OpacityBar.Value;
             CMD_Preview.Refresh();
@@ -1524,6 +1533,7 @@ namespace WinPaletter
                 CMD_AccentForegroundBar.Invalidate();
 
                 FontName.Text = F_cmd.Name;
+                FontName.Font.Dispose();
                 FontName.Font = new(F_cmd.Name, 9f, F_cmd.Style);
             }
         }
@@ -1673,12 +1683,14 @@ namespace WinPaletter
                     lfWeight = Console.FontWeight
                 };
 
+                F_cmd.Dispose();
                 F_cmd = Font.FromLogFont(logFont);
 
                 CMD_FontPxHeight.Value = Math.Abs(logFont.lfHeight);
             }
 
             FontName.Text = F_cmd.Name;
+            FontName.Font.Dispose();
             FontName.Font = new(F_cmd.Name, 9f, F_cmd.Style);
 
             if (Console.PixelWidth == 4 && Console.PixelHeight == 6) RasterList.SelectedItem = "4x6";
@@ -1713,7 +1725,7 @@ namespace WinPaletter
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            using (FontDialog dlg = new() { Font = F_cmd, FixedPitchOnly = !Program.Settings.WindowsTerminals.ListAllFonts })
+            using (FontDialog dlg = new() { Font = CMD_Preview.Font, FixedPitchOnly = !Program.Settings.WindowsTerminals.ListAllFonts })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -1726,9 +1738,14 @@ namespace WinPaletter
                     logFont.lfHeight = (int)-dlg.Font.Size; // Negative value for pixel height
                     logFont.lfWidth = 0; // Set to 0 for default width
                     logFont.lfWeight = CMD_FontWeightBox.SelectedIndex * 100;
+
+                    F_cmd.Dispose();
                     F_cmd = Font.FromLogFont(logFont);
+
+                    CMD_Preview.Dispose();
                     CMD_Preview.Font = F_cmd;
 
+                    FontName.Font.Dispose();
                     FontName.Font = new(F_cmd.Name, 9f, F_cmd.Style);
                 }
             }
@@ -1808,7 +1825,11 @@ namespace WinPaletter
             F_cmd.ToLogFont(logFont);
             logFont.lfHeight = -(int)CMD_FontPxHeight.Value;
             logFont.lfWidth = 0; // Set to 0 for default width
+
+            F_cmd.Dispose();
             F_cmd = Font.FromLogFont(logFont);
+
+            CMD_Preview.Dispose();
             CMD_Preview.Font = F_cmd;
             ApplyPreview();
         }

@@ -135,7 +135,7 @@ namespace WinPaletter.Theme.Structures
         {
             Program.Log?.Write(LogEventLevel.Information, $"Loading console settings from registry.");
 
-            Enabled = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", signature, 0) == 1;
+            Enabled = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", signatureEnabled, 0) == 1;
 
             string key = regKeys[0];
             {
@@ -251,7 +251,7 @@ namespace WinPaletter.Theme.Structures
         /// <param name="Signature_Of_Enable">Name of console (for example: Terminal_CMD_Enabled). Used for getting Enabled property</param>
         private void Save_Internal(string scopeReg, TreeView treeView = null)
         {
-            WriteReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", signature, Enabled);
+            WriteReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Terminals", signatureEnabled, Enabled);
 
             if (Enabled)
             {

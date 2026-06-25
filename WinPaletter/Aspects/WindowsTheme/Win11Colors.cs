@@ -42,15 +42,18 @@ namespace WinPaletter
 
         private void LoadFromCurrent(object sender, EventArgs e)
         {
-            using (Manager TMx = new(Manager.Source.Registry)) { LoadFromTM(TMx); }
+            using (Manager TMx = Program.TM.Clone())
+            {
+                TMx.Windows11.Load(Default.FromOS(Program.WindowStyle).Windows11);
+                LoadFromTM(TMx);
+            }
         }
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            using (Manager TM_default = Default.FromOS(WindowStyle.W11))
             using (Manager TMx = Program.TM.Clone())
             {
-                TMx.Windows11 = TM_default.Windows11;
+                TMx.Windows11 = Default.FromOS(Program.WindowStyle).Windows11;
                 LoadFromTM(TMx);
             }
         }

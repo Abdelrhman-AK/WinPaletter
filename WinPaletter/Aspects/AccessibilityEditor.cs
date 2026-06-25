@@ -38,16 +38,20 @@ namespace WinPaletter
 
         private void LoadFromCurrent(object sender, EventArgs e)
         {
-            Manager TMx = new(Source.Registry);
-            LoadFromTM(TMx);
-            TMx.Dispose();
+            using (Manager TMx = Program.TM.Clone())
+            {
+                TMx.Accessibility.Load(Default.FromOS(Program.WindowStyle).Accessibility);
+                LoadFromTM(TMx);
+            }
         }
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            Manager TMx = Default.FromOS(Program.WindowStyle);
-            LoadFromTM(TMx);
-            TMx.Dispose();
+            using (Manager TMx = Program.TM.Clone())
+            {
+                TMx.Accessibility = Default.FromOS(Program.WindowStyle).Accessibility;
+                LoadFromTM(TMx);
+            }
         }
 
         private void LoadIntoCurrentTheme(object sender, EventArgs e)

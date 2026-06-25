@@ -91,18 +91,37 @@ namespace WinPaletter
 
         private void LoadFromCurrent(object sender, EventArgs e)
         {
-            Manager TMx = new(Manager.Source.Registry);
-            LoadFromTM(TMx);
-            TMx.Dispose();
+            using (Manager TMx = Program.TM.Clone())
+            {
+                TMx.Wallpaper.Load(Default.FromOS(Program.WindowStyle).Wallpaper);
+                TMx.WallpaperTone_W12.Load();
+                TMx.WallpaperTone_W11.Load();
+                TMx.WallpaperTone_W10.Load();
+                TMx.WallpaperTone_W81.Load();
+                TMx.WallpaperTone_W8.Load();
+                TMx.WallpaperTone_W7.Load();
+                TMx.WallpaperTone_WVista.Load();
+                TMx.WallpaperTone_WXP.Load();
+                LoadFromTM(TMx);
+            }
         }
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            Manager TMx = Default.FromOS(Program.WindowStyle);
-            LoadFromTM(TMx);
-            TMx.Dispose();
+            using (Manager TMx = Program.TM.Clone())
+            {
+                TMx.Wallpaper = Default.FromOS(Program.WindowStyle).Wallpaper;
+                TMx.WallpaperTone_W12 = new("Win12");
+                TMx.WallpaperTone_W11 = new("Win11");
+                TMx.WallpaperTone_W10 = new("Win10");
+                TMx.WallpaperTone_W81 = new("Win8.1");
+                TMx.WallpaperTone_W8 = new("Win8");
+                TMx.WallpaperTone_W7 = new("Win7");
+                TMx.WallpaperTone_WVista = new("WinVista");
+                TMx.WallpaperTone_WXP = new("WinXP");
+                LoadFromTM(TMx);
+            }
         }
-
 
         private void LoadIntoCurrentTheme(object sender, EventArgs e)
         {

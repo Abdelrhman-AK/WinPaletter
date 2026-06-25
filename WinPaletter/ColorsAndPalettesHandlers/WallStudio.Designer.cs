@@ -2544,7 +2544,7 @@
             this.Name = "WallStudio";
             this.ShowIcon = false;
             this.ShowIconAndCaptionText = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "WallStudio";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.WallStudio_FormClosed);
             this.Load += new System.EventHandler(this.WallStudio_Load);

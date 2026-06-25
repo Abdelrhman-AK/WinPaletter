@@ -58,23 +58,55 @@ namespace WinPaletter
 
         private void LoadFromCurrent(object sender, EventArgs e)
         {
-            using (Manager TMx = new(Manager.Source.Registry))
+            using (Manager TMx = Program.TM.Clone())
             {
-                if (Program.WindowStyle == PreviewHelpers.WindowStyle.W12) LoadFromTM(TMx.LogonUI12);
-                else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W11) LoadFromTM(TMx.LogonUI11);
-                else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W10) LoadFromTM(TMx.LogonUI10);
-                else LoadFromTM(TMx.LogonUI11);
+                if (Program.WindowStyle == PreviewHelpers.WindowStyle.W12)
+                {
+                    TMx.LogonUI12.Load(Default.FromOS(Program.WindowStyle).LogonUI12);
+                    LoadFromTM(TMx.LogonUI12);
+                }
+                else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W11)
+                {
+                    TMx.LogonUI11.Load(Default.FromOS(Program.WindowStyle).LogonUI11);
+                    LoadFromTM(TMx.LogonUI11);
+                }
+                else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W10)
+                {
+                    TMx.LogonUI10.Load(Default.FromOS(Program.WindowStyle).LogonUI10);
+                    LoadFromTM(TMx.LogonUI10);
+                }
+                else
+                {
+                    TMx.LogonUI11.Load(Default.FromOS(Program.WindowStyle).LogonUI11);
+                    LoadFromTM(TMx.LogonUI11);
+                }
             }
         }
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            using (Manager TMx = Default.FromOS(Program.WindowStyle))
+            using (Manager TMx = Program.TM.Clone())
             {
-                if (Program.WindowStyle == PreviewHelpers.WindowStyle.W12) LoadFromTM(TMx.LogonUI12);
-                else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W11) LoadFromTM(TMx.LogonUI11);
-                else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W10) LoadFromTM(TMx.LogonUI10);
-                else LoadFromTM(TMx.LogonUI11);
+                if (Program.WindowStyle == PreviewHelpers.WindowStyle.W12)
+                {
+                    TMx.LogonUI12 = Default.FromOS(Program.WindowStyle).LogonUI12;
+                    LoadFromTM(TMx.LogonUI12);
+                }
+                else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W11)
+                {
+                    TMx.LogonUI11 = Default.FromOS(Program.WindowStyle).LogonUI11;
+                    LoadFromTM(TMx.LogonUI11);
+                }
+                else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W10)
+                {
+                    TMx.LogonUI10 = Default.FromOS(Program.WindowStyle).LogonUI10;
+                    LoadFromTM(TMx.LogonUI10);
+                }
+                else
+                {
+                    TMx.LogonUI11 = Default.FromOS(Program.WindowStyle).LogonUI11;
+                    LoadFromTM(TMx.LogonUI11);
+                }
             }
         }
 

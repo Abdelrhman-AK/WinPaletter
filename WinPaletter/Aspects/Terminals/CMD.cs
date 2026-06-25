@@ -41,7 +41,7 @@ namespace WinPaletter
             }
         }
 
-        private Font F_cmd = new("Consolas", 16f, FontStyle.Regular);
+        private static Font F_cmd = new("Consolas", 16f, FontStyle.Regular);
         public Edition _Edition = Edition.CMD;
 
         private Theme.Structures.WinTerminal terminal => Program.TM.Terminal;
@@ -80,16 +80,36 @@ namespace WinPaletter
 
         private void LoadFromCurrent(object sender, EventArgs e)
         {
-            Manager TMx = new(Manager.Source.Registry);
-            LoadFromTM(TMx, _Edition);
-            TMx.Dispose();
+            using (Manager TMx = Program.TM.Clone())
+            {
+                if (_Edition == Edition.CMD)
+                    TMx.CommandPrompt.Load(Default.FromOS(Program.WindowStyle).CommandPrompt);
+                else if (_Edition == Edition.PowerShellx86)
+                    TMx.PowerShellx86.Load(Default.FromOS(Program.WindowStyle).PowerShellx86);
+                else if (_Edition == Edition.PowerShellx64)
+                    TMx.PowerShellx64.Load(Default.FromOS(Program.WindowStyle).PowerShellx64);
+                else
+                    TMx.CommandPrompt.Load(Default.FromOS(Program.WindowStyle).CommandPrompt);
+
+                LoadFromTM(TMx, _Edition);
+            }
         }
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            Manager TMx = Default.FromOS(Program.WindowStyle);
-            LoadFromTM(TMx, _Edition);
-            TMx.Dispose();
+            using (Manager TMx = Program.TM.Clone())
+            {
+                if (_Edition == Edition.CMD)
+                    TMx.CommandPrompt = Default.FromOS(Program.WindowStyle).CommandPrompt;
+                else if (_Edition == Edition.PowerShellx86)
+                    TMx.PowerShellx86 = Default.FromOS(Program.WindowStyle).PowerShellx86;
+                else if (_Edition == Edition.PowerShellx64)
+                    TMx.PowerShellx64 = Default.FromOS(Program.WindowStyle).PowerShellx64;
+                else
+                    TMx.CommandPrompt = Default.FromOS(Program.WindowStyle).CommandPrompt;
+
+                LoadFromTM(TMx, _Edition);
+            }
         }
 
         private void LoadIntoCurrentTheme(object sender, EventArgs e)
@@ -380,6 +400,8 @@ namespace WinPaletter
             CMD_Preview.CMD_PopupBackground = (int)CMD_PopupBackgroundBar.Value;
             CMD_Preview.CMD_ScreenColorsForeground = (int)CMD_AccentForegroundBar.Value;
             CMD_Preview.CMD_ScreenColorsBackground = (int)CMD_AccentBackgroundBar.Value;
+
+            CMD_Preview.Font?.Dispose();
             CMD_Preview.Font = F_cmd;
 
             CMD_Preview.PowerShell = _Edition == Edition.PowerShellx64 | _Edition == Edition.PowerShellx86;
@@ -467,6 +489,7 @@ namespace WinPaletter
             }
 
             FontName.Text = F_cmd.Name;
+            FontName.Font?.Dispose();
             FontName.Font = new(F_cmd.Name, 9f, F_cmd.Style);
 
             CMD_Preview.Alpha = (int)CMD_OpacityBar.Value;
@@ -995,12 +1018,14 @@ namespace WinPaletter
                     lfWeight = Console.FontWeight
                 };
 
+                F_cmd?.Dispose();
                 F_cmd = Font.FromLogFont(logFont);
 
                 CMD_FontPxHeight.Value = Math.Abs(logFont.lfHeight);
             }
 
             FontName.Text = F_cmd.Name;
+            FontName.Font?.Dispose();
             FontName.Font = new(F_cmd.Name, 9f, F_cmd.Style);
 
             if (Console.PixelWidth == 4 && Console.PixelHeight == 6) RasterList.SelectedItem = "4x6";
@@ -1035,7 +1060,11 @@ namespace WinPaletter
 
         public void ApplyToTM(Manager TM, Edition Edition)
         {
-            Theme.Structures.Console Console = new()
+            string signature = Edition == Edition.CMD ? "Terminal_CMD" : Edition == Edition.PowerShellx86 ? "Terminal_PS_86" : "Terminal_PS_64";
+            string[] regKeys = Edition == Edition.CMD ? [string.Empty, "%SystemRoot%_System32_cmd.exe"]
+            : Edition == Edition.PowerShellx86 ? [SysPaths.PS86_reg] : [SysPaths.PS64_reg];
+
+            Theme.Structures.Console Console = new(signature, regKeys)
             {
                 Enabled = AspectEnabled,
                 ColorTable00 = ColorTable00.BackColor,
@@ -1435,6 +1464,8 @@ while ($true) {{
             logFont.lfHeight = -(int)CMD_FontPxHeight.Value;
             logFont.lfWidth = 0;
             logFont.lfWeight = CMD_FontWeightBox.SelectedIndex * 100;
+
+            F_cmd?.Dispose();
             F_cmd = Font.FromLogFont(logFont);
 
             ApplyPreview();
@@ -1444,6 +1475,7 @@ while ($true) {{
         {
             if (IsShown)
             {
+                F_cmd?.Dispose();
                 F_cmd = new(FontName.Font.Name, F_cmd.Size, F_cmd.Style);
                 ApplyPreview();
             }
@@ -1576,7 +1608,7 @@ while ($true) {{
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            using (FontDialog dlg = new() { Font = F_cmd, FixedPitchOnly = !Program.Settings.WindowsTerminals.ListAllFonts })
+            using (FontDialog dlg = new() { Font = CMD_Preview.Font, FixedPitchOnly = !Program.Settings.WindowsTerminals.ListAllFonts })
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -1589,8 +1621,11 @@ while ($true) {{
                     logFont.lfHeight = (int)-dlg.Font.Size; // Negative value for pixel height
                     logFont.lfWidth = 0; // Set to 0 for default width
                     logFont.lfWeight = CMD_FontWeightBox.SelectedIndex * 100;
+
+                    F_cmd?.Dispose();
                     F_cmd = Font.FromLogFont(logFont);
 
+                    FontName.Font?.Dispose();
                     FontName.Font = new(F_cmd.Name, 9f, F_cmd.Style);
                 }
             }
@@ -1604,6 +1639,8 @@ while ($true) {{
                 F_cmd.ToLogFont(logFont);
                 logFont.lfHeight = -(int)CMD_FontPxHeight.Value;
                 logFont.lfWidth = 0; // Set to 0 for default width
+
+                F_cmd?.Dispose();
                 F_cmd = Font.FromLogFont(logFont);
                 ApplyPreview();
             }

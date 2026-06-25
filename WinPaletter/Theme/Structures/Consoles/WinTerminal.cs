@@ -1580,6 +1580,8 @@ namespace WinPaletter.Theme.Structures
         /// <param name="Version">Either Stable or Preview</param>
         public WinTerminal(string File, Mode Mode, Version Version = Version.Stable)
         {
+            _signature = Version == Version.Stable ? "Terminal_Stable" : "Terminal_Preview";
+
             switch (Mode)
             {
                 // Load Windows Terminal settings from JSON File

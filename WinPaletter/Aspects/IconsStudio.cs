@@ -63,16 +63,20 @@ namespace WinPaletter
 
         private void LoadFromCurrent(object sender, EventArgs e)
         {
-            Manager TMx = new(Source.Registry);
-            LoadFromTM(TMx);
-            TMx.Dispose();
+            using (Manager TMx = Program.TM.Clone())
+            {
+                TMx.Icons.Load(Default.FromOS(Program.WindowStyle).Icons);
+                LoadFromTM(TMx);
+            }
         }
 
         private void LoadFromDefault(object sender, EventArgs e)
         {
-            Manager TMx = Default.FromOS(Program.WindowStyle);
-            LoadFromTM(TMx);
-            TMx.Dispose();
+            using (Manager TMx = Program.TM.Clone())
+            {
+                TMx.Icons = Default.FromOS(Program.WindowStyle).Icons;
+                LoadFromTM(TMx);
+            }
         }
 
         private void LoadIntoCurrentTheme(object sender, EventArgs e)

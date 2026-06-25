@@ -25,7 +25,7 @@ namespace WinPaletter
 
             TreeView1.Font = Fonts.ConsoleMedium;
 
-            Forms.GlassWindow.Show();
+            Forms.GlassWindow.Show(Forms.MainForm);
 
             CustomSystemSounds.Exclamation.Play();
 
@@ -69,6 +69,8 @@ namespace WinPaletter
             Program.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert = CheckBox1.Checked;
             Program.Settings.Save(Settings.Source.Registry);
             DialogResult = DialogResult.Cancel;
+            Close();
+            Forms.GlassWindow.Close();
         }
 
         private void Button1_Click(object sender, EventArgs e)
@@ -76,6 +78,7 @@ namespace WinPaletter
             Program.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert = CheckBox1.Checked;
             Program.Settings.Save(Settings.Source.Registry);
             Close();
+            Forms.GlassWindow.Close();
             DialogResult = DialogResult.OK;
         }
 
@@ -86,9 +89,9 @@ namespace WinPaletter
 
         private void PE_Warning_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Forms.GlassWindow.Close();
             Program.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert = CheckBox1.Checked;
             Program.Settings.Save(Settings.Source.Registry);
+            Forms.GlassWindow.Close();
         }
 
         private void Button3_Click(object sender, EventArgs e)
