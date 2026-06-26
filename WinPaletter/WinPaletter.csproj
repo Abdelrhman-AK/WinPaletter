@@ -349,26 +349,106 @@
     <Compile Include="Aspects\WindowsTheme\Win8Colors.Designer.cs">
       <DependentUpon>Win8Colors.cs</DependentUpon>
     </Compile>
-    <Compile Include="Assets\Accessibility_Vision.Designer.cs" />
-    <Compile Include="Assets\AeroLoadingCircles.Designer.cs" />
-    <Compile Include="Assets\AspectsResources.Designer.cs" />
-    <Compile Include="Assets\CMD_Raster.Designer.cs" />
-    <Compile Include="Assets\ColorEffects.Designer.cs" />
-    <Compile Include="Assets\ColorItemContextMenu.Designer.cs" />
-    <Compile Include="Assets\GitHubMgr.Designer.cs" />
-    <Compile Include="Assets\LogonUIRes.Designer.cs" />
-    <Compile Include="Assets\Notifications.Designer.cs" />
-    <Compile Include="Assets\PowerShell_Raster.Designer.cs" />
-    <Compile Include="Assets\Store.Designer.cs" />
-    <Compile Include="Assets\Tabs.Designer.cs" />
-    <Compile Include="Assets\Themes_Banners.Designer.cs" />
-    <Compile Include="Assets\Win10Preview.Designer.cs" />
-    <Compile Include="Assets\Win10xLegends.Designer.cs" />
-    <Compile Include="Assets\Win11Preview.Designer.cs" />
-    <Compile Include="Assets\Win7Preview.Designer.cs" />
-    <Compile Include="Assets\Win81Preview.Designer.cs" />
-    <Compile Include="Assets\WinLogos.Designer.cs" />
-    <Compile Include="Assets\WinVistaPreview.Designer.cs" />
+    <Compile Include="Assets\Accessibility_Vision.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Accessibility_Vision.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\AeroLoadingCircles.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AeroLoadingCircles.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\AspectsResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AspectsResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\CMD_Raster.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CMD_Raster.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\ColorEffects.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ColorEffects.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\ColorItemContextMenu.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ColorItemContextMenu.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\GitHubMgr.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GitHubMgr.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\LogonUIRes.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LogonUIRes.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\Notifications.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Notifications.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\PowerShell_Raster.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PowerShell_Raster.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\WinLogos.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WinLogos.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\Store.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Store.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\Tabs.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Tabs.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\Themes_Banners.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Themes_Banners.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\Win10Preview.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Win10Preview.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\Win10xLegends.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Win10xLegends.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\Win11Preview.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Win11Preview.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\Win7Preview.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Win7Preview.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\Win81Preview.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Win81Preview.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\WinVistaPreview.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WinVistaPreview.resx</DependentUpon>
+    </Compile>
     <Compile Include="ColorsAndPalettesHandlers\ColorEffectMiniControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -1796,27 +1876,86 @@
       <DependentUpon>Win8Colors.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Assets\Accessibility_Vision.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Accessibility_Vision.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Assets\AeroLoadingCircles.resx" />
-    <EmbeddedResource Include="Assets\AspectsResources.resx" />
-    <EmbeddedResource Include="Assets\CMD_Raster.resx" />
-    <EmbeddedResource Include="Assets\ColorEffects.resx" />
-    <EmbeddedResource Include="Assets\ColorItemContextMenu.resx" />
-    <EmbeddedResource Include="Assets\GitHubMgr.resx" />
-    <EmbeddedResource Include="Assets\LogonUIRes.resx" />
-    <EmbeddedResource Include="Assets\Notifications.resx" />
-    <EmbeddedResource Include="Assets\PowerShell_Raster.resx" />
-    <EmbeddedResource Include="Assets\Store.resx" />
-    <EmbeddedResource Include="Assets\Tabs.resx" />
-    <EmbeddedResource Include="Assets\Themes_Banners.resx" />
-    <EmbeddedResource Include="Assets\Win10Preview.resx" />
-    <EmbeddedResource Include="Assets\Win10xLegends.resx" />
-    <EmbeddedResource Include="Assets\Win11Preview.resx" />
-    <EmbeddedResource Include="Assets\Win7Preview.resx" />
-    <EmbeddedResource Include="Assets\Win81Preview.resx" />
-    <EmbeddedResource Include="Assets\WinLogos.resx" />
-    <EmbeddedResource Include="Assets\WinVistaPreview.resx" />
+    <EmbeddedResource Include="Assets\AeroLoadingCircles.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AeroLoadingCircles.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\AspectsResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AspectsResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\CMD_Raster.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CMD_Raster.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\ColorEffects.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ColorEffects.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\ColorItemContextMenu.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ColorItemContextMenu.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\GitHubMgr.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>GitHubMgr.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\LogonUIRes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>LogonUIRes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Notifications.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Notifications.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\PowerShell_Raster.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PowerShell_Raster.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\WinLogos.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>WinLogos.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Store.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Store.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Tabs.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Tabs.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Themes_Banners.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Themes_Banners.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Win10Preview.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Win10Preview.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Win10xLegends.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Win10xLegends.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Win11Preview.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Win11Preview.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Win7Preview.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Win7Preview.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\Win81Preview.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Win81Preview.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\WinVistaPreview.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>WinVistaPreview.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="ColorsAndPalettesHandlers\ColorEffectMiniControl.resx">
       <DependentUpon>ColorEffectMiniControl.cs</DependentUpon>
     </EmbeddedResource>

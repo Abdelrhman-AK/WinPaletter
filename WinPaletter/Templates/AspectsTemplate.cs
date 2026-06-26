@@ -9,6 +9,7 @@ using WinPaletter.Assets;
 using WinPaletter.NativeMethods;
 using WinPaletter.Properties;
 using WinPaletter.UI.Controllers;
+using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter
 {
@@ -61,6 +62,62 @@ namespace WinPaletter
         private void AspectsTemplate_Load(object sender, EventArgs e)
         {
             IsShown = false;
+        }
+
+        public static Bitmap AddFileOSImage(PreviewHelpers.WindowStyle windowStyle, bool large = true)
+        {
+            int size = large ? 24 : 20;
+            Point p_file = large ? new(3, 2) : new(2, 0);
+            Point p_os = large ? new(7, 8) : new(6, 6);
+            Bitmap bitmap = new(size, size);
+            Bitmap os;
+
+            if (windowStyle == WindowStyle.W12)
+            {
+                os = Assets.WinLogos.Win12;
+            }
+            else if (windowStyle == WindowStyle.W11)
+            {
+                os = Assets.WinLogos.Win11;
+            }
+            else if (windowStyle == WindowStyle.W10)
+            {
+                os = Assets.WinLogos.Win10;
+            }
+            else if (windowStyle == WindowStyle.W81)
+            {
+                os = Assets.WinLogos.Win8_1;
+            }
+            else if (windowStyle == WindowStyle.W8)
+            {
+                os = Assets.WinLogos.Win8;
+            }
+            else if (windowStyle == WindowStyle.W7)
+            {
+                os = Assets.WinLogos.Win7;
+            }
+            else if (windowStyle == WindowStyle.WVista)
+            {
+                os = Assets.WinLogos.WinVista;
+            }
+            else if (windowStyle == WindowStyle.WXP)
+            {
+                os = Assets.WinLogos.WinXP;
+            }
+            else
+            {
+                os = Assets.WinLogos.Win11;
+            }
+
+            using Bitmap osResized = large ? os.Resize(16, 16) : os.Resize(14, 14);
+
+            using (Graphics G = Graphics.FromImage(bitmap))
+            {
+                G.DrawImageUnscaled(Resources.BlankFile, p_file);
+                G.DrawImageUnscaled(osResized, p_os);
+            }
+
+            return bitmap;
         }
 
         /// <summary>
@@ -159,52 +216,30 @@ namespace WinPaletter
             import_JSON.Text = Program.Localization.Strings.Previewer.Import_JSON;
 
             import_current.Image = AspectsResources.CurrentApplied;
-
-            if (Program.WindowStyle == PreviewHelpers.WindowStyle.W12)
-            {
-                import_defaultWindows.Image = WinLogos.Add_Win12_20px;
-            }
-            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W11)
-            {
-                import_defaultWindows.Image = WinLogos.Add_Win11_20px;
-            }
-            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W10)
-            {
-                import_defaultWindows.Image = WinLogos.Add_Win10_20px;
-            }
-            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W81)
-            {
-                import_defaultWindows.Image = WinLogos.Add_Win81_20px;
-            }
-            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W8)
-            {
-                import_defaultWindows.Image = WinLogos.Add_Win8_20px;
-            }
-            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W7)
-            {
-                import_defaultWindows.Image = WinLogos.Add_Win7_20px;
-            }
-            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.WVista)
-            {
-                import_defaultWindows.Image = WinLogos.Add_WinVista_20px;
-            }
-            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.WXP)
-            {
-                import_defaultWindows.Image = WinLogos.Add_WinXP_20px;
-            }
+            import_defaultWindows.Image?.Dispose();
+            import_defaultWindows.Image = AddFileOSImage(Program.WindowStyle);
 
             import_theme.Image = AspectsResources.theme;
             import_msstyles.Image = AspectsResources.msstyles;
 
             import_scheme.Image = AspectsResources.Scheme;
-            //import_scheme_12.Image = WinLogos.Add_Win12_20px;
-            import_scheme_11.Image = WinLogos.Add_Win11_20px;
-            import_scheme_10.Image = WinLogos.Add_Win10_20px;
-            import_scheme_81.Image = WinLogos.Add_Win81_20px;
-            import_scheme_8.Image = WinLogos.Add_Win8_20px;
-            import_scheme_7.Image = WinLogos.Add_Win7_20px;
-            import_scheme_Vista.Image = WinLogos.Add_WinVista_20px;
-            import_scheme_XP.Image = WinLogos.Add_WinXP_20px;
+            //import_scheme_12.Image?.Dispose();
+            import_scheme_11.Image?.Dispose();
+            import_scheme_10.Image?.Dispose();
+            import_scheme_81.Image?.Dispose();
+            import_scheme_8.Image?.Dispose();
+            import_scheme_7.Image?.Dispose();
+            import_scheme_Vista.Image?.Dispose();
+            import_scheme_XP.Image?.Dispose();
+
+            //import_scheme_12.Image = AddFileOSImage(WindowStyle.W12);
+            import_scheme_11.Image = AddFileOSImage(WindowStyle.W11);
+            import_scheme_10.Image = AddFileOSImage(WindowStyle.W10);
+            import_scheme_81.Image = AddFileOSImage(WindowStyle.W81);
+            import_scheme_8.Image = AddFileOSImage(WindowStyle.W8);
+            import_scheme_7.Image = AddFileOSImage(WindowStyle.W7);
+            import_scheme_Vista.Image = AddFileOSImage(WindowStyle.WVista);
+            import_scheme_XP.Image = AddFileOSImage(WindowStyle.WXP);
 
             import_JSON.Image = AspectsResources.JSON;
             applyThemeWithRP.Image = AspectsResources.Restorepoint;

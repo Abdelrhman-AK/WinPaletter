@@ -33,8 +33,6 @@ namespace WinPaletter.UI.WP
                     bmp.Dispose();
                 }
             }
-
-
         }
     }
 }

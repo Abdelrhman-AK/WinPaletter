@@ -135,11 +135,35 @@ namespace WinPaletter.UI.WP
             base.OnHandleCreated(e);
             if (DesignMode) return;
 
+            RestoreHeaderSubclass(); // clean up any stale subclass from a previous handle
             SetControlTheme(Handle, CtrlTheme.DarkExplorer);
             SubclassHeader();
         }
-
+        
         #region Header Subclass
+
+        protected override void OnEnabledChanged(EventArgs e)
+        {
+            base.OnEnabledChanged(e);
+            if (DesignMode) return;
+            if (!IsHandleCreated) return;
+
+            // Windows resets the visual theme when the control is disabled,
+            // so we forcefully reapply it regardless of Enabled state.
+            SetControlTheme(Handle, CtrlTheme.DarkExplorer);
+            RestoreHeaderSubclass();
+            SubclassHeader();
+        }
+
+        private void RestoreHeaderSubclass()
+        {
+            if (headerHandle == IntPtr.Zero || oldHeaderProc == IntPtr.Zero) return;
+
+            User32.SetWindowLongPtr(headerHandle, GWL_WNDPROC, oldHeaderProc);
+            oldHeaderProc = IntPtr.Zero;
+            headerHandle = IntPtr.Zero;
+            newHeaderProc = null;
+        }
 
         private void SubclassHeader()
         {
@@ -218,12 +242,99 @@ namespace WinPaletter.UI.WP
 
         protected override void WndProc(ref Message m)
         {
-            // Trap WM_KILLFOCUS message
             if (m.Msg == 0x0008) // WM_KILLFOCUS
-            {
-                // Don't pass the killfocus message to base
-                // This prevents the control from losing visual focus state
                 return;
+
+            const int WM_PAINT = 0x000F;
+
+            if (m.Msg == WM_PAINT && !Enabled && Program.Style.DarkMode)
+            {
+                // Let Windows do its default paint first into the window DC
+                base.WndProc(ref m);
+
+                // Then overdraw with our dark disabled colors on top
+                using (Graphics G = Graphics.FromHwnd(Handle))
+                {
+                    // Cover the entire client area with our dark background
+                    Rectangle client = ClientRectangle;
+                    using (SolidBrush bgBrush = new(Program.Style.Schemes.Disabled.Colors.Button)) G.FillRectangle(bgBrush, client);
+
+                    // Redraw each item manually
+                    for (int i = 0; i < Items.Count; i++)
+                    {
+                        ListViewItem item = Items[i];
+                        Rectangle itemBounds = item.GetBounds(ItemBoundsPortion.Entire);
+                        if (!client.IntersectsWith(itemBounds)) continue;
+
+                        // Alternating row tint
+                        Color rowColor = (i % 2 == 0) ? Program.Style.Schemes.Disabled.Colors.Button : Program.Style.Schemes.Disabled.Colors.Button_Over;
+
+                        using (SolidBrush rowBrush = new(rowColor))
+                            G.FillRectangle(rowBrush, itemBounds);
+
+                        for (int j = 0; j < Columns.Count; j++)
+                        {
+                            // Build column bounds manually from Entire item row + column offsets
+                            Rectangle entireBounds = item.GetBounds(ItemBoundsPortion.Entire);
+
+                            int colX = 0;
+                            for (int k = 0; k < j; k++) colX += Columns[k].Width;
+
+                            Rectangle subBounds = new(colX, entireBounds.Top, Columns[j].Width, entireBounds.Height);
+
+                            if (subBounds.IsEmpty) continue;
+
+                            // Draw image on column 0 only
+                            if (j == 0 && SmallImageList != null)
+                            {
+                                Image img = null;
+
+                                if (!string.IsNullOrEmpty(item.ImageKey) && SmallImageList.Images.ContainsKey(item.ImageKey))
+                                    img = SmallImageList.Images[item.ImageKey];
+                                else if (item.ImageIndex >= 0 && item.ImageIndex < SmallImageList.Images.Count)
+                                    img = SmallImageList.Images[item.ImageIndex];
+
+                                if (img != null)
+                                {
+                                    // Image: vertically centered, left-aligned inside column
+                                    int imgX = subBounds.Left + 4;
+                                    int imgY = subBounds.Top + (subBounds.Height - img.Height) / 2;
+                                    Rectangle imgRect = new(imgX, imgY, img.Width, img.Height);
+
+                                    using (Bitmap grayscale = img.Grayscale()) G.DrawImage(grayscale, imgRect);
+
+                                    // Shrink text bounds to start after image + 1px gap
+                                    subBounds = new(imgRect.Right + 1, subBounds.Top, subBounds.Width - imgRect.Width - 4, subBounds.Height);
+                                }
+                                else
+                                {
+                                    // No image: add small left padding to match native indent
+                                    subBounds = new(subBounds.Left + 2, subBounds.Top, subBounds.Width - 2, subBounds.Height);
+                                }
+                            }
+
+                            string text = item.SubItems.Count > j ? item.SubItems[j].Text : string.Empty;
+
+                            TextRenderer.DrawText(G, text, Font, subBounds, Program.Style.Schemes.Disabled.Colors.ForeColor, TextFormatFlags.VerticalCenter | TextFormatFlags.Left | TextFormatFlags.EndEllipsis);
+                        }
+                    }
+
+                    // Redraw column header dividers on body (vertical grid lines)
+                    if (View == View.Details)
+                    {
+                        int x = 0;
+                        using (Pen linePen = new(Program.Style.Schemes.Disabled.Colors.Line_Hover()))
+                        {
+                            for (int i = 0; i < Columns.Count - 1; i++)
+                            {
+                                x += Columns[i].Width;
+                                G.DrawLine(linePen, x - 1, 0, x - 1, client.Height);
+                            }
+                        }
+                    }
+                }
+
+                return; // already handled
             }
 
             base.WndProc(ref m);

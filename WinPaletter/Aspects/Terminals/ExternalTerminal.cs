@@ -210,7 +210,7 @@ namespace WinPaletter
             toggle1.Checked = Program.Settings.WindowsTerminals.ListAllFonts;
 
             IEnumerable<UI.WP.Button> buttons = flowLayoutPanel1.Controls.OfType<UI.WP.Button>();
-            UI.WP.Button button_import = buttons.Where(b => b.Name.StartsWith("btn_import")).FirstOrDefault() ?? null;
+            UI.WP.Button button_import = buttons.FirstOrDefault(b => b.Name.StartsWith("btn_import")) ?? null;
             button_import.Text = Program.Localization.Strings.Previewer.Import_wpth;
 
             #region Menu _data
@@ -219,7 +219,7 @@ namespace WinPaletter
             ToolStripMenuItem import_current = new();
             ToolStripMenuItem import_defaultWindows = new();
             ToolStripMenuItem import_scheme = new();
-            ToolStripMenuItem import_scheme_12 = new();
+            //ToolStripMenuItem import_scheme_12 = new();
             ToolStripMenuItem import_scheme_11 = new();
             ToolStripMenuItem import_scheme_10 = new();
             ToolStripMenuItem import_scheme_81 = new();
@@ -231,7 +231,7 @@ namespace WinPaletter
             import_current.Text = Program.Localization.Strings.Previewer.Import_current;
             import_defaultWindows.Text = Program.Localization.Strings.Previewer.Import_defaultWindows;
             import_scheme.Text = Program.Localization.Strings.Previewer.Import_preset;
-            import_scheme_12.Text = Program.Localization.Strings.Windows.W12;
+            //import_scheme_12.Text = Program.Localization.Strings.Windows.W12;
             import_scheme_11.Text = Program.Localization.Strings.Windows.W11;
             import_scheme_10.Text = Program.Localization.Strings.Windows.W10;
             import_scheme_81.Text = Program.Localization.Strings.Windows.W81;
@@ -242,51 +242,30 @@ namespace WinPaletter
 
             import_current.Image = AspectsResources.CurrentApplied;
 
-            if (Program.WindowStyle == PreviewHelpers.WindowStyle.W12)
-            {
-                import_defaultWindows.Image = WinLogos.Add_Win12_20px;
-            }
-            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W11)
-            {
-                import_defaultWindows.Image = WinLogos.Add_Win11_20px;
-            }
-            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W10)
-            {
-                import_defaultWindows.Image = WinLogos.Add_Win10_20px;
-            }
-            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W81)
-            {
-                import_defaultWindows.Image = WinLogos.Add_Win81_20px;
-            }
-            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W8)
-            {
-                import_defaultWindows.Image = WinLogos.Add_Win8_20px;
-            }
-            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W7)
-            {
-                import_defaultWindows.Image = WinLogos.Add_Win7_20px;
-            }
-            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.WVista)
-            {
-                import_defaultWindows.Image = WinLogos.Add_WinVista_20px;
-            }
-            else if (Program.WindowStyle == PreviewHelpers.WindowStyle.WXP)
-            {
-                import_defaultWindows.Image = WinLogos.Add_WinXP_20px;
-            }
+            import_defaultWindows.Image?.Dispose();
+            import_defaultWindows.Image = AspectsTemplate.AddFileOSImage(Program.WindowStyle);
 
             import_scheme.Image = AspectsResources.Scheme;
-            import_scheme_12.Image = WinLogos.Add_Win12_20px;
-            import_scheme_11.Image = WinLogos.Add_Win11_20px;
-            import_scheme_10.Image = WinLogos.Add_Win10_20px;
-            import_scheme_81.Image = WinLogos.Add_Win81_20px;
-            import_scheme_8.Image = WinLogos.Add_Win8_20px;
-            import_scheme_7.Image = WinLogos.Add_Win7_20px;
-            import_scheme_Vista.Image = WinLogos.Add_WinVista_20px;
-            import_scheme_XP.Image = WinLogos.Add_WinXP_20px;
+            //import_scheme_12.Image?.Dispose();
+            import_scheme_11.Image?.Dispose();
+            import_scheme_10.Image?.Dispose();
+            import_scheme_81.Image?.Dispose();
+            import_scheme_8.Image?.Dispose();
+            import_scheme_7.Image?.Dispose();
+            import_scheme_Vista.Image?.Dispose();
+            import_scheme_XP.Image?.Dispose();
+
+            //import_scheme_12.Image = AspectsTemplate.AddFileOSImage(WindowStyle.W12);
+            import_scheme_11.Image = AspectsTemplate.AddFileOSImage(WindowStyle.W11);
+            import_scheme_10.Image = AspectsTemplate.AddFileOSImage(WindowStyle.W10);
+            import_scheme_81.Image = AspectsTemplate.AddFileOSImage(WindowStyle.W81);
+            import_scheme_8.Image = AspectsTemplate.AddFileOSImage(WindowStyle.W8);
+            import_scheme_7.Image = AspectsTemplate.AddFileOSImage(WindowStyle.W7);
+            import_scheme_Vista.Image = AspectsTemplate.AddFileOSImage(WindowStyle.WVista);
+            import_scheme_XP.Image = AspectsTemplate.AddFileOSImage(WindowStyle.WXP);
 
             import_scheme.DropDown.Renderer = button_import.Menu.Renderer;
-            import_scheme.DropDown.Items.Add(import_scheme_12);
+            //import_scheme.DropDown.Items.Add(import_scheme_12);
             import_scheme.DropDown.Items.Add(import_scheme_11);
             import_scheme.DropDown.Items.Add(import_scheme_10);
             import_scheme.DropDown.Items.Add(import_scheme_81);
@@ -311,8 +290,8 @@ namespace WinPaletter
             if (import_defaultWindows != null)
                 import_defaultWindows.Click += LoadFromDefault;
 
-            if (import_scheme_12 != null)
-                import_scheme_12.Click += ImportWin12Preset;
+            //if (import_scheme_12 != null)
+            //    import_scheme_12.Click += ImportWin12Preset;
 
             if (import_scheme_11 != null)
                 import_scheme_11.Click += ImportWin11Preset;
@@ -348,8 +327,8 @@ namespace WinPaletter
                 if (import_defaultWindows != null)
                     import_defaultWindows.Click -= LoadFromDefault;
 
-                if (import_scheme_12 != null)
-                    import_scheme_12.Click -= ImportWin12Preset;
+                //if (import_scheme_12 != null)
+                //    import_scheme_12.Click -= ImportWin12Preset;
 
                 if (import_scheme_11 != null)
                     import_scheme_11.Click -= ImportWin11Preset;

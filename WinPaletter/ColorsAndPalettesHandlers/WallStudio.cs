@@ -74,10 +74,12 @@ namespace WinPaletter
             labelAlt1.Text = Text;
             next_btn.Text = Program.Localization.Strings.General.Next;
             textBox1.Text = Program.TM.Wallpaper.ImageFile;
-            label7.Text = DateTime.Now.ToString("h:mm");
-            label5.Text = DateTime.Now.ToString("dddd, MMMM d");
-            label9.Text = DateTime.Now.ToString("h:mm");
-            label10.Text = DateTime.Now.ToString("dddd, MMMM d");
+
+            DateTime _now = DateTime.Now;
+            label7.Text = _now.ToString("h:mm");
+            label5.Text = _now.ToString("dddd, MMMM d");
+            label9.Text = _now.ToString("h:mm");
+            label10.Text = _now.ToString("dddd, MMMM d");
 
             label16.Font = Fonts.ConsoleMedium;
             if (!Fonts.Exists("Segoe UI Variable Small Semibol"))
