@@ -11,6 +11,25 @@ namespace WinPaletter.UI.WP
     [ProvideProperty("ToolTipTitle", typeof(Control))]
     public class ToolTip : System.Windows.Forms.ToolTip, IExtenderProvider
     {
+        private sealed class ToolTipNativeWindow : NativeWindow
+        {
+            private const int WM_DESTROY = 0x0002;
+            private readonly ToolTip _owner;
+
+            internal ToolTipNativeWindow(ToolTip owner, IntPtr handle)
+            {
+                _owner = owner;
+                AssignHandle(handle);
+            }
+
+            protected override void WndProc(ref Message m)
+            {
+                if (m.Msg == WM_DESTROY)
+                    ReleaseHandle();
+                base.WndProc(ref m);
+            }
+        }
+
         private bool CanAnimate => !DesignMode && Program.Style.Animations && this is not null;
 
         private readonly Dictionary<Control, ToolTipControlData> _controlData = [];
@@ -32,6 +51,14 @@ namespace WinPaletter.UI.WP
         private Size _cachedSize = Size.Empty;
         private bool _layoutDirty = true;
         private int _maxWidth = DefaultMaxWidth;
+        private ToolTipNativeWindow _nativeSubclass;
+        private bool _fadeInPending;
+        private System.Windows.Forms.Timer _fadeOutTimer;
+        private int _fadeOutStep;
+        private IntPtr _fadingHwnd;
+        private const int FadeSteps = 12;
+        private const int FadeOutInterval = 10; // ms per step → ~120ms total
+        private const int FadeInInterval = 12;  // ms per step → ~150ms total
 
         // System.Windows.Forms.ToolTip does not expose its native common-control window handle publicly - the "Handle" property on the base class is private, so it isn't visible
         // from a derived class. Reflection is the only way to reach it; reading the private property (rather than the underlying field) also preserves its create-on-demand
@@ -474,6 +501,21 @@ namespace WinPaletter.UI.WP
             _cachedSize = new Size(Math.Min(contentWidth, _maxWidth), contentHeight);
         }
 
+        private void EnsureLayered(IntPtr hwnd)
+        {
+            if (hwnd == IntPtr.Zero) return;
+            int exStyle = (int)NativeMethods.User32.GetWindowLong(hwnd, NativeMethods.User32.GWL_EXSTYLE);
+            if ((exStyle & NativeMethods.User32.WS_EX_LAYERED) == 0)
+                NativeMethods.User32.SetWindowLong(hwnd, NativeMethods.User32.GWL_EXSTYLE,
+                    exStyle | NativeMethods.User32.WS_EX_LAYERED);
+        }
+
+        private void SetOpacity(IntPtr hwnd, int alpha) // alpha 0-255
+        {
+            if (hwnd == IntPtr.Zero) return;
+            NativeMethods.User32.SetLayeredWindowAttributes(hwnd, 0, (byte)alpha, NativeMethods.User32.LWA_ALPHA);
+        }
+
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public new Size Size
@@ -577,15 +619,9 @@ namespace WinPaletter.UI.WP
                     ToolTipText = native;
             }
 
-            // Ensure valid duration
             if (_activeDuration <= 0)
-            {
                 _activeDuration = AutoPopDelay > 0 ? AutoPopDelay : 5000;
-            }
 
-            // Resolve the screen offset for THIS popup. _explicitPlacement is true only for the single popup that immediately follows a call to Show() (or a follow-the-form
-            // relocation), every other popup (normal hover tooltips) recomputes the cursor-relative offset from scratch, instead of reusing whatever was left over
-            // from a previous session.
             if (_activeControl != null)
             {
                 if (_explicitPlacement)
@@ -601,13 +637,22 @@ namespace WinPaletter.UI.WP
             }
 
             EnsureLayout();
-
             e.ToolTipSize = _cachedSize;
 
-            // The blur snapshot can only be captured accurately once the tooltip window has actually been moved/resized to its final on-screen position (which happens
-            // after this handler returns, and can additionally be clamped by the OS to stay within the screen edges - something this handler cannot predict). The real
-            // capture is deferred to the first Draw call for this popup, where GetWindowRect reflects the true final bounds.
             _blurPendingForCurrentPopup = true;
+            _fadeInPending = true;
+
+            // Schedule fade-out to begin just before AutoPopDelay expires.
+            // FadeSteps * FadeOutInterval ms before the tooltip would vanish, start fading.
+            if (CanAnimate)
+            {
+                _fadeOutTimer?.Stop();
+                _fadeOutTimer?.Dispose();
+                int delay = Math.Max(100, _activeDuration - (FadeSteps * FadeOutInterval));
+                _fadeOutTimer = new System.Windows.Forms.Timer { Interval = delay };
+                _fadeOutTimer.Tick += OnFadeOutDelayElapsed;
+                _fadeOutTimer.Start();
+            }
 
             if (_activeControl != null)
             {
@@ -615,6 +660,54 @@ namespace WinPaletter.UI.WP
                 _lastTooltipScreen = new Point(controlScreenPos.X + _activeOffset.X, controlScreenPos.Y + _activeOffset.Y);
                 StartFollowingControl(_activeControl);
             }
+        }
+
+        private void OnFadeOutDelayElapsed(object sender, EventArgs e)
+        {
+            _fadeOutTimer.Stop();
+
+            _fadingHwnd = Handle;
+
+            if (_fadingHwnd == IntPtr.Zero || !NativeMethods.User32.IsWindowVisible(_fadingHwnd))
+                return;
+
+            _fadeOutStep = FadeSteps;
+
+            _fadeOutTimer.Interval = FadeOutInterval;
+            _fadeOutTimer.Tick -= OnFadeOutDelayElapsed;
+            _fadeOutTimer.Tick += OnFadeOutStep;
+            _fadeOutTimer.Start();
+        }
+
+        private void OnFadeOutStep(object sender, EventArgs e)
+        {
+            if (_fadingHwnd == IntPtr.Zero)
+            {
+                _fadeOutTimer.Stop();
+                return;
+            }
+
+            _fadeOutStep--;
+
+            int alpha = (int)(255.0 * _fadeOutStep / FadeSteps);
+
+            if (alpha <= 0)
+            {
+                _fadeOutTimer.Stop();
+                _fadeOutTimer.Tick -= OnFadeOutStep;
+
+                SetOpacity(_fadingHwnd, 0);
+
+                Hide(_activeControl);
+
+                SetOpacity(_fadingHwnd, 255);
+
+                _fadingHwnd = IntPtr.Zero;
+
+                return;
+            }
+
+            SetOpacity(_fadingHwnd, alpha);
         }
 
         private void OnTooltipDraw(object sender, DrawToolTipEventArgs e)
@@ -640,20 +733,52 @@ namespace WinPaletter.UI.WP
             {
                 _blurPendingForCurrentPopup = false;
 
-                if (NativeMethods.User32.GetWindowRect(Handle, out NativeMethods.UxTheme.RECT r))
-                {
-                    bool wasVisible = NativeMethods.User32.IsWindowVisible(Handle);
+                IntPtr hwnd = Handle;
 
-                    if (wasVisible)
+                if (hwnd != IntPtr.Zero)
+                {
+                    EnsureLayered(hwnd);
+
+                    if (_nativeSubclass == null)
+                        _nativeSubclass = new ToolTipNativeWindow(this, hwnd);
+
+                    if (NativeMethods.User32.GetWindowRect(hwnd, out NativeMethods.UxTheme.RECT r))
                     {
-                        NativeMethods.User32.SetWindowPos(Handle, IntPtr.Zero, 0, 0, 0, 0, NativeMethods.User32.SWP_NOACTIVATE | NativeMethods.User32.SWP_NOMOVE | NativeMethods.User32.SWP_NOSIZE | NativeMethods.User32.SWP_NOZORDER | NativeMethods.User32.SWP_HIDEWINDOW);
+                        NativeMethods.User32.SetWindowPos(hwnd, IntPtr.Zero, 0, 0, 0, 0,
+                            NativeMethods.User32.SWP_NOACTIVATE | NativeMethods.User32.SWP_NOMOVE |
+                            NativeMethods.User32.SWP_NOSIZE | NativeMethods.User32.SWP_NOZORDER |
+                            NativeMethods.User32.SWP_HIDEWINDOW);
+
+                        CaptureBlur(Rectangle.FromLTRB(r.left, r.top, r.right, r.bottom));
+
+                        // Start fully transparent, then fade in via SetLayeredWindowAttributes steps
+                        SetOpacity(hwnd, 0);
+
+                        NativeMethods.User32.SetWindowPos(hwnd, IntPtr.Zero, 0, 0, 0, 0,
+                            NativeMethods.User32.SWP_NOACTIVATE | NativeMethods.User32.SWP_NOMOVE |
+                            NativeMethods.User32.SWP_NOSIZE | NativeMethods.User32.SWP_NOZORDER |
+                            NativeMethods.User32.SWP_SHOWWINDOW);
                     }
 
-                    CaptureBlur(Rectangle.FromLTRB(r.left, r.top, r.right, r.bottom));
-
-                    if (wasVisible)
+                    if (_fadeInPending)
                     {
-                        NativeMethods.User32.SetWindowPos(Handle, IntPtr.Zero, 0, 0, 0, 0, NativeMethods.User32.SWP_NOACTIVATE | NativeMethods.User32.SWP_NOMOVE | NativeMethods.User32.SWP_NOSIZE | NativeMethods.User32.SWP_NOZORDER | NativeMethods.User32.SWP_SHOWWINDOW);
+                        _fadeInPending = false;
+                        int step = 0;
+                        IntPtr capturedHwnd = hwnd;
+                        System.Windows.Forms.Timer fadeIn = new() { Interval = FadeInInterval };
+                        fadeIn.Tick += (s, _) =>
+                        {
+                            step++;
+                            int alpha = (int)(255.0 * step / FadeSteps);
+                            if (step >= FadeSteps) alpha = 255;
+                            SetOpacity(capturedHwnd, alpha);
+                            if (step >= FadeSteps)
+                            {
+                                ((System.Windows.Forms.Timer)s).Stop();
+                                ((System.Windows.Forms.Timer)s).Dispose();
+                            }
+                        };
+                        fadeIn.Start();
                     }
                 }
             }
@@ -781,6 +906,13 @@ namespace WinPaletter.UI.WP
                 Popup -= OnTooltipPopup;
 
                 StopFollowingControl();
+
+                _nativeSubclass?.ReleaseHandle();
+                _nativeSubclass = null;
+
+                _fadeOutTimer?.Stop();
+                _fadeOutTimer?.Dispose();
+                _fadeOutTimer = null;
 
                 _font?.Dispose();
                 _font_Title?.Dispose();

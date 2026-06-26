@@ -243,9 +243,6 @@ namespace WinPaletter.UI.WP
 
             int alpha = (int)(255f * val);
 
-            // Skip painting if nothing changed (except for animations)
-            if (!CanAnimate && alpha == _lastAlpha && DarkLight_Toggler == _lastDarkLightMode && Checked == _lastCheckedState) return;
-
             _lastAlpha = alpha;
             _lastDarkLightMode = DarkLight_Toggler;
             _lastCheckedState = Checked;

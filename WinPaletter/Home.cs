@@ -279,7 +279,7 @@ namespace WinPaletter
                 }
             }
 
-            Invoke(() => Program.ToolTip.SetToolTip(userButton, namePart, descPart, userButton.Image));
+            Forms.MainForm.Invoke(() => Program.ToolTip.SetToolTip(userButton, namePart, descPart, userButton.Image));
         }
 
         /// <summary>
@@ -433,39 +433,105 @@ namespace WinPaletter
         /// Downloads and parses update info once, always passes it to the Updates form.
         /// Shows notification only if a newer version is available.
         /// </summary>
+        /// <summary>
+        /// Automatically check for updates when the form is loaded.
+        /// Downloads and parses update info once, always passes it to the Updates form.
+        /// Shows notification only if a newer version is available.
+        /// </summary>
         public async void AutoUpdatesCheck()
         {
+            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Starting automatic updates check.");
+
+            if (Program.Settings.Updates.LimitDailyCheck)
+            {
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Daily update check limit enabled.");
+
+                DateTime configuredLastChecked = Program.Settings.Updates.LastUpdateChecked;
+                DateTime lastChecked = configuredLastChecked > DateTime.Today ? DateTime.Today : configuredLastChecked;
+
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"LastUpdateChecked from settings: {configuredLastChecked}. Validated value: {lastChecked}");
+
+                DateTime today = DateTime.Today;
+
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Last update checked DateTime value: {lastChecked}");
+
+                bool alreadyCheckedToday = lastChecked.Date >= today;
+
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Comparing LastUpdateChecked ({lastChecked.Date}) with Today ({today}). Result: {alreadyCheckedToday}");
+
+                if (alreadyCheckedToday)
+                {
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "Automatic updates check skipped because it was already checked today.");
+                    return;
+                }
+            }
+
             UpdatesInfo latestUpdate = null;
             bool hasNewerVersion = false;
+            bool checkSuccessful = false;
 
             if (Program.IsNetworkAvailable)
             {
                 try
                 {
                     using DownloadManager DM = new();
+
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "Getting updates information.");
+
                     string response = await DM.ReadStringAsync(Links.Updates);
                     string[] lines = response.Split([" ", "\n"], StringSplitOptions.RemoveEmptyEntries);
 
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Updates information are got successfully.");
+
                     Settings.Structures.Updates.Channels targetChannel = Program.Settings.Updates.Channel;
 
-                    // Find the first valid update for the target channel
                     foreach (string line in lines)
                     {
                         if (!UpdatesInfo.TryParse(line, out UpdatesInfo info)) continue;
+
                         if (info.Channel != targetChannel) continue;
 
                         latestUpdate = info;
                         hasNewerVersion = info.Version > new Version(Program.Version);
-                        break; // first match per channel wins
+
+                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Update matched. Version: {info.Version}, Channel: {info.Channel}, Newer version: {hasNewerVersion}");
+
+                        break;
+                    }
+
+                    checkSuccessful = true;
+
+                    if (Program.Settings.Updates.LimitDailyCheck)
+                    {
+                        DateTime saveDateTime = DateTime.Now;
+
+                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Setting LastUpdateChecked from {Program.Settings.Updates.LastUpdateChecked} to {saveDateTime}");
+
+                        Program.Settings.Updates.LastUpdateChecked = saveDateTime;
+
+                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"LastUpdateChecked after setting: {Program.Settings.Updates.LastUpdateChecked}");
+
+                        Program.Settings.Updates.Save();
+
+                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Update settings saved. Saved LastUpdateChecked: {Program.Settings.Updates.LastUpdateChecked}");
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
-                    // silent: auto-check must never block or crash UI
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Error while checking updates: {ex}");
                 }
             }
+            else
+            {
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Warning, "Update check skipped because network is unavailable.");
+            }
 
-            // Always pass info to the Updates form, but notify only if newer
+            if (!checkSuccessful)
+            {
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Warning, "Automatic updates check failed.");
+                return;
+            }
+
             try
             {
                 Invoke(() =>
@@ -473,6 +539,8 @@ namespace WinPaletter
                     if (latestUpdate is not null)
                     {
                         Forms.Updates.PreloadUpdateInfo(latestUpdate);
+
+                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Preloaded update information. Version: {latestUpdate.Version}");
                     }
 
                     if (hasNewerVersion)
@@ -483,13 +551,20 @@ namespace WinPaletter
                         Button5.ImageGlyph = Resources.Glyph_Update_Dot;
 
                         NotifyUpdates.ShowBalloonTip(10000, Application.ProductName,
-                            $"{Program.Localization.Strings.Updates.NewUpdate} ({Program.Localization.Strings.General.Version} {latestUpdate.Version})", ToolTipIcon.Info);
+                            $"{Program.Localization.Strings.Updates.NewUpdate} ({Program.Localization.Strings.General.Version} {latestUpdate.Version})",
+                            ToolTipIcon.Info);
+
+                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"New update notification shown. Version: {latestUpdate.Version}");
+                    }
+                    else
+                    {
+                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "No newer update found.");
                     }
                 });
             }
-            catch
+            catch (Exception ex)
             {
-                // Form may be closing — safely ignore
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Error while displaying update notification: {ex}");
             }
         }
 

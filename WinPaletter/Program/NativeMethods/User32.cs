@@ -1035,6 +1035,8 @@ namespace WinPaletter.NativeMethods
         public const uint SWP_SHOWWINDOW = 0x0040;
         public const uint SWP_HIDEWINDOW = 0x0080;
         public const uint GA_ROOT = 2;
+        public const int WS_EX_LAYERED = 0x00080000;
+        public const uint LWA_ALPHA = 0x00000002;
 
         /// <summary>
         /// Contains information that an application uses to calculate the size, position, and valid client area of a

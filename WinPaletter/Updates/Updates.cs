@@ -144,7 +144,7 @@ namespace WinPaletter
 
                 UpdatesInfo info = await FetchLatestUpdateAsync();
 
-                if (info is not null/* && info.Version > Program.Version*/)
+                if (info is not null/* && info._ver > Program._ver*/)
                 {
                     ApplyUpdateInfoUI(info);
                 }
@@ -390,7 +390,7 @@ namespace WinPaletter
 
         private void Updates_Load(object sender, EventArgs e)
         {
-            toggle1.Checked = Program.Settings.Updates.AutoCheck;
+            toggle1.Checked = Program.Settings.Updates.LimitDailyCheck;
 
             release_lbl.Font = Fonts.ConsoleLarge;
             channel_lbl.Font = Fonts.ConsoleLarge;
@@ -459,7 +459,8 @@ namespace WinPaletter
         private void toggle1_CheckedChanged(object sender, EventArgs e)
         {
             if (!IsShown) return;
-            Program.Settings.Updates.AutoCheck = toggle1.Checked;
+            Program.Settings.Updates.LimitDailyCheck = toggle1.Checked;
+            Program.Settings.Updates.LastUpdateChecked = toggle1.Checked ? Program.Settings.Updates.LastUpdateChecked : DateTime.MinValue;
             Program.Settings.Updates.Save();
         }
 

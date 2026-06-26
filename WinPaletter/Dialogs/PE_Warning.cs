@@ -25,7 +25,14 @@ namespace WinPaletter
 
             TreeView1.Font = Fonts.ConsoleMedium;
 
-            Forms.GlassWindow.Show(Forms.MainForm);
+            if (Forms.MainForm.InvokeRequired)
+            {
+                Forms.MainForm.Invoke(() => Forms.GlassWindow.Show(Forms.MainForm));
+            }
+            else
+            {
+                Forms.GlassWindow.Show(Forms.MainForm);
+            }
 
             CustomSystemSounds.Exclamation.Play();
 
@@ -34,7 +41,6 @@ namespace WinPaletter
 
         public DialogResult NotifyAction(string SourceFile, string ResourceType, int ID, ushort LangID = 1033)
         {
-
             DialogResult result;
 
             TreeView1.Nodes.Clear();
@@ -43,18 +49,21 @@ namespace WinPaletter
 
             TreeView1.Nodes.Add(Program.Localization.Strings.PE.FileTypeDescription).Nodes.Add(Path.GetFullPath(SourceFile));
 
+            TreeNode temp = TreeView1.Nodes.Add(Program.Localization.Strings.PE.ReplacedResourceProperties);
+            temp.Nodes.Add(Program.Localization.Strings.PE.ResourceType).Nodes.Add(ResourceType);
+            temp.Nodes.Add(Program.Localization.Strings.PE.ResourceID).Nodes.Add(ID.ToString());
+            temp.Nodes.Add(Program.Localization.Strings.PE.ResourceLanguageCode).Nodes.Add(LangID.ToString());
+
+            TreeNode temp1 = TreeView1.Nodes.Add(Program.Localization.Strings.PE.RunSFCinCMD_Node);
+            temp1.Nodes.Add($"sfc /scanfile=\"{Path.GetFullPath(SourceFile)}\"");
+
+            string MunFile = Path.Combine(SysPaths.SystemResources, Path.GetFileName(SourceFile) + ".mun");
+            if (File.Exists(MunFile))
             {
-                TreeNode temp = TreeView1.Nodes.Add(Program.Localization.Strings.PE.ReplacedResourceProperties);
-                temp.Nodes.Add(Program.Localization.Strings.PE.ResourceType).Nodes.Add(ResourceType);
-                temp.Nodes.Add(Program.Localization.Strings.PE.ResourceID).Nodes.Add(ID.ToString());
-                temp.Nodes.Add(Program.Localization.Strings.PE.ResourceLanguageCode).Nodes.Add(LangID.ToString());
+                temp1.Nodes.Add($"sfc /scanfile=\"{Path.GetFullPath(MunFile)}\"");
             }
 
-            {
-                TreeNode temp1 = TreeView1.Nodes.Add(Program.Localization.Strings.PE.RunSFCinCMD_Node);
-                temp1.Nodes.Add($"sfc /scanfile=\"{Path.GetFullPath(SourceFile)}\"");
-                temp1.Nodes.Add(Program.Localization.Strings.PE.DontForgetToRestart);
-            }
+            temp1.Nodes.Add(Program.Localization.Strings.PE.DontForgetToRestart);
 
             TreeView1.ExpandAll();
 
@@ -78,7 +87,6 @@ namespace WinPaletter
             Program.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert = CheckBox1.Checked;
             Program.Settings.Save(Settings.Source.Registry);
             Close();
-            Forms.GlassWindow.Close();
             DialogResult = DialogResult.OK;
         }
 
@@ -91,7 +99,15 @@ namespace WinPaletter
         {
             Program.Settings.ThemeApplyingBehavior.Ignore_PE_Modify_Alert = CheckBox1.Checked;
             Program.Settings.Save(Settings.Source.Registry);
-            Forms.GlassWindow.Close();
+
+            if (Forms.MainForm.InvokeRequired)
+            {
+                Forms.MainForm.Invoke(() => Forms.GlassWindow.Close());
+            }
+            else
+            {
+                Forms.GlassWindow.Close();
+            }
         }
 
         private void Button3_Click(object sender, EventArgs e)

@@ -6,10 +6,12 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using WinPaletter.Assets;
 using WinPaletter.Properties;
 using WinPaletter.UI.WP;
 using static WinPaletter.Localizer;
+using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter
 {
@@ -71,6 +73,8 @@ namespace WinPaletter
             toggle13.Checked = Sets.ThemeApplyingBehavior.ResetCursorsToAero;
 
             toggle1.Checked = Sets.Updates.AutoCheck;
+            checkBox19.Checked = Sets.Updates.LimitDailyCheck;
+
             toggle35.Checked = Sets.Miscellaneous.Win7LivePreview;
             toggle37.Checked = Sets.Miscellaneous.ShowWelcomeDialog;
 
@@ -172,6 +176,8 @@ namespace WinPaletter
             toggle48.Checked = Sets.ThemeApplyingBehavior.Vault_SaveMetricsFonts;
             toggle51.Checked = Sets.ThemeApplyingBehavior.Vault_RestoreOnLogon;
             toggle50.Checked = Sets.ThemeApplyingBehavior.Vault_RestoreOnUnlock;
+            toggle49.Checked = Sets.ThemeApplyingBehavior.OS_Redirection_Enabled;
+            comboBox1.SelectedValue = (int)Sets.ThemeApplyingBehavior.OS_Redirection_Version == -1 ? WindowStyle.W11 : Sets.ThemeApplyingBehavior.OS_Redirection_Version;
 
             toggle29.Checked = Sets.NerdStats.DragAndDrop;
 
@@ -229,6 +235,8 @@ namespace WinPaletter
             radioImage3.Checked = !Sets.AspectsControl.ClassicColors_Advanced;
             radioImage8.Checked = Sets.AspectsControl.MetricsFonts_Advanced;
             radioImage7.Checked = !Sets.AspectsControl.MetricsFonts_Advanced;
+
+            toggle14.Checked = Sets.GitHub.AutoLogin;
         }
 
         /// <summary>
@@ -417,9 +425,12 @@ namespace WinPaletter
             Sets.ThemeApplyingBehavior.ResetCursorsToAero = toggle13.Checked;
 
             Sets.Updates.AutoCheck = toggle1.Checked;
+            Sets.Updates.Channel = (Settings.Structures.Updates.Channels)ComboBox2.SelectedIndex;
+            Sets.Updates.LimitDailyCheck = checkBox19.Checked;
+            Sets.Updates.LastUpdateChecked = Sets.Updates.LimitDailyCheck ? Sets.Updates.LastUpdateChecked : DateTime.MinValue;
+
             Sets.Miscellaneous.Win7LivePreview = toggle35.Checked;
             Sets.Miscellaneous.ShowWelcomeDialog = toggle37.Checked;
-            Sets.Updates.Channel = (Settings.Structures.Updates.Channels)ComboBox2.SelectedIndex;
 
             Sets.Appearance.DarkMode = toggle3.Checked;
             Sets.Appearance.AutoDarkMode = toggle4.Checked;
@@ -540,6 +551,9 @@ namespace WinPaletter
             Sets.ThemeApplyingBehavior.Vault_RestoreOnLogon = toggle51.Checked;
             Sets.ThemeApplyingBehavior.Vault_RestoreOnUnlock = toggle50.Checked;
 
+            Sets.ThemeApplyingBehavior.OS_Redirection_Enabled = toggle49.Checked;
+            Sets.ThemeApplyingBehavior.OS_Redirection_Version = comboBox1.SelectedValue is WindowStyle style ? style : WindowStyle.W11;
+
             Sets.Store.Mode = radioImage2.Checked ? Settings.Structures.Store.Modes.Online :
                     radioImage5.Checked ? Settings.Structures.Store.Modes.Offline : Settings.Structures.Store.Modes.Hybrid;
 
@@ -568,6 +582,8 @@ namespace WinPaletter
             Sets.AspectsControl.ClassicColors_Advanced = radioImage4.Checked;
             Sets.AspectsControl.MetricsFonts_Advanced = radioImage8.Checked;
             Sets.AspectsControl.Accessibility = checkBox16.Checked;
+
+            Sets.GitHub.AutoLogin = toggle14.Checked;
 
             Sets.Save(Mode, File);
         }
@@ -626,11 +642,31 @@ namespace WinPaletter
             Close();
         }
 
+        private class WindowStyleItem
+        {
+            public WindowStyle Value { get; set; }
+            public string Name { get; set; }
+
+            public override string ToString() => Name;
+        }
+
         private void SettingsX_Load(object sender, EventArgs e)
         {
             ComboBox2.Items.Clear();
             ComboBox2.Items.Add(Program.Localization.Strings.General.Stable);
             ComboBox2.Items.Add(Program.Localization.Strings.General.Beta);
+
+            WindowStyle[] styles = [.. Enum.GetValues(typeof(WindowStyle)).Cast<WindowStyle>().Where(x => x != WindowStyle.W12)];
+
+            WindowStyleItem[] items = [.. styles.Select(x => new WindowStyleItem
+            {
+                Value = x,
+                Name = OS.GetName(x)
+            })];
+
+            comboBox1.DisplayMember = "Name";
+            comboBox1.ValueMember = "Value";
+            comboBox1.DataSource = items;
 
             LoadSettings();
 
@@ -802,6 +838,7 @@ namespace WinPaletter
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     Settings sets = new(Settings.Source.File, dlg.FileName);
+                    sets.Updates.LastUpdateChecked = DateTime.MinValue;
                     Read(sets);
                 }
             }

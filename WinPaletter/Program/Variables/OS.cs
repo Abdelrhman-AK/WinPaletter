@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing.Text;
 using System.Runtime.InteropServices;
 using static WinPaletter.PreviewHelpers;
 
@@ -17,58 +18,65 @@ namespace WinPaletter.GlobalVariables
         /// <summary>
         /// Gets the version of the operating system.
         /// </summary>
-        public static Version Version { get; } = NativeMethods.NTDLL.GetOSVersion();
+        private static Version _ver => NativeMethods.NTDLL.GetOSVersion();
+
+        private static bool IsRedirecting => Program.Settings?.ThemeApplyingBehavior?.OS_Redirection_Enabled ?? false;
+
+        private static bool IsRedirected(WindowStyle style) => IsRedirecting && Program.Settings.ThemeApplyingBehavior.OS_Redirection_Version == style;
 
         /// <summary>
         /// Gets a value indicating whether the current operating system is Windows XP.
         /// </summary>
-        public static bool WXP { get; } = Version.Major == 5;
+        public static bool WXP => IsRedirecting ? IsRedirected(WindowStyle.WXP) : _wxp;
+        private static readonly bool _wxp = _ver.Major == 5 && _ver.Minor == 1;
 
         /// <summary>
         /// Gets a value indicating whether the current operating system is Windows Vista.
         /// </summary>
-        public static bool WVista { get; } = Version.Major == 6 && Version.Minor == 0;
+        public static bool WVista => IsRedirecting ? IsRedirected(WindowStyle.WVista) : _wvista;
+        private static readonly bool _wvista = _ver.Major == 6 && _ver.Minor == 0;
 
         /// <summary>
         /// Gets a value indicating whether the current operating system is Windows 7.
         /// </summary>
-        public static bool W7 { get; } = Version.Major == 6 && Version.Minor == 1;
+        public static bool W7 => IsRedirecting ? IsRedirected(WindowStyle.W7) : _w7;
+        private static readonly bool _w7 = _ver.Major == 6 && _ver.Minor == 1;
 
         /// <summary>
         /// Gets a value indicating whether the current operating system is Windows 8.
         /// </summary>
-        public static bool W8 { get; } = Version.Major == 6 && Version.Minor == 2;
+        public static bool W8 => IsRedirecting ? IsRedirected(WindowStyle.W8) : _w8;
+        private static readonly bool _w8 = _ver.Major == 6 && _ver.Minor == 2;
 
         /// <summary>
         /// Gets a value indicating whether the current operating system is Windows 8.1.
         /// </summary>
-        public static bool W81 { get; } = Version.Major == 6 && Version.Minor == 3;
+        public static bool W81 => IsRedirecting ? IsRedirected(WindowStyle.W81) : _w81;
+        private static readonly bool _w81 = _ver.Major == 6 && _ver.Minor == 3;
 
         /// <summary>
         /// Gets a value indicating whether the current operating system is Windows 8 or 8.1.
         /// </summary>
-        public static bool W8x { get; } = Version.Major == 6 && Version.Minor >= 2;
+        public static bool W8x => IsRedirecting ? IsRedirected(WindowStyle.W8) || IsRedirected(WindowStyle.W81) : _w8x;
+        private static readonly bool _w8x = _ver.Major == 6 && _ver.Minor >= 2;
 
         /// <summary>
         /// Gets a value indicating whether the current operating system is Windows 10.
         /// </summary>
-        public static bool W10 { get; } = Version.Major == 10 && Version.Minor == 0 && Version.Build < 22000;
+        public static bool W10 => IsRedirecting ? IsRedirected(WindowStyle.W10) : _w10;
+        private static readonly bool _w10 = _ver.Major == 10 && _ver.Minor == 0 && _ver.Build < 22000;
 
         /// <summary>
         /// Gets a value indicating whether the current operating system is Windows 11.
         /// </summary>
-        public static bool W11 { get; } = Version.Major == 10 && Version.Minor == 0 && Version.Build >= 22000;
+        public static bool W11 => IsRedirecting ? IsRedirected(WindowStyle.W11) : _w11;
+        private static readonly bool _w11 = _ver.Major == 10 && _ver.Minor == 0 && _ver.Build >= 22000;
 
         /// <summary>
         /// A boolean that determines if OS is Windows 12 or not (prediction only).
-        /// <br></br>
-        /// <br>Currently, Windows 10 and 11 both report NT 10.0.
-        /// If Microsoft releases a Windows 12, detection could rely on either:
-        /// - NT version being greater than 10, or
-        /// - OS description string containing "12".
-        /// </br>
         /// </summary>
-        public static bool W12 { get; } = RuntimeInformation.OSDescription.Contains("12") || Version.Major > 10;
+        public static bool W12 => IsRedirecting ? IsRedirected(WindowStyle.W12) : _w12;
+        private static readonly bool _w12 = _ver.Major > 10 || RuntimeInformation.OSDescription.Contains("Windows 12");
 
         /// <summary>
         /// A flag that determines that Windows 12 is released or not (for UI elements)
@@ -78,32 +86,37 @@ namespace WinPaletter.GlobalVariables
         /// <summary>
         /// Gets a value indicating whether the current operating system is Windows 10, version 1909 (19H2 - build 18363) or later.
         /// </summary>
-        public static bool W10_1909 { get; } = Version.Major == 10 && Version.Minor == 0 && Version.Build >= 18363;
-
-        /// <summary>
-        /// Gets a value indicating whether the current operating system is Windows 10, version 2004 (20H1 - build 19041) or later.
-        /// </summary>
-        public static bool W10_2004 { get; } = Version.Major == 10 && Version.Minor == 0 && Version.Build >= 19041;
+        public static bool W10_1909 => W10;
 
         /// <summary>
         /// Gets a value indicating whether the current operating system is Windows 10, version 1909 (19H2 - build 18363) or below.
         /// </summary>
-        public static bool W10_1909_AndBelow { get; } = Version.Major == 10 && Version.Minor == 0 && Version.Build <= 18363;
+        public static bool W10_1909_AndBelow => IsRedirecting ? false : _w10_1909_below;
+        private static readonly bool _w10_1909_below = _ver.Major == 10 && _ver.Minor == 0 && _ver.Build <= 18363;
+
+        /// <summary>
+        /// Gets a value indicating whether the current operating system is Windows 10, version 2004 (20H1 - build 19041) or later.
+        /// </summary>
+        public static bool W10_2004 => IsRedirecting ? W10 : _w10_2004;
+        private static readonly bool _w10_2004 = _ver.Major == 10 && _ver.Minor == 0 && _ver.Build >= 19041;
 
         /// <summary>
         /// Gets a value indicating whether the current operating system is Windows 11 (build 22523) or later.
         /// </summary>
-        public static bool W11_22523 { get; } = Version.Major == 10 && Version.Minor == 0 && Version.Build >= 22523;
+        public static bool W11_22523 => IsRedirecting ? W11 : _w11_22523;
+        private static readonly bool _w11_22523 = _ver.Major == 10 && _ver.Minor == 0 && _ver.Build >= 22523;
 
         /// <summary>
         /// Gets a value indicating whether the current operating system is Windows 11 24H2 (build 26100) or later.
         /// </summary>
-        public static bool W11_24H2 { get; } = Version.Major == 10 && Version.Minor == 0 && Version.Build >= 26100;
+        public static bool W11_24H2 => IsRedirecting ? W11 : _w11_24h2;
+        private static readonly bool _w11_24h2 = _ver.Major == 10 && _ver.Minor == 0 && _ver.Build >= 26100;
 
         /// <summary>
         /// Gets a value indicating whether the current operating system is Windows 11 25H2 (build 26200) or later.
         /// </summary>
-        public static bool W11_25H2 { get; } = Version.Major == 10 && Version.Minor == 0 && Version.Build >= 26200;
+        public static bool W11_25H2 => IsRedirecting ? W11 : _w11_25h2;
+        private static readonly bool _w11_25h2 = _ver.Major == 10 && _ver.Minor == 0 && _ver.Build >= 26200;
 
         /// <summary>
         /// Gets the name of the Windows operating system version based on the current environment.
@@ -174,7 +187,7 @@ namespace WinPaletter.GlobalVariables
         /// <summary>
         /// Gets the build version of the application as a formatted string.
         /// </summary>
-        public static string Build => $"{Version.Major}.{Version.Minor}.{Version.Build}.{Version.Revision}";
+        public static string Build => $"{_ver.Major}.{_ver.Minor}.{_ver.Build}.{_ver.Revision}";
 
         /// <summary>
         /// Gets the architecture of the operating system as a string.

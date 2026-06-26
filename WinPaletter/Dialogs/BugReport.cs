@@ -343,7 +343,7 @@ namespace WinPaletter
             //    try
             //    {
             //        var assemblyNode = assembliesNode?.Nodes?.Add(assembly.GetName().Name);
-            //        assemblyNode?.Nodes?.Add($"Version: {assembly.GetName().Version}");
+            //        assemblyNode?.Nodes?.Add($"_ver: {assembly.GetName()._ver}");
             //        assemblyNode?.Nodes?.Add($"Location: {assembly.Location ?? "[Dynamic]"}");
             //        assemblyNode?.Nodes?.Add($"Is Dynamic: {assembly.IsDynamic}");
             //        assemblyNode?.Nodes?.Add($"Is Fully Trusted: {assembly.IsFullyTrusted}");
@@ -355,7 +355,7 @@ namespace WinPaletter
             //            var refNode = assemblyNode?.Nodes?.Add("Referenced Assemblies (first 3)");
             //            foreach (var refAssembly in referenced)
             //            {
-            //                refNode?.Nodes?.Add($"{refAssembly.Name} v{refAssembly.Version}");
+            //                refNode?.Nodes?.Add($"{refAssembly.Name} v{refAssembly._ver}");
             //            }
             //        }
             //    }

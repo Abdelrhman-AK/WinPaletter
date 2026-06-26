@@ -134,6 +134,16 @@ namespace WinPaletter
                 public Channels Channel { get; set; } = Program.IsBeta ? Structures.Updates.Channels.Beta : Structures.Updates.Channels.Stable;
 
                 /// <summary>
+                /// Limits updates check when WinPaletter is opened for once daily instead of everytime WinPaletter is opened.
+                /// </summary>
+                public bool LimitDailyCheck { get; set; } = false;
+
+                /// <summary>
+                /// Gets or sets when is last updates checked called, for reducing network load.
+                /// </summary>
+                public DateTime LastUpdateChecked { get; set; } = DateTime.MinValue;
+
+                /// <summary>
                 /// Create new instance of Updates settings structure with default values
                 /// </summary>
                 public Updates() { }
@@ -160,6 +170,16 @@ namespace WinPaletter
                 {
                     AutoCheck = ReadReg(REG_Updates, "AutoCheck", true);
                     Channel = ReadReg(REG_Updates, "Channel", Channels.Stable) == Channels.Stable ? Channels.Stable : Channels.Beta;
+                    LimitDailyCheck = ReadReg(REG_Updates, nameof(LimitDailyCheck), false);
+
+                    if (DateTime.TryParse(ReadReg(REG_Updates, nameof(LastUpdateChecked), DateTime.MinValue.ToShortDateString()), out DateTime dateTime))
+                    {
+                        LastUpdateChecked = dateTime;
+                    }
+                    else
+                    {
+                        LastUpdateChecked = DateTime.MinValue;
+                    }
                 }
 
                 /// <summary>
@@ -169,6 +189,8 @@ namespace WinPaletter
                 {
                     WriteReg(REG_Updates, "AutoCheck", AutoCheck, RegistryValueKind.DWord);
                     WriteReg(REG_Updates, "Channel", Channel == Channels.Stable ? 0 : 1);
+                    WriteReg(REG_Updates, nameof(LimitDailyCheck), LimitDailyCheck, RegistryValueKind.DWord);
+                    WriteReg(REG_Updates, nameof(LastUpdateChecked), LimitDailyCheck ? LastUpdateChecked.ToShortDateString() : string.Empty, RegistryValueKind.String);
                 }
             }
 
@@ -343,6 +365,19 @@ namespace WinPaletter
                 public bool Show_WinEffects_Alert { get; set; } = true;
 
                 /// <summary>
+                /// Gets or sets if deflection OS is enabled or not. It is used for making WinPaletter applies themes on Windows 11\10 exactly the same as Windows 8.1\8\7\Vista\XP, if user used mods or transformation packs.
+                /// </summary>
+                public bool OS_Redirection_Enabled { get; set; } = false;
+
+                /// <summary>
+                /// Gets or sets deflected OS used for making WinPaletter applies themes on Windows 11\10 exactly the same as choosed, if user used mods or transformation packs.
+                /// <br></br>
+                /// Works if <see cref="OS_Redirection_Enabled"/> is set to <c>true</c>.
+                /// </summary>
+                public PreviewHelpers.WindowStyle OS_Redirection_Version { get; set; } = (PreviewHelpers.WindowStyle)(-1);
+
+
+                /// <summary>
                 /// Create new instance of ThemeApplyingBehavior settings structure with default values
                 /// </summary>
                 public ThemeApplyingBehavior() { }
@@ -398,6 +433,8 @@ namespace WinPaletter
                     Vault_SaveMetricsFonts = ReadReg(REG_ThemeApplyingBehavior, nameof(Vault_SaveMetricsFonts), false);
                     Vault_RestoreOnLogon = ReadReg(REG_ThemeApplyingBehavior, nameof(Vault_RestoreOnLogon), false);
                     Vault_RestoreOnUnlock = ReadReg(REG_ThemeApplyingBehavior, nameof(Vault_RestoreOnUnlock), false);
+                    OS_Redirection_Enabled = ReadReg(REG_ThemeApplyingBehavior, nameof(OS_Redirection_Enabled), false);
+                    OS_Redirection_Version = ReadReg(REG_ThemeApplyingBehavior, nameof(OS_Redirection_Version), (PreviewHelpers.WindowStyle)(-1));
                 }
 
                 /// <summary>
@@ -428,6 +465,8 @@ namespace WinPaletter
                     WriteReg(REG_ThemeApplyingBehavior, nameof(Vault_SaveMetricsFonts), Vault_SaveMetricsFonts, RegistryValueKind.DWord);
                     WriteReg(REG_ThemeApplyingBehavior, nameof(Vault_RestoreOnLogon), Vault_RestoreOnLogon, RegistryValueKind.DWord);
                     WriteReg(REG_ThemeApplyingBehavior, nameof(Vault_RestoreOnUnlock), Vault_RestoreOnUnlock, RegistryValueKind.DWord);
+                    WriteReg(REG_ThemeApplyingBehavior, nameof(OS_Redirection_Enabled), OS_Redirection_Enabled, RegistryValueKind.DWord);
+                    WriteReg(REG_ThemeApplyingBehavior, nameof(OS_Redirection_Version), OS_Redirection_Version, RegistryValueKind.DWord);
 
                     if (!Vault_SaveWin10xColors)
                     {
@@ -1202,6 +1241,11 @@ namespace WinPaletter
                 public View DefaultView { get; set; } = View.Details;
 
                 /// <summary>
+                /// Automatically log in GitHub account when WinPaletter opens, if user credentials are already stored after a previous sign up\log in.
+                /// </summary>
+                public bool AutoLogin { get; set; } = true;
+
+                /// <summary>
                 /// Load settings from registry
                 /// </summary>
                 public void Load()
@@ -1209,6 +1253,7 @@ namespace WinPaletter
                     FilesLinking = ReadReg(REG_GitHub, nameof(FilesLinking), FilesLinkingMode.AskBeforeExecute);
                     ShowHiddenFiles = ReadReg(REG_GitHub, nameof(ShowHiddenFiles), false);
                     DefaultView = ReadReg(REG_GitHub, nameof(DefaultView), View.Details);
+                    AutoLogin = ReadReg(REG_GitHub, nameof(AutoLogin), true);
                 }
 
                 /// <summary>
@@ -1219,6 +1264,7 @@ namespace WinPaletter
                     SaveViewOnly();
                     WriteReg(REG_GitHub, nameof(FilesLinking), FilesLinking);
                     WriteReg(REG_GitHub, nameof(ShowHiddenFiles), ShowHiddenFiles);
+                    WriteReg(REG_GitHub, nameof(AutoLogin), AutoLogin);
                 }
 
                 public void SaveViewOnly()

@@ -131,11 +131,14 @@ namespace WinPaletter
 
             GitHub = new();
 
-            Task.Run(async () =>
+            if (Settings.GitHub.AutoLogin)
             {
-                bool isLoggedIn = await GitHub.IsLoggedInAsync();
-                User.UpdateGitHubLoginStatus(isLoggedIn);
-            });
+                Task.Run(async () =>
+                {
+                    bool isLoggedIn = await GitHub.IsLoggedInAsync();
+                    User.UpdateGitHubLoginStatus(isLoggedIn);
+                });
+            }
         }
 
         /// <summary>

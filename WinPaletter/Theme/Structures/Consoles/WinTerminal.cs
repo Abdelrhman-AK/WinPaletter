@@ -1684,7 +1684,7 @@ namespace WinPaletter.Theme.Structures
                     {
                         string SettingsFile = string.Empty;
 
-                        // Determine the path of the Windows Terminal settings JSON File based on the Version
+                        // Determine the path of the Windows Terminal settings JSON File based on the _ver
                         switch (Version)
                         {
                             case Version.Stable:

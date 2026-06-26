@@ -95,7 +95,6 @@ namespace WinPaletter
         private void button7_Click(object sender, EventArgs e)
         {
             // Set the OS style.
-
             if (radioImage7.Checked) Program.WindowStyle = WindowStyle.W12;
             else if (radioImage6.Checked) Program.WindowStyle = WindowStyle.W11;
             else if (radioImage5.Checked) Program.WindowStyle = WindowStyle.W10;

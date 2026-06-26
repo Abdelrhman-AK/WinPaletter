@@ -459,7 +459,7 @@ namespace WinPaletter
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(108, 24);
             this.label2.TabIndex = 18;
-            this.label2.Text = "Automatic checks";
+            this.label2.Text = "Daily once check";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // pictureBox5
