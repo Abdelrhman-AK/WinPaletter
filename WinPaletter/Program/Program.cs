@@ -62,6 +62,8 @@ namespace WinPaletter
         {
             Log?.Write(LogEventLevel.Information, "WinPaletter is exiting. Cleaning up resources and removing event handlers.");
 
+            ClearBaseKeyCache();
+
             DeleteUpdateResiduals();
 
             AppDomain.CurrentDomain.AssemblyResolve -= DomainCheck;

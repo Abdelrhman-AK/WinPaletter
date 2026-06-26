@@ -9,6 +9,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security;
 using System.Security.AccessControl;
+using System.Threading;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 
@@ -24,8 +25,8 @@ namespace WinPaletter
         private static readonly RegistryView regView = Environment.Is64BitOperatingSystem ? RegistryView.Registry64 : RegistryView.Default;
 
         // Cache for registry hives to avoid repeated opens
-        private static readonly Dictionary<RegScope, RegistryKey> _baseKeyCache = new Dictionary<RegScope, RegistryKey>();
-        private static readonly object _cacheLock = new();
+        private static readonly Dictionary<RegScope, RegistryKey> _baseKeyCache = [];
+        private static readonly ReaderWriterLockSlim _cacheLock = new();
 
         // Pre-compiled format strings
         private const string ComputerPrefix = "Computer\\";
@@ -119,25 +120,31 @@ namespace WinPaletter
 
         private static RegistryKey OpenBaseKey(RegScope scope)
         {
-            lock (_cacheLock)
+            _cacheLock.EnterReadLock();
+            try
             {
-                if (_baseKeyCache.TryGetValue(scope, out var cachedKey) && cachedKey != null)
-                {
-                    try
-                    {
-                        // Verify the key is still valid
-                        if (cachedKey.Handle != null) return cachedKey;
-                    }
-                    catch
-                    {
-                        _baseKeyCache.Remove(scope);
-                    }
-                }
+                if (_baseKeyCache.TryGetValue(scope, out RegistryKey cached) && IsKeyValid(cached)) return cached;
+            }
+            finally { _cacheLock.ExitReadLock(); }
 
-                var key = OpenBaseKeyInternal(scope);
+            _cacheLock.EnterWriteLock();
+            try
+            {
+                // Double-check after acquiring write lock
+                if (_baseKeyCache.TryGetValue(scope, out RegistryKey cached) && IsKeyValid(cached)) return cached;
+
+                RegistryKey key = OpenBaseKeyInternal(scope);
                 _baseKeyCache[scope] = key;
                 return key;
             }
+            finally { _cacheLock.ExitWriteLock(); }
+        }
+
+        private static bool IsKeyValid(RegistryKey key)
+        {
+            if (key == null) return false;
+            try { return key.Handle != null && !key.Handle.IsInvalid && !key.Handle.IsClosed; }
+            catch { return false; }
         }
 
         private static RegistryKey OpenBaseKeyInternal(RegScope scope)
@@ -169,17 +176,18 @@ namespace WinPaletter
 
         private static RegistryKey OpenUsersSubKey(string sid)
         {
-            try
+            // Do NOT use `using` here — caller owns the lifetime
+            RegistryKey usersKey = RegistryKey.OpenBaseKey(RegistryHive.Users, regView);
+            RegistryKey subKey = usersKey.OpenSubKey(sid);
+
+            if (subKey != null)
             {
-                using (var usersKey = RegistryKey.OpenBaseKey(RegistryHive.Users, regView))
-                {
-                    return usersKey.OpenSubKey(sid);
-                }
+                usersKey.Close(); // safe: subkey handle is independent after open
+                return subKey;
             }
-            catch
-            {
-                return RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, regView);
-            }
+
+            usersKey.Close();
+            return RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, regView);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -381,27 +389,26 @@ namespace WinPaletter
 
                 if (RegType == RegistryValueKind.String && Value == null) Value = string.Empty;
 
-                // Check if we can skip
-                object existingValue = ReadRegRaw(Key_BeforeModification, ValueName, null, skipLogging: true);
-                if (existingValue != null && CanSkip(existingValue, Value, RegType))
-                {
-                    if (Program.Settings.ThemeLog.ShowSkippedItemsOnDetailedVerbose)
-                    {
-                        Program.Log?.WriteReg(LogEventLevel.Information, $"(EditReg skipped) '{Key_BeforeModification}' → '{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}', existing value '{existingValue}' with value type '{RegType}'", WinPaletter.RegScope.Write);
-                    }
-                    AddVerboseItem(treeView, true, Key_BeforeModification, ValueName, Value, RegType);
-                    return;
-                }
-
-                Program.Log?.WriteReg(LogEventLevel.Information, $"(EditReg) '{Key_BeforeModification}' → '{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}', new value '{Value}' with value type '{RegType}'", WinPaletter.RegScope.Write);
-
-                // Try direct write first
+                // Try direct write first — open the subkey once and reuse it for both the skip-check and the write
                 if (CanWriteDirect(scope))
                 {
                     try
                     {
-                        // Ensure key exists
                         subKey = baseKey.OpenSubKey(processedKey, RegistryKeyPermissionCheck.ReadWriteSubTree) ?? baseKey.CreateSubKey(processedKey, true);
+
+                        // Skip-check using the already-open handle — no second ReadRegRaw call
+                        object existingValue = subKey.GetValue(ValueName, null);
+                        if (existingValue != null && CanSkip(existingValue, Value, RegType))
+                        {
+                            if (Program.Settings.ThemeLog.ShowSkippedItemsOnDetailedVerbose)
+                            {
+                                Program.Log?.WriteReg(LogEventLevel.Information, $"(EditReg skipped) '{Key_BeforeModification}' → '{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}', existing value '{existingValue}' with value type '{RegType}'", WinPaletter.RegScope.Write);
+                            }
+                            AddVerboseItem(treeView, true, Key_BeforeModification, ValueName, Value, RegType);
+                            return;
+                        }
+
+                        Program.Log?.WriteReg(LogEventLevel.Information, $"(EditReg) '{Key_BeforeModification}' → '{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}', new value '{Value}' with value type '{RegType}'", WinPaletter.RegScope.Write);
 
                         if (RegType == RegistryValueKind.DWord && Value is bool boolVal)
                         {
@@ -422,6 +429,22 @@ namespace WinPaletter
                     }
                 }
 
+                // CMD fallback path — still needs the skip-check since CanWriteDirect was false
+                {
+                    object existingValue = ReadRegRaw(Key_BeforeModification, ValueName, null, skipLogging: true);
+                    if (existingValue != null && CanSkip(existingValue, Value, RegType))
+                    {
+                        if (Program.Settings.ThemeLog.ShowSkippedItemsOnDetailedVerbose)
+                        {
+                            Program.Log?.WriteReg(LogEventLevel.Information, $"(EditReg skipped) '{Key_BeforeModification}' → '{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}', existing value '{existingValue}' with value type '{RegType}'", WinPaletter.RegScope.Write);
+                        }
+                        AddVerboseItem(treeView, true, Key_BeforeModification, ValueName, Value, RegType);
+                        return;
+                    }
+
+                    Program.Log?.WriteReg(LogEventLevel.Information, $"(EditReg) '{Key_BeforeModification}' → '{(string.IsNullOrWhiteSpace(ValueName) ? "(Default)" : ValueName)}', new value '{Value}' with value type '{RegType}'", WinPaletter.RegScope.Write);
+                }
+
                 // Fallback to CMD method
                 WriteReg_CMD(treeView, Key_BeforeModification, ValueName, Value, RegType);
             }
@@ -435,7 +458,6 @@ namespace WinPaletter
             finally
             {
                 subKey?.Close();
-                baseKey?.Close();
             }
         }
 
@@ -471,7 +493,7 @@ namespace WinPaletter
                 _Value = string.Empty;
             }
 
-            if (_Value.Contains('%')) _Value = _Value.Replace("%", "^%");
+            _Value = _Value.Replace("^", "^^").Replace("%", "^%").Replace("\"", "\\\"");
 
             try
             {
@@ -599,13 +621,12 @@ namespace WinPaletter
             (string processedKey, RegScope scope) = FormatKey(Key_BeforeModification);
 
             RegistryKey baseKey = null;
-            RegistryKey subKey = null;
 
             try
             {
                 baseKey = OpenBaseKey(scope);
 
-                using (subKey = baseKey.OpenSubKey(processedKey, RegistryKeyPermissionCheck.ReadSubTree, RegistryRights.ReadKey))
+                using (RegistryKey subKey = baseKey.OpenSubKey(processedKey, RegistryKeyPermissionCheck.ReadSubTree, RegistryRights.ReadKey))
                 {
                     object result = subKey?.GetValue(ValueName, DefaultValue);
 
@@ -628,11 +649,6 @@ namespace WinPaletter
                 if (RaiseExceptions) Forms.BugReport.Throw(ex);
                 return DefaultValue;
             }
-            finally
-            {
-                subKey?.Close();
-                baseKey?.Close();
-            }
         }
 
         public static string[] GetValueNames(string Key)
@@ -645,13 +661,12 @@ namespace WinPaletter
             (string processedKey, RegScope scope) = FormatKey(Key_BeforeModification);
 
             RegistryKey baseKey = null;
-            RegistryKey subKey = null;
 
             try
             {
                 baseKey = OpenBaseKey(scope);
 
-                using (subKey = baseKey.OpenSubKey(processedKey, RegistryKeyPermissionCheck.ReadSubTree, RegistryRights.ReadKey))
+                using (RegistryKey subKey = baseKey.OpenSubKey(processedKey, RegistryKeyPermissionCheck.ReadSubTree, RegistryRights.ReadKey))
                 {
                     if (subKey == null) return Array.Empty<string>();
 
@@ -663,11 +678,6 @@ namespace WinPaletter
             catch
             {
                 return [];
-            }
-            finally
-            {
-                subKey?.Close();
-                baseKey?.Close();
             }
         }
 
@@ -681,13 +691,12 @@ namespace WinPaletter
             (string processedKey, RegScope scope) = FormatKey(Key_BeforeModification);
 
             RegistryKey baseKey = null;
-            RegistryKey subKey = null;
 
             try
             {
                 baseKey = OpenBaseKey(scope);
 
-                using (subKey = baseKey.OpenSubKey(processedKey, RegistryKeyPermissionCheck.ReadSubTree, RegistryRights.ReadKey))
+                using (RegistryKey subKey = baseKey.OpenSubKey(processedKey, RegistryKeyPermissionCheck.ReadSubTree, RegistryRights.ReadKey))
                 {
                     if (subKey == null) return [];
 
@@ -699,11 +708,6 @@ namespace WinPaletter
             catch
             {
                 return [];
-            }
-            finally
-            {
-                subKey?.Close();
-                baseKey?.Close();
             }
         }
 
@@ -740,10 +744,6 @@ namespace WinPaletter
                 DeleteKeyAsAdministrator(Key_BeforeModification);
                 AddVerboseItem_DelKey(treeView, Key_BeforeModification);
             }
-            finally
-            {
-                baseKey?.Close();
-            }
         }
 
         public static void DeleteKey(TreeView treeView, string Key, bool deleteSubKeysAndValuesOnly = false)
@@ -761,13 +761,12 @@ namespace WinPaletter
             (string processedKey, RegScope scope) = FormatKey(Key_BeforeModification);
 
             RegistryKey baseKey = null;
-            RegistryKey subKey = null;
 
             try
             {
                 baseKey = OpenBaseKey(scope);
 
-                using (subKey = baseKey.OpenSubKey(processedKey, RegistryKeyPermissionCheck.ReadWriteSubTree))
+                using (RegistryKey subKey = baseKey.OpenSubKey(processedKey, RegistryKeyPermissionCheck.ReadWriteSubTree))
                 {
                     if (subKey == null) return;
 
@@ -782,11 +781,6 @@ namespace WinPaletter
                 Program.Log?.WriteReg(LogEventLevel.Error, "Falling back to REG.EXE for value deletion", WinPaletter.RegScope.Delete);
                 DeleteValueAsAdministrator(Key_BeforeModification, ValueName);
                 AddVerboseItem_DelValue(treeView, Key_BeforeModification, ValueName);
-            }
-            finally
-            {
-                subKey?.Close();
-                baseKey?.Close();
             }
         }
 
@@ -804,13 +798,12 @@ namespace WinPaletter
             (string processedKey, RegScope scope) = FormatKey(Key);
 
             RegistryKey baseKey = null;
-            RegistryKey subKey = null;
 
             try
             {
                 baseKey = OpenBaseKey(scope);
 
-                using (subKey = baseKey.OpenSubKey(processedKey, RegistryKeyPermissionCheck.ReadSubTree))
+                using (RegistryKey subKey = baseKey.OpenSubKey(processedKey, RegistryKeyPermissionCheck.ReadSubTree))
                 {
                     return subKey != null;
                 }
@@ -818,11 +811,6 @@ namespace WinPaletter
             catch
             {
                 return false;
-            }
-            finally
-            {
-                subKey?.Close();
-                baseKey?.Close();
             }
         }
 
@@ -835,29 +823,36 @@ namespace WinPaletter
             (string processedKey, RegScope scope) = FormatKey(Key);
 
             RegistryKey baseKey = null;
-            RegistryKey subKey = null;
 
             try
             {
                 baseKey = OpenBaseKey(scope);
 
-                using (subKey = baseKey.OpenSubKey(processedKey, RegistryKeyPermissionCheck.ReadSubTree))
+                using (RegistryKey subKey = baseKey.OpenSubKey(processedKey, RegistryKeyPermissionCheck.ReadSubTree))
                 {
                     if (subKey == null) return false;
 
-                    object value = subKey.GetValue(ValueName, null);
-                    return value != null && !string.IsNullOrEmpty(value.ToString());
+                    return subKey.GetValueNames().Contains(ValueName, StringComparer.OrdinalIgnoreCase);
                 }
             }
             catch
             {
                 return false;
             }
-            finally
+        }
+        
+        public static void ClearBaseKeyCache()
+        {
+            _cacheLock.EnterWriteLock();
+            try
             {
-                subKey?.Close();
-                baseKey?.Close();
+                foreach (RegistryKey key in _baseKeyCache.Values)
+                {
+                    try { key?.Close(); } catch { }
+                }
+                _baseKeyCache.Clear();
             }
+            finally { _cacheLock.ExitWriteLock(); }
         }
 
         public static void DeleteValueAsAdministrator(string Key, string ValueName)
