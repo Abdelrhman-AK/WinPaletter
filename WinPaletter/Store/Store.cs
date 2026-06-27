@@ -953,13 +953,15 @@ namespace WinPaletter
 
         private void FilesFetcher_DoWork(object sender, DoWorkEventArgs e)
         {
-
             if (Program.Settings.Store.Mode == Settings.Structures.Store.Modes.Online)
             {
                 if (!Program.IsNetworkAvailable)
                 {
-                    ProgressBar1.Visible = false;
-                    Tabs.SelectedIndex = 3;
+                    Invoke(() =>
+                    {
+                        ProgressBar1.Visible = false;
+                        Tabs.SelectedIndex = 3;
+                    });
                 }
                 else
                 {

@@ -79,7 +79,7 @@ namespace AnimatorNS
             AnimatedControl = null;
             pixelsBuffer = null;
             Hide();
-            
+
             // Clear bitmap cache to prevent memory leaks
             BitmapCache.Clear();
         }
@@ -534,8 +534,8 @@ namespace AnimatorNS
                 System.Runtime.InteropServices.Marshal.Copy(pooledBuffer, 0, ptr, numBytes);
                 bmp.UnlockBits(bmpData);
             }
-            catch 
-            { 
+            catch
+            {
                 // Cleanup on exception
                 if (bmp != null)
                 {

@@ -62,7 +62,7 @@ namespace WinPaletter
         {
             Log?.Write(LogEventLevel.Information, "WinPaletter is exiting. Cleaning up resources and removing event handlers.");
 
-            ClearBaseKeyCache();
+            Reg_IO.DisposeBaseKeyCache();
 
             DeleteUpdateResiduals();
 

@@ -134,7 +134,9 @@ namespace WinPaletter.Tabs
         private static StringFormat sf = new() { LineAlignment = StringAlignment.Center, Alignment = StringAlignment.Near, Trimming = StringTrimming.EllipsisCharacter, FormatFlags = StringFormatFlags.MeasureTrailingSpaces };
         private static StringFormat sf_middleCenter = ContentAlignment.MiddleCenter.ToStringFormat();
         private static string closeStr = "✕";
-        private static Color win7BorderColor = Color.FromArgb(159, 255, 255, 255);
+        private static Color win7BorderColor = Color.FromArgb(145, 255, 255, 255);
+        private static Color win7BorderColor_Inner = Color.FromArgb(150, 15, 15, 15);
+
         private Font selectedFont;
 
         #endregion
@@ -582,7 +584,7 @@ namespace WinPaletter.Tabs
 
         private TabData CreateTabData(TabPage page, int index, int? tabTop = null)
         {
-            int tabX = LeftBoundary + index * (tabWidth + _paddingBetweenTabs) - _animatedScrollOffset;
+            int tabX = Math.Max(LeftBoundary, LeftBoundary + index * (tabWidth + _paddingBetweenTabs) - _animatedScrollOffset);
             int tabW = tabWidth;
             int tabY = tabTop ?? _upperTabPadding;
 
@@ -768,6 +770,7 @@ namespace WinPaletter.Tabs
             if (collectionCount == 0) return;
 
             CalculateScrollOffset();
+            if (_animatedScrollOffset > _maxScrollOffset) _animatedScrollOffset = _maxScrollOffset; // snap, don't animate, layout is already changing
 
             if (_selectedIndex < 0 || _selectedIndex >= collectionCount) return;
 
@@ -797,6 +800,7 @@ namespace WinPaletter.Tabs
                 newTab.CloseButtonAlpha = oldTab.CloseButtonAlpha;
 
                 int naturalLeft = LeftBoundary + i * (tabWidth + _paddingBetweenTabs) - _animatedScrollOffset;
+                naturalLeft = Math.Max(LeftBoundary, naturalLeft);
                 newTab.TabLeft = naturalLeft;
                 newTab.TabWidth = tabWidth;
 
@@ -2236,7 +2240,10 @@ namespace WinPaletter.Tabs
 
             InvokePaintBackground(this, e);
 
-            using (Pen P = new(!OS.W7 ? scheme.Colors.Line_Hover(0) : Color.Black)) { G.DrawLine(P, new Point(0, Height - 1), new Point(Width - 1, Height - 1)); }
+            using (Pen P = new(!OS.W7 && !OS.WVista ? scheme.Colors.Line_Hover(0) : win7BorderColor_Inner)) 
+            { 
+                G.DrawLine(P, new Point(0, Height - 1), new Point(Width - 1, Height - 1)); 
+            }
 
             Rectangle clipRect = new(LeftBoundary, 0, RightBoundary - LeftBoundary, Height);
 
@@ -2462,16 +2469,17 @@ namespace WinPaletter.Tabs
 
                     if (OS.WVista || OS.W7)
                     {
-                        using (Pen Px = new(win7BorderColor))
+                        using (Pen Px = new(Color.FromArgb(Math.Max(0, Math.Min(tabData.SelectionAlpha, win7BorderColor.A)), win7BorderColor)))
                         {
                             DrawTabPath(G, path, Px, rect, _radius, Program.Style.RoundedCorners);
 
-                            if (tabData.HoverAlpha == 0)
+                            if (tabData.SelectionAlpha > 0)
                             {
                                 Rectangle rect_smaller = new(rect.X + _rectSmallerOffset, rect.Y + _rectSmallerOffset, rect.Width - _rectSmallerWidthReduction, rect.Height);
                                 using (GraphicsPath path_smaller = rect_smaller.ToTabPath(_radius - _smallerRadiusOffset, Program.Style.RoundedCorners ? GraphicsExtensions.TabStyle.Rounded : GraphicsExtensions.TabStyle.Sharp))
+                                using (Pen pen_inner = new(Color.FromArgb(Math.Max(0, Math.Min((int)(150f * (255 - tabData.HoverAlpha) / 255f), tabData.SelectionAlpha)), win7BorderColor_Inner)))
                                 {
-                                    DrawTabPath(G, path_smaller, Pens.Black, rect_smaller, _radius - _smallerRadiusOffset, Program.Style.RoundedCorners);
+                                    DrawTabPath(G, path_smaller, pen_inner, rect_smaller, _radius - _smallerRadiusOffset, Program.Style.RoundedCorners);
                                 }
                             }
                         }

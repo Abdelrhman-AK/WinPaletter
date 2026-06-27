@@ -791,7 +791,7 @@ namespace WinPaletter.UI.WP
 
         private int GetDWMBorderWidth()
         {
-            if (OS.WXP)  return Math.Max(1, User32.GetSystemMetrics(5)); // SM_CXBORDER = 5
+            if (OS.WXP) return Math.Max(1, User32.GetSystemMetrics(5)); // SM_CXBORDER = 5
 
             if (OS.WVista || OS.W7 || OS.W8 || OS.W81)
             {

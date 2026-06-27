@@ -56,7 +56,7 @@ namespace WinPaletter.GlobalVariables
         /// <summary>
         /// WinPaletter application data folder
         /// </summary>
-        public static string appData { get; set; } = Directory.GetParent(Application.LocalUserAppDataPath).FullName;
+        public static string appData { get; set; } = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), string.IsNullOrEmpty(Application.CompanyName) ? Application.ProductName : Application.CompanyName, Application.ProductName);
 
         /// <summary>
         /// WinPaletter application data folder

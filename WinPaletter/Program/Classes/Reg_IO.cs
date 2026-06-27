@@ -19,6 +19,10 @@ namespace WinPaletter
     /// Provides utility methods for interacting with the Windows Registry, including reading, writing, deleting, and
     /// managing registry keys and values. This class also includes methods for logging registry operations and
     /// handling security or access issues.
+    /// <br></br>
+    /// Note: _cacheLock.DisposeBaseKeyCache() is intentionally not called here because Reg_IO is a
+    /// static utility class with process lifetime. Call ClearBaseKeyCache() at app shutdown
+    /// which closes all cached handles; the lock itself is released when the process exits.
     /// </summary>
     public class Reg_IO
     {
@@ -38,10 +42,28 @@ namespace WinPaletter
         private const string RealHKCUPrefix = "HKEY_REAL_CURRENT_USER\\";
 
         // Cache for frequently accessed SID
-        private static string CurrentUserSid => _currentUserSid ??= User.SID;
+        private static string CurrentUserSid
+        {
+            get
+            {
+                if (_currentUserSid != null) return _currentUserSid;
+                string sid = User.SID;
+                Interlocked.CompareExchange(ref _currentUserSid, sid, null);
+                return _currentUserSid;
+            }
+        }
         private static string _currentUserSid;
 
-        private static string AdminSid => _adminSid ??= User.AdminSID_GrantedUAC;
+        private static string AdminSid
+        {
+            get
+            {
+                if (_adminSid != null) return _adminSid;
+                string sid = User.AdminSID_GrantedUAC;
+                Interlocked.CompareExchange(ref _adminSid, sid, null);
+                return _adminSid;
+            }
+        }
         private static string _adminSid;
 
         private enum RegScope
@@ -61,35 +83,41 @@ namespace WinPaletter
 
             if (Key.StartsWith(ComputerPrefix, StringComparison.OrdinalIgnoreCase)) Key = Key.Substring(ComputerPrefix.Length);
 
-            if (Key.StartsWith(HKCUPrefix, StringComparison.OrdinalIgnoreCase))
+            if (Key.Length > 5)
             {
-                scope = RegScope.HKEY_CURRENT_USER;
-                Key = Key.Substring(HKCUPrefix.Length);
-            }
-            else if (Key.StartsWith(HKUPrefix, StringComparison.OrdinalIgnoreCase))
-            {
-                scope = RegScope.HKEY_USERS;
-                Key = Key.Substring(HKUPrefix.Length);
-            }
-            else if (Key.StartsWith(HKMLPrefix, StringComparison.OrdinalIgnoreCase))
-            {
-                scope = RegScope.HKEY_LOCAL_MACHINE;
-                Key = Key.Substring(HKMLPrefix.Length);
-            }
-            else if (Key.StartsWith(HKCRPrefix, StringComparison.OrdinalIgnoreCase))
-            {
-                scope = RegScope.HKEY_CLASSES_ROOT;
-                Key = Key.Substring(HKCRPrefix.Length);
-            }
-            else if (Key.StartsWith(HKCCPrefix, StringComparison.OrdinalIgnoreCase))
-            {
-                scope = RegScope.HKEY_CURRENT_CONFIG;
-                Key = Key.Substring(HKCCPrefix.Length);
-            }
-            else if (Key.StartsWith(RealHKCUPrefix, StringComparison.OrdinalIgnoreCase))
-            {
-                scope = RegScope.HKEY_REAL_CURRENT_USER;
-                Key = Key.Substring(RealHKCUPrefix.Length);
+                // Char index checking is faster than all strings matching check
+                char c = char.ToUpperInvariant(Key[5]);
+                if (c == 'C')
+                {
+                    // HKEY_CURRENT_USER, HKEY_CLASSES_ROOT, HKEY_CURRENT_CONFIG
+                    if (Key.StartsWith(HKCUPrefix, StringComparison.OrdinalIgnoreCase))
+                    { 
+                        scope = RegScope.HKEY_CURRENT_USER; Key = Key.Substring(HKCUPrefix.Length);
+                    }
+                    else if (Key.StartsWith(HKCRPrefix, StringComparison.OrdinalIgnoreCase))
+                    { 
+                        scope = RegScope.HKEY_CLASSES_ROOT; Key = Key.Substring(HKCRPrefix.Length); 
+                    }
+                    else if (Key.StartsWith(HKCCPrefix, StringComparison.OrdinalIgnoreCase))
+                    { 
+                        scope = RegScope.HKEY_CURRENT_CONFIG; Key = Key.Substring(HKCCPrefix.Length); 
+                    }
+                }
+                else if (c == 'L')
+                {
+                    if (Key.StartsWith(HKMLPrefix, StringComparison.OrdinalIgnoreCase))
+                    { scope = RegScope.HKEY_LOCAL_MACHINE; Key = Key.Substring(HKMLPrefix.Length); }
+                }
+                else if (c == 'U')
+                {
+                    if (Key.StartsWith(HKUPrefix, StringComparison.OrdinalIgnoreCase))
+                    { scope = RegScope.HKEY_USERS; Key = Key.Substring(HKUPrefix.Length); }
+                }
+                else if (c == 'R')
+                {
+                    if (Key.StartsWith(RealHKCUPrefix, StringComparison.OrdinalIgnoreCase))
+                    { scope = RegScope.HKEY_REAL_CURRENT_USER; Key = Key.Substring(RealHKCUPrefix.Length); }
+                }
             }
 
             return (Key, scope);
@@ -100,20 +128,37 @@ namespace WinPaletter
         {
             if (string.IsNullOrEmpty(Key)) return Key;
 
-            if (Key.StartsWith(ComputerPrefix, StringComparison.OrdinalIgnoreCase)) Key = Key.Substring(ComputerPrefix.Length);
+            if (Key.StartsWith(ComputerPrefix, StringComparison.OrdinalIgnoreCase))
+                Key = Key.Substring(ComputerPrefix.Length);
 
-            if (Key.StartsWith(HKMLPrefix, StringComparison.OrdinalIgnoreCase))
-                Key = "HKLM" + Key.Substring(HKMLPrefix.Length - 1);
-            else if (Key.StartsWith(HKCUPrefix, StringComparison.OrdinalIgnoreCase))
-                Key = (CurrentUserSid != AdminSid ? $"HKU\\{CurrentUserSid}" : "HKCU") + Key.Substring(HKCUPrefix.Length - 1);
-            else if (Key.StartsWith(HKUPrefix, StringComparison.OrdinalIgnoreCase))
-                Key = "HKU" + Key.Substring(HKUPrefix.Length - 1);
-            else if (Key.StartsWith(HKCRPrefix, StringComparison.OrdinalIgnoreCase))
-                Key = "HKCR" + Key.Substring(HKCRPrefix.Length - 1);
-            else if (Key.StartsWith(HKCCPrefix, StringComparison.OrdinalIgnoreCase))
-                Key = "HKCC" + Key.Substring(HKCCPrefix.Length - 1);
-            else if (Key.StartsWith(RealHKCUPrefix, StringComparison.OrdinalIgnoreCase))
-                Key = "HKCU" + Key.Substring(RealHKCUPrefix.Length - 1);
+            if (Key.Length <= 5) return Key;
+
+            char c = char.ToUpperInvariant(Key[5]);
+
+            if (c == 'L')
+            {
+                if (Key.StartsWith(HKMLPrefix, StringComparison.OrdinalIgnoreCase))
+                    Key = "HKLM" + Key.Substring(HKMLPrefix.Length - 1);
+            }
+            else if (c == 'C')
+            {
+                if (Key.StartsWith(HKCUPrefix, StringComparison.OrdinalIgnoreCase))
+                    Key = (CurrentUserSid != AdminSid ? $"HKU\\{CurrentUserSid}" : "HKCU") + Key.Substring(HKCUPrefix.Length - 1);
+                else if (Key.StartsWith(HKCRPrefix, StringComparison.OrdinalIgnoreCase))
+                    Key = "HKCR" + Key.Substring(HKCRPrefix.Length - 1);
+                else if (Key.StartsWith(HKCCPrefix, StringComparison.OrdinalIgnoreCase))
+                    Key = "HKCC" + Key.Substring(HKCCPrefix.Length - 1);
+            }
+            else if (c == 'U')
+            {
+                if (Key.StartsWith(HKUPrefix, StringComparison.OrdinalIgnoreCase))
+                    Key = "HKU" + Key.Substring(HKUPrefix.Length - 1);
+            }
+            else if (c == 'R')
+            {
+                if (Key.StartsWith(RealHKCUPrefix, StringComparison.OrdinalIgnoreCase))
+                    Key = "HKCU" + Key.Substring(RealHKCUPrefix.Length - 1);
+            }
 
             return Key;
         }
@@ -200,10 +245,17 @@ namespace WinPaletter
 
             switch (RegType)
             {
-                case RegistryValueKind.MultiString when existingValue is string[] a && targetValue is string[] b:
-                    if (a.Length != b.Length) return false;
-                    for (int i = 0; i < a.Length; i++) if (!string.Equals(a[i], b[i], StringComparison.Ordinal)) return false;
-                    return true;
+                case RegistryValueKind.MultiString:
+                    {
+                        if (existingValue is string[] a && targetValue is string[] b)
+                        {
+                            if (a.Length != b.Length) return false;
+                            for (int i = 0; i < a.Length; i++)
+                                if (!string.Equals(a[i], b[i], StringComparison.Ordinal)) return false;
+                            return true;
+                        }
+                        return false; // type mismatch — don't skip
+                    }
 
                 case RegistryValueKind.Binary when existingValue is byte[] eb && targetValue is byte[] tb:
                     if (eb.Length != tb.Length) return false;
@@ -425,6 +477,8 @@ namespace WinPaletter
                     catch (Exception ex) when (ex is SecurityException or UnauthorizedAccessException)
                     {
                         Program.Log?.WriteReg(LogEventLevel.Error, $"Access exception: {ex.Message}", WinPaletter.RegScope.Write);
+                        subKey?.Close();
+                        subKey = null;
                         // Fall through to CMD method
                     }
                 }
@@ -453,7 +507,7 @@ namespace WinPaletter
                 Program.Log?.WriteReg(LogEventLevel.Error, $"Registry write exception: {ex.Message}", WinPaletter.RegScope.Write);
 
                 try { WriteReg_CMD(treeView, Key_BeforeModification, ValueName, Value, RegType); }
-                catch { AddVerboseException(treeView, ex, processedKey, ValueName, Value, RegType); }
+                catch { AddVerboseException(treeView, ex, Key_BeforeModification, ValueName, Value, RegType); }
             }
             finally
             {
@@ -493,7 +547,10 @@ namespace WinPaletter
                 _Value = string.Empty;
             }
 
-            _Value = _Value.Replace("^", "^^").Replace("%", "^%").Replace("\"", "\\\"");
+            if (RegType == RegistryValueKind.String || RegType == RegistryValueKind.ExpandString || RegType == RegistryValueKind.MultiString || RegType == RegistryValueKind.None)
+            {
+                _Value = _Value.Replace("^", "^^").Replace("%", "^%").Replace("\"", "\\\"");
+            }
 
             try
             {
@@ -516,8 +573,8 @@ namespace WinPaletter
             return RegType switch
             {
                 RegistryValueKind.String => ("add \"{0}\" /v \"{1}\" /t REG_SZ /d \"{2}\" /f", Value.ToString()),
-                RegistryValueKind.DWord => ("add \"{0}\" /v \"{1}\" /t REG_DWORD /d {2} /f", ((int)Value).ToStringDWord()),
-                RegistryValueKind.QWord => ("add \"{0}\" /v \"{1}\" /t REG_QWORD /d {2} /f", ((int)Value).ToStringQWord()),
+                RegistryValueKind.DWord => ("add \"{0}\" /v \"{1}\" /t REG_DWORD /d {2} /f", Convert.ToInt32(Value, CultureInfo.InvariantCulture).ToStringDWord()),
+                RegistryValueKind.QWord => ("add \"{0}\" /v \"{1}\" /t REG_QWORD /d {2} /f", Convert.ToInt64(Value, CultureInfo.InvariantCulture).ToStringQWord()),
                 RegistryValueKind.Binary => ("add \"{0}\" /v \"{1}\" /t REG_BINARY /d {2} /f", BitConverter.ToString((byte[])Value).Replace("-", string.Empty)),
                 RegistryValueKind.ExpandString => ("add \"{0}\" /v \"{1}\" /t REG_EXPAND_SZ /d \"{2}\" /f", Value.ToString()),
                 RegistryValueKind.MultiString => ("add \"{0}\" /v \"{1}\" /t REG_MULTI_SZ /d \"{2}\" /f", $"{Value.ToString().Replace("\r\n", @"\0")}\\0\\0"),
@@ -551,6 +608,19 @@ namespace WinPaletter
                 if (targetType == typeof(Color))
                 {
                     return (T)(object)ConvertToColor(raw, defaultValue);
+                }
+
+                if (targetType == typeof(bool))
+                {
+                    if (raw is bool b) return (T)(object)b;
+
+                    if (raw is IConvertible)
+                        return (T)(object)Convert.ToBoolean(Convert.ToInt32(raw, CultureInfo.InvariantCulture));
+
+                    if (bool.TryParse(raw.ToString(), out bool parsed))
+                        return (T)(object)parsed;
+
+                    return defaultValue;
                 }
 
                 if (targetType == typeof(string[]) && raw is string[] arr)
@@ -632,7 +702,11 @@ namespace WinPaletter
 
                     if (result?.ToString()?.StartsWith("#USR:", StringComparison.OrdinalIgnoreCase) == true)
                     {
-                        result = ReadReg($"HKEY_REAL_CURRENT_USER\\{result.ToString().Replace("#USR:", string.Empty)}", ValueName, DefaultValue, RaiseExceptions, IfNullReturnDefaultValue);
+                        string redirectPath = result.ToString().Substring(5);
+                        if (!string.IsNullOrWhiteSpace(redirectPath))
+                        {
+                            result = ReadReg($"HKEY_REAL_CURRENT_USER\\{redirectPath}", ValueName, DefaultValue, RaiseExceptions, IfNullReturnDefaultValue);
+                        }
                     }
 
                     if (!skipLogging)
@@ -814,6 +888,7 @@ namespace WinPaletter
             }
         }
 
+        private static readonly object _notFoundSentinel = new();
         public static bool ValueExists(string Key, string ValueName)
         {
             if (string.IsNullOrEmpty(Key)) return false;
@@ -832,7 +907,7 @@ namespace WinPaletter
                 {
                     if (subKey == null) return false;
 
-                    return subKey.GetValueNames().Contains(ValueName, StringComparer.OrdinalIgnoreCase);
+                    return subKey.GetValue(ValueName, _notFoundSentinel) != _notFoundSentinel;
                 }
             }
             catch
@@ -840,7 +915,7 @@ namespace WinPaletter
                 return false;
             }
         }
-        
+
         public static void ClearBaseKeyCache()
         {
             _cacheLock.EnterWriteLock();
@@ -855,13 +930,19 @@ namespace WinPaletter
             finally { _cacheLock.ExitWriteLock(); }
         }
 
+        public static void DisposeBaseKeyCache()
+        {
+            ClearBaseKeyCache();
+            _cacheLock.Dispose();
+        }
+
         public static void DeleteValueAsAdministrator(string Key, string ValueName)
         {
             if (string.IsNullOrEmpty(Key)) return;
 
             string cmdKey = FormatKey_CMD(Key);
-            Program.Log?.WriteReg(LogEventLevel.Information, $"REG.EXE delete: reg delete \"{cmdKey}\\{ValueName}\" /f", WinPaletter.RegScope.Delete);
-            Program.SendCommand($"reg delete \"{cmdKey}\\{ValueName}\" /f");
+            Program.Log?.WriteReg(LogEventLevel.Information, $"REG.EXE delete: reg delete \"{cmdKey}\" /v \"{ValueName}\" /f", WinPaletter.RegScope.Delete);
+            Program.SendCommand($"reg delete \"{cmdKey}\" /v \"{ValueName}\" /f");
         }
 
         public static void DeleteKeyAsAdministrator(string Key)

@@ -224,7 +224,7 @@ namespace AnimatorNS
 
         readonly List<QueueItem> completed = new List<QueueItem>();
         readonly List<QueueItem> actived = new List<QueueItem>();
-        
+
         // Reusable collections to reduce GC pressure
         readonly Dictionary<Control, QueueItem> controlDict = new Dictionary<Control, QueueItem>();
 
@@ -316,7 +316,7 @@ namespace AnimatorNS
             {
                 toRemove.Clear();
                 controlDict.Clear();
-                
+
                 foreach (var item in requests)
                 {
                     if (item.control != null)

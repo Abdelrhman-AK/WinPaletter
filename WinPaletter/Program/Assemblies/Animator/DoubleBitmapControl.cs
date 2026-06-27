@@ -56,7 +56,7 @@ namespace AnimatorNS
 
             try
             {
-                if (bgBmp != null && !IsDisposed)
+                if (bgBmp != null && !IsDisposed && bgBmp.IsValid())
                     e.Graphics.DrawImage(bgBmp, 0, 0);
 
                 if (frame != null && !IsDisposed)

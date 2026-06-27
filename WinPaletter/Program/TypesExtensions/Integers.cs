@@ -14,45 +14,21 @@ namespace WinPaletter.TypesExtensions
         /// </summary>
         public static string ToStringDWord(this int @int)
         {
-            if (@int.ToString().Count() <= 8)
-            {
-                int i = 8 - @int.ToString().Count();
-                string s = string.Empty;
-                int loopTo = i;
-
-                // If the number is less than 8 digits, add 0s to the left
-                for (i = 1; i <= loopTo; i++) s += "0";
-
-                s += @int.ToString();
-                return s.Replace("-", string.Empty);
-            }
-            else
-            {
-                return @int.ToString().Replace("-", string.Empty);
-            }
+            string s = @int < 0 ? (@int * -1).ToString() : @int.ToString();
+            int padding = 8 - s.Length;
+            if (padding > 0) s = new string('0', padding) + s;
+            return s;
         }
 
         /// <summary>
         /// Return string in the format of XXXXXXXXXXXXXXXX, useful for registry handling
         /// </summary>
-        public static string ToStringQWord(this int @int)
+        public static string ToStringQWord(this long @long)
         {
-            if (@int.ToString().Count() <= 16)
-            {
-                int i = 16 - @int.ToString().Count();
-                string s = string.Empty;
-                int loopTo = i;
-
-                // If the number is less than 16 digits, add 0s to the left
-                for (i = 1; i <= loopTo; i++) s += "0";
-
-                s += @int.ToString();
-                return s.Replace("-", string.Empty);
-            }
-            else
-            {
-                return @int.ToString().Replace("-", string.Empty);
-            }
+            string s = @long < 0 ? (@long * -1).ToString() : @long.ToString();
+            int padding = 16 - s.Length;
+            if (padding > 0) s = new string('0', padding) + s;
+            return s;
         }
 
         /// <summary>

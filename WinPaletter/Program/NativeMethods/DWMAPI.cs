@@ -350,148 +350,34 @@ namespace WinPaletter.NativeMethods
 
         #region Enumerations
 
-        /// <summary>
-        /// Enumerates the DWM (Desktop Window Manager) window attributes.
-        /// </summary>
         public enum DWMWINDOWATTRIBUTE : uint
         {
-            /// <summary>
-            /// Enables or disables non-client rendering in the window.
-            /// </summary>
-            NCRENDERING_ENABLED,
-
-            /// <summary>
-            /// Sets the non-client rendering policy.
-            /// </summary>
-            NCRENDERING_POLICY,
-
-            /// <summary>
-            /// Forces the window's transitions to be disabled.
-            /// </summary>
-            TRANSITIONS_FORCEDISABLED,
-
-            /// <summary>
-            /// Allows non-client area painting.
-            /// </summary>
-            ALLOW_NCPAINT,
-
-            /// <summary>
-            /// Retrieves the bounds of the caption button area in the window's title bar.
-            /// </summary>
-            CAPTION_BUTTON_BOUNDS,
-
-            /// <summary>
-            /// Sets the non-client area right-to-left (RTL) layout.
-            /// </summary>
-            NONCLIENT_RTL_LAYOUT,
-
-            /// <summary>
-            /// Forces the window to display an iconic representation in the taskbar.
-            /// </summary>
-            FORCE_ICONIC_REPRESENTATION,
-
-            /// <summary>
-            /// Sets the Flip3D policy for the window.
-            /// </summary>
-            FLIP3D_POLICY,
-
-            /// <summary>
-            /// Retrieves the extended frame bounds.
-            /// </summary>
-            EXTENDED_FRAME_BOUNDS,
-
-            /// <summary>
-            /// Determines if the window has an iconic bitmap.
-            /// </summary>
-            HAS_ICONIC_BITMAP,
-
-            /// <summary>
-            /// Disallows Peek functionality on the window.
-            /// </summary>
-            DISALLOW_PEEK,
-
-            /// <summary>
-            /// Specifies whether the window is excluded from Peek functionality.
-            /// </summary>
-            EXCLUDED_FROM_PEEK,
-
-            /// <summary>
-            /// Cloaks or uncloaks the window.
-            /// </summary>
-            CLOAK,
-
-            /// <summary>
-            /// Retrieves the cloaked state of the window.
-            /// </summary>
-            CLOAKED,
-
-            /// <summary>
-            /// Freezes or unfreezes the window's representation in the DWM thumbnail.
-            /// </summary>
-            FREEZE_REPRESENTATION,
-
-            /// <summary>
-            /// Sets the update mode for non-client rendering.
-            /// </summary>
-            PASSIVE_UPDATE_MODE,
-
-            /// <summary>
-            /// Uses the host's backdrop brush.
-            /// </summary>
-            USE_HOSTBACKDROPBRUSH,
-
-            /// <summary>
-            /// Uses immersive dark mode before Windows 10, version 2004.
-            /// </summary>
+            NCRENDERING_ENABLED = 1,
+            NCRENDERING_POLICY = 2,
+            TRANSITIONS_FORCEDISABLED = 3,
+            ALLOW_NCPAINT = 4,
+            CAPTION_BUTTON_BOUNDS = 5,
+            NONCLIENT_RTL_LAYOUT = 6,
+            FORCE_ICONIC_REPRESENTATION = 7,
+            FLIP3D_POLICY = 8,
+            EXTENDED_FRAME_BOUNDS = 9,
+            HAS_ICONIC_BITMAP = 10,
+            DISALLOW_PEEK = 11,
+            EXCLUDED_FROM_PEEK = 12,
+            CLOAK = 13,
+            CLOAKED = 14,
+            FREEZE_REPRESENTATION = 15,
+            PASSIVE_UPDATE_MODE = 16,
+            USE_HOSTBACKDROPBRUSH = 17,
             USE_IMMERSIVE_DARK_MODE_BEFORE_20H1 = 19,
-
-            /// <summary>
-            /// Uses immersive dark mode.
-            /// </summary>
             USE_IMMERSIVE_DARK_MODE = 20,
-
-            /// <summary>
-            /// Specifies the preferred corner for the window's top-left corner when window resizing is allowed.
-            /// </summary>
             WINDOW_CORNER_PREFERENCE = 33,
-
-            /// <summary>
-            /// Represents the system backdrop type attribute for a window, used to specify the visual style of the
-            /// window's background.
-            /// </summary>
-            /// <remarks>This value corresponds to the DWM (Desktop Window Manager) attribute for
-            /// setting the system backdrop type. It is typically used with the <see cref="DwmSetWindowAttribute"/>
-            /// function to configure the appearance of a window's background.</remarks>
             DWMWA_SYSTEMBACKDROP_TYPE = 38,
-
-            /// <summary>
-            /// Sets the border color.
-            /// </summary>
-            BORDER_COLOR,
-
-            /// <summary>
-            /// Sets the caption color.
-            /// </summary>
-            CAPTION_COLOR,
-
-            /// <summary>
-            /// Sets the text color.
-            /// </summary>
-            TEXT_COLOR,
-
-            /// <summary>
-            /// Retrieves the visible frame border thickness.
-            /// </summary>
-            VISIBLE_FRAME_BORDER_THICKNESS,
-
-            /// <summary>
-            /// Specifies the Mica effect attribute.
-            /// </summary>
+            BORDER_COLOR = 34,
+            CAPTION_COLOR = 35,
+            TEXT_COLOR = 36,
+            VISIBLE_FRAME_BORDER_THICKNESS = 37,
             MICA_EFFECT = 1029,
-
-            /// <summary>
-            /// The last value in the enumeration.
-            /// </summary>
             LAST
         }
 
