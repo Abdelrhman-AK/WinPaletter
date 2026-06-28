@@ -165,24 +165,32 @@ namespace WinPaletter
 
         private static RegistryKey OpenBaseKey(RegScope scope)
         {
-            _cacheLock.EnterReadLock();
+            string currentSid = CurrentUserSid;
+            string adminSid = AdminSid;
+
+            _cacheLock.EnterUpgradeableReadLock();
             try
             {
                 if (_baseKeyCache.TryGetValue(scope, out RegistryKey cached) && IsKeyValid(cached)) return cached;
-            }
-            finally { _cacheLock.ExitReadLock(); }
 
-            _cacheLock.EnterWriteLock();
-            try
+                _cacheLock.EnterWriteLock();
+                try
+                {
+                    if (_baseKeyCache.TryGetValue(scope, out cached) && IsKeyValid(cached)) return cached;
+
+                    RegistryKey key = OpenBaseKeyInternal(scope, currentSid, adminSid);
+                    _baseKeyCache[scope] = key;
+                    return key;
+                }
+                finally
+                {
+                    _cacheLock.ExitWriteLock();
+                }
+            }
+            finally
             {
-                // Double-check after acquiring write lock
-                if (_baseKeyCache.TryGetValue(scope, out RegistryKey cached) && IsKeyValid(cached)) return cached;
-
-                RegistryKey key = OpenBaseKeyInternal(scope);
-                _baseKeyCache[scope] = key;
-                return key;
+                _cacheLock.ExitUpgradeableReadLock();
             }
-            finally { _cacheLock.ExitWriteLock(); }
         }
 
         private static bool IsKeyValid(RegistryKey key)
@@ -192,12 +200,12 @@ namespace WinPaletter
             catch { return false; }
         }
 
-        private static RegistryKey OpenBaseKeyInternal(RegScope scope)
+        private static RegistryKey OpenBaseKeyInternal(RegScope scope, string currentSid, string adminSid)
         {
             switch (scope)
             {
                 case RegScope.HKEY_CURRENT_USER:
-                    return CurrentUserSid != AdminSid ? OpenUsersSubKey(CurrentUserSid) : RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, regView);
+                    return currentSid != adminSid ? OpenUsersSubKey(currentSid) : RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, regView);
 
                 case RegScope.HKEY_REAL_CURRENT_USER:
                     return RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, regView);
@@ -215,7 +223,7 @@ namespace WinPaletter
                     return RegistryKey.OpenBaseKey(RegistryHive.Users, regView);
 
                 default:
-                    return CurrentUserSid != AdminSid ? OpenUsersSubKey(CurrentUserSid) : RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, regView);
+                    return currentSid != adminSid ? OpenUsersSubKey(currentSid) : RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, regView);
             }
         }
 
