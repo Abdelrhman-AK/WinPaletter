@@ -1,6 +1,5 @@
-//#define debug
-
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
@@ -103,7 +102,7 @@ namespace AnimatorNS
                     {
                         try
                         {
-                            db.Invoke(new MethodInvoker(() =>
+                            db.BeginInvoke(new MethodInvoker(() =>
                             {
                                 try
                                 {
@@ -165,14 +164,14 @@ namespace AnimatorNS
                         catch { }
                     }
 
-                    // Force parent repaint
+                    // Force parent repaint with BeginInvoke to avoid threading issues
                     if (parent != null && !parent.IsDisposed)
                     {
                         try
                         {
-                            if (parent.InvokeRequired)
+                            parent.BeginInvoke(new MethodInvoker(() =>
                             {
-                                parent.Invoke(new MethodInvoker(() =>
+                                try
                                 {
                                     if (!parent.IsDisposed)
                                     {
@@ -182,6 +181,14 @@ namespace AnimatorNS
                                         if (parent is WinPaletter.UI.WP.TablessControl)
                                         {
                                             parent.Refresh();
+                                            foreach (Control ctrl in parent.Controls)
+                                            {
+                                                if (!ctrl.IsDisposed)
+                                                {
+                                                    ctrl.Invalidate();
+                                                    ctrl.Update();
+                                                }
+                                            }
                                             try
                                             {
                                                 User32.InvalidateRect(parent.Handle, IntPtr.Zero, true);
@@ -190,27 +197,9 @@ namespace AnimatorNS
                                             catch { }
                                         }
                                     }
-                                }));
-                            }
-                            else
-                            {
-                                if (!parent.IsDisposed)
-                                {
-                                    parent.Invalidate(bounds);
-                                    parent.Update();
-
-                                    if (parent is WinPaletter.UI.WP.TablessControl)
-                                    {
-                                        parent.Refresh();
-                                        try
-                                        {
-                                            User32.InvalidateRect(parent.Handle, IntPtr.Zero, true);
-                                            User32.UpdateWindow(parent.Handle);
-                                        }
-                                        catch { }
-                                    }
                                 }
-                            }
+                                catch { }
+                            }));
                         }
                         catch { }
                     }
@@ -244,8 +233,7 @@ namespace AnimatorNS
             else
                 DoubleBitmap = new DoubleBitmapControl();
 
-            // Store the animated control reference in the fake control's Tag
-            // so we can identify which control this fake belongs to
+            // Store the animated control reference in the fake control's Tag so we can identify which control this fake belongs to
             DoubleBitmap.Tag = control;
 
             // Store the mode for later reference
@@ -352,47 +340,102 @@ namespace AnimatorNS
 
         protected virtual Bitmap GetBackground(Control ctrl, bool includeForeground = false, bool clip = false)
         {
-            if (ctrl is Form)
-                return GetScreenBackground(ctrl, includeForeground, clip);
+            if (ctrl is Form) return GetScreenBackground();
+
+            // Check if control and parent are valid
+            if (ctrl == null || ctrl.IsDisposed || ctrl.Parent == null || ctrl.Parent.IsDisposed)
+                return null;
 
             var bounds = GetBounds();
             int w = bounds.Width;
             int h = bounds.Height;
+
+            // Ensure valid dimensions
             if (w <= 0) w = 1;
             if (h <= 0) h = 1;
-            Bitmap bmp = BitmapCache.GetOrCreate(w, h, "background");
 
-            var clientRect = new Rectangle(0, 0, bmp.Width, bmp.Height);
-            using (Graphics g = Graphics.FromImage(bmp))
+            // Create a new bitmap directly instead of using cache to avoid sharing issues
+            Bitmap bmp;
+            try
             {
-                PaintEventArgs ea = new PaintEventArgs(g, clientRect);
-                if (clip)
-                {
-                    if (CustomClipRect == default(Rectangle))
-                        g.SetClip(new Rectangle(0, 0, w, h));
-                    else
-                        g.SetClip(CustomClipRect);
-                }
+                bmp = new Bitmap(w, h);
+            }
+            catch
+            {
+                return null;
+            }
 
-                for (int i = ctrl.Parent.Controls.Count - 1; i >= 0; i--)
+            try
+            {
+                var clientRect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+                using (Graphics G = Graphics.FromImage(bmp))
                 {
-                    var c = ctrl.Parent.Controls[i];
-                    if (c == ctrl && !includeForeground) break;
-                    if (c.Visible && !c.IsDisposed && c.Bounds.IntersectsWith(bounds))
+                    // Set high quality rendering
+                    G.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                    G.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                    G.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+
+                    PaintEventArgs ea = new(G, clientRect);
+                    if (clip)
                     {
-                        using (Bitmap cb = new Bitmap(c.Width, c.Height))
+                        if (CustomClipRect == default(Rectangle))
+                            G.SetClip(new Rectangle(0, 0, w, h));
+                        else
+                            G.SetClip(CustomClipRect);
+                    }
+
+                    // Use a safer iteration approach with a copy of the controls list
+                    Control.ControlCollection controls = ctrl.Parent.Controls;
+                    if (controls == null) return bmp;
+
+                    // Create a list of controls to iterate safely
+                    List<Control> controlsList = [];
+                    try
+                    {
+                        foreach (Control c in controls)
                         {
-                            c.DrawToBitmap(cb, new Rectangle(0, 0, c.Width, c.Height));
-                            ea.Graphics.DrawImage(cb, c.Left - bounds.Left, c.Top - bounds.Top, c.Width, c.Height);
+                            if (c != null && !c.IsDisposed) controlsList.Add(c);
                         }
                     }
-                    if (c == ctrl) break;
+                    catch { return bmp; }
+
+                    for (int i = controlsList.Count - 1; i >= 0; i--)
+                    {
+                        var c = controlsList[i];
+                        if (c == null || c.IsDisposed) continue;
+
+                        if (c == ctrl && !includeForeground) break;
+
+                        if (c.Visible && !c.IsDisposed && c.Bounds.IntersectsWith(bounds))
+                        {
+                            try
+                            {
+                                int cw = Math.Max(1, c.Width);
+                                int ch = Math.Max(1, c.Height);
+                                using (Bitmap cb = new(cw, ch))
+                                {
+                                    c.DrawToBitmap(cb, new Rectangle(0, 0, cw, ch));
+                                    if (cb != null)
+                                    {
+                                        G.DrawImage(cb, c.Left - bounds.Left, c.Top - bounds.Top, c.Width, c.Height);
+                                    }
+                                }
+                            }
+                            catch { /* Skip this control if it can't be rendered */ }
+                        }
+                        if (c == ctrl) break;
+                    }
                 }
+                return bmp;
             }
-            return bmp;
+            catch
+            {
+                try { bmp?.Dispose(); } catch { }
+                return null;
+            }
         }
 
-        private Bitmap GetScreenBackground(Control ctrl, bool includeForeground, bool clip)
+        private Bitmap GetScreenBackground()
         {
             // Check if DoubleBitmap is null (disposed) - if so, return null
             if (DoubleBitmap == null || DoubleBitmap.IsDisposed)

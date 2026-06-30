@@ -89,7 +89,7 @@ namespace WinPaletter.GitHub
                 }
             });
 
-            // Optional: handle cases where the helper returned default due to network/server/rate-limit
+            // Handle cases where the helper returned default due to network/server/rate-limit
             if (!result)
             {
                 Client.Credentials = Credentials.Anonymous;

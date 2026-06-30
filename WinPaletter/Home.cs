@@ -10,7 +10,6 @@ using System.Windows.Forms;
 using WinPaletter.Assets;
 using WinPaletter.NativeMethods;
 using WinPaletter.Properties;
-using WinPaletter.Tabs;
 using WinPaletter.Theme;
 using WinPaletter.UI.WP;
 using static WinPaletter.PreviewHelpers;
@@ -479,7 +478,7 @@ namespace WinPaletter
                     Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "Getting updates information.");
 
                     string response = await DM.ReadStringAsync(Links.Updates);
-                    string[] lines = response.Split([" ", "\n"], StringSplitOptions.RemoveEmptyEntries);
+                    string[] lines = response.Split(["\n"], StringSplitOptions.RemoveEmptyEntries);
 
                     Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Updates information are got successfully.");
 

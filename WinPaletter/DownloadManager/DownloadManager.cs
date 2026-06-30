@@ -75,7 +75,7 @@ namespace WinPaletter
 
             string result;
 
-            using (HttpResponseMessage response = client.GetAsync(url).Result)
+            using (HttpResponseMessage response = await SendWithRetryAsync(() => client.GetAsync(url)).ConfigureAwait(false))
             {
                 if (!response.IsSuccessStatusCode)
                 {
@@ -104,7 +104,7 @@ namespace WinPaletter
 
             byte[] result;
 
-            using (HttpResponseMessage response = client.GetAsync(url).Result)
+            using (HttpResponseMessage response = await SendWithRetryAsync(() => client.GetAsync(url)).ConfigureAwait(false))
             {
                 if (!response.IsSuccessStatusCode)
                 {
@@ -135,7 +135,11 @@ namespace WinPaletter
             IsBusy = true;
 
             // Create a new CancellationTokenSource
-            cts ??= new();
+            lock (lockObject)
+            {
+                cts?.Dispose();
+                cts = new CancellationTokenSource();
+            }
 
             try
             {
@@ -337,9 +341,7 @@ namespace WinPaletter
             HttpClientHandler handler = new()
             {
                 UseDefaultCredentials = true,
-                ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true,
-                SslProtocols = SslProtocols.Tls12 | SslProtocols.Tls11 | SslProtocols.Tls
-
+                SslProtocols = SslProtocols.Tls12
             };
 
             Program.Log?.Write(LogEventLevel.Information, $"Creating HttpClient with timeout of {Program.Timeout} ms and protocols {handler.SslProtocols}");
@@ -362,18 +364,17 @@ namespace WinPaletter
 
             string result;
 
-            using (HttpResponseMessage response = client.GetAsync(url).Result)
+            using (HttpResponseMessage response = SendWithRetryAsync(() => client.GetAsync(url)).GetAwaiter().GetResult())
             {
                 if (!response.IsSuccessStatusCode)
                 {
                     Program.Log?.Write(LogEventLevel.Error, $"Couldn't read string from `{url}`");
                     throw new HttpRequestException($"Error: {response.StatusCode} - {response.ReasonPhrase}");
                 }
-                else
-                {
-                    result = response.Content.ReadAsStringAsync().Result;
-                    Program.Log?.Write(LogEventLevel.Information, $"Reading string from URL `{url}` returned `{result}`");
-                }
+
+                result = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
+                Program.Log?.Write(LogEventLevel.Information, $"Reading string from URL `{url}` returned `{result}`");
             }
 
             return result;
@@ -392,7 +393,11 @@ namespace WinPaletter
             IsBusy = true;
 
             // Create a new CancellationTokenSource
-            cts = new();
+            lock (lockObject)
+            {
+                cts?.Dispose();
+                cts = new CancellationTokenSource();
+            }
 
             try
             {
@@ -479,7 +484,11 @@ namespace WinPaletter
             IsBusy = true;
 
             // Create a new CancellationTokenSource
-            cts = new CancellationTokenSource();
+            lock (lockObject)
+            {
+                cts?.Dispose();
+                cts = new CancellationTokenSource();
+            }
 
             try
             {
@@ -591,8 +600,13 @@ namespace WinPaletter
         {
             lock (lockObject)
             {
-                Program.Log?.Write(LogEventLevel.Information, $"Download is paused.");
-                cts?.Cancel();
+                if (cts is not null && !cts.IsCancellationRequested)
+                {
+                    cts.Cancel();
+                    Program.Log?.Write(LogEventLevel.Information, $"Download is paused.");
+                    return;
+                }
+                Program.Log?.Write(LogEventLevel.Information, $"Cannot pause current dowmload");
             }
         }
 
@@ -609,10 +623,15 @@ namespace WinPaletter
             {
                 if (disposed) return;
 
-                Program.Log?.Write(LogEventLevel.Information, $"Download {(canceled ? "canceled" : "finished")}.");
-                cts?.Cancel();
+                if (cts is not null && !cts.IsCancellationRequested)
+                {
+                    cts.Cancel();
+                    Program.Log?.Write(LogEventLevel.Information, $"Download {(canceled ? "canceled" : "finished")}.");
+                }
 
                 if (IsBusy) OnDownloadCompleted(new(null, true, new object()));
+
+                return;
             }
         }
 
@@ -651,6 +670,27 @@ namespace WinPaletter
         #endregion
 
         #region Helpers
+
+        private async Task<HttpResponseMessage> SendWithRetryAsync(Func<Task<HttpResponseMessage>> action, int retries = 3)
+        {
+            Exception lastException = null;
+
+            for (int i = 0; i < retries; i++)
+            {
+                try
+                {
+                    return await action().ConfigureAwait(false);
+                }
+                catch (HttpRequestException ex)
+                {
+                    lastException = ex;
+
+                    await Task.Delay(1000 * (i + 1)).ConfigureAwait(false);
+                }
+            }
+
+            throw lastException;
+        }
 
         private static string EnsureGitHubRawUrl(string url)
         {
@@ -732,10 +772,12 @@ namespace WinPaletter
             lock (lockObject)
             {
                 if (disposed) return;
+
                 disposed = true;
-                StopDownload(false);
-                client?.Dispose();
-                cts?.Dispose();
+
+                cts?.Cancel();
+
+                client.Dispose();
             }
         }
 

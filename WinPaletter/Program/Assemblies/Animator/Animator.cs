@@ -440,21 +440,9 @@ namespace AnimatorNS
             AddToQueue(control, AnimateMode.Show, parallel, animation);
         }
 
-        public void ShowSync(Control control, bool parallel = false, Animation animation = null)
-        {
-            Show(control, parallel, animation);
-            WaitAnimation(control);
-        }
-
         public void Hide(Control control, bool parallel = false, Animation animation = null)
         {
             AddToQueue(control, AnimateMode.Hide, parallel, animation);
-        }
-
-        public void HideSync(Control control, bool parallel = false, Animation animation = null)
-        {
-            Hide(control, parallel, animation);
-            WaitAnimation(control);
         }
 
         public void BeginUpdate(Control control, bool parallel = false, Animation animation = null, Rectangle clipRectangle = default(Rectangle))
@@ -489,6 +477,18 @@ namespace AnimatorNS
             }
         }
 
+        public void ShowSync(Control control, bool parallel = false, Animation animation = null)
+        {
+            Show(control, parallel, animation);
+            WaitAnimation(control);
+        }
+
+        public void HideSync(Control control, bool parallel = false, Animation animation = null)
+        {
+            Hide(control, parallel, animation);
+            WaitAnimation(control);
+        }
+
         public void EndUpdateSync(Control control)
         {
             EndUpdate(control);
@@ -503,21 +503,100 @@ namespace AnimatorNS
 
         public void WaitAnimation(Control animatedControl)
         {
+            if (animatedControl == null || animatedControl.IsDisposed)
+                return;
+
+            // Check if we're on the UI thread
+            bool isUIThread = false;
+            try
+            {
+                if (animatedControl.InvokeRequired == false)
+                    isUIThread = true;
+            }
+            catch { isUIThread = false; }
+
+            // Use a timeout to prevent infinite loops
+            DateTime startTime = DateTime.Now;
+            const int timeoutMs = 30000; // 30 second timeout
+
             while (true)
             {
-                bool flag = false;
+                // Check timeout
+                if ((DateTime.Now - startTime).TotalMilliseconds > timeoutMs)
+                {
+                    // Force cleanup of the animation
+                    lock (queue)
+                    {
+                        List<QueueItem> itemsToRemove = new List<QueueItem>();
+                        foreach (var item in queue)
+                        {
+                            if (item.control == animatedControl)
+                            {
+                                if (item.controller != null)
+                                {
+                                    try { item.controller.Dispose(); } catch { }
+                                    item.controller = null;
+                                }
+                                itemsToRemove.Add(item);
+                            }
+                        }
+                        foreach (var item in itemsToRemove)
+                        {
+                            queue.Remove(item);
+                        }
+                    }
+                    return;
+                }
+
+                bool hasAnimation = false;
                 lock (queue)
                 {
                     foreach (var item in queue)
+                    {
                         if (item.control == animatedControl)
                         {
-                            flag = true;
+                            hasAnimation = true;
                             break;
                         }
+                    }
                 }
-                if (!flag)
+
+                if (!hasAnimation)
                     return;
-                Application.DoEvents();
+
+                // Process messages differently based on thread context
+                if (isUIThread)
+                {
+                    // On UI thread, use DoEvents to process messages
+                    Application.DoEvents();
+                }
+                else
+                {
+                    // On background thread, use a short sleep and check if control is still valid
+                    if (animatedControl.IsDisposed || !animatedControl.IsHandleCreated)
+                    {
+                        // Control is gone, clean up
+                        lock (queue)
+                        {
+                            List<QueueItem> itemsToRemove = new List<QueueItem>();
+                            foreach (var item in queue)
+                            {
+                                if (item.control == animatedControl)
+                                {
+                                    itemsToRemove.Add(item);
+                                }
+                            }
+                            foreach (var item in itemsToRemove)
+                            {
+                                queue.Remove(item);
+                            }
+                        }
+                        return;
+                    }
+
+                    // Sleep briefly to yield CPU
+                    Thread.Sleep(10);
+                }
             }
         }
 
@@ -559,26 +638,35 @@ namespace AnimatorNS
 
                             if (tablessControl != null)
                             {
-                                // Force TablessControl to repaint
-                                try
+                                // Force TablessControl to repaint - use BeginInvoke to avoid deadlocks
+                                tablessControl.BeginInvoke(new MethodInvoker(() =>
                                 {
-                                    User32.InvalidateRect(tablessControl.Handle, IntPtr.Zero, true);
-                                    User32.UpdateWindow(tablessControl.Handle);
-                                }
-                                catch { }
-
-                                tablessControl.Invalidate();
-                                tablessControl.Update();
-                                tablessControl.Refresh();
-
-                                foreach (Control ctrl in tablessControl.Controls)
-                                {
-                                    if (!ctrl.IsDisposed && ctrl != item.control)
+                                    try
                                     {
-                                        ctrl.Invalidate();
-                                        ctrl.Update();
+                                        if (!tablessControl.IsDisposed)
+                                        {
+                                            tablessControl.Invalidate();
+                                            tablessControl.Update();
+                                            tablessControl.Refresh();
+
+                                            // Ensure the animated control is visible/hidden correctly
+                                            if (item.control != null && !item.control.IsDisposed)
+                                            {
+                                                item.control.Invalidate();
+                                                item.control.Update();
+                                            }
+
+                                            // Force Win32 redraw
+                                            try
+                                            {
+                                                User32.InvalidateRect(tablessControl.Handle, IntPtr.Zero, true);
+                                                User32.UpdateWindow(tablessControl.Handle);
+                                            }
+                                            catch { }
+                                        }
                                     }
-                                }
+                                    catch { }
+                                }));
                             }
                             else
                             {
@@ -619,8 +707,7 @@ namespace AnimatorNS
                 return;
             }
 
-            // IMPORTANT: Clean up any existing fake controls for this control
-            // This is critical for TablessControl scenarios
+            // Clean up any existing fake controls for this control
             CleanupExistingFakeControls(control);
 
             var item = new QueueItem() { animation = animation, control = control, IsActive = parallel, mode = mode, clipRectangle = clipRectangle };
@@ -628,6 +715,8 @@ namespace AnimatorNS
             // Check if there's already an animation for this control in the queue
             lock (queue)
             {
+                // Use a list to track items to remove
+                List<QueueItem> itemsToRemove = new List<QueueItem>();
                 foreach (var existing in queue)
                 {
                     if (existing.control == control)
@@ -645,9 +734,13 @@ namespace AnimatorNS
                             catch { }
                             existing.controller = null;
                         }
-                        queue.Remove(existing);
+                        itemsToRemove.Add(existing);
                         break;
                     }
+                }
+                foreach (var itemToRemove in itemsToRemove)
+                {
+                    queue.Remove(itemToRemove);
                 }
             }
 

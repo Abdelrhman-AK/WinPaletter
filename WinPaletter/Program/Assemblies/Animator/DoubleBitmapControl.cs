@@ -109,14 +109,15 @@ namespace AnimatorNS
                 Control parent = Parent;
                 Rectangle bounds = Bounds;
 
+                // Dispose bitmaps
                 if (bgBmp != null)
                 {
-                    bgBmp.Dispose();
+                    try { bgBmp.Dispose(); } catch { }
                     bgBmp = null;
                 }
                 if (frame != null)
                 {
-                    frame.Dispose();
+                    try { frame.Dispose(); } catch { }
                     frame = null;
                 }
 
@@ -147,33 +148,55 @@ namespace AnimatorNS
                             tablessControl = parent;
                         }
 
-                        if (tablessControl != null)
+                        if (tablessControl != null && !tablessControl.IsDisposed)
                         {
-                            // Force TablessControl to repaint using Win32 calls
-                            try
+                            // Use BeginInvoke to avoid threading issues
+                            tablessControl.BeginInvoke(new MethodInvoker(() =>
                             {
-                                User32.InvalidateRect(tablessControl.Handle, IntPtr.Zero, true);
-                                User32.UpdateWindow(tablessControl.Handle);
-                            }
-                            catch { }
-
-                            tablessControl.Invalidate();
-                            tablessControl.Update();
-                            tablessControl.Refresh();
-
-                            foreach (Control ctrl in tablessControl.Controls)
-                            {
-                                if (!ctrl.IsDisposed && ctrl != this)
+                                try
                                 {
-                                    ctrl.Invalidate();
-                                    ctrl.Update();
+                                    if (!tablessControl.IsDisposed)
+                                    {
+                                        // Force TablessControl to repaint
+                                        tablessControl.Invalidate();
+                                        tablessControl.Update();
+                                        tablessControl.Refresh();
+
+                                        // Redraw all child controls
+                                        foreach (Control ctrl in tablessControl.Controls)
+                                        {
+                                            if (!ctrl.IsDisposed && ctrl != this)
+                                            {
+                                                ctrl.Invalidate();
+                                                ctrl.Update();
+                                            }
+                                        }
+
+                                        try
+                                        {
+                                            User32.InvalidateRect(tablessControl.Handle, IntPtr.Zero, true);
+                                            User32.UpdateWindow(tablessControl.Handle);
+                                        }
+                                        catch { }
+                                    }
                                 }
-                            }
+                                catch { }
+                            }));
                         }
-                        else
+                        else if (!parent.IsDisposed)
                         {
-                            parent.Invalidate(bounds);
-                            parent.Update();
+                            parent.BeginInvoke(new MethodInvoker(() =>
+                            {
+                                try
+                                {
+                                    if (!parent.IsDisposed)
+                                    {
+                                        parent.Invalidate(bounds);
+                                        parent.Update();
+                                    }
+                                }
+                                catch { }
+                            }));
                         }
                     }
                     catch { }

@@ -23,17 +23,60 @@ namespace AnimatorNS
 
                 if (_cache.TryGetValue(cacheKey, out Bitmap cached))
                 {
-                    // Return existing if not disposed
-                    if (cached is not null)
-                        return cached;
+                    // Validate the cached bitmap is still valid
+                    if (cached != null && !IsDisposed(cached) && cached.Width == width && cached.Height == height)
+                    {
+                        // Return a clone to avoid sharing issues
+                        return CloneBitmap(cached);
+                    }
                     else
+                    {
+                        if (cached != null)
+                        {
+                            try { cached.Dispose(); } catch { }
+                        }
                         _cache.Remove(cacheKey);
+                    }
                 }
 
                 // Create new bitmap
                 Bitmap bmp = new Bitmap(width, height);
                 _cache[cacheKey] = bmp;
-                return bmp;
+                // Return a clone to avoid sharing issues
+                return CloneBitmap(bmp);
+            }
+        }
+
+        /// <summary>
+        /// Check if a bitmap is disposed
+        /// </summary>
+        private static bool IsDisposed(Bitmap bmp)
+        {
+            try
+            {
+                // This will throw if disposed
+                int width = bmp.Width;
+                return false;
+            }
+            catch
+            {
+                return true;
+            }
+        }
+
+        /// <summary>
+        /// Clone a bitmap safely
+        /// </summary>
+        private static Bitmap CloneBitmap(Bitmap source)
+        {
+            if (source == null) return null;
+            try
+            {
+                return new Bitmap(source);
+            }
+            catch
+            {
+                return null;
             }
         }
 
@@ -46,7 +89,7 @@ namespace AnimatorNS
             {
                 foreach (var kvp in _cache)
                 {
-                    kvp.Value?.Dispose();
+                    try { kvp.Value?.Dispose(); } catch { }
                 }
                 _cache.Clear();
             }
@@ -62,7 +105,7 @@ namespace AnimatorNS
                 string cacheKey = $"{key}_{width}x{height}";
                 if (_cache.TryGetValue(cacheKey, out Bitmap cached))
                 {
-                    cached?.Dispose();
+                    try { cached?.Dispose(); } catch { }
                     _cache.Remove(cacheKey);
                 }
             }

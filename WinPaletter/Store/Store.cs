@@ -957,11 +957,8 @@ namespace WinPaletter
             {
                 if (!Program.IsNetworkAvailable)
                 {
-                    Invoke(() =>
-                    {
-                        ProgressBar1.Visible = false;
-                        Tabs.SelectedIndex = 3;
-                    });
+                    ProgressBar1.Visible = false;
+                    Tabs.SelectedIndex = 3;
                 }
                 else
                 {

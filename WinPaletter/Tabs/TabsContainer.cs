@@ -1757,7 +1757,7 @@ namespace WinPaletter.Tabs
             forceChangeSelectedIndex = true;
             SelectedIndex = SI;
 
-            _tabControl.TabPages.Remove(tabData.TabPage);
+            if (tabData.TabPage is not null) _tabControl.TabPages.Remove(tabData.TabPage);
 
             if (FindForm() is not null) FindForm().Visible = _tabControl.TabPages.Count > 0;
 
