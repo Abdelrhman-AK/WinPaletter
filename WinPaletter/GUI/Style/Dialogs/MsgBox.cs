@@ -6,8 +6,16 @@ using System.Drawing;
 using System.Linq;
 using System.Media;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
+using static System.Windows.Automation.AutomationElement;
+using static WinPaletter.NativeMethods.GDI32;
+using static WinPaletter.NativeMethods.User32;
+using static WinPaletter.NativeMethods.UxTheme;
 
 namespace WinPaletter.UI.Style
 {
@@ -609,21 +617,317 @@ namespace WinPaletter.UI.Style
         /// <summary>
         /// A void that handles the Created event of the modern task dialog.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         public static void TD_Created(object sender, EventArgs e)
         {
-            // Get the handle of the dialog
-            IntPtr hWnd = (sender as IWin32Window).Handle;
+            IntPtr hWnd = ((IWin32Window)sender).Handle;
 
-            // Don't make whole window dark, as it makes some controls invisible (like the expanded details box and labels)
-            NativeMethods.Helpers.SetHWNDDarkMode(hWnd, Program.Style.DarkMode, false);
+            NativeMethods.Helpers.SetHWNDDarkMode(hWnd, Program.Style.DarkMode);
 
-            //// Process the modern style to the child controls of the dialog
-            //foreach (IntPtr ChildHwnd in User32.GetChildWindowHandles(hWnd))
-            //{
-            //    NativeMethods.Helpers.SetHWNDDarkMode(ChildHwnd, Program.Style.DarkMode);
-            //}
+            ApplyDarkModeRecursive(hWnd);
+
+            foreach (IntPtr child in User32.GetChildWindowHandles(hWnd))
+            {
+                NativeMethods.Helpers.SetHWNDDarkMode(child, Program.Style.DarkMode);
+                ApplyDarkModeRecursive(child);
+            }
+        }
+
+        public static string GetClassName(IntPtr hWnd)
+        {
+            StringBuilder className = new(256);
+            return User32.GetClassName(hWnd, className, className.Capacity) > 0 ? className.ToString() : string.Empty;
+        }
+
+        private static void ApplyDarkModeRecursive(IntPtr hwnd)
+        {
+            NativeMethods.Helpers.SetHWNDDarkMode(hwnd, Program.Style.DarkMode);
+
+            switch (GetClassName(hwnd))
+            {
+                case "Button":
+                    SetControlTheme(hwnd, Program.Style.DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default);
+                    break;
+
+                case "Static":
+                    SubclassStatic(hwnd);
+                    break;
+
+                case "SysLink":
+                    SubclassSysLink(hwnd);
+                    break;
+
+                case "DirectUIHWND":
+                    SubclassDirectUI(hwnd);
+                    break;
+            }
+
+            foreach (IntPtr child in User32.GetChildWindowHandles(hwnd))
+                ApplyDarkModeRecursive(child);
+        }
+
+        private static void SubclassStatic(IntPtr hwnd)
+        {
+            SetControlTheme(hwnd, Program.Style.DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Explorer);
+            User32.InvalidateRect(hwnd, IntPtr.Zero, true);
+        }
+
+        private static void SubclassSysLink(IntPtr hwnd)
+        {
+            SetControlTheme(hwnd, Program.Style.DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Explorer);
+            User32.InvalidateRect(hwnd, IntPtr.Zero, true);
+        }
+
+        private static readonly Dictionary<IntPtr, IntPtr> _originalWndProc = [];
+
+        private delegate IntPtr WndProcDelegate(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
+        private static readonly WndProcDelegate _directUIProc = DirectUIWndProc;
+
+        private static readonly Dictionary<IntPtr, List<CachedTextElement>> _textCache = [];
+
+        private static void SubclassDirectUI(IntPtr hwnd)
+        {
+            SetControlTheme(hwnd, CtrlTheme.DarkExplorer);
+            NativeMethods.Helpers.SetHWNDDarkMode(hwnd, Program.Style.DarkMode);
+
+            // Cache the text details ONCE right here, or on the very first paint.
+            // This moves the slow UIA overhead out of the WM_PAINT loop.
+            if (!_textCache.ContainsKey(hwnd)) CacheElementsForWindow(hwnd);
+
+            if (!_originalWndProc.ContainsKey(hwnd))
+            {
+                IntPtr proc = Marshal.GetFunctionPointerForDelegate(_directUIProc);
+                _originalWndProc[hwnd] = User32.SetWindowLongPtr(hwnd, -4, proc);
+            }
+
+            User32.InvalidateRect(hwnd, IntPtr.Zero, false);
+        }
+
+        private static void CacheElementsForWindow(IntPtr hwnd)
+        {
+            List<CachedTextElement> elementsList = [];
+
+            AutomationElement root = AutomationElement.FromHandle(hwnd);
+            if (root == null) return;
+
+            AutomationElementCollection elements = root.FindAll(TreeScope.Descendants, Condition.TrueCondition);
+
+            foreach (AutomationElement element in elements)
+            {
+                AutomationElementInformation current = element.Current;
+
+                if (current.ControlType != ControlType.Text &&
+                    current.ControlType != ControlType.Hyperlink)
+                    continue;
+
+                if (string.IsNullOrWhiteSpace(current.Name))
+                    continue;
+
+                Rect bounds = current.BoundingRectangle;
+                if (bounds.IsEmpty)
+                    continue;
+
+                POINT pt = new((int)bounds.Left, (int)bounds.Top);
+                ScreenToClient(hwnd, ref pt);
+
+                TextElementType type = GetElementType(current.AutomationId);
+
+                if (type == TextElementType.Unknown)
+                {
+                    if (current.ControlType == ControlType.Hyperlink)
+                    {
+                        type = TextElementType.ContentLink;
+                    }
+                    else
+                    {
+                        // Any other visible text that lacks an AutomationId
+                        // is most likely footer, expanded text, verification text, etc.
+                        type = TextElementType.ContentText;
+                    }
+                }
+
+                elementsList.Add(new CachedTextElement
+                {
+                    Type = type,
+                    Text = current.Name,
+                    Bounds = new Rectangle(
+                        pt.X,
+                        pt.Y,
+                        (int)bounds.Width,
+                        (int)bounds.Height)
+                });
+            }
+
+            _textCache[hwnd] = elementsList;
+        }
+
+        private const uint WM_PAINT = 0x000F;
+
+        private static IntPtr DirectUIWndProc(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam)
+        {
+            IntPtr result = User32.CallWindowProc(_originalWndProc[hWnd], hWnd, msg, wParam, lParam);
+
+            if (msg == WM_PAINT)
+            {
+                CacheElementsForWindow(hWnd);
+
+                using Graphics g = Graphics.FromHwnd(hWnd);
+                PaintDirectUIText(hWnd, g);
+            }
+
+            return result;
+        }
+
+        private static LOGFONT GetFont(TextElementType type)
+        {
+            LOGFONT lf = new()
+            {
+                lfFaceName = "Segoe UI",
+                lfWeight = 400
+            };
+
+            switch (type)
+            {
+                case TextElementType.MainInstruction:
+                    lf.lfHeight = -16;
+                    break;
+
+                case TextElementType.ContentText:
+                case TextElementType.ContentLink:
+                case TextElementType.ExpandedInformationText:
+                case TextElementType.ExpandedInformationLink:
+                case TextElementType.ExpandoTextExpanded:
+                case TextElementType.ExpandoTextCollapsed:
+                case TextElementType.VerificationText:
+                    lf.lfHeight = -12;
+                    break;
+            }
+
+            return lf;
+        }
+
+        private static Color GetTextColor(TextElementType type)
+        {
+            return type switch
+            {
+                TextElementType.MainInstruction => Color.FromArgb(153, 235, 255),
+
+                TextElementType.ContentText or
+                TextElementType.ExpandedInformationText or
+                TextElementType.ExpandedInformationLink or
+                TextElementType.ContentLink or
+                TextElementType.ExpandoTextExpanded or
+                TextElementType.ExpandoTextCollapsed or
+                TextElementType.VerificationText
+                    => Color.White,
+
+                _ => Color.White
+            };
+        }
+
+        private static TextElementType GetElementType(string id)
+        {
+            return id switch
+            {
+                "MainInstruction" => TextElementType.MainInstruction,
+                "ContentText" => TextElementType.ContentText,
+                "ContentLink" => TextElementType.ContentLink,
+                "ExpandedInformationText" => TextElementType.ExpandedInformationText,
+                "ExpandedInformationLink" => TextElementType.ExpandedInformationLink,
+                "ExpandoTextExpanded" => TextElementType.ExpandoTextExpanded,
+                "ExpandoTextCollapsed" => TextElementType.ExpandoTextCollapsed,
+                "VerificationText" => TextElementType.VerificationText,
+                _ => TextElementType.Unknown
+            };
+        }
+
+        private enum TextElementType
+        {
+            MainInstruction,
+            ContentText,
+            ContentLink,
+            ExpandedInformationText,
+            ExpandedInformationLink,
+            ExpandoTextExpanded,
+            ExpandoTextCollapsed,
+            VerificationText,
+            Unknown
+        }
+
+        private static bool LooksLikePath(string text)
+        {
+            return
+                text.Contains(":\\") ||
+                text.StartsWith(@"\\") ||
+                text.Contains('/');
+        }
+
+        private struct CachedTextElement
+        {
+            public TextElementType Type;
+            public string Text;
+            public Rectangle Bounds;
+        }
+
+        private static void PaintDirectUIText(IntPtr hwnd, Graphics g)
+        {
+            if (!_textCache.TryGetValue(hwnd, out var cachedElements))
+                return;
+
+            IntPtr hTheme = OpenThemeData(hwnd, "TEXTSTYLE");
+            if (hTheme == IntPtr.Zero) return;
+
+            IntPtr hdc = IntPtr.Zero;
+            try
+            {
+                hdc = g.GetHdc();
+
+                foreach (var element in cachedElements)
+                {
+                    RECT rc = new(element.Bounds);
+                    Color foreColor = GetTextColor(element.Type);
+                    LOGFONT lf = GetFont(element.Type);
+
+                    // Paint background to cover old text quickly
+                    IntPtr hBrush = CreateSolidBrush(ColorTranslator.ToWin32(Color.FromArgb(44, 44, 44)));
+                    FillRect(hdc, ref rc, hBrush);
+                    DeleteObject(hBrush);
+
+                    IntPtr hFont = CreateFontIndirect(ref lf);
+                    if (hFont == IntPtr.Zero) continue;
+
+                    IntPtr oldFont = SelectObject(hdc, hFont);
+                    try
+                    {
+                        DTTOPTS opts = new()
+                        {
+                            dwSize = (uint)Marshal.SizeOf<DTTOPTS>(),
+                            dwFlags = DTT_TEXTCOLOR | DTT_COMPOSITED,
+                            crText = new COLORREF(foreColor)
+                        };
+
+                        uint flags = DT_NOPREFIX;
+
+                        if (LooksLikePath(element.Text))
+                            flags |= DT_PATH_ELLIPSIS;
+                        else
+                            flags |= DT_END_ELLIPSIS;
+
+                        flags |= DT_WORDBREAK;
+
+                        DrawThemeTextEx(hTheme, hdc, 0, 0, element.Text, -1, flags, ref rc, ref opts);
+                    }
+                    finally
+                    {
+                        SelectObject(hdc, oldFont);
+                        DeleteObject(hFont);
+                    }
+                }
+            }
+            finally
+            {
+                if (hdc != IntPtr.Zero) g.ReleaseHdc(hdc);
+                CloseThemeData(hTheme);
+            }
         }
 
         #endregion

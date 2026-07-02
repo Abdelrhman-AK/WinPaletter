@@ -105,7 +105,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="hWnd">A handle to the window whose title bar appearance is being modified.</param>
         /// <param name="darkMode">A boolean value indicating whether to enable dark mode.  <see langword="true"/> enables dark mode; <seelangword="false"/> enables light mode.</param>
         /// <param name="wholeWindow">A boolean value indicating whether to apply the dark mode setting to the entire window. Default is <see langword="true"/>.</param>
-        public static void SetHWNDDarkMode(IntPtr hWnd, bool darkMode, bool wholeWindow = true)
+        public static void SetHWNDDarkMode(IntPtr hWnd, bool darkMode)
         {
             // Check if the operating system is Windows XP, Vista, 7, 8, or 8.1
             if (OS.WXP || OS.WVista || OS.W7 || OS.W8x) return;
@@ -143,7 +143,7 @@ namespace WinPaletter.NativeMethods
 
             DWMAPI.DwmSetWindowAttribute(hWnd, (int)DWMAPI.DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, ref mica, Marshal.SizeOf<int>());
 
-            if (wholeWindow) SetControlTheme(hWnd, Program.Style.DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default);
+            SetControlTheme(hWnd, Program.Style.DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default);
         }
 
         #endregion

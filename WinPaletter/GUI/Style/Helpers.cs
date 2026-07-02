@@ -163,7 +163,7 @@ namespace WinPaletter.UI.Style
                 // try is used as a fallback for Windows 10 1809 and below
                 try
                 {
-                    UxTheme.SetPreferredAppMode(DarkMode ? UxTheme.PreferredAppMode.Dark : UxTheme.PreferredAppMode.Light);
+                    UxTheme.SetPreferredAppMode(DarkMode ? (int)UxTheme.PreferredAppMode.Dark : (int)UxTheme.PreferredAppMode.Light);
                 }
                 catch { } // ignored
             }

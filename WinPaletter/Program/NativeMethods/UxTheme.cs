@@ -39,7 +39,136 @@ namespace WinPaletter.NativeMethods
         /// <param name="preferredAppMode"></param>
         /// <returns></returns>
         [DllImport(_uxtheme, EntryPoint = "#135", SetLastError = true, CharSet = CharSet.Unicode)]
-        public static extern int SetPreferredAppMode(PreferredAppMode preferredAppMode);
+        public static extern int SetPreferredAppMode(int preferredAppMode);
+
+        /// <summary>
+        /// Allow dark mode for a window provided by its handle
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <param name="allow"></param>
+        /// <returns></returns>
+        [DllImport(_uxtheme, EntryPoint = "#133", SetLastError = true)]
+        public static extern bool AllowDarkModeForWindow(IntPtr hWnd, bool allow);
+
+        /// <summary>
+        /// Opens a theme data handle for a specified window and class list.
+        /// </summary>
+        /// <param name="hwnd"></param>
+        /// <param name="pszClassList"></param>
+        /// <returns></returns>
+        [DllImport(_uxtheme, CharSet = CharSet.Unicode)]
+        public static extern IntPtr OpenThemeData(IntPtr hwnd, string pszClassList);
+
+        /// <summary>
+        /// Closes a theme data handle and releases associated resources.
+        /// </summary>
+        /// <param name="hTheme"></param>
+        /// <returns></returns>
+        [DllImport(_uxtheme)]
+        public static extern int CloseThemeData(IntPtr hTheme);
+
+        /// <summary>
+        /// Gets the font associated with a specified theme part and state.
+        /// </summary>
+        /// <param name="hTheme"></param>
+        /// <param name="hdc"></param>
+        /// <param name="iPartId"></param>
+        /// <param name="iStateId"></param>
+        /// <param name="iPropId"></param>
+        /// <param name="pFont"></param>
+        /// <returns></returns>
+        [DllImport(_uxtheme, CharSet = CharSet.Unicode)]
+        public static extern int GetThemeFont(IntPtr hTheme, IntPtr hdc, int iPartId, int iStateId, int iPropId, out GDI32.LOGFONT pFont);
+
+        /// <summary>
+        /// Gets the color associated with a specified theme part and property.
+        /// </summary>
+        /// <param name="hTheme"></param>
+        /// <param name="iPartId"></param>
+        /// <param name="iStateId"></param>
+        /// <param name="iPropId"></param>
+        /// <param name="color"></param>
+        /// <returns></returns>
+        [DllImport(_uxtheme)]
+        public static extern int GetThemeColor(IntPtr hTheme, int iPartId, int iStateId, int iPropId, out COLORREF color);
+
+        /// <summary>
+        /// Draws text using the visual style defined by the theme for a specified control part and state.
+        /// </summary>
+        /// <param name="hTheme"></param>
+        /// <param name="hdc"></param>
+        /// <param name="iPartId"></param>
+        /// <param name="iStateId"></param>
+        /// <param name="text"></param>
+        /// <param name="iCharCount"></param>
+        /// <param name="dwFlags"></param>
+        /// <param name="pRect"></param>
+        /// <param name="pOptions"></param>
+        /// <returns></returns>
+        [DllImport(_uxtheme, CharSet = CharSet.Unicode)]
+        public static extern int DrawThemeTextEx(IntPtr hTheme, IntPtr hdc, int iPartId, int iStateId, string text, int iCharCount, uint dwFlags, ref RECT pRect, ref DTTOPTS pOptions);
+
+        /// <summary>
+        /// Color reference structure used to represent colors in the UxTheme API.
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential)]
+        public struct COLORREF(Color c)
+        {
+            public uint Value = (uint)(c.R | (c.G << 8) | (c.B << 16));
+
+            public readonly Color Color => Color.FromArgb((int)(Value & 0xFF), (int)((Value >> 8) & 0xFF), (int)((Value >> 16) & 0xFF));
+        }
+
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+        public struct DTTOPTS
+        {
+            public uint dwSize;
+            public uint dwFlags;
+            public COLORREF crText;
+            public uint iBorderSize;
+            public uint iFontPropId;
+            public uint iColorPropId;
+            public uint iStateId;
+            public bool fApplyOverlay;
+            public int iGlowSize;
+            public IntPtr pfnDrawTextCallback;
+            public IntPtr lParam;
+        }
+
+        public const uint DT_TOP = 0x00000000;
+        public const uint DT_LEFT = 0x00000000;
+        public const uint DT_CENTER = 0x00000001;
+        public const uint DT_RIGHT = 0x00000002;
+        public const uint DT_VCENTER = 0x00000004;
+        public const uint DT_BOTTOM = 0x00000008;
+        public const uint DT_WORDBREAK = 0x00000010;
+        public const uint DT_SINGLELINE = 0x00000020;
+        public const uint DT_EXPANDTABS = 0x00000040;
+        public const uint DT_TABSTOP = 0x00000080;
+        public const uint DT_NOCLIP = 0x00000100;
+        public const uint DT_EXTERNALLEADING = 0x00000200;
+        public const uint DT_CALCRECT = 0x00000400;
+        public const uint DT_NOPREFIX = 0x00000800;
+        public const uint DT_INTERNAL = 0x00001000;
+        public const uint DT_EDITCONTROL = 0x00002000;
+        public const uint DT_PATH_ELLIPSIS = 0x00004000;
+        public const uint DT_END_ELLIPSIS = 0x00008000;
+        public const uint DT_MODIFYSTRING = 0x00010000;
+        public const uint DT_RTLREADING = 0x00020000;
+        public const uint DT_WORD_ELLIPSIS = 0x00040000;
+        public const uint DT_NOFULLWIDTHCHARBREAK = 0x00080000;
+        public const uint DT_HIDEPREFIX = 0x00100000;
+        public const uint DT_PREFIXONLY = 0x00200000;
+        public const uint DTT_GLOWSIZE = 2048;
+
+        public const int TMT_TEXTCOLOR = 3803;
+        public const int TMT_FONT = 210;
+
+        public const int TDLG_MAININSTRUCTIONPANE = 1;
+        public const int TDLG_CONTENTPANE = 2;
+
+        public const uint DTT_TEXTCOLOR = 0x00000001;
+        public const uint DTT_COMPOSITED = 0x00002000;
 
         /// <summary>
         /// Represents a method that opens a theme data handle for a specified window and class list.

@@ -99,8 +99,9 @@ namespace WinPaletter.GitHub
                 Events.OnServerUnavailable();
                 return default;
             }
-            catch (HttpRequestException)
+            catch (Exception ex) when (IsNetworkException(ex))
             {
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Warning, $"GitHub call failed due to network interruption ({ex.GetType().Name}).", ex);
                 Events.OnNetworkLost();
                 return default;
             }
@@ -112,6 +113,48 @@ namespace WinPaletter.GitHub
 
             int code = (int)ex.StatusCode;
             return code >= 500 && code <= 599;
+        }
+
+        /// <summary>
+        /// Determines whether an exception (or any exception in its InnerException chain)
+        /// represents a network connectivity failure rather than an application defect.
+        /// Covers both the modern HttpClient stack (HttpRequestException wrapping
+        /// SocketException/WebException) and the legacy HttpWebRequest stack
+        /// (raw WebException, SocketException, and the ObjectDisposedException/
+        /// InvalidOperationException race conditions thrown by ServicePoint/Connection
+        /// internals when a connection is torn down mid-request).
+        /// </summary>
+        internal static bool IsNetworkException(Exception ex)
+        {
+            while (ex is not null)
+            {
+                if (ex is HttpRequestException
+                    or WebException
+                    or System.Net.Sockets.SocketException
+                    or TaskCanceledException)
+                {
+                    return true;
+                }
+
+                if (ex is ObjectDisposedException && ex.Message.Contains("NetworkStream"))
+                {
+                    return true;
+                }
+
+                if (ex is ObjectDisposedException && ex.Message.Contains("Safe handle"))
+                {
+                    return true;
+                }
+
+                if (ex is InvalidOperationException && ex.Message.Contains("asynchronous result"))
+                {
+                    return true;
+                }
+
+                ex = ex.InnerException;
+            }
+
+            return false;
         }
     }
 }

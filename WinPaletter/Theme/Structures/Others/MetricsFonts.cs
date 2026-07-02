@@ -3,6 +3,7 @@ using libmsstyle;
 using Microsoft.Win32;
 using Serilog.Events;
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -11,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
+using static WinPaletter.NativeMethods.GDI32;
 using static WinPaletter.NativeMethods.User32;
 using static WinPaletter.PreviewHelpers;
 

@@ -91,7 +91,7 @@ namespace WinPaletter
                 if (MouseMoved != null)
                 {
                     var hookStruct = Marshal.PtrToStructure<User32.MSLLHOOKSTRUCT>(lParam);
-                    var args = new MouseEventArgs(MouseButtons.None, 0, hookStruct.pt.x, hookStruct.pt.y, 0);
+                    var args = new MouseEventArgs(MouseButtons.None, 0, hookStruct.pt.X, hookStruct.pt.Y, 0);
 
                     MouseMoved?.Invoke(this, args);
                 }

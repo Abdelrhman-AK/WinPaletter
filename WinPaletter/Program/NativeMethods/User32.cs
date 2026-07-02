@@ -20,6 +20,13 @@ namespace WinPaletter.NativeMethods
         private const string _user32 = "user32.dll";
 
         /// <summary>
+        /// Retrieves a handle to the foreground window (the window with which the user is currently working).
+        /// </summary>
+        /// <returns>A handle to the foreground window. The foreground window can be NULL in certain circumstances, such as when a window is losing activation.</returns>
+        [DllImport(_user32, SetLastError = true)]
+        public static extern IntPtr GetForegroundWindow();
+
+        /// <summary>
         /// Retrieves the dimensions of the bounding rectangle of the specified window.
         /// </summary>
         /// <remarks>The coordinates returned are relative to the screen. If the window is minimized, the
@@ -166,21 +173,14 @@ namespace WinPaletter.NativeMethods
         public static extern bool RedrawWindow(IntPtr hWnd, IntPtr lprcUpdate, IntPtr hrgnUpdate, uint flags);
 
         /// <summary>
-        /// Draws a frame control, such as a button, check box, or scroll bar, in the specified rectangle on a device
-        /// context.
+        /// Gets the client coordinates of a specified point on the screen, converting from screen coordinates to client-area coordinates relative to the specified window.
         /// </summary>
-        /// <remarks>This method is a wrapper for the native DrawFrameControl function in user32.dll. The
-        /// caller is responsible for ensuring that the device context and rectangle are valid. For information about
-        /// valid values for uType and uState, see the Windows API documentation for DrawFrameControl.</remarks>
-        /// <param name="hdc">A handle to the device context on which to draw the frame control.</param>
-        /// <param name="lprc">A reference to a RECT structure that specifies the bounding rectangle, in logical units, for the frame
-        /// control.</param>
-        /// <param name="uType">The type of frame control to draw. This parameter must be one of the predefined control type values.</param>
-        /// <param name="uState">The state of the frame control to draw. This parameter must be a combination of state values appropriate for
-        /// the specified control type.</param>
-        /// <returns>true if the function succeeds; otherwise, false.</returns>
-        [DllImport(_user32)]
-        public static extern bool DrawFrameControl(IntPtr hdc, ref RECT lprc, uint uType, uint uState);
+        /// <param name="hWnd"></param>
+        /// <param name="lpPoint"></param>
+        /// <returns></returns>
+        [DllImport(_user32, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool ScreenToClient(IntPtr hWnd, ref POINT lpPoint);
 
         /// <summary>
         /// Retrieves information about icons or icon-sized images from a specified File.
@@ -844,6 +844,38 @@ namespace WinPaletter.NativeMethods
         public static extern uint SetTextColor(IntPtr hdc, int crColor);
 
         /// <summary>
+        /// Fills a rectangle in the specified device context with the specified brush.
+        /// </summary>
+        /// <param name="hDC"></param>
+        /// <param name="lprc"></param>
+        /// <param name="hbr"></param>
+        /// <returns></returns>
+        [DllImport(_user32, SetLastError = true)]
+        public static extern int FillRect(IntPtr hDC, [In] ref RECT lprc, IntPtr hbr);
+
+        /// <summary>
+        /// Draws formatted text in the specified rectangle of a device context.
+        /// </summary>
+        /// <param name="hdc"></param>
+        /// <param name="lpchText"></param>
+        /// <param name="nCount"></param>
+        /// <param name="lpRect"></param>
+        /// <param name="uFormat"></param>
+        /// <returns></returns>
+        [DllImport(_user32, CharSet = CharSet.Unicode)]
+        public static extern int DrawText(IntPtr hdc, string lpchText, int nCount, ref RECT lpRect, uint uFormat);
+
+        /// <summary>
+        /// Gets the text of the specified window's title bar (if it has one) or the text of a control.
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <param name="lpString"></param>
+        /// <param name="nMaxCount"></param>
+        /// <returns></returns>
+        [DllImport(_user32, CharSet = CharSet.Unicode)]
+        public static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
+
+        /// <summary>
         /// Retrieves the class name of the specified window.
         /// </summary>
         /// <remarks>To retrieve extended error information when the function fails, call <see
@@ -1103,8 +1135,12 @@ namespace WinPaletter.NativeMethods
             public IntPtr dwExtraInfo;
         }
 
-        [StructLayout(LayoutKind.Sequential)]
-        public struct POINT { public int x; public int y; }
+        [StructLayout(LayoutKind.Sequential)] 
+        public struct POINT(int x, int y)
+        { 
+            public int X = x;
+            public int Y = y;
+        }
 
         /// <summary>
         /// Contains parameters that describe the non-client area metrics of a window, such as the caption height, border width, and the system font.

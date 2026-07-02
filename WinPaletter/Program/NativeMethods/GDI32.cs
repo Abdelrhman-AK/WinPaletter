@@ -400,6 +400,9 @@ namespace WinPaletter.NativeMethods
         [DllImport(_gdi32, SetLastError = true)]
         public static extern int SetTextColor(IntPtr hdc, int crColor);
 
+        [DllImport(_gdi32)]
+        public static extern int SetBkMode(IntPtr hdc, int mode);
+
         /// <summary>
         /// Creates a device-independent bitmap (DIB) that applications can write to directly and selects it into a
         /// device context.
@@ -442,6 +445,34 @@ namespace WinPaletter.NativeMethods
         /// <returns>true if the operation succeeds; otherwise, false.</returns>
         [DllImport(_gdi32)]
         public static extern bool BitBlt(IntPtr hdcDest, int x, int y, int cx, int cy, IntPtr hdcSrc, int x1, int y1, uint rop);
+
+        [DllImport(_gdi32, CharSet = CharSet.Unicode, SetLastError = true)]
+        public static extern IntPtr CreateFontIndirect([In] LOGFONT lplf);
+
+        [DllImport(_gdi32, CharSet = CharSet.Unicode, SetLastError = true)]
+        public static extern IntPtr CreateFontIndirect([In] ref LOGFONT lplf);
+
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+        public struct LOGFONT
+        {
+            public int lfHeight;
+            public int lfWidth;
+            public int lfEscapement;
+            public int lfOrientation;
+            public int lfWeight;
+
+            public byte lfItalic;
+            public byte lfUnderline;
+            public byte lfStrikeOut;
+            public byte lfCharSet;
+            public byte lfOutPrecision;
+            public byte lfClipPrecision;
+            public byte lfQuality;
+            public byte lfPitchAndFamily;
+
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
+            public string lfFaceName;
+        }
 
         /// <summary>
         /// Defines the core header information for a device-independent bitmap (DIB).
