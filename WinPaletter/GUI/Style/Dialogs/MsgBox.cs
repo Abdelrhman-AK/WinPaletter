@@ -372,6 +372,7 @@ namespace WinPaletter.UI.Style
 
         private static void ApplyDarkMode(IntPtr hwnd)
         {
+            if (OS.WXP) return;
             if (!Program.Style.DarkMode) return;
 
             NativeMethods.Helpers.SetHWNDDarkMode(hwnd, true);

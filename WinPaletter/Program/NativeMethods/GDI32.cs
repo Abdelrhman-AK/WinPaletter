@@ -568,6 +568,11 @@ namespace WinPaletter.NativeMethods
         public const uint DI_NORMAL = 0x0003;
 
         /// <summary>
+        /// Device Independent (DI) flags: Compatible rendering
+        /// </summary>
+        public const uint DI_COMPAT = 0x0004;
+
+        /// <summary>
         /// Draw text flags: Left alignment
         /// </summary>
         public const uint DT_LEFT = 0x00000000;

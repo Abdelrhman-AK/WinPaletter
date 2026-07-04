@@ -15,19 +15,69 @@ namespace WinPaletter
 {
     internal static class DarkColors
     {
+        /// <summary>
+        /// Primary panel background color.
+        /// </summary>
         public static readonly COLORREF kPrimary = new(Color.FromArgb(32, 32, 32));
-        public static readonly COLORREF kSecondary = new(Color.FromArgb(44, 44, 44));
-        public static readonly COLORREF kFootnote = new(Color.FromArgb(44, 44, 44));
-        public static readonly COLORREF kSeparator = new(Color.FromArgb(68, 68, 68));
 
+        /// <summary>
+        /// Secondary panel background color.
+        /// </summary>
+        public static readonly COLORREF kSecondary = new(Color.FromArgb(44, 44, 44));
+
+        /// <summary>
+        /// Footnote area background color.
+        /// </summary>
+        public static readonly COLORREF kFootnote = new(Color.FromArgb(44, 44, 44));
+
+        /// <summary>
+        /// Separator line color.
+        /// </summary>
+        public static readonly COLORREF kSeparator = new(Color.FromArgb(77, 77, 77));
+
+        /// <summary>
+        /// Normal text color used for general content.
+        /// </summary>
         public static readonly COLORREF kTextNormal = new(Color.FromArgb(255, 255, 255));
-        public static readonly COLORREF kTextInstruct = new(Color.FromArgb(255, 255, 255));
-        public static readonly COLORREF kTextContent = new(Color.FromArgb(216, 216, 216));
-        public static readonly COLORREF kTextExpInfo = new(Color.FromArgb(216, 216, 216));
-        public static readonly COLORREF kTextExpando = new(Color.FromArgb(153, 209, 255));
-        public static readonly COLORREF kTextVerify = new(Color.FromArgb(216, 216, 216));
-        public static readonly COLORREF kTextFootnote = new(Color.FromArgb(216, 216, 216));
-        public static readonly COLORREF kTextFtrExp = new(Color.FromArgb(216, 216, 216));
+
+        /// <summary>
+        /// Main instruction text color.
+        /// </summary>
+        public static readonly COLORREF kTextInstruct = new(Color.FromArgb(153, 235, 255));
+
+        /// <summary>
+        /// Content text color used for ContentText, ContentLink, ExpandedInformationText, and ExpandedInformationLink.
+        /// </summary>
+        public static readonly COLORREF kTextContent = new(Color.FromArgb(255, 255, 255));
+
+        /// <summary>
+        /// Expanded information text color.
+        /// </summary>
+        public static readonly COLORREF kTextExpInfo = new(Color.FromArgb(255, 255, 255));
+
+        /// <summary>
+        /// Expando button text color for both expanded and collapsed states.
+        /// </summary>
+        public static readonly COLORREF kTextExpando = new(Color.FromArgb(255, 255, 255));
+
+        /// <summary>
+        /// Verification checkbox text color.
+        /// </summary>
+        public static readonly COLORREF kTextVerify = new(Color.FromArgb(255, 255, 255));
+
+        /// <summary>
+        /// Footnote text color used for FootnoteText and FootnoteTextLink.
+        /// </summary>
+        public static readonly COLORREF kTextFootnote = new(Color.FromArgb(224, 224, 224));
+
+        /// <summary>
+        /// Expanded footer text color used for ExpandedFooterText and ExpandedFooterTextLink.
+        /// </summary>
+        public static readonly COLORREF kTextFtrExp = new(Color.FromArgb(224, 224, 224));
+
+        /// <summary>
+        /// Radio button text color. Note: Radio buttons use system themes by default.
+        /// </summary>
         public static readonly COLORREF kTextRadio = new(Color.FromArgb(216, 216, 216));
     }
 
