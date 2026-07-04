@@ -536,7 +536,7 @@ namespace WinPaletter
             TerCursorHeightBar.Value = profile.CursorHeight;
 
             TerFontName.Text = profile.Font.Face;
-            GDI32.LogFont fx = new();
+            GDI32.LOGFONT fx = new();
 
             using (Font f_cmd = new(profile.Font.Face, profile.Font.Size))
             {
@@ -1182,7 +1182,7 @@ namespace WinPaletter
             }
 
             WinTerminal.Types.Profile temp_p = TerProfiles.SelectedIndex == 0 ? _Terminal.Profiles.Defaults : _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1];
-            GDI32.LogFont fx = new();
+            GDI32.LOGFONT fx = new();
             Font f_cmd = new(temp_p.Font.Face, temp_p.Font.Size);
             f_cmd.ToLogFont(fx);
             fx.lfWeight = (int)temp_p.Font.Weight * 100;
@@ -1201,7 +1201,7 @@ namespace WinPaletter
 
         private void TerFontWeight_SelectedIndexChanged(object sender, EventArgs e)
         {
-            GDI32.LogFont fx = new();
+            GDI32.LOGFONT fx = new();
             Font f_cmd = new(Terminal1.Font.Name, Terminal1.Font.Size, Terminal1.Font.Style);
             f_cmd.ToLogFont(fx);
             fx.lfWeight = TerFontWeight.SelectedIndex * 100;
@@ -1671,7 +1671,7 @@ namespace WinPaletter
                         TerCursorHeightBar.Value = CCatFrom.CursorHeight;
 
                         TerFontName.Text = CCatFrom.Font.Face;
-                        GDI32.LogFont fx = new();
+                        GDI32.LOGFONT fx = new();
                         Font f_cmd = new(CCatFrom.Font.Face, CCatFrom.Font.Size);
                         f_cmd.ToLogFont(fx);
                         fx.lfWeight = (int)CCatFrom.Font.Weight * 100;
@@ -1859,7 +1859,7 @@ namespace WinPaletter
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     TerFontName.Text = dlg.Font.Name;
-                    GDI32.LogFont fx = new();
+                    GDI32.LOGFONT fx = new();
                     dlg.Font.ToLogFont(fx);
                     fx.lfWeight = TerFontWeight.SelectedIndex * 100;
                     {

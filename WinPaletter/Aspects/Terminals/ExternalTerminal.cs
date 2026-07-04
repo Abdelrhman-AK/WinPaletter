@@ -538,7 +538,7 @@ namespace WinPaletter
 
                 if (!CMD_RasterToggle.Checked)
                 {
-                    GDI32.LogFont logFont = new()
+                    GDI32.LOGFONT logFont = new()
                     {
                         lfFaceName = FaceName,
                         lfHeight = -PixelHeight,
@@ -827,7 +827,7 @@ namespace WinPaletter
 
         private void CMD_FontWeightBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            GDI32.LogFont logFont = new();
+            GDI32.LOGFONT logFont = new();
             F_cmd.ToLogFont(logFont);
             logFont.lfHeight = -(int)CMD_FontPxHeight.Value;
             logFont.lfWidth = 0;
@@ -1654,7 +1654,7 @@ namespace WinPaletter
 
             if (!Console.FontRaster)
             {
-                GDI32.LogFont logFont = new()
+                GDI32.LOGFONT logFont = new()
                 {
                     lfFaceName = Console.FaceName,
                     lfHeight = -Console.PixelHeight,
@@ -1712,7 +1712,7 @@ namespace WinPaletter
 
                     CMD_FontPxHeight.Value = (int)(dlg.Font.Size);
 
-                    GDI32.LogFont logFont = new();
+                    GDI32.LOGFONT logFont = new();
                     dlg.Font.ToLogFont(logFont);
                     logFont.lfHeight = (int)-dlg.Font.Size; // Negative value for pixel height
                     logFont.lfWidth = 0; // Set to 0 for default width
@@ -1800,7 +1800,7 @@ namespace WinPaletter
 
         private void CMD_FontPxHeight_ValueChanged(object sender, EventArgs e)
         {
-            GDI32.LogFont logFont = new();
+            GDI32.LOGFONT logFont = new();
             F_cmd.ToLogFont(logFont);
             logFont.lfHeight = -(int)CMD_FontPxHeight.Value;
             logFont.lfWidth = 0; // Set to 0 for default width

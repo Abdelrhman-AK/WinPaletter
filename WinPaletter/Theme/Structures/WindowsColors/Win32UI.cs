@@ -851,23 +851,23 @@ namespace WinPaletter.Theme.Structures
             ncm.iScrollWidth = metricsFonts.ScrollWidth;
             ncm.iScrollHeight = metricsFonts.ScrollHeight;
 
-            GDI32.LogFont lfCaptionFont = new();
+            GDI32.LOGFONT lfCaptionFont = new();
             metricsFonts.CaptionFont.ToLogFont(lfCaptionFont);
             ncm.lfCaptionFont = lfCaptionFont;
 
-            GDI32.LogFont lfMenuFont = new();
+            GDI32.LOGFONT lfMenuFont = new();
             metricsFonts.MenuFont.ToLogFont(lfMenuFont);
             ncm.lfMenuFont = lfMenuFont;
 
-            GDI32.LogFont lfMessageFont = new();
+            GDI32.LOGFONT lfMessageFont = new();
             metricsFonts.MessageFont.ToLogFont(lfMessageFont);
             ncm.lfMessageFont = lfMessageFont;
 
-            GDI32.LogFont lfSMCaptionFont = new();
+            GDI32.LOGFONT lfSMCaptionFont = new();
             metricsFonts.SmCaptionFont.ToLogFont(lfSMCaptionFont);
             ncm.lfSMCaptionFont = lfSMCaptionFont;
 
-            GDI32.LogFont lfStatusFont = new();
+            GDI32.LOGFONT lfStatusFont = new();
             metricsFonts.StatusFont.ToLogFont(lfStatusFont);
             ncm.lfStatusFont = lfStatusFont;
 
@@ -876,7 +876,7 @@ namespace WinPaletter.Theme.Structures
             icm.iHorzSpacing = metricsFonts.IconSpacing;
             icm.iVertSpacing = metricsFonts.IconVerticalSpacing;
 
-            GDI32.LogFont lfIconFont = new();
+            GDI32.LOGFONT lfIconFont = new();
             metricsFonts.IconFont.ToLogFont(lfIconFont);
             icm.lfFont = lfIconFont;
 
@@ -916,7 +916,7 @@ namespace WinPaletter.Theme.Structures
         /// <summary>
         /// Mirrors all Process() registry writes into the Vault so the Task Scheduler task
         /// can restore them after Windows resets them on logon or resume.
-        /// Font values are stored as LogFont byte arrays — same format Process() writes to HKU\.DEFAULT.
+        /// Font values are stored as LOGFONT byte arrays — same format Process() writes to HKU\.DEFAULT.
         /// </summary>
         public void SaveVault(TreeView treeView = null)
         {

@@ -355,6 +355,104 @@ namespace WinPaletter.NativeMethods
         }
 
         /// <summary>
+        /// Gets a value indicating whether a specified point lies within the boundaries of a given rectangle.
+        /// </summary>
+        /// <param name="lprc"></param>
+        /// <param name="pt"></param>
+        /// <returns></returns>
+        [DllImport(_user32)] 
+        public static extern bool PtInRect(ref RECT lprc, POINT pt);
+
+        /// <summary>
+        /// Gets the DPI (dots per inch) value for a specified window, which can be used to determine the scaling factor for rendering content appropriately on high-DPI displays.
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <returns></returns>
+        [DllImport(_user32)]
+        public static extern uint GetDpiForWindow(IntPtr hWnd);
+
+        /// <summary>
+        /// Draws an icon or cursor into the specified device context, allowing for custom rendering of icons at specific locations and sizes.
+        /// </summary>
+        /// <param name="hdc"></param>
+        /// <param name="xLeft"></param>
+        /// <param name="yTop"></param>
+        /// <param name="hIcon"></param>
+        /// <param name="cxWidth"></param>
+        /// <param name="cyWidth"></param>
+        /// <param name="istepIfAniCur"></param>
+        /// <param name="hbrFlickerFreeDraw"></param>
+        /// <param name="diFlags"></param>
+        /// <returns></returns>
+        [DllImport(_user32)]
+        public static extern bool DrawIconEx(IntPtr hdc, int xLeft, int yTop, IntPtr hIcon, int cxWidth, int cyWidth, uint istepIfAniCur, IntPtr hbrFlickerFreeDraw, uint diFlags);
+
+        /// <summary>
+        /// Gets the value of a specified class attribute for a window, allowing retrieval of information such as styles, extended styles, or other class-specific data.
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <param name="nIndex"></param>
+        /// <returns></returns>
+        [DllImport(_user32)] 
+        public static extern IntPtr GetClassLongPtr(IntPtr hWnd, int nIndex);
+
+        /// <summary>
+        /// Gets the text of the specified window's title bar (if it has one) or the text of a control within the window, allowing retrieval of user-visible strings for display or processing.
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <param name="lpString"></param>
+        /// <param name="nMaxCount"></param>
+        /// <returns></returns>
+        [DllImport(_user32, CharSet = CharSet.Unicode)] 
+        public static extern int GetWindowTextW(IntPtr hWnd, System.Text.StringBuilder lpString, int nMaxCount);
+
+        /// <summary>
+        /// Begins the painting process for a specified window by preparing the device context and returning a structure containing information about the painting area.
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <param name="lpPaint"></param>
+        /// <returns></returns>
+        [DllImport(_user32)] 
+        public static extern IntPtr BeginPaint(IntPtr hWnd, out PAINTSTRUCT lpPaint);
+
+        /// <summary>
+        /// Ends the painting process for a specified window, releasing the device context and finalizing any drawing operations that were performed during the painting session.
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <param name="lpPaint"></param>
+        /// <returns></returns>
+        [DllImport(_user32)] 
+        public static extern bool EndPaint(IntPtr hWnd, ref PAINTSTRUCT lpPaint);
+
+        /// <summary>
+        /// Gets a property associated with a specified window, allowing retrieval of custom data or state information that has been set for the window.
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <param name="lpString"></param>
+        /// <returns></returns>
+        [DllImport(_user32, CharSet = CharSet.Unicode)] 
+        public static extern IntPtr GetProp(IntPtr hWnd, string lpString);
+
+        /// <summary>
+        /// Gets a handle to the parent window of a specified child window, allowing navigation of the window hierarchy and retrieval of related windows.
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <returns></returns>
+        [DllImport(_user32)] 
+        public static extern IntPtr GetParent(IntPtr hWnd);
+
+        /// <summary>
+        /// Tracks mouse events for a specified window, allowing the application to receive notifications when the mouse enters, leaves, or hovers over the window.
+        /// </summary>
+        /// <param name="lpEventTrack"></param>
+        /// <returns></returns>
+        [DllImport(_user32)]
+        public static extern IntPtr TrackMouseEvent2(ref TRACKMOUSEEVENT lpEventTrack);
+
+        [DllImport(_user32, EntryPoint = "TrackMouseEvent")] 
+        public static extern bool TrackMouseEvent(ref TRACKMOUSEEVENT lpEventTrack);
+
+        /// <summary>
         /// Retrieves the current color of a specified display element.
         /// </summary>
         /// <remarks>This method is a wrapper for the Windows API function in user32.dll.  The color
@@ -830,18 +928,12 @@ namespace WinPaletter.NativeMethods
         public static extern uint SetBkColor(IntPtr hdc, int crColor);
 
         /// <summary>
-        /// Sets the text color for the specified device context.
+        /// Gets a handle to a brush that corresponds to the specified system color index.
         /// </summary>
-        /// <remarks>The <see cref="SetTextColor"/> function changes the text color used by the specified
-        /// device context. The new color is used for text-drawing operations until the text color is changed
-        /// again.</remarks>
-        /// <param name="hdc">A handle to the device context.</param>
-        /// <param name="crColor">The color value to set, specified as a COLORREF value. The COLORREF value is a 32-bit integer where the
-        /// low-order byte specifies the intensity of red, the second byte specifies the intensity of green, and the
-        /// third byte specifies the intensity of blue.</param>
-        /// <returns>The previous text color as a COLORREF value, or 0xFFFFFFFF if an error occurs.</returns>
-        [DllImport(_user32)]
-        public static extern uint SetTextColor(IntPtr hdc, int crColor);
+        /// <param name="nIndex"></param>
+        /// <returns></returns>
+        [DllImport(_user32)] 
+        public static extern IntPtr GetSysColorBrush(int nIndex);
 
         /// <summary>
         /// Fills a rectangle in the specified device context with the specified brush.
@@ -851,7 +943,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="hbr"></param>
         /// <returns></returns>
         [DllImport(_user32, SetLastError = true)]
-        public static extern int FillRect(IntPtr hDC, [In] ref RECT lprc, IntPtr hbr);
+        public static extern int FillRect(IntPtr hDC, [In] ref UxTheme.RECT lprc, IntPtr hbr);
 
         /// <summary>
         /// Draws formatted text in the specified rectangle of a device context.
@@ -863,7 +955,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="uFormat"></param>
         /// <returns></returns>
         [DllImport(_user32, CharSet = CharSet.Unicode)]
-        public static extern int DrawText(IntPtr hdc, string lpchText, int nCount, ref RECT lpRect, uint uFormat);
+        public static extern int DrawText(IntPtr hdc, string lpchText, int nCount, ref UxTheme.RECT lpRect, uint uFormat);
 
         /// <summary>
         /// Gets the text of the specified window's title bar (if it has one) or the text of a control.
@@ -1021,6 +1113,12 @@ namespace WinPaletter.NativeMethods
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool DrawIconEx(IntPtr hdc, int xLeft, int yTop, IntPtr hIcon, int cxWidth, int cyHeight, int istepIfAniCur, IntPtr hbrFlickerFreeDraw, int diFlags);
 
+        /// <summary>
+        /// Sets the display affinity setting for a window, which determines how the window's content is displayed on the screen.
+        /// </summary>
+        /// <param name="hwnd"></param>
+        /// <param name="affinity"></param>
+        /// <returns></returns>
         [DllImport(_user32)]
         public static extern bool SetWindowDisplayAffinity(IntPtr hwnd, uint affinity);
 
@@ -1045,30 +1143,273 @@ namespace WinPaletter.NativeMethods
         /// the operation  should be aborted if the receiving application is not responding.</remarks>
         public const uint SMTO_ABORTIFHUNG = 0x0002;
 
+        /// <summary>
+        /// WM_NCCALCSIZE message: Sent when the size and position of a window's client area must be calculated.
+        /// Used to customize non-client area sizing behavior.
+        /// </summary>
         public const int WM_NCCALCSIZE = 0x0083;
+
+        /// <summary>
+        /// WM_NCPAINT message: Sent to a window when its non-client area (frame, title bar, scroll bars, etc.)
+        /// needs to be repainted.
+        /// </summary>
         public const int WM_NCPAINT = 0x0085;
+
+        /// <summary>
+        /// RedrawWindow flag: Invalidates the window, causing it to be redrawn.
+        /// </summary>
         public const int RDW_INVALIDATE = 0x0001;
+
+        /// <summary>
+        /// RedrawWindow flag: Causes the non-client area (frame) of the window to be redrawn.
+        /// </summary>
         public const int RDW_FRAME = 0x0400;
+
+        /// <summary>
+        /// RedrawWindow flag: Causes the window to be updated immediately before the function returns,
+        /// rather than queuing the update for later.
+        /// </summary>
         public const int RDW_UPDATENOW = 0x0100;
+
+        /// <summary>
+        /// RedrawWindow flag: Causes all child windows of the specified window to be invalidated or updated.
+        /// </summary>
         public const int RDW_ALLCHILDREN = 0x0080;
+
+        /// <summary>
+        /// SetWindowPos flag: Retains the current window size, ignoring the cx and cy parameters.
+        /// </summary>
         public const uint SWP_NOSIZE = 0x0001;
+
+        /// <summary>
+        /// SetWindowPos flag: Retains the current window position, ignoring the x and y parameters.
+        /// </summary>
         public const uint SWP_NOMOVE = 0x0002;
+
+        /// <summary>
+        /// SetWindowPos flag: Retains the current Z-order position, ignoring the hWndInsertAfter parameter.
+        /// </summary>
         public const uint SWP_NOZORDER = 0x0004;
+
+        /// <summary>
+        /// SetWindowPos flag: Does not activate the window. If this flag is not set, the window is activated
+        /// and moved to the top of the Z-order.
+        /// </summary>
         public const uint SWP_NOACTIVATE = 0x0010;
+
+        /// <summary>
+        /// SetWindowPos flag: Sends a WM_NCCALCSIZE message to the window, even if the window's size is not changing.
+        /// Used to force recalculation of the non-client area.
+        /// </summary>
         public const uint SWP_FRAMECHANGED = 0x0020;
+
+        /// <summary>
+        /// GetWindowLong/SetWindowLong index: Retrieves or sets the window's style (WS_* flags).
+        /// </summary>
         public const int GWL_STYLE = -16;
+
+        /// <summary>
+        /// GetWindowLong/SetWindowLong index: Retrieves or sets the window's extended style (WS_EX_* flags).
+        /// </summary>
         public const int GWL_EXSTYLE = -20;
+
+        /// <summary>
+        /// SetWindowDisplayAffinity flag: Removes any display affinity setting, allowing the window to be captured
+        /// or displayed normally.
+        /// </summary>
         public const uint WDA_NONE = 0x00000000;
+
+        /// <summary>
+        /// SetWindowDisplayAffinity flag: Prevents the window from being displayed in screen capture or mirroring.
+        /// The window content appears black in captures.
+        /// </summary>
         public const uint WDA_MONITOR = 0x00000001;
+
+        /// <summary>
+        /// SetWindowDisplayAffinity flag: Excludes the window from screen capture while allowing the window
+        /// to be displayed normally. Includes WDA_MONITOR behavior combined with capture exclusion.
+        /// </summary>
         public const uint WDA_EXCLUDEFROMCAPTURE = 0x00000011;
+
+        /// <summary>
+        /// EM_SETSEL message: Sets the selection range in an edit control. Used to select text programmatically.
+        /// </summary>
         public const int EM_SETSEL = 0x00B1;
+
+        /// <summary>
+        /// ShowWindow command: Hides the window and deactivates it.
+        /// </summary>
         public const int SW_HIDE = 0;
-        public const int SW_SHOWNA = 8; // Show without activating, preserving position/size
+
+        /// <summary>
+        /// ShowWindow command: Shows the window in its current state without activating it.
+        /// Preserves the window's position and size.
+        /// </summary>
+        public const int SW_SHOWNA = 8;
+
+        /// <summary>
+        /// SetWindowPos flag: Displays the window (shows it). Used in conjunction with SWP_NOACTIVATE and other flags.
+        /// </summary>
         public const uint SWP_SHOWWINDOW = 0x0040;
+
+        /// <summary>
+        /// SetWindowPos flag: Hides the window. Used in conjunction with SWP_NOACTIVATE and other flags.
+        /// </summary>
         public const uint SWP_HIDEWINDOW = 0x0080;
+
+        /// <summary>
+        /// GetAncestor flag: Retrieves the root window of the specified window.
+        /// </summary>
         public const uint GA_ROOT = 2;
+
+        /// <summary>
+        /// Extended window style flag: Makes the window layered, enabling transparency, opacity,
+        /// and per-pixel alpha blending.
+        /// </summary>
         public const int WS_EX_LAYERED = 0x00080000;
+
+        /// <summary>
+        /// SetLayeredWindowAttributes flag: Uses the alpha value specified to set the opacity of the layered window.
+        /// The bAlpha parameter specifies the transparency level (0 = fully transparent, 255 = fully opaque).
+        /// </summary>
         public const uint LWA_ALPHA = 0x00000002;
+
+        /// <summary>
+        /// Window message: Erase background
+        /// </summary>
+        public const uint WM_ERASEBKGND = 0x0014;
+
+        /// <summary>
+        /// Window message: Paint window
+        /// </summary>
+        public const uint WM_PAINT = 0x000F;
+
+        /// <summary>
+        /// Window message: Mouse movement
+        /// </summary>
+        public const uint WM_MOUSEMOVE = 0x0200;
+
+        /// <summary>
+        /// Window message: Mouse leave notification
+        /// </summary>
+        public const uint WM_MOUSELEAVE = 0x02A3;
+
+        /// <summary>
+        /// Window message: Left mouse button down
+        /// </summary>
+        public const uint WM_LBUTTONDOWN = 0x0201;
+
+        /// <summary>
+        /// Window message: Left mouse button up
+        /// </summary>
+        public const uint WM_LBUTTONUP = 0x0202;
+
+        /// <summary>
+        /// Window message: Window destroyed
+        /// </summary>
+        public const uint WM_DESTROY = 0x0002;
+
+        /// <summary>
+        /// Window message: Control color - message box
+        /// </summary>
+        public const uint WM_CTLCOLORMSGBOX = 0x0132;
+
+        /// <summary>
+        /// Window message: Control color - edit control
+        /// </summary>
+        public const uint WM_CTLCOLOREDIT = 0x0133;
+
+        /// <summary>
+        /// Window message: Control color - list box
+        /// </summary>
+        public const uint WM_CTLCOLORLISTBOX = 0x0134;
+
+        /// <summary>
+        /// Window message: Control color - button
+        /// </summary>
+        public const uint WM_CTLCOLORBTN = 0x0135;
+
+        /// <summary>
+        /// Window message: Control color - dialog box
+        /// </summary>
+        public const uint WM_CTLCOLORDLG = 0x0136;
+
+        /// <summary>
+        /// Window message: Control color - scrollbar
+        /// </summary>
+        public const uint WM_CTLCOLORSCROLLBAR = 0x0137;
+
+        /// <summary>
+        /// Window message: Control color - static control
+        /// </summary>
+        public const uint WM_CTLCOLORSTATIC = 0x0138;
+
+        /// <summary>
+        /// Window message: System color change
+        /// </summary>
+        public const uint WM_SYSCOLORCHANGE = 0x0015;
+
+        /// <summary>
+        /// Track mouse event flags: Request mouse leave notification
+        /// </summary>
+        public const int TME_LEAVE = 0x00000002;
+
+        /// <summary>
+        /// GetClassLongPtr index: Background brush handle
+        /// </summary>
+        public const int GCLP_HBRBACKGROUND = -10;
+
+        /// <summary>
+        /// System color index: Window background color
+        /// </summary>
+        public const int COLOR_WINDOW = 5;
+
+        /// <summary>
+        /// System color index: Button face color
+        /// </summary>
+        public const int COLOR_BTNFACE = 15;
+
+        /// <summary>
+        /// Window message: Print client area
+        /// </summary>
+        public const uint WM_PRINTCLIENT = 0x0318;
+
+        /// <summary>
+        /// Paint/Print flags: Client area
+        /// </summary>
+        public const uint PRF_CLIENT = 0x00000004;
+
+        /// <summary>
+        /// Get window long index: Window ID
+        /// </summary>
+        public const int GWL_ID = -12;
+
+        /// <summary>
+        /// Struct that contains information about the painting process for a window, including the device context, the area to be painted, and flags indicating whether the background should be erased or restored.
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential)]
+        public struct PAINTSTRUCT
+        {
+            public IntPtr hdc;
+            public bool fErase;
+            public RECT rcPaint;
+            public bool fRestore;
+            public bool fIncUpdate;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)]
+            public byte[] rgbReserved;
+        }
+
+        /// <summary>
+        /// Struct that contains information about a mouse event being tracked, including the size of the structure, the flags indicating which events to track, the window handle to track, and the hover time for mouse hover events.
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential)]
+        public struct TRACKMOUSEEVENT
+        {
+            public int cbSize;
+            public int dwFlags;
+            public IntPtr hwndTrack;
+            public int dwHoverTime;
+        }
 
         /// <summary>
         /// Contains information that an application uses to calculate the size, position, and valid client area of a
@@ -1179,9 +1520,9 @@ namespace WinPaletter.NativeMethods
             public int iCaptionHeight;
 
             /// <summary>
-            /// A LogFont structure that defines the font of the caption or title bar.
+            /// A LOGFONT structure that defines the font of the caption or title bar.
             /// </summary>
-            public LogFont lfCaptionFont;
+            public LOGFONT lfCaptionFont;
 
             /// <summary>
             /// The width of the small caption, in pixels.
@@ -1194,9 +1535,9 @@ namespace WinPaletter.NativeMethods
             public int iSMCaptionHeight;
 
             /// <summary>
-            /// A LogFont structure that defines the font of the small caption.
+            /// A LOGFONT structure that defines the font of the small caption.
             /// </summary>
-            public LogFont lfSMCaptionFont;
+            public LOGFONT lfSMCaptionFont;
 
             /// <summary>
             /// The width of the menu bar, in pixels.
@@ -1209,19 +1550,19 @@ namespace WinPaletter.NativeMethods
             public int iMenuHeight;
 
             /// <summary>
-            /// A LogFont structure that defines the font of the menu bar.
+            /// A LOGFONT structure that defines the font of the menu bar.
             /// </summary>
-            public LogFont lfMenuFont;
+            public LOGFONT lfMenuFont;
 
             /// <summary>
-            /// A LogFont structure that defines the font of the status bar.
+            /// A LOGFONT structure that defines the font of the status bar.
             /// </summary>
-            public LogFont lfStatusFont;
+            public LOGFONT lfStatusFont;
 
             /// <summary>
-            /// A LogFont structure that defines the font of the message box window.
+            /// A LOGFONT structure that defines the font of the message box window.
             /// </summary>
-            public LogFont lfMessageFont;
+            public LOGFONT lfMessageFont;
 
             /// <summary>
             /// The border padding for caption buttons, in pixels.
@@ -1236,7 +1577,7 @@ namespace WinPaletter.NativeMethods
             {
                 int intSize = sizeof(int);
                 int uintSize = sizeof(uint);
-                int logFontSize = 60; //Marshal.SizeOf(typeof(LogFont));
+                int logFontSize = 60; //Marshal.SizeOf(typeof(LOGFONT));
                 int cursor = 0;
 
                 cbSize = BitConverter.ToUInt32(bytes, cursor);
@@ -1347,9 +1688,9 @@ namespace WinPaletter.NativeMethods
             public int iTitleWrap;
 
             /// <summary>
-            /// A LogFont structure that defines the font of the icon label.
+            /// A LOGFONT structure that defines the font of the icon label.
             /// </summary>
-            public LogFont lfFont;
+            public LOGFONT lfFont;
 
             /// <summary>
             /// Convert a byte array to an ICONMETRICS structure.
@@ -1359,7 +1700,7 @@ namespace WinPaletter.NativeMethods
             {
                 int intSize = sizeof(int);
                 int uintSize = sizeof(uint);
-                int logFontSize = 60; //Marshal.SizeOf(typeof(LogFont));
+                int logFontSize = 60; //Marshal.SizeOf(typeof(LOGFONT));
                 int cursor = 0;
 
                 cbSize = BitConverter.ToUInt32(bytes, cursor);

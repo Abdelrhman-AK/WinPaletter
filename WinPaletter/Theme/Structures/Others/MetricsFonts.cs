@@ -313,23 +313,23 @@ namespace WinPaletter.Theme.Structures
                     float OldDPI = ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "AppliedDPI", Program.GetWindowsScreenScalingFactor());
                     WriteReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "AppliedDPI", 100);
 
-                    // Convert fonts to LogFont
-                    GDI32.LogFont lfCaptionFont = new();
+                    // Convert fonts to LOGFONT
+                    GDI32.LOGFONT lfCaptionFont = new();
                     CaptionFont.ToLogFont(lfCaptionFont);
 
-                    GDI32.LogFont lfIconFont = new();
+                    GDI32.LOGFONT lfIconFont = new();
                     IconFont.ToLogFont(lfIconFont);
 
-                    GDI32.LogFont lfMenuFont = new();
+                    GDI32.LOGFONT lfMenuFont = new();
                     MenuFont.ToLogFont(lfMenuFont);
 
-                    GDI32.LogFont lfMessageFont = new();
+                    GDI32.LOGFONT lfMessageFont = new();
                     MessageFont.ToLogFont(lfMessageFont);
 
-                    GDI32.LogFont lfSMCaptionFont = new();
+                    GDI32.LOGFONT lfSMCaptionFont = new();
                     SmCaptionFont.ToLogFont(lfSMCaptionFont);
 
-                    GDI32.LogFont lfStatusFont = new();
+                    GDI32.LOGFONT lfStatusFont = new();
                     StatusFont.ToLogFont(lfStatusFont);
 
                     WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop", "FontSmoothing", !Fonts_SingleBitPP ? 2 : 0);
@@ -556,23 +556,23 @@ namespace WinPaletter.Theme.Structures
             ncm.iScrollWidth = ScrollWidth;
             ncm.iScrollHeight = ScrollHeight;
 
-            GDI32.LogFont lfCaptionFont = new();
+            GDI32.LOGFONT lfCaptionFont = new();
             CaptionFont.ToLogFont(lfCaptionFont);
             ncm.lfCaptionFont = lfCaptionFont;
 
-            GDI32.LogFont lfMenuFont = new();
+            GDI32.LOGFONT lfMenuFont = new();
             MenuFont.ToLogFont(lfMenuFont);
             ncm.lfMenuFont = lfMenuFont;
 
-            GDI32.LogFont lfMessageFont = new();
+            GDI32.LOGFONT lfMessageFont = new();
             MessageFont.ToLogFont(lfMessageFont);
             ncm.lfMessageFont = lfMessageFont;
 
-            GDI32.LogFont lfSMCaptionFont = new();
+            GDI32.LOGFONT lfSMCaptionFont = new();
             SmCaptionFont.ToLogFont(lfSMCaptionFont);
             ncm.lfSMCaptionFont = lfSMCaptionFont;
 
-            GDI32.LogFont lfStatusFont = new();
+            GDI32.LOGFONT lfStatusFont = new();
             StatusFont.ToLogFont(lfStatusFont);
             ncm.lfStatusFont = lfStatusFont;
 
@@ -581,7 +581,7 @@ namespace WinPaletter.Theme.Structures
             icm.iHorzSpacing = IconSpacing;
             icm.iVertSpacing = IconVerticalSpacing;
 
-            GDI32.LogFont lfIconFont = new();
+            GDI32.LOGFONT lfIconFont = new();
             IconFont.ToLogFont(lfIconFont);
             icm.lfFont = lfIconFont;
 
@@ -621,18 +621,18 @@ namespace WinPaletter.Theme.Structures
         /// <summary>
         /// Mirrors all Process() registry writes into the Vault so the Task Scheduler task
         /// can restore them after Windows resets them on logon or resume.
-        /// Font values are stored as LogFont byte arrays — same format Process() writes to HKU\.DEFAULT.
+        /// Font values are stored as LOGFONT byte arrays — same format Process() writes to HKU\.DEFAULT.
         /// </summary>
         public void SaveVault(TreeView treeView = null)
         {
             try
             {
-                GDI32.LogFont lfCaptionFont = new(); CaptionFont.ToLogFont(lfCaptionFont);
-                GDI32.LogFont lfIconFont = new(); IconFont.ToLogFont(lfIconFont);
-                GDI32.LogFont lfMenuFont = new(); MenuFont.ToLogFont(lfMenuFont);
-                GDI32.LogFont lfMessageFont = new(); MessageFont.ToLogFont(lfMessageFont);
-                GDI32.LogFont lfSMCaptionFont = new(); SmCaptionFont.ToLogFont(lfSMCaptionFont);
-                GDI32.LogFont lfStatusFont = new(); StatusFont.ToLogFont(lfStatusFont);
+                GDI32.LOGFONT lfCaptionFont = new(); CaptionFont.ToLogFont(lfCaptionFont);
+                GDI32.LOGFONT lfIconFont = new(); IconFont.ToLogFont(lfIconFont);
+                GDI32.LOGFONT lfMenuFont = new(); MenuFont.ToLogFont(lfMenuFont);
+                GDI32.LOGFONT lfMessageFont = new(); MessageFont.ToLogFont(lfMessageFont);
+                GDI32.LOGFONT lfSMCaptionFont = new(); SmCaptionFont.ToLogFont(lfSMCaptionFont);
+                GDI32.LOGFONT lfStatusFont = new(); StatusFont.ToLogFont(lfStatusFont);
 
                 WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics"), "CaptionFont", lfCaptionFont.ToBytes(), RegistryValueKind.Binary);
                 WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics"), "IconFont", lfIconFont.ToBytes(), RegistryValueKind.Binary);
@@ -712,7 +712,7 @@ namespace WinPaletter.Theme.Structures
                 string desktop = ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Desktop");
                 Fonts_SingleBitPP = ReadReg(desktop, "FontSmoothingType", !Fonts_SingleBitPP ? 2 : 1) != 2;
 
-                // Fonts are stored as LogFont byte arrays
+                // Fonts are stored as LOGFONT byte arrays
                 byte[] captionBytes = ReadReg(wm, "CaptionFont", (byte[])null);
                 byte[] iconBytes = ReadReg(wm, "IconFont", (byte[])null);
                 byte[] menuBytes = ReadReg(wm, "MenuFont", (byte[])null);
@@ -720,12 +720,12 @@ namespace WinPaletter.Theme.Structures
                 byte[] smCaptionBytes = ReadReg(wm, "SmCaptionFont", (byte[])null);
                 byte[] statusBytes = ReadReg(wm, "StatusFont", (byte[])null);
 
-                if (captionBytes is not null) { GDI32.LogFont lf = captionBytes.ToLogFont(); CaptionFont = Font.FromLogFont(lf); }
-                if (iconBytes is not null) { GDI32.LogFont lf = iconBytes.ToLogFont(); IconFont = Font.FromLogFont(lf); }
-                if (menuBytes is not null) { GDI32.LogFont lf = menuBytes.ToLogFont(); MenuFont = Font.FromLogFont(lf); }
-                if (messageBytes is not null) { GDI32.LogFont lf = messageBytes.ToLogFont(); MessageFont = Font.FromLogFont(lf); }
-                if (smCaptionBytes is not null) { GDI32.LogFont lf = smCaptionBytes.ToLogFont(); SmCaptionFont = Font.FromLogFont(lf); }
-                if (statusBytes is not null) { GDI32.LogFont lf = statusBytes.ToLogFont(); StatusFont = Font.FromLogFont(lf); }
+                if (captionBytes is not null) { GDI32.LOGFONT lf = captionBytes.ToLogFont(); CaptionFont = Font.FromLogFont(lf); }
+                if (iconBytes is not null) { GDI32.LOGFONT lf = iconBytes.ToLogFont(); IconFont = Font.FromLogFont(lf); }
+                if (menuBytes is not null) { GDI32.LOGFONT lf = menuBytes.ToLogFont(); MenuFont = Font.FromLogFont(lf); }
+                if (messageBytes is not null) { GDI32.LOGFONT lf = messageBytes.ToLogFont(); MessageFont = Font.FromLogFont(lf); }
+                if (smCaptionBytes is not null) { GDI32.LOGFONT lf = smCaptionBytes.ToLogFont(); SmCaptionFont = Font.FromLogFont(lf); }
+                if (statusBytes is not null) { GDI32.LOGFONT lf = statusBytes.ToLogFont(); StatusFont = Font.FromLogFont(lf); }
 
                 Program.Log?.Write(LogEventLevel.Information, "LoadVault (MetricsFonts): Properties loaded.");
             }

@@ -560,6 +560,7 @@
     </Compile>
     <Compile Include="ColorsAndPalettesHandlers\ControlProperty.cs" />
     <Compile Include="GUI\Style\Config.cs" />
+    <Compile Include="GUI\Style\Dialogs\DarkTaskDialog.cs" />
     <Compile Include="GUI\Style\Dialogs\IconPicker.cs" />
     <Compile Include="GUI\Style\SchemeEditor.cs">
       <SubType>Form</SubType>
@@ -636,8 +637,10 @@
     <Compile Include="Program\Classes\SearchManager.cs" />
     <Compile Include="Program\Classes\SystemRestoreHelper.cs" />
     <Compile Include="Program\Logger.cs" />
+    <Compile Include="Program\NativeMethods\Comctl32.cs" />
     <Compile Include="Program\NativeMethods\Credui.cs" />
     <Compile Include="Program\NativeMethods\NTDLL.cs" />
+    <Compile Include="Program\NativeMethods\Shlwapi.cs" />
     <Compile Include="Program\NativeMethods\SrClient.cs" />
     <Compile Include="Program\TypesExtensions\ImageList.cs" />
     <Compile Include="Program\TypesExtensions\Images.cs" />

@@ -213,8 +213,8 @@ namespace WinPaletter.NativeMethods
             /// <summary>
             /// <b>Retrieves the logical font information for the current icon-title font.</b>
             /// <br></br>
-            /// <br></br> • The <b><c>uiParam</c></b> parameter specifies the size of a LogFont structure,
-            /// <br></br> • The <b><c>pvParam</c></b> parameter must point to the LogFont structure to fill in.
+            /// <br></br> • The <b><c>uiParam</c></b> parameter specifies the size of a LOGFONT structure,
+            /// <br></br> • The <b><c>pvParam</c></b> parameter must point to the LOGFONT structure to fill in.
             /// </summary>
             SPI_GETICONTITLELOGFONT = 0x001F,
 
@@ -237,8 +237,8 @@ namespace WinPaletter.NativeMethods
             /// <summary>
             /// <b>Sets the font that is used for icon titles.</b>
             /// <br></br>
-            /// <br></br> • The <b><c>uiParam</c></b> parameter specifies the size of a LogFont structure,
-            /// <br></br> • The <b><c>pvParam</c></b> parameter must point to a LogFont structure.
+            /// <br></br> • The <b><c>uiParam</c></b> parameter specifies the size of a LOGFONT structure,
+            /// <br></br> • The <b><c>pvParam</c></b> parameter must point to a LOGFONT structure.
             /// </summary>
             SPI_SETICONTITLELOGFONT = 0x0022,
 
@@ -289,7 +289,7 @@ namespace WinPaletter.NativeMethods
             /// <br></br>
             /// <br></br> • The <b><c>pvParam</c></b> parameter must point to a <b><c>NONCLIENTMETRICS</c></b> structure that contains the new parameters.
             /// <br></br> • Set the <b><c>cbSize</c></b> member of this structure and the <b><c>uiParam</c></b> parameter to <b><c>sizeof(NONCLIENTMETRICS)</c></b>.
-            /// <br></br> • Also, the lfHeight member of the LogFont structure must be a negative value.
+            /// <br></br> • Also, the lfHeight member of the LOGFONT structure must be a negative value.
             /// </summary>
             SPI_SETNONCLIENTMETRICS = 0x002A,
 

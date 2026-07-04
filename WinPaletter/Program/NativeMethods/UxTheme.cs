@@ -109,66 +109,317 @@ namespace WinPaletter.NativeMethods
         public static extern int DrawThemeTextEx(IntPtr hTheme, IntPtr hdc, int iPartId, int iStateId, string text, int iCharCount, uint dwFlags, ref RECT pRect, ref DTTOPTS pOptions);
 
         /// <summary>
+        /// Open theme data for a specified window and class list, with support for DPI scaling.
+        /// </summary>
+        /// <param name="hwnd"></param>
+        /// <param name="pszClassList"></param>
+        /// <param name="dpi"></param>
+        /// <returns></returns>
+        [DllImport(_uxtheme, CharSet = CharSet.Unicode)]
+        public static extern IntPtr OpenThemeDataForDpi(IntPtr hwnd, string pszClassList, uint dpi);
+
+        /// <summary>
+        /// Gets the color associated with a specified theme part and property, with support for DPI scaling.
+        /// </summary>
+        /// <param name="hTheme"></param>
+        /// <param name="iPartId"></param>
+        /// <param name="iStateId"></param>
+        /// <param name="iPropId"></param>
+        /// <param name="pColor"></param>
+        /// <returns></returns>
+        [DllImport(_uxtheme)] 
+        public static extern int GetThemeColor(IntPtr hTheme, int iPartId, int iStateId, int iPropId, out int pColor);
+
+        /// <summary>
+        /// Gets the size of a visual style part for a specified theme, state, and drawing context.
+        /// </summary>
+        /// <param name="hTheme"></param>
+        /// <param name="hdc"></param>
+        /// <param name="iPartId"></param>
+        /// <param name="iStateId"></param>
+        /// <param name="prc"></param>
+        /// <param name="eSize"></param>
+        /// <param name="psz"></param>
+        /// <returns></returns>
+        [DllImport(_uxtheme)] 
+        public static extern int GetThemePartSize(IntPtr hTheme, IntPtr hdc, int iPartId, int iStateId, IntPtr prc, int eSize, out SIZE psz);
+
+        /// <summary>
+        /// Draws the background image defined by the visual style for a specified control part and state.
+        /// </summary>
+        /// <param name="hTheme"></param>
+        /// <param name="hdc"></param>
+        /// <param name="iPartId"></param>
+        /// <param name="iStateId"></param>
+        /// <param name="pRect"></param>
+        /// <param name="pClipRect"></param>
+        /// <returns></returns>
+        [DllImport(_uxtheme)] 
+        public static extern int DrawThemeBackground(IntPtr hTheme, IntPtr hdc, int iPartId, int iStateId, ref RECT pRect, IntPtr pClipRect);
+
+        /// <summary>
+        /// Draws text using the visual style defined by the theme for a specified control part and state, with additional options.
+        /// </summary>
+        /// <param name="hTheme"></param>
+        /// <param name="hdc"></param>
+        /// <param name="iPartId"></param>
+        /// <param name="iStateId"></param>
+        /// <param name="pszText"></param>
+        /// <param name="cchText"></param>
+        /// <param name="dwTextFlags"></param>
+        /// <param name="dwTextFlags2"></param>
+        /// <param name="pRect"></param>
+        /// <returns></returns>
+        [DllImport(_uxtheme, CharSet = CharSet.Unicode)] 
+        public static extern int DrawThemeText(IntPtr hTheme, IntPtr hdc, int iPartId, int iStateId, string pszText, int cchText, uint dwTextFlags, uint dwTextFlags2, ref RECT pRect);
+
+        /// <summary>
+        /// Gets the margins associated with a specified theme part and property.
+        /// </summary>
+        /// <param name="hTheme"></param>
+        /// <param name="hdc"></param>
+        /// <param name="iPartId"></param>
+        /// <param name="iStateId"></param>
+        /// <param name="iPropId"></param>
+        /// <param name="prc"></param>
+        /// <param name="pMargins"></param>
+        /// <returns></returns>
+        [DllImport(_uxtheme)] 
+        public static extern int GetThemeMargins(IntPtr hTheme, IntPtr hdc, int iPartId, int iStateId, int iPropId, ref RECT prc, out DWMAPI.MARGINS pMargins);
+
+        /// <summary>
+        /// Begins a buffered paint operation for a specified target device context and rectangle, allowing for off-screen rendering.
+        /// </summary>
+        /// <param name="hdcTarget"></param>
+        /// <param name="prcTarget"></param>
+        /// <param name="dwFormat"></param>
+        /// <param name="pPaintParams"></param>
+        /// <param name="phdc"></param>
+        /// <returns></returns>
+        [DllImport(_uxtheme)] 
+        public static extern IntPtr BeginBufferedPaint(IntPtr hdcTarget, ref RECT prcTarget, int dwFormat, IntPtr pPaintParams, out IntPtr phdc);
+
+        /// <summary>
+        /// Ends a buffered paint operation, optionally updating the target device context with the rendered content.
+        /// </summary>
+        /// <param name="hBufferedPaint"></param>
+        /// <param name="fUpdateTarget"></param>
+        /// <returns></returns>
+        [DllImport(_uxtheme)] 
+        public static extern int EndBufferedPaint(IntPtr hBufferedPaint, bool fUpdateTarget);
+
+        /// <summary>
+        /// Gets a pointer to the buffer used for a buffered paint operation, along with the row size in pixels.
+        /// </summary>
+        /// <param name="hBufferedPaint"></param>
+        /// <param name="ppbBuffer"></param>
+        /// <param name="pcxRow"></param>
+        /// <returns></returns>
+        [DllImport(_uxtheme)] 
+        public static extern int GetBufferedPaintBits(IntPtr hBufferedPaint, out IntPtr ppbBuffer, out int pcxRow);
+
+        /// <summary>
+        /// Gets the target rectangle for a buffered paint operation, which defines the area to be painted.
+        /// </summary>
+        /// <param name="hBufferedPaint"></param>
+        /// <param name="prc"></param>
+        /// <returns></returns>
+        [DllImport(_uxtheme)] 
+        public static extern int GetBufferedPaintTargetRect(IntPtr hBufferedPaint, out RECT prc);
+
+        /// <summary>
+        /// DrawThemeTextEx flags: Use composited (alpha-blended) drawing
+        /// </summary>
+        public const int DTT_COMPOSITED = 0x00002000;
+
+        /// <summary>
+        /// DrawThemeTextEx flags: Use custom text color
+        /// </summary>
+        public const int DTT_TEXTCOLOR = 0x00000001;
+
+        /// <summary>
+        /// Window message: Theme changed
+        /// </summary>
+        public const uint WM_THEMECHANGED = 0x031A;
+
+        /// <summary>
+        /// Button part flags: Top-down DIB (device-independent bitmap) rendering
+        /// </summary>
+        public const int BPBF_TOPDOWNDIB = 2;
+
+        /// <summary>
         /// Color reference structure used to represent colors in the UxTheme API.
+        /// This structure is used with theme drawing functions like DrawThemeTextEx.
         /// </summary>
         [StructLayout(LayoutKind.Sequential)]
-        public struct COLORREF(Color c)
+        public struct COLORREF
         {
-            public uint Value = (uint)(c.R | (c.G << 8) | (c.B << 16));
+            /// <summary>
+            /// The 32-bit color value in the format 0x00BBGGRR (little-endian).
+            /// </summary>
+            public uint Value;
 
+            /// <summary>
+            /// Initializes a new instance of the <see cref="COLORREF"/> structure from a <see cref="Color"/>.
+            /// </summary>
+            /// <param name="color">The .NET Color to convert to COLORREF.</param>
+            public COLORREF(Color color)
+            {
+                Value = (uint)(color.R | (color.G << 8) | (color.B << 16));
+            }
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="COLORREF"/> structure from a 32-bit integer.
+            /// </summary>
+            /// <param name="color">The integer value representing the color (0x00BBGGRR).</param>
+            public COLORREF(int color)
+            {
+                Value = unchecked((uint)color);
+            }
+
+            /// <summary>
+            /// Initializes a new instance of the <see cref="COLORREF"/> structure from a 32-bit unsigned integer.
+            /// </summary>
+            /// <param name="color">The unsigned integer value representing the color (0x00BBGGRR).</param>
+            public COLORREF(uint color)
+            {
+                Value = color;
+            }
+
+            /// <summary>
+            /// Gets the red component of the color (0-255).
+            /// </summary>
+            public readonly byte R => (byte)(Value & 0xFF);
+
+            /// <summary>
+            /// Gets the green component of the color (0-255).
+            /// </summary>
+            public readonly byte G => (byte)((Value >> 8) & 0xFF);
+
+            /// <summary>
+            /// Gets the blue component of the color (0-255).
+            /// </summary>
+            public readonly byte B => (byte)((Value >> 16) & 0xFF);
+
+            /// <summary>
+            /// Gets the .NET <see cref="Color"/> representation of this COLORREF.
+            /// </summary>
             public readonly Color Color => Color.FromArgb((int)(Value & 0xFF), (int)((Value >> 8) & 0xFF), (int)((Value >> 16) & 0xFF));
+
+            /// <summary>
+            /// Implicitly converts a <see cref="Color"/> to a <see cref="COLORREF"/>.
+            /// </summary>
+            /// <param name="color">The .NET Color to convert.</param>
+            public static implicit operator COLORREF(Color color) => new(color);
+
+            /// <summary>
+            /// Implicitly converts a 32-bit integer to a <see cref="COLORREF"/>.
+            /// </summary>
+            /// <param name="color">The integer value representing the color (0x00BBGGRR).</param>
+            public static implicit operator COLORREF(int color) => new(color);
+
+            /// <summary>
+            /// Implicitly converts a 32-bit unsigned integer to a <see cref="COLORREF"/>.
+            /// </summary>
+            /// <param name="color">The unsigned integer value representing the color (0x00BBGGRR).</param>
+            public static implicit operator COLORREF(uint color) => new(color);
+
+            /// <summary>
+            /// Implicitly converts a <see cref="COLORREF"/> to a 32-bit unsigned integer.
+            /// </summary>
+            /// <param name="color">The COLORREF to convert.</param>
+            public static implicit operator uint(COLORREF color) => color.Value;
+
+            /// <summary>
+            /// Implicitly converts a <see cref="COLORREF"/> to a 32-bit integer.
+            /// </summary>
+            /// <param name="color">The COLORREF to convert.</param>
+            public static implicit operator int(COLORREF color) => unchecked((int)color.Value);
+
+            /// <summary>
+            /// Returns a string representation of the COLORREF in the format "#RRGGBB".
+            /// </summary>
+            /// <returns>A string representation of the color.</returns>
+            public override readonly string ToString() => Color.ToString();
         }
 
+        /// <summary>
+        /// DrawThemeTextEx flags: Use glow size
+        /// </summary>
+        public const int DTT_GLOWSIZE = 2048;
+
+        /// <summary>
+        /// Theme property ID: Text color
+        /// </summary>
+        public const int TMT_TEXTCOLOR = 3803;
+
+        /// <summary>
+        /// Theme property ID: Font
+        /// </summary>
+        public const int TMT_FONT = 210;
+
+        /// <summary>
+        /// Structure that defines options for drawing text using the visual style defined by the theme.
+        /// Used with DrawThemeTextEx function.
+        /// </summary>
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
         public struct DTTOPTS
         {
+            /// <summary>
+            /// Size of the structure in bytes.
+            /// </summary>
             public uint dwSize;
+
+            /// <summary>
+            /// Flags that control the drawing options. Combination of DTT_* constants.
+            /// </summary>
             public uint dwFlags;
+
+            /// <summary>
+            /// Text color to use when DTT_TEXTCOLOR is specified.
+            /// </summary>
             public COLORREF crText;
+
+            /// <summary>
+            /// Size of the border around the text.
+            /// </summary>
             public uint iBorderSize;
+
+            /// <summary>
+            /// Font property identifier to use.
+            /// </summary>
             public uint iFontPropId;
+
+            /// <summary>
+            /// Color property identifier to use.
+            /// </summary>
             public uint iColorPropId;
+
+            /// <summary>
+            /// State identifier for the control part.
+            /// </summary>
             public uint iStateId;
+
+            /// <summary>
+            /// Whether to apply overlay effects.
+            /// </summary>
             public bool fApplyOverlay;
+
+            /// <summary>
+            /// Size of the glow effect when DTT_GLOWSIZE is specified.
+            /// </summary>
             public int iGlowSize;
+
+            /// <summary>
+            /// Callback function pointer for custom text drawing.
+            /// </summary>
             public IntPtr pfnDrawTextCallback;
+
+            /// <summary>
+            /// Additional application-defined parameter.
+            /// </summary>
             public IntPtr lParam;
         }
-
-        public const uint DT_TOP = 0x00000000;
-        public const uint DT_LEFT = 0x00000000;
-        public const uint DT_CENTER = 0x00000001;
-        public const uint DT_RIGHT = 0x00000002;
-        public const uint DT_VCENTER = 0x00000004;
-        public const uint DT_BOTTOM = 0x00000008;
-        public const uint DT_WORDBREAK = 0x00000010;
-        public const uint DT_SINGLELINE = 0x00000020;
-        public const uint DT_EXPANDTABS = 0x00000040;
-        public const uint DT_TABSTOP = 0x00000080;
-        public const uint DT_NOCLIP = 0x00000100;
-        public const uint DT_EXTERNALLEADING = 0x00000200;
-        public const uint DT_CALCRECT = 0x00000400;
-        public const uint DT_NOPREFIX = 0x00000800;
-        public const uint DT_INTERNAL = 0x00001000;
-        public const uint DT_EDITCONTROL = 0x00002000;
-        public const uint DT_PATH_ELLIPSIS = 0x00004000;
-        public const uint DT_END_ELLIPSIS = 0x00008000;
-        public const uint DT_MODIFYSTRING = 0x00010000;
-        public const uint DT_RTLREADING = 0x00020000;
-        public const uint DT_WORD_ELLIPSIS = 0x00040000;
-        public const uint DT_NOFULLWIDTHCHARBREAK = 0x00080000;
-        public const uint DT_HIDEPREFIX = 0x00100000;
-        public const uint DT_PREFIXONLY = 0x00200000;
-        public const uint DTT_GLOWSIZE = 2048;
-
-        public const int TMT_TEXTCOLOR = 3803;
-        public const int TMT_FONT = 210;
-
-        public const int TDLG_MAININSTRUCTIONPANE = 1;
-        public const int TDLG_CONTENTPANE = 2;
-
-        public const uint DTT_TEXTCOLOR = 0x00000001;
-        public const uint DTT_COMPOSITED = 0x00002000;
 
         /// <summary>
         /// Represents a method that opens a theme data handle for a specified window and class list.

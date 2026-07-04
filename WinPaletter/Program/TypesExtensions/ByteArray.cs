@@ -32,13 +32,13 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Converts a byte array to a <see cref="NativeMethods.GDI32.LogFont"/> structure.
+        /// Converts a byte array to a <see cref="NativeMethods.GDI32.LOGFONT"/> structure.
         /// </summary>
         /// <param name="fontBytes">The byte array containing font information.</param>
-        /// <returns>A <see cref="NativeMethods.GDI32.LogFont"/> structure representing the font.</returns>
-        public static GDI32.LogFont ToLogFont(this byte[] fontBytes)
+        /// <returns>A <see cref="NativeMethods.GDI32.LOGFONT"/> structure representing the font.</returns>
+        public static GDI32.LOGFONT ToLogFont(this byte[] fontBytes)
         {
-            GDI32.LogFont lOGFONT = new()
+            GDI32.LOGFONT lOGFONT = new()
             {
                 lfHeight = BitConverter.ToInt32(fontBytes, 0),
                 lfWidth = 0,

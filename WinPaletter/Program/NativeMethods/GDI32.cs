@@ -14,11 +14,11 @@ namespace WinPaletter.NativeMethods
         /// Represents a logical font used for text rendering.
         /// </summary>
         /// <remarks>
-        /// Initializes a new instance of the <see cref="LogFont"/> class.
+        /// Initializes a new instance of the <see cref="LOGFONT"/> class.
         /// </remarks>
         /// <param name="lfFaceName">The typeface name of the font.</param>
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-        public class LogFont(string lfFaceName = null)
+        public struct LOGFONT(string lfFaceName = null)
         {
             /// <summary>
             /// Specifies the height, in logical units, of the font's character cell or character.
@@ -446,32 +446,172 @@ namespace WinPaletter.NativeMethods
         [DllImport(_gdi32)]
         public static extern bool BitBlt(IntPtr hdcDest, int x, int y, int cx, int cy, IntPtr hdcSrc, int x1, int y1, uint rop);
 
+        /// <summary>
+        /// Creates a logical font with the specified characteristics and returns a handle to the font. The font can then be selected into a device context for text rendering.
+        /// </summary>
+        /// <param name="lplf"></param>
+        /// <returns></returns>
         [DllImport(_gdi32, CharSet = CharSet.Unicode, SetLastError = true)]
         public static extern IntPtr CreateFontIndirect([In] LOGFONT lplf);
 
+        /// <summary>
+        /// Creates a logical font with the specified characteristics and returns a handle to the font. The font can then be selected into a device context for text rendering.
+        /// </summary>
+        /// <param name="lplf"></param>
+        /// <returns></returns>
         [DllImport(_gdi32, CharSet = CharSet.Unicode, SetLastError = true)]
         public static extern IntPtr CreateFontIndirect([In] ref LOGFONT lplf);
 
-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-        public struct LOGFONT
+        /// <summary>
+        /// Gets information about the specified graphics object. The function fills a buffer with information about the object, such as its type and attributes.
+        /// </summary>
+        /// <param name="hgdiobj"></param>
+        /// <param name="cbBuffer"></param>
+        /// <param name="lpvObject"></param>
+        /// <returns></returns>
+        [DllImport(_gdi32)] 
+        public static extern bool GetObject(IntPtr hgdiobj, int cbBuffer, ref LOGBRUSH lpvObject);
+
+        /// <summary>
+        /// Draw text flags: Top alignment (same as DT_LEFT)
+        /// </summary>
+        public const uint DT_TOP = 0x00000000;
+
+        /// <summary>
+        /// Draw text flags: Center alignment horizontally
+        /// </summary>
+        public const uint DT_CENTER = 0x00000001;
+
+        /// <summary>
+        /// Draw text flags: Right alignment horizontally
+        /// </summary>
+        public const uint DT_RIGHT = 0x00000002;
+
+        /// <summary>
+        /// Draw text flags: Bottom alignment vertically
+        /// </summary>
+        public const uint DT_BOTTOM = 0x00000008;
+
+        /// <summary>
+        /// Draw text flags: Expand tab characters
+        /// </summary>
+        public const uint DT_EXPANDTABS = 0x00000040;
+
+        /// <summary>
+        /// Draw text flags: Use tab stops specified in lParam
+        /// </summary>
+        public const uint DT_TABSTOP = 0x00000080;
+
+        /// <summary>
+        /// Draw text flags: No clipping of text outside the rectangle
+        /// </summary>
+        public const uint DT_NOCLIP = 0x00000100;
+
+        /// <summary>
+        /// Draw text flags: Include external leading in line height
+        /// </summary>
+        public const uint DT_EXTERNALLEADING = 0x00000200;
+
+        /// <summary>
+        /// Draw text flags: Use internal GDI text formatting
+        /// </summary>
+        public const uint DT_INTERNAL = 0x00001000;
+
+        /// <summary>
+        /// Draw text flags: Edit control style formatting
+        /// </summary>
+        public const uint DT_EDITCONTROL = 0x00002000;
+
+        /// <summary>
+        /// Draw text flags: Add ellipsis at the end of truncated text
+        /// </summary>
+        public const uint DT_END_ELLIPSIS = 0x00008000;
+
+        /// <summary>
+        /// Draw text flags: Allow modification of the string
+        /// </summary>
+        public const uint DT_MODIFYSTRING = 0x00010000;
+
+        /// <summary>
+        /// Draw text flags: Right-to-left reading order
+        /// </summary>
+        public const uint DT_RTLREADING = 0x00020000;
+
+        /// <summary>
+        /// Draw text flags: Add ellipsis at the end of word-truncated text
+        /// </summary>
+        public const uint DT_WORD_ELLIPSIS = 0x00040000;
+
+        /// <summary>
+        /// Draw text flags: No full-width character break
+        /// </summary>
+        public const uint DT_NOFULLWIDTHCHARBREAK = 0x00080000;
+
+        /// <summary>
+        /// Draw text flags: Hide prefix characters
+        /// </summary>
+        public const uint DT_HIDEPREFIX = 0x00100000;
+
+        /// <summary>
+        /// Draw text flags: Show only prefix characters
+        /// </summary>
+        public const uint DT_PREFIXONLY = 0x00200000;
+
+        /// <summary>
+        /// Brush style: Solid brush
+        /// </summary>
+        public const uint BS_SOLID = 0;
+
+        /// <summary>
+        /// Device Independent (DI) flags: Normal rendering
+        /// </summary>
+        public const uint DI_NORMAL = 0x0003;
+
+        /// <summary>
+        /// Draw text flags: Left alignment
+        /// </summary>
+        public const uint DT_LEFT = 0x00000000;
+
+        /// <summary>
+        /// Draw text flags: Vertically center
+        /// </summary>
+        public const uint DT_VCENTER = 0x00000004;
+
+        /// <summary>
+        /// Draw text flags: Word wrap/break
+        /// </summary>
+        public const uint DT_WORDBREAK = 0x00000010;
+
+        /// <summary>
+        /// Draw text flags: Single line text
+        /// </summary>
+        public const uint DT_SINGLELINE = 0x00000020;
+
+        /// <summary>
+        /// Draw text flags: Calculate rectangle size
+        /// </summary>
+        public const uint DT_CALCRECT = 0x00000400;
+
+        /// <summary>
+        /// Draw text flags: No prefix characters
+        /// </summary>
+        public const uint DT_NOPREFIX = 0x00000800;
+
+        /// <summary>
+        /// Draw text flags: Path ellipsis
+        /// </summary>
+        public const uint DT_PATH_ELLIPSIS = 0x00004000;
+
+
+        /// <summary>
+        /// Structure that defines the attributes of a logical brush, including its style, color, and hatch pattern. This structure is used with GDI functions to create and manipulate brushes for drawing operations.
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential)]
+        public struct LOGBRUSH
         {
-            public int lfHeight;
-            public int lfWidth;
-            public int lfEscapement;
-            public int lfOrientation;
-            public int lfWeight;
-
-            public byte lfItalic;
-            public byte lfUnderline;
-            public byte lfStrikeOut;
-            public byte lfCharSet;
-            public byte lfOutPrecision;
-            public byte lfClipPrecision;
-            public byte lfQuality;
-            public byte lfPitchAndFamily;
-
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
-            public string lfFaceName;
+            public uint lbStyle;
+            public int lbColor;
+            public IntPtr lbHatch;
         }
 
         /// <summary>

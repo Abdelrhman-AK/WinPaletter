@@ -1,21 +1,12 @@
-﻿using Ookii.Dialogs.WinForms;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
 using System.Media;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Windows;
-using System.Windows.Automation;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
-using static System.Windows.Automation.AutomationElement;
-using static WinPaletter.NativeMethods.GDI32;
-using static WinPaletter.NativeMethods.User32;
-using static WinPaletter.NativeMethods.UxTheme;
+using static WinPaletter.NativeMethods.Comctl32;
 
 namespace WinPaletter.UI.Style
 {
@@ -24,7 +15,8 @@ namespace WinPaletter.UI.Style
         /// <summary>
         /// A class instance that provides modern task dialog.
         /// </summary>
-        private static TaskDialog _TD;
+        private static TaskDialogState _TDState;
+        private static TASKDIALOGCONFIG _config = new();
 
         /// <summary>
         /// Represents the system-defined icon used for help or question dialogs.<br></br>
@@ -49,54 +41,31 @@ namespace WinPaletter.UI.Style
         /// Get question icon from shell32.dll, not from the system icons as question icon is old and inconsistent with Windows 10 and higher (but consistent with Windows 8.1 and lower).
         /// </summary>
         private static Icon exclamationIcon = NativeMethods.Helpers.GetSystemIcon(Shell32.SHSTOCKICONID.WARNING, Shell32.SHGSI.ICON);
+
         /// <summary>
-        /// A class instance that provides modern task dialog.
+        /// Represents the current state of the task dialog.
         /// </summary>
-
-        private static TaskDialog TD
+        private class TaskDialogState
         {
-            [MethodImpl(MethodImplOptions.Synchronized)]
-            get => _TD;
-
-            [MethodImpl(MethodImplOptions.Synchronized)]
-            set
-            {
-                // Unsubscribe from the previous instance
-                if (_TD != null)
-                {
-                    _TD.HyperlinkClicked -= TD_HyperlinkClicked;
-                    _TD.RadioButtonClicked -= TD_RadioButtonClicked;
-                    _TD.Timer -= TD_Timer;
-                    _TD.VerificationClicked -= TD_VerificationClicked;
-                    _TD.HelpRequested -= TD_HelpRequested;
-                    _TD.ExpandButtonClicked -= TD_ExpandButtonClicked;
-                    _TD.ButtonClicked -= TD_ButtonClicked;
-                    _TD.Created -= TD_Created;
-                }
-
-                // Set the new instance
-                _TD = value;
-
-                // Subscribe to the new instance
-                if (_TD != null)
-                {
-                    _TD.HyperlinkClicked += TD_HyperlinkClicked;
-                    _TD.RadioButtonClicked += TD_RadioButtonClicked;
-                    _TD.Timer += TD_Timer;
-                    _TD.VerificationClicked += TD_VerificationClicked;
-                    _TD.HelpRequested += TD_HelpRequested;
-                    _TD.ExpandButtonClicked += TD_ExpandButtonClicked;
-                    _TD.ButtonClicked += TD_ButtonClicked;
-                    _TD.Created += TD_Created;
-                }
-            }
+            public IntPtr hWnd;
+            public bool VerificationFlagChecked;
+            public int SelectedButton;
+            public int SelectedRadioButton;
+            public List<TASKDIALOG_BUTTON> Buttons = new List<TASKDIALOG_BUTTON>();
+            public List<TASKDIALOG_BUTTON> RadioButtons = new List<TASKDIALOG_BUTTON>();
+            public Dictionary<int, Action> ButtonActions = new Dictionary<int, Action>();
+            public Dictionary<int, Action> RadioButtonActions = new Dictionary<int, Action>();
+            public Action<int> HyperlinkAction;
+            public Action TimerAction;
+            public Action ExpandAction;
+            public Action VerificationAction;
         }
 
         private static string ConvertToLink(string String)
         {
             if (String == null) return String;
 
-            List<string> c = new List<string>();
+            List<string> c = [];
 
             string urlPattern = @"^(https?:\/\/)?(www\.)?[a-zA-Z0-9\-]+(\.[a-zA-Z]{2,})+(:\d+)?(\/[^\s]*)?$";
             string localPathPattern = @"^([a-zA-Z]:\\|\\\\)[^\s]+$";
@@ -139,176 +108,73 @@ namespace WinPaletter.UI.Style
         /// <param name="FooterCustomIcon">Icon of the fotter when its type is set to TaskDialogIcon.Custom</param>
         /// <param name="RequireElevation">Put shield icon beside (OK, Yes, Retry) that means administrator\elevation is required</param>
         /// <returns></returns>
-        public static DialogResult MsgBox(object Message, MessageBoxButtons Buttons = MessageBoxButtons.OK, MessageBoxIcon Icon = MessageBoxIcon.None, object SubMessage = null, object CollapsedText = null, object ExpandedText = null, object ExpandedDetails = null, object DialogTitle = null, object Footer = null, TaskDialogIcon FooterIcon = TaskDialogIcon.Custom, Icon FooterCustomIcon = null, bool RequireElevation = false)
+        public static DialogResult MsgBox(object Message, MessageBoxButtons Buttons = MessageBoxButtons.OK, MessageBoxIcon Icon = MessageBoxIcon.None, object SubMessage = null, object CollapsedText = null, object ExpandedText = null, object ExpandedDetails = null, object DialogTitle = null, object Footer = null, TaskDialogIcon FooterIcon = TaskDialogIcon.None, Icon FooterCustomIcon = null, bool RequireElevation = false)
         {
             try
             {
                 // Windows XP does not support the modern task dialog.
                 if (!OS.WXP)
                 {
-                    // Create a new instance of the modern task dialog.
-                    TD = new()
+                    // Initialize state
+                    _TDState = new TaskDialogState();
+
+                    // Build the task dialog configuration
+                    TASKDIALOGCONFIG config = new()
                     {
-                        EnableHyperlinks = true,
-                        RightToLeft = Program.Localization.Information.RightToLeft,
-                        ButtonStyle = TaskDialogButtonStyle.Standard,
-                        Content = ConvertToLink((SubMessage ?? string.Empty).ToString()),
-                        FooterIcon = FooterIcon,
-                        CenterParent = true,
-                        WindowTitle = (DialogTitle ?? Application.ProductName).ToString(),
-                        MainInstruction = (Message ?? string.Empty).ToString(),
-                        CollapsedControlText = (ExpandedText ?? string.Empty).ToString(),
-                        ExpandedControlText = (CollapsedText ?? string.Empty).ToString(),
-                        ExpandedInformation = ConvertToLink((ExpandedDetails ?? string.Empty).ToString()),
-                        Footer = ConvertToLink((Footer ?? string.Empty).ToString()).ToLower(),
-                        MainIcon = TaskDialogIcon.Custom
+                        cbSize = (uint)Marshal.SizeOf<TASKDIALOGCONFIG>(),
+                        hwndParent = IntPtr.Zero,
+                        hInstance = IntPtr.Zero,
+                        dwFlags = TaskDialogFlags.EnableHyperlinks | TaskDialogFlags.AllowDialogCancellation,
+                        dwCommonButtons = 0,
+                        pszWindowTitle = (DialogTitle ?? Application.ProductName).ToString(),
+                        pszMainInstruction = (Message ?? string.Empty).ToString(),
+                        pszContent = ConvertToLink((SubMessage ?? string.Empty).ToString()),
+                        pszExpandedInformation = ConvertToLink((ExpandedDetails ?? string.Empty).ToString()),
+                        pszExpandedControlText = (CollapsedText ?? string.Empty).ToString(),
+                        pszCollapsedControlText = (ExpandedText ?? string.Empty).ToString(),
+                        pszFooter = ConvertToLink((Footer ?? string.Empty).ToString()),
+                        pfCallback = TaskDialogCallbackProc,
+                        lpCallbackData = IntPtr.Zero,
+                        cxWidth = 0,
+                        pszVerificationText = null,
+                        cButtons = 0,
+                        pButtons = IntPtr.Zero,
+                        cRadioButtons = 0,
+                        pRadioButtons = IntPtr.Zero,
+                        nDefaultButton = 0,
+                        nDefaultRadioButton = 0,
+                        hMainIcon = IntPtr.Zero,
+                        hFooterIcon = IntPtr.Zero
                     };
+                    _config = config;
 
-                    // Get the icon of the footer
-                    if (FooterCustomIcon is null) FooterCustomIcon = informationIcon;
-                    else TD.CustomFooterIcon = FooterCustomIcon;
-
-                    // Create the buttons of the dialog
-                    TaskDialogButton okButton = new(ButtonType.Custom) { Text = Program.Localization.Strings.General.OK, ElevationRequired = RequireElevation };
-                    TaskDialogButton yesButton = new(ButtonType.Custom) { Text = Program.Localization.Strings.General.Yes, ElevationRequired = RequireElevation };
-                    TaskDialogButton noButton = new(ButtonType.Custom) { Text = Program.Localization.Strings.General.No };
-                    TaskDialogButton cancelButton = new(ButtonType.Custom) { Text = Program.Localization.Strings.General.Cancel };
-                    TaskDialogButton retryButton = new(ButtonType.Custom) { Text = Program.Localization.Strings.General.Retry, ElevationRequired = RequireElevation };
-                    TaskDialogButton closeButton = new(ButtonType.Custom) { Text = Program.Localization.Strings.General.Close };
-                    TaskDialogButton customButton = new(ButtonType.Custom);
-
-                    // Set the buttons of the dialog based on the MessageBoxButtons
-                    if (Buttons == MessageBoxButtons.YesNoCancel)
+                    // Set RTL layout if needed
+                    if (Program.Localization.Information.RightToLeft)
                     {
-                        TD.Buttons.Add(yesButton);
-                        TD.Buttons.Add(noButton);
-                        TD.Buttons.Add(cancelButton);
-                    }
-                    else if (Buttons == MessageBoxButtons.YesNo)
-                    {
-                        TD.Buttons.Add(yesButton);
-                        TD.Buttons.Add(noButton);
-                    }
-                    else if (Buttons == MessageBoxButtons.RetryCancel)
-                    {
-                        TD.Buttons.Add(retryButton);
-                        TD.Buttons.Add(cancelButton);
-                    }
-                    else if (Buttons == MessageBoxButtons.OKCancel)
-                    {
-                        TD.Buttons.Add(okButton);
-                        TD.Buttons.Add(cancelButton);
-                    }
-                    else if (Buttons == MessageBoxButtons.OK)
-                    {
-                        TD.Buttons.Add(okButton);
-                    }
-                    else
-                    {
-                        TD.Buttons.Add(okButton);
+                        config.dwFlags |= TaskDialogFlags.RTLLayout;
                     }
 
-                    // Set information icon based on MessageBoxIcon
-                    if (Icon == MessageBoxIcon.Information)
-                    {
-                        CustomSystemSounds.Asterisk.Play();
-                        TD.CustomMainIcon = informationIcon;
-                    }
-                    else if (Icon == MessageBoxIcon.Question)
-                    {
-                        CustomSystemSounds.Question.Play();
-                        TD.CustomMainIcon = questionIcon;
-                    }
-                    else if (Icon == MessageBoxIcon.Error)
-                    {
-                        CustomSystemSounds.Hand.Play();
-                        TD.CustomMainIcon = errorIcon;
-                    }
-                    else if (Icon == MessageBoxIcon.Exclamation)
-                    {
-                        CustomSystemSounds.Exclamation.Play();
-                        TD.CustomMainIcon = exclamationIcon;
-                    }
+                    // Set icons
+                    SetMainIcon(ref config, Icon);
+                    SetFooterIcon(ref config, FooterIcon, FooterCustomIcon);
 
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"MsgBox query");
+                    // Create buttons
+                    CreateButtons(ref config, Buttons, RequireElevation);
 
-                    if (!string.IsNullOrWhiteSpace(TD.WindowTitle))
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"MsgBox.Title: {TD.WindowTitle}");
+                    // Show the dialog
 
-                    if (!string.IsNullOrWhiteSpace(TD.Content))
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"MsgBox.Content: {TD.Content}");
+                    int result = TaskDialogIndirect(ref config, out int pnButton, out int pnRadioButton, out bool pfVerificationFlagChecked);
 
-                    if (!string.IsNullOrWhiteSpace(TD.Footer))
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"MsgBox.Footer: {TD.Footer}");
+                    // Map result to DialogResult
+                    DialogResult dialogResult = MapButtonResult(pnButton);
 
-                    if (!string.IsNullOrWhiteSpace(TD.ExpandedInformation))
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"MsgBox.Expanded Information: {TD.ExpandedInformation}");
+                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Message box result: {dialogResult}");
 
-                    if (!string.IsNullOrWhiteSpace(TD.CollapsedControlText))
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"MsgBox.Collapsed Control Text: {TD.CollapsedControlText}");
+                    // Clean up
+                    CleanupTaskDialog();
 
-                    if (!string.IsNullOrWhiteSpace(TD.ExpandedControlText))
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"MsgBox.Expanded Control Text: {TD.ExpandedControlText}");
-
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"MsgBox.Icon: {TD.MainIcon}");
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"MsgBox.Footer Icon: {TD.FooterIcon}");
-
-                    if (TD.Buttons is not null && TD.Buttons.Any(x => x is not null))
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"MsgBox.Buttons: {string.Join(", ", TD.Buttons.Where(x => x is not null).Select(x => x.Text))}");
-
-                    if (!string.IsNullOrWhiteSpace(TD.MainInstruction))
-                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"MsgBox.Message: {TD.MainInstruction}");
-
-                    DialogResult result = DialogResult.OK;
-                    TaskDialogButton resultButton = TD.ShowDialog();
-
-                    if (resultButton == yesButton)
-                    {
-                        result = DialogResult.Yes;
-                    }
-                    else if (resultButton == okButton)
-                    {
-                        result = DialogResult.OK;
-                    }
-                    else if (resultButton == noButton)
-                    {
-                        result = DialogResult.No;
-                    }
-                    else if (resultButton == cancelButton)
-                    {
-                        result = DialogResult.Cancel;
-                    }
-                    else if (resultButton == retryButton)
-                    {
-                        result = DialogResult.Cancel;
-                    }
-                    else if (resultButton == closeButton)
-                    {
-                        result = DialogResult.OK;
-                    }
-                    else if (resultButton == customButton)
-                    {
-                        result = DialogResult.OK;
-                    }
-
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"Message box result: {result}");
-
-                    // Dispose the dialog and its components to free up memory
-                    resultButton?.Dispose();
-                    okButton?.Dispose();
-                    yesButton?.Dispose();
-                    noButton?.Dispose();
-                    cancelButton?.Dispose();
-                    retryButton?.Dispose();
-                    closeButton?.Dispose();
-                    customButton?.Dispose();
-                    TD?.CustomFooterIcon?.Dispose();
-                    FooterCustomIcon?.Dispose();
-                    TD?.Dispose();
-
-                    return result;
+                    return dialogResult;
                 }
-
                 else
                 {
                     // If the operating system is Windows XP, use the classic message box dialog.
@@ -319,6 +185,215 @@ namespace WinPaletter.UI.Style
             {
                 // If an error occurred, use the classic message box dialog.
                 return Msgbox_Classic(Message, SubMessage, ExpandedDetails, Footer, DialogTitle, Buttons, Icon);
+            }
+        }
+
+        private static void SetMainIcon(ref TASKDIALOGCONFIG config, MessageBoxIcon icon)
+        {
+            switch (icon)
+            {
+                case MessageBoxIcon.Information:
+                    CustomSystemSounds.Asterisk.Play();
+                    config.hMainIcon = new IntPtr((int)TaskDialogIcon.Information);
+                    break;
+                case MessageBoxIcon.Question:
+                    CustomSystemSounds.Question.Play();
+                    config.hMainIcon = questionIcon?.Handle ?? IntPtr.Zero;
+                    if (questionIcon != null) config.dwFlags |= TaskDialogFlags.UseHIconMain;
+                    break;
+                case MessageBoxIcon.Error:
+                    CustomSystemSounds.Hand.Play();
+                    config.hMainIcon = new IntPtr((int)TaskDialogIcon.Error);
+                    break;
+                case MessageBoxIcon.Exclamation:
+                    CustomSystemSounds.Exclamation.Play();
+                    config.hMainIcon = new IntPtr((int)TaskDialogIcon.Warning);
+                    break;
+                default:
+                    config.hMainIcon = IntPtr.Zero;
+                    break;
+            }
+        }
+
+        private static void SetFooterIcon(ref TASKDIALOGCONFIG config, TaskDialogIcon footerIcon, Icon customIcon)
+        {
+            if (customIcon != null)
+            {
+                config.hFooterIcon = customIcon.Handle;
+                config.dwFlags |= TaskDialogFlags.UseHIconFooter;
+            }
+            else if (footerIcon == TaskDialogIcon.Information || footerIcon == TaskDialogIcon.Warning || footerIcon == TaskDialogIcon.Error || footerIcon == TaskDialogIcon.Shield)
+            {
+                config.hFooterIcon = new IntPtr((int)footerIcon);
+            }
+            else
+            {
+                config.hFooterIcon = IntPtr.Zero;
+            }
+        }
+
+        private static void CreateButtons(ref TASKDIALOGCONFIG config, MessageBoxButtons buttons, bool requireElevation)
+        {
+            List<TASKDIALOG_BUTTON> buttonList = new List<TASKDIALOG_BUTTON>();
+            TaskDialogCommonButtonFlags commonFlags = 0;
+
+            switch (buttons)
+            {
+                case MessageBoxButtons.YesNoCancel:
+                    commonFlags = TaskDialogCommonButtonFlags.YesNo | TaskDialogCommonButtonFlags.Cancel;
+                    break;
+                case MessageBoxButtons.YesNo:
+                    commonFlags = TaskDialogCommonButtonFlags.YesNo;
+                    break;
+                case MessageBoxButtons.RetryCancel:
+                    commonFlags = TaskDialogCommonButtonFlags.RetryCancel;
+                    break;
+                case MessageBoxButtons.OKCancel:
+                    commonFlags = TaskDialogCommonButtonFlags.OKCancel;
+                    break;
+                case MessageBoxButtons.OK:
+                default:
+                    commonFlags = TaskDialogCommonButtonFlags.OK;
+                    break;
+            }
+
+            config.dwCommonButtons = commonFlags;
+
+            // Add custom button text for localization
+            if (commonFlags.HasFlag(TaskDialogCommonButtonFlags.OK))
+            {
+                buttonList.Add(new TASKDIALOG_BUTTON { nButtonID = IDOK, pszButtonText = Program.Localization.Strings.General.OK });
+            }
+            if (commonFlags.HasFlag(TaskDialogCommonButtonFlags.Yes))
+            {
+                buttonList.Add(new TASKDIALOG_BUTTON { nButtonID = IDYES, pszButtonText = Program.Localization.Strings.General.Yes });
+            }
+            if (commonFlags.HasFlag(TaskDialogCommonButtonFlags.No))
+            {
+                buttonList.Add(new TASKDIALOG_BUTTON { nButtonID = IDNO, pszButtonText = Program.Localization.Strings.General.No });
+            }
+            if (commonFlags.HasFlag(TaskDialogCommonButtonFlags.Cancel))
+            {
+                buttonList.Add(new TASKDIALOG_BUTTON { nButtonID = IDCANCEL, pszButtonText = Program.Localization.Strings.General.Cancel });
+            }
+            if (commonFlags.HasFlag(TaskDialogCommonButtonFlags.Retry))
+            {
+                buttonList.Add(new TASKDIALOG_BUTTON { nButtonID = IDRETRY, pszButtonText = Program.Localization.Strings.General.Retry });
+            }
+            if (commonFlags.HasFlag(TaskDialogCommonButtonFlags.Close))
+            {
+                buttonList.Add(new TASKDIALOG_BUTTON { nButtonID = IDCLOSE, pszButtonText = Program.Localization.Strings.General.Close });
+            }
+
+            // Store buttons in state for reference
+            _TDState.Buttons = buttonList;
+        }
+
+        private static DialogResult MapButtonResult(int buttonId)
+        {
+            switch (buttonId)
+            {
+                case IDOK:
+                    return DialogResult.OK;
+                case IDYES:
+                    return DialogResult.Yes;
+                case IDNO:
+                    return DialogResult.No;
+                case IDCANCEL:
+                    return DialogResult.Cancel;
+                case IDRETRY:
+                    return DialogResult.Retry;
+                case IDCLOSE:
+                    return DialogResult.OK;
+                default:
+                    return DialogResult.OK;
+            }
+        }
+
+        private static IntPtr TaskDialogCallbackProc(IntPtr hwnd, uint uNotification, IntPtr wParam, IntPtr lParam, IntPtr lpRefData)
+        {
+            switch (uNotification)
+            {
+                case TaskDialogNotification.Created:
+                    _TDState.hWnd = hwnd;
+                    ApplyDarkMode(hwnd);
+                    break;
+
+                case TaskDialogNotification.Navigated:
+                    // Dialog navigation occurred
+                    break;
+
+                case TaskDialogNotification.ButtonClicked:
+                    // Button was clicked
+                    int buttonId = (int)wParam;
+                    if (_TDState.ButtonActions.ContainsKey(buttonId))
+                        _TDState.ButtonActions[buttonId]?.Invoke();
+                    break;
+
+                case TaskDialogNotification.HyperlinkClicked:
+                    // Hyperlink was clicked
+                    string href = Marshal.PtrToStringUni(lParam);
+                    if (!string.IsNullOrEmpty(href))
+                    {
+                        try
+                        {
+                            Process.Start(href);
+                        }
+                        catch { }
+                    }
+                    break;
+
+                case TaskDialogNotification.Timer:
+                    // Timer tick
+                    _TDState.TimerAction?.Invoke();
+                    break;
+
+                case TaskDialogNotification.RadioButtonClicked:
+                    // Radio button was clicked
+                    int radioId = (int)wParam;
+                    if (_TDState.RadioButtonActions.ContainsKey(radioId))
+                        _TDState.RadioButtonActions[radioId]?.Invoke();
+                    break;
+
+                case TaskDialogNotification.VerificationClicked:
+                    // Verification checkbox was clicked
+                    _TDState.VerificationFlagChecked = (int)wParam != 0;
+                    _TDState.VerificationAction?.Invoke();
+                    break;
+
+                case TaskDialogNotification.ExpandButtonClicked:
+                    // Expand button was clicked
+                    _TDState.ExpandAction?.Invoke();
+                    break;
+            }
+
+            return IntPtr.Zero;
+        }
+
+        private static void ApplyDarkMode(IntPtr hwnd)
+        {
+            if (!Program.Style.DarkMode) return;
+
+            NativeMethods.Helpers.SetHWNDDarkMode(hwnd, true);
+            WinPaletter.DarkTaskDialog.DarkenTD(hwnd, _config.hInstance);
+
+            //foreach (IntPtr child in User32.GetChildWindowHandles(hwnd))
+            //{
+            //    NativeMethods.Helpers.SetHWNDDarkMode(child, true);
+            //    WinPaletter.DarkTaskDialog.DarkenTD(child, _config.hInstance);
+            //}
+        }
+
+        private static void CleanupTaskDialog()
+        {
+            // Clean up resources
+            if (_TDState != null)
+            {
+                _TDState.Buttons.Clear();
+                _TDState.RadioButtons.Clear();
+                _TDState.ButtonActions.Clear();
+                _TDState.RadioButtonActions.Clear();
+                _TDState = null;
             }
         }
 
@@ -375,7 +450,7 @@ namespace WinPaletter.UI.Style
         /// <returns></returns>
         public static DialogResult MsgBox(object Message)
         {
-            return MsgBox(Message, MessageBoxButtons.OK, MessageBoxIcon.None, null, null, null, null, null, null, TaskDialogIcon.Custom, null, false);
+            return MsgBox(Message, MessageBoxButtons.OK, MessageBoxIcon.None, null, null, null, null, null, null, (int)TaskDialogIcon.None, null, false);
         }
 
         /// <summary>
@@ -386,7 +461,7 @@ namespace WinPaletter.UI.Style
         /// <returns></returns>
         public static DialogResult MsgBox(object Message, MessageBoxButtons Buttons)
         {
-            return MsgBox(Message, Buttons, MessageBoxIcon.None, null, null, null, null, null, null, TaskDialogIcon.Custom, null, false);
+            return MsgBox(Message, Buttons, MessageBoxIcon.None, null, null, null, null, null, null, (int)TaskDialogIcon.None, null, false);
         }
 
         /// <summary>
@@ -398,7 +473,7 @@ namespace WinPaletter.UI.Style
         /// <returns></returns>
         public static DialogResult MsgBox(object Message, MessageBoxButtons Buttons, MessageBoxIcon Icon)
         {
-            return MsgBox(Message, Buttons, Icon, null, null, null, null, null, null, TaskDialogIcon.Custom, null, false);
+            return MsgBox(Message, Buttons, Icon, null, null, null, null, null, null, (int)TaskDialogIcon.None, null, false);
         }
 
         /// <summary>
@@ -411,7 +486,7 @@ namespace WinPaletter.UI.Style
         /// <returns></returns>
         public static DialogResult MsgBox(object Message, MessageBoxButtons Buttons, MessageBoxIcon Icon, object SubMessage)
         {
-            return MsgBox(Message, Buttons, Icon, SubMessage, null, null, null, null, null, TaskDialogIcon.Custom, null, false);
+            return MsgBox(Message, Buttons, Icon, SubMessage, null, null, null, null, null, (int)TaskDialogIcon.None, null, false);
         }
 
         /// <summary>
@@ -425,7 +500,7 @@ namespace WinPaletter.UI.Style
         /// <returns></returns>
         public static DialogResult MsgBox(object Message, MessageBoxButtons Buttons, MessageBoxIcon Icon, object SubMessage, object CollapsedText)
         {
-            return MsgBox(Message, Buttons, Icon, SubMessage, CollapsedText, null, null, null, null, TaskDialogIcon.Custom, null, false);
+            return MsgBox(Message, Buttons, Icon, SubMessage, CollapsedText, null, null, null, null, (int)TaskDialogIcon.None, null, false);
         }
 
         /// <summary>
@@ -440,7 +515,7 @@ namespace WinPaletter.UI.Style
         /// <returns></returns>
         public static DialogResult MsgBox(object Message, MessageBoxButtons Buttons, MessageBoxIcon Icon, object SubMessage, object CollapsedText, object ExpandedText)
         {
-            return MsgBox(Message, Buttons, Icon, SubMessage, CollapsedText, ExpandedText, null, null, null, TaskDialogIcon.Custom, null, false);
+            return MsgBox(Message, Buttons, Icon, SubMessage, CollapsedText, ExpandedText, null, null, null, (int)TaskDialogIcon.None, null, false);
         }
 
         /// <summary>
@@ -456,7 +531,7 @@ namespace WinPaletter.UI.Style
         /// <returns></returns>
         public static DialogResult MsgBox(object Message, MessageBoxButtons Buttons, MessageBoxIcon Icon, object SubMessage, object CollapsedText, object ExpandedText, object ExpandedDetails)
         {
-            return MsgBox(Message, Buttons, Icon, SubMessage, CollapsedText, ExpandedText, ExpandedDetails, null, null, TaskDialogIcon.Custom, null, false);
+            return MsgBox(Message, Buttons, Icon, SubMessage, CollapsedText, ExpandedText, ExpandedDetails, null, null, (int)TaskDialogIcon.None, null, false);
         }
 
         /// <summary>
@@ -473,7 +548,7 @@ namespace WinPaletter.UI.Style
         /// <returns></returns>
         public static DialogResult MsgBox(object Message, MessageBoxButtons Buttons, MessageBoxIcon Icon, object SubMessage, object CollapsedText, object ExpandedText, object ExpandedDetails, object DialogTitle)
         {
-            return MsgBox(Message, Buttons, Icon, SubMessage, CollapsedText, ExpandedText, ExpandedDetails, DialogTitle, null, TaskDialogIcon.Custom, null, false);
+            return MsgBox(Message, Buttons, Icon, SubMessage, CollapsedText, ExpandedText, ExpandedDetails, DialogTitle, null, (int)TaskDialogIcon.None, null, false);
         }
 
         /// <summary>
@@ -491,7 +566,7 @@ namespace WinPaletter.UI.Style
         /// <returns></returns>
         public static DialogResult MsgBox(object Message, MessageBoxButtons Buttons, MessageBoxIcon Icon, object SubMessage, object CollapsedText, object ExpandedText, object ExpandedDetails, object DialogTitle, object Footer)
         {
-            return MsgBox(Message, Buttons, Icon, SubMessage, CollapsedText, ExpandedText, ExpandedDetails, DialogTitle, Footer, TaskDialogIcon.Custom, null, false);
+            return MsgBox(Message, Buttons, Icon, SubMessage, CollapsedText, ExpandedText, ExpandedDetails, DialogTitle, Footer, (int)TaskDialogIcon.None, null, false);
         }
 
         /// <summary>
@@ -531,403 +606,6 @@ namespace WinPaletter.UI.Style
         public static DialogResult MsgBox(object Message, MessageBoxButtons Buttons, MessageBoxIcon Icon, object SubMessage, object CollapsedText, object ExpandedText, object ExpandedDetails, object DialogTitle, object Footer, TaskDialogIcon FooterIcon, Icon FooterCustomIcon)
         {
             return MsgBox(Message, Buttons, Icon, SubMessage, CollapsedText, ExpandedText, ExpandedDetails, DialogTitle, Footer, FooterIcon, FooterCustomIcon, false);
-        }
-
-        #endregion
-
-        #region Events/Overrides
-
-        /// <summary>
-        /// A void that handles the HyperlinkClicked event of the modern task dialog.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private static void TD_HyperlinkClicked(object sender, HyperlinkClickedEventArgs e)
-        {
-            // Check if e.Href is a valid URL
-            bool isValidUrl = Uri.TryCreate(e.Href, UriKind.Absolute, out Uri uriResult) && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
-
-            if (isValidUrl)
-            {
-                // e.Href is a valid URL, proceed with opening it
-                Process.Start(e.Href);
-            }
-        }
-
-        /// <summary>
-        /// A void that handles the RadioButtonClicked event of the modern task dialog.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private static void TD_RadioButtonClicked(object sender, TaskDialogItemClickedEventArgs e)
-        {
-
-        }
-
-        /// <summary>
-        /// A void that handles the Timer event of the modern task dialog.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private static void TD_Timer(object sender, TimerEventArgs e)
-        {
-
-        }
-
-        /// <summary>
-        /// A void that handles the VerificationClicked event of the modern task dialog.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private static void TD_VerificationClicked(object sender, EventArgs e)
-        {
-
-        }
-
-        /// <summary>
-        /// A void that handles the HelpRequested event of the modern task dialog.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private static void TD_HelpRequested(object sender, EventArgs e)
-        {
-
-        }
-
-        /// <summary>
-        /// A void that handles the ExpandButtonClicked event of the modern task dialog.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private static void TD_ExpandButtonClicked(object sender, ExpandButtonClickedEventArgs e)
-        {
-
-        }
-
-        /// <summary>
-        /// A void that handles the ButtonClicked event of the modern task dialog.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private static void TD_ButtonClicked(object sender, TaskDialogItemClickedEventArgs e)
-        {
-
-        }
-
-        /// <summary>
-        /// A void that handles the Created event of the modern task dialog.
-        /// </summary>
-        public static void TD_Created(object sender, EventArgs e)
-        {
-            IntPtr hWnd = ((IWin32Window)sender).Handle;
-
-            NativeMethods.Helpers.SetHWNDDarkMode(hWnd, Program.Style.DarkMode);
-
-            ApplyDarkModeRecursive(hWnd);
-
-            foreach (IntPtr child in User32.GetChildWindowHandles(hWnd))
-            {
-                NativeMethods.Helpers.SetHWNDDarkMode(child, Program.Style.DarkMode);
-                ApplyDarkModeRecursive(child);
-            }
-        }
-
-        public static string GetClassName(IntPtr hWnd)
-        {
-            StringBuilder className = new(256);
-            return User32.GetClassName(hWnd, className, className.Capacity) > 0 ? className.ToString() : string.Empty;
-        }
-
-        private static void ApplyDarkModeRecursive(IntPtr hwnd)
-        {
-            NativeMethods.Helpers.SetHWNDDarkMode(hwnd, Program.Style.DarkMode);
-
-            switch (GetClassName(hwnd))
-            {
-                case "Button":
-                    SetControlTheme(hwnd, Program.Style.DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default);
-                    break;
-
-                case "Static":
-                    SubclassStatic(hwnd);
-                    break;
-
-                case "SysLink":
-                    SubclassSysLink(hwnd);
-                    break;
-
-                case "DirectUIHWND":
-                    SubclassDirectUI(hwnd);
-                    break;
-            }
-
-            foreach (IntPtr child in User32.GetChildWindowHandles(hwnd))
-                ApplyDarkModeRecursive(child);
-        }
-
-        private static void SubclassStatic(IntPtr hwnd)
-        {
-            SetControlTheme(hwnd, Program.Style.DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Explorer);
-            User32.InvalidateRect(hwnd, IntPtr.Zero, true);
-        }
-
-        private static void SubclassSysLink(IntPtr hwnd)
-        {
-            SetControlTheme(hwnd, Program.Style.DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Explorer);
-            User32.InvalidateRect(hwnd, IntPtr.Zero, true);
-        }
-
-        private static readonly Dictionary<IntPtr, IntPtr> _originalWndProc = [];
-
-        private delegate IntPtr WndProcDelegate(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
-        private static readonly WndProcDelegate _directUIProc = DirectUIWndProc;
-
-        private static readonly Dictionary<IntPtr, List<CachedTextElement>> _textCache = [];
-
-        private static void SubclassDirectUI(IntPtr hwnd)
-        {
-            SetControlTheme(hwnd, CtrlTheme.DarkExplorer);
-            NativeMethods.Helpers.SetHWNDDarkMode(hwnd, Program.Style.DarkMode);
-
-            // Cache the text details ONCE right here, or on the very first paint.
-            // This moves the slow UIA overhead out of the WM_PAINT loop.
-            if (!_textCache.ContainsKey(hwnd)) CacheElementsForWindow(hwnd);
-
-            if (!_originalWndProc.ContainsKey(hwnd))
-            {
-                IntPtr proc = Marshal.GetFunctionPointerForDelegate(_directUIProc);
-                _originalWndProc[hwnd] = User32.SetWindowLongPtr(hwnd, -4, proc);
-            }
-
-            User32.InvalidateRect(hwnd, IntPtr.Zero, false);
-        }
-
-        private static void CacheElementsForWindow(IntPtr hwnd)
-        {
-            List<CachedTextElement> elementsList = [];
-
-            AutomationElement root = AutomationElement.FromHandle(hwnd);
-            if (root == null) return;
-
-            AutomationElementCollection elements = root.FindAll(TreeScope.Descendants, Condition.TrueCondition);
-
-            foreach (AutomationElement element in elements)
-            {
-                AutomationElementInformation current = element.Current;
-
-                if (current.ControlType != ControlType.Text &&
-                    current.ControlType != ControlType.Hyperlink)
-                    continue;
-
-                if (string.IsNullOrWhiteSpace(current.Name))
-                    continue;
-
-                Rect bounds = current.BoundingRectangle;
-                if (bounds.IsEmpty)
-                    continue;
-
-                POINT pt = new((int)bounds.Left, (int)bounds.Top);
-                ScreenToClient(hwnd, ref pt);
-
-                TextElementType type = GetElementType(current.AutomationId);
-
-                if (type == TextElementType.Unknown)
-                {
-                    if (current.ControlType == ControlType.Hyperlink)
-                    {
-                        type = TextElementType.ContentLink;
-                    }
-                    else
-                    {
-                        // Any other visible text that lacks an AutomationId
-                        // is most likely footer, expanded text, verification text, etc.
-                        type = TextElementType.ContentText;
-                    }
-                }
-
-                elementsList.Add(new CachedTextElement
-                {
-                    Type = type,
-                    Text = current.Name,
-                    Bounds = new Rectangle(
-                        pt.X,
-                        pt.Y,
-                        (int)bounds.Width,
-                        (int)bounds.Height)
-                });
-            }
-
-            _textCache[hwnd] = elementsList;
-        }
-
-        private const uint WM_PAINT = 0x000F;
-
-        private static IntPtr DirectUIWndProc(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam)
-        {
-            IntPtr result = User32.CallWindowProc(_originalWndProc[hWnd], hWnd, msg, wParam, lParam);
-
-            if (msg == WM_PAINT)
-            {
-                CacheElementsForWindow(hWnd);
-
-                using Graphics g = Graphics.FromHwnd(hWnd);
-                PaintDirectUIText(hWnd, g);
-            }
-
-            return result;
-        }
-
-        private static LOGFONT GetFont(TextElementType type)
-        {
-            LOGFONT lf = new()
-            {
-                lfFaceName = "Segoe UI",
-                lfWeight = 400
-            };
-
-            switch (type)
-            {
-                case TextElementType.MainInstruction:
-                    lf.lfHeight = -16;
-                    break;
-
-                case TextElementType.ContentText:
-                case TextElementType.ContentLink:
-                case TextElementType.ExpandedInformationText:
-                case TextElementType.ExpandedInformationLink:
-                case TextElementType.ExpandoTextExpanded:
-                case TextElementType.ExpandoTextCollapsed:
-                case TextElementType.VerificationText:
-                    lf.lfHeight = -12;
-                    break;
-            }
-
-            return lf;
-        }
-
-        private static Color GetTextColor(TextElementType type)
-        {
-            return type switch
-            {
-                TextElementType.MainInstruction => Color.FromArgb(153, 235, 255),
-
-                TextElementType.ContentText or
-                TextElementType.ExpandedInformationText or
-                TextElementType.ExpandedInformationLink or
-                TextElementType.ContentLink or
-                TextElementType.ExpandoTextExpanded or
-                TextElementType.ExpandoTextCollapsed or
-                TextElementType.VerificationText
-                    => Color.White,
-
-                _ => Color.White
-            };
-        }
-
-        private static TextElementType GetElementType(string id)
-        {
-            return id switch
-            {
-                "MainInstruction" => TextElementType.MainInstruction,
-                "ContentText" => TextElementType.ContentText,
-                "ContentLink" => TextElementType.ContentLink,
-                "ExpandedInformationText" => TextElementType.ExpandedInformationText,
-                "ExpandedInformationLink" => TextElementType.ExpandedInformationLink,
-                "ExpandoTextExpanded" => TextElementType.ExpandoTextExpanded,
-                "ExpandoTextCollapsed" => TextElementType.ExpandoTextCollapsed,
-                "VerificationText" => TextElementType.VerificationText,
-                _ => TextElementType.Unknown
-            };
-        }
-
-        private enum TextElementType
-        {
-            MainInstruction,
-            ContentText,
-            ContentLink,
-            ExpandedInformationText,
-            ExpandedInformationLink,
-            ExpandoTextExpanded,
-            ExpandoTextCollapsed,
-            VerificationText,
-            Unknown
-        }
-
-        private static bool LooksLikePath(string text)
-        {
-            return
-                text.Contains(":\\") ||
-                text.StartsWith(@"\\") ||
-                text.Contains('/');
-        }
-
-        private struct CachedTextElement
-        {
-            public TextElementType Type;
-            public string Text;
-            public Rectangle Bounds;
-        }
-
-        private static void PaintDirectUIText(IntPtr hwnd, Graphics g)
-        {
-            if (!_textCache.TryGetValue(hwnd, out var cachedElements))
-                return;
-
-            IntPtr hTheme = OpenThemeData(hwnd, "TEXTSTYLE");
-            if (hTheme == IntPtr.Zero) return;
-
-            IntPtr hdc = IntPtr.Zero;
-            try
-            {
-                hdc = g.GetHdc();
-
-                foreach (var element in cachedElements)
-                {
-                    RECT rc = new(element.Bounds);
-                    Color foreColor = GetTextColor(element.Type);
-                    LOGFONT lf = GetFont(element.Type);
-
-                    // Paint background to cover old text quickly
-                    IntPtr hBrush = CreateSolidBrush(ColorTranslator.ToWin32(Color.FromArgb(44, 44, 44)));
-                    FillRect(hdc, ref rc, hBrush);
-                    DeleteObject(hBrush);
-
-                    IntPtr hFont = CreateFontIndirect(ref lf);
-                    if (hFont == IntPtr.Zero) continue;
-
-                    IntPtr oldFont = SelectObject(hdc, hFont);
-                    try
-                    {
-                        DTTOPTS opts = new()
-                        {
-                            dwSize = (uint)Marshal.SizeOf<DTTOPTS>(),
-                            dwFlags = DTT_TEXTCOLOR | DTT_COMPOSITED,
-                            crText = new COLORREF(foreColor)
-                        };
-
-                        uint flags = DT_NOPREFIX;
-
-                        if (LooksLikePath(element.Text))
-                            flags |= DT_PATH_ELLIPSIS;
-                        else
-                            flags |= DT_END_ELLIPSIS;
-
-                        flags |= DT_WORDBREAK;
-
-                        DrawThemeTextEx(hTheme, hdc, 0, 0, element.Text, -1, flags, ref rc, ref opts);
-                    }
-                    finally
-                    {
-                        SelectObject(hdc, oldFont);
-                        DeleteObject(hFont);
-                    }
-                }
-            }
-            finally
-            {
-                if (hdc != IntPtr.Zero) g.ReleaseHdc(hdc);
-                CloseThemeData(hTheme);
-            }
         }
 
         #endregion

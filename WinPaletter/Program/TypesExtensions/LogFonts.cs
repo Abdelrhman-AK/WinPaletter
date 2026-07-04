@@ -6,7 +6,7 @@ using static WinPaletter.NativeMethods.GDI32;
 namespace WinPaletter.TypesExtensions
 {
     /// <summary>
-    /// Extension methods for <see cref="LogFont"/>
+    /// Extension methods for <see cref="LOGFONT"/>
     /// </summary>
     public static class LogFontExtensions
     {
@@ -16,7 +16,7 @@ namespace WinPaletter.TypesExtensions
         /// <param name="logFont">The logFont object to convert.</param>
         /// <param name="size">The size of the byte array to return. Default is 92.</param>
         /// <returns>A byte array representation of the logFont object.</returns>
-        public static byte[] ToBytes(this LogFont logFont, int size = 92)
+        public static byte[] ToBytes(this LOGFONT logFont, int size = 92)
         {
             byte[] b = new byte[size];
 
@@ -51,11 +51,11 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
-        /// Creates a <see cref="Font"/> object from a <see cref="LogFont"/> object.
+        /// Creates a <see cref="Font"/> object from a <see cref="LOGFONT"/> object.
         /// </summary>
         /// <param name="logFont"></param>
         /// <returns></returns>
-        public static Font ToFont(this LogFont logFont)
+        public static Font ToFont(this LOGFONT logFont)
         {
             try
             {
@@ -70,7 +70,7 @@ namespace WinPaletter.TypesExtensions
             }
         }
 
-        private static FontStyle ConvertLogFontStyle(LogFont logFont)
+        private static FontStyle ConvertLogFontStyle(LOGFONT logFont)
         {
             FontStyle style = FontStyle.Regular;
 

@@ -1326,7 +1326,7 @@ namespace WinPaletter
 
             if (!Console.FontRaster)
             {
-                GDI32.LogFont logFont = new()
+                GDI32.LOGFONT logFont = new()
                 {
                     lfFaceName = Console.FaceName,
                     lfHeight = -Console.PixelHeight,

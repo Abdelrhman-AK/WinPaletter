@@ -89,6 +89,9 @@ namespace WinPaletter
                 card.MouseEnter += (s, e) => Transition.With(panel1, nameof(panel1.BackColor), Program.Style.DarkMode ? (s as Card).Color.Dark(0.7f) : (s as Card).Color.CB(0.7f)).CriticalDamp(Program.AnimationSpan);
                 card.MouseLeave += (s, e) => Transition.With(panel1, nameof(panel1.BackColor), BackColor).CriticalDamp(Program.AnimationSpan);
             }
+
+            MsgBox("MainInstructions", SubMessage: "SubMessage", CollapsedText: "Collapsed button text", ExpandedText: "Expanded button text", ExpandedDetails: "Expanded Details",
+                Footer: "Footer C:\\Windows\\System32\\shell32.dll", FooterIcon: Comctl32.TaskDialogIcon.Information, Icon: MessageBoxIcon.Information);
         }
 
         private void Home_Localized()

@@ -49,7 +49,7 @@ namespace WinPaletter
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
                     using (INI ini = new(dlg.FileName))
-                    using (Manager TMx = Default.FromOS(Program.WindowStyle))
+                    using (Manager TMx = Program.TM.Clone())
                     {
                         string metricsStr = ini.Read("Metrics", "NonclientMetrics");
                         string iconsmetricsStr = ini.Read("Metrics", "IconMetrics");
@@ -142,8 +142,9 @@ namespace WinPaletter
                         //Newer versions of msstyles
                         using (VisualStyle visualStyle = new(theme))
                         {
-                            using (Manager TMx = new(Manager.Source.Empty) { MetricsFonts = visualStyle.MetricsFonts() })
+                            using (Manager TMx = Program.TM.Clone())
                             {
+                                TMx.MetricsFonts = visualStyle.MetricsFonts();
                                 LoadFromTM(TMx);
                             }
                         }

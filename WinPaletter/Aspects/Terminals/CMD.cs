@@ -1010,7 +1010,7 @@ namespace WinPaletter
 
             if (!Console.FontRaster)
             {
-                GDI32.LogFont logFont = new()
+                GDI32.LOGFONT logFont = new()
                 {
                     lfFaceName = Console.FaceName,
                     lfHeight = -Console.PixelHeight,
@@ -1459,7 +1459,7 @@ while ($true) {{
         {
             if (!IsShown) return;
 
-            GDI32.LogFont logFont = new();
+            GDI32.LOGFONT logFont = new();
             F_cmd.ToLogFont(logFont);
             logFont.lfHeight = -(int)CMD_FontPxHeight.Value;
             logFont.lfWidth = 0;
@@ -1616,7 +1616,7 @@ while ($true) {{
 
                     CMD_FontPxHeight.Value = (int)(dlg.Font.Size);
 
-                    GDI32.LogFont logFont = new();
+                    GDI32.LOGFONT logFont = new();
                     dlg.Font.ToLogFont(logFont);
                     logFont.lfHeight = (int)-dlg.Font.Size; // Negative value for pixel height
                     logFont.lfWidth = 0; // Set to 0 for default width
@@ -1635,7 +1635,7 @@ while ($true) {{
         {
             if (IsShown)
             {
-                GDI32.LogFont logFont = new();
+                GDI32.LOGFONT logFont = new();
                 F_cmd.ToLogFont(logFont);
                 logFont.lfHeight = -(int)CMD_FontPxHeight.Value;
                 logFont.lfWidth = 0; // Set to 0 for default width
