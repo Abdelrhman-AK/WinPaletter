@@ -16,7 +16,6 @@ namespace WinPaletter.UI.Style
         /// A class instance that provides modern task dialog.
         /// </summary>
         private static TaskDialogState _TDState;
-        private static TASKDIALOGCONFIG _config = new();
 
         /// <summary>
         /// Represents the system-defined icon used for help or question dialogs.<br></br>
@@ -59,6 +58,7 @@ namespace WinPaletter.UI.Style
             public Action TimerAction;
             public Action ExpandAction;
             public Action VerificationAction;
+            public IntPtr ConfigPointer = IntPtr.Zero;
         }
 
         private static string ConvertToLink(string String)
@@ -146,7 +146,6 @@ namespace WinPaletter.UI.Style
                         hMainIcon = IntPtr.Zero,
                         hFooterIcon = IntPtr.Zero
                     };
-                    _config = config;
 
                     // Set RTL layout if needed
                     if (Program.Localization.Information.RightToLeft)
@@ -161,8 +160,12 @@ namespace WinPaletter.UI.Style
                     // Create buttons
                     CreateButtons(ref config, Buttons, RequireElevation);
 
-                    // Show the dialog
+                    // Marshal the config to unmanaged memory
+                    int size = Marshal.SizeOf(config);
+                    _TDState.ConfigPointer = Marshal.AllocHGlobal(size);
+                    Marshal.StructureToPtr(config, _TDState.ConfigPointer, false);
 
+                    // Show the dialog
                     int result = TaskDialogIndirect(ref config, out int pnButton, out int pnRadioButton, out bool pfVerificationFlagChecked);
 
                     // Map result to DialogResult
@@ -372,11 +375,14 @@ namespace WinPaletter.UI.Style
 
         private static void ApplyDarkMode(IntPtr hwnd)
         {
-            if (OS.WXP) return;
             if (!Program.Style.DarkMode) return;
 
             NativeMethods.Helpers.SetHWNDDarkMode(hwnd, true);
-            WinPaletter.DarkTaskDialog.DarkenTD(hwnd, _config.hInstance);
+
+            if (_TDState != null && _TDState.ConfigPointer != IntPtr.Zero)
+            {
+                WinPaletter.DarkTaskDialog.DarkenTD(hwnd, _TDState.ConfigPointer);
+            }
 
             //foreach (IntPtr child in User32.GetChildWindowHandles(hwnd))
             //{
@@ -390,6 +396,13 @@ namespace WinPaletter.UI.Style
             // Clean up resources
             if (_TDState != null)
             {
+                // Free the marshaled config memory
+                if (_TDState.ConfigPointer != IntPtr.Zero)
+                {
+                    Marshal.FreeHGlobal(_TDState.ConfigPointer);
+                    _TDState.ConfigPointer = IntPtr.Zero;
+                }
+
                 _TDState.Buttons.Clear();
                 _TDState.RadioButtons.Clear();
                 _TDState.ButtonActions.Clear();

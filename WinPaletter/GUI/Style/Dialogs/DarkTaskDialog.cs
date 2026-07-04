@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 using static WinPaletter.NativeMethods.Comctl32;
 using static WinPaletter.NativeMethods.DWMAPI;
@@ -499,7 +500,15 @@ namespace WinPaletter
             foreach (UIAElementInfo el in s.elements)
             {
                 if (el.automationId == "VerificationCheckBox")
+                {
                     s.isChecked = (el.toggleState + STATE_SYSTEM_CHECKED) != 0;
+                }
+                // ADD THIS: Capture the actual visual tree state for the expander button
+                else if (el.automationId == "ExpandoButton")
+                {
+                    // ExpandCollapseState: 0 = Collapsed, 1 = Expanded
+                    s.isExpanded = (int)el.toggleState == 1;
+                }
             }
             if (s.defChecked) s.isChecked = true;
 
@@ -694,12 +703,9 @@ namespace WinPaletter
                     bool hot = i == s.hotIdx;
                     bool press = hot && s.pressing;
 
-                    if (el.automationId == "ExpandoButton" && s.hTD != IntPtr.Zero)
+                    if (el.automationId == "ExpandoButton" && s.hTD != IntPtr.Zero && !s_hasNativeTheme)
                     {
-                        GetThemePartSize(s.hTD, hdcBuf, TaskDialogParts.TDLG_EXPANDOBUTTON, TaskDialogParts.TDLGEBS_NORMAL, IntPtr.Zero, TaskDialogParts.TS_TRUE, out SIZE sz);
-                        RECT rcGlyph = el.rect;
-                        rcGlyph.right = el.rect.left + sz.cx + 3;
-
+                        // 1. Determine the correct state first
                         int st;
                         if (press && s.isExpanded) st = TaskDialogParts.TDLGEBS_EXPANDEDPRESSED;
                         else if (press) st = TaskDialogParts.TDLGEBS_PRESSED;
@@ -708,11 +714,15 @@ namespace WinPaletter
                         else if (s.isExpanded) st = TaskDialogParts.TDLGEBS_EXPANDEDNORMAL;
                         else st = TaskDialogParts.TDLGEBS_NORMAL;
 
-                        if (!s_hasNativeTheme)
-                        {
-                            FillRect(hdcBuf, ref rcGlyph, s.brSecondary);
-                            DrawThemeBackground(s.hTD, hdcBuf, TaskDialogParts.TDLG_EXPANDOBUTTON, st, ref rcGlyph, IntPtr.Zero);
-                        }
+                        // 2. Fetch size based on the exact state needed
+                        GetThemePartSize(s.hTD, hdcBuf, TaskDialogParts.TDLG_EXPANDOBUTTON, st, IntPtr.Zero, TaskDialogParts.TS_TRUE, out SIZE sz);
+
+                        RECT rcGlyph = el.rect;
+                        rcGlyph.right = el.rect.left + sz.cx + 1;
+
+                        // 3. Paint background and the appropriate glyph state
+                        FillRect(hdcBuf, ref rcGlyph, s.brSecondary);
+                        DrawThemeBackground(s.hTD, hdcBuf, TaskDialogParts.TDLG_EXPANDOBUTTON, st, ref rcGlyph, IntPtr.Zero);
                     }
                     else if (el.automationId == "VerificationCheckBox" && s.hButton != IntPtr.Zero)
                     {
@@ -787,7 +797,7 @@ namespace WinPaletter
                         RECT elRectForMargins = el.rect;
                         GetThemeMargins(s.hTD, hdcBuf, TaskDialogParts.TDLG_VERIFICATIONTEXT, 0, TaskDialogParts.TMT_CONTENTMARGINS, ref elRectForMargins, out MARGINS vtextMargins);
                         rcText.left += sz.cx + vtextMargins.leftWidth - 2;
-                        rcText.top += 1;
+                        rcText.top += 2;
                         uiPart = TaskDialogParts.TDLG_EXPANDOTEXT;
                         brBg = s.brSecondary;
                         dtFlags = GDI32.DT_LEFT | GDI32.DT_VCENTER | GDI32.DT_NOPREFIX;
@@ -901,7 +911,6 @@ namespace WinPaletter
                     {
                         IntPtr hdc = BeginPaint(hwnd, out PAINTSTRUCT ps);
                         DirectUIState s = GetState(hwnd);
-                        s.isExpanded = GetProp(GetParent(hwnd), "IsExpanded") != IntPtr.Zero;
                         RefreshElements(hwnd, s);
                         PaintDirectUI(hwnd, hdc, s);
                         EndPaint(hwnd, ref ps);
@@ -950,6 +959,7 @@ namespace WinPaletter
                         DirectUIState s = GetState(hwnd);
                         s.pressing = true;
                         RefreshElements(hwnd, s);
+                        InvalidateRect(hwnd, IntPtr.Zero, false);
                         break;
                     }
                 case WM_LBUTTONUP:
@@ -957,6 +967,7 @@ namespace WinPaletter
                         DirectUIState s = GetState(hwnd);
                         if (s.pressing) s.pressing = false;
                         RefreshElements(hwnd, s);
+                        InvalidateRect(hwnd, IntPtr.Zero, false);
                         break;
                     }
 
@@ -1090,6 +1101,9 @@ namespace WinPaletter
         // TaskDialogMainSubclassProc
         private static IntPtr s_solidSecondaryBrush = IntPtr.Zero;
 
+        private const uint WM_USER = 0x0400;
+        private const uint WM_REFRESH_DUI_STATE = WM_USER + 4242;
+
         private static IntPtr TaskDialogMainSubclassProc(IntPtr hwnd, uint msg, IntPtr wParam, IntPtr lParam, UIntPtr uId, IntPtr dwRef)
         {
             switch (msg)
@@ -1119,6 +1133,30 @@ namespace WinPaletter
                     RemoveFromTaskDialog(hwnd);
                     RemoveWindowSubclass(hwnd, s_mainProc, uId);
                     break;
+
+                // 1. Intercept the notification and defer it
+                case 0x1102 /*TDN_EXPANDO_BUTTON_CLICKED*/:
+                    PostMessage(hwnd, WM_REFRESH_DUI_STATE, IntPtr.Zero, IntPtr.Zero);
+                    break;
+
+                // 2. Handle it after the UI engine completes layout transition
+                case WM_REFRESH_DUI_STATE:
+                    EnumChildWindows(hwnd, delegate (IntPtr hwndChild, IntPtr lp)
+                    {
+                        if (GetWindowSubclass(hwndChild, s_directUiProc, kDirectUISubclassId, out _))
+                        {
+                            DirectUIState s = GetState(hwndChild);
+
+                            // Explicitly toggle state or re-read UI Automation tree safely
+                            RefreshElements(hwndChild, s);
+
+                            // Force an immediate redraw pass
+                            InvalidateRect(hwndChild, IntPtr.Zero, false);
+                            UpdateWindow(hwndChild);
+                        }
+                        return true;
+                    }, IntPtr.Zero);
+                    break;
             }
             return DefSubclassProc(hwnd, msg, wParam, lParam);
         }
@@ -1143,6 +1181,16 @@ namespace WinPaletter
             s_hasNativeTheme = IsDarkThemeActive("DarkMode_Explorer::TaskDialog", "TaskDialog") || IsDarkThemeActive("DarkMode_DarkTheme::TaskDialog", "TaskDialog");
 
             bool dark = Program.Style.DarkMode;
+
+            // If pCfg is zero, try to get it from the window
+            if (pCfg == IntPtr.Zero)
+            {
+                // Try to get the stored config from the main window's subclass data
+                if (GetWindowSubclass(hwndTD, s_mainProc, kMainSubclassId, out IntPtr existingConfig))
+                {
+                    pCfg = existingConfig;
+                }
+            }
 
             // Remove path
             if (!dark)
@@ -1243,12 +1291,8 @@ namespace WinPaletter
                 {
                     int controlType = ComUIAutomation.GetPropertyValueInt(child, ComUIAutomation.UIA_ControlTypePropertyId);
 
-                    if (controlType == ComUIAutomation.UIA_ButtonControlTypeId ||
-                        controlType == ComUIAutomation.UIA_RadioButtonControlTypeId ||
-                        controlType == ComUIAutomation.UIA_ProgressBarControlTypeId ||
-                        controlType == ComUIAutomation.UIA_HyperlinkControlTypeId ||
-                        controlType == ComUIAutomation.UIA_ScrollBarControlTypeId ||
-                        controlType == ComUIAutomation.UIA_PaneControlTypeId)
+                    if (controlType == ComUIAutomation.UIA_ButtonControlTypeId || controlType == ComUIAutomation.UIA_RadioButtonControlTypeId || controlType == ComUIAutomation.UIA_ProgressBarControlTypeId ||
+                        controlType == ComUIAutomation.UIA_HyperlinkControlTypeId || controlType == ComUIAutomation.UIA_ScrollBarControlTypeId || controlType == ComUIAutomation.UIA_PaneControlTypeId)
                     {
                         IntPtr hBtn = ComUIAutomation.GetNativeWindowHandle(child);
                         if (hBtn != IntPtr.Zero)
@@ -1310,15 +1354,13 @@ namespace WinPaletter
                     s.defExpanded = cfgView != null && (cfgView.dwFlags & TaskDialogConfigView.TDF_EXPANDED_BY_DEFAULT) != 0;
                     s.defChecked = cfgView != null && (cfgView.dwFlags & TaskDialogConfigView.TDF_VERIFICATION_FLAG_CHECKED) != 0;
 
-                    s.isExpanded = GetProp(hwndTD, "IsExpanded") != IntPtr.Zero;
-                    s.isChecked = GetProp(hwndTD, "IsChecked") != IntPtr.Zero;
-                    if (s.defChecked) s.isChecked = true;
+                    s.isExpanded = s.defExpanded;
+                    s.isChecked = s.defChecked;
 
                     s.elemsOk = false;
                     RefreshElements(hDUI, s);
 
-                    IntPtr ex;
-                    if (!GetWindowSubclass(hDUI, s_directUiProc, kDirectUISubclassId, out ex))
+                    if (!GetWindowSubclass(hDUI, s_directUiProc, kDirectUISubclassId, out IntPtr ex))
                         SetWindowSubclass(hDUI, s_directUiProc, kDirectUISubclassId, pCfg);
                 }
 
