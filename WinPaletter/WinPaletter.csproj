@@ -233,8 +233,6 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Xml" />
-    <Reference Include="UIAutomationClient" />
-    <Reference Include="UIAutomationTypes" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -638,6 +636,7 @@
     <Compile Include="Program\Classes\SystemRestoreHelper.cs" />
     <Compile Include="Program\Logger.cs" />
     <Compile Include="Program\NativeMethods\Comctl32.cs" />
+    <Compile Include="Program\NativeMethods\ComUIAutomation.cs" />
     <Compile Include="Program\NativeMethods\Credui.cs" />
     <Compile Include="Program\NativeMethods\NTDLL.cs" />
     <Compile Include="Program\NativeMethods\Shlwapi.cs" />

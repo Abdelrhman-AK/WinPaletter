@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Windows;
-using System.Windows.Automation;
 using WinPaletter.NativeMethods;
 using static WinPaletter.NativeMethods.Comctl32;
 using static WinPaletter.NativeMethods.DWMAPI;
@@ -38,7 +36,7 @@ namespace WinPaletter
         public RECT rect;
         public string automationId = string.Empty;
         public string name = string.Empty;
-        public ToggleState toggleState = ToggleState.Indeterminate;
+        public ComUIAutomation.ToggleState toggleState = ComUIAutomation.ToggleState.Indeterminate;
 
         public bool IsRectEmpty()
         {
@@ -443,93 +441,10 @@ namespace WinPaletter
             };
         }
 
-        /// <summary>
-        /// UIA element cache
-        /// </summary>
-        /// <param name="hwnd"></param>
-        /// <param name="outList"></param>
-        /// <returns></returns>
-        private static bool QueryElements(IntPtr hwnd, List<UIAElementInfo> outList)
-        {
-            outList.Clear();
-
-            AutomationElement root;
-            try
-            {
-                root = AutomationElement.FromHandle(hwnd);
-            }
-            catch (ArgumentException)
-            {
-                return false;
-            }
-            if (root == null) return false;
-
-            TreeWalker walker = TreeWalker.ContentViewWalker;
-            AutomationElement child = walker.GetFirstChild(root);
-
-            while (child != null)
-            {
-                UIAElementInfo info = new UIAElementInfo();
-                Rect boundingRect = (Rect)child.GetCurrentPropertyValue(AutomationElement.BoundingRectangleProperty);
-
-                RECT screenRect = new RECT();
-                screenRect.left = (int)boundingRect.Left;
-                screenRect.top = (int)boundingRect.Top;
-                screenRect.right = (int)boundingRect.Right;
-                screenRect.bottom = (int)boundingRect.Bottom;
-
-                POINT topLeft = new POINT { X = screenRect.left, Y = screenRect.top };
-                POINT bottomRight = new POINT { X = screenRect.right, Y = screenRect.bottom };
-                ScreenToClient(hwnd, ref topLeft);
-                ScreenToClient(hwnd, ref bottomRight);
-
-                info.rect.left = topLeft.X;
-                info.rect.top = topLeft.Y;
-                info.rect.right = bottomRight.X;
-                info.rect.bottom = bottomRight.Y;
-
-                info.automationId = (string)child.GetCurrentPropertyValue(AutomationElement.AutomationIdProperty) ?? string.Empty;
-                info.name = (string)child.GetCurrentPropertyValue(AutomationElement.NameProperty) ?? string.Empty;
-
-                if (info.automationId == "VerificationCheckBox")
-                {
-                    try
-                    {
-                        TogglePattern toggle = (TogglePattern)child.GetCurrentPattern(TogglePattern.Pattern);
-                        info.toggleState = toggle.Current.ToggleState;
-                    }
-                    catch (InvalidOperationException)
-                    {
-                        info.toggleState = ToggleState.Indeterminate;
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(info.automationId) && !info.IsRectEmpty())
-                {
-                    string id = info.automationId;
-                    if (id == "MainIcon" || id == "MainInstruction" ||
-                        id == "ContentText" || id == "ExpandedInformationText" ||
-                        id == "ExpandedFooterText" ||
-                        id == "ExpandoButton" || id == "VerificationCheckBox" ||
-                        id == "FootnoteText" || id == "FootnoteIcon" ||
-                        id.StartsWith("RadioButton_") ||
-                        id.StartsWith("CommandLink_") ||
-                        id.StartsWith("CommandButton_"))
-                    {
-                        outList.Add(info);
-                    }
-                }
-
-                child = walker.GetNextSibling(child);
-            }
-
-            return outList.Count > 0;
-        }
-
         private static void RefreshElements(IntPtr hwnd, DirectUIState s)
         {
             s.elements.Clear();
-            QueryElements(hwnd, s.elements);
+            ComUIAutomation.QueryElements(hwnd, s.elements);
 
             foreach (UIAElementInfo el in s.elements)
             {
@@ -1222,29 +1137,29 @@ namespace WinPaletter
 
             EnumChildWindows(hwndTD, delegate (IntPtr hwndChild, IntPtr lp)
             {
-                AutomationElement el;
+                NativeMethods.IUIAutomationElement el;
                 try
                 {
-                    el = AutomationElement.FromHandle(hwndChild);
+                    el = ComUIAutomation.FromHandle(hwndChild);
                 }
-                catch (ArgumentException)
+                catch
                 {
                     return true;
                 }
                 if (el == null) return true;
 
-                string cls = (string)el.GetCurrentPropertyValue(AutomationElement.ClassNameProperty) ?? string.Empty;
+                string cls = ComUIAutomation.GetPropertyValueString(el, ComUIAutomation.UIA_ClassNamePropertyId);
 
                 // CCSysLink — footnote / content hyperlinks
                 if (cls == "CCSysLink")
                 {
-                    IntPtr hLink = new((long)(int)el.GetCurrentPropertyValue(AutomationElement.NativeWindowHandleProperty));
+                    IntPtr hLink = ComUIAutomation.GetNativeWindowHandle(el);
                     if (hLink != IntPtr.Zero)
                     {
                         IntPtr hParent = GetParent(hLink);
                         if (hParent != IntPtr.Zero)
                         {
-                            string id = (string)el.GetCurrentPropertyValue(AutomationElement.AutomationIdProperty) ?? string.Empty;
+                            string id = ComUIAutomation.GetPropertyValueString(el, ComUIAutomation.UIA_AutomationIdPropertyId);
 
                             bool isFootnote = id == "FootnoteTextLink" || id == "ExpandedFooterTextLink" || id.Contains("Footnote") || id.Contains("ExpandedFooter");
 
@@ -1253,7 +1168,8 @@ namespace WinPaletter
                             if (id == "ContentLink")
                                 bg = s_hasNativeTheme ? DarkColors.kFootnote : DarkColors.kPrimary;
 
-                            if (!GetWindowSubclass(hParent, s_ctColorProc, kCtlColorId, out IntPtr ex)) SetWindowSubclass(hParent, s_ctColorProc, kCtlColorId, CreateSolidBrush(bg));
+                            if (!GetWindowSubclass(hParent, s_ctColorProc, kCtlColorId, out IntPtr ex))
+                                SetWindowSubclass(hParent, s_ctColorProc, kCtlColorId, CreateSolidBrush(bg));
                         }
                     }
                     return true;
@@ -1262,7 +1178,7 @@ namespace WinPaletter
                 // "TaskDialog" — the DirectUI TaskPage window
                 if (cls != "TaskDialog") return true;
 
-                IntPtr hDUI = new((long)(int)el.GetCurrentPropertyValue(AutomationElement.NativeWindowHandleProperty));
+                IntPtr hDUI = ComUIAutomation.GetNativeWindowHandle(el);
                 if (hDUI == IntPtr.Zero) return true;
 
                 // Class background brush
@@ -1272,28 +1188,30 @@ namespace WinPaletter
                     if (ob != IntPtr.Zero && ob != GetSysColorBrush(COLOR_WINDOW) && ob != GetSysColorBrush(COLOR_BTNFACE)) DeleteObject(ob);
                 }
 
-                // Walk TaskPage UIA children
-                TreeWalker walker = TreeWalker.ContentViewWalker;
-                AutomationElement child = walker.GetFirstChild(el);
-
-                while (child != null)
+                // Walk TaskPage UIA children using ComUIAutomation
+                foreach (NativeMethods.IUIAutomationElement child in ComUIAutomation.GetContentChildren(el))
                 {
-                    ControlType ct = (ControlType)child.GetCurrentPropertyValue(AutomationElement.ControlTypeProperty);
+                    int controlType = ComUIAutomation.GetPropertyValueInt(child, ComUIAutomation.UIA_ControlTypePropertyId);
 
-                    if (ct == ControlType.Button || ct == ControlType.RadioButton || ct == ControlType.ProgressBar || ct == ControlType.Hyperlink || ct == ControlType.ScrollBar || ct == ControlType.Pane)
+                    if (controlType == ComUIAutomation.UIA_ButtonControlTypeId ||
+                        controlType == ComUIAutomation.UIA_RadioButtonControlTypeId ||
+                        controlType == ComUIAutomation.UIA_ProgressBarControlTypeId ||
+                        controlType == ComUIAutomation.UIA_HyperlinkControlTypeId ||
+                        controlType == ComUIAutomation.UIA_ScrollBarControlTypeId ||
+                        controlType == ComUIAutomation.UIA_PaneControlTypeId)
                     {
-                        IntPtr hBtn = new((long)(int)child.GetCurrentPropertyValue(AutomationElement.NativeWindowHandleProperty));
+                        IntPtr hBtn = ComUIAutomation.GetNativeWindowHandle(child);
                         if (hBtn != IntPtr.Zero)
                         {
-                            string id = (string)child.GetCurrentPropertyValue(AutomationElement.AutomationIdProperty) ?? string.Empty;
+                            string id = ComUIAutomation.GetPropertyValueString(child, ComUIAutomation.UIA_AutomationIdPropertyId);
                             IntPtr hP = GetParent(hBtn);
 
-                            if (ct == ControlType.ProgressBar)
+                            if (controlType == ComUIAutomation.UIA_ProgressBarControlTypeId)
                             {
                                 bool hasCopyEngine = IsDarkThemeActive("DarkMode_CopyEngine::Progress", "Progress");
                                 AllowForWindow(hBtn, hasCopyEngine ? "DarkMode_CopyEngine" : "DarkMode_Explorer");
                             }
-                            else if (ct == ControlType.RadioButton || id.StartsWith("RadioButton_") || ct == ControlType.Hyperlink)
+                            else if (controlType == ComUIAutomation.UIA_RadioButtonControlTypeId || id.StartsWith("RadioButton_") || controlType == ComUIAutomation.UIA_HyperlinkControlTypeId)
                             {
                                 IntPtr ex;
                                 bool hasDarkTheme = IsDarkThemeActive("DarkMode_DarkTheme::TaskDialog", "TaskDialog");
@@ -1328,8 +1246,6 @@ namespace WinPaletter
                             }
                         }
                     }
-
-                    child = walker.GetNextSibling(child);
                 }
 
                 // Window theme for TaskPage — must be set after children.
@@ -1352,7 +1268,8 @@ namespace WinPaletter
                     RefreshElements(hDUI, s);
 
                     IntPtr ex;
-                    if (!GetWindowSubclass(hDUI, s_directUiProc, kDirectUISubclassId, out ex)) SetWindowSubclass(hDUI, s_directUiProc, kDirectUISubclassId, pCfg);
+                    if (!GetWindowSubclass(hDUI, s_directUiProc, kDirectUISubclassId, out ex))
+                        SetWindowSubclass(hDUI, s_directUiProc, kDirectUISubclassId, pCfg);
                 }
 
                 found = true;
@@ -1366,7 +1283,8 @@ namespace WinPaletter
                 EnableForTLW(hwndTD);
 
                 IntPtr existing;
-                if (!GetWindowSubclass(hwndTD, s_mainProc, kMainSubclassId, out existing)) SetWindowSubclass(hwndTD, s_mainProc, kMainSubclassId, pCfg);
+                if (!GetWindowSubclass(hwndTD, s_mainProc, kMainSubclassId, out existing))
+                    SetWindowSubclass(hwndTD, s_mainProc, kMainSubclassId, pCfg);
 
                 EnumChildWindows(hwndTD, delegate (IntPtr hwndDuiChild, IntPtr lp)
                 {
