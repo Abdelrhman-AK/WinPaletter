@@ -1,8 +1,8 @@
-﻿using Ookii.Dialogs.WinForms;
-using System;
+﻿using System;
 using System.Reflection;
 using System.Windows.Forms;
 using WinPaletter.Properties;
+using WinPaletter.UI.WP;
 
 namespace WinPaletter
 {
@@ -119,19 +119,9 @@ namespace WinPaletter
 
         private void button23_Click(object sender, EventArgs e)
         {
-            if (!OS.WXP)
+            using (FolderBrowserDialogEx FD = new() { SelectedPath = textBox2.Text })
             {
-                using (VistaFolderBrowserDialog FD = new() { SelectedPath = textBox2.Text })
-                {
-                    if (FD.ShowDialog() == DialogResult.OK) textBox2.Text = FD.SelectedPath;
-                }
-            }
-            else
-            {
-                using (FolderBrowserDialog FD = new() { SelectedPath = textBox2.Text })
-                {
-                    if (FD.ShowDialog() == DialogResult.OK) textBox2.Text = FD.SelectedPath;
-                }
+                if (FD.ShowDialog() == DialogResult.OK) textBox2.Text = FD.SelectedPath;
             }
         }
 

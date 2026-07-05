@@ -1,5 +1,4 @@
 ﻿using Microsoft.Win32;
-using Ookii.Dialogs.WinForms;
 using Serilog.Events;
 using System;
 using System.Linq;
@@ -23,44 +22,53 @@ namespace WinPaletter
         /// <param name="description">The description of the restore point.</param>
         public static bool CreateRestorePoint(string description)
         {
-            ProgressDialog dlg = null;
+            UI.WP.ProgressDialog dlg = null;
+            bool result = false;
 
             try
             {
                 // Ensure System Restore is enabled
-                if (!EnsureSystemRestoreEnabled())
-                    return false;
+                if (!EnsureSystemRestoreEnabled()) return false;
 
-                if (!OS.WXP)
+                dlg = new()
                 {
-                    dlg = new()
+                    Animation = UI.WP.AnimationResource.GetShellAnimation(UI.WP.ShellAnimation.FlyingPapers),
+                    Text = Program.Localization.Strings.General.RestorePoint_DialogTitle,
+                    Description = description,
+                    ProgressBarStyle = UI.WP.ProgressBarStyle.MarqueeProgressBar,
+                    ShowCancelButton = false,
+                    MinimizeBox = false,
+                    WindowTitle = Application.ProductName,
+                };
+
+                dlg.DoWork += (s, e) =>
+                {
+                    // Reset frequency to 0 instead of 24 hours
+                    SetRestorePointFrequency(0);
+
+                    Program.Log?.Write(LogEventLevel.Information, $"Creating system restore point with description: {description}");
+
+                    // Try native API first (works on all supported Windows versions)
+                    if (CreateRestorePointNative(description))
                     {
-                        Animation = AnimationResource.GetShellAnimation(ShellAnimation.FlyingPapers),
-                        Text = Program.Localization.Strings.General.RestorePoint_DialogTitle,
-                        Description = description,
-                        ProgressBarStyle = Ookii.Dialogs.WinForms.ProgressBarStyle.MarqueeProgressBar,
-                        ShowCancelButton = false,
-                        MinimizeBox = false,
-                        WindowTitle = Application.ProductName,
-                    };
-                    dlg.Show();
-                }
+                        Program.Log?.Write(LogEventLevel.Information, "System restore point created successfully via native API");
+                        result = true;
+                    }
 
-                // Reset frequency to 0 instead of 24 hours
-                SetRestorePointFrequency(0);
+                    // Fallback to WMI
+                    Program.Log?.Write(LogEventLevel.Warning, "Native API failed, falling back to WMI");
+                    result = CreateRestorePointWMI(description);
+                };
 
-                Program.Log?.Write(LogEventLevel.Information, $"Creating system restore point with description: {description}");
-
-                // Try native API first (works on all supported Windows versions)
-                if (CreateRestorePointNative(description))
+                dlg.RunWorkerCompleted += (s, e) =>
                 {
-                    Program.Log?.Write(LogEventLevel.Information, "System restore point created successfully via native API");
-                    return true;
-                }
+                    Program.Log?.Write(LogEventLevel.Error, "Failed to create system restore point", e.Error);
+                    result = false;
+                };
 
-                // Fallback to WMI
-                Program.Log?.Write(LogEventLevel.Warning, "Native API failed, falling back to WMI");
-                return CreateRestorePointWMI(description);
+                dlg.ShowDialog();
+
+                return result;
             }
             catch (Exception ex)
             {

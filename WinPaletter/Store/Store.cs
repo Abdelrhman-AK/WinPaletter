@@ -1,5 +1,4 @@
 using FluentTransitions;
-using Ookii.Dialogs.WinForms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -382,19 +381,9 @@ namespace WinPaletter
 
             string selectedPath = string.Empty;
 
-            if (!OS.WXP)
+            using (FolderBrowserDialogEx FD = new())
             {
-                using (VistaFolderBrowserDialog FD = new())
-                {
-                    if (FD.ShowDialog() == DialogResult.OK) selectedPath = FD.SelectedPath;
-                }
-            }
-            else
-            {
-                using (FolderBrowserDialog FD = new())
-                {
-                    if (FD.ShowDialog() == DialogResult.OK) selectedPath = FD.SelectedPath;
-                }
+                if (FD.ShowDialog() == DialogResult.OK) selectedPath = FD.SelectedPath;
             }
 
             if (!string.IsNullOrWhiteSpace(selectedPath) && Directory.Exists(selectedPath))

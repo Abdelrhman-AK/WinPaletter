@@ -1,6 +1,5 @@
 using FluentTransitions;
 using Octokit;
-using Ookii.Dialogs.WinForms;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -728,24 +727,11 @@ Generated automatically by WinPaletter. Please review the changes before merging
         {
             string selectedPath = string.Empty;
 
-            if (!OS.WXP)
+            using (UI.WP.FolderBrowserDialogEx FD = new())
             {
-                using (VistaFolderBrowserDialog FD = new())
+                if (FD.ShowDialog() == DialogResult.OK)
                 {
-                    if (FD.ShowDialog() == DialogResult.OK)
-                    {
-                        selectedPath = FD.SelectedPath;
-                    }
-                }
-            }
-            else
-            {
-                using (FolderBrowserDialog FD = new())
-                {
-                    if (FD.ShowDialog() == DialogResult.OK)
-                    {
-                        selectedPath = FD.SelectedPath;
-                    }
+                    selectedPath = FD.SelectedPath;
                 }
             }
 

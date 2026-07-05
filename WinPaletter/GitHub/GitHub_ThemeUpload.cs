@@ -1,5 +1,4 @@
-﻿using Ookii.Dialogs.WinForms;
-using Serilog.Events;
+﻿using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -147,19 +146,9 @@ namespace WinPaletter
         {
             string selectedPath = string.Empty;
 
-            if (!OS.WXP)
+            using (UI.WP.FolderBrowserDialogEx FD = new())
             {
-                using (VistaFolderBrowserDialog FD = new())
-                {
-                    if (FD.ShowDialog() == DialogResult.OK) selectedPath = FD.SelectedPath;
-                }
-            }
-            else
-            {
-                using (FolderBrowserDialog FD = new())
-                {
-                    if (FD.ShowDialog() == DialogResult.OK) selectedPath = FD.SelectedPath;
-                }
+                if (FD.ShowDialog() == DialogResult.OK) selectedPath = FD.SelectedPath;
             }
 
             if (!string.IsNullOrEmpty(selectedPath)) textBox3.Text = selectedPath;

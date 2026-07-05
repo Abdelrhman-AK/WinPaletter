@@ -22,6 +22,17 @@ namespace WinPaletter.NativeMethods
             Indeterminate = 2
         }
 
+        /// <summary>
+        /// Expand/collapse state for UIA expand-collapse-pattern elements (ExpandoButton).
+        /// </summary>
+        internal enum ExpandCollapseState
+        {
+            Collapsed = 0,
+            Expanded = 1,
+            PartiallyExpanded = 2,
+            LeafNode = 3
+        }
+
         // Property IDs (UIAutomationClient.h) -- plain documented integers
         public const int UIA_BoundingRectanglePropertyId = 30001;
         public const int UIA_ControlTypePropertyId = 30003;
@@ -31,6 +42,7 @@ namespace WinPaletter.NativeMethods
         public const int UIA_NativeWindowHandlePropertyId = 30020;
 
         public const int UIA_TogglePatternId = 10015;
+        public const int UIA_ExpandCollapsePatternId = 10005;
 
         // Control type IDs
         public const int UIA_ButtonControlTypeId = 50000;
@@ -56,8 +68,7 @@ namespace WinPaletter.NativeMethods
             {
                 if (s_automation == null)
                 {
-                    object obj = Activator.CreateInstance(
-                        Type.GetTypeFromCLSID(CLSID_CUIAutomation));
+                    object obj = Activator.CreateInstance(Type.GetTypeFromCLSID(CLSID_CUIAutomation));
                     s_automation = (IUIAutomation)obj;
                 }
                 return s_automation;
@@ -119,8 +130,7 @@ namespace WinPaletter.NativeMethods
 
                 try
                 {
-                    IUIAutomationElement next;
-                    walker.GetNextSiblingElement(child, out next);
+                    walker.GetNextSiblingElement(child, out IUIAutomationElement next);
                     child = next;
                 }
                 catch (COMException)
@@ -200,6 +210,23 @@ namespace WinPaletter.NativeMethods
             return ToggleState.Indeterminate;
         }
 
+        public static ExpandCollapseState GetExpandCollapseState(IUIAutomationElement element)
+        {
+            if (element == null) return ExpandCollapseState.LeafNode;
+            try
+            {
+                element.GetCurrentPattern(UIA_ExpandCollapsePatternId, out object patternObj);
+                if (patternObj is IUIAutomationExpandCollapsePattern expandCollapse)
+                {
+                    expandCollapse.get_CurrentExpandCollapseState(out int state);
+                    return (ExpandCollapseState)state;
+                }
+            }
+            catch (COMException) { }
+            catch (InvalidCastException) { }
+            return ExpandCollapseState.LeafNode;
+        }
+
         /// <summary>
         /// Builds a <see cref="UIAElementInfo"/> from a raw-COM UIA element, converting
         /// its bounding rectangle from screen to <paramref name="hwndForClientCoords"/>'s
@@ -210,7 +237,7 @@ namespace WinPaletter.NativeMethods
         {
             if (element == null) return null;
 
-            UIAElementInfo info = new UIAElementInfo
+            UIAElementInfo info = new()
             {
                 automationId = GetPropertyValueString(element, UIA_AutomationIdPropertyId),
                 name = GetPropertyValueString(element, UIA_NamePropertyId)
@@ -218,8 +245,8 @@ namespace WinPaletter.NativeMethods
 
             RECT screenRect = GetBoundingRectangleScreen(element);
 
-            POINT topLeft = new POINT { X = screenRect.left, Y = screenRect.top };
-            POINT bottomRight = new POINT { X = screenRect.right, Y = screenRect.bottom };
+            POINT topLeft = new() { X = screenRect.left, Y = screenRect.top };
+            POINT bottomRight = new() { X = screenRect.right, Y = screenRect.bottom };
             ScreenToClient(hwndForClientCoords, ref topLeft);
             ScreenToClient(hwndForClientCoords, ref bottomRight);
 
@@ -232,9 +259,19 @@ namespace WinPaletter.NativeMethods
             {
                 info.toggleState = GetToggleState(element);
             }
+            else if (info.automationId == "ExpandoButton")
+            {
+                info.expandCollapseState = GetExpandCollapseState(element);
+            }
 
             return info;
         }
+
+        private static readonly HashSet<string> s_whitelistedAutomationIds =
+        [
+            "MainIcon", "MainInstruction", "ContentText", "ExpandedInformationText",
+            "ExpandedFooterText", "ExpandoButton", "VerificationCheckBox", "FootnoteText", "FootnoteIcon"
+        ];
 
         /// <summary>
         /// Populates <paramref name="outList"/> with the whitelisted TaskDialog parts
@@ -255,14 +292,7 @@ namespace WinPaletter.NativeMethods
                 if (info == null || info.IsRectEmpty() || string.IsNullOrEmpty(info.automationId)) continue;
 
                 string id = info.automationId;
-                if (id == "MainIcon" || id == "MainInstruction" ||
-                    id == "ContentText" || id == "ExpandedInformationText" ||
-                    id == "ExpandedFooterText" ||
-                    id == "ExpandoButton" || id == "VerificationCheckBox" ||
-                    id == "FootnoteText" || id == "FootnoteIcon" ||
-                    id.StartsWith("RadioButton_") ||
-                    id.StartsWith("CommandLink_") ||
-                    id.StartsWith("CommandButton_"))
+                if (s_whitelistedAutomationIds.Contains(id) || id.StartsWith("RadioButton_") || id.StartsWith("CommandLink_") || id.StartsWith("CommandButton_"))
                 {
                     outList.Add(info);
                 }
@@ -285,73 +315,46 @@ namespace WinPaletter.NativeMethods
         // Core methods we need - vtable order must match uiautomationcore.h
 
         [PreserveSig]
-        int CompareElements(
-            [MarshalAs(UnmanagedType.Interface)] IUIAutomationElement element1,
-            [MarshalAs(UnmanagedType.Interface)] IUIAutomationElement element2,
-            [MarshalAs(UnmanagedType.Bool)] out bool result);
+        int CompareElements([MarshalAs(UnmanagedType.Interface)] IUIAutomationElement element1, [MarshalAs(UnmanagedType.Interface)] IUIAutomationElement element2, [MarshalAs(UnmanagedType.Bool)] out bool result);
 
         [PreserveSig]
-        int CompareRuntimeIds(
-            IntPtr runtimeId1,
-            IntPtr runtimeId2,
-            [MarshalAs(UnmanagedType.Bool)] out bool result);
+        int CompareRuntimeIds(IntPtr runtimeId1, IntPtr runtimeId2, [MarshalAs(UnmanagedType.Bool)] out bool result);
 
         [PreserveSig]
-        int GetRootElement(
-            [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement root);
+        int GetRootElement([MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement root);
 
         [PreserveSig]
-        int ElementFromHandle(
-            IntPtr hwnd,
-            [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement element);
+        int ElementFromHandle(IntPtr hwnd, [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement element);
 
         [PreserveSig]
-        int ElementFromPoint(
-            POINT pt,
-            [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement element);
+        int ElementFromPoint(POINT pt, [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement element);
 
         [PreserveSig]
-        int GetFocusedElement(
-            [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement element);
+        int GetFocusedElement([MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement element);
 
         [PreserveSig]
-        int GetRootElementBuildCache(
-            IntPtr cacheRequest,
-            [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement root);
+        int GetRootElementBuildCache(IntPtr cacheRequest, [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement root);
 
         [PreserveSig]
-        int ElementFromHandleBuildCache(
-            IntPtr hwnd,
-            IntPtr cacheRequest,
-            [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement element);
+        int ElementFromHandleBuildCache(IntPtr hwnd, IntPtr cacheRequest, [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement element);
 
         [PreserveSig]
-        int ElementFromPointBuildCache(
-            POINT pt,
-            IntPtr cacheRequest,
-            [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement element);
+        int ElementFromPointBuildCache(POINT pt, IntPtr cacheRequest, [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement element);
 
         [PreserveSig]
-        int GetFocusedElementBuildCache(
-            IntPtr cacheRequest,
-            [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement element);
+        int GetFocusedElementBuildCache(IntPtr cacheRequest, [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement element);
 
         [PreserveSig]
-        int CreateTreeWalker(
-            IntPtr condition,
-            [MarshalAs(UnmanagedType.Interface)] out IUIAutomationTreeWalker walker);
+        int CreateTreeWalker(IntPtr condition, [MarshalAs(UnmanagedType.Interface)] out IUIAutomationTreeWalker walker);
 
         [PreserveSig]
-        int GetControlViewWalker(
-            [MarshalAs(UnmanagedType.Interface)] out IUIAutomationTreeWalker walker);
+        int GetControlViewWalker([MarshalAs(UnmanagedType.Interface)] out IUIAutomationTreeWalker walker);
 
         [PreserveSig]
-        int GetContentViewWalker(
-            [MarshalAs(UnmanagedType.Interface)] out IUIAutomationTreeWalker walker);
+        int GetContentViewWalker([MarshalAs(UnmanagedType.Interface)] out IUIAutomationTreeWalker walker);
 
         [PreserveSig]
-        int GetRawViewWalker(
-            [MarshalAs(UnmanagedType.Interface)] out IUIAutomationTreeWalker walker);
+        int GetRawViewWalker([MarshalAs(UnmanagedType.Interface)] out IUIAutomationTreeWalker walker);
 
         // Additional methods omitted for brevity - not needed for our use case
     }
@@ -373,83 +376,49 @@ namespace WinPaletter.NativeMethods
         int GetRuntimeId(out IntPtr runtimeId);
 
         [PreserveSig]
-        int FindFirst(
-            TreeScope scope,
-            IntPtr condition,
-            [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement found);
+        int FindFirst(TreeScope scope, IntPtr condition, [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement found);
 
         [PreserveSig]
-        int FindAll(
-            TreeScope scope,
-            IntPtr condition,
-            [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElementArray found);
+        int FindAll(TreeScope scope, IntPtr condition, [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElementArray found);
 
         [PreserveSig]
-        int FindFirstBuildCache(
-            TreeScope scope,
-            IntPtr condition,
-            IntPtr cacheRequest,
-            [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement found);
+        int FindFirstBuildCache(TreeScope scope, IntPtr condition, IntPtr cacheRequest, [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement found);
 
         [PreserveSig]
-        int FindAllBuildCache(
-            TreeScope scope,
-            IntPtr condition,
-            IntPtr cacheRequest,
-            [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElementArray found);
+        int FindAllBuildCache(TreeScope scope, IntPtr condition, IntPtr cacheRequest, [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElementArray found);
 
         [PreserveSig]
-        int BuildUpdatedCache(
-            IntPtr cacheRequest,
-            [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement updatedElement);
+        int BuildUpdatedCache(IntPtr cacheRequest, [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement updatedElement);
 
         [PreserveSig]
-        int GetCurrentPropertyValue(
-            int propertyId,
-            out object value);
+        int GetCurrentPropertyValue(int propertyId, out object value);
 
         [PreserveSig]
-        int GetCurrentPropertyValueEx(
-            int propertyId,
-            [MarshalAs(UnmanagedType.Bool)] bool ignoreDefault,
-            out object value);
+        int GetCurrentPropertyValueEx(int propertyId, [MarshalAs(UnmanagedType.Bool)] bool ignoreDefault, out object value);
 
         [PreserveSig]
-        int GetCachedPropertyValue(
-            int propertyId,
-            out object value);
+        int GetCachedPropertyValue(int propertyId, out object value);
 
         [PreserveSig]
-        int GetCachedPropertyValueEx(
-            int propertyId,
-            [MarshalAs(UnmanagedType.Bool)] bool ignoreDefault,
-            out object value);
+        int GetCachedPropertyValueEx(int propertyId, [MarshalAs(UnmanagedType.Bool)] bool ignoreDefault, out object value);
 
         [PreserveSig]
-        int GetCurrentPattern(
-            int patternId,
-            [MarshalAs(UnmanagedType.IUnknown)] out object patternObject);
+        int GetCurrentPattern(int patternId, [MarshalAs(UnmanagedType.IUnknown)] out object patternObject);
 
         [PreserveSig]
-        int GetCachedPattern(
-            int patternId,
-            [MarshalAs(UnmanagedType.IUnknown)] out object patternObject);
+        int GetCachedPattern(int patternId, [MarshalAs(UnmanagedType.IUnknown)] out object patternObject);
 
         [PreserveSig]
-        int GetCachedParent(
-            [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement parent);
+        int GetCachedParent([MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement parent);
 
         [PreserveSig]
-        int GetCachedChildren(
-            [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElementArray children);
+        int GetCachedChildren([MarshalAs(UnmanagedType.Interface)] out IUIAutomationElementArray children);
 
         [PreserveSig]
-        int GetCurrentParent(
-            [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement parent);
+        int GetCurrentParent([MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement parent);
 
         [PreserveSig]
-        int GetCurrentChildren(
-            [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElementArray children);
+        int GetCurrentChildren([MarshalAs(UnmanagedType.Interface)] out IUIAutomationElementArray children);
 
         // Additional methods omitted for brevity
     }
@@ -465,63 +434,37 @@ namespace WinPaletter.NativeMethods
         // Core methods we need - vtable order must match uiautomationcore.h
 
         [PreserveSig]
-        int GetParentElement(
-            [MarshalAs(UnmanagedType.Interface)] IUIAutomationElement element,
-            [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement parent);
+        int GetParentElement([MarshalAs(UnmanagedType.Interface)] IUIAutomationElement element, [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement parent);
 
         [PreserveSig]
-        int GetFirstChildElement(
-            [MarshalAs(UnmanagedType.Interface)] IUIAutomationElement element,
-            [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement first);
+        int GetFirstChildElement([MarshalAs(UnmanagedType.Interface)] IUIAutomationElement element, [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement first);
 
         [PreserveSig]
-        int GetLastChildElement(
-            [MarshalAs(UnmanagedType.Interface)] IUIAutomationElement element,
-            [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement last);
+        int GetLastChildElement([MarshalAs(UnmanagedType.Interface)] IUIAutomationElement element, [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement last);
 
         [PreserveSig]
-        int GetNextSiblingElement(
-            [MarshalAs(UnmanagedType.Interface)] IUIAutomationElement element,
-            [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement next);
+        int GetNextSiblingElement([MarshalAs(UnmanagedType.Interface)] IUIAutomationElement element, [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement next);
 
         [PreserveSig]
-        int GetPreviousSiblingElement(
-            [MarshalAs(UnmanagedType.Interface)] IUIAutomationElement element,
-            [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement previous);
+        int GetPreviousSiblingElement([MarshalAs(UnmanagedType.Interface)] IUIAutomationElement element, [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement previous);
 
         [PreserveSig]
-        int GetParentElementBuildCache(
-            [MarshalAs(UnmanagedType.Interface)] IUIAutomationElement element,
-            IntPtr cacheRequest,
-            [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement parent);
+        int GetParentElementBuildCache([MarshalAs(UnmanagedType.Interface)] IUIAutomationElement element, IntPtr cacheRequest, [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement parent);
 
         [PreserveSig]
-        int GetFirstChildElementBuildCache(
-            [MarshalAs(UnmanagedType.Interface)] IUIAutomationElement element,
-            IntPtr cacheRequest,
-            [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement first);
+        int GetFirstChildElementBuildCache([MarshalAs(UnmanagedType.Interface)] IUIAutomationElement element, IntPtr cacheRequest, [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement first);
 
         [PreserveSig]
-        int GetLastChildElementBuildCache(
-            [MarshalAs(UnmanagedType.Interface)] IUIAutomationElement element,
-            IntPtr cacheRequest,
-            [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement last);
+        int GetLastChildElementBuildCache([MarshalAs(UnmanagedType.Interface)] IUIAutomationElement element, IntPtr cacheRequest, [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement last);
 
         [PreserveSig]
-        int GetNextSiblingElementBuildCache(
-            [MarshalAs(UnmanagedType.Interface)] IUIAutomationElement element,
-            IntPtr cacheRequest,
-            [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement next);
+        int GetNextSiblingElementBuildCache([MarshalAs(UnmanagedType.Interface)] IUIAutomationElement element, IntPtr cacheRequest, [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement next);
 
         [PreserveSig]
-        int GetPreviousSiblingElementBuildCache(
-            [MarshalAs(UnmanagedType.Interface)] IUIAutomationElement element,
-            IntPtr cacheRequest,
-            [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement previous);
+        int GetPreviousSiblingElementBuildCache([MarshalAs(UnmanagedType.Interface)] IUIAutomationElement element, IntPtr cacheRequest, [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement previous);
 
         [PreserveSig]
-        int GetCondition(
-            [MarshalAs(UnmanagedType.Interface)] out IUIAutomationCondition condition);
+        int GetCondition([MarshalAs(UnmanagedType.Interface)] out IUIAutomationCondition condition);
     }
 
     /// <summary>
@@ -544,12 +487,33 @@ namespace WinPaletter.NativeMethods
         int get_CachedToggleState(out int state);
 
         [PreserveSig]
-        int get_CurrentToggleStateProgrammaticName(
-            [MarshalAs(UnmanagedType.BStr)] out string programmaticName);
+        int get_CurrentToggleStateProgrammaticName([MarshalAs(UnmanagedType.BStr)] out string programmaticName);
 
         [PreserveSig]
-        int get_CachedToggleStateProgrammaticName(
-            [MarshalAs(UnmanagedType.BStr)] out string programmaticName);
+        int get_CachedToggleStateProgrammaticName([MarshalAs(UnmanagedType.BStr)] out string programmaticName);
+    }
+
+    /// <summary>
+    /// IUIAutomationExpandCollapsePattern interface (IID: d847d3a5-cab0-4a98-8c32-ecb45c59ad24)
+    /// </summary>
+    [ComImport]
+    [Guid("d847d3a5-cab0-4a98-8c32-ecb45c59ad24")]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    internal interface IUIAutomationExpandCollapsePattern
+    {
+        // Methods must be in vtable order
+
+        [PreserveSig]
+        int Expand();
+
+        [PreserveSig]
+        int Collapse();
+
+        [PreserveSig]
+        int get_CurrentExpandCollapseState(out int state);
+
+        [PreserveSig]
+        int get_CachedExpandCollapseState(out int state);
     }
 
     /// <summary>
@@ -564,9 +528,7 @@ namespace WinPaletter.NativeMethods
         int get_Length(out int length);
 
         [PreserveSig]
-        int GetElement(
-            int index,
-            [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement element);
+        int GetElement(int index, [MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement element);
     }
 
     /// <summary>
@@ -575,10 +537,7 @@ namespace WinPaletter.NativeMethods
     [ComImport]
     [Guid("e3522c9b-e012-4abe-9901-47b60d6af7b1")]
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    internal interface IUIAutomationCondition
-    {
-        // No methods needed for our use case
-    }
+    internal interface IUIAutomationCondition { }   // No methods needed for our use case
 
     /// <summary>
     /// TreeScope enum from UIAutomationClient.h
@@ -601,9 +560,7 @@ namespace WinPaletter.NativeMethods
     [ComImport]
     [Guid("ff48dba4-60ef-4201-aa87-54103eef594e")]
     [ClassInterface(ClassInterfaceType.None)]
-    internal class CUIAutomation
-    {
-    }
+    internal class CUIAutomation { }
 
     #endregion
 }

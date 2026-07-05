@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 using static WinPaletter.NativeMethods.Comctl32;
 using static WinPaletter.NativeMethods.DWMAPI;
@@ -88,6 +87,7 @@ namespace WinPaletter
         public string automationId = string.Empty;
         public string name = string.Empty;
         public ComUIAutomation.ToggleState toggleState = ComUIAutomation.ToggleState.Indeterminate;
+        public ComUIAutomation.ExpandCollapseState expandCollapseState = ComUIAutomation.ExpandCollapseState.LeafNode;
 
         public bool IsRectEmpty()
         {
@@ -349,10 +349,10 @@ namespace WinPaletter
     /// has been created and its window handle is known.
     /// </para>
     /// <para>
-    /// <b>UI Automation:</b> The original C++ implementation uses raw COM interfaces for
-    /// UI Automation. This C# port uses the managed <c>System.Windows.Automation</c> API,
-    /// which wraps the same COM layer and provides equivalent content-view walking via
-    /// <c>TreeWalker.ContentViewWalker</c>.
+    /// <b>UI Automation:</b> Element discovery talks directly to uiautomationcore.dll
+    /// through the raw COM interfaces defined in <see cref="ComUIAutomation"/>, matching
+    /// the original C++ implementation's approach and content-view walking behaviour
+    /// without going through the managed <c>System.Windows.Automation</c> wrapper.
     /// </para>
     /// <para>
     /// <b>Configuration:</b> This file depends on a <c>TASKDIALOGCONFIG</c> structure
@@ -385,6 +385,8 @@ namespace WinPaletter
         // delegates
         public delegate IntPtr SUBCLASSPROC(IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam, UIntPtr uIdSubclass, IntPtr dwRefData);
         public delegate bool WNDENUMPROC(IntPtr hWnd, IntPtr lParam);
+
+        private static IntPtr s_solidSecondaryBrush = IntPtr.Zero;
 
         private static bool IsDarkThemeActive(string dark, string baseClass)
         {
@@ -494,7 +496,6 @@ namespace WinPaletter
 
         private static void RefreshElements(IntPtr hwnd, DirectUIState s)
         {
-            s.elements.Clear();
             ComUIAutomation.QueryElements(hwnd, s.elements);
 
             foreach (UIAElementInfo el in s.elements)
@@ -503,11 +504,9 @@ namespace WinPaletter
                 {
                     s.isChecked = (el.toggleState + STATE_SYSTEM_CHECKED) != 0;
                 }
-                // ADD THIS: Capture the actual visual tree state for the expander button
                 else if (el.automationId == "ExpandoButton")
                 {
-                    // ExpandCollapseState: 0 = Collapsed, 1 = Expanded
-                    s.isExpanded = (int)el.toggleState == 1;
+                    s.isExpanded = el.expandCollapseState is ComUIAutomation.ExpandCollapseState.Expanded or ComUIAutomation.ExpandCollapseState.PartiallyExpanded;
                 }
             }
             if (s.defChecked) s.isChecked = true;
@@ -620,10 +619,10 @@ namespace WinPaletter
                 return;
             }
 
-            // 1. Native render
+            // Let comctl32 render the light-mode dialog into the offscreen buffer first.
             DefSubclassProc(hwnd, WM_PRINTCLIENT, hdcBuf, (IntPtr)PRF_CLIENT);
 
-            // 2. Pixel swap (panel backgrounds)
+            // Pixel-swap the panel backgrounds to their dark equivalents.
             COLORREF bgPri = new(Color.FromArgb(255, 255, 255));
             COLORREF bgSec = new(Color.FromArgb(240, 240, 240));
             COLORREF bgFtn = new(Color.FromArgb(240, 240, 240));
@@ -647,21 +646,17 @@ namespace WinPaletter
 
                     SwapRule[] rules =
                     [
-                        new SwapRule { sR = bgPri.R, sG = bgPri.G, sB = bgPri.B,
-                                       dR = DarkColors.kPrimary.R, dG = DarkColors.kPrimary.G, dB = DarkColors.kPrimary.B },
-                        new SwapRule { sR = bgSec.R, sG = bgSec.G, sB = bgSec.B,
-                                       dR = DarkColors.kSecondary.R, dG = DarkColors.kSecondary.G, dB = DarkColors.kSecondary.B },
-                        new SwapRule { sR = 128, sG = 128, sB = 128,
-                                       dR = DarkColors.kSeparator.R, dG = DarkColors.kSeparator.G, dB = DarkColors.kSeparator.B },
-                        new SwapRule { sR = 223, sG = 223, sB = 223,
-                                       dR = DarkColors.kSeparator.R, dG = DarkColors.kSeparator.G, dB = DarkColors.kSeparator.B },
+                        new SwapRule { sR = bgPri.R, sG = bgPri.G, sB = bgPri.B, dR = DarkColors.kPrimary.R, dG = DarkColors.kPrimary.G, dB = DarkColors.kPrimary.B },
+                        new SwapRule { sR = bgSec.R, sG = bgSec.G, sB = bgSec.B, dR = DarkColors.kSecondary.R, dG = DarkColors.kSecondary.G, dB = DarkColors.kSecondary.B },
+                        new SwapRule { sR = 128, sG = 128, sB = 128, dR = DarkColors.kSeparator.R, dG = DarkColors.kSeparator.G, dB = DarkColors.kSeparator.B },
+                        new SwapRule { sR = 223, sG = 223, sB = 223, dR = DarkColors.kSeparator.R, dG = DarkColors.kSeparator.G, dB = DarkColors.kSeparator.B },
                     ];
                     PixelSwap(pPx, rw, w, h, rules);
                 }
             }
 
-            // 3. Icon overdraw
-            if (s.pCfg != IntPtr.Zero)
+            // Icon overdraw applies only to the Windows 10 pixel-swap path; the native Windows 11 theme already paints icons correctly.
+            if (s.pCfg != IntPtr.Zero && !s_hasNativeTheme)
             {
                 TaskDialogConfigView cfgView = TaskDialogConfigView.FromPointer(s.pCfg);
                 foreach (UIAElementInfo el in s.elements)
@@ -684,15 +679,12 @@ namespace WinPaletter
 
                     if (hIcon == IntPtr.Zero || brBg == IntPtr.Zero) continue;
 
-                    if (!s_hasNativeTheme)
-                    {
-                        FillRect(hdcBuf, ref el.rect, brBg);
-                        DrawIconEx(hdcBuf, el.rect.left, el.rect.top, hIcon, el.rect.right - el.rect.left, el.rect.bottom - el.rect.top, 0, IntPtr.Zero, DI_NORMAL);
-                    }
+                    FillRect(hdcBuf, ref el.rect, brBg);
+                    DrawIconEx(hdcBuf, el.rect.left, el.rect.top, hIcon, el.rect.right - el.rect.left, el.rect.bottom - el.rect.top, 0, IntPtr.Zero, DI_NORMAL);
                 }
             }
 
-            // 4. Glyph overdraw
+            // Glyph overdraw for the ExpandoButton arrow and the verification checkbox.
             if (s.hTD != IntPtr.Zero || s.hButton != IntPtr.Zero)
             {
                 for (int i = 0; i < s.elements.Count; i++)
@@ -705,7 +697,6 @@ namespace WinPaletter
 
                     if (el.automationId == "ExpandoButton" && s.hTD != IntPtr.Zero && !s_hasNativeTheme)
                     {
-                        // 1. Determine the correct state first
                         int st;
                         if (press && s.isExpanded) st = TaskDialogParts.TDLGEBS_EXPANDEDPRESSED;
                         else if (press) st = TaskDialogParts.TDLGEBS_PRESSED;
@@ -714,17 +705,15 @@ namespace WinPaletter
                         else if (s.isExpanded) st = TaskDialogParts.TDLGEBS_EXPANDEDNORMAL;
                         else st = TaskDialogParts.TDLGEBS_NORMAL;
 
-                        // 2. Fetch size based on the exact state needed
                         GetThemePartSize(s.hTD, hdcBuf, TaskDialogParts.TDLG_EXPANDOBUTTON, st, IntPtr.Zero, TaskDialogParts.TS_TRUE, out SIZE sz);
 
                         RECT rcGlyph = el.rect;
                         rcGlyph.right = el.rect.left + sz.cx + 1;
 
-                        // 3. Paint background and the appropriate glyph state
                         FillRect(hdcBuf, ref rcGlyph, s.brSecondary);
                         DrawThemeBackground(s.hTD, hdcBuf, TaskDialogParts.TDLG_EXPANDOBUTTON, st, ref rcGlyph, IntPtr.Zero);
                     }
-                    else if (el.automationId == "VerificationCheckBox" && s.hButton != IntPtr.Zero)
+                    else if (el.automationId == "VerificationCheckBox" && s.hButton != IntPtr.Zero && !s_hasNativeTheme)
                     {
                         GetThemePartSize(s.hButton, hdcBuf, TaskDialogParts.BP_CHECKBOX, TaskDialogParts.CBS_UNCHECKEDNORMAL, IntPtr.Zero, TaskDialogParts.TS_DRAW, out SIZE cs);
                         int mg = (el.rect.bottom - el.rect.top - cs.cy) / 3;
@@ -744,16 +733,13 @@ namespace WinPaletter
                         else if (s.isChecked) st = TaskDialogParts.CBS_CHECKEDNORMAL;
                         else st = TaskDialogParts.CBS_UNCHECKEDNORMAL;
 
-                        if (!s_hasNativeTheme)
-                        {
-                            FillRect(hdcBuf, ref rcGlyph, s.brSecondary);
-                            DrawThemeBackground(s.hButton, hdcBuf, TaskDialogParts.BP_CHECKBOX, st, ref rcGlyph, IntPtr.Zero);
-                        }
+                        FillRect(hdcBuf, ref rcGlyph, s.brSecondary);
+                        DrawThemeBackground(s.hButton, hdcBuf, TaskDialogParts.BP_CHECKBOX, st, ref rcGlyph, IntPtr.Zero);
                     }
                 }
             }
 
-            // 5. Text overdraw
+            // Text overdraw for every whitelisted TaskDialog text part.
             {
                 IntPtr hThm = s.hTD; // valid dark-capable "TaskDialog" handle; only used for part plumbing, not color/font
 
@@ -836,8 +822,7 @@ namespace WinPaletter
                         uiPart == TaskDialogParts.TDLG_EXPANDEDFOOTERAREA ||
                         uiPart == TaskDialogParts.TDLG_FOOTNOTEPANE;
 
-                    // Cap an embedded path/URL at 3/4 of the available line width so it
-                    // shrinks instead of dominating the wrapped line it sits on.
+                    // Cap an embedded path/URL at 3/4 of the available line width so it shrinks instead of dominating the wrapped line it sits on.
                     string drawText = eligibleForPathCompaction ? CompactEmbeddedPaths(hdcBuf, el.name, (rcText.right - rcText.left)) : el.name;
 
                     DrawThemeTextEx(hThm, hdcBuf, uiPart, 0, drawText, -1, dtFlags, ref rcText, ref opts);
@@ -1056,8 +1041,7 @@ namespace WinPaletter
                         string text = sb.ToString();
 
                         SIZE gsize;
-                        GetThemePartSize(hThemeBtn, hdcBuf, TaskDialogParts.BP_RADIOBUTTON,
-                            TaskDialogParts.RBS_UNCHECKEDNORMAL, IntPtr.Zero, TaskDialogParts.TS_TRUE, out gsize);
+                        GetThemePartSize(hThemeBtn, hdcBuf, TaskDialogParts.BP_RADIOBUTTON, TaskDialogParts.RBS_UNCHECKEDNORMAL, IntPtr.Zero, TaskDialogParts.TS_TRUE, out gsize);
 
                         RECT rcText = new RECT
                         {
@@ -1098,12 +1082,6 @@ namespace WinPaletter
             return DefSubclassProc(hwnd, msg, wParam, lParam);
         }
 
-        // TaskDialogMainSubclassProc
-        private static IntPtr s_solidSecondaryBrush = IntPtr.Zero;
-
-        private const uint WM_USER = 0x0400;
-        private const uint WM_REFRESH_DUI_STATE = WM_USER + 4242;
-
         private static IntPtr TaskDialogMainSubclassProc(IntPtr hwnd, uint msg, IntPtr wParam, IntPtr lParam, UIntPtr uId, IntPtr dwRef)
         {
             switch (msg)
@@ -1134,12 +1112,21 @@ namespace WinPaletter
                     RemoveWindowSubclass(hwnd, s_mainProc, uId);
                     break;
 
-                // 1. Intercept the notification and defer it
                 case 0x1102 /*TDN_EXPANDO_BUTTON_CLICKED*/:
+                    EnumChildWindows(hwnd, delegate (IntPtr hwndChild, IntPtr lp)
+                    {
+                        if (GetWindowSubclass(hwndChild, s_directUiProc, kDirectUISubclassId, out _))
+                        {
+                            DirectUIState s = GetState(hwndChild);
+                            // Force-invert the state locally ahead of UIA synchronization
+                            s.isExpanded = !s.isExpanded;
+                        }
+                        return true;
+                    }, IntPtr.Zero);
+
                     PostMessage(hwnd, WM_REFRESH_DUI_STATE, IntPtr.Zero, IntPtr.Zero);
                     break;
 
-                // 2. Handle it after the UI engine completes layout transition
                 case WM_REFRESH_DUI_STATE:
                     EnumChildWindows(hwnd, delegate (IntPtr hwndChild, IntPtr lp)
                     {
@@ -1147,10 +1134,11 @@ namespace WinPaletter
                         {
                             DirectUIState s = GetState(hwndChild);
 
-                            // Explicitly toggle state or re-read UI Automation tree safely
+                            // Retain the manual toggle state across the refresh safely
+                            bool expectedState = s.isExpanded;
                             RefreshElements(hwndChild, s);
+                            s.isExpanded = expectedState;
 
-                            // Force an immediate redraw pass
                             InvalidateRect(hwndChild, IntPtr.Zero, false);
                             UpdateWindow(hwndChild);
                         }
@@ -1291,8 +1279,7 @@ namespace WinPaletter
                 {
                     int controlType = ComUIAutomation.GetPropertyValueInt(child, ComUIAutomation.UIA_ControlTypePropertyId);
 
-                    if (controlType == ComUIAutomation.UIA_ButtonControlTypeId || controlType == ComUIAutomation.UIA_RadioButtonControlTypeId || controlType == ComUIAutomation.UIA_ProgressBarControlTypeId ||
-                        controlType == ComUIAutomation.UIA_HyperlinkControlTypeId || controlType == ComUIAutomation.UIA_ScrollBarControlTypeId || controlType == ComUIAutomation.UIA_PaneControlTypeId)
+                    if (controlType == ComUIAutomation.UIA_ButtonControlTypeId || controlType == ComUIAutomation.UIA_RadioButtonControlTypeId || controlType == ComUIAutomation.UIA_ProgressBarControlTypeId || controlType == ComUIAutomation.UIA_HyperlinkControlTypeId || controlType == ComUIAutomation.UIA_ScrollBarControlTypeId || controlType == ComUIAutomation.UIA_PaneControlTypeId)
                     {
                         IntPtr hBtn = ComUIAutomation.GetNativeWindowHandle(child);
                         if (hBtn != IntPtr.Zero)

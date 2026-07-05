@@ -1,5 +1,4 @@
-﻿using Ookii.Dialogs.WinForms;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
@@ -127,7 +126,7 @@ namespace WinPaletter.UI.WP
 
                     else if (!DesignMode & DrawOnGlass)
                     {
-                        Glass.DrawCompositedText(G, Text, Font, new Rectangle(0, 0, Width, Height), Padding, ForeColor, 10, ReturnFormatFlags(Text));
+                        G.DrawCompositedText(Text, Font, new Rectangle(0, 0, Width, Height), Padding, ForeColor, 10, ReturnFormatFlags(Text));
                     }
                 }
                 catch
@@ -137,8 +136,6 @@ namespace WinPaletter.UI.WP
 
                 // Don't use base.OnPaint(e) to avoid doubling graphics bug
                 //// base.OnPaint(e);
-
-
             }
         }
     }

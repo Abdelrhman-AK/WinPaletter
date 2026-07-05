@@ -135,6 +135,16 @@ namespace WinPaletter.NativeMethods
         public static extern IntPtr LoadLibrary(string lpFileName);
 
         /// <summary>
+        /// Loads the specified module into the address space of the calling process. The specified module may cause other modules to be loaded.
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="hFile"></param>
+        /// <param name="dwFlags"></param>
+        /// <returns></returns>
+        [DllImport(_kernel32, CharSet = CharSet.Unicode, SetLastError = true)]
+        public static extern IntPtr LoadLibraryEx(string fileName, IntPtr hFile, uint dwFlags);
+
+        /// <summary>
         /// </summary>
         /// <param name="hModule"></param>
         /// <returns></returns>

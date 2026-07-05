@@ -1,6 +1,4 @@
-﻿using Microsoft.VisualBasic.Devices;
-using Octokit;
-using Ookii.Dialogs.WinForms;
+﻿using Octokit;
 using Serilog.Events;
 using System;
 using System.Collections.Generic;
@@ -1569,19 +1567,9 @@ namespace WinPaletter.GitHub
         {
             string selectedPath = string.Empty;
 
-            if (!OS.WXP)
+            using (UI.WP.FolderBrowserDialogEx FD = new())
             {
-                using (VistaFolderBrowserDialog FD = new())
-                {
-                    if (FD.ShowDialog() == DialogResult.OK) selectedPath = FD.SelectedPath;
-                }
-            }
-            else
-            {
-                using (FolderBrowserDialog FD = new())
-                {
-                    if (FD.ShowDialog() == DialogResult.OK) selectedPath = FD.SelectedPath;
-                }
+                if (FD.ShowDialog() == DialogResult.OK) selectedPath = FD.SelectedPath;
             }
 
             if (!string.IsNullOrEmpty(selectedPath) && !Directory.Exists(selectedPath)) { Directory.CreateDirectory(selectedPath); }

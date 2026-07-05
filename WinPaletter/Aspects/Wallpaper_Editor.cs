@@ -1,5 +1,4 @@
-﻿using Ookii.Dialogs.WinForms;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -516,19 +515,9 @@ namespace WinPaletter
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            if (!OS.WXP)
+            using (FolderBrowserDialogEx dlg = new() { SelectedPath = TextBox2.Text })
             {
-                using (VistaFolderBrowserDialog dlg = new() { SelectedPath = TextBox2.Text })
-                {
-                    if (dlg.ShowDialog() == DialogResult.OK) TextBox2.Text = dlg.SelectedPath;
-                }
-            }
-            else
-            {
-                using (FolderBrowserDialog dlg = new() { SelectedPath = TextBox2.Text })
-                {
-                    if (dlg.ShowDialog() == DialogResult.OK) TextBox2.Text = dlg.SelectedPath;
-                }
+                if (dlg.ShowDialog() == DialogResult.OK) TextBox2.Text = dlg.SelectedPath;
             }
         }
 

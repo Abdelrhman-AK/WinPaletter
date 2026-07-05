@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Ookii.Dialogs.WinForms;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -957,24 +956,11 @@ namespace WinPaletter
 
         private void Button18_Click(object sender, EventArgs e)
         {
-            if (!OS.WXP)
+            using (FolderBrowserDialogEx dlg = new())
             {
-                VistaFolderBrowserDialog dlg = new();
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    if (!ListBox2.Items.Contains(dlg.SelectedPath))
-                        ListBox2.Items.Add(dlg.SelectedPath);
-                }
-                dlg.Dispose();
-            }
-            else
-            {
-                using (FolderBrowserDialog dlg = new())
-                {
-                    if (dlg.ShowDialog() == DialogResult.OK)
-                    {
-                        if (!ListBox2.Items.Contains(dlg.SelectedPath)) ListBox2.Items.Add(dlg.SelectedPath);
-                    }
+                    if (!ListBox2.Items.Contains(dlg.SelectedPath)) ListBox2.Items.Add(dlg.SelectedPath);
                 }
             }
         }
@@ -1080,19 +1066,9 @@ namespace WinPaletter
 
         private void button23_Click(object sender, EventArgs e)
         {
-            if (!OS.WXP)
+            using (FolderBrowserDialogEx FD = new())
             {
-                using (VistaFolderBrowserDialog FD = new())
-                {
-                    if (FD.ShowDialog() == DialogResult.OK) textBox4.Text = FD.SelectedPath;
-                }
-            }
-            else
-            {
-                using (FolderBrowserDialog FD = new())
-                {
-                    if (FD.ShowDialog() == DialogResult.OK) textBox4.Text = FD.SelectedPath;
-                }
+                if (FD.ShowDialog() == DialogResult.OK) textBox4.Text = FD.SelectedPath;
             }
         }
 
@@ -1365,24 +1341,11 @@ namespace WinPaletter
 
         private void Button18_Click_1(object sender, EventArgs e)
         {
-            if (!OS.WXP)
+            using (FolderBrowserDialogEx dlg = new())
             {
-                VistaFolderBrowserDialog dlg = new();
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    if (!ListBox2.Items.Contains(dlg.SelectedPath))
-                        ListBox2.Items.Add(dlg.SelectedPath);
-                }
-                dlg.Dispose();
-            }
-            else
-            {
-                using (FolderBrowserDialog dlg = new())
-                {
-                    if (dlg.ShowDialog() == DialogResult.OK)
-                    {
-                        if (!ListBox2.Items.Contains(dlg.SelectedPath)) ListBox2.Items.Add(dlg.SelectedPath);
-                    }
+                    if (!ListBox2.Items.Contains(dlg.SelectedPath)) ListBox2.Items.Add(dlg.SelectedPath);
                 }
             }
         }

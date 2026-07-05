@@ -1,5 +1,4 @@
-﻿using Ookii.Dialogs.WinForms;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -130,24 +129,11 @@ namespace WinPaletter
 
         private void Button18_Click(object sender, EventArgs e)
         {
-            if (!OS.WXP)
+            using (UI.WP.FolderBrowserDialogEx dlg = new())
             {
-                VistaFolderBrowserDialog dlg = new();
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    if (!ListBox2.Items.Contains(dlg.SelectedPath))
-                        ListBox2.Items.Add(dlg.SelectedPath);
-                }
-                dlg.Dispose();
-            }
-            else
-            {
-                using (FolderBrowserDialog dlg = new())
-                {
-                    if (dlg.ShowDialog() == DialogResult.OK)
-                    {
-                        if (!ListBox2.Items.Contains(dlg.SelectedPath)) ListBox2.Items.Add(dlg.SelectedPath);
-                    }
+                    if (!ListBox2.Items.Contains(dlg.SelectedPath)) ListBox2.Items.Add(dlg.SelectedPath);
                 }
             }
         }

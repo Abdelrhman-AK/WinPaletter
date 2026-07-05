@@ -1,5 +1,4 @@
 ﻿using Microsoft.Win32;
-using Ookii.Dialogs.WinForms;
 using Serilog.Events;
 using System;
 using System.Collections.Generic;

@@ -4,8 +4,11 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using WinPaletter.NativeMethods;
 using WinPaletter.UI.WP;
+using static WinPaletter.NativeMethods.GDI32;
 
 namespace WinPaletter.TypesExtensions
 {
@@ -810,6 +813,65 @@ namespace WinPaletter.TypesExtensions
         }
 
         /// <summary>
+        /// Draws composited text onto the glass area of a form.
+        /// </summary>
+        /// <param name="dc">The <see cref="IDeviceContext"/> onto which the composited text should be drawn.</param>
+        /// <param name="text">The text to draw.</param>
+        /// <param name="font">The <see cref="Font"/> to apply to the drawn text.</param>
+        /// <param name="bounds">The <see cref="Rectangle" /> that represents the bounds of the text.</param>
+        /// <param name="padding">The <see cref="Padding"/> around the text; necessary to allow space for the glow effect.</param>
+        /// <param name="foreColor">The <see cref="Color" /> to apply to the drawn text.</param>
+        /// <param name="textFormat">A bitwise combination of the <see cref="TextFormatFlags" /> values.</param>
+        /// <param name="glowSize">Specifies the size of a glow that will be drawn on the background prior to any text being drawn.</param>
+        /// <remarks>
+        /// <para>
+        ///   Do not use this method to draw text on non-glass areas of a form.
+        /// </para>
+        /// </remarks>
+        /// <exception cref="NotSupportedException">The current operating system does not support glass, or the Desktop Window Manager is not enabled.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="dc"/>, <paramref name="text"/> or <paramref name="font"/> is <see langword="null"/>.</exception>
+        public static void DrawCompositedText(this IDeviceContext dc, string text, Font font, Rectangle bounds, Padding padding, Color foreColor, int glowSize, TextFormatFlags textFormat)
+        {
+            if (!DWMAPI.IsCompositionEnabled()) throw new NotSupportedException("DWM composition is not enabled on this system.");
+            if (dc == null) throw new ArgumentNullException("dc");
+            if (text == null) throw new ArgumentNullException("text");
+            if (font == null) throw new ArgumentNullException("font");
+
+            IntPtr primaryHdc = dc.GetHdc();
+
+            try
+            {
+                using (SafeDeviceHandle memoryHdc = GDI32.CreateCompatibleDC(primaryHdc))
+                using (SafeGDIHandle fontHandle = new(font.ToHfont(), true))
+                using (SafeGDIHandle dib = GDI32.CreateDib(bounds, primaryHdc, memoryHdc))
+                {
+                    GDI32.SelectObject(memoryHdc, fontHandle);
+
+                    System.Windows.Forms.VisualStyles.VisualStyleRenderer renderer = new System.Windows.Forms.VisualStyles.VisualStyleRenderer(System.Windows.Forms.VisualStyles.VisualStyleElement.Window.Caption.Active);
+
+                    UxTheme.DTTOPTS_AsInt32 dttOpts = new()
+                    {
+                        dwSize = Marshal.SizeOf(typeof(UxTheme.DTTOPTS_AsInt32)),
+                        dwFlags = UxTheme.DrawThemeTextFlags.Composited | UxTheme.DrawThemeTextFlags.GlowSize | UxTheme.DrawThemeTextFlags.TextColor,
+                        crText = ColorTranslator.ToWin32(foreColor),
+                        iGlowSize = glowSize
+                    };
+
+                    UxTheme.RECT textBounds = new() { left = padding.Left, top = padding.Top, right = bounds.Width - padding.Right, bottom = bounds.Height - padding.Bottom };
+
+                    UxTheme.DrawThemeTextEx(renderer.Handle, memoryHdc, 0, 0, text, text.Length, (int)textFormat, ref textBounds, ref dttOpts);
+
+                    const int SRCCOPY = 0x00CC0020;
+                    GDI32.BitBlt(primaryHdc, bounds.Left, bounds.Top, bounds.Width, bounds.Height, memoryHdc, 0, 0, SRCCOPY);
+                }
+            }
+            finally
+            {
+                dc.ReleaseHdc();
+            }
+        }
+
+        /// <summary>
         /// Determines whether the specified point is inside the given polygon.
         /// </summary>
         /// <remarks>The polygon is assumed to be a closed shape, and the vertices should be provided in order (either
@@ -907,7 +969,6 @@ namespace WinPaletter.TypesExtensions
         {
             return BordersContains(rectangleF, new PointF(pointToCheck.X, pointToCheck.Y), borderWidth);
         }
-
 
         /// <summary>
         /// Determines whether the specified point lies within the border of the bounds.

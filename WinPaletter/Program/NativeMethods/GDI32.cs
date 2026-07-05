@@ -1,5 +1,10 @@
-﻿using System;
+﻿using Microsoft.Win32.SafeHandles;
+using System;
+using System.Drawing;
+using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
+using System.Security.Permissions;
+using static WinPaletter.NativeMethods.UxTheme;
 
 namespace WinPaletter.NativeMethods
 {
@@ -315,18 +320,6 @@ namespace WinPaletter.NativeMethods
         public static extern int GetDeviceCaps(IntPtr hDC, int nIndex);
 
         /// <summary>
-        /// Creates a memory device context (DC) compatible with the specified device context.
-        /// </summary>
-        /// <remarks>The returned device context must be deleted with DeleteDC when it is no longer needed
-        /// to avoid resource leaks. The compatible DC can be used for off-screen drawing or as a target for bitmaps
-        /// compatible with the original device context.</remarks>
-        /// <param name="hdc">A handle to an existing device context. If this parameter is IntPtr.Zero, the function creates a memory DC
-        /// compatible with the application's current screen.</param>
-        /// <returns>A handle to the compatible memory device context. Returns IntPtr.Zero if the function fails.</returns>
-        [DllImport(_gdi32)]
-        public static extern IntPtr CreateCompatibleDC(IntPtr hdc);
-
-        /// <summary>
         /// Deletes the specified device context (DC).
         /// </summary>
         /// <remarks>After a device context is deleted, the handle is no longer valid and should not be
@@ -400,31 +393,14 @@ namespace WinPaletter.NativeMethods
         [DllImport(_gdi32, SetLastError = true)]
         public static extern int SetTextColor(IntPtr hdc, int crColor);
 
+        /// <summary>
+        /// Sets the background mix mode of the specified device context. The background mix mode determines how the background color is combined with the foreground color when drawing text or graphics.
+        /// </summary>
+        /// <param name="hdc"></param>
+        /// <param name="mode"></param>
+        /// <returns></returns>
         [DllImport(_gdi32)]
         public static extern int SetBkMode(IntPtr hdc, int mode);
-
-        /// <summary>
-        /// Creates a device-independent bitmap (DIB) that applications can write to directly and selects it into a
-        /// device context.
-        /// </summary>
-        /// <remarks>The DIB created by this function can be selected into a device context for drawing
-        /// operations. The caller is responsible for releasing the bitmap handle by calling DeleteObject when it is no
-        /// longer needed. This function enables direct access to the bitmap's pixel data, which can improve performance
-        /// for image manipulation tasks.</remarks>
-        /// <param name="hdc">A handle to a device context. If this parameter is not NULL, the function uses the device context's color
-        /// format to initialize the DIB.</param>
-        /// <param name="pbmi">A reference to a BITMAPINFO structure that specifies the dimensions and color format of the DIB.</param>
-        /// <param name="usage">The type of data contained in the color table. This parameter must be either DIB_RGB_COLORS or
-        /// DIB_PAL_COLORS.</param>
-        /// <param name="ppvBits">When the function returns, contains a pointer to the location of the DIB's bit values. This allows direct
-        /// access to the bitmap's pixel data.</param>
-        /// <param name="hSection">A handle to a file mapping object that the function will use to create the DIB. This parameter can be
-        /// IntPtr.Zero if no file mapping is used.</param>
-        /// <param name="offset">The offset, in bytes, from the beginning of the file mapping object referenced by hSection. This value is
-        /// ignored if hSection is IntPtr.Zero.</param>
-        /// <returns>A handle to the created device-independent bitmap (DIB) if successful; otherwise, IntPtr.Zero.</returns>
-        [DllImport(_gdi32)]
-        public static extern IntPtr CreateDIBSection(IntPtr hdc, ref BITMAPINFO pbmi, uint usage, out IntPtr ppvBits, IntPtr hSection, uint offset);
 
         /// <summary>
         /// Performs a bit-block transfer of color data from a source device context to a destination device context.
@@ -469,8 +445,167 @@ namespace WinPaletter.NativeMethods
         /// <param name="cbBuffer"></param>
         /// <param name="lpvObject"></param>
         /// <returns></returns>
-        [DllImport(_gdi32)] 
+        [DllImport(_gdi32)]
         public static extern bool GetObject(IntPtr hgdiobj, int cbBuffer, ref LOGBRUSH lpvObject);
+
+        [DllImport(_gdi32, SetLastError = true)]
+        public static extern SafeDeviceHandle CreateCompatibleDC(IntPtr hdc);
+
+        [DllImport(_gdi32)]
+        public static extern IntPtr SelectObject(SafeDeviceHandle hdc, SafeHandle hObject);
+
+        /// <summary>
+        /// Creates a device-independent bitmap (DIB) that applications can write to directly and selects it into a
+        /// device context.
+        /// </summary>
+        /// <remarks>The DIB created by this function can be selected into a device context for drawing
+        /// operations. The caller is responsible for releasing the bitmap handle by calling DeleteObject when it is no
+        /// longer needed. This function enables direct access to the bitmap's pixel data, which can improve performance
+        /// for image manipulation tasks.</remarks>
+        /// <param name="hdc">A handle to a device context. If this parameter is not NULL, the function uses the device context's color
+        /// format to initialize the DIB.</param>
+        /// <param name="pbmi">A reference to a BITMAPINFO structure that specifies the dimensions and color format of the DIB.</param>
+        /// <param name="usage">The type of data contained in the color table. This parameter must be either DIB_RGB_COLORS or
+        /// DIB_PAL_COLORS.</param>
+        /// <param name="ppvBits">When the function returns, contains a pointer to the location of the DIB's bit values. This allows direct
+        /// access to the bitmap's pixel data.</param>
+        /// <param name="hSection">A handle to a file mapping object that the function will use to create the DIB. This parameter can be
+        /// IntPtr.Zero if no file mapping is used.</param>
+        /// <param name="offset">The offset, in bytes, from the beginning of the file mapping object referenced by hSection. This value is
+        /// ignored if hSection is IntPtr.Zero.</param>
+        /// <returns>A handle to the created device-independent bitmap (DIB) if successful; otherwise, IntPtr.Zero.</returns>
+        [DllImport(_gdi32, SetLastError = true)]
+        public static extern IntPtr CreateDIBSection(IntPtr hdc, ref BITMAPINFO pbmi, uint iUsage, out IntPtr ppvBits, IntPtr hSection, uint dwOffset);
+
+        [DllImport(_gdi32)]
+        public static extern bool BitBlt(IntPtr hdcDest, int xDest, int yDest, int width, int height, SafeDeviceHandle hdcSrc, int xSrc, int ySrc, int rop);
+
+        public static SafeGDIHandle CreateDib(Rectangle bounds, IntPtr primaryHdc, SafeDeviceHandle memoryHdc)
+        {
+            BITMAPINFO info = new();
+            info.biSize = Marshal.SizeOf(typeof(BITMAPINFO));
+            info.biWidth = bounds.Width;
+            info.biHeight = -bounds.Height;
+            info.biPlanes = 1;
+            info.biBitCount = 32;
+            info.biCompression = 0;
+
+            IntPtr bitsPointer;
+            IntPtr dib = CreateDIBSection(primaryHdc, ref info, 0, out bitsPointer, IntPtr.Zero, 0);
+            SafeGDIHandle result = new SafeGDIHandle(dib, true);
+            SelectObject(memoryHdc, result);
+            return result;
+        }
+
+        /// <summary>
+        /// Retrieves a handle to one of the stock pens, brushes, fonts, or palettes.
+        /// </summary>
+        /// <param name="fnObject">The type of stock object.</param>
+        /// <returns>If the function succeeds, the return value is a handle to the logical object. If the function fails, the return value is IntPtr.Zero.</returns>
+        [DllImport(_gdi32, SetLastError = true, ExactSpelling = true)]
+        public static extern IntPtr GetStockObject(StockObjects fnObject);
+
+        /// <summary>
+        /// Predefined stock objects for GetStockObject.
+        /// </summary>
+        public enum StockObjects : int
+        {
+            WHITE_BRUSH = 0,
+            LTGRAY_BRUSH = 1,
+            GRAY_BRUSH = 2,
+            DKGRAY_BRUSH = 3,
+            BLACK_BRUSH = 4,
+            NULL_BRUSH = 5,
+            HOLLOW_BRUSH = 5, // Equivalent to NULL_BRUSH
+            WHITE_PEN = 6,
+            BLACK_PEN = 7,
+            NULL_PEN = 8,
+            OEM_FIXED_FONT = 10,
+            ANSI_FIXED_FONT = 11,
+            ANSI_VAR_FONT = 12,
+            SYSTEM_FONT = 13,
+            DEVICE_DEFAULT_FONT = 14,
+            DEFAULT_PALETTE = 15,
+            SYSTEM_FIXED_FONT = 16,
+            DEFAULT_GUI_FONT = 17, // Often used for standard UI font metrics
+            DC_BRUSH = 18,
+            DC_PEN = 19
+        }
+
+        /// <summary>
+        /// Defines the structure that contains information about a DIB (device-independent bitmap), including
+        /// dimensions, color format, and other properties required for bitmap operations.
+        /// </summary>
+        /// <remarks>The BITMAPINFO structure is commonly used with Windows API functions that create or
+        /// manipulate device-independent bitmaps. The bmiHeader field specifies the core bitmap information, while the
+        /// color table is only present for certain bit depths. For 32-bpp bitmaps using BI_RGB compression, a color
+        /// table is not required.</remarks>
+        [StructLayout(LayoutKind.Sequential)]
+        public struct BITMAPINFO
+        {
+            public int biSize;
+            public int biWidth;
+            public int biHeight;
+            public short biPlanes;
+            public short biBitCount;
+            public int biCompression;
+            public int biSizeImage;
+            public int biXPelsPerMeter;
+            public int biYPelsPerMeter;
+            public int biClrUsed;
+            public int biClrImportant;
+            public int colors;
+        }
+
+        public sealed class SafeDeviceHandle : SafeHandleZeroOrMinusOneIsInvalid
+        {
+            private SafeDeviceHandle() : base(true) { }
+
+            public SafeDeviceHandle(IntPtr handle, bool ownsHandle) : base(ownsHandle)
+            {
+                SetHandle(handle);
+            }
+
+            protected override bool ReleaseHandle()
+            {
+                return DeleteDC(handle);
+            }
+        }
+
+        public sealed class SafeGDIHandle : SafeHandleZeroOrMinusOneIsInvalid
+        {
+            private SafeGDIHandle() : base(true) { }
+
+            public SafeGDIHandle(IntPtr handle, bool ownsHandle) : base(ownsHandle)
+            {
+                SetHandle(handle);
+            }
+
+            protected override bool ReleaseHandle()
+            {
+                return DeleteObject(handle);
+            }
+        }
+
+        /// <summary>
+        /// Pen style constant for solid lines. This constant is used with GDI functions to specify that a pen should draw solid lines without any pattern or dashes.
+        /// </summary>
+        public const int PS_SOLID = 0;
+
+        /// <summary>
+        /// Background mode flag for opaque background drawing
+        /// </summary>
+        public const int OPAQUE = 2;
+
+        /// <summary>
+        /// Null brush constant. This constant is used with GDI functions to specify that a brush should not fill any area, effectively making it transparent. It is often used when drawing shapes or text where no background fill is desired.
+        /// </summary>
+        public const int NULL_BRUSH = 5;
+
+        /// <summary>
+        /// Background mode flag for transparent background drawing
+        /// </summary>
+        public const int TRANSPARENT = 1;
 
         /// <summary>
         /// Draw text flags: Top alignment (same as DT_LEFT)
@@ -705,21 +840,6 @@ namespace WinPaletter.NativeMethods
             /// </summary>
             /// <remarks>If this value is zero, all colors are considered important. This field is primarily used for certain bitmap formats and may be ignored by some applications.</remarks>
             public uint biClrImportant;
-        }
-
-        /// <summary>
-        /// Defines the structure that contains information about a DIB (device-independent bitmap), including
-        /// dimensions, color format, and other properties required for bitmap operations.
-        /// </summary>
-        /// <remarks>The BITMAPINFO structure is commonly used with Windows API functions that create or
-        /// manipulate device-independent bitmaps. The bmiHeader field specifies the core bitmap information, while the
-        /// color table is only present for certain bit depths. For 32-bpp bitmaps using BI_RGB compression, a color
-        /// table is not required.</remarks>
-        [StructLayout(LayoutKind.Sequential)]
-        public struct BITMAPINFO
-        {
-            public BITMAPINFOHEADER bmiHeader;
-            // No colour table needed for BI_RGB 32-bpp.
         }
 
         /// <summary>

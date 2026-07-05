@@ -132,10 +132,6 @@
       <HintPath>..\packages\Octokit.14.0.0\lib\netstandard2.0\Octokit.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Ookii.Dialogs.WinForms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=66aa232afad40158, processorArchitecture=MSIL">
-      <HintPath>..\packages\Ookii.Dialogs.WinForms.4.0.0\lib\net462\Ookii.Dialogs.WinForms.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Ressy, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Ressy.2.0.0\lib\netstandard2.0\Ressy.dll</HintPath>
       <Private>False</Private>
@@ -558,8 +554,14 @@
     </Compile>
     <Compile Include="ColorsAndPalettesHandlers\ControlProperty.cs" />
     <Compile Include="GUI\Style\Config.cs" />
+    <Compile Include="GUI\Style\Dialogs\ProgressDialog.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="GUI\Style\Dialogs\DarkTaskDialog.cs" />
     <Compile Include="GUI\Style\Dialogs\IconPicker.cs" />
+    <Compile Include="GUI\Style\Dialogs\FolderBrowserDialogEx.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="GUI\Style\SchemeEditor.cs">
       <SubType>Form</SubType>
     </Compile>

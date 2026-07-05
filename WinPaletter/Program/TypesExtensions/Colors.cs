@@ -180,6 +180,25 @@ namespace WinPaletter.TypesExtensions
 
             return Color.Empty;
         }
+        
+        /// <summary>
+        /// Converts a <see cref="Color"/> to its integer representation. 
+        /// <br></br>Includes the Alpha channel if it represents transparency (A < 255).
+        /// </summary>
+        /// <param name="color">The color to convert.</param>
+        /// <returns>A 32-bit integer in ABGR/ARGB bitwise format.</returns>
+        public static int ToInt(this Color color)
+        {
+            int rgb = color.R | (color.G << 8) | (color.B << 16);
+
+            // If Alpha is less than 255, shift it into the highest byte (bits 24-31)
+            if (color.A < 255)
+            {
+                return rgb | (color.A << 24);
+            }
+
+            return rgb;
+        }
 
         /// <summary>
         /// Converts the specified <see cref="Color"/> to its hexadecimal string representation.

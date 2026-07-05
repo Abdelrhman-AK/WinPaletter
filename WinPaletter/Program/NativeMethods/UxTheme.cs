@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using static WinPaletter.NativeMethods.GDI32;
 
 namespace WinPaletter.NativeMethods
 {
@@ -107,6 +108,21 @@ namespace WinPaletter.NativeMethods
         /// <returns></returns>
         [DllImport(_uxtheme, CharSet = CharSet.Unicode)]
         public static extern int DrawThemeTextEx(IntPtr hTheme, IntPtr hdc, int iPartId, int iStateId, string text, int iCharCount, uint dwFlags, ref RECT pRect, ref DTTOPTS pOptions);
+
+        /// <summary>
+        /// Draws text using the visual style defined by the theme for a specified control part and state, with additional options.
+        /// </summary>
+        /// <param name="hTheme"></param>
+        /// <param name="hdc"></param>
+        /// <param name="iPartId"></param>
+        /// <param name="iStateId"></param>
+        /// <param name="text"></param>
+        /// <param name="iCharCount"></param>
+        /// <param name="dwFlags"></param>
+        /// <param name="pRect"></param>
+        /// <param name="pOptions"></param>
+        [DllImport(_uxtheme, CharSet = CharSet.Unicode)]
+        public static extern int DrawThemeTextEx(IntPtr hTheme, SafeDeviceHandle hdc, int iPartId, int iStateId, string text, int iCharCount, int dwFlags, ref RECT pRect, ref DTTOPTS_AsInt32 pOptions);
 
         /// <summary>
         /// Open theme data for a specified window and class list, with support for DPI scaling.
@@ -246,6 +262,28 @@ namespace WinPaletter.NativeMethods
         /// Button part flags: Top-down DIB (device-independent bitmap) rendering
         /// </summary>
         public const int BPBF_TOPDOWNDIB = 2;
+
+        /// <summary>
+        /// DrawThemeTextEx flags enumeration that specifies options for drawing text with visual styles.
+        /// </summary>
+        [Flags()]
+        public enum DrawThemeTextFlags
+        {
+            TextColor = 1 << 0,
+            BorderColor = 1 << 1,
+            ShadowColor = 1 << 2,
+            ShadowType = 1 << 3,
+            ShadowOffset = 1 << 4,
+            BorderSize = 1 << 5,
+            FontProp = 1 << 6,
+            ColorProp = 1 << 7,
+            StateId = 1 << 8,
+            CalcRect = 1 << 9,
+            ApplyOverlay = 1 << 10,
+            GlowSize = 1 << 11,
+            Callback = 1 << 12,
+            Composited = 1 << 13
+        }
 
         /// <summary>
         /// Color reference structure used to represent colors in the UxTheme API.
@@ -418,6 +456,30 @@ namespace WinPaletter.NativeMethods
             /// <summary>
             /// Additional application-defined parameter.
             /// </summary>
+            public IntPtr lParam;
+        }
+
+        /// <summary>
+        /// DrawThemeTextEx options structure with integer fields for color values, used for interop with unmanaged code.
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential)]
+        public struct DTTOPTS_AsInt32
+        {
+            public int dwSize;
+            public DrawThemeTextFlags dwFlags;
+            public int crText;
+            public int crBorder;
+            public int crShadow;
+            public int iTextShadowType;
+            public Point ptShadowOffset;
+            public int iBorderSize;
+            public int iFontPropId;
+            public int iColorPropId;
+            public int iStateId;
+            [MarshalAs(UnmanagedType.Bool)]
+            public bool fApplyOverlay;
+            public int iGlowSize;
+            public IntPtr pfnDrawTextCallback;
             public IntPtr lParam;
         }
 

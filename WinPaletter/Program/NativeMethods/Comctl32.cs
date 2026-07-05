@@ -27,6 +27,11 @@ namespace WinPaletter.NativeMethods
         public static extern IntPtr DefSubclassProc(IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam);
 
         /// <summary>
+        /// Task Dialog message: Set the main instruction text of the dialog.
+        /// </summary>
+        public const int TDLG_MAININSTRUCTION = 0x3E9;
+
+        /// <summary>
         /// Task Dialog pane: Main instruction pane
         /// </summary>
         public const int TDLG_MAININSTRUCTIONPANE = 1;
@@ -140,12 +145,7 @@ namespace WinPaletter.NativeMethods
             public string pszButtonText;
         }
 
-        public delegate IntPtr TaskDialogCallback(
-            IntPtr hwnd,
-            uint uNotification,
-            IntPtr wParam,
-            IntPtr lParam,
-            IntPtr lpRefData);
+        public delegate IntPtr TaskDialogCallback(IntPtr hwnd, uint uNotification, IntPtr wParam, IntPtr lParam, IntPtr lpRefData);
 
         [Flags]
         public enum TaskDialogFlags : uint

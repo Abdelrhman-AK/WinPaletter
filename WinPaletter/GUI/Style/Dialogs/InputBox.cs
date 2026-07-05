@@ -1,131 +1,389 @@
 ﻿using Microsoft.VisualBasic;
-using Ookii.Dialogs.WinForms;
+using System;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows.Forms;
+using WinPaletter.NativeMethods;
+using static WinPaletter.DarkTaskDialog;
 
 namespace WinPaletter.UI.Style
 {
     /// <summary>
-    /// A class that provides modern dialogs.
+    /// A class that provides modern dialogs with content-adaptive layouts.
     /// </summary>
     public partial class Dialogs
     {
         /// <summary>
-        /// Displays an input dialog box that allows the user to enter a value, with support for modern and classic
-        /// dialog styles.
+        /// Holds the transient state for a single native input task dialog invocation.
         /// </summary>
-        /// <remarks>This method uses a modern input dialog box on supported operating systems. On Windows
-        /// XP, a classic input box is used as a fallback.</remarks>
-        /// <param name="Instruction">The main instruction or prompt displayed to the user. This should clearly describe what input is expected.</param>
-        /// <param name="Value">The default value pre-filled in the input box. If the user does not provide input, this value will be
-        /// returned. Defaults to an empty string.</param>
-        /// <param name="Notice">An optional notice or additional information displayed in the dialog box. This can provide context or
-        /// guidance for the user.</param>
-        /// <param name="Title">The title of the input dialog window. If not specified, the application name is used as the default title.</param>
-        /// <returns>The string entered by the user. If the user cancels the dialog, the <paramref name="Value"/> parameter is
-        /// returned.</returns>
+        private sealed class InputDialogState
+        {
+            public IntPtr hWnd;
+            public IntPtr hEdit;
+            public IntPtr ConfigPointer = IntPtr.Zero;
+            public IntPtr DarkEditBrush = IntPtr.Zero;
+            public string InputText;
+            public string DefaultValue;
+            public bool Canceled = true;
+            public int EditHeight = 24;
+            public IntPtr OldEditWndProc = IntPtr.Zero;
+            public IntPtr OldDialogWndProc = IntPtr.Zero;
+
+            // Kept alive as fields so the GC does not collect the delegates while
+            // native code holds a pointer to them.
+            public Comctl32.TaskDialogCallback Callback;
+            public WNDPROC EditWndProc;
+            public WNDPROC DialogWndProc;
+            public IntPtr ManagedFontHandle = IntPtr.Zero;
+        }
+
+        // Delegate for window procedures
+        private delegate IntPtr WNDPROC(IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam);
+
         public static string InputBox(string Instruction, string Value = "", string Notice = "", string Title = "")
         {
             try
             {
-                // Log input box details
                 Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "InputBox query");
 
-                if (!string.IsNullOrWhiteSpace(Value))
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"InputBox.DefaultValue: {Value}");
-
-                if (!string.IsNullOrWhiteSpace(Notice))
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"InputBox.Notice: {Notice}");
-
-                if (!string.IsNullOrWhiteSpace(Title))
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"InputBox.Title: {Title}");
-                else
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"InputBox.Title: {Application.ProductName}");
-
-                if (!string.IsNullOrWhiteSpace(Instruction))
-                    Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"InputBox.Instruction: {Instruction}");
-
-                //Windows XP does not support the modern input box dialog.
                 if (!OS.WXP)
                 {
-                    // Create a new instance of the modern input box dialog.
-                    using (InputDialog ib = new()
-                    {
-                        MainInstruction = Instruction,
-                        Input = Value,
-                        Content = Notice,
-                        WindowTitle = !string.IsNullOrWhiteSpace(Title) ? Title : Application.ProductName,
-                    })
-                    {
-                        // Hide the dialog and return the response.
-                        if (ib.ShowDialog() == DialogResult.OK)
-                        {
-                            string response = ib.Input;
-                            if (string.IsNullOrWhiteSpace(response)) response = Value;
+                    string response = InputBox_Native(Instruction, Value, Notice, Title, out bool canceled);
 
-                            // Log user input
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"InputBox.UserInput: {response}");
-
-                            return response;
-                        }
-                        else
-                        {
-                            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "InputBox > Canceled by user.");
-                            return Value;
-                        }
+                    if (canceled)
+                    {
+                        Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "InputBox > Canceled by user.");
+                        return Value;
                     }
+
+                    if (string.IsNullOrWhiteSpace(response)) response = Value;
+                    return response;
                 }
                 else
                 {
-                    // If Windows XP, use classic input box
                     return InputBox_Classic(Instruction, Value, Notice, Title);
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Warning, " Modern InputBox failed, falling back to classic input box.");
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Warning, $"Modern InputBox failed: {ex.Message}, falling back to classic.");
                 return InputBox_Classic(Instruction, Value, Notice, Title);
             }
         }
 
-        /// <summary>
-        /// Displays a classic input box dialog that prompts the user for input.
-        /// </summary>
-        /// <remarks>This method uses the classic input box dialog provided by the
-        /// Microsoft.VisualBasic.Interaction.InputBox API. It logs the details of the input box and the user's response
-        /// for informational purposes.</remarks>
-        /// <param name="Instruction">The main instruction or prompt displayed to the user.</param>
-        /// <param name="Value">The default value pre-filled in the input box. This parameter is optional and defaults to an empty string.</param>
-        /// <param name="Notice">An additional notice or message displayed below the instruction. This parameter is optional and defaults to
-        /// an empty string.</param>
-        /// <param name="Title">The title of the input box window. This parameter is optional and defaults to the application's product
-        /// name.</param>
-        /// <returns>The string entered by the user in the input box. If the user cancels the dialog, an empty string is
-        /// returned.</returns>
+        private static string InputBox_Native(string Instruction, string Value, string Notice, string Title, out bool canceled)
+        {
+            InputDialogState state = new()
+            {
+                DefaultValue = Value ?? string.Empty,
+                EditHeight = 24
+            };
+
+            state.Callback = (hwnd, uNotification, wParam, lParam, lpRefData) => InputDialogCallbackProc(state, hwnd, uNotification, wParam, lParam);
+
+            // DIALOG HEIGHT ADJUSTMENT MECHANISM
+            // We adjust the dialog height by modulating text block spacing.
+            // If the Instruction is long, or Notice is missing, we balance the vertical canvas size.
+            string baseContent = Dialogs_ConvertToLinkSafe(Notice);
+            string dynamicPadding = string.Empty;
+
+            bool hasInstruction = !string.IsNullOrWhiteSpace(Instruction);
+            bool hasNotice = !string.IsNullOrWhiteSpace(baseContent);
+
+            if (hasInstruction && hasNotice)
+            {
+                // Both fields present: Dialog naturally expands. We only need space for the textbox.
+                dynamicPadding = "\r\n\r\n\r\n";
+            }
+            else if (hasInstruction && !hasNotice)
+            {
+                // Instruction only: Dialog shrinks. We inject extra spacing lines to expand the window framework height.
+                dynamicPadding = "\r\n";
+            }
+            else if (!hasInstruction && hasNotice)
+            {
+                // Notice only: Standard spacing layout expansion.
+                dynamicPadding = "\r\n";
+            }
+            else
+            {
+                // Both missing: Force a minimalist box height buffer zone so elements don't collapse.
+                dynamicPadding = "\r\n";
+            }
+
+            string content = baseContent + dynamicPadding;
+
+            Comctl32.TASKDIALOGCONFIG config = new()
+            {
+                cbSize = (uint)Marshal.SizeOf<Comctl32.TASKDIALOGCONFIG>(),
+                hwndParent = IntPtr.Zero,
+                hInstance = IntPtr.Zero,
+                dwFlags = Comctl32.TaskDialogFlags.EnableHyperlinks | Comctl32.TaskDialogFlags.AllowDialogCancellation,
+                dwCommonButtons = Comctl32.TaskDialogCommonButtonFlags.OKCancel,
+                pszWindowTitle = !string.IsNullOrWhiteSpace(Title) ? Title : Application.ProductName,
+                pszMainInstruction = Instruction ?? string.Empty,
+                pszContent = content,
+                nDefaultButton = Comctl32.IDOK,
+                pfCallback = state.Callback
+            };
+
+            if (Program.Localization.Information.RightToLeft)
+            {
+                config.dwFlags |= Comctl32.TaskDialogFlags.RTLLayout;
+            }
+
+            int size = Marshal.SizeOf(config);
+            state.ConfigPointer = Marshal.AllocHGlobal(size);
+            Marshal.StructureToPtr(config, state.ConfigPointer, false);
+
+            try
+            {
+                int hr = Comctl32.TaskDialogIndirect(ref config, out int pnButton, out _, out _);
+                canceled = state.Canceled || pnButton == Comctl32.IDCANCEL || pnButton == 0;
+
+                if (state.hEdit != IntPtr.Zero && string.IsNullOrEmpty(state.InputText))
+                {
+                    StringBuilder sb = new(1024);
+                    User32.GetWindowText(state.hEdit, sb, sb.Capacity);
+                    state.InputText = sb.ToString();
+                }
+
+                return canceled ? state.DefaultValue : (state.InputText ?? state.DefaultValue);
+            }
+            finally
+            {
+                CleanupInputDialog(state);
+            }
+        }
+
+        private static string Dialogs_ConvertToLinkSafe(string text) => string.IsNullOrEmpty(text) ? string.Empty : text;
+
+        private static IntPtr InputDialogCallbackProc(InputDialogState state, IntPtr hwnd, uint uNotification, IntPtr wParam, IntPtr lParam)
+        {
+            if (uNotification == 0) // TDN_CREATED
+            {
+                state.hWnd = hwnd;
+                ApplyDarkModeToInputDialog(state, hwnd);
+                CreateInputEdit(state, hwnd);
+            }
+            else if (uNotification == 2) // TDN_BUTTON_CLICKED
+            {
+                int buttonId = (int)wParam;
+                if (state.hEdit != IntPtr.Zero)
+                {
+                    StringBuilder sb = new(1024);
+                    User32.GetWindowText(state.hEdit, sb, sb.Capacity);
+                    state.InputText = sb.ToString();
+                }
+                state.Canceled = (buttonId == Comctl32.IDCANCEL);
+            }
+            else if (uNotification == 5) // TDN_DESTROYED
+            {
+                if (state.hEdit != IntPtr.Zero && string.IsNullOrEmpty(state.InputText))
+                {
+                    StringBuilder sb = new(1024);
+                    User32.GetWindowText(state.hEdit, sb, sb.Capacity);
+                    state.InputText = sb.ToString();
+                }
+            }
+            return IntPtr.Zero;
+        }
+
+        private static void ApplyDarkModeToInputDialog(InputDialogState state, IntPtr hwnd)
+        {
+            if (!Program.Style.DarkMode) return;
+            NativeMethods.Helpers.SetHWNDDarkMode(hwnd, Program.Style.DarkMode);
+            if (state.ConfigPointer != IntPtr.Zero) DarkenTD(hwnd, state.ConfigPointer);
+            state.DarkEditBrush = GDI32.CreateSolidBrush((int)DarkColors.kSecondary.Value);
+        }
+
+        private static IntPtr EditWndProc(IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam, InputDialogState state)
+        {
+            switch (uMsg)
+            {
+                case User32.WM_ERASEBKGND:
+                    if (!Program.Style.DarkMode) return User32.CallWindowProc(state.OldEditWndProc, hWnd, uMsg, wParam, lParam);
+                    // In dark mode, we skip default background erasing to prevent white flashing
+                    return new IntPtr(1);
+            }
+            return User32.CallWindowProc(state.OldEditWndProc, hWnd, uMsg, wParam, lParam);
+        }
+
+        private static IntPtr DialogWndProc(IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam, InputDialogState state)
+        {
+            switch (uMsg)
+            {
+                case User32.WM_CTLCOLOREDIT:
+                    // CRITICAL FIX: Only intercept colors if we are explicitly in Dark Mode
+                    if (Program.Style.DarkMode && lParam == state.hEdit && state.hEdit != IntPtr.Zero && state.DarkEditBrush != IntPtr.Zero)
+                    {
+                        GDI32.SetTextColor(wParam, (int)DarkColors.kTextContent.Value);
+                        GDI32.SetBkColor(wParam, (int)DarkColors.kFootnote.Value);
+                        GDI32.SetBkMode(wParam, GDI32.OPAQUE); // Use OPAQUE to fill the text background cleanly
+                        return state.DarkEditBrush;
+                    }
+                    break; // Let default system processing handle it for Light Mode
+
+                case User32.WM_PAINT:
+                case User32.WM_SIZE:
+                case User32.WM_WINDOWPOSCHANGED:
+                    IntPtr res = User32.CallWindowProc(state.OldDialogWndProc, hWnd, uMsg, wParam, lParam);
+                    if (state.hEdit != IntPtr.Zero && User32.IsWindow(state.hEdit))
+                    {
+                        User32.InvalidateRect(state.hEdit, IntPtr.Zero, true);
+                    }
+                    return res;
+            }
+            return User32.CallWindowProc(state.OldDialogWndProc, hWnd, uMsg, wParam, lParam);
+        }
+
+        private static void CreateInputEdit(InputDialogState state, IntPtr hwnd)
+        {
+            try
+            {
+                if (!User32.IsWindow(hwnd)) return;
+
+                state.DialogWndProc = (h, msg, wParam, lParam) => DialogWndProc(h, msg, wParam, lParam, state);
+                state.OldDialogWndProc = User32.SetWindowLongPtr(hwnd, User32.GWLP_WNDPROC, Marshal.GetFunctionPointerForDelegate(state.DialogWndProc));
+
+                int parentStyle = (int)User32.GetWindowLong(hwnd, -16);
+                User32.SetWindowLong(hwnd, -16, parentStyle | User32.WS_CLIPCHILDREN);
+
+                IntPtr hContent = User32.GetDlgItem(hwnd, Comctl32.TDLG_CONTENTPANE);
+                bool workingWithContentPane = hContent != IntPtr.Zero && User32.IsWindow(hContent);
+
+                if (!workingWithContentPane)
+                {
+                    hContent = User32.GetDlgItem(hwnd, NativeMethods.Comctl32.TDLG_MAININSTRUCTION);
+                }
+
+                int x = 0;
+                int y = 0;
+                int width = 0;
+                int height = state.EditHeight;
+                int padding = 5;
+
+                User32.GetClientRect(hwnd, out UxTheme.RECT clientRect);
+
+                if (hContent != IntPtr.Zero && User32.IsWindow(hContent))
+                {
+                    User32.GetWindowRect(hContent, out UxTheme.RECT contentRect);
+
+                    User32.POINT topLeft = new() { X = contentRect.left, Y = contentRect.top };
+                    User32.POINT bottomRight = new() { X = contentRect.right, Y = contentRect.bottom };
+
+                    User32.MapWindowPoints(IntPtr.Zero, hwnd, ref topLeft, 1);
+                    User32.MapWindowPoints(IntPtr.Zero, hwnd, ref bottomRight, 1);
+
+                    x = topLeft.X + padding;
+                    width = (bottomRight.X - topLeft.X) - (padding * 2);
+
+                    // Dynamic Height Calculation logic:
+                    // If TDLG_CONTENTPANE exists, target its bottom boundary.
+                    // If missing and relying on TDLG_MAININSTRUCTION, calculate further offset downward 
+                    // to dynamically account for layout structures safely.
+                    if (workingWithContentPane)
+                    {
+                        y = bottomRight.Y - height - 6;
+                    }
+                    else
+                    {
+                        y = bottomRight.Y + 10;
+                    }
+
+                    if (y + height > clientRect.bottom - 45 || y < 0 || width < 100)
+                    {
+                        hContent = IntPtr.Zero; // Reset layout fallback marker
+                    }
+                }
+
+                // Fallback Layout: Calculates absolute context measurements using structural window client height
+                if (hContent == IntPtr.Zero)
+                {
+                    x = clientRect.left + padding + 10;
+                    y = clientRect.bottom - height - 57;
+                    width = (clientRect.right - clientRect.left) - (x * 2);
+                }
+
+                if (width < 200) width = 200;
+
+                int exStyle = User32.WS_EX_CLIENTEDGE;
+                int style = User32.WS_CHILD | User32.WS_VISIBLE | User32.WS_TABSTOP | User32.ES_AUTOHSCROLL | User32.ES_LEFT;
+
+                state.hEdit = User32.CreateWindowEx(exStyle, "EDIT", state.DefaultValue ?? string.Empty, style, x, y, width, height, hwnd, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero);
+                if (state.hEdit == IntPtr.Zero) return;
+
+                User32.SetWindowPos(state.hEdit, IntPtr.Zero, 0, 0, 0, 0, User32.SWP_NOSIZE | User32.SWP_NOMOVE | User32.SWP_SHOWWINDOW);
+
+                IntPtr hFont = IntPtr.Zero;
+                try
+                {
+                    if (System.Drawing.SystemFonts.MessageBoxFont != null)
+                    {
+                        hFont = System.Drawing.SystemFonts.MessageBoxFont.ToHfont();
+                    }
+                }
+                catch
+                {
+                    hFont = User32.SendMessage(hwnd, User32.WM_GETFONT, IntPtr.Zero, IntPtr.Zero);
+                    if (hFont == IntPtr.Zero) hFont = NativeMethods.GDI32.GetStockObject(GDI32.StockObjects.DEFAULT_GUI_FONT);
+                }
+
+                if (hFont != IntPtr.Zero)
+                {
+                    User32.SendMessage(state.hEdit, User32.WM_SETFONT, hFont, new IntPtr(1));
+                    state.ManagedFontHandle = hFont;
+                }
+
+                if (Program.Style.DarkMode)
+                {
+                    UxTheme.SetWindowTheme(state.hEdit, "DarkMode_CFD", null);
+                }
+                else
+                {
+                    // Revert to default native msstyles (restores the modern blue-focus text box)
+                    UxTheme.SetWindowTheme(state.hEdit, null, null);
+                }
+
+                User32.SetWindowPos(state.hEdit, IntPtr.Zero, 0, 0, 0, 0, User32.SWP_NOSIZE | User32.SWP_NOMOVE | User32.SWP_NOZORDER | User32.SWP_FRAMECHANGED);
+
+                state.EditWndProc = (h, msg, wParam, lParam) => EditWndProc(h, msg, wParam, lParam, state);
+                state.OldEditWndProc = User32.SetWindowLongPtr(state.hEdit, User32.GWLP_WNDPROC, Marshal.GetFunctionPointerForDelegate(state.EditWndProc));
+
+                User32.ShowWindow(state.hEdit, User32.SW_SHOW);
+                User32.SetFocus(state.hEdit);
+                User32.SendMessage(state.hEdit, User32.EM_SETSEL, IntPtr.Zero, new IntPtr(-1));
+                User32.InvalidateRect(state.hEdit, IntPtr.Zero, true);
+                User32.UpdateWindow(state.hEdit);
+            }
+            catch (Exception ex)
+            {
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Error creating edit control: {ex.Message}");
+            }
+        }
+
+        private static void CleanupInputDialog(InputDialogState state)
+        {
+            if (state == null) return;
+            try
+            {
+                if (state.hEdit != IntPtr.Zero && state.OldEditWndProc != IntPtr.Zero) User32.SetWindowLongPtr(state.hEdit, User32.GWLP_WNDPROC, state.OldEditWndProc);
+                if (state.hWnd != IntPtr.Zero && state.OldDialogWndProc != IntPtr.Zero) User32.SetWindowLongPtr(state.hWnd, User32.GWLP_WNDPROC, state.OldDialogWndProc);
+            }
+            catch { }
+
+            if (state.DarkEditBrush != IntPtr.Zero) { NativeMethods.GDI32.DeleteObject(state.DarkEditBrush); state.DarkEditBrush = IntPtr.Zero; }
+            if (state.ConfigPointer != IntPtr.Zero) { Marshal.FreeHGlobal(state.ConfigPointer); state.ConfigPointer = IntPtr.Zero; }
+            if (state.ManagedFontHandle != IntPtr.Zero) { NativeMethods.GDI32.DeleteObject(state.ManagedFontHandle); state.ManagedFontHandle = IntPtr.Zero; }
+            state.hEdit = IntPtr.Zero;
+            state.hWnd = IntPtr.Zero;
+        }
+
         private static string InputBox_Classic(string Instruction, string Value = "", string Notice = "", string Title = "")
         {
             string N = !string.IsNullOrWhiteSpace(Notice) ? $"\r\n\r\n{Notice}" : string.Empty;
             string T = !string.IsNullOrWhiteSpace(Title) ? Title : Application.ProductName;
-
-            // Log classic input box details
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "InputBox query");
-
-            if (!string.IsNullOrWhiteSpace(Value))
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"InputBox.DefaultValue: {Value}");
-
-            if (!string.IsNullOrWhiteSpace(Notice))
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"InputBox.Notice: {Notice}");
-
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"InputBox.Title: {T}");
-
-            if (!string.IsNullOrWhiteSpace(Instruction))
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"InputBox.Instruction: {Instruction}");
-
-            // Show the classic input box and return the response
-            string response = Interaction.InputBox($"{Instruction}{N}", T, Value);
-
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, $"InputBox.UserInput: {response}");
-
-            return response;
+            return Interaction.InputBox($"{Instruction}{N}", T, Value);
         }
     }
 }

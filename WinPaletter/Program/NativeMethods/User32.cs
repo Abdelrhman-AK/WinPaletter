@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
+using WinPaletter.UI.WP;
 using static WinPaletter.NativeMethods.GDI32;
 using static WinPaletter.NativeMethods.UxTheme;
 
@@ -1123,6 +1124,177 @@ namespace WinPaletter.NativeMethods
         public static extern bool SetWindowDisplayAffinity(IntPtr hwnd, uint affinity);
 
         /// <summary>
+        /// Creates an overlapped, pop-up, or child window with an extended window style.
+        /// </summary>
+        /// <param name="dwExStyle"></param>
+        /// <param name="lpClassName"></param>
+        /// <param name="lpWindowName"></param>
+        /// <param name="dwStyle"></param>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="nWidth"></param>
+        /// <param name="nHeight"></param>
+        /// <param name="hWndParent"></param>
+        /// <param name="hMenu"></param>
+        /// <param name="hInstance"></param>
+        /// <param name="lpParam"></param>
+        /// <returns></returns>
+        [DllImport(_user32, CharSet = CharSet.Unicode, SetLastError = true)]
+        public static extern IntPtr CreateWindowEx(int dwExStyle, string lpClassName, string lpWindowName, int dwStyle, int x, int y, int nWidth, int nHeight, IntPtr hWndParent, IntPtr hMenu, IntPtr hInstance, IntPtr lpParam);
+
+        /// <summary>
+        /// Destroys the specified window. The function sends a WM_DESTROY message to the window to be destroyed and then removes the window from the screen.
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <returns></returns>
+        [DllImport(_user32)]
+        public static extern bool DestroyWindow(IntPtr hWnd);
+
+        /// <summary>
+        /// Gets a handle to a control in the specified dialog box. The control is identified by its control identifier.
+        /// </summary>
+        /// <param name="hDlg"></param>
+        /// <param name="nIDDlgItem"></param>
+        /// <returns></returns>
+        [DllImport(_user32)]
+        public static extern IntPtr GetDlgItem(IntPtr hDlg, int nIDDlgItem);
+
+        /// <summary>
+        /// Maps a set of points from a coordinate space relative to one window to a coordinate space relative to another window.
+        /// </summary>
+        /// <param name="hWndFrom"></param>
+        /// <param name="hWndTo"></param>
+        /// <param name="lpPoints"></param>
+        /// <param name="cPoints"></param>
+        /// <returns></returns>
+        [DllImport(_user32)]
+        public static extern int MapWindowPoints(IntPtr hWndFrom, IntPtr hWndTo, ref RECT lpPoints, uint cPoints);
+
+        /// <summary>
+        /// Maps a set of points from a coordinate space relative to one window to a coordinate space relative to another window.
+        /// </summary>
+        /// <param name="hWndFrom"></param>
+        /// <param name="hWndTo"></param>
+        /// <param name="lpPoints"></param>
+        /// <param name="cPoints"></param>
+        /// <returns></returns>
+        [DllImport(_user32)]
+        public static extern int MapWindowPoints(IntPtr hWndFrom, IntPtr hWndTo, ref POINT lpPoints, uint cPoints);
+
+        /// <summary>
+        /// Moves the specified window to a new position and size. The window is redrawn if the bRepaint parameter is true.
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <param name="X"></param>
+        /// <param name="Y"></param>
+        /// <param name="nWidth"></param>
+        /// <param name="nHeight"></param>
+        /// <param name="bRepaint"></param>
+        /// <returns></returns>
+        [DllImport(_user32)]
+        public static extern bool MoveWindow(IntPtr hWnd, int X, int Y, int nWidth, int nHeight, bool bRepaint);
+
+        /// <summary>
+        /// Sets the keyboard focus to the specified window. The window must be attached to the calling thread's message queue.
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <returns></returns>
+        [DllImport(_user32)]
+        public static extern IntPtr SetFocus(IntPtr hWnd);
+
+        /// <summary>
+        /// Sets the parent window of the specified child window. The child window is removed from its current parent and added to the new parent.
+        /// </summary>
+        /// <param name="hWndChild"></param>
+        /// <param name="hWndNewParent"></param>
+        /// <returns></returns>
+        [DllImport(_user32)]
+        public static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
+
+        /// <summary>
+        /// Sets a new value for the specified window's long pointer (window data). This function can be used to change window styles, extended styles, or other window-specific data.
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <param name="nIndex"></param>
+        /// <param name="dwNewLong"></param>
+        /// <returns></returns>
+        [DllImport(_user32)]
+        public static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+
+        /// <summary>
+        /// Gets a handle to the device context (DC) for the entire window, including the non-client area (title bar, borders, scroll bars, etc.). This function can be used to draw on the entire window surface.
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <returns></returns>
+        [DllImport(_user32)]
+        public static extern IntPtr GetWindowDC(IntPtr hWnd);
+
+        /// <summary>
+        /// Gets a handle to the window that currently has the keyboard focus. The window must be attached to the calling thread's message queue.
+        /// </summary>
+        /// <returns></returns>
+        [DllImport(_user32)]
+        public static extern IntPtr GetFocus();
+
+        /// <summary>
+        /// Draws a focus rectangle in the specified device context. The focus rectangle is a dotted rectangle that indicates the current focus of user input.
+        /// </summary>
+        /// <param name="hDC"></param>
+        /// <param name="lprc"></param>
+        /// <returns></returns>
+        [DllImport(_user32)]
+        public static extern bool DrawFocusRect(IntPtr hDC, ref RECT lprc);
+
+        /// <summary>
+        /// Gets a handle to the active window associated with the calling thread's message queue. The active window is the window that currently receives user input.
+        /// </summary>
+        /// <returns></returns>
+        [DllImport(_user32, CharSet = CharSet.Auto, ExactSpelling = true)]
+        public static extern IntPtr GetActiveWindow();
+
+        /// <summary>
+        /// Creates an IShellItem object from a parsing name (path). This function is used to obtain a shell item interface for a specified file or folder path.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        [DllImport(_user32, CharSet = CharSet.Unicode, PreserveSig = false)]
+        public static extern IShellItem CreateItemFromParsingName(string path);
+
+        /// <summary>
+        /// Enables or disables mouse and keyboard input to the specified window. When a window is disabled, it cannot receive input from the user.
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <param name="bEnable"></param>
+        /// <returns></returns>
+        [DllImport(_user32, CharSet = CharSet.Auto, ExactSpelling = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool EnableWindow(IntPtr hWnd, bool bEnable);
+
+        /// <summary>
+        /// Gets the identifier of the thread that created the specified window and, optionally, the identifier of the process that created the window.
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <param name="lpdwProcessId"></param>
+        /// <returns></returns>
+        [DllImport(_user32)]
+        public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
+
+        /// <summary>
+        /// RedrawWindow flags: Invalidates the window, causing it to be redrawn. This flag is used with the RedrawWindow function to specify that the entire window should be invalidated and repainted.
+        /// </summary>
+        public const uint RDW_INVALIDATE = 0x0001;
+
+        /// <summary>
+        /// RedrawWindow flags: Causes the non-client area (frame) of the window to be redrawn. This flag is used with the RedrawWindow function to specify that the window's frame should be repainted.
+        /// </summary>
+        public const uint RDW_FRAME = 0x0400;
+
+        /// <summary>
+        /// RedrawWindow flags: Causes the window to be updated immediately before the function returns, rather than queuing the update for later. This flag is used with the RedrawWindow function to force an immediate repaint of the window.
+        /// </summary>
+        public const uint RDW_UPDATENOW = 0x0100;
+
+        /// <summary>
         /// Constant for LoadImage function specifying the type of image to load.
         /// </summary>
         public const uint IMAGE_CURSOR = 2;
@@ -1156,20 +1328,24 @@ namespace WinPaletter.NativeMethods
         public const int WM_NCPAINT = 0x0085;
 
         /// <summary>
-        /// RedrawWindow flag: Invalidates the window, causing it to be redrawn.
+        /// WM_SETFOCUS message: Sent to a window when it is about to receive keyboard focus. This message allows the window to prepare for focus changes, such as updating visual cues or state.
         /// </summary>
-        public const int RDW_INVALIDATE = 0x0001;
+        public const uint WM_SETFOCUS = 0x0007;
 
         /// <summary>
-        /// RedrawWindow flag: Causes the non-client area (frame) of the window to be redrawn.
+        /// WM_KILLFOCUS message: Sent to a window when it is about to lose keyboard focus. This message allows the window to perform any necessary cleanup or state updates before losing focus.
         /// </summary>
-        public const int RDW_FRAME = 0x0400;
+        public const uint WM_KILLFOCUS = 0x0008;
 
         /// <summary>
-        /// RedrawWindow flag: Causes the window to be updated immediately before the function returns,
-        /// rather than queuing the update for later.
+        /// WM_USER message: The first message identifier available for application-defined messages. Applications can define their own custom messages starting from this value.
         /// </summary>
-        public const int RDW_UPDATENOW = 0x0100;
+        public const uint WM_USER = 0x0400;
+
+        /// <summary>
+        /// WM_REFRESH_DUI_STATE message: A custom message defined by the application to request a refresh of the DirectUI state. This message can be used to trigger updates or redraws of UI elements that rely on DirectUI.
+        /// </summary>
+        public const uint WM_REFRESH_DUI_STATE = WM_USER + 4242;
 
         /// <summary>
         /// RedrawWindow flag: Causes all child windows of the specified window to be invalidated or updated.
@@ -1383,6 +1559,115 @@ namespace WinPaletter.NativeMethods
         /// Get window long index: Window ID
         /// </summary>
         public const int GWL_ID = -12;
+
+        /// <summary>
+        /// Default GUI font identifier
+        /// </summary>
+        public const int DEFAULT_GUI_FONT = 17;
+
+        /// <summary>
+        /// WM_GETFONT message - Sent to a control to retrieve the font with which it is drawing its text
+        /// </summary>
+        public const uint WM_GETFONT = 0x0031;
+
+        /// <summary>
+        /// WM_SETFONT message - Sent to a control to set the font with which it will draw its text
+        /// </summary>
+        public const uint WM_SETFONT = 0x0030;
+
+        /// <summary>
+        /// WM_SIZE message - Sent to a window after its size has changed
+        /// </summary>
+        public const uint WM_SIZE = 0x0005;
+
+        /// <summary>
+        /// WM_WINDOWPOSCHANGED message - Sent to a window whose size, position, or Z-order has changed
+        /// </summary>
+        public const uint WM_WINDOWPOSCHANGED = 0x0047;
+
+        /// <summary>
+        /// WS_CHILD window style - Creates a child window
+        /// </summary>
+        public const int WS_CHILD = 0x40000000;
+
+        /// <summary>
+        /// WS_VISIBLE window style - Makes the window initially visible
+        /// </summary>
+        public const int WS_VISIBLE = 0x10000000;
+
+        /// <summary>
+        /// WS_TABSTOP window style - Control can receive focus through tab navigation
+        /// </summary>
+        public const int WS_TABSTOP = 0x00010000;
+
+        /// <summary>
+        /// WS_BORDER window style - Creates a window with a thin-line border
+        /// </summary>
+        public const int WS_BORDER = 0x00800000;
+
+        /// <summary>
+        /// WS_CLIPCHILDREN window style - Excludes child window areas from drawing
+        /// </summary>
+        public const int WS_CLIPCHILDREN = 0x02000000;
+
+        /// <summary>
+        /// WS_EX_CLIENTEDGE extended window style - Adds a sunken edge to the client area
+        /// </summary>
+        public const int WS_EX_CLIENTEDGE = 0x00000200;
+
+        /// <summary>
+        /// ES_AUTOHSCROLL edit style - Automatically scrolls text horizontally when entering text beyond control width
+        /// </summary>
+        public const int ES_AUTOHSCROLL = 0x0080;
+
+        /// <summary>
+        /// ES_LEFT edit style - Aligns text to the left
+        /// </summary>
+        public const int ES_LEFT = 0x0000;
+
+        /// <summary>
+        /// SW_SHOW show window command - Shows the window in its current position and size
+        /// </summary>
+        public const int SW_SHOW = 5;
+
+        /// <summary>
+        /// EM_GETSEL edit message - Gets the starting and ending character positions of the current selection
+        /// </summary>
+        public const int EM_GETSEL = 0x00B0;
+
+        /// <summary>
+        /// GWL_WNDPROC window long index - Retrieves the address of the window procedure
+        /// </summary>
+        public const int GWL_WNDPROC = -4;
+
+        /// <summary>
+        /// GWLP_WNDPROC window long pointer index - Retrieves the address of the window procedure (64-bit compatible)
+        /// </summary>
+        public const int GWLP_WNDPROC = -4;
+
+        /// <summary>
+        /// IShellItem interface: Represents a Shell item object, which can be a file, folder, or other item in the Windows Shell namespace. This interface provides methods to retrieve information about the item, bind to handlers, and compare items.
+        /// </summary>
+        [ComImport]
+        [Guid("43826d1e-e718-42ee-bc55-a1e261c37bfe")]
+        [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+        public interface IShellItem
+        {
+            void BindToHandler([In] IntPtr pbc, [In] ref Guid rbhid, [In] ref Guid riid, out IntPtr ppv);
+            void GetParent(out IShellItem ppsi);
+            void GetDisplayName([In] SIGDN sigdnName, [MarshalAs(UnmanagedType.LPWStr)] out string ppszName);
+            void GetAttributes([In] uint sfgaoMask, out uint psfgaoAttribs);
+            void Compare([In] IShellItem psi, [In] uint hint, out int piOrder);
+        }
+
+        /// <summary>
+        /// SIGDN enumeration: Specifies the type of display name to retrieve for a Shell item. This enumeration is used with the IShellItem.GetDisplayName method to indicate how the display name should be formatted or represented.
+        /// </summary>
+        public enum SIGDN : uint
+        {
+            SIGDN_FILESYSPATH = 0x80058000,
+            SIGDN_URL = 0x80058000
+        }
 
         /// <summary>
         /// Struct that contains information about the painting process for a window, including the device context, the area to be painted, and flags indicating whether the background should be erased or restored.
