@@ -326,7 +326,7 @@ namespace WinPaletter.NativeMethods
         /// used in subsequent GDI operations. Attempting to delete a device context that was not created by a
         /// compatible creation function may result in undefined behavior.</remarks>
         /// <param name="hdc">A handle to the device context to be deleted. This handle must have been created by a previous call to a
-        /// device context creation function such as CreateCompatibleDC or CreateDC.</param>
+        /// device context creation function such as CreateCompatibleDC_SDH or CreateDC.</param>
         /// <returns>true if the device context is successfully deleted; otherwise, false.</returns>
         [DllImport(_gdi32)]
         public static extern bool DeleteDC(IntPtr hdc);
@@ -394,6 +394,18 @@ namespace WinPaletter.NativeMethods
         public static extern int SetTextColor(IntPtr hdc, int crColor);
 
         /// <summary>
+        /// Sets the text color for the specified device context.
+        /// </summary>
+        /// <remarks>If the function fails, the return value is –1. To get extended error information,
+        /// call GetLastError. This function affects text drawn after the call; previously drawn text is not
+        /// affected.</remarks>
+        /// <param name="hdc">A handle to the device context whose text color is to be set.</param>
+        /// <param name="crColor">The new text color, specified as a COLORREF value. The color value must be in 0x00bbggrr format.</param>
+        /// <returns>The previous text color as a COLORREF value if successful; otherwise, –1 to indicate failure.</returns>
+        [DllImport(_gdi32, SetLastError = true)]
+        public static extern int SetTextColor(IntPtr hdc, uint crColor);
+
+        /// <summary>
         /// Sets the background mix mode of the specified device context. The background mix mode determines how the background color is combined with the foreground color when drawing text or graphics.
         /// </summary>
         /// <param name="hdc"></param>
@@ -448,9 +460,38 @@ namespace WinPaletter.NativeMethods
         [DllImport(_gdi32)]
         public static extern bool GetObject(IntPtr hgdiobj, int cbBuffer, ref LOGBRUSH lpvObject);
 
-        [DllImport(_gdi32, SetLastError = true)]
-        public static extern SafeDeviceHandle CreateCompatibleDC(IntPtr hdc);
+        /// <summary>
+        /// Creates a memory device context (DC) compatible with the specified device. The memory DC can be used for off-screen drawing and bitmap manipulation.
+        /// </summary>
+        /// <param name="hdc"></param>
+        /// <returns></returns>
+        [DllImport(_gdi32, EntryPoint ="CreateCompatibleDC",  SetLastError = true)]
+        public static extern SafeDeviceHandle CreateCompatibleDC_SDH(IntPtr hdc);
 
+        /// <summary>
+        /// Creates a memory device context (DC) compatible with the specified device. The memory DC can be used for off-screen drawing and bitmap manipulation.
+        /// </summary>
+        /// <param name="hdc"></param>
+        /// <returns></returns>
+        [DllImport(_gdi32, EntryPoint = "CreateCompatibleDC", SetLastError = true)]
+        public static extern IntPtr CreateCompatibleDC(IntPtr hdc);
+
+        /// <summary>
+        /// Creates a bitmap compatible with the device that is associated with the specified device context. The bitmap can be selected into a memory device context for off-screen drawing.
+        /// </summary>
+        /// <param name="hdc"></param>
+        /// <param name="cx"></param>
+        /// <param name="cy"></param>
+        /// <returns></returns>
+        [DllImport(_gdi32, SetLastError = true)]
+        public static extern IntPtr CreateCompatibleBitmap(IntPtr hdc, int cx, int cy);
+
+        /// <summary>
+        /// Selects an object into the specified device context. The new object replaces the previous object of the same type.
+        /// </summary>
+        /// <param name="hdc"></param>
+        /// <param name="hObject"></param>
+        /// <returns></returns>
         [DllImport(_gdi32)]
         public static extern IntPtr SelectObject(SafeDeviceHandle hdc, SafeHandle hObject);
 
@@ -477,9 +518,29 @@ namespace WinPaletter.NativeMethods
         [DllImport(_gdi32, SetLastError = true)]
         public static extern IntPtr CreateDIBSection(IntPtr hdc, ref BITMAPINFO pbmi, uint iUsage, out IntPtr ppvBits, IntPtr hSection, uint dwOffset);
 
+        /// <summary>
+        /// Bit-block transfers the color data corresponding to a rectangle of pixels from the specified source device context into a destination device context.
+        /// </summary>
+        /// <param name="hdcDest"></param>
+        /// <param name="xDest"></param>
+        /// <param name="yDest"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="hdcSrc"></param>
+        /// <param name="xSrc"></param>
+        /// <param name="ySrc"></param>
+        /// <param name="rop"></param>
+        /// <returns></returns>
         [DllImport(_gdi32)]
         public static extern bool BitBlt(IntPtr hdcDest, int xDest, int yDest, int width, int height, SafeDeviceHandle hdcSrc, int xSrc, int ySrc, int rop);
 
+        /// <summary>
+        /// Creates a device-independent bitmap (DIB) section and selects it into a memory device context. This allows for direct manipulation of the bitmap's pixel data while using GDI drawing functions.
+        /// </summary>
+        /// <param name="bounds"></param>
+        /// <param name="primaryHdc"></param>
+        /// <param name="memoryHdc"></param>
+        /// <returns></returns>
         public static SafeGDIHandle CreateDib(Rectangle bounds, IntPtr primaryHdc, SafeDeviceHandle memoryHdc)
         {
             BITMAPINFO info = new();

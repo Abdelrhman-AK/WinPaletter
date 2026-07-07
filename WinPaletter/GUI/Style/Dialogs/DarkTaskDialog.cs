@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 using static WinPaletter.NativeMethods.Comctl32;
 using static WinPaletter.NativeMethods.DWMAPI;
@@ -344,7 +346,7 @@ namespace WinPaletter
     /// reverts the dialog to the system-light appearance.
     /// </para>
     /// <para>
-    /// The <see cref="DarkTaskDialog.DarkenTD"/> method is the main entry point for
+    /// The <see cref="DarkTaskDialog.DarkenTaskDialog"/> method is the main entry point for
     /// applying dark mode to a TaskDialog window. It must be called after the dialog
     /// has been created and its window handle is known.
     /// </para>
@@ -383,9 +385,11 @@ namespace WinPaletter
         private static readonly SUBCLASSPROC s_mainProc = TaskDialogMainSubclassProc;
 
         // delegates
-        public delegate IntPtr SUBCLASSPROC(IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam, UIntPtr uIdSubclass, IntPtr dwRefData);
         public delegate bool WNDENUMPROC(IntPtr hWnd, IntPtr lParam);
-
+        private static readonly UIntPtr kProgressDuiSubclassId = (UIntPtr)0xDEADBEEF02UL;
+        private static readonly SUBCLASSPROC s_progressDuiProc = ProgressDuiSubclassProc;
+        private static User32.HookProc s_progressThreadHookDelegate;
+        private static IntPtr s_hProgressThreadHook = IntPtr.Zero;
         private static IntPtr s_solidSecondaryBrush = IntPtr.Zero;
 
         private static bool IsDarkThemeActive(string dark, string baseClass)
@@ -837,26 +841,13 @@ namespace WinPaletter
 
             EndBufferedPaint(hbp, true);
         }
-
-        /// <summary>
-        /// Token-level check, not sentence-level
-        /// </summary>
-        /// <param name="token"></param>
-        /// <returns></returns>
+        
         private static bool LooksLikePath(string token)
         {
             if (string.IsNullOrEmpty(token)) return false;
             return token.Contains(":\\") || token.StartsWith(@"\\") || token.Contains("://") || token.Contains('/');
         }
 
-        /// <summary>
-        /// Replaces only the path/URL-looking word(s) inside text with a middle-ellipsized version that fits maxWidthPx, using the font already selected into hdc, then returns the whole string for normal DT_WORDBREAK drawing.
-        /// <br></br>The rest of the sentence still wraps across multiple lines;  only the path token itself gets shortened.
-        /// </summary>
-        /// <param name="hdc"></param>
-        /// <param name="text"></param>
-        /// <param name="maxWidthPx"></param>
-        /// <returns></returns>
         private static string CompactEmbeddedPaths(IntPtr hdc, string text, int maxWidthPx)
         {
             if (string.IsNullOrEmpty(text)) return text;
@@ -876,7 +867,7 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// DirectUISubclassProc
+        /// Windows subclass procedure for DirectUI child windows. This is used to intercept paint and mouse messages for the DirectUI elements of a TaskDialog, allowing custom rendering and interaction handling for dark mode support.
         /// </summary>
         /// <param name="hwnd"></param>
         /// <param name="msg"></param>
@@ -964,7 +955,16 @@ namespace WinPaletter
             return DefSubclassProc(hwnd, msg, wParam, lParam);
         }
 
-        // WmCtColorSubclassProc
+        /// <summary>
+        /// Windows subclass procedure for WM_CTLCOLOR* messages. This is used to intercept control color messages and apply custom background and text colors for child controls in dark mode, ensuring that they are drawn correctly according to the dark theme.
+        /// </summary>
+        /// <param name="hwnd"></param>
+        /// <param name="msg"></param>
+        /// <param name="wParam"></param>
+        /// <param name="lParam"></param>
+        /// <param name="uId"></param>
+        /// <param name="dwRef"></param>
+        /// <returns></returns>
         private static IntPtr WmCtColorSubclassProc(IntPtr hwnd, uint msg, IntPtr wParam, IntPtr lParam, UIntPtr uId, IntPtr dwRef)
         {
             switch (msg)
@@ -1008,7 +1008,16 @@ namespace WinPaletter
             return DefSubclassProc(hwnd, msg, wParam, lParam);
         }
 
-        // RadioSubclassProc
+        /// <summary>
+        /// Windows subclass procedure for TaskDialog radio buttons. This is used to intercept paint messages and apply custom rendering for radio buttons in dark mode, ensuring that they are drawn correctly according to the dark theme.
+        /// </summary>
+        /// <param name="hwnd"></param>
+        /// <param name="msg"></param>
+        /// <param name="wParam"></param>
+        /// <param name="lParam"></param>
+        /// <param name="uId"></param>
+        /// <param name="dwRef"></param>
+        /// <returns></returns>
         private static IntPtr RadioSubclassProc(IntPtr hwnd, uint msg, IntPtr wParam, IntPtr lParam, UIntPtr uId, IntPtr dwRef)
         {
             switch (msg)
@@ -1082,6 +1091,16 @@ namespace WinPaletter
             return DefSubclassProc(hwnd, msg, wParam, lParam);
         }
 
+        /// <summary>
+        /// Windows subclass procedure for the main TaskDialog window. This is used to intercept messages related to theming, dark mode, and UI updates, allowing for custom rendering and behavior in dark mode scenarios.
+        /// </summary>
+        /// <param name="hwnd"></param>
+        /// <param name="msg"></param>
+        /// <param name="wParam"></param>
+        /// <param name="lParam"></param>
+        /// <param name="uId"></param>
+        /// <param name="dwRef"></param>
+        /// <returns></returns>
         private static IntPtr TaskDialogMainSubclassProc(IntPtr hwnd, uint msg, IntPtr wParam, IntPtr lParam, UIntPtr uId, IntPtr dwRef)
         {
             switch (msg)
@@ -1103,7 +1122,7 @@ namespace WinPaletter
                 case WM_SETTINGCHANGE:
                     if (Program.Style.DarkMode)
                     {
-                        DarkenTD(hwnd, dwRef);
+                        DarkenTaskDialog(hwnd, dwRef);
                     }
                     break;
 
@@ -1149,22 +1168,232 @@ namespace WinPaletter
             return DefSubclassProc(hwnd, msg, wParam, lParam);
         }
 
-        // EnableForTLW
-        public static void EnableForTLW(IntPtr hwnd, bool dark = true)
+        /// <summary>
+        /// Windows subclass procedure for the progress dialog's DirectUI window. This is used to intercept paint messages and apply custom theming for dark mode, specifically targeting text elements that are not natively themed by DirectUI.
+        /// </summary>
+        /// <param name="hwnd"></param>
+        /// <param name="uMsg"></param>
+        /// <param name="wParam"></param>
+        /// <param name="lParam"></param>
+        /// <param name="uIdSubclass"></param>
+        /// <param name="dwRefData"></param>
+        /// <returns></returns>
+        private static IntPtr ProgressDuiSubclassProc(IntPtr hwnd, uint uMsg, IntPtr wParam, IntPtr lParam, UIntPtr uIdSubclass, IntPtr dwRefData)
+        {
+            const uint WM_DESTROY = 0x0002;
+            const uint WM_PAINT = 0x000F;
+
+            switch (uMsg)
+            {
+                case WM_PAINT:
+                    if (Program.Style.DarkMode)
+                    {
+                        // 1. Let DirectUI render ALL its native components untouched (AVI, Main Title, colors stay perfectly clean)
+                        IntPtr res = DefSubclassProc(hwnd, uMsg, wParam, lParam);
+
+                        // 2. Acquire a true surface DC to draw over the specific text boundaries
+                        IntPtr hdcScreen = User32.GetDC(hwnd);
+
+                        if (hdcScreen != IntPtr.Zero)
+                        {
+                            try
+                            {
+                                UxTheme.RECT winRect;
+                                User32.GetWindowRect(hwnd, out winRect);
+
+                                NativeMethods.IUIAutomationElement baseEl = ComUIAutomation.FromHandle(hwnd);
+                                if (baseEl != null)
+                                {
+                                    // 3. Scan for windowless text elements (UIA_TextControlTypeId = 50020)
+                                    foreach (NativeMethods.IUIAutomationElement child in ComUIAutomation.GetContentChildren(baseEl))
+                                    {
+                                        int controlType = ComUIAutomation.GetPropertyValueInt(child, ComUIAutomation.UIA_ControlTypePropertyId);
+
+                                        if (controlType == 50020)
+                                        {
+                                            // Get the Automation ID property to safely distinguish the elements
+                                            string autoId = ComUIAutomation.GetPropertyValueString(child, ComUIAutomation.UIA_AutomationIdPropertyId);
+
+                                            // LocLabel1 is description label, theme it only (other parts are themed correctly before)
+                                            if (!string.IsNullOrEmpty(autoId) && autoId.Equals("LocLabel1", StringComparison.OrdinalIgnoreCase))
+                                            {
+                                                string textValue = ComUIAutomation.GetPropertyValueString(child, ComUIAutomation.UIA_NamePropertyId);
+                                                if (string.IsNullOrWhiteSpace(textValue)) continue;
+
+                                                child.GetCurrentPropertyValue(ComUIAutomation.UIA_BoundingRectanglePropertyId, out object propValue);
+                                                double[] boundingBox = propValue as double[];
+
+                                                if (boundingBox != null && boundingBox.Length == 4)
+                                                {
+                                                    int screenLeft = (int)boundingBox[0];
+                                                    int screenTop = (int)boundingBox[1];
+                                                    int screenWidth = (int)boundingBox[2];
+                                                    int screenHeight = (int)boundingBox[3];
+
+                                                    RECT clientTextRect = new()
+                                                    {
+                                                        left = screenLeft - winRect.left,
+                                                        top = screenTop - winRect.top,
+                                                        right = (screenLeft - winRect.left) + screenWidth,
+                                                        bottom = (screenTop - winRect.top) + screenHeight
+                                                    };
+
+                                                    // 4. PINPOINT MASKING: Wipe ONLY the exact description string coordinate area.
+                                                    IntPtr bgBrush = CreateSolidBrush(DarkColors.kSecondary);
+                                                    User32.FillRect(hdcScreen, ref clientTextRect, bgBrush);
+                                                    DeleteObject(bgBrush);
+
+                                                    // 5. EXTRACT DESIGNATED SYSTEM LOGFONT & DRAW THE WHITE TEXT OVERLAY
+                                                    LOGFONT lf = GetThemedFont(7); // Part 7 maps perfectly to TDLG_CONTENTPANE (Description typography metrics)
+                                                    IntPtr hFont = GDI32.CreateFontIndirect(ref lf);
+                                                    IntPtr oldFont = IntPtr.Zero;
+
+                                                    if (hFont != IntPtr.Zero) oldFont = GDI32.SelectObject(hdcScreen, hFont);
+
+                                                    GDI32.SetTextColor(hdcScreen, (uint)ColorTranslator.ToWin32(Color.White));
+                                                    GDI32.SetBkMode(hdcScreen, 1); // TRANSPARENT
+
+                                                    User32.DrawText(hdcScreen, textValue, textValue.Length, ref clientTextRect,
+                                                        0x00000000 /* DT_LEFT */ | 0x00000010 /* DT_SINGLELINE */ | 0x00000004 /* DT_VCENTER */ | 0x00008000 /* DT_NOPREFIX */ | 0x00000020 /* DT_PATH_ELLIPSIS */);
+
+                                                    if (oldFont != IntPtr.Zero) GDI32.SelectObject(hdcScreen, oldFont);
+                                                    if (hFont != IntPtr.Zero) GDI32.DeleteObject(hFont);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                Program.Log?.Write(Serilog.Events.LogEventLevel.Debug, $"[ProgressDialog Direct Overlay Error] {ex.Message}");
+                            }
+
+                            User32.ReleaseDC(hwnd, hdcScreen);
+                        }
+
+                        return res; // Return the exact result from the procedure chain
+                    }
+                    break;
+
+                case WM_DESTROY:
+                    RemoveWindowSubclass(hwnd, s_progressDuiProc, uIdSubclass);
+
+                    if (s_hProgressThreadHook != IntPtr.Zero)
+                    {
+                        User32.UnhookWindowsHookEx(s_hProgressThreadHook);
+                        s_hProgressThreadHook = IntPtr.Zero;
+                        s_progressThreadHookDelegate = null;
+                    }
+                    break;
+            }
+
+            return DefSubclassProc(hwnd, uMsg, wParam, lParam);
+        }
+
+        private static void EnableForTLW(IntPtr hwnd, bool dark = true)
         {
             int use = dark ? 1 : 0;
             int hr = DwmSetWindowAttribute(hwnd, DWMWINDOWATTRIBUTE.USE_IMMERSIVE_DARK_MODE, ref use, sizeof(int));
             if (hr < 0) DwmSetWindowAttribute(hwnd, DWMWINDOWATTRIBUTE.USE_IMMERSIVE_DARK_MODE_BEFORE_20H1, ref use, sizeof(int));
         }
 
-        // AllowForWindow
-        public static void AllowForWindow(IntPtr hwnd, string theme)
+        private static void SetWindowTheme(IntPtr hwnd, string theme)
         {
-            if (!string.IsNullOrEmpty(theme)) SetWindowTheme(hwnd, theme, null);
+            if (hwnd != IntPtr.Zero && !string.IsNullOrEmpty(theme)) UxTheme.SetWindowTheme(hwnd, theme, null);
         }
 
-        // DarkenTD
-        public static void DarkenTD(IntPtr hwndTD, IntPtr pCfg)
+        /// <summary>
+        /// Manipulates the visual style of a progress dialog window to apply dark mode theming. This method checks for the presence of native dark theme support and applies appropriate window themes and subclass procedures to ensure that the progress dialog and its child controls are rendered correctly in dark mode.
+        /// </summary>
+        /// <param name="hwndPD"></param>
+        public static void DarkenProgressDialog(IntPtr hwndPD)
+        {
+            if (hwndPD == IntPtr.Zero || !Program.Style.DarkMode) return;
+
+            bool hasNativeTheme = IsDarkThemeActive("DarkMode_Explorer::TaskDialog", "TaskDialog") || IsDarkThemeActive("DarkMode_DarkTheme::TaskDialog", "TaskDialog");
+            bool hasCopyEngine = IsDarkThemeActive("DarkMode_CopyEngine::Progress", "Progress");
+
+            // Frame wrapper framing dark
+            SetWindowTheme(hwndPD, "DarkMode_Explorer");
+
+            // GET THE BACKGROUND THREAD ID MANAGING THE PROGRESS DIALOG
+            uint progressThreadId = User32.GetWindowThreadProcessId(hwndPD, out _);
+
+            if (progressThreadId != 0 && s_hProgressThreadHook == IntPtr.Zero)
+            {
+                // Install a thread-context hook to intercept messages within the background thread
+                s_progressThreadHookDelegate = (int nCode, IntPtr wParam, IntPtr lParam) =>
+                {
+                    if (nCode >= 0 && lParam != IntPtr.Zero)
+                    {
+                        // Structure mapping to capture window activation/creation events
+                        var cwp = (User32.CWPSTRUCT)Marshal.PtrToStructure(lParam, typeof(User32.CWPSTRUCT));
+
+                        // Check if message targets a valid window structure handle
+                        if (cwp.hwnd != IntPtr.Zero)
+                        {
+                            System.Text.StringBuilder className = new(256);
+                            User32.GetClassName(cwp.hwnd, className, className.Capacity);
+                            string clsName = className.ToString();
+
+                            if (clsName == "ProgressDialogUI" || clsName == "DirectUIHWND")
+                            {
+                                // We are now executing INSIDE the correct thread context! SetWindowSubclass will succeed.
+                                if (!GetWindowSubclass(cwp.hwnd, s_progressDuiProc, kProgressDuiSubclassId, out _))
+                                {
+                                    bool success = SetWindowSubclass(cwp.hwnd, s_progressDuiProc, kProgressDuiSubclassId, IntPtr.Zero);
+                                }
+                            }
+                        }
+                    }
+                    return User32.CallNextHookEx(s_hProgressThreadHook, nCode, wParam, lParam);
+                };
+
+                s_hProgressThreadHook = User32.SetWindowsHookEx(User32.WH_CALLWNDPROC, s_progressThreadHookDelegate, IntPtr.Zero, progressThreadId);
+            }
+
+            // Enumerate standard Win32 child controls that leak out to style their frames
+            EnumChildWindows(hwndPD, delegate (IntPtr hwndChild, IntPtr lp)
+            {
+                NativeMethods.IUIAutomationElement el;
+                try { el = ComUIAutomation.FromHandle(hwndChild); } catch { return true; }
+                if (el == null) return true;
+
+                string cls = ComUIAutomation.GetPropertyValueString(el, ComUIAutomation.UIA_ClassNamePropertyId);
+
+                if (cls == "CCProgressBar")
+                {
+                    SetWindowTheme(hwndChild, hasCopyEngine ? "DarkMode_CopyEngine" : "DarkMode_Explorer");
+                }
+                else if (cls == "CCPushButton" || cls == "Button")
+                {
+                    SetWindowTheme(hwndChild, "DarkMode_Explorer");
+                }
+
+                return true;
+            }, IntPtr.Zero);
+
+            //// Force dark mode style for progressbar
+            //SendMessage(hwndPD, WM_SYSCOLORCHANGE, IntPtr.Zero, IntPtr.Zero);
+            //SendMessage(hwndPD, WM_THEMECHANGED, IntPtr.Zero, IntPtr.Zero);
+
+            //EnumChildWindows(hwndPD, delegate (IntPtr hwndDuiChild, IntPtr lp)
+            //{
+            //    SendMessage(hwndDuiChild, WM_SYSCOLORCHANGE, IntPtr.Zero, IntPtr.Zero);
+            //    SendMessage(hwndDuiChild, WM_THEMECHANGED, IntPtr.Zero, IntPtr.Zero);
+            //    return true;
+            //}, IntPtr.Zero);
+
+            //RedrawWindow(hwndPD, IntPtr.Zero, IntPtr.Zero, RDW_INVALIDATE | RDW_UPDATENOW | RDW_ALLCHILDREN);
+        }
+
+        /// <summary>
+        /// Manipulates the visual style of a TaskDialog window to apply dark mode theming. This method checks for the presence of native dark theme support and applies appropriate window themes and subclass procedures to ensure that the TaskDialog and its child controls are rendered correctly in dark mode.
+        /// </summary>
+        /// <param name="hwndTD"></param>
+        /// <param name="pCfg"></param>
+        public static void DarkenTaskDialog(IntPtr hwndTD, IntPtr pCfg)
         {
             s_hasNativeTheme = IsDarkThemeActive("DarkMode_Explorer::TaskDialog", "TaskDialog") || IsDarkThemeActive("DarkMode_DarkTheme::TaskDialog", "TaskDialog");
 
@@ -1183,7 +1412,7 @@ namespace WinPaletter
             // Remove path
             if (!dark)
             {
-                SetWindowTheme(hwndTD, null, null);
+                UxTheme.SetWindowTheme(hwndTD, null, null);
 
                 EnumChildWindows(hwndTD, delegate (IntPtr hwndChild, IntPtr lp)
                 {
@@ -1191,14 +1420,14 @@ namespace WinPaletter
                     {
                         EnumChildWindows(hwndChild, delegate (IntPtr hwndDuiChild, IntPtr lp2)
                         {
-                            SetWindowTheme(hwndDuiChild, null, null);
+                            UxTheme.SetWindowTheme(hwndDuiChild, null, null);
                             SendMessage(hwndDuiChild, WM_SYSCOLORCHANGE, IntPtr.Zero, IntPtr.Zero);
                             if (GetWindowSubclass(hwndDuiChild, s_ctColorProc, kCtlColorId, out IntPtr ex1))
                                 RemoveWindowSubclass(hwndDuiChild, s_ctColorProc, kCtlColorId);
                             return true;
                         }, IntPtr.Zero);
 
-                        SetWindowTheme(hwndChild, null, null);
+                        UxTheme.SetWindowTheme(hwndChild, null, null);
                         RemoveWindowSubclass(hwndChild, s_directUiProc, kDirectUISubclassId);
                         DestroyState(hwndChild);
                     }
@@ -1233,7 +1462,7 @@ namespace WinPaletter
                     return true;
                 }
                 if (el == null) return true;
-
+             
                 string cls = ComUIAutomation.GetPropertyValueString(el, ComUIAutomation.UIA_ClassNamePropertyId);
 
                 // CCSysLink — footnote / content hyperlinks
@@ -1290,7 +1519,7 @@ namespace WinPaletter
                             if (controlType == ComUIAutomation.UIA_ProgressBarControlTypeId)
                             {
                                 bool hasCopyEngine = IsDarkThemeActive("DarkMode_CopyEngine::Progress", "Progress");
-                                AllowForWindow(hBtn, hasCopyEngine ? "DarkMode_CopyEngine" : "DarkMode_Explorer");
+                                SetWindowTheme(hBtn, hasCopyEngine ? "DarkMode_CopyEngine" : "DarkMode_Explorer");
                             }
                             else if (controlType == ComUIAutomation.UIA_RadioButtonControlTypeId || id.StartsWith("RadioButton_") || controlType == ComUIAutomation.UIA_HyperlinkControlTypeId)
                             {
@@ -1298,7 +1527,7 @@ namespace WinPaletter
                                 bool hasDarkTheme = IsDarkThemeActive("DarkMode_DarkTheme::TaskDialog", "TaskDialog");
                                 if (hasDarkTheme)
                                 {
-                                    AllowForWindow(hBtn, "DarkMode_DarkTheme");
+                                    SetWindowTheme(hBtn, "DarkMode_DarkTheme");
                                 }
                                 else
                                 {
@@ -1311,26 +1540,26 @@ namespace WinPaletter
                             }
                             else if (id.StartsWith("CommandLink_"))
                             {
-                                AllowForWindow(hBtn, "DarkMode_Explorer");
+                                SetWindowTheme(hBtn, "DarkMode_Explorer");
                                 if (hP != IntPtr.Zero && !GetWindowSubclass(hP, s_ctColorProc, kCtlColorId, out IntPtr ex))
                                     SetWindowSubclass(hP, s_ctColorProc, kCtlColorId, CreateSolidBrush(s_hasNativeTheme ? DarkColors.kSecondary : DarkColors.kPrimary));
                             }
                             else if (id.StartsWith("CommandButton_"))
                             {
-                                AllowForWindow(hBtn, "DarkMode_Explorer");
+                                SetWindowTheme(hBtn, "DarkMode_Explorer");
                                 if (hP != IntPtr.Zero && !GetWindowSubclass(hP, s_ctColorProc, kCtlColorId, out IntPtr ex))
                                     SetWindowSubclass(hP, s_ctColorProc, kCtlColorId, CreateSolidBrush(DarkColors.kSecondary));
                             }
                             else
                             {
-                                AllowForWindow(hBtn, "DarkMode_Explorer");
+                                SetWindowTheme(hBtn, "DarkMode_Explorer");
                             }
                         }
                     }
                 }
 
                 // Window theme for TaskPage — must be set after children.
-                AllowForWindow(hDUI, "DarkMode_Explorer");
+                SetWindowTheme(hDUI, "DarkMode_Explorer");
 
                 // Store state and attach DirectUI subclass (idempotent)
                 {
@@ -1357,7 +1586,7 @@ namespace WinPaletter
 
             if (found)
             {
-                if (s_hasNativeTheme) AllowForWindow(hwndTD, "DarkMode_Explorer");
+                if (s_hasNativeTheme) SetWindowTheme(hwndTD, "DarkMode_Explorer");
 
                 EnableForTLW(hwndTD);
 
@@ -1390,7 +1619,7 @@ namespace WinPaletter
                     DestroyState(hwndChild);
                 }
                 if (GetWindowSubclass(hwndChild, s_ctColorProc, kCtlColorId, out ex)) RemoveWindowSubclass(hwndChild, s_ctColorProc, kCtlColorId);
-                SetWindowTheme(hwndChild, null, null);
+                UxTheme.SetWindowTheme(hwndChild, null, null);
                 return true;
             }, IntPtr.Zero);
         }

@@ -644,7 +644,7 @@ namespace WinPaletter
                     filename = $"{SysPaths.System32}\\shell32.dll";
                 }
 
-                string result = IconPicker.ShowIconPicker(shell32Data.Handle, filename, index);
+                string result = UI.Style.Dialogs.PickIcon(shell32Data.Handle, filename, index);
                 if (result != null) { shell32Data.Rows[e.RowIndex].Cells[3].Value = Environment.ExpandEnvironmentVariables(result); }
             }
         }
@@ -732,7 +732,7 @@ namespace WinPaletter
                     filename = $"{SysPaths.System32}\\shell32.dll";
                 }
 
-                string result = IconPicker.ShowIconPicker(cpData.Handle, filename, index);
+                string result = UI.Style.Dialogs.PickIcon(cpData.Handle, filename, index);
                 if (result != null) { cpData.Rows[e.RowIndex].Cells[4].Value = Environment.ExpandEnvironmentVariables(result); }
             }
         }
@@ -799,7 +799,7 @@ namespace WinPaletter
                     filename = SysPaths.imageres;
                 }
 
-                string result = IconPicker.ShowIconPicker(explorerData.Handle, filename, index);
+                string result = UI.Style.Dialogs.PickIcon(explorerData.Handle, filename, index);
                 if (result != null) { explorerData.Rows[e.RowIndex].Cells[4].Value = Environment.ExpandEnvironmentVariables(result); }
             }
         }
@@ -925,7 +925,7 @@ namespace WinPaletter
                 filename = SysPaths.imageres;
             }
 
-            string result = IconPicker.ShowIconPicker(shell32Data.Handle, filename, index);
+            string result = UI.Style.Dialogs.PickIcon(shell32Data.Handle, filename, index);
             if (result != null) { textBox.Text = Environment.ExpandEnvironmentVariables(result); }
         }
 

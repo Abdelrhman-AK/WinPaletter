@@ -21,6 +21,15 @@ namespace WinPaletter.NativeMethods
         private const string _user32 = "user32.dll";
 
         /// <summary>
+        /// Hook procedure delegate used for low-level keyboard and mouse hooks. This delegate defines the signature of the callback function that will be called by the system when a hook event occurs.
+        /// </summary>
+        /// <param name="nCode"></param>
+        /// <param name="wParam"></param>
+        /// <param name="lParam"></param>
+        /// <returns></returns>
+        public delegate IntPtr HookProc(int nCode, IntPtr wParam, IntPtr lParam);
+
+        /// <summary>
         /// Retrieves a handle to the foreground window (the window with which the user is currently working).
         /// </summary>
         /// <returns>A handle to the foreground window. The foreground window can be NULL in certain circumstances, such as when a window is losing activation.</returns>
@@ -890,6 +899,14 @@ namespace WinPaletter.NativeMethods
         }
 
         /// <summary>
+        /// Gets the identifier of the control associated with the specified window handle.
+        /// </summary>
+        /// <param name="hwnd"></param>
+        /// <returns></returns>
+        [DllImport(_user32, SetLastError = true)]
+        public static extern int GetDlgCtrlID(IntPtr hwnd);
+
+        /// <summary>
         /// Retrieves a handle to a device context (DC) for the client area of a specified window or for the entire
         /// screen.
         /// </summary>
@@ -969,6 +986,14 @@ namespace WinPaletter.NativeMethods
         public static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
 
         /// <summary>
+        /// Gets the length, in characters, of the specified window's title bar text (if the window has a title bar). If the specified window is a control, the return value is the length of the text within the control.
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <returns></returns>
+        [DllImport(_user32)]
+        public static extern int GetWindowTextLength(IntPtr hWnd);
+
+        /// <summary>
         /// Retrieves the class name of the specified window.
         /// </summary>
         /// <remarks>To retrieve extended error information when the function fails, call <see
@@ -1002,6 +1027,17 @@ namespace WinPaletter.NativeMethods
         /// If the function fails, the return value is IntPtr.Zero.</returns>
         [DllImport(_user32, CharSet = CharSet.Auto, SetLastError = true)]
         public static extern IntPtr SetWindowsHookEx(int idHook, LowLevelMouseProc lpfn, IntPtr hMod, uint dwThreadId);
+
+        /// <summary>
+        /// Sets a hook procedure that monitors low-level mouse input events. This delegate is used with the SetWindowsHookEx function to install a hook that can intercept mouse events before they reach the target window or application.
+        /// </summary>
+        /// <param name="idHook"></param>
+        /// <param name="lpfn"></param>
+        /// <param name="hMod"></param>
+        /// <param name="dwThreadId"></param>
+        /// <returns></returns>
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern IntPtr SetWindowsHookEx(int idHook, HookProc lpfn, IntPtr hMod, uint dwThreadId);
 
         /// <summary>
         /// UnhookWindowsHookEx function: Removes a hook procedure installed in a hook chain by the SetWindowsHookEx function.
@@ -1486,6 +1522,16 @@ namespace WinPaletter.NativeMethods
         public const uint WM_DESTROY = 0x0002;
 
         /// <summary>
+        /// Window message: Non-client area destroyed (sent when the non-client area of a window is being destroyed)
+        /// </summary>
+        public const uint WM_NCDESTROY = 0x0082;
+
+        /// <summary>
+        /// Window message: Notify - Sent to a window when a control sends a notification message (e.g., button click, selection change).
+        /// </summary>
+        public const uint WM_NOTIFY = 0x004E;
+
+        /// <summary>
         /// Window message: Control color - message box
         /// </summary>
         public const uint WM_CTLCOLORMSGBOX = 0x0132;
@@ -1646,6 +1692,11 @@ namespace WinPaletter.NativeMethods
         public const int GWLP_WNDPROC = -4;
 
         /// <summary>
+        /// WH_CALLWNDPROC hook type - Installs a hook procedure that monitors messages before they are sent to the target window procedure.
+        /// </summary>
+        public const int WH_CALLWNDPROC = 4;
+
+        /// <summary>
         /// IShellItem interface: Represents a Shell item object, which can be a file, folder, or other item in the Windows Shell namespace. This interface provides methods to retrieve information about the item, bind to handlers, and compare items.
         /// </summary>
         [ComImport]
@@ -1667,6 +1718,18 @@ namespace WinPaletter.NativeMethods
         {
             SIGDN_FILESYSPATH = 0x80058000,
             SIGDN_URL = 0x80058000
+        }
+
+        /// <summary>
+        /// CWPSTRUCT structure: Contains information about a window message being processed by the CallWndProc hook procedure. This structure is used to pass message parameters to the hook procedure, allowing it to examine or modify the message before it is dispatched to the target window.
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential)]
+        public struct CWPSTRUCT
+        {
+            public IntPtr lParam;
+            public IntPtr wParam;
+            public uint message;
+            public IntPtr hwnd;
         }
 
         /// <summary>

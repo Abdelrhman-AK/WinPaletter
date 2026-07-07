@@ -60,6 +60,13 @@ namespace WinPaletter.NativeMethods
         [DllImport(_kernel32)]
         public static extern bool CloseHandle(IntPtr hObject);
 
+        /// <summary>
+        /// Gets the thread identifier of the calling thread.
+        /// </summary>
+        /// <returns></returns>
+        [DllImport(_kernel32)]
+        public static extern uint GetCurrentThreadId();
+
         [DllImport(_kernel32, CharSet = CharSet.Unicode, SetLastError = true)]
         public static extern bool MoveFileEx(string lpExistingFileName, string lpNewFileName, int dwFlags);
 

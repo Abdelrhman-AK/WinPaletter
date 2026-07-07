@@ -381,13 +381,13 @@ namespace WinPaletter.UI.Style
 
             if (_TDState != null && _TDState.ConfigPointer != IntPtr.Zero)
             {
-                WinPaletter.DarkTaskDialog.DarkenTD(hwnd, _TDState.ConfigPointer);
+                WinPaletter.DarkTaskDialog.DarkenTaskDialog(hwnd, _TDState.ConfigPointer);
             }
 
             //foreach (IntPtr child in User32.GetChildWindowHandles(hwnd))
             //{
             //    NativeMethods.Helpers.SetHWNDDarkMode(child, true);
-            //    WinPaletter.DarkTaskDialog.DarkenTD(child, _config.hInstance);
+            //    WinPaletter.DarkTaskDialog.DarkenTaskDialog(child, _config.hInstance);
             //}
         }
 

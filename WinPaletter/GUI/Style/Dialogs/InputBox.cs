@@ -193,7 +193,7 @@ namespace WinPaletter.UI.Style
         {
             if (!Program.Style.DarkMode) return;
             NativeMethods.Helpers.SetHWNDDarkMode(hwnd, Program.Style.DarkMode);
-            if (state.ConfigPointer != IntPtr.Zero) DarkenTD(hwnd, state.ConfigPointer);
+            if (state.ConfigPointer != IntPtr.Zero) DarkenTaskDialog(hwnd, state.ConfigPointer);
             state.DarkEditBrush = GDI32.CreateSolidBrush((int)DarkColors.kSecondary.Value);
         }
 
@@ -280,8 +280,7 @@ namespace WinPaletter.UI.Style
 
                     // Dynamic Height Calculation logic:
                     // If TDLG_CONTENTPANE exists, target its bottom boundary.
-                    // If missing and relying on TDLG_MAININSTRUCTION, calculate further offset downward 
-                    // to dynamically account for layout structures safely.
+                    // If missing and relying on TDLG_MAININSTRUCTION, calculate further offset downward to dynamically account for layout structures safely.
                     if (workingWithContentPane)
                     {
                         y = bottomRight.Y - height - 6;

@@ -90,31 +90,7 @@ namespace WinPaletter
                 card.MouseLeave += (s, e) => Transition.With(panel1, nameof(panel1.BackColor), BackColor).CriticalDamp(Program.AnimationSpan);
             }
 
-            UI.WP.ProgressDialog dlg = new()
-            {
-                Animation = UI.WP.AnimationResource.GetShellAnimation(UI.WP.ShellAnimation.FlyingPapers),
-                Text = Program.Localization.Strings.General.RestorePoint_DialogTitle,
-                Description = "description",
-                ProgressBarStyle = UI.WP.ProgressBarStyle.MarqueeProgressBar,
-                ShowCancelButton = false,
-                MinimizeBox = false,
-                WindowTitle = Application.ProductName,
-            };
-
-            dlg.DoWork += (s, e) =>
-            {
-                System.Threading.Thread.Sleep(5000);
-            };
-
-            dlg.RunWorkerCompleted += (s, e) =>
-            {
-                if (e.Error != null)
-                {
-                    // handle/report failure
-                }
-            };
-
-            dlg.ShowDialog();
+            UI.Style.Dialogs.PickIcon(Handle, SysPaths.System32 + "\\shell32.dll");
         }
 
         private void Home_Localized()

@@ -123,10 +123,10 @@ namespace AnimatorNS
                                     }
 
                                     // Hide and dispose
-                                    if (!db.IsDisposed)
+                                    if (db is not null && !db.IsDisposed)
                                     {
-                                        db.Visible = false;
-                                        db.Dispose();
+                                        db?.Visible = false;
+                                        db?.Dispose();
                                     }
                                 }
                                 catch { }

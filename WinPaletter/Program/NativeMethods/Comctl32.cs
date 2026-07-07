@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using static WinPaletter.DarkTaskDialog;
+using static WinPaletter.NativeMethods.UxTheme;
 
 namespace WinPaletter.NativeMethods
 {
@@ -10,6 +10,8 @@ namespace WinPaletter.NativeMethods
     public class Comctl32
     {
         private const string _comctl32 = "comctl32.dll";
+
+        public delegate IntPtr SUBCLASSPROC(IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam, UIntPtr uIdSubclass, IntPtr dwRefData);
 
         [DllImport(_comctl32, CharSet = CharSet.Unicode)]
         public static extern int TaskDialogIndirect(ref TASKDIALOGCONFIG pTaskConfig, out int pnButton, out int pnRadioButton, out bool pfVerificationFlagChecked);
@@ -203,6 +205,57 @@ namespace WinPaletter.NativeMethods
             public const uint DialogConstructed = 7;   // TDN_DIALOG_CONSTRUCTED
             public const uint VerificationClicked = 8; // TDN_VERIFICATION_CLICKED
             public const uint ExpandButtonClicked = 9; // TDN_EXPANDO_BUTTON_CLICKED
+        }
+
+        // WM_NOTIFY notification code for custom draw
+        public const int NM_CUSTOMDRAW = -12;
+
+        // CDDS_* draw stage flags
+        public const int CDDS_PREPAINT = 0x00000001;
+        public const int CDDS_POSTPAINT = 0x00000002;
+        public const int CDDS_ITEM = 0x00010000;
+        public const int CDDS_ITEMPREPAINT = CDDS_ITEM | CDDS_PREPAINT;
+        public const int CDDS_ITEMPOSTPAINT = CDDS_ITEM | CDDS_POSTPAINT;
+
+        // CDRF_* return flags from custom draw handling
+        public const int CDRF_DODEFAULT = 0x00000000;
+        public const int CDRF_NEWFONT = 0x00000002;
+        public const int CDRF_SKIPDEFAULT = 0x00000004;
+        public const int CDRF_NOTIFYPOSTPAINT = 0x00000010;
+        public const int CDRF_NOTIFYITEMDRAW = 0x00000020;
+        public const int CDRF_NOTIFYSUBITEMDRAW = 0x00000020;
+        public const int CDRF_NOTIFYPOSTERASE = 0x00000040;
+
+        // Item state flags occasionally useful for SysLink custom draw (hot/hyperlink runs)
+        public const int CDIS_SELECTED = 0x0001;
+        public const int CDIS_GRAYED = 0x0002;
+        public const int CDIS_DISABLED = 0x0004;
+        public const int CDIS_HOT = 0x0040;
+
+        /// <summary>
+        /// NMCUSTOMDRAW structure - used in WM_NOTIFY messages for custom draw notifications.
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential)]
+        public struct NMCUSTOMDRAW
+        {
+            internal NMHDR hdr;
+            internal int dwDrawStage;
+            internal IntPtr hdc;
+            internal RECT rc;
+            internal IntPtr dwItemSpec;
+            internal int uItemState;
+            internal IntPtr lItemlParam;
+        }
+
+        /// <summary>
+        /// NMHDR structure - used in TaskDialog notifications to provide information about the notification.
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential)]
+        public struct NMHDR
+        {
+            internal IntPtr hwndFrom;
+            internal IntPtr idFrom;
+            internal int code;
         }
     }
 }

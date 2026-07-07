@@ -841,7 +841,7 @@ namespace WinPaletter.TypesExtensions
 
             try
             {
-                using (SafeDeviceHandle memoryHdc = GDI32.CreateCompatibleDC(primaryHdc))
+                using (SafeDeviceHandle memoryHdc = GDI32.CreateCompatibleDC_SDH(primaryHdc))
                 using (SafeGDIHandle fontHandle = new(font.ToHfont(), true))
                 using (SafeGDIHandle dib = GDI32.CreateDib(bounds, primaryHdc, memoryHdc))
                 {

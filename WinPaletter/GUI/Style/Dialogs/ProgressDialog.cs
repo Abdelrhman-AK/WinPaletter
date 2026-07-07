@@ -476,6 +476,7 @@ namespace WinPaletter.UI.WP
         {
             if (!Program.Style.DarkMode) return;
             NativeMethods.Helpers.SetHWNDDarkMode(hwnd, Program.Style.DarkMode);
+            DarkTaskDialog.DarkenProgressDialog(hwnd);
         }
 
         #endregion
@@ -487,16 +488,6 @@ namespace WinPaletter.UI.WP
     {
         /// <summary>
         /// Managed projection of the native shell IProgressDialog interface.
-        ///
-        /// THE ACTUAL BUG (root cause of every previous E_NOINTERFACE / InvalidCastException):
-        /// F8383852-FCD3-11d1-A6B9-006097DF5BD4 is CLSID_ProgressDialog - the CONCRETE CLASS to
-        /// CoCreateInstance. It is NOT the interface's IID. The real IID_IProgressDialog is
-        /// EBBC7C04-315E-11d2-B62F-006097DF5BD4. Every earlier version of this file (including
-        /// the shipped one) put the CLSID on the interface's own [Guid], so at runtime the QI
-        /// was for an IID that no interface on the object actually implements - guaranteed
-        /// E_NOINTERFACE regardless of how the surrounding C# class/interface types were shaped.
-        /// [CoClass] lets the compiler translate "new IProgressDialog()" into
-        /// "CoCreateInstance(CLSID_ProgressDialog) then QueryInterface(IID_IProgressDialog)".
         /// </summary>
         [ComImport]
         [Guid("EBBC7C04-315E-11d2-B62F-006097DF5BD4")]
