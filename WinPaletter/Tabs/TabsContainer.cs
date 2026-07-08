@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
@@ -114,7 +115,7 @@ namespace WinPaletter.Tabs
 
         private int _dragX = 0;
 
-        private readonly UI.WP.ContextMenuStrip contextMenu = new() { ShowImageMargin = true, AllowTransparency = true };
+        private static readonly UI.WP.ContextMenuStrip contextMenu = new() { ShowImageMargin = true, AllowTransparency = true };
         private TabData contextItemDropped;
 
         private Point hoverPosition;
@@ -139,6 +140,16 @@ namespace WinPaletter.Tabs
 
         private Font selectedFont;
 
+        private static ToolStripMenuItem _closeButton;
+        private static ToolStripMenuItem _closeAllButThis;
+        private static ToolStripMenuItem _closeAllToTheRight;
+        private static ToolStripMenuItem _closeAllToTheLeft;
+        private static ToolStripMenuItem _closeAll;
+        private static ToolStripMenuItem _detach;
+        private static ToolStripMenuItem _detachAll;
+        private static ToolStripMenuItem _detachAllButThis;
+        private static ToolStripMenuItem _helpButton;
+
         #endregion
 
         #region Methods
@@ -147,35 +158,56 @@ namespace WinPaletter.Tabs
         {
             contextMenu.ItemHeight = 24;
 
-            ToolStripMenuItem closeButton = new(Program.Localization.Strings.General.Close) { Image = Assets.Tabs.ContextBox_Close };
-            ToolStripMenuItem closeAllButThis = new(Program.Localization.Strings.Tabs.Context_CloseOthers) { Image = Assets.Tabs.ContextBox_CloseAllButThis };
-            ToolStripMenuItem closeAllToTheRight = new(Program.Localization.Strings.Tabs.Context_CloseToTheRight) { Image = Assets.Tabs.ContextBox_CloseRight };
-            ToolStripMenuItem closeAllToTheLeft = new(Program.Localization.Strings.Tabs.Context_CloseToTheLeft) { Image = Assets.Tabs.ContextBox_CloseLeft };
-            ToolStripMenuItem closeAll = new(Program.Localization.Strings.Tabs.Context_CloseAll) { Image = Assets.Tabs.ContextBox_CloseAll };
-            ToolStripSeparator toolStripSeparator0 = new();
-            ToolStripMenuItem detach = new(Program.Localization.Strings.Tabs.Context_Unpin) { Image = Assets.Tabs.ContextBox_Detach };
-            ToolStripMenuItem detachAll = new(Program.Localization.Strings.Tabs.Context_UnpinAll) { Image = Assets.Tabs.ContextBox_DetachAll };
-            ToolStripMenuItem detachAllButThis = new(Program.Localization.Strings.Tabs.Context_UnpinOthers) { Image = Assets.Tabs.ContextBox_DetachAllButThis };
-            ToolStripSeparator toolStripSeparator1 = new();
-            ToolStripMenuItem helpButton = new(Program.Localization.Strings.General.Help) { Image = Assets.Tabs.ContextBox_Help };
+            // 1. Initialize objects
+            CreateMenuItems();
 
-            closeButton.Click += (s, e) => contextItemDropped.Form.Close();
-            closeAllButThis.Click += (s, e) => CloseAllTabsButThis();
-            closeAllToTheRight.Click += (s, e) => CloseAllTabsToTheRight();
-            closeAllToTheLeft.Click += (s, e) => CloseAllTabsToTheLeft();
-            closeAll.Click += (s, e) => CloseAllTabs();
-            detach.Click += (s, e) => DetachTab(contextItemDropped);
-            detachAll.Click += (s, e) => DetachAllTabs();
-            detachAllButThis.Click += (s, e) => DetachAllTabsButThis();
-            helpButton.Click += (s, e) => TriggerHelp();
+            // 2. Assign text (Separated as requested)
+            UpdateMenuStrings();
 
-            contextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-                closeButton, closeAllToTheRight, closeAllToTheLeft, closeAll, closeAllButThis,
-                toolStripSeparator0,
-                detach, detachAll, detachAllButThis,
-                toolStripSeparator1,
-                helpButton
-            });
+            // 3. Attach Events
+            _closeButton.Click += (s, e) => contextItemDropped.Form.Close();
+            _closeAllButThis.Click += (s, e) => CloseAllTabsButThis();
+            _closeAllToTheRight.Click += (s, e) => CloseAllTabsToTheRight();
+            _closeAllToTheLeft.Click += (s, e) => CloseAllTabsToTheLeft();
+            _closeAll.Click += (s, e) => CloseAllTabs();
+            _detach.Click += (s, e) => DetachTab(contextItemDropped);
+            _detachAll.Click += (s, e) => DetachAllTabs();
+            _detachAllButThis.Click += (s, e) => DetachAllTabsButThis();
+            _helpButton.Click += (s, e) => TriggerHelp();
+
+            contextMenu.Items.AddRange([
+                _closeButton, _closeAllToTheRight, _closeAllToTheLeft, _closeAll, _closeAllButThis,
+                 new ToolStripSeparator(),
+                _detach, _detachAll, _detachAllButThis,
+                new ToolStripSeparator(),
+                _helpButton
+                ]);
+        }
+
+        private void CreateMenuItems()
+        {
+            _closeButton = new() { Image = Assets.Tabs.ContextBox_Close };
+            _closeAllButThis = new() { Image = Assets.Tabs.ContextBox_CloseAllButThis };
+            _closeAllToTheRight = new() { Image = Assets.Tabs.ContextBox_CloseRight };
+            _closeAllToTheLeft = new() { Image = Assets.Tabs.ContextBox_CloseLeft };
+            _closeAll = new() { Image = Assets.Tabs.ContextBox_CloseAll };
+            _detach = new() { Image = Assets.Tabs.ContextBox_Detach };
+            _detachAll = new() { Image = Assets.Tabs.ContextBox_DetachAll };
+            _detachAllButThis = new() { Image = Assets.Tabs.ContextBox_DetachAllButThis };
+            _helpButton = new() { Image = Assets.Tabs.ContextBox_Help };
+        }
+
+        public void UpdateMenuStrings()
+        {
+            _closeButton.Text = Program.Localization.Strings.General.Close;
+            _closeAllButThis.Text = Program.Localization.Strings.Tabs.Context_CloseOthers;
+            _closeAllToTheRight.Text = Program.Localization.Strings.Tabs.Context_CloseToTheRight;
+            _closeAllToTheLeft.Text = Program.Localization.Strings.Tabs.Context_CloseToTheLeft;
+            _closeAll.Text = Program.Localization.Strings.Tabs.Context_CloseAll;
+            _detach.Text = Program.Localization.Strings.Tabs.Context_Unpin;
+            _detachAll.Text = Program.Localization.Strings.Tabs.Context_UnpinAll;
+            _detachAllButThis.Text = Program.Localization.Strings.Tabs.Context_UnpinOthers;
+            _helpButton.Text = Program.Localization.Strings.General.Help;
         }
 
         /// <summary>
@@ -1402,8 +1434,6 @@ namespace WinPaletter.Tabs
 
             if (TabDataList.Count == 0 && FindForm() is not null) TabControl.FindForm().Visible = false;
 
-            TriggerFormTabPinnedStatusChange(tabData.Form, false);
-
             tabData.Form.Visible = true;
         }
 
@@ -1478,6 +1508,8 @@ namespace WinPaletter.Tabs
             form?.Focus();
             form?.BringToFront();
             form.Show();
+
+            TriggerFormTabPinnedStatusChange(form, false);
         }
 
         private void DetachForm(System.Windows.Forms.Form form, Point screenPosition)
@@ -1505,6 +1537,8 @@ namespace WinPaletter.Tabs
             form?.Focus();
             form?.BringToFront();
             form.Show();
+
+            TriggerFormTabPinnedStatusChange(form, false);
         }
 
         private void DetachTabWithPosition(TabData tabData, Point screenPosition)

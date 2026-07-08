@@ -46,5 +46,10 @@ namespace WinPaletter.Tabs
             if (form == null || form.IsDisposed) return;
             tabsContainer1?.AddFormIntoTab(form);
         }
+
+        private void TabsForm_Localized()
+        {
+            tabsContainer1.UpdateMenuStrings();
+        }
     }
 }

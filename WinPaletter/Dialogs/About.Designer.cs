@@ -239,7 +239,7 @@ namespace WinPaletter
             this.PictureBox10.Location = new System.Drawing.Point(12, 513);
             this.PictureBox10.Name = "PictureBox10";
             this.PictureBox10.Size = new System.Drawing.Size(24, 24);
-            this.PictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
             this.PictureBox10.TabIndex = 34;
             this.PictureBox10.TabStop = false;
             // 
@@ -463,7 +463,8 @@ namespace WinPaletter
             this.LinkLabel10.Size = new System.Drawing.Size(610, 24);
             this.LinkLabel10.TabIndex = 35;
             this.LinkLabel10.TabStop = true;
-            this.LinkLabel10.Text = "Modern dialogs design (messages boxes) by Ookii.Dialogs.WinForms";
+            this.LinkLabel10.Text = "Dark Task Dialog based on memoarfaa/DarkTaskDialog-Native, extended by WinPalette" +
+    "r for more dialogs.";
             this.LinkLabel10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.LinkLabel10.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel10_LinkClicked);
             // 

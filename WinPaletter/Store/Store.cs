@@ -260,14 +260,14 @@ namespace WinPaletter
             path_lbl.Font = Fonts.Console;
             TextBox1.Font = Fonts.ConsoleLarge;
 
-            os_12.Image = Assets.Store.DesignedFor12;
-            os_11.Image = Assets.Store.DesignedFor11;
-            os_10.Image = Assets.Store.DesignedFor10;
-            os_81.Image = Assets.Store.DesignedFor81;
-            os_8.Image = Assets.Store.DesignedFor8;
-            os_7.Image = Assets.Store.DesignedFor7;
-            os_vista.Image = Assets.Store.DesignedForVista;
-            os_xp.Image = Assets.Store.DesignedForXP;
+            os_12.Image = StoreItem.Badge_designed_for_w12;
+            os_11.Image = StoreItem.Badge_designed_for_w11;
+            os_10.Image = StoreItem.Badge_designed_for_w10;
+            os_81.Image = StoreItem.Badge_designed_for_w81;
+            os_8.Image = StoreItem.Badge_designed_for_w8;
+            os_7.Image = StoreItem.Badge_designed_for_w7;
+            os_vista.Image = StoreItem.Badge_designed_for_wvista;
+            os_xp.Image = StoreItem.Badge_designed_for_wxp;
 
             LoadTogglesData();
 
@@ -1026,7 +1026,7 @@ namespace WinPaletter
                     labelAlt3.Text = selectedItem.TM.Info.ThemeName;
                     author_lbl.Text = selectedItem.TM.Info.Author;
                     ver_lbl.Text = selectedItem.TM.Info.ThemeVersion;
-                    path_lbl.Text = System.IO.File.Exists(selectedItem.URL_ThemeFile) ? selectedItem.URL_ThemeFile : string.Empty;
+                    path_lbl.Text = selectedItem.URL_ThemeFile.Contains("\\") && File.Exists(selectedItem.URL_ThemeFile) ? selectedItem.URL_ThemeFile : string.Empty;
                     path_lbl.Visible = !string.IsNullOrEmpty(path_lbl.Text);
                     separatorV1.Visible = !string.IsNullOrEmpty(path_lbl.Text);
 

@@ -1528,6 +1528,11 @@ namespace WinPaletter.NativeMethods
         /// </summary>
         public const uint LWA_ALPHA = 0x00000002;
 
+        public const uint WM_MOUSEWHEEL = 0x020A;
+        public const uint WM_MOUSEHWHEEL = 0x020E;
+        public const uint WM_HSCROLL = 0x114;
+        public const uint WM_VSCROLL = 0x115;
+
         /// <summary>
         /// Window message: Erase background
         /// </summary>

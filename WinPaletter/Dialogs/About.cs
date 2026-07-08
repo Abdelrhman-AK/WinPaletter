@@ -80,7 +80,7 @@ namespace WinPaletter
 
         private void LinkLabel10_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start("https://github.com/ookii-dialogs/ookii-dialogs-winforms");
+            Process.Start("https://github.com/memoarfaa/DarkTaskDialog-Native");
         }
 
         private void LinkLabel11_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

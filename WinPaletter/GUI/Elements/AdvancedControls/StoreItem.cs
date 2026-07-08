@@ -43,6 +43,15 @@ namespace WinPaletter.UI.Controllers
             Down
         }
 
+        public static Bitmap Badge_designed_for_wxp = GetDesignedBadge(Assets.WinLogos.WinXP);
+        public static Bitmap Badge_designed_for_wvista = GetDesignedBadge(Assets.WinLogos.WinVista);
+        public static Bitmap Badge_designed_for_w7 = GetDesignedBadge(Assets.WinLogos.Win7);
+        public static Bitmap Badge_designed_for_w8 = GetDesignedBadge(Assets.WinLogos.Win8);
+        public static Bitmap Badge_designed_for_w81 = GetDesignedBadge(Assets.WinLogos.Win8_1);
+        public static Bitmap Badge_designed_for_w10 = GetDesignedBadge(Assets.WinLogos.Win10);
+        public static Bitmap Badge_designed_for_w11 = GetDesignedBadge(Assets.WinLogos.Win11);
+        public static Bitmap Badge_designed_for_w12 = GetDesignedBadge(Assets.WinLogos.Win12);
+
         #endregion
 
         #region Properties
@@ -164,8 +173,6 @@ namespace WinPaletter.UI.Controllers
             _TM?.Dispose();
             pattern?.Dispose();
 
-            foreach (Bitmap bmp in DesignedFor_Badges) { bmp?.Dispose(); }
-
             base.Dispose(disposing);
         }
 
@@ -180,22 +187,33 @@ namespace WinPaletter.UI.Controllers
         #endregion
 
         #region Methods
+
+        private static Bitmap GetDesignedBadge(Bitmap originalBitmap, Size size = default)
+        {
+            if (originalBitmap == null) return null;
+            if (size == default) size = new Size(24, 24);
+
+            using (Bitmap resizedBitmap = originalBitmap.Resize(size))
+            using (Bitmap grayscaledBitmap = resizedBitmap.Grayscale())
+            {
+                return grayscaledBitmap.Fade(0.5f);
+            }
+        }
+
         public void UpdateBadges()
         {
-            foreach (Bitmap bmp in DesignedFor_Badges) { bmp?.Dispose(); }
-
             DesignedFor_Badges.Clear();
 
             if (_TM is not null)
             {
-                if (_TM.Info.DesignedFor_Win12 && OS.IsWin12Released) DesignedFor_Badges.Add(Assets.Store.DesignedFor12);
-                if (_TM.Info.DesignedFor_Win11) DesignedFor_Badges.Add(Assets.Store.DesignedFor11);
-                if (_TM.Info.DesignedFor_Win10) DesignedFor_Badges.Add(Assets.Store.DesignedFor10);
-                if (_TM.Info.DesignedFor_Win81) DesignedFor_Badges.Add(Assets.Store.DesignedFor81);
-                if (_TM.Info.DesignedFor_Win8) DesignedFor_Badges.Add(Assets.Store.DesignedFor8);
-                if (_TM.Info.DesignedFor_Win7) DesignedFor_Badges.Add(Assets.Store.DesignedFor7);
-                if (_TM.Info.DesignedFor_WinVista) DesignedFor_Badges.Add(Assets.Store.DesignedForVista);
-                if (_TM.Info.DesignedFor_WinXP) DesignedFor_Badges.Add(Assets.Store.DesignedForXP);
+                if (_TM.Info.DesignedFor_Win12 && OS.IsWin12Released) DesignedFor_Badges.Add(Badge_designed_for_w12);
+                if (_TM.Info.DesignedFor_Win11) DesignedFor_Badges.Add(Badge_designed_for_w11);
+                if (_TM.Info.DesignedFor_Win10) DesignedFor_Badges.Add(Badge_designed_for_w10);
+                if (_TM.Info.DesignedFor_Win81) DesignedFor_Badges.Add(Badge_designed_for_w81);
+                if (_TM.Info.DesignedFor_Win8) DesignedFor_Badges.Add(Badge_designed_for_w8);
+                if (_TM.Info.DesignedFor_Win7) DesignedFor_Badges.Add(Badge_designed_for_w7);
+                if (_TM.Info.DesignedFor_WinVista) DesignedFor_Badges.Add(Badge_designed_for_wvista);
+                if (_TM.Info.DesignedFor_WinXP) DesignedFor_Badges.Add(Badge_designed_for_wxp);
             }
 
             Invalidate();
@@ -209,7 +227,7 @@ namespace WinPaletter.UI.Controllers
             {
                 case 0:
                     {
-                        using (Bitmap x = new(Width, Height)) { bmp = (Bitmap)x.Clone(); }
+                        using (Bitmap x = new(Width, Height)) { bmp = x.Clone() as Bitmap; }
                         break;
                     }
 

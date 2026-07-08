@@ -339,7 +339,7 @@ namespace WinPaletter
             // 
             this.pictureBox19.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.pictureBox19.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureBox19.Image = global::WinPaletter.Assets.Store.DesignedFor12;
+            this.pictureBox19.Image = global::WinPaletter.UI.Controllers.StoreItem.Badge_designed_for_w12;
             this.pictureBox19.Location = new System.Drawing.Point(3, 3);
             this.pictureBox19.Name = "pictureBox19";
             this.pictureBox19.Size = new System.Drawing.Size(24, 24);
@@ -374,7 +374,7 @@ namespace WinPaletter
             // 
             this.PictureBox9.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.PictureBox9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox9.Image = global::WinPaletter.Assets.Store.DesignedFor11;
+            this.PictureBox9.Image = global::WinPaletter.UI.Controllers.StoreItem.Badge_designed_for_w11;
             this.PictureBox9.Location = new System.Drawing.Point(3, 3);
             this.PictureBox9.Name = "PictureBox9";
             this.PictureBox9.Size = new System.Drawing.Size(24, 24);
@@ -409,7 +409,7 @@ namespace WinPaletter
             // 
             this.PictureBox10.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.PictureBox10.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox10.Image = global::WinPaletter.Assets.Store.DesignedFor10;
+            this.PictureBox10.Image = global::WinPaletter.UI.Controllers.StoreItem.Badge_designed_for_w10;
             this.PictureBox10.Location = new System.Drawing.Point(3, 3);
             this.PictureBox10.Name = "PictureBox10";
             this.PictureBox10.Size = new System.Drawing.Size(24, 24);
@@ -444,7 +444,7 @@ namespace WinPaletter
             // 
             this.PictureBox11.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.PictureBox11.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox11.Image = global::WinPaletter.Assets.Store.DesignedFor81;
+            this.PictureBox11.Image = global::WinPaletter.UI.Controllers.StoreItem.Badge_designed_for_w81;
             this.PictureBox11.Location = new System.Drawing.Point(3, 3);
             this.PictureBox11.Name = "PictureBox11";
             this.PictureBox11.Size = new System.Drawing.Size(24, 24);
@@ -479,7 +479,7 @@ namespace WinPaletter
             // 
             this.pictureBox7.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.pictureBox7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureBox7.Image = global::WinPaletter.Assets.Store.DesignedFor8;
+            this.pictureBox7.Image = global::WinPaletter.UI.Controllers.StoreItem.Badge_designed_for_w8;
             this.pictureBox7.Location = new System.Drawing.Point(3, 3);
             this.pictureBox7.Name = "pictureBox7";
             this.pictureBox7.Size = new System.Drawing.Size(24, 24);
@@ -514,7 +514,7 @@ namespace WinPaletter
             // 
             this.PictureBox12.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.PictureBox12.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox12.Image = global::WinPaletter.Assets.Store.DesignedFor7;
+            this.PictureBox12.Image = global::WinPaletter.UI.Controllers.StoreItem.Badge_designed_for_w7;
             this.PictureBox12.Location = new System.Drawing.Point(3, 3);
             this.PictureBox12.Name = "PictureBox12";
             this.PictureBox12.Size = new System.Drawing.Size(24, 24);
@@ -549,7 +549,7 @@ namespace WinPaletter
             // 
             this.PictureBox13.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.PictureBox13.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox13.Image = global::WinPaletter.Assets.Store.DesignedForVista;
+            this.PictureBox13.Image = global::WinPaletter.UI.Controllers.StoreItem.Badge_designed_for_wvista;
             this.PictureBox13.Location = new System.Drawing.Point(3, 3);
             this.PictureBox13.Name = "PictureBox13";
             this.PictureBox13.Size = new System.Drawing.Size(24, 24);
@@ -584,7 +584,7 @@ namespace WinPaletter
             // 
             this.PictureBox14.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.PictureBox14.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox14.Image = global::WinPaletter.Assets.Store.DesignedForXP;
+            this.PictureBox14.Image = global::WinPaletter.UI.Controllers.StoreItem.Badge_designed_for_wxp;
             this.PictureBox14.Location = new System.Drawing.Point(3, 3);
             this.PictureBox14.Name = "PictureBox14";
             this.PictureBox14.Size = new System.Drawing.Size(24, 24);

@@ -34,6 +34,7 @@
             // tabsContainer1
             // 
             this.tabsContainer1.AllowDrop = true;
+            this.tabsContainer1.AnimatedScrollOffset = 0;
             this.tabsContainer1.BackColor = System.Drawing.Color.Transparent;
             this.tabsContainer1.Dock = System.Windows.Forms.DockStyle.Top;
             this.tabsContainer1.Flag = WinPaletter.Tabs.TitlebarExtender.Flags.System;
@@ -56,6 +57,7 @@
             this.Name = "TabsForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TabsForm";
+            this.Localized += new System.Action(this.TabsForm_Localized);
             this.ResumeLayout(false);
 
         }
