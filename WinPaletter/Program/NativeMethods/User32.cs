@@ -526,6 +526,27 @@ namespace WinPaletter.NativeMethods
         public static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 
         /// <summary>
+        /// Sends the specified message to a window or windows by calling the window procedure for the given window
+        /// handle.
+        /// </summary>
+        /// <remarks>This method is a managed definition of the native SendMessage function from
+        /// user32.dll. It sends the message and waits for the window procedure to process it before returning. For
+        /// certain messages, this call may block until the message is processed. Use caution when sending messages that
+        /// may cause the receiving window to perform lengthy operations.</remarks>
+        /// <param name="hWnd">A handle to the window whose window procedure will receive the message. If this parameter is IntPtr.Zero,
+        /// the message is sent to all top-level windows.</param>
+        /// <param name="Msg">The message to be sent. This value determines the action to be performed and must be a valid window message
+        /// identifier.</param>
+        /// <param name="wParam">Additional message-specific information. The interpretation of this parameter depends on the value of the
+        /// Msg parameter.</param>
+        /// <param name="lParam">Additional message-specific information. The interpretation of this parameter depends on the value of the
+        /// Msg parameter.</param>
+        /// <returns>The result of the message processing, which depends on the message sent. If the function fails, the return
+        /// value is IntPtr.Zero.</returns>
+        [DllImport(_user32, SetLastError = true)]
+        public static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, StringBuilder lParam);
+
+        /// <summary>
         /// Posts a message to the message queue of the specified window and returns immediately without waiting for the
         /// window to process the message.
         /// </summary>
@@ -1678,6 +1699,11 @@ namespace WinPaletter.NativeMethods
         public const uint WM_WINDOWPOSCHANGED = 0x0047;
 
         /// <summary>
+        /// WM_SHOWWINDOW message - Sent to a window when it is about to be shown or hidden
+        /// </summary>
+        public const uint WM_SHOWWINDOW = 0x0018;
+
+        /// <summary>
         /// WS_CHILD window style - Creates a child window
         /// </summary>
         public const int WS_CHILD = 0x40000000;
@@ -1741,6 +1767,27 @@ namespace WinPaletter.NativeMethods
         /// WH_CALLWNDPROC hook type - Installs a hook procedure that monitors messages before they are sent to the target window procedure.
         /// </summary>
         public const int WH_CALLWNDPROC = 4;
+
+        /// <summary>
+        /// LVITEM structure: Contains information about a list view item, including its state, text, image, and other attributes. This structure is used with list view controls to retrieve or set item information.
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+        public struct LVITEM
+        {
+            public uint mask;
+            public int iItem;
+            public int iSubItem;
+            public uint state;
+            public uint stateMask;
+            public IntPtr pszText;
+            public int cchTextMax;
+            public int iImage;
+            public IntPtr lParam;
+            public int iIndent;
+            public int iGroupId;
+            public uint cColumns;
+            public IntPtr puColumns;
+        }
 
         /// <summary>
         /// Contains the window class information for the GetClassInfoEx function.

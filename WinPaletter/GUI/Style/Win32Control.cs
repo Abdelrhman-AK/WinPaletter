@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using WinPaletter.NativeMethods;
 
@@ -41,6 +42,18 @@ namespace WinPaletter.UI
             ClassName = sb.ToString();
 
             Type = DetectType();
+        }
+
+        /// <summary>
+        /// Creates a Win32Control instance from a parent dialog window and a control ID.
+        /// </summary>
+        /// <param name="dialogHwnd"></param>
+        /// <param name="controlId"></param>
+        /// <returns></returns>
+        public static Win32Control FromParent(IntPtr dialogHwnd, int controlId)
+        {
+            IntPtr hCtrl = User32.GetDlgItem(dialogHwnd, controlId);
+            return hCtrl != IntPtr.Zero ? new(hCtrl) : null;
         }
 
         private ControlType DetectType()
@@ -132,6 +145,76 @@ namespace WinPaletter.UI
             Static,
             ScrollBar,
             AutoSuggestDropdown
+        }
+
+        /// <summary>
+        /// Adds a specific style to the current window styles.
+        /// </summary>
+        /// <param name="style"></param>
+        public void AppendStyle(WindowStyles style)
+        {
+            Style |= style;
+        }
+
+        /// <summary>
+        /// Removes a specific style from the current window styles.
+        /// </summary>
+        /// <param name="style"></param>
+        public void RemoveStyle(WindowStyles style)
+        {
+            Style &= ~style;
+        }
+
+        /// <summary>
+        /// Adds a specific extended style to the current window extended styles.
+        /// </summary>
+        /// <param name="style"></param>
+        public void AppendExtendedStyle(WindowExtendedStyles style)
+        {
+            ExtendedStyle |= style;
+        }
+
+        /// <summary>
+        /// Removes a specific extended style from the current window extended styles.
+        /// </summary>
+        /// <param name="style"></param>
+        public void RemoveExtendedStyle(WindowExtendedStyles style)
+        {
+            ExtendedStyle &= ~style;
+        }
+
+        /// <summary>
+        /// Lists all the currently applied window styles as strings.
+        /// </summary>
+        public IEnumerable<string> Styles
+        {
+            get
+            {
+                foreach (WindowStyles style in Enum.GetValues(typeof(WindowStyles)))
+                {
+                    if (style != WindowStyles.None && Style.HasFlag(style))
+                    {
+                        yield return style.ToString();
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Lists all the currently applied window extended styles as strings.
+        /// </summary>
+        public IEnumerable<string> ExtendedStyles
+        {
+            get
+            {
+                foreach (WindowExtendedStyles style in Enum.GetValues(typeof(WindowExtendedStyles)))
+                {
+                    if (style != WindowExtendedStyles.None && ExtendedStyle.HasFlag(style))
+                    {
+                        yield return style.ToString();
+                    }
+                }
+            }
         }
     }
 }

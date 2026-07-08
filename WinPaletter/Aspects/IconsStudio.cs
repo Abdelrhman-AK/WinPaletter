@@ -182,7 +182,9 @@ namespace WinPaletter
             {
                 try
                 {
-                    iconControl.Icon.Dispose();
+                    Icon ico = iconControl.Icon;
+                    iconControl?.Icon = null;
+                    ico?.Dispose();
                 }
                 catch
                 {

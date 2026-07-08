@@ -89,8 +89,6 @@ namespace WinPaletter
                 card.MouseEnter += (s, e) => Transition.With(panel1, nameof(panel1.BackColor), Program.Style.DarkMode ? (s as Card).Color.Dark(0.7f) : (s as Card).Color.CB(0.7f)).CriticalDamp(Program.AnimationSpan);
                 card.MouseLeave += (s, e) => Transition.With(panel1, nameof(panel1.BackColor), BackColor).CriticalDamp(Program.AnimationSpan);
             }
-
-            UI.Style.Dialogs.PickIcon(Handle, SysPaths.Explorer);
         }
 
         private void Home_Localized()

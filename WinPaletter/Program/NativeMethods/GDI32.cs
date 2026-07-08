@@ -567,6 +567,28 @@ namespace WinPaletter.NativeMethods
         public static extern IntPtr GetStockObject(StockObjects fnObject);
 
         /// <summary>
+        /// Draws a rectangle in the specified device context using the current pen and brush. The rectangle is defined by the coordinates of its upper-left and lower-right corners.
+        /// </summary>
+        /// <param name="hdc"></param>
+        /// <param name="nLeftRect"></param>
+        /// <param name="nTopRect"></param>
+        /// <param name="nRightRect"></param>
+        /// <param name="nBottomRect"></param>
+        /// <returns></returns>
+        [DllImport(_gdi32)]
+        public static extern bool Rectangle(IntPtr hdc, int nLeftRect, int nTopRect, int nRightRect, int nBottomRect);
+
+        /// <summary>
+        /// Creates a logical pen with the specified style, width, and color. The pen can then be selected into a device context for drawing lines and shapes.
+        /// </summary>
+        /// <param name="fnPenStyle"></param>
+        /// <param name="nWidth"></param>
+        /// <param name="crColor"></param>
+        /// <returns></returns>
+        [DllImport(_gdi32)]
+        public static extern IntPtr CreatePen(int fnPenStyle, int nWidth, int crColor);
+
+        /// <summary>
         /// Predefined stock objects for GetStockObject.
         /// </summary>
         public enum StockObjects : int
