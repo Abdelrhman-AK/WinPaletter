@@ -13,7 +13,7 @@ using static WinPaletter.NativeMethods.Shell32;
 using static WinPaletter.NativeMethods.User32;
 using static WinPaletter.NativeMethods.UxTheme;
 
-namespace WinPaletter
+namespace WinPaletter.UI.Dark
 {
     internal static class DarkColors
     {
@@ -83,20 +83,6 @@ namespace WinPaletter
         public static readonly COLORREF kTextRadio = new(Color.FromArgb(216, 216, 216));
     }
 
-    internal sealed class UIAElementInfo
-    {
-        public RECT rect;
-        public string automationId = string.Empty;
-        public string name = string.Empty;
-        public ComUIAutomation.ToggleState toggleState = ComUIAutomation.ToggleState.Indeterminate;
-        public ComUIAutomation.ExpandCollapseState expandCollapseState = ComUIAutomation.ExpandCollapseState.LeafNode;
-
-        public bool IsRectEmpty()
-        {
-            return rect.left >= rect.right || rect.top >= rect.bottom;
-        }
-    }
-
     /// <summary>
     /// Per-DirectUI-window state
     /// </summary>
@@ -114,7 +100,7 @@ namespace WinPaletter
         public IntPtr brSecondary = IntPtr.Zero;
         public IntPtr brFootnote = IntPtr.Zero;
 
-        public List<UIAElementInfo> elements = new List<UIAElementInfo>();
+        public List<ComUIAutomation.UIAElementInfo> elements = new();
         public bool elemsOk;
 
         public bool tracking;
@@ -346,7 +332,7 @@ namespace WinPaletter
     /// reverts the dialog to the system-light appearance.
     /// </para>
     /// <para>
-    /// The <see cref="DarkTaskDialog.DarkenTaskDialog"/> method is the main entry point for
+    /// The <see cref="DarkDirectUI.DarkenTaskDialog"/> method is the main entry point for
     /// applying dark mode to a TaskDialog window. It must be called after the dialog
     /// has been created and its window handle is known.
     /// </para>
@@ -362,7 +348,7 @@ namespace WinPaletter
     /// by defining the <c>DARKMODE_DEFINE_TASKDIALOGCONFIG</c> symbol.
     /// </para>
     /// </remarks>
-    public static class DarkTaskDialog
+    public static class DarkDirectUI
     {
         private const int STATE_SYSTEM_CHECKED = 0x00000010;
         public const uint BS_SOLID = 0;
@@ -502,7 +488,7 @@ namespace WinPaletter
         {
             ComUIAutomation.QueryElements(hwnd, s.elements);
 
-            foreach (UIAElementInfo el in s.elements)
+            foreach (ComUIAutomation.UIAElementInfo el in s.elements)
             {
                 if (el.automationId == "VerificationCheckBox")
                 {
@@ -518,7 +504,7 @@ namespace WinPaletter
             s.elemsOk = true;
         }
 
-        private static int HitTest(List<UIAElementInfo> els, POINT pt)
+        private static int HitTest(List<ComUIAutomation.UIAElementInfo> els, POINT pt)
         {
             for (int i = 0; i < els.Count; i++)
             {
@@ -663,7 +649,7 @@ namespace WinPaletter
             if (s.pCfg != IntPtr.Zero && !s_hasNativeTheme)
             {
                 TaskDialogConfigView cfgView = TaskDialogConfigView.FromPointer(s.pCfg);
-                foreach (UIAElementInfo el in s.elements)
+                foreach (ComUIAutomation.UIAElementInfo el in s.elements)
                 {
                     if (el.IsRectEmpty()) continue;
 
@@ -693,7 +679,7 @@ namespace WinPaletter
             {
                 for (int i = 0; i < s.elements.Count; i++)
                 {
-                    UIAElementInfo el = s.elements[i];
+                    ComUIAutomation.UIAElementInfo el = s.elements[i];
                     if (el.IsRectEmpty()) continue;
 
                     bool hot = i == s.hotIdx;
@@ -747,7 +733,7 @@ namespace WinPaletter
             {
                 IntPtr hThm = s.hTD; // valid dark-capable "TaskDialog" handle; only used for part plumbing, not color/font
 
-                foreach (UIAElementInfo el in s.elements)
+                foreach (ComUIAutomation.UIAElementInfo el in s.elements)
                 {
                     if (el.IsRectEmpty()) continue;
 

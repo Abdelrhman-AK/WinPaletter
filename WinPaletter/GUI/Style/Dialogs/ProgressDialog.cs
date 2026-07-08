@@ -278,7 +278,7 @@ namespace WinPaletter.UI.WP
             // This forces Windows to fall back to classic drawing, which honors WM_CTLCOLORSTATIC.
             NativeMethods.User32.EnumChildWindows(hwnd, (childHwnd, lParam) =>
             {
-                System.Text.StringBuilder className = new System.Text.StringBuilder(256);
+                System.Text.StringBuilder className = new(256);
                 NativeMethods.User32.GetClassName(childHwnd, className, className.Capacity);
 
                 if (className.ToString().Equals("Static", StringComparison.OrdinalIgnoreCase))
@@ -321,8 +321,7 @@ namespace WinPaletter.UI.WP
 
         private void RunProgressDialog(IntPtr owner, object argument)
         {
-            if (_backgroundWorker.IsBusy)
-                throw new InvalidOperationException("The progress dialog is already running.");
+            if (_backgroundWorker.IsBusy) throw new InvalidOperationException("The progress dialog is already running.");
 
             if (Animation != null)
             {
@@ -370,8 +369,7 @@ namespace WinPaletter.UI.WP
                         flags |= Interop.ProgressDialogFlags.NoProgressBar;
                         break;
                     case ProgressBarStyle.MarqueeProgressBar:
-                        // Marquee style requires Vista+; older shells simply don't support it,
-                        // so fall back to hiding the progress bar entirely on XP.
+                        // Marquee style requires Vista+; older shells simply don't support it, so fall back to hiding the progress bar entirely on XP.
                         if (!OS.WXP) flags |= Interop.ProgressDialogFlags.MarqueeProgress;
                         else flags |= Interop.ProgressDialogFlags.NoProgressBar;
                         break;
@@ -476,7 +474,7 @@ namespace WinPaletter.UI.WP
         {
             if (!Program.Style.DarkMode) return;
             NativeMethods.Helpers.SetHWNDDarkMode(hwnd, Program.Style.DarkMode);
-            DarkTaskDialog.DarkenProgressDialog(hwnd);
+            Dark.DarkDirectUI.DarkenProgressDialog(hwnd);
         }
 
         #endregion

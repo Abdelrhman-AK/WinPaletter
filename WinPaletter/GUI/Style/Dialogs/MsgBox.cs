@@ -24,24 +24,6 @@ namespace WinPaletter.UI.Style
         private static Icon questionIcon = NativeMethods.Helpers.GetSystemIcon(Shell32.SHSTOCKICONID.HELP, Shell32.SHGSI.ICON);
 
         /// <summary>
-        /// Represents the system-defined icon used for information dialogs.<br></br>
-        /// Get question icon from shell32.dll, not from the system icons as question icon is old and inconsistent with Windows 10 and higher (but consistent with Windows 8.1 and lower).
-        /// </summary>
-        private static Icon informationIcon = NativeMethods.Helpers.GetSystemIcon(Shell32.SHSTOCKICONID.INFO, Shell32.SHGSI.ICON);
-
-        /// <summary>
-        /// Represents the system-defined icon used for errors dialogs.<br></br>
-        /// Get question icon from shell32.dll, not from the system icons as question icon is old and inconsistent with Windows 10 and higher (but consistent with Windows 8.1 and lower).
-        /// </summary>
-        private static Icon errorIcon = NativeMethods.Helpers.GetSystemIcon(Shell32.SHSTOCKICONID.Error, Shell32.SHGSI.ICON);
-
-        /// <summary>
-        /// Represents the system-defined icon used for exclamation dialogs.<br></br>
-        /// Get question icon from shell32.dll, not from the system icons as question icon is old and inconsistent with Windows 10 and higher (but consistent with Windows 8.1 and lower).
-        /// </summary>
-        private static Icon exclamationIcon = NativeMethods.Helpers.GetSystemIcon(Shell32.SHSTOCKICONID.WARNING, Shell32.SHGSI.ICON);
-
-        /// <summary>
         /// Represents the current state of the task dialog.
         /// </summary>
         private class TaskDialogState
@@ -50,10 +32,10 @@ namespace WinPaletter.UI.Style
             public bool VerificationFlagChecked;
             public int SelectedButton;
             public int SelectedRadioButton;
-            public List<TASKDIALOG_BUTTON> Buttons = new List<TASKDIALOG_BUTTON>();
-            public List<TASKDIALOG_BUTTON> RadioButtons = new List<TASKDIALOG_BUTTON>();
-            public Dictionary<int, Action> ButtonActions = new Dictionary<int, Action>();
-            public Dictionary<int, Action> RadioButtonActions = new Dictionary<int, Action>();
+            public List<TASKDIALOG_BUTTON> Buttons = [];
+            public List<TASKDIALOG_BUTTON> RadioButtons = [];
+            public Dictionary<int, Action> ButtonActions = [];
+            public Dictionary<int, Action> RadioButtonActions = [];
             public Action<int> HyperlinkAction;
             public Action TimerAction;
             public Action ExpandAction;
@@ -381,14 +363,8 @@ namespace WinPaletter.UI.Style
 
             if (_TDState != null && _TDState.ConfigPointer != IntPtr.Zero)
             {
-                WinPaletter.DarkTaskDialog.DarkenTaskDialog(hwnd, _TDState.ConfigPointer);
+                Dark.DarkDirectUI.DarkenTaskDialog(hwnd, _TDState.ConfigPointer);
             }
-
-            //foreach (IntPtr child in User32.GetChildWindowHandles(hwnd))
-            //{
-            //    NativeMethods.Helpers.SetHWNDDarkMode(child, true);
-            //    WinPaletter.DarkTaskDialog.DarkenTaskDialog(child, _config.hInstance);
-            //}
         }
 
         private static void CleanupTaskDialog()

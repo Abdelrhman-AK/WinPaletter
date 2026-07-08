@@ -4,7 +4,6 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
-using static WinPaletter.DarkTaskDialog;
 
 namespace WinPaletter.UI.Style
 {
@@ -193,8 +192,8 @@ namespace WinPaletter.UI.Style
         {
             if (!Program.Style.DarkMode) return;
             NativeMethods.Helpers.SetHWNDDarkMode(hwnd, Program.Style.DarkMode);
-            if (state.ConfigPointer != IntPtr.Zero) DarkenTaskDialog(hwnd, state.ConfigPointer);
-            state.DarkEditBrush = GDI32.CreateSolidBrush((int)DarkColors.kSecondary.Value);
+            if (state.ConfigPointer != IntPtr.Zero) Dark.DarkDirectUI.DarkenTaskDialog(hwnd, state.ConfigPointer);
+            state.DarkEditBrush = GDI32.CreateSolidBrush((int)Dark.DarkColors.kSecondary.Value);
         }
 
         private static IntPtr EditWndProc(IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam, InputDialogState state)
@@ -217,8 +216,8 @@ namespace WinPaletter.UI.Style
                     // CRITICAL FIX: Only intercept colors if we are explicitly in Dark Mode
                     if (Program.Style.DarkMode && lParam == state.hEdit && state.hEdit != IntPtr.Zero && state.DarkEditBrush != IntPtr.Zero)
                     {
-                        GDI32.SetTextColor(wParam, (int)DarkColors.kTextContent.Value);
-                        GDI32.SetBkColor(wParam, (int)DarkColors.kFootnote.Value);
+                        GDI32.SetTextColor(wParam, (int)Dark.DarkColors.kTextContent.Value);
+                        GDI32.SetBkColor(wParam, (int)Dark.DarkColors.kFootnote.Value);
                         GDI32.SetBkMode(wParam, GDI32.OPAQUE); // Use OPAQUE to fill the text background cleanly
                         return state.DarkEditBrush;
                     }

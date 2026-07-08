@@ -1316,6 +1316,27 @@ namespace WinPaletter.NativeMethods
         public static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
 
         /// <summary>
+        /// Determines whether the specified window is enabled for mouse and keyboard input.
+        /// </summary>
+        /// <param name="hWnd">Handle to the window to test.</param>
+        /// <returns>true if the window is enabled; otherwise, false.</returns>
+        [DllImport(_user32, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool IsWindowEnabled(IntPtr hWnd);
+
+        /// <summary>
+        /// Retrieves information about a window class, including a handle to the small icon 
+        /// associated with the window class. The GetClassInfoEx function does not retrieve 
+        /// the class extra bytes or the window extra bytes.
+        /// </summary>
+        /// <param name="hInstance">A handle to the instance of the application that created the class.</param>
+        /// <param name="lpClassName">The class name.</param>/// <param name="lpwcx">A pointer to a WNDCLASSEX structure that receives the class information.</param>
+        /// <returns>true if successful; otherwise, false.</returns>
+        [DllImport(_user32, SetLastError = true, CharSet = CharSet.Auto)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool GetClassInfoEx(IntPtr hInstance, string lpClassName, ref WNDCLASSEX lpwcx);
+
+        /// <summary>
         /// RedrawWindow flags: Invalidates the window, causing it to be redrawn. This flag is used with the RedrawWindow function to specify that the entire window should be invalidated and repainted.
         /// </summary>
         public const uint RDW_INVALIDATE = 0x0001;
@@ -1720,6 +1741,73 @@ namespace WinPaletter.NativeMethods
         /// WH_CALLWNDPROC hook type - Installs a hook procedure that monitors messages before they are sent to the target window procedure.
         /// </summary>
         public const int WH_CALLWNDPROC = 4;
+
+        /// <summary>
+        /// Contains the window class information for the GetClassInfoEx function.
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
+        public struct WNDCLASSEX
+        {
+            /// <summary>
+            /// The size, in bytes, of this structure. Set this member to sizeof(WNDCLASSEX).
+            /// </summary>
+            public int cbSize;
+
+            /// <summary>
+            /// The class styles. Can be a combination of CS_* values.
+            /// </summary>
+            public uint style;
+
+            /// <summary>
+            /// A pointer to the window procedure.
+            /// </summary>
+            public IntPtr lpfnWndProc;
+
+            /// <summary>
+            /// The number of extra bytes to allocate following the window-class structure.
+            /// </summary>
+            public int cbClsExtra;
+
+            /// <summary>
+            /// The number of extra bytes to allocate following the window instance.
+            /// </summary>
+            public int cbWndExtra;
+
+            /// <summary>
+            /// A handle to the class instance.
+            /// </summary>
+            public IntPtr hInstance;
+
+            /// <summary>
+            /// A handle to the class icon.
+            /// </summary>
+            public IntPtr hIcon;
+
+            /// <summary>
+            /// A handle to the class cursor.
+            /// </summary>
+            public IntPtr hCursor;
+
+            /// <summary>
+            /// A handle to the class background brush.
+            /// </summary>
+            public IntPtr hbrBackground;
+
+            /// <summary>
+            /// The menu name.
+            /// </summary>
+            public string lpszMenuName;
+
+            /// <summary>
+            /// The class name.
+            /// </summary>
+            public string lpszClassName;
+
+            /// <summary>
+            /// A handle to the small class icon.
+            /// </summary>
+            public IntPtr hIconSm;
+        }
 
         /// <summary>
         /// IShellItem interface: Represents a Shell item object, which can be a file, folder, or other item in the Windows Shell namespace. This interface provides methods to retrieve information about the item, bind to handlers, and compare items.

@@ -58,7 +58,21 @@ namespace WinPaletter.NativeMethods
         private const int ToggleState_Indeterminate = 2;
 
         // GUIDs from uiautomationcore.h
-        private static readonly Guid CLSID_CUIAutomation = new Guid("ff48dba4-60ef-4201-aa87-54103eef594e");
+        private static readonly Guid CLSID_CUIAutomation = new("ff48dba4-60ef-4201-aa87-54103eef594e");
+
+        internal sealed class UIAElementInfo
+        {
+            public RECT rect;
+            public string automationId = string.Empty;
+            public string name = string.Empty;
+            public ToggleState toggleState = ToggleState.Indeterminate;
+            public ExpandCollapseState expandCollapseState = ExpandCollapseState.LeafNode;
+
+            public bool IsRectEmpty()
+            {
+                return rect.left >= rect.right || rect.top >= rect.bottom;
+            }
+        }
 
         private static IUIAutomation s_automation;
 
@@ -231,7 +245,7 @@ namespace WinPaletter.NativeMethods
         /// Builds a <see cref="UIAElementInfo"/> from a raw-COM UIA element, converting
         /// its bounding rectangle from screen to <paramref name="hwndForClientCoords"/>'s
         /// client coordinates. Direct substitute for the AutomationElement-based
-        /// conversion that used to live in DarkTaskDialog.QueryElements.
+        /// conversion that used to live in DarkDirectUI.QueryElements.
         /// </summary>
         public static UIAElementInfo ToElementInfo(IUIAutomationElement element, IntPtr hwndForClientCoords)
         {
@@ -277,7 +291,7 @@ namespace WinPaletter.NativeMethods
         /// Populates <paramref name="outList"/> with the whitelisted TaskDialog parts
         /// found among the content-view children of the window at <paramref name="hwnd"/>.
         /// Direct substitute for the old System.Windows.Automation-based QueryElements
-        /// in DarkTaskDialog.
+        /// in DarkDirectUI.
         /// </summary>
         public static bool QueryElements(IntPtr hwnd, List<UIAElementInfo> outList)
         {

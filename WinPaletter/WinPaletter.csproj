@@ -554,10 +554,11 @@
     </Compile>
     <Compile Include="ColorsAndPalettesHandlers\ControlProperty.cs" />
     <Compile Include="GUI\Style\Config.cs" />
+    <Compile Include="GUI\Style\DarkMode\DarkWin32.cs" />
     <Compile Include="GUI\Style\Dialogs\ProgressDialog.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="GUI\Style\Dialogs\DarkTaskDialog.cs" />
+    <Compile Include="GUI\Style\DarkMode\DarkDirectUI.cs" />
     <Compile Include="GUI\Style\Dialogs\IconPicker.cs" />
     <Compile Include="GUI\Style\Dialogs\FolderBrowserDialogEx.cs">
       <SubType>Component</SubType>
@@ -572,6 +573,7 @@
     <Compile Include="GUI\Style\TestControl.Designer.cs">
       <DependentUpon>TestControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="GUI\Style\Win32Control.cs" />
     <Compile Include="Home.cs">
       <SubType>Form</SubType>
     </Compile>
