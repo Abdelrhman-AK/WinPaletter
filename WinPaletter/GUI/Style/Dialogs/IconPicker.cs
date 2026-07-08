@@ -203,7 +203,7 @@ namespace WinPaletter.UI.Style
         public static string PickIcon(IntPtr windowHandle, string PEfileName, int index = 0)
         {
             _acceptedPath = Environment.ExpandEnvironmentVariables(PEfileName);
-            StringBuilder sb = new(PEfileName, MAX_PATH);
+            StringBuilder sb = new(_acceptedPath, MAX_PATH);
 
             try
             {
