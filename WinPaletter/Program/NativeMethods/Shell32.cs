@@ -73,20 +73,18 @@ namespace WinPaletter.NativeMethods
         [DllImport(_shell32)]
         public static extern int SHGetImageList(int iImageList, ref Guid riid, out IImageList ppv);
 
-        [StructLayout(LayoutKind.Sequential)]
-        struct SHFILEINFO
-        {
-            public IntPtr hIcon;
-            public int iIcon;
-            public uint dwAttributes;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
-            public string szDisplayName;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 80)]
-            public string szTypeName;
-        }
+        /// <summary>
+        /// Extracts an icon from a specified executable file, DLL, or icon file.
+        /// </summary>
+        /// <param name="hInst"></param>
+        /// <param name="lpszExeFileName"></param>
+        /// <param name="nIconIndex"></param>
+        /// <returns></returns>
+        [DllImport(_shell32, CharSet = CharSet.Auto)]
+        public static extern IntPtr ExtractIcon(IntPtr hInst, string lpszExeFileName, int nIconIndex);
 
         [DllImport(_shell32, CharSet = CharSet.Auto)]
-        private static extern IntPtr SHGetFileInfo(string pszPath, uint dwFileAttributes, out SHFILEINFO psfi, uint cbFileInfo, uint uFlags);
+        public static extern IntPtr SHGetFileInfo(string pszPath, uint dwFileAttributes, out SHFILEINFO psfi, uint cbFileInfo, uint uFlags);
 
         /// <summary>
         /// Gets the description of a file extension as registered in the Windows shell.
@@ -175,6 +173,18 @@ namespace WinPaletter.NativeMethods
             {
                 return Properties.Resources.User;
             }
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct SHFILEINFO
+        {
+            public IntPtr hIcon;
+            public int iIcon;
+            public uint dwAttributes;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
+            public string szDisplayName;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 80)]
+            public string szTypeName;
         }
 
         /// <summary>

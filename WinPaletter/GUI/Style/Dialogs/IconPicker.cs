@@ -1,180 +1,238 @@
 ﻿using System;
 using System.IO;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 using WinPaletter.NativeMethods;
+
 namespace WinPaletter.UI.Style
 {
     public partial class Dialogs
     {
+        private static string _acceptedPath = string.Empty;
         private const int MAX_PATH = 0x00000104;
         private const int WH_CALLWNDPROCRET = 12;
         private const int WM_INITDIALOG = 0x0110;
-
-        // Standard Win32 ListView Native Color Messages
         private const uint LVM_FIRST = 0x1000;
         private const uint LVM_SETBKCOLOR = (LVM_FIRST + 1);
         private const uint LVM_SETTEXTCOLOR = (LVM_FIRST + 3);
         private const uint LVM_SETTEXTBKCOLOR = (LVM_FIRST + 38);
-        private const uint LVM_GETIMAGELIST = (LVM_FIRST + 2);
-        private const int LVSIL_NORMAL = 0;
-        private const uint CLR_NONE = 0xFFFFFFFF; // Forces pure background alpha transparency
+        private static IntPtr _darkBackgroundBrush = GDI32.CreateSolidBrush(0x1F1F1F);
+        private const int DARK_COLOR_INT = 0x001F1F1F;
+        private const int EN_CHANGE = 0x0300;
+        private static IntPtr targetDialogHwnd = IntPtr.Zero;
+        private static IntPtr hookId = IntPtr.Zero;
+        private static IntPtr cbtHookId = IntPtr.Zero;
+        private const int WH_CBT = 5;
+        private const int HCBT_CREATEWND = 3;
 
-        // Keep a static brush reference so we don't leak GDI handles
-        private static IntPtr _darkBackgroundBrush = GDI32.CreateSolidBrush(0x1F1F1F); // Color: #1F1F1F (COLORREF format)
-        private const int DARK_COLOR_INT = 0x001F1F1F; // Color: #1F1F1F (BBGGRR / COLORREF value)
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct CWPRETSTRUCT
+        private static Comctl32.SUBCLASSPROC dialogSubclassDelegate = (IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam, UIntPtr uIdSubclass, IntPtr dwRefData) =>
         {
-            public IntPtr lResult;
-            public IntPtr lParam;
-            public IntPtr wParam;
-            public uint message;
-            public IntPtr hwnd;
-        }
-
-        [DllImport("comctl32.dll", SetLastError = true)]
-        public static extern uint ImageList_SetBkColor(IntPtr himl, uint clrBk);
-
-        public static string PickIcon(IntPtr windowHandle, string PEfileName, int index = 0)
-        {
-            Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "UI.Style.PickIcon query");
-
-            StringBuilder sb = new(PEfileName, MAX_PATH);
-            IntPtr hookId = IntPtr.Zero;
-
-            // Subclass 1: Handles the general dialog shell container coloration
-            Comctl32.SUBCLASSPROC dialogSubclassDelegate = (IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam, UIntPtr uIdSubclass, IntPtr dwRefData) =>
+            if (Program.Style.DarkMode)
             {
-                if (Program.Style.DarkMode)
+                // Update _acceptedPath when text changes or OK is clicked
+                if (uMsg == User32.WM_COMMAND)
                 {
-                    if (uMsg == User32.WM_CTLCOLORDLG || uMsg == User32.WM_CTLCOLORSTATIC || uMsg == User32.WM_CTLCOLORLISTBOX || uMsg == User32.WM_CTLCOLOREDIT || uMsg == User32.WM_CTLCOLORBTN)
+                    // Cast to long to perform bitwise shifts
+                    long wParamLong = (long)wParam;
+                    int id = (ushort)(wParamLong & 0xFFFF);
+                    int code = (int)((wParamLong >> 16) & 0xFFFF);
+
+                    if (id == 1 || (id == 12290 && code == EN_CHANGE))
                     {
-                        GDI32.SetTextColor(wParam, 0xFFFFFF);
-                        GDI32.SetBkMode(wParam, 1); // Transparent
-                        GDI32.SetBkColor(wParam, 0x1F1F1F);
-                        return _darkBackgroundBrush;
+                        IntPtr hEdit = User32.GetDlgItem(hWnd, 12290);
+                        int len = User32.GetWindowTextLength(hEdit);
+                        if (len > 0)
+                        {
+                            StringBuilder tmp = new(len + 1);
+                            User32.GetWindowText(hEdit, tmp, tmp.Capacity);
+                            _acceptedPath = Environment.ExpandEnvironmentVariables(tmp.ToString());
+                        }
                     }
                 }
-                return Comctl32.DefSubclassProc(hWnd, uMsg, wParam, lParam);
-            };
 
-            // Subclass 2: The absolute brute-force dark mode layer for the Icon Grid View (12297)
-            Comctl32.SUBCLASSPROC listViewAggressiveSubclass = (IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam, UIntPtr uIdSubclass, IntPtr dwRefData) =>
-            {
-                if (Program.Style.DarkMode)
+                if (uMsg == User32.WM_DRAWITEM && lParam != IntPtr.Zero)
                 {
-                    switch (uMsg)
+                    User32.DRAWITEMSTRUCT dis = Marshal.PtrToStructure<User32.DRAWITEMSTRUCT>(lParam);
+
+                    if (dis.CtlID == 12297) // The Icon ListView
                     {
-                        case User32.WM_ERASEBKGND:
-                            User32.GetClientRect(hWnd, out var rect);
-                            User32.FillRect(wParam, ref rect, _darkBackgroundBrush);
-                            return (IntPtr)1; // Prevent original code from clearing to white
+                        if ((int)dis.itemID < 0) return (IntPtr)1;
 
-                        case User32.WM_PAINT:
-                            // 1. Force control backgrounds dark
-                            User32.SendMessage(hWnd, LVM_SETBKCOLOR, IntPtr.Zero, (IntPtr)DARK_COLOR_INT);
+                        // Use the fully resolved _acceptedPath
+                        IntPtr hIcon = Shell32.ExtractIcon(IntPtr.Zero, _acceptedPath, (int)dis.itemID);
 
-                            // 2. CRITICAL: Force item text backgrounds to be completely transparent (CLR_NONE)
-                            User32.SendMessage(hWnd, LVM_SETTEXTBKCOLOR, IntPtr.Zero, (IntPtr)CLR_NONE);
-                            User32.SendMessage(hWnd, LVM_SETTEXTCOLOR, IntPtr.Zero, (IntPtr)0x00FFFFFF); // White text
+                        User32.FillRect(dis.hDC, ref dis.rcItem, _darkBackgroundBrush);
 
-                            // 3. CRITICAL: Grab the control's internal icon image list and strip its white background
-                            IntPtr hImageList = User32.SendMessage(hWnd, LVM_GETIMAGELIST, (IntPtr)LVSIL_NORMAL, IntPtr.Zero);
-                            if (hImageList != IntPtr.Zero)
-                            {
-                                ImageList_SetBkColor(hImageList, DARK_COLOR_INT);
-                            }
-                            break;
+                        if ((dis.itemState & 0x0001) != 0)
+                        {
+                            IntPtr selectBrush = GDI32.CreateSolidBrush(0x003F3F3F);
+                            User32.FillRect(dis.hDC, ref dis.rcItem, selectBrush);
+                            GDI32.DeleteObject(selectBrush);
+                        }
+
+                        if (hIcon != IntPtr.Zero)
+                        {
+                            int iconSize = 32;
+                            int x = dis.rcItem.left + ((dis.rcItem.right - dis.rcItem.left) - iconSize) / 2;
+                            int y = dis.rcItem.top + ((dis.rcItem.bottom - dis.rcItem.top) - iconSize) / 2;
+                            User32.DrawIconEx(dis.hDC, x, y, hIcon, iconSize, iconSize, 0, IntPtr.Zero, 0x0003);
+                            User32.DestroyIcon(hIcon);
+                        }
+
+                        if ((dis.itemState & 0x0008) != 0) User32.DrawFocusRect(dis.hDC, ref dis.rcItem);
+
+                        return (IntPtr)1;
                     }
                 }
-                return Comctl32.DefSubclassProc(hWnd, uMsg, wParam, lParam);
-            };
 
-            User32.HookProc hookDelegate = (int nCode, IntPtr wParam, IntPtr lParam) =>
-            {
-                if (nCode >= 0 && lParam != IntPtr.Zero)
+                if (uMsg >= 0x0133 && uMsg <= 0x0138)
                 {
-                    CWPRETSTRUCT msg = Marshal.PtrToStructure<CWPRETSTRUCT>(lParam);
+                    GDI32.SetTextColor(wParam, 0xFFFFFF);
+                    GDI32.SetBkMode(wParam, 1);
+                    GDI32.SetBkColor(wParam, DARK_COLOR_INT);
+                    return _darkBackgroundBrush;
+                }
+            }
+            return Comctl32.DefSubclassProc(hWnd, uMsg, wParam, lParam);
+        };
 
-                    if (msg.message == WM_INITDIALOG)
+        private static Comctl32.SUBCLASSPROC listViewAggressiveSubclass = (IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam, UIntPtr uIdSubclass, IntPtr dwRefData) =>
+        {
+            if (Program.Style.DarkMode)
+            {
+                // 1. Force background and text color for all list/dropdown components
+                // WM_CTLCOLORMSGBOX, WM_CTLCOLOREDIT, WM_CTLCOLORLISTBOX, etc.
+                if (uMsg >= 0x0132 && uMsg <= 0x0138)
+                {
+                    GDI32.SetTextColor(wParam, 0xFFFFFF);      // White Text
+                    GDI32.SetBkColor(wParam, DARK_COLOR_INT); // Dark Background
+                    return _darkBackgroundBrush;              // Return the dark brush
+                }
+
+                switch (uMsg)
+                {
+                    case 0x0014: // WM_ERASEBKGND
+                        User32.GetClientRect(hWnd, out var rect);
+                        User32.FillRect(wParam, ref rect, _darkBackgroundBrush);
+                        return (IntPtr)1;
+
+                    case 0x000F: // WM_PAINT
+                        User32.SendMessage(hWnd, LVM_SETBKCOLOR, IntPtr.Zero, (IntPtr)DARK_COLOR_INT);
+                        User32.SendMessage(hWnd, LVM_SETTEXTBKCOLOR, IntPtr.Zero, (IntPtr)DARK_COLOR_INT);
+                        User32.SendMessage(hWnd, LVM_SETTEXTCOLOR, IntPtr.Zero, (IntPtr)0x00FFFFFF);
+                        break;
+                }
+            }
+            return Comctl32.DefSubclassProc(hWnd, uMsg, wParam, lParam);
+        };
+
+        private static User32.HookProc cbtDelegate = (int nCode, IntPtr wParam, IntPtr lParam) =>
+        {
+            if (nCode == HCBT_CREATEWND)
+            {
+                IntPtr hWnd = wParam;
+                StringBuilder sb = new(265);
+                User32.GetClassName(hWnd, sb, sb.Capacity);
+                string className = sb.ToString();
+
+                if (className.Equals("Auto-Suggest Dropdown", StringComparison.OrdinalIgnoreCase))
+                {
+                    // Ensure we are targeting the actual window handle, not a sub-part
+                    IntPtr rootHwnd = User32.GetAncestor(hWnd, 2); // GA_ROOT = 2
+
+                    NativeMethods.Helpers.SetHWNDDarkMode(rootHwnd, true);
+                    UxTheme.SetWindowTheme(rootHwnd, "DarkMode_Explorer", null);
+
+                    Comctl32.SetWindowSubclass(rootHwnd, listViewAggressiveSubclass, (UIntPtr)4, IntPtr.Zero);
+                }
+            }
+            return User32.CallNextHookEx(cbtHookId, nCode, wParam, lParam);
+        };
+
+        private static User32.HookProc hookDelegate = (int nCode, IntPtr wParam, IntPtr lParam) =>
+        {
+            if (nCode >= 0 && lParam != IntPtr.Zero)
+            {
+                User32.CWPRETSTRUCT msg = Marshal.PtrToStructure<User32.CWPRETSTRUCT>(lParam);
+
+                if (msg.message == WM_INITDIALOG)
+                {
+                    if (targetDialogHwnd == IntPtr.Zero)
+                    {
+                        targetDialogHwnd = msg.hwnd;
+                    }
+
+                    if (msg.hwnd == targetDialogHwnd)
                     {
                         IntPtr dialogHwnd = msg.hwnd;
 
-                        // 1. Darken main titlebar and frame structures
                         NativeMethods.Helpers.SetHWNDDarkMode(dialogHwnd, Program.Style.DarkMode);
-
-                        // 2. Bind the master text/label background subclass
                         Comctl32.SetWindowSubclass(dialogHwnd, dialogSubclassDelegate, (UIntPtr)1, IntPtr.Zero);
 
-                        // 3. Enumerate layout elements
                         User32.GetChildWindowHandles(dialogHwnd).ForEach(childHwnd =>
                         {
                             int ctrlId = User32.GetDlgCtrlID(childHwnd);
+                            StringBuilder sb = new(265);
+                            User32.GetClassName(childHwnd, sb, sb.Capacity);
+                            string className = sb.ToString();
+
                             NativeMethods.Helpers.SetHWNDDarkMode(childHwnd, Program.Style.DarkMode);
 
                             if (Program.Style.DarkMode)
                             {
-                                if (ctrlId == 12297)
+                                if (ctrlId == 12297 || className.Equals("ListBox", StringComparison.OrdinalIgnoreCase))
                                 {
-                                    // Inject aggressive rendering subclass directly to the item handler
                                     Comctl32.SetWindowSubclass(childHwnd, listViewAggressiveSubclass, (UIntPtr)2, IntPtr.Zero);
 
-                                    // Force direct memory coloration changes via explicit Win32 window message commands
-                                    User32.SendMessage(childHwnd, LVM_SETBKCOLOR, IntPtr.Zero, (IntPtr)DARK_COLOR_INT);
-                                    User32.SendMessage(childHwnd, LVM_SETTEXTCOLOR, IntPtr.Zero, (IntPtr)0x00FFFFFF);
-                                    User32.SendMessage(childHwnd, LVM_SETTEXTBKCOLOR, IntPtr.Zero, (IntPtr)DARK_COLOR_INT);
-
-                                    // Also apply fallback themes to keep scrollbars darkened safely
                                     UxTheme.SetWindowTheme(childHwnd, "Explorer", null);
                                     UxTheme.SetWindowTheme(childHwnd, "DarkMode_Explorer", null);
                                 }
-                                else if (ctrlId == 12290)
+                                else if (ctrlId == 12290 || className.Equals("Edit", StringComparison.OrdinalIgnoreCase))
                                 {
-                                    UxTheme.SetWindowTheme(childHwnd, "CFD", null);
+                                    UxTheme.SetWindowTheme(childHwnd, "DarkMode_Explorer", null);
                                 }
 
-                                // Trigger an absolute immediate paint update invalidation loop
                                 User32.RedrawWindow(childHwnd, IntPtr.Zero, IntPtr.Zero, 0x0001 | 0x0004 | 0x0100);
                             }
                         });
                     }
                 }
-                return User32.CallNextHookEx(hookId, nCode, wParam, lParam);
-            };
+            }
+            return User32.CallNextHookEx(hookId, nCode, wParam, lParam);
+        };
+        public static string PickIcon(IntPtr windowHandle, string PEfileName, int index = 0)
+        {
+            _acceptedPath = Environment.ExpandEnvironmentVariables(PEfileName);
+            StringBuilder sb = new(PEfileName, MAX_PATH);
 
             try
             {
+                int retval;
+
                 if (Program.Style.DarkMode)
                 {
-                    NativeMethods.UxTheme.SetPreferredAppMode(2); // Request strict thread compliance
+                    hookId = User32.SetWindowsHookEx(WH_CALLWNDPROCRET, hookDelegate, IntPtr.Zero, Kernel32.GetCurrentThreadId());
+                    cbtHookId = User32.SetWindowsHookEx(WH_CBT, cbtDelegate, IntPtr.Zero, Kernel32.GetCurrentThreadId());
+                    retval = Shell32.PickIconDlg(windowHandle, sb, sb.MaxCapacity, ref index);
+
+                    GC.KeepAlive(hookDelegate);
+                    GC.KeepAlive(cbtDelegate);
+                    GC.KeepAlive(dialogSubclassDelegate);
+                    GC.KeepAlive(listViewAggressiveSubclass);
                 }
-
-                hookId = User32.SetWindowsHookEx(WH_CALLWNDPROCRET, hookDelegate, IntPtr.Zero, Kernel32.GetCurrentThreadId());
-
-                int retval = Shell32.PickIconDlg(windowHandle, sb, sb.MaxCapacity, ref index);
-
-                GC.KeepAlive(hookDelegate);
-                GC.KeepAlive(dialogSubclassDelegate);
-                GC.KeepAlive(listViewAggressiveSubclass);
+                else // No dark mode manipulation needed, just call the dialog directly
+                {
+                    retval = Shell32.PickIconDlg(windowHandle, sb, sb.MaxCapacity, ref index);
+                }
 
                 if (retval != 0)
                 {
-                    string result = Path.GetExtension(sb.ToString()).ToLower() != ".ico" ? $"{sb},{index}" : sb.ToString();
-                    return result;
+                    return Path.GetExtension(sb.ToString()).ToLower() != ".ico" ? $"{sb},{index}" : sb.ToString();
                 }
             }
             finally
             {
-                if (hookId != IntPtr.Zero)
-                {
-                    User32.UnhookWindowsHookEx(hookId);
-                }
-                if (Program.Style.DarkMode)
-                {
-                    NativeMethods.UxTheme.SetPreferredAppMode(0);
-                }
+                if (hookId != IntPtr.Zero) User32.UnhookWindowsHookEx(hookId);
             }
 
             return null;

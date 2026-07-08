@@ -90,7 +90,7 @@ namespace WinPaletter
                 card.MouseLeave += (s, e) => Transition.With(panel1, nameof(panel1.BackColor), BackColor).CriticalDamp(Program.AnimationSpan);
             }
 
-            UI.Style.Dialogs.PickIcon(Handle, SysPaths.System32 + "\\shell32.dll");
+            UI.Style.Dialogs.PickIcon(Handle, SysPaths.Explorer);
         }
 
         private void Home_Localized()

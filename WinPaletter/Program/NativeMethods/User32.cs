@@ -370,7 +370,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="lprc"></param>
         /// <param name="pt"></param>
         /// <returns></returns>
-        [DllImport(_user32)] 
+        [DllImport(_user32)]
         public static extern bool PtInRect(ref RECT lprc, POINT pt);
 
         /// <summary>
@@ -403,7 +403,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="hWnd"></param>
         /// <param name="nIndex"></param>
         /// <returns></returns>
-        [DllImport(_user32)] 
+        [DllImport(_user32)]
         public static extern IntPtr GetClassLongPtr(IntPtr hWnd, int nIndex);
 
         /// <summary>
@@ -413,7 +413,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="lpString"></param>
         /// <param name="nMaxCount"></param>
         /// <returns></returns>
-        [DllImport(_user32, CharSet = CharSet.Unicode)] 
+        [DllImport(_user32, CharSet = CharSet.Unicode)]
         public static extern int GetWindowTextW(IntPtr hWnd, System.Text.StringBuilder lpString, int nMaxCount);
 
         /// <summary>
@@ -422,7 +422,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="hWnd"></param>
         /// <param name="lpPaint"></param>
         /// <returns></returns>
-        [DllImport(_user32)] 
+        [DllImport(_user32)]
         public static extern IntPtr BeginPaint(IntPtr hWnd, out PAINTSTRUCT lpPaint);
 
         /// <summary>
@@ -431,7 +431,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="hWnd"></param>
         /// <param name="lpPaint"></param>
         /// <returns></returns>
-        [DllImport(_user32)] 
+        [DllImport(_user32)]
         public static extern bool EndPaint(IntPtr hWnd, ref PAINTSTRUCT lpPaint);
 
         /// <summary>
@@ -440,7 +440,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="hWnd"></param>
         /// <param name="lpString"></param>
         /// <returns></returns>
-        [DllImport(_user32, CharSet = CharSet.Unicode)] 
+        [DllImport(_user32, CharSet = CharSet.Unicode)]
         public static extern IntPtr GetProp(IntPtr hWnd, string lpString);
 
         /// <summary>
@@ -448,7 +448,7 @@ namespace WinPaletter.NativeMethods
         /// </summary>
         /// <param name="hWnd"></param>
         /// <returns></returns>
-        [DllImport(_user32)] 
+        [DllImport(_user32)]
         public static extern IntPtr GetParent(IntPtr hWnd);
 
         /// <summary>
@@ -459,7 +459,7 @@ namespace WinPaletter.NativeMethods
         [DllImport(_user32)]
         public static extern IntPtr TrackMouseEvent2(ref TRACKMOUSEEVENT lpEventTrack);
 
-        [DllImport(_user32, EntryPoint = "TrackMouseEvent")] 
+        [DllImport(_user32, EntryPoint = "TrackMouseEvent")]
         public static extern bool TrackMouseEvent(ref TRACKMOUSEEVENT lpEventTrack);
 
         /// <summary>
@@ -950,7 +950,7 @@ namespace WinPaletter.NativeMethods
         /// </summary>
         /// <param name="nIndex"></param>
         /// <returns></returns>
-        [DllImport(_user32)] 
+        [DllImport(_user32)]
         public static extern IntPtr GetSysColorBrush(int nIndex);
 
         /// <summary>
@@ -1497,6 +1497,11 @@ namespace WinPaletter.NativeMethods
         public const uint WM_PAINT = 0x000F;
 
         /// <summary>
+        /// Window message: Create window
+        /// </summary>
+        public const uint WM_CREATE = 1;
+
+        /// <summary>
         /// Window message: Mouse movement
         /// </summary>
         public const uint WM_MOUSEMOVE = 0x0200;
@@ -1520,6 +1525,11 @@ namespace WinPaletter.NativeMethods
         /// Window message: Window destroyed
         /// </summary>
         public const uint WM_DESTROY = 0x0002;
+
+        /// <summary>
+        /// Window message: Window closed
+        /// </summary>
+        public const uint WM_COMMAND = 0x0111;
 
         /// <summary>
         /// Window message: Non-client area destroyed (sent when the non-client area of a window is being destroyed)
@@ -1552,6 +1562,16 @@ namespace WinPaletter.NativeMethods
         public const uint WM_CTLCOLORBTN = 0x0135;
 
         /// <summary>
+        /// Window message: Control color - edit control (duplicate of WM_CTLCOLOREDIT)
+        /// </summary>
+        public const uint WM_CTLCOREDIT = 0x0133;
+
+        /// <summary>
+        /// Window message: Control color - static control
+        /// </summary>
+        public const uint WM_CTLCOLORTEXT = 0x0139;
+
+        /// <summary>
         /// Window message: Control color - dialog box
         /// </summary>
         public const uint WM_CTLCOLORDLG = 0x0136;
@@ -1570,6 +1590,11 @@ namespace WinPaletter.NativeMethods
         /// Window message: System color change
         /// </summary>
         public const uint WM_SYSCOLORCHANGE = 0x0015;
+
+        /// <summary>
+        /// Window message: Draw item - Sent to the owner window of an owner-drawn control when a visual aspect of the control needs to be drawn.
+        /// </summary>
+        public const uint WM_DRAWITEM = 0x002B;
 
         /// <summary>
         /// Track mouse event flags: Request mouse leave notification
@@ -1721,15 +1746,20 @@ namespace WinPaletter.NativeMethods
         }
 
         /// <summary>
-        /// CWPSTRUCT structure: Contains information about a window message being processed by the CallWndProc hook procedure. This structure is used to pass message parameters to the hook procedure, allowing it to examine or modify the message before it is dispatched to the target window.
+        /// DRAWITEMSTRUCT structure: Contains information about an owner-drawn control, including the control type, item ID, item state, device context, and rectangle for drawing. This structure is used in the WM_DRAWITEM message to provide details for custom drawing of controls.
         /// </summary>
         [StructLayout(LayoutKind.Sequential)]
-        public struct CWPSTRUCT
+        public struct DRAWITEMSTRUCT
         {
-            public IntPtr lParam;
-            public IntPtr wParam;
-            public uint message;
-            public IntPtr hwnd;
+            public uint CtlType;
+            public uint CtlID;
+            public uint itemID;
+            public uint itemAction;
+            public uint itemState;
+            public IntPtr hwndItem;
+            public IntPtr hDC;
+            public UxTheme.RECT rcItem;
+            public IntPtr itemData;
         }
 
         /// <summary>
@@ -1745,6 +1775,31 @@ namespace WinPaletter.NativeMethods
             public bool fIncUpdate;
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 32)]
             public byte[] rgbReserved;
+        }
+
+        /// <summary>
+        /// CWPSTRUCT structure: Contains information about a window message being processed by the CallWndProc hook procedure. This structure is used to pass message parameters to the hook procedure, allowing it to examine or modify the message before it is dispatched to the target window.
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential)]
+        public struct CWPSTRUCT
+        {
+            public IntPtr lParam;
+            public IntPtr wParam;
+            public uint message;
+            public IntPtr hwnd;
+        }
+
+        /// <summary>
+        /// CWPRETSTRUCT structure: Contains information about a window message being processed by the CallWndRetProc hook procedure. This structure is used to pass message parameters and the result of the message processing to the hook procedure, allowing it to examine or modify the message after it has been processed by the target window.
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential)]
+        public struct CWPRETSTRUCT
+        {
+            public IntPtr lResult;
+            public IntPtr lParam;
+            public IntPtr wParam;
+            public uint message;
+            public IntPtr hwnd;
         }
 
         /// <summary>
@@ -1824,9 +1879,9 @@ namespace WinPaletter.NativeMethods
             public IntPtr dwExtraInfo;
         }
 
-        [StructLayout(LayoutKind.Sequential)] 
+        [StructLayout(LayoutKind.Sequential)]
         public struct POINT(int x, int y)
-        { 
+        {
             public int X = x;
             public int Y = y;
         }
