@@ -35,7 +35,6 @@
             // 
             this.tabsContainer1.AllowDrop = true;
             this.tabsContainer1.AnimatedScrollOffset = 0;
-            this.tabsContainer1.BackColor = System.Drawing.Color.Transparent;
             this.tabsContainer1.Dock = System.Windows.Forms.DockStyle.Top;
             this.tabsContainer1.Flag = WinPaletter.Tabs.TitlebarExtender.Flags.System;
             this.tabsContainer1.Location = new System.Drawing.Point(0, 0);

@@ -6,7 +6,7 @@ using System.Windows.Forms;
 namespace WinPaletter
 {
     [Microsoft.VisualBasic.CompilerServices.DesignerGenerated()]
-    public partial class OS_Dashboard : UI.WP.Form
+    public partial class OS_Dashboard : GlassWindow
     {
 
         // Form overrides dispose to clean up the component list.
@@ -220,6 +220,7 @@ namespace WinPaletter
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            this.WindowState = FormWindowState.Normal;
             this.Text = "";
             this.Load += new System.EventHandler(this.OS_Dashboard_Load);
             this.ResumeLayout(false);

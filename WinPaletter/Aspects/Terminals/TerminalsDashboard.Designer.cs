@@ -6,7 +6,7 @@ using System.Windows.Forms;
 namespace WinPaletter
 {
     [Microsoft.VisualBasic.CompilerServices.DesignerGenerated()]
-    public partial class TerminalsDashboard : UI.WP.Form
+    public partial class TerminalsDashboard : GlassWindow
     {
 
         // Form overrides dispose to clean up the component list.
@@ -43,9 +43,7 @@ namespace WinPaletter
             this.Button2 = new WinPaletter.UI.WP.Button();
             this.Button1 = new WinPaletter.UI.WP.Button();
             this.button7 = new WinPaletter.UI.WP.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.labelAlt1 = new WinPaletter.UI.WP.LabelAlt();
-            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // Button5
@@ -58,7 +56,7 @@ namespace WinPaletter
             this.Button5.Image = ((System.Drawing.Image)(resources.GetObject("Button5.Image")));
             this.Button5.ImageGlyph = null;
             this.Button5.ImageGlyphEnabled = false;
-            this.Button5.Location = new System.Drawing.Point(178, 42);
+            this.Button5.Location = new System.Drawing.Point(179, 41);
             this.Button5.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button5.Name = "Button5";
             this.Button5.Size = new System.Drawing.Size(31, 78);
@@ -79,7 +77,7 @@ namespace WinPaletter
             this.Button6.Image = ((System.Drawing.Image)(resources.GetObject("Button6.Image")));
             this.Button6.ImageGlyph = null;
             this.Button6.ImageGlyphEnabled = false;
-            this.Button6.Location = new System.Drawing.Point(141, 42);
+            this.Button6.Location = new System.Drawing.Point(142, 41);
             this.Button6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button6.Name = "Button6";
             this.Button6.Size = new System.Drawing.Size(31, 78);
@@ -100,7 +98,7 @@ namespace WinPaletter
             this.Button3.Image = ((System.Drawing.Image)(resources.GetObject("Button3.Image")));
             this.Button3.ImageGlyph = null;
             this.Button3.ImageGlyphEnabled = false;
-            this.Button3.Location = new System.Drawing.Point(103, 42);
+            this.Button3.Location = new System.Drawing.Point(104, 41);
             this.Button3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button3.Name = "Button3";
             this.Button3.Size = new System.Drawing.Size(31, 78);
@@ -121,7 +119,7 @@ namespace WinPaletter
             this.Button4.Image = ((System.Drawing.Image)(resources.GetObject("Button4.Image")));
             this.Button4.ImageGlyph = null;
             this.Button4.ImageGlyphEnabled = false;
-            this.Button4.Location = new System.Drawing.Point(65, 42);
+            this.Button4.Location = new System.Drawing.Point(66, 41);
             this.Button4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button4.Name = "Button4";
             this.Button4.Size = new System.Drawing.Size(31, 78);
@@ -142,7 +140,7 @@ namespace WinPaletter
             this.Button2.Image = ((System.Drawing.Image)(resources.GetObject("Button2.Image")));
             this.Button2.ImageGlyph = null;
             this.Button2.ImageGlyphEnabled = false;
-            this.Button2.Location = new System.Drawing.Point(217, 42);
+            this.Button2.Location = new System.Drawing.Point(218, 41);
             this.Button2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button2.Name = "Button2";
             this.Button2.Size = new System.Drawing.Size(31, 78);
@@ -163,7 +161,7 @@ namespace WinPaletter
             this.Button1.Image = ((System.Drawing.Image)(resources.GetObject("Button1.Image")));
             this.Button1.ImageGlyph = null;
             this.Button1.ImageGlyphEnabled = false;
-            this.Button1.Location = new System.Drawing.Point(27, 42);
+            this.Button1.Location = new System.Drawing.Point(28, 41);
             this.Button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(31, 78);
@@ -184,7 +182,7 @@ namespace WinPaletter
             this.button7.Image = null;
             this.button7.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button7.ImageGlyph")));
             this.button7.ImageGlyphEnabled = true;
-            this.button7.Location = new System.Drawing.Point(247, 9);
+            this.button7.Location = new System.Drawing.Point(248, 8);
             this.button7.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(20, 20);
@@ -193,31 +191,12 @@ namespace WinPaletter
             this.button7.UseVisualStyleBackColor = false;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.Transparent;
-            this.panel1.Controls.Add(this.Button6);
-            this.panel1.Controls.Add(this.Button1);
-            this.panel1.Controls.Add(this.button7);
-            this.panel1.Controls.Add(this.Button4);
-            this.panel1.Controls.Add(this.Button5);
-            this.panel1.Controls.Add(this.Button3);
-            this.panel1.Controls.Add(this.Button2);
-            this.panel1.Controls.Add(this.labelAlt1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(276, 130);
-            this.panel1.TabIndex = 106;
-            this.panel1.Visible = false;
-            // 
             // labelAlt1
             // 
             this.labelAlt1.BackColor = System.Drawing.Color.Transparent;
             this.labelAlt1.DrawOnGlass = true;
             this.labelAlt1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelAlt1.Location = new System.Drawing.Point(12, 10);
+            this.labelAlt1.Location = new System.Drawing.Point(13, 9);
             this.labelAlt1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelAlt1.Name = "labelAlt1";
             this.labelAlt1.Size = new System.Drawing.Size(229, 18);
@@ -229,21 +208,21 @@ namespace WinPaletter
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
+            this.BackdropStyle = WinPaletter.DWM.DWMStyles.None;
             this.ClientSize = new System.Drawing.Size(276, 130);
             this.CloseOnLostFocus = true;
-            this.ControlBox = false;
-            this.Controls.Add(this.panel1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Controls.Add(this.Button6);
+            this.Controls.Add(this.Button1);
+            this.Controls.Add(this.labelAlt1);
+            this.Controls.Add(this.button7);
+            this.Controls.Add(this.Button2);
+            this.Controls.Add(this.Button4);
+            this.Controls.Add(this.Button3);
+            this.Controls.Add(this.Button5);
             this.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.Name = "TerminalsDashboard";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Load += new System.EventHandler(this.TerminalsDashboard_Load);
-            this.Shown += new System.EventHandler(this.TerminalsDashboard_Shown);
-            this.panel1.ResumeLayout(false);
+            this.ScreenCaptureBlock = WinPaletter.UI.WP.Form.ScreenCaptureBlockType.None;
+            this.WindowState = System.Windows.Forms.FormWindowState.Normal;
             this.ResumeLayout(false);
 
         }
@@ -254,7 +233,6 @@ namespace WinPaletter
         internal UI.WP.Button Button5;
         internal UI.WP.Button Button6;
         internal UI.WP.Button button7;
-        private Panel panel1;
         private UI.WP.LabelAlt labelAlt1;
     }
 }

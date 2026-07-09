@@ -571,7 +571,7 @@ namespace WinPaletter.UI.WP
             }
         }
 
-        private byte _blurOpacity = 128; // default: 0-255
+        private byte _blurOpacity = 255; // default: 0-255
         private bool _blurBehind;
 
         [Browsable(true)]
@@ -592,7 +592,7 @@ namespace WinPaletter.UI.WP
         [Browsable(true)]
         [Category("Advanced Native")]
         [Description("Adjusts blur opacity when BlurBehind is enabled (0=transparent, 255=opaque).")]
-        [DefaultValue(128)]
+        [DefaultValue(255)]
         public byte BlurOpacity
         {
             get => _blurOpacity;

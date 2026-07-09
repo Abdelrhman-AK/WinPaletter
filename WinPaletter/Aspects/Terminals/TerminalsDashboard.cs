@@ -15,19 +15,6 @@ namespace WinPaletter
             InitializeComponent();
         }
 
-        private void TerminalsDashboard_Load(object sender, EventArgs e)
-        {
-            BackColor = Color.Black;
-
-            DWM.DWMStyles style;
-
-            if (OS.WXP || OS.W8x) style = DWM.DWMStyles.None;
-            else if (OS.WVista || OS.W7) style = DWM.DWMStyles.Aero;
-            else style = DWM.DWMStyles.Acrylic;
-
-            this.DropEffect(Padding.Empty, true, style, true);
-        }
-
         public DialogResult ShowDialog(Size size, Point location)
         {
             this.Size = size;
@@ -206,11 +193,6 @@ namespace WinPaletter
         private void Button1_MouseLeave(object sender, EventArgs e)
         {
             Transition.With(labelAlt1, nameof(labelAlt1.Text), string.Empty).CriticalDamp(Program.AnimationSpan_Quick);
-        }
-
-        private void TerminalsDashboard_Shown(object sender, EventArgs e)
-        {
-            Program.Animator.ShowSync(panel1);
         }
     }
 }

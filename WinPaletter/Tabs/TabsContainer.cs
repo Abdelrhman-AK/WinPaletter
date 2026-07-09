@@ -41,10 +41,10 @@ namespace WinPaletter.Tabs
     {
         public TabsContainer()
         {
-            SetStyle(ControlStyles.SupportsTransparentBackColor | ControlStyles.UserPaint | ControlStyles.ContainerControl | ControlStyles.OptimizedDoubleBuffer, true);
+            SetStyle(ControlStyles.ContainerControl | ControlStyles.OptimizedDoubleBuffer, true);
             DoubleBuffered = true;
             AllowDrop = true;
-
+            Flag = Flags.System;
             InitializeContextMenu();
         }
 

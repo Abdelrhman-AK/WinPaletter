@@ -396,7 +396,7 @@ namespace WinPaletter.Tabs
                     break;
                 case TitlebarTypes.Basic:
                 case TitlebarTypes.Classic:
-                    BackColor = Color.Black;
+                    BackColor = activeTtl;
                     break;
             }
 
@@ -423,7 +423,7 @@ namespace WinPaletter.Tabs
                 Rectangle rect = new(0, 0, Width, Height);
                 using (LinearGradientBrush brush = new(rect, _formFocused ? activeTtl : inactiveTtl, _formFocused ? activeTtlG : inactiveTtlG, LinearGradientMode.Horizontal))
                 {
-                    G.FillRectangle(brush, rect);
+                    G.FillRectangle(Brushes.Red, rect);
                 }
             }
         }

@@ -66,26 +66,16 @@ namespace WinPaletter
                     break;
             }
 
-            // Animate the form.
-            Transition.With(this, nameof(Height), targetSize.Height).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration * 0.6));
-
-            BackColor = Color.Black;
-
-            DWM.DWMStyles style;
-
-            if (OS.WXP || OS.W8x) style = DWM.DWMStyles.None;
-            else if (OS.WVista || OS.W7) style = DWM.DWMStyles.Aero;
-            else style = DWM.DWMStyles.Acrylic;
-
-            this.DropEffect(Padding.Empty, true, style, true);
+            //// Animate the form.
+            //Transition.With(this, nameof(Height), targetSize.Height).CriticalDamp(TimeSpan.FromMilliseconds(Program.AnimationDuration * 0.6));
         }
 
         public DialogResult ShowDialog(Size parentButtonSize, Point parentButtonLocation)
         {
-            targetSize = Size;
+            //targetSize = Size;
             targetLocation = parentButtonLocation - new Size(Width - parentButtonSize.Width, 0);
 
-            Size = new(Width, 1);
+            //Size = new(Width, 1);
             Location = parentButtonLocation;
             Left -= Width - parentButtonSize.Width;
 

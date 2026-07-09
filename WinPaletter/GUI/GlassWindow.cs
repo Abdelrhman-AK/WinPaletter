@@ -12,12 +12,11 @@ namespace WinPaletter
     public class GlassWindow : UI.WP.Form
     {
         private bool shownOverAParent = false;
+        private bool blurActive = false;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GlassWindow"/> class.
-        /// </summary>
         public GlassWindow()
         {
+            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.Opaque, true);
             BackColor = Color.Black;
             ControlBox = false;
             Font = new("Segoe UI", 9.0f, FontStyle.Regular, GraphicsUnit.Point, 0);
@@ -52,66 +51,25 @@ namespace WinPaletter
 
             shownOverAParent = true;
 
-            // Acrlyic glass size fixer
             int fixer_Width = OS.W10 || OS.W11 || OS.W12 ? 15 : 0;
             int fixer_Height = OS.W10 || OS.W11 || OS.W12 ? 7 : 0;
 
-            // Match size and position
             WindowState = FormWindowState.Normal;
             Location = parent.Location + new Size(fixer_Width / 2, 0);
             Size = parent.Size - new Size(fixer_Width, fixer_Height);
 
-            // Make this glass window owned by the parent
-            // So it stays above parent but below any dialog of parent
             Owner = parent;
 
-            // Show without activating or changing Z-order
             Show();
 
-            // Ensure it’s directly above parent but not topmost globally
             User32.SetWindowPos(Handle, parent.Handle, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
         }
 
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-
-            if ((OS.W7 || OS.WVista) && DWMAPI.IsCompositionEnabled())
-            {
-                // If the OS is Windows 7 or Vista and DWM is enabled, use Aero effect.
-                DWMAPI.DWM_BLURBEHIND blurBehind = new(true);
-                DWMAPI.DwmEnableBlurBehindWindow(Handle, blurBehind);
-            }
-            else if (!OS.WXP && !OS.W8x)
-            {
-                // If the OS is not Windows XP, 8 or 8.1 or even DWM composition is disabled, use Acrylic effect.
-                this.DropEffect(Padding.Empty, shownOverAParent, DWM.DWMStyles.Acrylic, true);
-
-                if (shownOverAParent)
-                {
-                    // Make the form have rounded corners if the operating system is Windows 11 or 12
-                    // It should be used as a fallback for the custom styling.
-                    if (OS.W12 || OS.W11)
-                    {
-                        bool useRoundedCorners = Program.Settings.Appearance.ManagedByTheme && Program.Settings.Appearance.CustomColors && !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8x && !OS.W10;
-
-                        int argpvAttribute = (int)DWMAPI.FormCornersType.Round;
-                        DWMAPI.DwmSetWindowAttribute(Handle, DWMAPI.DWMWINDOWATTRIBUTE.WINDOW_CORNER_PREFERENCE, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
-
-                        // Process rectangular window corners if custom styling is enabled and rounded corners are disabled
-                        if (useRoundedCorners && !Program.Settings.Appearance.RoundedCorners)
-                        {
-                            int argpvAttribute1 = (int)DWMAPI.FormCornersType.Rectangular;
-                            DWMAPI.DwmSetWindowAttribute(Handle, DWMAPI.DWMWINDOWATTRIBUTE.WINDOW_CORNER_PREFERENCE, ref argpvAttribute1, Marshal.SizeOf(typeof(int)));
-                        }
-                    }
-                }
-            }
-            else
-            {
-                // If the OS is Windows XP, 8 or 8.1, use transparent gray effect.
-                this.DropEffect(Padding.Empty, shownOverAParent, DWM.DWMStyles.None);
-            }
+            BackColor = Color.Black;
+            ApplyGlassEffect();
         }
 
         protected override void OnHandleCreated(EventArgs e)
@@ -119,11 +77,119 @@ namespace WinPaletter
             base.OnHandleCreated(e);
 
             long exStyle = User32.GetWindowLong(Handle, GWL_EXSTYLE);
-            exStyle |= WS_EX_LAYERED | WS_EX_TRANSPARENT | WS_EX_NOACTIVATE;
+            exStyle |= WS_EX_TRANSPARENT | WS_EX_NOACTIVATE;
+            User32.SetWindowLong(Handle, GWL_EXSTYLE, exStyle);
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            if (!DesignMode && IsHandleCreated) ApplyGlassEffect();
+        }
+
+        private void ApplyGlassEffect()
+        {
+            if (DesignMode || !IsHandleCreated) return;
+
+            if ((OS.W7 || OS.WVista) && DWMAPI.IsCompositionEnabled())
+            {
+                blurActive = true;
+                RemoveLayeredAlpha();
+
+                DWMAPI.MARGINS margins = new() { leftWidth = -1, rightWidth = -1, topHeight = -1, bottomHeight = -1 };
+                DWMAPI.DwmExtendFrameIntoClientArea(Handle, ref margins);
+
+                IntPtr hRgn = GDI32.CreateRectRgn(0, 0, Math.Max(1, Width), Math.Max(1, Height));
+
+                DWMAPI.DWM_BLURBEHIND blurBehind = new()
+                {
+                    dwFlags = DWMAPI.DWM_BB_ENABLE | DWMAPI.DWM_BB_BLURREGION,
+                    fEnable = true,
+                    hRgnBlur = hRgn,
+                    fTransitionOnMaximized = false
+                };
+
+                DWMAPI.DwmEnableBlurBehindWindow(Handle, blurBehind);
+
+                if (hRgn != IntPtr.Zero) GDI32.DeleteObject(hRgn);
+
+                Invalidate();
+            }
+            else if (!OS.WXP && !OS.W8x)
+            {
+                blurActive = false;
+
+                this.DropEffect(Padding.Empty, shownOverAParent, DWM.DWMStyles.Acrylic, true);
+
+                if (shownOverAParent && (OS.W12 || OS.W11))
+                {
+                    bool useRoundedCorners = Program.Settings.Appearance.ManagedByTheme && Program.Settings.Appearance.CustomColors && !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8x && !OS.W10;
+
+                    int argpvAttribute = (int)DWMAPI.FormCornersType.Round;
+                    DWMAPI.DwmSetWindowAttribute(Handle, DWMAPI.DWMWINDOWATTRIBUTE.WINDOW_CORNER_PREFERENCE, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
+
+                    if (useRoundedCorners && !Program.Settings.Appearance.RoundedCorners)
+                    {
+                        int argpvAttribute1 = (int)DWMAPI.FormCornersType.Rectangular;
+                        DWMAPI.DwmSetWindowAttribute(Handle, DWMAPI.DWMWINDOWATTRIBUTE.WINDOW_CORNER_PREFERENCE, ref argpvAttribute1, Marshal.SizeOf(typeof(int)));
+                    }
+                }
+
+                ApplyLayeredAlpha();
+            }
+            else
+            {
+                blurActive = false;
+                this.DropEffect(Padding.Empty, shownOverAParent, DWM.DWMStyles.None);
+                ApplyLayeredAlpha();
+            }
+        }
+
+        protected override void OnPaintBackground(PaintEventArgs e)
+        {
+            if (blurActive)
+            {
+                using (SolidBrush brush = new(Color.Black))
+                {
+                    e.Graphics.FillRectangle(brush, ClientRectangle);
+                }
+            }
+            else
+            {
+                base.OnPaintBackground(e);
+            }
+        }
+
+        private void ApplyLayeredAlpha()
+        {
+            long exStyle = User32.GetWindowLong(Handle, GWL_EXSTYLE);
+            exStyle |= WS_EX_LAYERED;
             User32.SetWindowLong(Handle, GWL_EXSTYLE, exStyle);
 
-            // 50% transparent gray
             User32.SetLayeredWindowAttributes(Handle, 0, 128, LWA_ALPHA);
+        }
+
+        private void RemoveLayeredAlpha()
+        {
+            long exStyle = User32.GetWindowLong(Handle, GWL_EXSTYLE);
+            if ((exStyle & WS_EX_LAYERED) != 0)
+            {
+                exStyle &= ~WS_EX_LAYERED;
+                User32.SetWindowLong(Handle, GWL_EXSTYLE, exStyle);
+            }
+        }
+
+        private void InitializeComponent()
+        {
+            this.SuspendLayout();
+            // 
+            // GlassWindow
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.ClientSize = new System.Drawing.Size(484, 351);
+            this.Name = "GlassWindow";
+            this.ResumeLayout(false);
+
         }
     }
 }

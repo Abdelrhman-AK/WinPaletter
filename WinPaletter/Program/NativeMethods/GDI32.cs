@@ -450,6 +450,9 @@ namespace WinPaletter.NativeMethods
         [DllImport(_gdi32, CharSet = CharSet.Unicode, SetLastError = true)]
         public static extern IntPtr CreateFontIndirect([In] ref LOGFONT lplf);
 
+        [DllImport(_gdi32)]
+        public static extern IntPtr CreateRectRgn(int nLeftRect, int nTopRect, int nRightRect, int nBottomRect);
+
         /// <summary>
         /// Gets information about the specified graphics object. The function fills a buffer with information about the object, such as its type and attributes.
         /// </summary>
