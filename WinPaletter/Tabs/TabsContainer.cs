@@ -135,8 +135,8 @@ namespace WinPaletter.Tabs
         private static StringFormat sf = new() { LineAlignment = StringAlignment.Center, Alignment = StringAlignment.Near, Trimming = StringTrimming.EllipsisCharacter, FormatFlags = StringFormatFlags.MeasureTrailingSpaces };
         private static StringFormat sf_middleCenter = ContentAlignment.MiddleCenter.ToStringFormat();
         private static string closeStr = "✕";
-        private static Color win7BorderColor = Color.FromArgb(145, 255, 255, 255);
-        private static Color win7BorderColor_Inner = Color.FromArgb(150, 15, 15, 15);
+        private static Color win7BorderColor = Color.FromArgb(130, 225, 225, 225);
+        private static Color win7BorderColor_Inner = Color.FromArgb(255, 0, 0, 0);
 
         private Font selectedFont;
 
@@ -2503,15 +2503,18 @@ namespace WinPaletter.Tabs
 
                     if (OS.WVista || OS.W7)
                     {
+                        Rectangle rect_7 = new(rect.X, rect.Y, rect.Width, rect.Height - 1);
+
+                        using (GraphicsPath path_7 = rect_7.ToTabPath(_radius, Program.Style.RoundedCorners ? GraphicsExtensions.TabStyle.Rounded : GraphicsExtensions.TabStyle.Sharp))
                         using (Pen Px = new(Color.FromArgb(Math.Max(0, Math.Min(tabData.SelectionAlpha, win7BorderColor.A)), win7BorderColor)))
                         {
-                            DrawTabPath(G, path, Px, rect, _radius, Program.Style.RoundedCorners);
+                            DrawTabPath(G, path_7, Px, rect_7, _radius, Program.Style.RoundedCorners);
 
                             if (tabData.SelectionAlpha > 0)
                             {
-                                Rectangle rect_smaller = new(rect.X + _rectSmallerOffset, rect.Y + _rectSmallerOffset, rect.Width - _rectSmallerWidthReduction, rect.Height);
+                                Rectangle rect_smaller = new(rect_7.X + _rectSmallerOffset, rect_7.Y + _rectSmallerOffset, rect_7.Width - _rectSmallerWidthReduction, rect_7.Height);
                                 using (GraphicsPath path_smaller = rect_smaller.ToTabPath(_radius - _smallerRadiusOffset, Program.Style.RoundedCorners ? GraphicsExtensions.TabStyle.Rounded : GraphicsExtensions.TabStyle.Sharp))
-                                using (Pen pen_inner = new(Color.FromArgb(Math.Max(0, Math.Min((int)(150f * (255 - tabData.HoverAlpha) / 255f), tabData.SelectionAlpha)), win7BorderColor_Inner)))
+                                using (Pen pen_inner = new(Color.FromArgb(Math.Max(0, Math.Min((int)(200f * (255 - tabData.HoverAlpha) / 255f), tabData.SelectionAlpha)), win7BorderColor_Inner)))
                                 {
                                     DrawTabPath(G, path_smaller, pen_inner, rect_smaller, _radius - _smallerRadiusOffset, Program.Style.RoundedCorners);
                                 }

@@ -944,9 +944,6 @@
     <Compile Include="GUI\Form.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GUI\Form.Designer.cs">
-      <DependentUpon>Form.cs</DependentUpon>
-    </Compile>
     <Compile Include="Theme\Default\ClassicColorsSchemes.cs" />
     <Compile Include="Theme\Default\MetricsSchemes.cs" />
     <Compile Include="Theme\Default\Windows10.cs" />
