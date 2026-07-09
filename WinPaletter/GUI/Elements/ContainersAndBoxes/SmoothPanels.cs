@@ -8,8 +8,11 @@ namespace WinPaletter.UI.WP
     {
         private readonly Timer _scrollTimer;
         protected double _targetV, _targetH;
+        private double _currentV, _currentH;
+        private bool _positionInitialized;
         private const int SCROLL_INTERVAL = 15;
         private const double SCROLL_SPEED = 0.3;
+        private const double SNAP_THRESHOLD = 0.5;
 
         public SmoothScrollableControlBase()
         {
@@ -20,28 +23,44 @@ namespace WinPaletter.UI.WP
             MouseEnter += (s, e) => Focus();
         }
 
+        private void EnsurePositionInitialized()
+        {
+            if (!_positionInitialized)
+            {
+                _currentH = -AutoScrollPosition.X;
+                _currentV = -AutoScrollPosition.Y;
+                _targetH = _currentH;
+                _targetV = _currentV;
+                _positionInitialized = true;
+            }
+        }
+
         private void ScrollTimer_Tick(object sender, EventArgs e)
         {
-            double currentH = -AutoScrollPosition.X;
-            double currentV = -AutoScrollPosition.Y;
-            double diffH = _targetH - currentH;
-            double diffV = _targetV - currentV;
+            double diffH = _targetH - _currentH;
+            double diffV = _targetV - _currentV;
 
-            // Only animate if the difference is more than 0.1 pixels
-            if (Math.Abs(diffH) > 0.1 || Math.Abs(diffV) > 0.1)
+            // Only animate if the difference is more than the snap threshold
+            if (Math.Abs(diffH) > SNAP_THRESHOLD || Math.Abs(diffV) > SNAP_THRESHOLD)
             {
-                AutoScrollPosition = new Point((int)(currentH + diffH * SCROLL_SPEED), (int)(currentV + diffV * SCROLL_SPEED));
+                _currentH += diffH * SCROLL_SPEED;
+                _currentV += diffV * SCROLL_SPEED;
+                AutoScrollPosition = new Point((int)Math.Round(_currentH), (int)Math.Round(_currentV));
             }
             else
             {
                 // Force snap to target to finish the scroll completely
-                AutoScrollPosition = new Point((int)_targetH, (int)_targetV);
+                _currentH = _targetH;
+                _currentV = _targetV;
+                AutoScrollPosition = new Point((int)Math.Round(_currentH), (int)Math.Round(_currentV));
                 _scrollTimer.Stop();
             }
         }
 
         protected override void OnMouseWheel(MouseEventArgs e)
         {
+            EnsurePositionInitialized();
+
             if (HorizontalScroll.Visible && !VerticalScroll.Visible)
                 UpdateTarget(ref _targetH, HorizontalScroll, -e.Delta, 120);
             else
@@ -61,6 +80,7 @@ namespace WinPaletter.UI.WP
         {
             if (m.Msg == NativeMethods.User32.WM_MOUSEHWHEEL)
             {
+                EnsurePositionInitialized();
                 int delta = (short)((ushort)m.WParam >> 16);
                 UpdateTarget(ref _targetH, HorizontalScroll, -delta, 120);
                 if (!_scrollTimer.Enabled) _scrollTimer.Start();
@@ -77,27 +97,53 @@ namespace WinPaletter.UI.WP
     {
         private readonly Timer _scrollTimer;
         private double _targetV, _targetH;
+        private double _currentV, _currentH;
+        private bool _positionInitialized;
         private const int SCROLL_INTERVAL = 15;
         private const double SCROLL_SPEED = 0.25;
+        private const double SNAP_THRESHOLD = 0.5;
 
         public SmoothFlowLayoutPanel()
         {
             this.DoubleBuffer();
             _scrollTimer = new() { Interval = SCROLL_INTERVAL };
-            _scrollTimer.Tick += (s, e) => {
-                double currentH = -AutoScrollPosition.X;
-                double currentV = -AutoScrollPosition.Y;
-                double diffH = _targetH - currentH;
-                double diffV = _targetV - currentV;
+            _scrollTimer.Tick += (s, e) =>
+            {
+                double diffH = _targetH - _currentH;
+                double diffV = _targetV - _currentV;
 
-                if (Math.Abs(diffH) > 0.1 || Math.Abs(diffV) > 0.1)
-                    AutoScrollPosition = new Point((int)(currentH + diffH * SCROLL_SPEED), (int)(currentV + diffV * SCROLL_SPEED));
-                else { AutoScrollPosition = new Point((int)_targetH, (int)_targetV); _scrollTimer.Stop(); }
+                if (Math.Abs(diffH) > SNAP_THRESHOLD || Math.Abs(diffV) > SNAP_THRESHOLD)
+                {
+                    _currentH += diffH * SCROLL_SPEED;
+                    _currentV += diffV * SCROLL_SPEED;
+                    AutoScrollPosition = new Point((int)Math.Round(_currentH), (int)Math.Round(_currentV));
+                }
+                else
+                {
+                    _currentH = _targetH;
+                    _currentV = _targetV;
+                    AutoScrollPosition = new Point((int)Math.Round(_currentH), (int)Math.Round(_currentV));
+                    _scrollTimer.Stop();
+                }
             };
+        }
+
+        private void EnsurePositionInitialized()
+        {
+            if (!_positionInitialized)
+            {
+                _currentH = -AutoScrollPosition.X;
+                _currentV = -AutoScrollPosition.Y;
+                _targetH = _currentH;
+                _targetV = _currentV;
+                _positionInitialized = true;
+            }
         }
 
         protected override void OnMouseWheel(MouseEventArgs e)
         {
+            EnsurePositionInitialized();
+
             if (HorizontalScroll.Visible && !VerticalScroll.Visible)
                 _targetH = Math.Max(0, Math.Min(HorizontalScroll.Maximum - HorizontalScroll.LargeChange + 1, _targetH + (-e.Delta / 120.0 * 120)));
             else
@@ -110,6 +156,7 @@ namespace WinPaletter.UI.WP
         {
             if (m.Msg == NativeMethods.User32.WM_MOUSEHWHEEL)
             {
+                EnsurePositionInitialized();
                 int delta = (short)((ushort)m.WParam >> 16);
                 _targetH = Math.Max(0, Math.Min(HorizontalScroll.Maximum - HorizontalScroll.LargeChange + 1, _targetH + (-delta / 120.0 * 120)));
                 _scrollTimer.Start();

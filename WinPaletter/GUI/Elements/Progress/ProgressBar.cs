@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.Interfaces;
@@ -21,6 +22,10 @@ namespace WinPaletter.UI.WP
             BackColor = Color.Transparent;
             taskbarList?.HrInit();
             StyleChanged += ProgressBar_StyleChanged;
+
+            // Initialize animation engine
+            _animationEngine = new AnimationEngine();
+            _animationEngine.FrameUpdate += OnAnimationFrameUpdate;
         }
 
         #region Variables
@@ -32,9 +37,10 @@ namespace WinPaletter.UI.WP
         private DateTime _lastTaskbarUpdate = DateTime.MinValue;
         private bool _intendedVisible = true;
 
-        // Animation fields
-        private System.Windows.Forms.Timer _marqueeTimer;
-        private System.Windows.Forms.Timer _progressTimer;
+        // Animation engine - runs on separate thread
+        private readonly AnimationEngine _animationEngine;
+
+        // Animation fields (values updated by animation engine)
         private float _marqueeOffset = 0;
         private float _hoverOffset = 0;
         private int _alpha = 255;
@@ -43,6 +49,174 @@ namespace WinPaletter.UI.WP
         // Property fields
         private bool _highlightEffectEnabled = true;
         private int _highlightAnimationSpeed = 300;
+        #endregion
+
+        #region Animation Engine (Thread-Safe)
+        private class AnimationEngine : IDisposable
+        {
+            private readonly Thread _animationThread;
+            private volatile bool _isRunning;
+            private volatile bool _disposed;
+            private readonly object _lock = new();
+            private readonly ManualResetEvent _stopEvent = new(false);
+            private int _targetFPS = 60;
+            private int _marqueeSpeed = 100;
+            private int _highlightSpeed = 300;
+            private bool _marqueeActive = false;
+            private bool _highlightActive = false;
+
+            // Animation values
+            public float MarqueeOffset { get; private set; }
+            public float HoverOffset { get; private set; }
+
+            public event EventHandler FrameUpdate;
+
+            public AnimationEngine()
+            {
+                _isRunning = true;
+                _animationThread = new Thread(AnimationLoop)
+                {
+                    IsBackground = true,
+                    Priority = ThreadPriority.AboveNormal // Higher priority for smooth animations
+                };
+                _animationThread.Start();
+            }
+
+            private void AnimationLoop()
+            {
+                while (_isRunning)
+                {
+                    try
+                    {
+                        int interval = 1000 / _targetFPS;
+                        var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+
+                        // Update animation values
+                        UpdateAnimations();
+
+                        // Trigger UI update on UI thread
+                        FrameUpdate?.BeginInvoke(null, EventArgs.Empty, null, null);
+
+                        // Wait for next frame
+                        int elapsed = (int)stopwatch.ElapsedMilliseconds;
+                        int sleepTime = Math.Max(1, interval - elapsed);
+
+                        if (_stopEvent.WaitOne(sleepTime))
+                            break;
+
+                        // If we're running behind, skip the wait
+                        if (elapsed > interval)
+                            Thread.Yield();
+                    }
+                    catch (ThreadAbortException)
+                    {
+                        break;
+                    }
+                    catch
+                    {
+                        // Ignore exceptions in animation loop
+                        Thread.Sleep(16);
+                    }
+                }
+            }
+
+            private void UpdateAnimations()
+            {
+                lock (_lock)
+                {
+                    // Update marquee animation
+                    if (_marqueeActive)
+                    {
+                        float marqueeIncrement = 0.02f * (_marqueeSpeed / 100f);
+                        MarqueeOffset += marqueeIncrement;
+                        if (MarqueeOffset > 1) MarqueeOffset = 0;
+                    }
+                    else
+                    {
+                        MarqueeOffset = 0;
+                    }
+
+                    // Update hover animation
+                    if (_highlightActive)
+                    {
+                        float hoverIncrement = 0.01f * (_highlightSpeed / 300f);
+                        HoverOffset += hoverIncrement;
+                        if (HoverOffset > 1) HoverOffset = 0;
+                    }
+                    else
+                    {
+                        HoverOffset = 0;
+                    }
+                }
+            }
+
+            public void SetMarqueeActive(bool active)
+            {
+                lock (_lock)
+                {
+                    _marqueeActive = active;
+                    if (!active) MarqueeOffset = 0;
+                }
+            }
+
+            public void SetHighlightActive(bool active)
+            {
+                lock (_lock)
+                {
+                    _highlightActive = active;
+                    if (!active) HoverOffset = 0;
+                }
+            }
+
+            public void SetMarqueeSpeed(int speed)
+            {
+                lock (_lock)
+                {
+                    _marqueeSpeed = Math.Max(1, speed);
+                }
+            }
+
+            public void SetHighlightSpeed(int speed)
+            {
+                lock (_lock)
+                {
+                    _highlightSpeed = Math.Max(1, speed);
+                }
+            }
+
+            public void SetFPS(int fps)
+            {
+                lock (_lock)
+                {
+                    _targetFPS = Math.Max(30, Math.Min(120, fps));
+                }
+            }
+
+            public void Dispose()
+            {
+                if (_disposed) return;
+                _disposed = true;
+                _isRunning = false;
+                _stopEvent.Set();
+                _animationThread?.Join(500);
+                _stopEvent?.Dispose();
+            }
+        }
+
+        private void OnAnimationFrameUpdate(object sender, EventArgs e)
+        {
+            if (_disposed || !IsHandleCreated) return;
+
+            // Update animation values from engine
+            _marqueeOffset = _animationEngine.MarqueeOffset;
+            _hoverOffset = _animationEngine.HoverOffset;
+
+            // Invalidate UI if needed
+            if (Style == ProgressBarStyle.Marquee || _highlightEffectEnabled)
+            {
+                Invalidate();
+            }
+        }
         #endregion
 
         #region Events/Overrides
@@ -72,8 +246,8 @@ namespace WinPaletter.UI.WP
                     }
                 }
 
-                // Reinitialize timers when handle is recreated
-                EnsureTimersInitialized();
+                // Update animation engine state
+                UpdateAnimationState();
             }
 
             base.OnHandleCreated(e);
@@ -84,8 +258,9 @@ namespace WinPaletter.UI.WP
             SetProgressState(TaskbarProgressBarState.NoProgress);
             SetProgressValue(0);
 
-            // Stop timers but don't dispose them completely - they'll be recreated if needed
-            StopAllTimers();
+            // Stop animations
+            _animationEngine.SetMarqueeActive(false);
+            _animationEngine.SetHighlightActive(false);
 
             base.OnHandleDestroyed(e);
         }
@@ -96,17 +271,19 @@ namespace WinPaletter.UI.WP
             {
                 if (Style == ProgressBarStyle.Marquee)
                 {
-                    EnsureMarqueeTimerInitialized();
-                    StartMarqueeTimer();
+                    _animationEngine.SetMarqueeActive(true);
                 }
                 else
                 {
-                    StopMarqueeTimer();
+                    _animationEngine.SetMarqueeActive(false);
                     if (CanAnimate)
                         Transition.With(this, nameof(Value_Animation), _value).CriticalDamp(Program.AnimationSpan);
                     else
                         Value_Animation = _value;
                 }
+
+                // Update highlight state
+                UpdateHighlightState();
             }
 
             await Task.Delay(10);
@@ -118,38 +295,35 @@ namespace WinPaletter.UI.WP
         protected virtual void OnValueChanged(EventArgs e)
         {
             ValueChanged?.Invoke(this, e);
-
-            // Enable/disable progress timer based on value and highlight effect setting
-            UpdateProgressTimerState();
+            UpdateHighlightState();
         }
 
-        private void UpdateProgressTimerState()
+        private void UpdateHighlightState()
         {
             if (!DesignMode && Style != ProgressBarStyle.Marquee)
             {
-                EnsureProgressTimerInitialized();
+                bool shouldRun = _highlightEffectEnabled && _value > Minimum && _value < Maximum;
+                _animationEngine.SetHighlightActive(shouldRun);
+            }
+            else
+            {
+                _animationEngine.SetHighlightActive(false);
+            }
+        }
 
-                if (_progressTimer != null)
-                {
-                    bool shouldRun = _highlightEffectEnabled && _value > Minimum && _value < Maximum;
+        private void UpdateAnimationState()
+        {
+            if (!DesignMode)
+            {
+                bool isMarquee = Style == ProgressBarStyle.Marquee;
+                _animationEngine.SetMarqueeActive(isMarquee);
 
-                    if (shouldRun)
-                    {
-                        if (!_progressTimer.Enabled)
-                        {
-                            _progressTimer.Start();
-                        }
-                    }
-                    else
-                    {
-                        if (_progressTimer.Enabled)
-                        {
-                            _progressTimer.Stop();
-                        }
-                        _hoverOffset = 0; // reset hover when out of range
-                        Invalidate();
-                    }
-                }
+                bool highlightShouldRun = _highlightEffectEnabled && !isMarquee && _value > Minimum && _value < Maximum;
+                _animationEngine.SetHighlightActive(highlightShouldRun);
+
+                // Set FPS based on animation speed
+                int fps = Math.Max(30, Math.Min(60, 60000 / Math.Max(1, _highlightAnimationSpeed)));
+                _animationEngine.SetFPS(fps);
             }
         }
 
@@ -165,7 +339,7 @@ namespace WinPaletter.UI.WP
             {
                 if (disposing)
                 {
-                    StopAllTimers();
+                    _animationEngine?.Dispose();
                 }
                 _disposed = true;
             }
@@ -190,10 +364,6 @@ namespace WinPaletter.UI.WP
             {
                 _intendedVisible = value;
                 base.Visible = value;
-                // OnVisibleChanged fires automatically via base — but only if the
-                // effective visibility actually changed. For deep-nested controls
-                // whose parent chain suppresses them, we push the intended state
-                // directly so timers and taskbar always reflect what the caller wanted.
                 ApplyVisibilityState(value);
             }
         }
@@ -213,22 +383,14 @@ namespace WinPaletter.UI.WP
             {
                 _lastTaskbarUpdate = DateTime.MinValue;
                 UpdateTaskbar();
-
-                if (Style == ProgressBarStyle.Marquee)
-                {
-                    EnsureMarqueeTimerInitialized();
-                    StartMarqueeTimer();
-                }
-                else
-                {
-                    UpdateProgressTimerState();
-                }
+                UpdateAnimationState();
             }
             else
             {
                 SetProgressState(TaskbarProgressBarState.NoProgress);
                 SetProgressValue(0);
-                StopAllTimers();
+                _animationEngine.SetMarqueeActive(false);
+                _animationEngine.SetHighlightActive(false);
                 _lastTaskbarUpdate = DateTime.MinValue;
             }
         }
@@ -271,7 +433,7 @@ namespace WinPaletter.UI.WP
                 if (_highlightEffectEnabled != value)
                 {
                     _highlightEffectEnabled = value;
-                    UpdateProgressTimerState();
+                    UpdateHighlightState();
                     Invalidate();
                 }
             }
@@ -293,13 +455,11 @@ namespace WinPaletter.UI.WP
                 if (_highlightAnimationSpeed != value && value > 0)
                 {
                     _highlightAnimationSpeed = value;
+                    _animationEngine.SetHighlightSpeed(value);
 
-                    // Reinitialize progress timer with new speed if it's running
-                    if (_progressTimer != null && _progressTimer.Enabled)
-                    {
-                        StopHighlightEffect();
-                        UpdateProgressTimerState();
-                    }
+                    // Update FPS based on animation speed
+                    int fps = Math.Max(30, Math.Min(60, 60000 / Math.Max(1, value)));
+                    _animationEngine.SetFPS(fps);
                 }
             }
         }
@@ -460,7 +620,7 @@ namespace WinPaletter.UI.WP
         /// <summary>
         /// Indicates if marquee animation is active (based on Style)
         /// </summary>
-        public bool IsMarquee => Style == ProgressBarStyle.Marquee && _marqueeTimer != null;
+        public bool IsMarquee => Style == ProgressBarStyle.Marquee && _animationEngine != null;
 
         /// <summary>
         /// Gets or sets the speed of the marquee animation.
@@ -478,20 +638,7 @@ namespace WinPaletter.UI.WP
                 if (_marqueeAnimationSpeed != value && value > 0)
                 {
                     _marqueeAnimationSpeed = value;
-
-                    if (_marqueeTimer != null)
-                    {
-                        bool wasRunning = _marqueeTimer.Enabled;
-                        _marqueeTimer.Stop();
-                        _marqueeTimer.Dispose();
-                        _marqueeTimer = null;
-
-                        if (wasRunning)
-                        {
-                            EnsureMarqueeTimerInitialized();
-                            StartMarqueeTimer();
-                        }
-                    }
+                    _animationEngine.SetMarqueeSpeed(value);
                 }
             }
         }
@@ -594,140 +741,6 @@ namespace WinPaletter.UI.WP
 
             taskbarList?.SetProgressValue(FormHwnd, (ulong)_val, 100);
         }
-
-        #region Timer Management
-
-        /// <summary>
-        /// Ensures all timers are properly initialized
-        /// </summary>
-        private void EnsureTimersInitialized()
-        {
-            if (_disposed || DesignMode) return;
-
-            // Don't auto-start timers here - they'll be started by their respective properties
-        }
-
-        /// <summary>
-        /// Ensures the progress timer is initialized
-        /// </summary>
-        private void EnsureProgressTimerInitialized()
-        {
-            if (_progressTimer != null || _disposed || DesignMode) return;
-
-            // Calculate interval based on HighlightAnimationSpeed
-            // Higher speed = smaller interval = faster animation
-            // Lower speed = larger interval = slower animation
-            // Speed of 100 gives interval of 35ms (default)
-            // Speed of 200 gives interval of ~17ms (faster)
-            // Speed of 50 gives interval of 70ms (slower)
-            int interval = Math.Max(1, 3500 / Math.Max(1, _highlightAnimationSpeed));
-
-            _progressTimer = new System.Windows.Forms.Timer { Interval = interval };
-            _progressTimer.Tick += (s, e) =>
-            {
-                if (_disposed) return;
-
-                // Increment is constant regardless of interval to maintain smooth motion
-                _hoverOffset += 0.01f;
-
-                if (_hoverOffset > 1) _hoverOffset = 0;
-                Invalidate();
-            };
-        }
-
-        /// <summary>
-        /// Ensures the marquee timer is initialized
-        /// </summary>
-        private void EnsureMarqueeTimerInitialized()
-        {
-            if (_marqueeTimer != null || _disposed || DesignMode) return;
-
-            // Calculate interval based on MarqueeAnimationSpeed
-            // Higher speed = smaller interval = faster animation
-            // Lower speed = larger interval = slower animation
-            int interval = Math.Max(1, 2000 / Math.Max(1, MarqueeAnimationSpeed));
-
-            _marqueeTimer = new System.Windows.Forms.Timer { Interval = interval };
-            _marqueeTimer.Tick += (s, e) =>
-            {
-                if (_disposed) return;
-
-                // Increment is constant regardless of interval
-                _marqueeOffset += 0.02f;
-
-                if (_marqueeOffset > 1) _marqueeOffset = 0;
-                Invalidate();
-            };
-        }
-
-        /// <summary>
-        /// Stops all timers without disposing them
-        /// </summary>
-        private void StopAllTimers()
-        {
-            if (_progressTimer != null)
-            {
-                _progressTimer.Stop();
-                _progressTimer.Dispose();
-                _progressTimer = null;
-            }
-
-            if (_marqueeTimer != null)
-            {
-                _marqueeTimer.Stop();
-                _marqueeTimer.Dispose();
-                _marqueeTimer = null;
-            }
-
-            _hoverOffset = 0;
-            _marqueeOffset = 0;
-        }
-
-        /// <summary>
-        /// Stops the highlight effect timer
-        /// </summary>
-        private void StopHighlightEffect()
-        {
-            if (_progressTimer != null)
-            {
-                _progressTimer.Stop();
-                _progressTimer.Dispose();
-                _progressTimer = null;
-            }
-            _hoverOffset = 0;
-        }
-
-        /// <summary>
-        /// Starts the marquee timer
-        /// </summary>
-        private void StartMarqueeTimer()
-        {
-            if (_disposed || DesignMode) return;
-
-            EnsureMarqueeTimerInitialized();
-
-            if (_marqueeTimer != null && !_marqueeTimer.Enabled)
-            {
-                _marqueeTimer.Start();
-            }
-        }
-
-        /// <summary>
-        /// Stops the marquee timer
-        /// </summary>
-        private void StopMarqueeTimer()
-        {
-            if (_marqueeTimer != null)
-            {
-                _marqueeTimer.Stop();
-                _marqueeTimer.Dispose();
-                _marqueeTimer = null;
-            }
-            _marqueeOffset = 0;
-            Invalidate();
-        }
-
-        #endregion
 
         #endregion
 

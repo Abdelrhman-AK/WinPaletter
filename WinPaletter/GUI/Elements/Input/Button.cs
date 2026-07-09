@@ -81,9 +81,9 @@ namespace WinPaletter.UI.WP
             _cachedAlphaPen?.Dispose();
 
             _cachedFillBrush = new SolidBrush(Color.FromArgb(255, _color));
-            _cachedAlphaBrush = new SolidBrush(Color.FromArgb(_alpha, _color));
+            _cachedAlphaBrush = new SolidBrush(Color.FromArgb(State != MouseState.Down ? _alpha : 255, _color));
             _cachedBorderPen = new Pen(Color.FromArgb(255, _lineColor));
-            _cachedAlphaPen = new Pen(Color.FromArgb(_alpha, _lineColor));
+            _cachedAlphaPen = new Pen(Color.FromArgb(State != MouseState.Down ? _alpha : 255, _lineColor));
 
             _lastCachedColor = _color;
             _lastCachedAlpha = _alpha;
