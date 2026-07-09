@@ -358,6 +358,8 @@ namespace WinPaletter.UI.Style
         private static void ApplyDarkMode(IntPtr hwnd)
         {
             if (!Program.Style.DarkMode) return;
+            if (OS.WXP || OS.WVista || OS.W7 || OS.W8x) return;
+            if (hwnd == IntPtr.Zero) return;
 
             NativeMethods.Helpers.SetHWNDDarkMode(hwnd, true);
 

@@ -1295,7 +1295,9 @@ namespace WinPaletter.UI.Dark
         /// <param name="hwndPD"></param>
         public static void DarkenProgressDialog(IntPtr hwndPD)
         {
-            if (hwndPD == IntPtr.Zero || !Program.Style.DarkMode) return;
+            if (!Program.Style.DarkMode) return;
+            if (OS.WXP || OS.WVista || OS.W7 || OS.W8x) return;
+            if (hwndPD == IntPtr.Zero) return;
 
             bool hasNativeTheme = IsDarkThemeActive("DarkMode_Explorer::TaskDialog", "TaskDialog") || IsDarkThemeActive("DarkMode_DarkTheme::TaskDialog", "TaskDialog");
             bool hasCopyEngine = IsDarkThemeActive("DarkMode_CopyEngine::Progress", "Progress");
@@ -1381,6 +1383,10 @@ namespace WinPaletter.UI.Dark
         /// <param name="pCfg"></param>
         public static void DarkenTaskDialog(IntPtr hwndTD, IntPtr pCfg)
         {
+            if (!Program.Style.DarkMode) return;
+            if (OS.WXP || OS.WVista || OS.W7 || OS.W8x) return;
+            if (hwndTD == IntPtr.Zero) return;
+
             s_hasNativeTheme = IsDarkThemeActive("DarkMode_Explorer::TaskDialog", "TaskDialog") || IsDarkThemeActive("DarkMode_DarkTheme::TaskDialog", "TaskDialog");
 
             bool dark = Program.Style.DarkMode;

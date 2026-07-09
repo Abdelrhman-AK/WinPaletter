@@ -67,6 +67,9 @@ namespace WinPaletter.UI.Dark
 
         public DarkWin32()
         {
+            if (!Program.Style.DarkMode) return;
+            if (OS.WXP || OS.WVista || OS.W7 || OS.W8x) return;
+
             // Initialize delegates
             _dialogSubclassDelegate = DialogSubclassProc;
             _listViewAggressiveSubclass = ListViewSubclassProc;
@@ -74,12 +77,9 @@ namespace WinPaletter.UI.Dark
             _hookDelegate = HookProc;
             _cbtDelegate = CbtProc;
 
-            if (Program.Style.DarkMode)
-            {
-                uint threadId = Kernel32.GetCurrentThreadId();
-                _hookId = User32.SetWindowsHookEx(WH_CALLWNDPROCRET, _hookDelegate, IntPtr.Zero, threadId);
-                _cbtHookId = User32.SetWindowsHookEx(WH_CBT, _cbtDelegate, IntPtr.Zero, threadId);
-            }
+            uint threadId = Kernel32.GetCurrentThreadId();
+            _hookId = User32.SetWindowsHookEx(WH_CALLWNDPROCRET, _hookDelegate, IntPtr.Zero, threadId);
+            _cbtHookId = User32.SetWindowsHookEx(WH_CBT, _cbtDelegate, IntPtr.Zero, threadId);
         }
 
         #region Delegate Logic
@@ -415,9 +415,11 @@ namespace WinPaletter.UI.Dark
 
         private void ApplyDarkModeToControl(Win32Control ctrl)
         {
-            NativeMethods.Helpers.SetHWNDDarkMode(ctrl.Hwnd, Program.Style.DarkMode);
-
             if (!Program.Style.DarkMode) return;
+            if (OS.WXP || OS.WVista || OS.W7 || OS.W8x) return;
+            if (ctrl is null || ctrl.Hwnd == IntPtr.Zero) return;
+
+            NativeMethods.Helpers.SetHWNDDarkMode(ctrl.Hwnd, Program.Style.DarkMode);
 
             switch (ctrl.Type)
             {
@@ -440,6 +442,10 @@ namespace WinPaletter.UI.Dark
 
         private void ApplyDarkModeToAutoSuggestDropdown(IntPtr hWnd)
         {
+            if (!Program.Style.DarkMode) return;
+            if (OS.WXP || OS.WVista || OS.W7 || OS.W8x) return;
+            if (hWnd == IntPtr.Zero) return;
+
             NativeMethods.Helpers.SetHWNDDarkMode(hWnd, true);
             UxTheme.SetWindowTheme(hWnd, "DarkMode_Explorer", null);
             SubclassWindow(hWnd, _dropdownSubclassDelegate, (UIntPtr)SUBCLASS_ID_DROPDOWN);

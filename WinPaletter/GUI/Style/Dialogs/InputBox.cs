@@ -191,6 +191,9 @@ namespace WinPaletter.UI.Style
         private static void ApplyDarkModeToInputDialog(InputDialogState state, IntPtr hwnd)
         {
             if (!Program.Style.DarkMode) return;
+            if (OS.WXP || OS.WVista || OS.W7 || OS.W8x) return;
+            if (hwnd == IntPtr.Zero) return;
+            
             NativeMethods.Helpers.SetHWNDDarkMode(hwnd, Program.Style.DarkMode);
             if (state.ConfigPointer != IntPtr.Zero) Dark.DarkDirectUI.DarkenTaskDialog(hwnd, state.ConfigPointer);
             state.DarkEditBrush = GDI32.CreateSolidBrush((int)Dark.DarkColors.kSecondary.Value);
