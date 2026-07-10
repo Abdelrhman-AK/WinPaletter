@@ -107,7 +107,7 @@ namespace WinPaletter.Theme.Structures
                     WriteReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes", "ColorSetFromTheme", 0);
 
                     // Broadcast the system message to notify about the setting change
-                    User32.SendMessage(IntPtr.Zero, User32.WindowsMessages.WM_SETTINGCHANGE | User32.WindowsMessages.WM_THEMECHANGED | User32.WindowsMessages.WM_SYSCOLORCHANGE, IntPtr.Zero, IntPtr.Zero);
+                    User32.SendMessage(IntPtr.Zero, WindowsMessage.SettingChange | WindowsMessage.ThemeChanged | WindowsMessage.SysColorChange, IntPtr.Zero, IntPtr.Zero);
                 }
 
                 WriteReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\ColorFiltering", "Active", ColorFilter_Enabled);

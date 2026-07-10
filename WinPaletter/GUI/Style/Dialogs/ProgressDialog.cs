@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using static System.Windows.Forms.AxHost;
+using static WinPaletter.NativeMethods.User32;
 
 namespace WinPaletter.UI.WP
 {
@@ -296,7 +297,7 @@ namespace WinPaletter.UI.WP
         private IntPtr ProgressDialogWndProc(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam)
         {
             // WM_CTLCOLORSTATIC (0x0138) handles the text and background color for static elements
-            if (msg == NativeMethods.User32.WM_CTLCOLORSTATIC)
+            if (msg == (uint)WindowsMessage.CtlColorStatic)
             {
                 // Text color: White (0x00FFFFFF)
                 NativeMethods.GDI32.SetTextColor(wParam, 0xFFFFFF);
@@ -307,7 +308,7 @@ namespace WinPaletter.UI.WP
                 return _darkBackgroundBrush;
             }
 
-            if (msg == NativeMethods.User32.WM_DESTROY)
+            if (msg == (uint)WindowsMessage.Destroy)
             {
                 if (_darkBackgroundBrush != IntPtr.Zero)
                 {

@@ -866,10 +866,10 @@ namespace WinPaletter.UI.Dark
         {
             switch (msg)
             {
-                case WM_ERASEBKGND:
+                case (uint)WindowsMessage.EraseBkgnd:
                     return (IntPtr)1;
 
-                case WM_PAINT:
+                case (uint)WindowsMessage.Paint:
                     {
                         IntPtr hdc = BeginPaint(hwnd, out PAINTSTRUCT ps);
                         DirectUIState s = GetState(hwnd);
@@ -879,7 +879,7 @@ namespace WinPaletter.UI.Dark
                         return IntPtr.Zero;
                     }
 
-                case WM_MOUSEMOVE:
+                case (uint)WindowsMessage.MouseMove:
                     {
                         DirectUIState s = GetState(hwnd);
                         if (!s.tracking)
@@ -904,7 +904,7 @@ namespace WinPaletter.UI.Dark
                         }
                         break;
                     }
-                case WM_MOUSELEAVE:
+                case (uint)WindowsMessage.MouseLeave:
                     {
                         DirectUIState s = GetState(hwnd);
                         s.tracking = false;
@@ -916,7 +916,7 @@ namespace WinPaletter.UI.Dark
                         }
                         break;
                     }
-                case WM_LBUTTONDOWN:
+                case (uint)WindowsMessage.LButtonDown:
                     {
                         DirectUIState s = GetState(hwnd);
                         s.pressing = true;
@@ -924,7 +924,7 @@ namespace WinPaletter.UI.Dark
                         InvalidateRect(hwnd, IntPtr.Zero, false);
                         break;
                     }
-                case WM_LBUTTONUP:
+                case (uint)WindowsMessage.LButtonUp:
                     {
                         DirectUIState s = GetState(hwnd);
                         if (s.pressing) s.pressing = false;
@@ -933,7 +933,7 @@ namespace WinPaletter.UI.Dark
                         break;
                     }
 
-                case WM_DESTROY:
+                case (uint)WindowsMessage.Destroy:
                     DestroyState(hwnd);
                     RemoveWindowSubclass(hwnd, s_directUiProc, uId);
                     break;
@@ -955,7 +955,7 @@ namespace WinPaletter.UI.Dark
         {
             switch (msg)
             {
-                case WM_ERASEBKGND:
+                case (uint)WindowsMessage.EraseBkgnd:
                     {
                         if (dwRef == IntPtr.Zero) break;
                         IntPtr hdc = wParam;
@@ -965,13 +965,13 @@ namespace WinPaletter.UI.Dark
                         SetTextColor(hdc, DarkColors.kTextNormal);
                         return (IntPtr)1;
                     }
-                case WM_CTLCOLORMSGBOX:
-                case WM_CTLCOLOREDIT:
-                case WM_CTLCOLORLISTBOX:
-                case WM_CTLCOLORBTN:
-                case WM_CTLCOLORDLG:
-                case WM_CTLCOLORSCROLLBAR:
-                case WM_CTLCOLORSTATIC:
+                case (uint)WindowsMessage.CtlColorMsgBox:
+                case (uint)WindowsMessage.CtlColorEdit:
+                case (uint)WindowsMessage.CtlColorListBox:
+                case (uint)WindowsMessage.CtlColorBtn:
+                case (uint)WindowsMessage.CtlColorDlg:
+                case (uint)WindowsMessage.CtlColorScrollBar:
+                case (uint)WindowsMessage.CtlColorStatic:
                     {
                         IntPtr hdc = wParam;
                         int bg = DarkColors.kSecondary;
@@ -986,7 +986,7 @@ namespace WinPaletter.UI.Dark
                         IntPtr br = dwRef != IntPtr.Zero ? dwRef : GetClassLongPtr(hwnd, GCLP_HBRBACKGROUND);
                         return br;
                     }
-                case WM_DESTROY:
+                case (uint)WindowsMessage.Destroy:
                     if (dwRef != IntPtr.Zero) DeleteObject(dwRef);
                     RemoveWindowSubclass(hwnd, s_ctColorProc, uId);
                     return DefSubclassProc(hwnd, msg, wParam, lParam);
@@ -1008,7 +1008,7 @@ namespace WinPaletter.UI.Dark
         {
             switch (msg)
             {
-                case WM_PAINT:
+                case (uint)WindowsMessage.Paint:
                     {
                         IntPtr hTheme = OpenThemeData(IntPtr.Zero, "TaskDialogStyle");
                         uint dpi = GetDpiForWindow(hwnd);
@@ -1070,7 +1070,7 @@ namespace WinPaletter.UI.Dark
                         return IntPtr.Zero;
                     }
 
-                case WM_DESTROY:
+                case (uint)WindowsMessage.Destroy:
                     RemoveWindowSubclass(hwnd, s_radioProc, uId);
                     return DefSubclassProc(hwnd, msg, wParam, lParam);
             }
@@ -1091,7 +1091,7 @@ namespace WinPaletter.UI.Dark
         {
             switch (msg)
             {
-                case WM_CTLCOLORDLG:
+                case (uint)WindowsMessage.CtlColorDlg:
                     {
                         if (Program.Style.DarkMode)
                         {
@@ -1105,19 +1105,19 @@ namespace WinPaletter.UI.Dark
                         break;
                     }
 
-                case WM_SETTINGCHANGE:
+                case (uint)WindowsMessage.SettingChange:
                     if (Program.Style.DarkMode)
                     {
                         DarkenTaskDialog(hwnd, dwRef);
                     }
                     break;
 
-                case WM_DESTROY:
+                case (uint)WindowsMessage.Destroy:
                     RemoveFromTaskDialog(hwnd);
                     RemoveWindowSubclass(hwnd, s_mainProc, uId);
                     break;
 
-                case 0x1102 /*TDN_EXPANDO_BUTTON_CLICKED*/:
+                case (uint)WindowsMessage.ExpandoButtonClicked:
                     EnumChildWindows(hwnd, delegate (IntPtr hwndChild, IntPtr lp)
                     {
                         if (GetWindowSubclass(hwndChild, s_directUiProc, kDirectUISubclassId, out _))
@@ -1129,10 +1129,10 @@ namespace WinPaletter.UI.Dark
                         return true;
                     }, IntPtr.Zero);
 
-                    PostMessage(hwnd, WM_REFRESH_DUI_STATE, IntPtr.Zero, IntPtr.Zero);
+                    PostMessage(hwnd, WindowsMessage.RefreshDuiState, IntPtr.Zero, IntPtr.Zero);
                     break;
 
-                case WM_REFRESH_DUI_STATE:
+                case (uint)WindowsMessage.RefreshDuiState:
                     EnumChildWindows(hwnd, delegate (IntPtr hwndChild, IntPtr lp)
                     {
                         if (GetWindowSubclass(hwndChild, s_directUiProc, kDirectUISubclassId, out _))
@@ -1413,7 +1413,7 @@ namespace WinPaletter.UI.Dark
                         EnumChildWindows(hwndChild, delegate (IntPtr hwndDuiChild, IntPtr lp2)
                         {
                             UxTheme.SetWindowTheme(hwndDuiChild, null, null);
-                            SendMessage(hwndDuiChild, WM_SYSCOLORCHANGE, IntPtr.Zero, IntPtr.Zero);
+                            SendMessage(hwndDuiChild, WindowsMessage.SysColorChange, IntPtr.Zero, IntPtr.Zero);
                             if (GetWindowSubclass(hwndDuiChild, s_ctColorProc, kCtlColorId, out IntPtr ex1))
                                 RemoveWindowSubclass(hwndDuiChild, s_ctColorProc, kCtlColorId);
                             return true;
@@ -1588,7 +1588,7 @@ namespace WinPaletter.UI.Dark
 
                 EnumChildWindows(hwndTD, delegate (IntPtr hwndDuiChild, IntPtr lp)
                 {
-                    SendMessage(hwndDuiChild, WM_SYSCOLORCHANGE, IntPtr.Zero, IntPtr.Zero);
+                    SendMessage(hwndDuiChild, WindowsMessage.SysColorChange, IntPtr.Zero, IntPtr.Zero);
                     return true;
                 }, IntPtr.Zero);
 

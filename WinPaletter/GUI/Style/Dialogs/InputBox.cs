@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
+using static WinPaletter.NativeMethods.User32;
 
 namespace WinPaletter.UI.Style
 {
@@ -203,7 +204,7 @@ namespace WinPaletter.UI.Style
         {
             switch (uMsg)
             {
-                case User32.WM_ERASEBKGND:
+                case (uint)WindowsMessage.EraseBkgnd:
                     if (!Program.Style.DarkMode) return User32.CallWindowProc(state.OldEditWndProc, hWnd, uMsg, wParam, lParam);
                     // In dark mode, we skip default background erasing to prevent white flashing
                     return new IntPtr(1);
@@ -215,7 +216,7 @@ namespace WinPaletter.UI.Style
         {
             switch (uMsg)
             {
-                case User32.WM_CTLCOLOREDIT:
+                case (uint)WindowsMessage.CtlColorEdit:
                     // CRITICAL FIX: Only intercept colors if we are explicitly in Dark Mode
                     if (Program.Style.DarkMode && lParam == state.hEdit && state.hEdit != IntPtr.Zero && state.DarkEditBrush != IntPtr.Zero)
                     {
@@ -226,9 +227,9 @@ namespace WinPaletter.UI.Style
                     }
                     break; // Let default system processing handle it for Light Mode
 
-                case User32.WM_PAINT:
-                case User32.WM_SIZE:
-                case User32.WM_WINDOWPOSCHANGED:
+                case (uint)WindowsMessage.Paint:
+                case (uint)WindowsMessage.Size:
+                case (uint)WindowsMessage.WindowPosChanged:
                     IntPtr res = User32.CallWindowProc(state.OldDialogWndProc, hWnd, uMsg, wParam, lParam);
                     if (state.hEdit != IntPtr.Zero && User32.IsWindow(state.hEdit))
                     {
@@ -326,13 +327,13 @@ namespace WinPaletter.UI.Style
                 }
                 catch
                 {
-                    hFont = User32.SendMessage(hwnd, User32.WM_GETFONT, IntPtr.Zero, IntPtr.Zero);
+                    hFont = User32.SendMessage(hwnd, (uint)WindowsMessage.GetFont, IntPtr.Zero, IntPtr.Zero);
                     if (hFont == IntPtr.Zero) hFont = NativeMethods.GDI32.GetStockObject(GDI32.StockObjects.DEFAULT_GUI_FONT);
                 }
 
                 if (hFont != IntPtr.Zero)
                 {
-                    User32.SendMessage(state.hEdit, User32.WM_SETFONT, hFont, new IntPtr(1));
+                    User32.SendMessage(state.hEdit, (uint)WindowsMessage.SetFont, hFont, new IntPtr(1));
                     state.ManagedFontHandle = hFont;
                 }
 

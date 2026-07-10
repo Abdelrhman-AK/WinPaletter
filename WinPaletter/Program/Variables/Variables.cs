@@ -93,8 +93,15 @@ namespace WinPaletter
         {
             get
             {
-                Tuple<string, string, string> ThemeTuple = UxTheme.GetCurrentVS();
-                return string.IsNullOrEmpty(ThemeTuple.Item1.ToString()) || !File.Exists(ThemeTuple.Item1.ToString());
+                try
+                {
+                    Tuple<string, string, string> ThemeTuple = UxTheme.GetCurrentVS();
+                    return string.IsNullOrEmpty(ThemeTuple.Item1.ToString()) || !File.Exists(ThemeTuple.Item1.ToString());
+                }
+                catch
+                {
+                    return true;
+                }
             }
         }
 

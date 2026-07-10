@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using static WinPaletter.NativeMethods.User32;
 
 namespace WinPaletter.UI.WP
 {
@@ -78,7 +79,7 @@ namespace WinPaletter.UI.WP
 
         protected override void WndProc(ref Message m)
         {
-            if (m.Msg == NativeMethods.User32.WM_MOUSEHWHEEL)
+            if (m.Msg == (uint)WindowsMessage.MouseHWheel)
             {
                 EnsurePositionInitialized();
                 int delta = (short)((ushort)m.WParam >> 16);
@@ -154,7 +155,7 @@ namespace WinPaletter.UI.WP
 
         protected override void WndProc(ref Message m)
         {
-            if (m.Msg == NativeMethods.User32.WM_MOUSEHWHEEL)
+            if (m.Msg == (uint)WindowsMessage.MouseHWheel)
             {
                 EnsurePositionInitialized();
                 int delta = (short)((ushort)m.WParam >> 16);

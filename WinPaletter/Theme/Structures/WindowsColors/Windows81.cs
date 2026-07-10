@@ -111,7 +111,7 @@ namespace WinPaletter.Theme.Structures
                     // Broadcast the system message to notify about the setting change
                     Program.Log?.Write(LogEventLevel.Information, "Broadcasting system message to notify about the setting change (User32.SendMessage(IntPtr.Zero, User32.WindowsMessages.WM_SETTINGCHANGE, IntPtr.Zero, IntPtr.Zero)).");
 
-                    User32.SendMessage(IntPtr.Zero, User32.WindowsMessages.WM_SETTINGCHANGE, IntPtr.Zero, IntPtr.Zero);
+                    User32.SendMessage(IntPtr.Zero, User32.WindowsMessage.SettingChange, IntPtr.Zero, IntPtr.Zero);
                     User32.NotifySettingChanged("ImmersiveColorSet");  // for theme/accent
                     User32.NotifySettingChanged("WindowsThemeElement"); // Win8-style themes
 

@@ -156,7 +156,7 @@ namespace WinPaletter.Theme.Structures
 
         public static Color GetColor(SysColorIndex index)
         {
-            int colorRef = GetSysColor((int)index);
+            uint colorRef = GetSysColor((int)index);
             byte r = (byte)(colorRef & 0xFF);
             byte g = (byte)((colorRef >> 8) & 0xFF);
             byte b = (byte)((colorRef >> 16) & 0xFF);

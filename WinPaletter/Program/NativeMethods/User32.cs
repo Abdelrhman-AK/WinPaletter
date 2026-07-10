@@ -183,6 +183,26 @@ namespace WinPaletter.NativeMethods
         public static extern bool RedrawWindow(IntPtr hWnd, IntPtr lprcUpdate, IntPtr hrgnUpdate, uint flags);
 
         /// <summary>
+        /// Updates the specified window or windows by invalidating the client area, causing the operating system to
+        /// send a paint message and optionally updating the window immediately.
+        /// </summary>
+        /// <remarks>This method is a platform invoke (P/Invoke) signature for the native RedrawWindow
+        /// function in user32.dll. Use this method to force a window or region to be redrawn, which can be useful when
+        /// custom painting or when the window's appearance must be refreshed. For more information about valid flag
+        /// values and usage scenarios, see the RedrawWindow function documentation on learn.microsoft.com.</remarks>
+        /// <param name="hWnd">A handle to the window to be updated. If this parameter is <see langword="IntPtr.Zero"/>, the update applies
+        /// to all windows in the system.</param>
+        /// <param name="lprcUpdate">A pointer to a RECT structure that contains the coordinates of the update region in logical coordinates. If
+        /// this parameter is <see langword="IntPtr.Zero"/>, the entire client area is considered for updating.</param>
+        /// <param name="hrgnUpdate">A handle to a region that defines the area to be updated. If this parameter is <see
+        /// langword="IntPtr.Zero"/>, no region is used.</param>
+        /// <param name="flags">A set of flags that control the update operation. These flags specify options such as whether to erase the
+        /// background, whether to send a paint message, and whether to update child windows.</param>
+        /// <returns>true if the function succeeds; otherwise, false.</returns>
+        [DllImport(_user32)]
+        public static extern bool RedrawWindow(IntPtr hWnd, IntPtr lprcUpdate, IntPtr hrgnUpdate, RedrawWindowFlags flags);
+
+        /// <summary>
         /// Gets the client coordinates of a specified point on the screen, converting from screen coordinates to client-area coordinates relative to the specified window.
         /// </summary>
         /// <param name="hWnd"></param>
@@ -215,7 +235,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="hIcon">A handle to the icon to be destroyed. This handle must have been obtained from a previous call to a function
         /// that creates or loads icons.</param>
         /// <returns>true if the function succeeds; otherwise, false.</returns>
-        [DllImport(_user32, EntryPoint = "DestroyIcon")]
+        [DllImport(_user32)]
         public static extern bool DestroyIcon(IntPtr hIcon);
 
         /// <summary>
@@ -300,26 +320,6 @@ namespace WinPaletter.NativeMethods
         }
 
         /// <summary>
-        /// Refreshes the non-client area of a window, causing its frame and decorations to be recalculated and
-        /// repainted.
-        /// </summary>
-        /// <remarks>Call this method to update the appearance of a window's borders, title bar, and other
-        /// non-client elements after changes such as resizing, theme updates, or custom drawing. This method sends
-        /// messages to the specified window to recalculate and redraw its non-client area immediately.</remarks>
-        /// <param name="handle">The handle to the window whose non-client area is to be refreshed.</param>
-        public static void RefreshNonClient(IntPtr handle)
-        {
-            // Recalculate frame
-            SendMessage(handle, WM_NCCALCSIZE, IntPtr.Zero, IntPtr.Zero);
-
-            // Force NC repaint
-            SendMessage(handle, WM_NCPAINT, IntPtr.Zero, IntPtr.Zero);
-
-            // Strong redraw
-            RedrawWindow(handle, IntPtr.Zero, IntPtr.Zero, RDW_INVALIDATE | RDW_FRAME | RDW_UPDATENOW | RDW_ALLCHILDREN);
-        }
-
-        /// <summary>
         /// Sets a new value for a specified class attribute of a window.
         /// </summary>
         /// <remarks>This method is a wrapper for the Win32 API function SetClassLong, which modifies
@@ -396,6 +396,9 @@ namespace WinPaletter.NativeMethods
         /// <returns></returns>
         [DllImport(_user32)]
         public static extern bool DrawIconEx(IntPtr hdc, int xLeft, int yTop, IntPtr hIcon, int cxWidth, int cyWidth, uint istepIfAniCur, IntPtr hbrFlickerFreeDraw, uint diFlags);
+
+        [DllImport(_user32, SetLastError = true)]
+        public static extern bool DrawEdge(IntPtr hdc, ref UxTheme.RECT qrc, uint edge, uint grfFlags);
 
         /// <summary>
         /// Gets the value of a specified class attribute for a window, allowing retrieval of information such as styles, extended styles, or other class-specific data.
@@ -474,7 +477,7 @@ namespace WinPaletter.NativeMethods
         /// where the least significant byte represents the blue component,  the next byte represents the green
         /// component, and the third byte represents the red component.</returns>
         [DllImport(_user32)]
-        public static extern int GetSysColor(int nIndex);
+        public static extern uint GetSysColor(int nIndex);
 
         /// <summary>
         /// Registers a window message with the system and returns a unique message identifier that can be used for
@@ -544,6 +547,27 @@ namespace WinPaletter.NativeMethods
         /// <returns>The result of the message processing, which depends on the message sent. If the function fails, the return
         /// value is IntPtr.Zero.</returns>
         [DllImport(_user32, SetLastError = true)]
+        public static extern IntPtr SendMessage(IntPtr hWnd, WindowsMessage Msg, IntPtr wParam, IntPtr lParam);
+
+        /// <summary>
+        /// Sends the specified message to a window or windows by calling the window procedure for the given window
+        /// handle.
+        /// </summary>
+        /// <remarks>This method is a managed definition of the native SendMessage function from
+        /// user32.dll. It sends the message and waits for the window procedure to process it before returning. For
+        /// certain messages, this call may block until the message is processed. Use caution when sending messages that
+        /// may cause the receiving window to perform lengthy operations.</remarks>
+        /// <param name="hWnd">A handle to the window whose window procedure will receive the message. If this parameter is IntPtr.Zero,
+        /// the message is sent to all top-level windows.</param>
+        /// <param name="Msg">The message to be sent. This value determines the action to be performed and must be a valid window message
+        /// identifier.</param>
+        /// <param name="wParam">Additional message-specific information. The interpretation of this parameter depends on the value of the
+        /// Msg parameter.</param>
+        /// <param name="lParam">Additional message-specific information. The interpretation of this parameter depends on the value of the
+        /// Msg parameter.</param>
+        /// <returns>The result of the message processing, which depends on the message sent. If the function fails, the return
+        /// value is IntPtr.Zero.</returns>
+        [DllImport(_user32, SetLastError = true)]
         public static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, StringBuilder lParam);
 
         /// <summary>
@@ -566,6 +590,27 @@ namespace WinPaletter.NativeMethods
         /// Marshal.GetLastWin32Error.</returns>
         [DllImport(_user32, SetLastError = true)]
         public static extern bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+
+        /// <summary>
+        /// Posts a message to the message queue of the specified window and returns immediately without waiting for the
+        /// window to process the message.
+        /// </summary>
+        /// <remarks>Unlike SendMessage, PostMessage returns immediately after posting the message to the
+        /// message queue, without waiting for the message to be processed. The message is processed asynchronously by
+        /// the target window's message loop. If hWnd is set to IntPtr.Zero, the message is posted to all top-level
+        /// windows in the system.</remarks>
+        /// <param name="hWnd">A handle to the window whose message queue will receive the message. This can be a handle to a top-level
+        /// window or a child window.</param>
+        /// <param name="Msg">The message identifier to be posted. This value must be one of the message constants defined by the Windows
+        /// API, such as WM_CLOSE or WM_SETTEXT.</param>
+        /// <param name="wParam">Additional message-specific information. The interpretation of this parameter depends on the value of the
+        /// Msg parameter.</param>
+        /// <param name="lParam">Additional message-specific information. The interpretation of this parameter also depends on the value of
+        /// the Msg parameter.</param>
+        /// <returns>true if the function succeeds; otherwise, false. To obtain extended error information, call
+        /// Marshal.GetLastWin32Error.</returns>
+        [DllImport(_user32, SetLastError = true)]
+        public static extern bool PostMessage(IntPtr hWnd, WindowsMessage Msg, IntPtr wParam, IntPtr lParam);
 
         /// <summary>
         /// Sets the composition attribute for a specified window, enabling visual effects such as transparency or blur.
@@ -1109,6 +1154,32 @@ namespace WinPaletter.NativeMethods
         public static extern IntPtr SendMessageTimeout(IntPtr hWnd, uint Msg, UIntPtr wParam, string lParam, uint fuFlags, uint uTimeout, out UIntPtr lpdwResult);
 
         /// <summary>
+        /// Sends a message to the specified window and waits for the operation to complete or for a timeout period to
+        /// elapse.
+        /// </summary>
+        /// <remarks>This function is typically used for inter-process communication or to send messages
+        /// to windows in other threads. Use caution when sending messages to avoid potential deadlocks or performance
+        /// issues, especially when specifying a long timeout.</remarks>
+        /// <param name="hWnd">A handle to the window whose window procedure will receive the message. If this parameter is <see
+        /// langword="IntPtr.Zero"/>, the message is sent to all top-level windows in the system.</param>
+        /// <param name="Msg">The message to be sent.</param>
+        /// <param name="wParam">Additional message-specific information. The meaning of this parameter depends on the value of <paramref
+        /// name="Msg"/>.</param>
+        /// <param name="lParam">A string containing additional message-specific information. The meaning of this parameter depends on the
+        /// value of <paramref name="Msg"/>.</param>
+        /// <param name="fuFlags">The behavior of the function. This parameter can be a combination of one or more
+        /// <c>SendMessageTimeoutFlags</c> values.</param>
+        /// <param name="uTimeout">The duration, in milliseconds, to wait for the message to be processed. If the timeout elapses, the function
+        /// returns without completing the operation.</param>
+        /// <param name="lpdwResult">When the function returns, contains the result of the message processing. This parameter is set to <see
+        /// langword="UIntPtr.Zero"/> if the function times out.</param>
+        /// <returns>If the function succeeds, the return value is a handle to the window that processed the message. If the
+        /// function times out or encounters an error, the return value is <see langword="IntPtr.Zero"/>. Call
+        /// <c>Marshal.GetLastWin32Error</c> to retrieve extended error information.</returns>
+        [DllImport(_user32, SetLastError = true, CharSet = CharSet.Auto)]
+        public static extern IntPtr SendMessageTimeout(IntPtr hWnd, WindowsMessage Msg, UIntPtr wParam, string lParam, uint fuFlags, uint uTimeout, out UIntPtr lpdwResult);
+
+        /// <summary>
         /// Notifies the system that a setting has changed, allowing applications to update accordingly.
         /// </summary>
         /// <remarks>This method broadcasts a system-wide message to inform applications of the specified
@@ -1118,7 +1189,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="section">The name of the setting section that has changed. Defaults to "ImmersiveColorSet".</param>
         public static void NotifySettingChanged(string section = "ImmersiveColorSet")
         {
-            SendMessageTimeout(new IntPtr(HWND_BROADCAST), WM_SETTINGCHANGE, UIntPtr.Zero, section, SMTO_ABORTIFHUNG, 100, out _);
+            SendMessageTimeout(new IntPtr(HWND_BROADCAST), WindowsMessage.SettingChange, UIntPtr.Zero, section, SMTO_ABORTIFHUNG, 100, out _);
         }
 
         /// <summary>
@@ -1378,52 +1449,11 @@ namespace WinPaletter.NativeMethods
         public const uint IMAGE_CURSOR = 2;
 
         /// <summary>
-        /// Represents the Windows message identifier for a system-wide setting change notification.
-        /// </summary>
-        /// <remarks>This constant is used to identify the <c>WM_SETTINGCHANGE</c> message, which is sent
-        /// to all top-level windows when a system-wide setting or policy has changed. Applications can handle this
-        /// message to respond to changes in system settings, such as environment variables or user
-        /// preferences.</remarks>
-        public const uint WM_SETTINGCHANGE = 0x001A;
-
-        /// <summary>
         /// Specifies that the message should be sent only if the receiving application is responsive.
         /// </summary>
         /// <remarks>This constant is used with the <c>SendMessageTimeout</c> function to indicate that
         /// the operation  should be aborted if the receiving application is not responding.</remarks>
         public const uint SMTO_ABORTIFHUNG = 0x0002;
-
-        /// <summary>
-        /// WM_NCCALCSIZE message: Sent when the size and position of a window's client area must be calculated.
-        /// Used to customize non-client area sizing behavior.
-        /// </summary>
-        public const int WM_NCCALCSIZE = 0x0083;
-
-        /// <summary>
-        /// WM_NCPAINT message: Sent to a window when its non-client area (frame, title bar, scroll bars, etc.)
-        /// needs to be repainted.
-        /// </summary>
-        public const int WM_NCPAINT = 0x0085;
-
-        /// <summary>
-        /// WM_SETFOCUS message: Sent to a window when it is about to receive keyboard focus. This message allows the window to prepare for focus changes, such as updating visual cues or state.
-        /// </summary>
-        public const uint WM_SETFOCUS = 0x0007;
-
-        /// <summary>
-        /// WM_KILLFOCUS message: Sent to a window when it is about to lose keyboard focus. This message allows the window to perform any necessary cleanup or state updates before losing focus.
-        /// </summary>
-        public const uint WM_KILLFOCUS = 0x0008;
-
-        /// <summary>
-        /// WM_USER message: The first message identifier available for application-defined messages. Applications can define their own custom messages starting from this value.
-        /// </summary>
-        public const uint WM_USER = 0x0400;
-
-        /// <summary>
-        /// WM_REFRESH_DUI_STATE message: A custom message defined by the application to request a refresh of the DirectUI state. This message can be used to trigger updates or redraws of UI elements that rely on DirectUI.
-        /// </summary>
-        public const uint WM_REFRESH_DUI_STATE = WM_USER + 4242;
 
         /// <summary>
         /// RedrawWindow flag: Causes all child windows of the specified window to be invalidated or updated.
@@ -1528,121 +1558,6 @@ namespace WinPaletter.NativeMethods
         /// </summary>
         public const uint LWA_ALPHA = 0x00000002;
 
-        public const uint WM_MOUSEWHEEL = 0x020A;
-        public const uint WM_MOUSEHWHEEL = 0x020E;
-        public const uint WM_HSCROLL = 0x114;
-        public const uint WM_VSCROLL = 0x115;
-
-        /// <summary>
-        /// Window message: Erase background
-        /// </summary>
-        public const uint WM_ERASEBKGND = 0x0014;
-
-        /// <summary>
-        /// Window message: Paint window
-        /// </summary>
-        public const uint WM_PAINT = 0x000F;
-
-        /// <summary>
-        /// Window message: Create window
-        /// </summary>
-        public const uint WM_CREATE = 1;
-
-        /// <summary>
-        /// Window message: Mouse movement
-        /// </summary>
-        public const uint WM_MOUSEMOVE = 0x0200;
-
-        /// <summary>
-        /// Window message: Mouse leave notification
-        /// </summary>
-        public const uint WM_MOUSELEAVE = 0x02A3;
-
-        /// <summary>
-        /// Window message: Left mouse button down
-        /// </summary>
-        public const uint WM_LBUTTONDOWN = 0x0201;
-
-        /// <summary>
-        /// Window message: Left mouse button up
-        /// </summary>
-        public const uint WM_LBUTTONUP = 0x0202;
-
-        /// <summary>
-        /// Window message: Window destroyed
-        /// </summary>
-        public const uint WM_DESTROY = 0x0002;
-
-        /// <summary>
-        /// Window message: Window closed
-        /// </summary>
-        public const uint WM_COMMAND = 0x0111;
-
-        /// <summary>
-        /// Window message: Non-client area destroyed (sent when the non-client area of a window is being destroyed)
-        /// </summary>
-        public const uint WM_NCDESTROY = 0x0082;
-
-        /// <summary>
-        /// Window message: Notify - Sent to a window when a control sends a notification message (e.g., button click, selection change).
-        /// </summary>
-        public const uint WM_NOTIFY = 0x004E;
-
-        /// <summary>
-        /// Window message: Control color - message box
-        /// </summary>
-        public const uint WM_CTLCOLORMSGBOX = 0x0132;
-
-        /// <summary>
-        /// Window message: Control color - edit control
-        /// </summary>
-        public const uint WM_CTLCOLOREDIT = 0x0133;
-
-        /// <summary>
-        /// Window message: Control color - list box
-        /// </summary>
-        public const uint WM_CTLCOLORLISTBOX = 0x0134;
-
-        /// <summary>
-        /// Window message: Control color - button
-        /// </summary>
-        public const uint WM_CTLCOLORBTN = 0x0135;
-
-        /// <summary>
-        /// Window message: Control color - edit control (duplicate of WM_CTLCOLOREDIT)
-        /// </summary>
-        public const uint WM_CTLCOREDIT = 0x0133;
-
-        /// <summary>
-        /// Window message: Control color - static control
-        /// </summary>
-        public const uint WM_CTLCOLORTEXT = 0x0139;
-
-        /// <summary>
-        /// Window message: Control color - dialog box
-        /// </summary>
-        public const uint WM_CTLCOLORDLG = 0x0136;
-
-        /// <summary>
-        /// Window message: Control color - scrollbar
-        /// </summary>
-        public const uint WM_CTLCOLORSCROLLBAR = 0x0137;
-
-        /// <summary>
-        /// Window message: Control color - static control
-        /// </summary>
-        public const uint WM_CTLCOLORSTATIC = 0x0138;
-
-        /// <summary>
-        /// Window message: System color change
-        /// </summary>
-        public const uint WM_SYSCOLORCHANGE = 0x0015;
-
-        /// <summary>
-        /// Window message: Draw item - Sent to the owner window of an owner-drawn control when a visual aspect of the control needs to be drawn.
-        /// </summary>
-        public const uint WM_DRAWITEM = 0x002B;
-
         /// <summary>
         /// Track mouse event flags: Request mouse leave notification
         /// </summary>
@@ -1682,31 +1597,6 @@ namespace WinPaletter.NativeMethods
         /// Default GUI font identifier
         /// </summary>
         public const int DEFAULT_GUI_FONT = 17;
-
-        /// <summary>
-        /// WM_GETFONT message - Sent to a control to retrieve the font with which it is drawing its text
-        /// </summary>
-        public const uint WM_GETFONT = 0x0031;
-
-        /// <summary>
-        /// WM_SETFONT message - Sent to a control to set the font with which it will draw its text
-        /// </summary>
-        public const uint WM_SETFONT = 0x0030;
-
-        /// <summary>
-        /// WM_SIZE message - Sent to a window after its size has changed
-        /// </summary>
-        public const uint WM_SIZE = 0x0005;
-
-        /// <summary>
-        /// WM_WINDOWPOSCHANGED message - Sent to a window whose size, position, or Z-order has changed
-        /// </summary>
-        public const uint WM_WINDOWPOSCHANGED = 0x0047;
-
-        /// <summary>
-        /// WM_SHOWWINDOW message - Sent to a window when it is about to be shown or hidden
-        /// </summary>
-        public const uint WM_SHOWWINDOW = 0x0018;
 
         /// <summary>
         /// WS_CHILD window style - Creates a child window
@@ -2577,45 +2467,2855 @@ namespace WinPaletter.NativeMethods
             OCR_WAIT = 32514
         }
 
-        /// <summary>
-        /// Constants for various Windows messages.
-        /// </summary>
-        public static class WindowsMessages
+        [Flags]
+        public enum RedrawWindowFlags : uint
         {
             /// <summary>
-            /// Indicates a change in colorization color.
+            /// Invalidates the specified rectangle or region. If the hRgn parameter is NULL, 
+            /// the entire window is invalidated.
             /// </summary>
-            public const int WM_DWMCOLORIZATIONCOLORCHANGED = 0x320;
+            Invalidate = 0x0001,
 
             /// <summary>
-            /// Indicates a change in DWM composition status.
+            /// Causes a WM_PAINT message to be posted to the window regardless of whether any 
+            /// portion of the window is invalid.
             /// </summary>
-            public const int WM_DWMCOMPOSITIONCHANGED = 0x31E;
+            InternalPaint = 0x0002,
 
             /// <summary>
-            /// Indicates a change in theme.
+            /// Causes the window to receive a WM_ERASEBKGND message when the window is repainted.
+            /// The Erase flag must be used with the Invalidate or InternalPaint flag.
             /// </summary>
-            public const int WM_THEMECHANGED = 0x31A;
+            Erase = 0x0004,
 
             /// <summary>
-            /// Indicates a change in system color.
+            /// Validates the specified rectangle or region.
             /// </summary>
-            public const int WM_SYSCOLORCHANGE = 0x15;
+            Validate = 0x0008,
 
             /// <summary>
-            /// Windows message constant for notifying all top-level windows about system-wide setting changes.
+            /// Suppresses any pending WM_ERASEBKGND messages.
             /// </summary>
-            public const int WM_SETTINGCHANGE = 0x001A;
+            NoErase = 0x0010,
 
             /// <summary>
-            /// Indicates a change in palette.
+            /// Excludes child windows, if any, from the repainting operation.
             /// </summary>
-            public const int WM_PALETTECHANGED = 0x311;
+            NoChildren = 0x0040,
 
             /// <summary>
-            /// Indicates a change in Windows initialization.
+            /// Includes child windows, if any, in the repainting operation.
             /// </summary>
-            public const uint WM_WININICHANGE = 0x1AU;
+            AllChildren = 0x0080,
+
+            /// <summary>
+            /// Causes the affected windows (as specified by the AllChildren and NoChildren flags) 
+            /// to receive WM_NCPAINT, WM_ERASEBKGND, and WM_PAINT messages, if necessary, 
+            /// before the function returns.
+            /// </summary>
+            UpdateNow = 0x0100,
+
+            /// <summary>
+            /// Causes the affected windows to receive WM_NCPAINT, WM_ERASEBKGND, and WM_PAINT 
+            /// messages after the application or system processes other queued messages.
+            /// </summary>
+            NoInternalPaint = 0x0200,
+
+            /// <summary>
+            /// The window receives a WM_NCPAINT message, allowing you to redraw the 
+            /// non-client area (frame/titlebar).
+            /// </summary>
+            Frame = 0x0400,
+
+            /// <summary>
+            /// The window does not receive any internal paint messages.
+            /// </summary>
+            NoFrame = 0x0800
+        }
+
+        /// <summary>
+        /// Defines standard Windows message identifiers (WM_*) as a C# enumeration.
+        /// <para>
+        /// These constants are used in window procedures (WndProc) to handle system-defined messages.
+        /// The values are defined in <c>winuser.h</c> and are used for communication between windows and the operating system.
+        /// </para>
+        /// <para>
+        /// <b>Usage:</b> Cast the <c>msg</c> parameter in <c>WndProc</c> to this enum type to compare with known message values.
+        /// For example: <c>switch ((WindowsMessage)m.Msg) { case WindowsMessage.Paint: ... }</c>
+        /// </para>
+        /// <para>
+        /// For custom application-defined messages, use values starting from <see cref="WindowsMessage.User"/> (0x0400) or <see cref="WindowsMessage.App"/> (0x8000).
+        /// </para>
+        /// </summary>
+        /// <remarks>
+        /// This enum is based on the official Windows SDK definitions from <c>winuser.h</c>.
+        /// The numeric values are represented in hexadecimal. For more details on each message,
+        /// refer to the Microsoft documentation or <see href="https://pinvoke.net/default.aspx/Constants.WM">pinvoke.net</see>.
+        /// </remarks>
+        public enum WindowsMessage : uint
+        {
+            /// <summary>
+            /// Performs no operation. Used to post a message that the recipient window will ignore.
+            /// </summary>
+            Null = 0x0000,
+
+            /// <summary>
+            /// Sent when an application requests that a window be created.
+            /// <para>
+            /// The message is sent before <c>CreateWindowEx</c> or <c>CreateWindow</c> returns,
+            /// after the window is created but before it becomes visible.
+            /// </para>
+            /// </summary>
+            Create = 0x0001,
+
+            /// <summary>
+            /// Sent when a window is being destroyed. Sent after the window is removed from the screen.
+            /// <para>
+            /// This message is sent first to the window being destroyed and then to its child windows.
+            /// All child windows still exist when this message is processed.
+            /// </para>
+            /// </summary>
+            Destroy = 0x0002,
+
+            /// <summary>
+            /// Sent after a window has been moved.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - The x and y coordinates of the window's new position. The low-order word is the x-coordinate, and the high-order word is the y-coordinate.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            Move = 0x0003,
+
+            /// <summary>
+            /// Sent to a window after its size has changed.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - The type of resizing (e.g., <c>SIZE_RESTORED</c>, <c>SIZE_MINIMIZED</c>, <c>SIZE_MAXIMIZED</c>).</item>
+            /// <item><c>lParam</c> - The new width and height of the client area. The low-order word is the width, and the high-order word is the height.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            Size = 0x0005,
+
+            /// <summary>
+            /// Sent when a window is being activated or deactivated.
+            /// <para>
+            /// Sent first to the window procedure of the top-level window being deactivated,
+            /// then to the window procedure of the top-level window being activated.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Specifies whether the window is being activated or deactivated (<c>WA_ACTIVE</c>, <c>WA_CLICKACTIVE</c>, <c>WA_INACTIVE</c>).</item>
+            /// <item><c>lParam</c> - Handle to the window being activated or deactivated.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            Activate = 0x0006,
+
+            /// <summary>
+            /// Sent to a window immediately before it receives the keyboard focus.
+            /// <para>
+            /// Allows the window to prepare for focus changes, such as updating visual cues or state.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Handle to the window that has lost the keyboard focus.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            SetFocus = 0x0007,
+
+            /// <summary>
+            /// Sent to a window immediately before it loses the keyboard focus.
+            /// <para>
+            /// Allows the window to perform any necessary cleanup or state updates before losing focus.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Handle to the window that will receive the keyboard focus.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            KillFocus = 0x0008,
+
+            /// <summary>
+            /// Sent when an application changes the enabled state of a window.
+            /// <para>
+            /// Sent before the <c>EnableWindow</c> function returns, after the enabled state (<c>WS_DISABLED</c> style bit) has changed.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Indicates whether the window has been enabled (<c>TRUE</c>) or disabled (<c>FALSE</c>).</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            Enable = 0x000A,
+
+            /// <summary>
+            /// Sent to a window to allow changes in that window to be redrawn or to prevent changes from being redrawn.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Redraw state (<c>TRUE</c> to enable redrawing, <c>FALSE</c> to disable).</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            SetRedraw = 0x000B,
+
+            /// <summary>
+            /// Sent to set the text of a window.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Pointer to a null-terminated string containing the new text.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            SetText = 0x000C,
+
+            /// <summary>
+            /// Sent to copy the text that corresponds to a window into a buffer provided by the caller.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - The maximum number of characters to copy.</item>
+            /// <item><c>lParam</c> - Pointer to the buffer that receives the text.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            GetText = 0x000D,
+
+            /// <summary>
+            /// Sent to determine the length, in characters, of the text associated with a window.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            GetTextLength = 0x000E,
+
+            /// <summary>
+            /// Sent when a window needs to be repainted. The window should process this message to update its client area.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            Paint = 0x000F,
+
+            /// <summary>
+            /// Sent as a signal that a window or an application should terminate.
+            /// <para>
+            /// An application can handle this message to prompt the user for confirmation or to perform cleanup before closing.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            Close = 0x0010,
+
+            /// <summary>
+            /// Sent when the user chooses to end the session or when an application calls a system shutdown function.
+            /// <para>
+            /// If any application returns zero, the session is not ended.
+            /// After processing this message, the system sends the <see cref="EndSession"/> message.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            QueryEndSession = 0x0011,
+
+            /// <summary>
+            /// Signals the application to end its message loop.
+            /// <para>
+            /// Can be generated by Alt+F4, clicking the X button, or selecting File → Exit.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            Quit = 0x0012,
+
+            /// <summary>
+            /// Sent to an icon when the user requests that the window be restored to its previous size and position.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            QueryOpen = 0x0013,
+
+            /// <summary>
+            /// Sent when the window background must be erased (for example, when a window is resized).
+            /// <para>
+            /// Used to prepare an invalidated portion of a window for painting.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Handle to the device context (DC) for the window.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            EraseBkgnd = 0x0014,
+
+            /// <summary>
+            /// Sent to all top-level windows when a system color setting has changed.
+            /// <para>
+            /// Applications should handle this message to update their color schemes.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            SysColorChange = 0x0015,
+
+            /// <summary>
+            /// Sent to an application after the system processes the results of the <see cref="QueryEndSession"/> message.
+            /// <para>
+            /// Informs the application whether the session is ending.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - <c>TRUE</c> if the session is ending; otherwise <c>FALSE</c>.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            EndSession = 0x0016,
+
+            /// <summary>
+            /// Sent to a window when the window is about to be hidden or shown.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - <c>TRUE</c> if the window is being shown; <c>FALSE</c> if being hidden.</item>
+            /// <item><c>lParam</c> - The status of the window being shown or hidden.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            ShowWindow = 0x0018,
+
+            /// <summary>
+            /// Sent to all top-level windows after a change to the system settings (e.g., <c>WIN.INI</c>).
+            /// <para>
+            /// The <c>SystemParametersInfo</c> function sends this message after an application changes a system setting.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Pointer to a string indicating the system parameter that changed, or <c>NULL</c>.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            SettingChange = 0x001A,
+
+            /// <summary>
+            /// Sent to all top-level windows after a change to the <c>WIN.INI</c> file.
+            /// <para>
+            /// Provided for compatibility with earlier versions. New applications should use <see cref="SettingChange"/>.
+            /// </para>
+            /// </summary>
+            WinIniChange = 0x001A,
+
+            /// <summary>
+            /// Sent to all top-level windows whenever the user changes device-mode settings.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            DevModeChange = 0x001B,
+
+            /// <summary>
+            /// Sent when a window belonging to a different application than the active window is about to be activated.
+            /// <para>
+            /// Sent to the application whose window is being activated and to the application whose window is being deactivated.
+            /// </para>
+            /// </summary>
+            ActivateApp = 0x001C,
+
+            /// <summary>
+            /// Sent to all top-level windows after the pool of font resources has changed.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            FontChange = 0x001D,
+
+            /// <summary>
+            /// Sent whenever there is a change in the system time.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            TimeChange = 0x001E,
+
+            /// <summary>
+            /// Sent to cancel certain modes, such as mouse capture.
+            /// <para>
+            /// For example, sent to the active window when a dialog box or message box is displayed.
+            /// </para>
+            /// </summary>
+            CancelMode = 0x001F,
+
+            /// <summary>
+            /// Sent to a window if the mouse causes the cursor to move within a window and mouse input is not captured.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Handle to the window that contains the cursor.</item>
+            /// <item><c>lParam</c> - The hit-test code.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            SetCursor = 0x0020,
+
+            /// <summary>
+            /// Sent when the cursor is in an inactive window and the user presses a mouse button.
+            /// <para>
+            /// The parent window receives this message only if the child window passes it to <c>DefWindowProc</c>.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Handle to the top-level parent window of the window being activated.</item>
+            /// <item><c>lParam</c> - The hit-test code and mouse message identifier.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            MouseActivate = 0x0021,
+
+            /// <summary>
+            /// Sent to a child window when the user clicks the window's title bar or when the window is activated, moved, or sized.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            ChildActivate = 0x0022,
+
+            /// <summary>
+            /// Sent by a computer-based training (CBT) application to separate user-input messages from other messages sent through the <c>WH_JOURNALPLAYBACK</c> hook procedure.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            QueueSync = 0x0023,
+
+            /// <summary>
+            /// Sent to a window when the size or position of the window is about to change.
+            /// <para>
+            /// Allows the application to override the window's default maximized size and position, or its default minimum or maximum tracking size.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Pointer to a <c>MINMAXINFO</c> structure.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            GetMinMaxInfo = 0x0024,
+
+            /// <summary>
+            /// Sent to a minimized window when the icon needs to be painted. (Windows NT 3.51 and earlier; not sent by newer versions.)
+            /// </summary>
+            PaintIcon = 0x0026,
+
+            /// <summary>
+            /// Sent to a minimized window when the background of the icon must be filled before painting the icon. (Windows NT 3.51 and earlier; not sent by newer versions.)
+            /// </summary>
+            IconEraseBkgnd = 0x0027,
+
+            /// <summary>
+            /// Sent to a dialog box procedure to set the keyboard focus to a different control in the dialog box.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Handle to the control that is to receive the focus, or <c>NULL</c> to use the next control.</item>
+            /// <item><c>lParam</c> - Flags indicating how to set the focus.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            NextDlgCtl = 0x0028,
+
+            /// <summary>
+            /// Sent from Print Manager whenever a job is added to or removed from the Print Manager queue.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Job ID.</item>
+            /// <item><c>lParam</c> - Status flags.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            SpoolerStatus = 0x002A,
+
+            /// <summary>
+            /// Sent to the parent window of an owner-drawn button, combo box, list box, or menu when a visual aspect of the control or menu has changed.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Control ID.</item>
+            /// <item><c>lParam</c> - Pointer to a <c>DRAWITEMSTRUCT</c> structure.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            DrawItem = 0x002B,
+
+            /// <summary>
+            /// Sent to the owner window of a combo box, list box, list view control, or menu item when the control or menu is created.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Control ID.</item>
+            /// <item><c>lParam</c> - Pointer to a <c>MEASUREITEMSTRUCT</c> structure.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            MeasureItem = 0x002C,
+
+            /// <summary>
+            /// Sent to the owner of a list box or combo box when the list box or combo box is destroyed or when items are removed.
+            /// <para>
+            /// Sent for each deleted item with nonzero item data.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Control ID.</item>
+            /// <item><c>lParam</c> - Pointer to a <c>DELETEITEMSTRUCT</c> structure.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            DeleteItem = 0x002D,
+
+            /// <summary>
+            /// Sent by a list box with the <c>LBS_WANTKEYBOARDINPUT</c> style to its owner in response to a <see cref="KeyDown"/> message.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Virtual key code.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            VKeyToItem = 0x002E,
+
+            /// <summary>
+            /// Sent by a list box with the <c>LBS_WANTKEYBOARDINPUT</c> style to its owner in response to a <see cref="Char"/> message.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Character code.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            CharToItem = 0x002F,
+
+            /// <summary>
+            /// Sent to a control to set the font with which it will draw its text.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Handle to the font (<c>HFONT</c>).</item>
+            /// <item><c>lParam</c> - <c>TRUE</c> if the control should redraw immediately; otherwise <c>FALSE</c>.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            SetFont = 0x0030,
+
+            /// <summary>
+            /// Sent to a control to retrieve the font with which it is drawing its text.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            GetFont = 0x0031,
+
+            /// <summary>
+            /// Sent to a window to associate a hot key with the window. When the user presses the hot key, the system activates the window.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Virtual key code and modifier flags.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            SetHotKey = 0x0032,
+
+            /// <summary>
+            /// Sent to determine the hot key associated with a window.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            GetHotKey = 0x0033,
+
+            /// <summary>
+            /// Sent to a minimized (iconic) window that is about to be dragged but does not have an icon defined for its class.
+            /// <para>
+            /// The application can return a handle to an icon or cursor.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            QueryDragIcon = 0x0037,
+
+            /// <summary>
+            /// Sent to determine the relative position of a new item in the sorted list of an owner-drawn combo box or list box.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Control ID.</item>
+            /// <item><c>lParam</c> - Pointer to a <c>COMPAREITEMSTRUCT</c> structure.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            CompareItem = 0x0039,
+
+            /// <summary>
+            /// Sent by Active Accessibility to obtain information about an accessible object contained in a server application.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Pointer to an <c>OBJID</c> value.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            GetObject = 0x003D,
+
+            /// <summary>
+            /// Sent to all top-level windows when the system detects more than 12.5% of system time over a 30- to 60-second interval is being spent compacting memory.
+            /// <para>
+            /// Indicates that system memory is low.
+            /// </para>
+            /// </summary>
+            Compacting = 0x0041,
+
+            /// <summary>
+            /// Sent when a window is created (internal use).
+            /// </summary>
+            OtherWindowCreated = 0x0042,
+
+            /// <summary>
+            /// Sent when a window is destroyed (internal use).
+            /// </summary>
+            OtherWindowDestroyed = 0x0043,
+
+            /// <summary>
+            /// Sent when communication with a device changes (internal use).
+            /// </summary>
+            CommNotify = 0x0044,
+
+            /// <summary>
+            /// Sent to a window whose size, position, or Z-order is about to change as a result of a call to <c>SetWindowPos</c> or another window-management function.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Pointer to a <c>WINDOWPOS</c> structure.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            WindowPosChanging = 0x0046,
+
+            /// <summary>
+            /// Sent to a window whose size, position, or Z-order has changed as a result of a call to <c>SetWindowPos</c> or another window-management function.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Pointer to a <c>WINDOWPOS</c> structure.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            WindowPosChanged = 0x0047,
+
+            /// <summary>
+            /// Notifies applications that the system is about to enter a suspended mode.
+            /// <para>
+            /// Obsolete: Use <see cref="PowerBroadcast"/> instead.
+            /// </para>
+            /// </summary>
+            Power = 0x0048,
+
+            /// <summary>
+            /// Sent to pass data to another application.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Handle to the window passing the data.</item>
+            /// <item><c>lParam</c> - Pointer to a <c>COPYDATASTRUCT</c> structure.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            CopyData = 0x004A,
+
+            /// <summary>
+            /// Posted to an application when a user cancels the application's journaling activities.
+            /// <para>
+            /// Posted with a <c>NULL</c> window handle.
+            /// </para>
+            /// </summary>
+            CancelJournal = 0x004B,
+
+            /// <summary>
+            /// Sent by a common control to its parent window when an event has occurred or the control requires some information.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Control ID.</item>
+            /// <item><c>lParam</c> - Pointer to an <c>NMHDR</c> structure.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            Notify = 0x004E,
+
+            /// <summary>
+            /// Posted to the window with the focus when the user chooses a new input language.
+            /// <para>
+            /// An application can accept the change by passing the message to <c>DefWindowProc</c> or reject it by returning immediately.
+            /// </para>
+            /// </summary>
+            InputLangChangeRequest = 0x0050,
+
+            /// <summary>
+            /// Sent to the topmost affected window after an application's input language has been changed.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - New input locale identifier.</item>
+            /// <item><c>lParam</c> - Previous input locale identifier.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            InputLangChange = 0x0051,
+
+            /// <summary>
+            /// Sent to an application that has initiated a training card with Microsoft Windows Help.
+            /// <para>
+            /// Informs the application when the user clicks an authorable button.
+            /// </para>
+            /// </summary>
+            TCard = 0x0052,
+
+            /// <summary>
+            /// Indicates that the user pressed the F1 key.
+            /// <para>
+            /// If a menu is active, sent to the window associated with the menu; otherwise, sent to the window with the keyboard focus.
+            /// </para>
+            /// </summary>
+            Help = 0x0053,
+
+            /// <summary>
+            /// Sent to all windows after the user has logged on or off.
+            /// <para>
+            /// The system updates user-specific settings and sends this message immediately after.
+            /// </para>
+            /// </summary>
+            UserChanged = 0x0054,
+
+            /// <summary>
+            /// Determines if a window accepts ANSI or Unicode structures in the <see cref="Notify"/> notification message.
+            /// <para>
+            /// Sent from a common control to its parent window and from the parent window to the common control.
+            /// </para>
+            /// </summary>
+            NotifyFormat = 0x0055,
+
+            /// <summary>
+            /// Notifies a window that the user right-clicked in the window.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Handle to the window.</item>
+            /// <item><c>lParam</c> - The x and y coordinates of the cursor.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            ContextMenu = 0x007B,
+
+            /// <summary>
+            /// Sent to a window when <c>SetWindowLong</c> is about to change one or more of the window's styles.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - The style type (GWL_STYLE or GWL_EXSTYLE).</item>
+            /// <item><c>lParam</c> - Pointer to a <c>STYLESTRUCT</c> structure.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            StyleChanging = 0x007C,
+
+            /// <summary>
+            /// Sent to a window after <c>SetWindowLong</c> has changed one or more of the window's styles.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - The style type (GWL_STYLE or GWL_EXSTYLE).</item>
+            /// <item><c>lParam</c> - Pointer to a <c>STYLESTRUCT</c> structure.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            StyleChanged = 0x007D,
+
+            /// <summary>
+            /// Sent to all windows when the display resolution has changed.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - New bits per pixel.</item>
+            /// <item><c>lParam</c> - New width and height. Low-order word is width, high-order word is height.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            DisplayChange = 0x007E,
+
+            /// <summary>
+            /// Sent to a window to retrieve a handle to the large or small icon associated with a window.
+            /// <para>
+            /// The system displays the large icon in the ALT+TAB dialog and the small icon in the window caption.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Specifies the type of icon (<c>ICON_BIG</c> or <c>ICON_SMALL</c>).</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            GetIcon = 0x007F,
+
+            /// <summary>
+            /// Sent to associate a new large or small icon with a window.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Specifies the type of icon (<c>ICON_BIG</c> or <c>ICON_SMALL</c>).</item>
+            /// <item><c>lParam</c> - Handle to the icon (<c>HICON</c>).</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            SetIcon = 0x0080,
+
+            /// <summary>
+            /// Sent prior to the <see cref="Create"/> message when a window is first created.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Pointer to a <c>CREATESTRUCT</c> structure.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            NCCreate = 0x0081,
+
+            /// <summary>
+            /// Informs a window that its non-client area is being destroyed.
+            /// <para>
+            /// Sent by <c>DestroyWindow</c> following the <see cref="Destroy"/> message.
+            /// </para>
+            /// </summary>
+            NCDestroy = 0x0082,
+
+            /// <summary>
+            /// Sent when the size and position of a window's client area must be calculated.
+            /// <para>
+            /// Allows the application to customize non-client area sizing behavior.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - <c>TRUE</c> if the application should specify the client area; otherwise <c>FALSE</c>.</item>
+            /// <item><c>lParam</c> - Pointer to an <c>NCCALCSIZE_PARAMS</c> structure or a <c>RECT</c> structure.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            NCCalcSize = 0x0083,
+
+            /// <summary>
+            /// Sent to a window when the cursor moves, or when a mouse button is pressed or released.
+            /// <para>
+            /// If the mouse is not captured, the message is sent to the window beneath the cursor.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - The x and y coordinates of the cursor.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            NCHitTest = 0x0084,
+
+            /// <summary>
+            /// Sent to a window when its non-client area (frame, title bar, scroll bars, etc.) needs to be repainted.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Handle to the update region.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            NCPaint = 0x0085,
+
+            /// <summary>
+            /// Sent when the non-client area of a window is being activated or deactivated.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - <c>TRUE</c> if the caption is being activated; otherwise <c>FALSE</c>.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            NCActivate = 0x0086,
+
+            /// <summary>
+            /// Sent to the window procedure associated with a control to determine how the control handles keyboard input.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            GetDlgCode = 0x0087,
+
+            /// <summary>
+            /// Used to synchronize painting while avoiding linking independent GUI threads.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            SyncPaint = 0x0088,
+
+            /// <summary>
+            /// Sent to a window when the cursor moves within the non-client area of the window.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - The hit-test code.</item>
+            /// <item><c>lParam</c> - The x and y coordinates of the cursor.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            NCMouseMove = 0x00A0,
+
+            /// <summary>
+            /// Posted when the user presses the left mouse button while the cursor is within the non-client area of a window.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - The hit-test code.</item>
+            /// <item><c>lParam</c> - The x and y coordinates of the cursor.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            NCLButtonDown = 0x00A1,
+
+            /// <summary>
+            /// Posted when the user releases the left mouse button while the cursor is within the non-client area of a window.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - The hit-test code.</item>
+            /// <item><c>lParam</c> - The x and y coordinates of the cursor.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            NCLButtonUp = 0x00A2,
+
+            /// <summary>
+            /// Posted when the user double-clicks the left mouse button while the cursor is within the non-client area of a window.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - The hit-test code.</item>
+            /// <item><c>lParam</c> - The x and y coordinates of the cursor.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            NCLButtonDblClk = 0x00A3,
+
+            /// <summary>
+            /// Posted when the user presses the right mouse button while the cursor is within the non-client area of a window.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - The hit-test code.</item>
+            /// <item><c>lParam</c> - The x and y coordinates of the cursor.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            NCRButtonDown = 0x00A4,
+
+            /// <summary>
+            /// Posted when the user releases the right mouse button while the cursor is within the non-client area of a window.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - The hit-test code.</item>
+            /// <item><c>lParam</c> - The x and y coordinates of the cursor.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            NCRButtonUp = 0x00A5,
+
+            /// <summary>
+            /// Posted when the user double-clicks the right mouse button while the cursor is within the non-client area of a window.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - The hit-test code.</item>
+            /// <item><c>lParam</c> - The x and y coordinates of the cursor.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            NCRButtonDblClk = 0x00A6,
+
+            /// <summary>
+            /// Posted when the user presses the middle mouse button while the cursor is within the non-client area of a window.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - The hit-test code.</item>
+            /// <item><c>lParam</c> - The x and y coordinates of the cursor.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            NCMButtonDown = 0x00A7,
+
+            /// <summary>
+            /// Posted when the user releases the middle mouse button while the cursor is within the non-client area of a window.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - The hit-test code.</item>
+            /// <item><c>lParam</c> - The x and y coordinates of the cursor.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            NCMButtonUp = 0x00A8,
+
+            /// <summary>
+            /// Posted when the user double-clicks the middle mouse button while the cursor is within the non-client area of a window.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - The hit-test code.</item>
+            /// <item><c>lParam</c> - The x and y coordinates of the cursor.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            NCMButtonDblClk = 0x00A9,
+
+            /// <summary>
+            /// Posted when the user presses the first or second X button while the cursor is within the non-client area of a window.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - The hit-test code.</item>
+            /// <item><c>lParam</c> - The x and y coordinates of the cursor.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            NCXButtonDown = 0x00AB,
+
+            /// <summary>
+            /// Posted when the user releases the first or second X button while the cursor is within the non-client area of a window.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - The hit-test code.</item>
+            /// <item><c>lParam</c> - The x and y coordinates of the cursor.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            NCXButtonUp = 0x00AC,
+
+            /// <summary>
+            /// Posted when the user double-clicks the first or second X button while the cursor is within the non-client area of a window.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - The hit-test code.</item>
+            /// <item><c>lParam</c> - The x and y coordinates of the cursor.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            NCXButtonDblClk = 0x00AD,
+
+            /// <summary>
+            /// Undocumented message related to themes. Should be handled when handling <see cref="NCPaint"/>.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            NCUAHDRawCaption = 0x00AE,
+
+            /// <summary>
+            /// Undocumented message related to themes. Should be handled when handling <see cref="NCPaint"/>.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            NCUAHDRawFrame = 0x00AF,
+
+            /// <summary>
+            /// Filters for keyboard messages. The first keyboard message.
+            /// </summary>
+            KeyFirst = 0x0100,
+
+            /// <summary>
+            /// Posted to the window with the keyboard focus when a nonsystem key is pressed.
+            /// <para>
+            /// A nonsystem key is a key pressed when the ALT key is not pressed.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Virtual key code.</item>
+            /// <item><c>lParam</c> - Repeat count, scan code, and other flags.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            KeyDown = 0x0100,
+
+            /// <summary>
+            /// Posted to the window with the keyboard focus when a nonsystem key is released.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Virtual key code.</item>
+            /// <item><c>lParam</c> - Repeat count, scan code, and other flags.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            KeyUp = 0x0101,
+
+            /// <summary>
+            /// Posted to the window with the keyboard focus when a <see cref="KeyDown"/> message is translated by <c>TranslateMessage</c>.
+            /// <para>
+            /// Contains the character code of the key that was pressed.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Character code.</item>
+            /// <item><c>lParam</c> - Repeat count, scan code, and other flags.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            Char = 0x0102,
+
+            /// <summary>
+            /// Posted to the window with the keyboard focus when a <see cref="KeyUp"/> message is translated by <c>TranslateMessage</c>.
+            /// <para>
+            /// Specifies a character code generated by a dead key (e.g., a key that generates a character like the umlaut).
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Character code of the dead key.</item>
+            /// <item><c>lParam</c> - Repeat count, scan code, and other flags.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            DeadChar = 0x0103,
+
+            /// <summary>
+            /// Posted to the window with the keyboard focus when the user presses the F10 key or holds down the ALT key and presses another key.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Virtual key code.</item>
+            /// <item><c>lParam</c> - Repeat count, scan code, and other flags.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            SysKeyDown = 0x0104,
+
+            /// <summary>
+            /// Posted to the window with the keyboard focus when the user releases a key that was pressed while the ALT key was held down.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Virtual key code.</item>
+            /// <item><c>lParam</c> - Repeat count, scan code, and other flags.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            SysKeyUp = 0x0105,
+
+            /// <summary>
+            /// Posted to the window with the keyboard focus when a <see cref="SysKeyDown"/> message is translated by <c>TranslateMessage</c>.
+            /// <para>
+            /// Specifies the character code of a system character key (pressed while the ALT key is down).
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Character code.</item>
+            /// <item><c>lParam</c> - Repeat count, scan code, and other flags.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            SysChar = 0x0106,
+
+            /// <summary>
+            /// Posted to the window with the keyboard focus when a <see cref="SysKeyDown"/> message is translated by <c>TranslateMessage</c>.
+            /// <para>
+            /// Specifies the character code of a system dead key (pressed while holding down the ALT key).
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Character code of the system dead key.</item>
+            /// <item><c>lParam</c> - Repeat count, scan code, and other flags.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            SysDeadChar = 0x0107,
+
+            /// <summary>
+            /// Filters for keyboard messages. The last keyboard message.
+            /// </summary>
+            KeyLast = 0x0108,
+
+            /// <summary>
+            /// Sent immediately before the IME generates the composition string as a result of a keystroke.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            IMEStartComposition = 0x010D,
+
+            /// <summary>
+            /// Sent to an application when the IME ends composition.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            IMEEndComposition = 0x010E,
+
+            /// <summary>
+            /// Sent to an application when the IME changes composition status as a result of a keystroke.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            IMEComposition = 0x010F,
+
+            /// <summary>
+            /// Last IME key message.
+            /// </summary>
+            IMEKeyLast = 0x010F,
+
+            /// <summary>
+            /// Sent to the dialog box procedure immediately before a dialog box is displayed.
+            /// <para>
+            /// Used to initialize controls and carry out other initialization tasks.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Handle to the control that has the default focus.</item>
+            /// <item><c>lParam</c> - Additional initialization data.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            InitDialog = 0x0110,
+
+            /// <summary>
+            /// Sent when the user selects a command item from a menu, when a control sends a notification message to its parent window, or when an accelerator keystroke is translated.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - The command identifier.</item>
+            /// <item><c>lParam</c> - For controls, the low-order word is the control ID, and the high-order word is the notification code.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            Command = 0x0111,
+
+            /// <summary>
+            /// Received when the user chooses a command from the Window menu (system menu) or the maximize, minimize, restore, or close button.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - The system command type (e.g., <c>SC_CLOSE</c>, <c>SC_MAXIMIZE</c>).</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            SysCommand = 0x0112,
+
+            /// <summary>
+            /// Posted to the installing thread's message queue when a timer expires.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - The timer identifier.</item>
+            /// <item><c>lParam</c> - Pointer to the timer callback function (if specified).</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            Timer = 0x0113,
+
+            /// <summary>
+            /// Sent to a window when a scroll event occurs in the window's standard horizontal scroll bar or the owner of a horizontal scroll bar control.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Scroll code and position.</item>
+            /// <item><c>lParam</c> - Handle to the scroll bar control (if applicable).</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            HScroll = 0x0114,
+
+            /// <summary>
+            /// Sent to a window when a scroll event occurs in the window's standard vertical scroll bar or the owner of a vertical scroll bar control.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Scroll code and position.</item>
+            /// <item><c>lParam</c> - Handle to the scroll bar control (if applicable).</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            VScroll = 0x0115,
+
+            /// <summary>
+            /// Sent when a menu is about to become active. Occurs when the user clicks an item on the menu bar or presses a menu key.
+            /// <para>
+            /// Allows the application to modify the menu before it is displayed.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Handle to the menu.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            InitMenu = 0x0116,
+
+            /// <summary>
+            /// Sent when a drop-down menu or submenu is about to become active.
+            /// <para>
+            /// Allows an application to modify the menu before it is displayed, without changing the entire menu.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Handle to the drop-down menu or submenu.</item>
+            /// <item><c>lParam</c> - The low-order word is the menu index, and the high-order word is the system menu flag.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            InitMenuPopup = 0x0117,
+
+            /// <summary>
+            /// Sent to a menu's owner window when the user selects a menu item.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Menu item information.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            MenuSelect = 0x011F,
+
+            /// <summary>
+            /// Sent when a menu is active and the user presses a key that does not correspond to any mnemonic or accelerator key.
+            /// <para>
+            /// Sent to the window that owns the menu.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Character code.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            MenuChar = 0x0120,
+
+            /// <summary>
+            /// Sent to the owner window of a modal dialog box or menu that is entering an idle state.
+            /// <para>
+            /// A modal dialog box or menu enters an idle state when no messages are waiting in its queue.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            EnterIdle = 0x0121,
+
+            /// <summary>
+            /// Sent when the user releases the right mouse button while the cursor is on a menu item.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            MenuRButtonUp = 0x0122,
+
+            /// <summary>
+            /// Sent to the owner of a drag-and-drop menu when the user drags a menu item.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            MenuDrag = 0x0123,
+
+            /// <summary>
+            /// Sent to the owner of a drag-and-drop menu when the mouse cursor enters a menu item or moves from the center of the item to the top or bottom of the item.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            MenuGetObject = 0x0124,
+
+            /// <summary>
+            /// Sent when a drop-down menu or submenu has been destroyed.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            UnInitMenuPopup = 0x0125,
+
+            /// <summary>
+            /// Sent when the user makes a selection from a menu.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            MenuCommand = 0x0126,
+
+            /// <summary>
+            /// Sent to indicate that the user interface (UI) state should be changed.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Flags indicating the action and the UI element.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            ChangeUIState = 0x0127,
+
+            /// <summary>
+            /// Posted to a window when the cursor hovers over the non-client area of the window for the period of time specified in a prior call to <c>TrackMouseEvent</c>.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            NCMouseHover = 0x02A0,
+
+            /// <summary>
+            /// Posted to a window when the cursor leaves the non-client area of the window specified in a prior call to <c>TrackMouseEvent</c>.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            NCMouseLeave = 0x02A2,
+
+            /// <summary>
+            /// Filters for mouse messages. The first mouse message.
+            /// </summary>
+            MouseFirst = 0x0200,
+
+            /// <summary>
+            /// Posted to a window when the cursor moves.
+            /// <para>
+            /// If the mouse is not captured, the message is posted to the window that contains the cursor.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - The x and y coordinates of the cursor.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            MouseMove = 0x0200,
+
+            /// <summary>
+            /// Posted when the user presses the left mouse button while the cursor is in the client area of a window.
+            /// <para>
+            /// If the mouse is not captured, the message is posted to the window beneath the cursor.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Flags indicating the state of the mouse buttons and modifier keys.</item>
+            /// <item><c>lParam</c> - The x and y coordinates of the cursor.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            LButtonDown = 0x0201,
+
+            /// <summary>
+            /// Posted when the user releases the left mouse button while the cursor is in the client area of a window.
+            /// <para>
+            /// If the mouse is not captured, the message is posted to the window beneath the cursor.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Flags indicating the state of the mouse buttons and modifier keys.</item>
+            /// <item><c>lParam</c> - The x and y coordinates of the cursor.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            LButtonUp = 0x0202,
+
+            /// <summary>
+            /// Posted when the user double-clicks the left mouse button while the cursor is in the client area of a window.
+            /// <para>
+            /// If the mouse is not captured, the message is posted to the window beneath the cursor.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Flags indicating the state of the mouse buttons and modifier keys.</item>
+            /// <item><c>lParam</c> - The x and y coordinates of the cursor.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            LButtonDblClk = 0x0203,
+
+            /// <summary>
+            /// Posted when the user presses the right mouse button while the cursor is in the client area of a window.
+            /// <para>
+            /// If the mouse is not captured, the message is posted to the window beneath the cursor.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Flags indicating the state of the mouse buttons and modifier keys.</item>
+            /// <item><c>lParam</c> - The x and y coordinates of the cursor.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            RButtonDown = 0x0204,
+
+            /// <summary>
+            /// Posted when the user releases the right mouse button while the cursor is in the client area of a window.
+            /// <para>
+            /// If the mouse is not captured, the message is posted to the window beneath the cursor.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Flags indicating the state of the mouse buttons and modifier keys.</item>
+            /// <item><c>lParam</c> - The x and y coordinates of the cursor.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            RButtonUp = 0x0205,
+
+            /// <summary>
+            /// Posted when the user double-clicks the right mouse button while the cursor is in the client area of a window.
+            /// <para>
+            /// If the mouse is not captured, the message is posted to the window beneath the cursor.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Flags indicating the state of the mouse buttons and modifier keys.</item>
+            /// <item><c>lParam</c> - The x and y coordinates of the cursor.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            RButtonDblClk = 0x0206,
+
+            /// <summary>
+            /// Posted when the user presses the middle mouse button while the cursor is in the client area of a window.
+            /// <para>
+            /// If the mouse is not captured, the message is posted to the window beneath the cursor.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Flags indicating the state of the mouse buttons and modifier keys.</item>
+            /// <item><c>lParam</c> - The x and y coordinates of the cursor.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            MButtonDown = 0x0207,
+
+            /// <summary>
+            /// Posted when the user releases the middle mouse button while the cursor is in the client area of a window.
+            /// <para>
+            /// If the mouse is not captured, the message is posted to the window beneath the cursor.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Flags indicating the state of the mouse buttons and modifier keys.</item>
+            /// <item><c>lParam</c> - The x and y coordinates of the cursor.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            MButtonUp = 0x0208,
+
+            /// <summary>
+            /// Posted when the user double-clicks the middle mouse button while the cursor is in the client area of a window.
+            /// <para>
+            /// If the mouse is not captured, the message is posted to the window beneath the cursor.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Flags indicating the state of the mouse buttons and modifier keys.</item>
+            /// <item><c>lParam</c> - The x and y coordinates of the cursor.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            MButtonDblClk = 0x0209,
+
+            /// <summary>
+            /// Sent to the focus window when the mouse wheel is rotated.
+            /// <para>
+            /// The <c>DefWindowProc</c> function propagates the message up the parent chain until it finds a window that processes it.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - The high-order word indicates the wheel rotation delta; the low-order word is the modifier keys.</item>
+            /// <item><c>lParam</c> - The x and y coordinates of the cursor.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            MouseWheel = 0x020A,
+
+            /// <summary>
+            /// Posted when the user presses the first or second X button while the cursor is in the client area of a window.
+            /// <para>
+            /// If the mouse is not captured, the message is posted to the window beneath the cursor.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Flags indicating which X button was pressed and the modifier keys.</item>
+            /// <item><c>lParam</c> - The x and y coordinates of the cursor.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            XButtonDown = 0x020B,
+
+            /// <summary>
+            /// Posted when the user releases the first or second X button while the cursor is in the client area of a window.
+            /// <para>
+            /// If the mouse is not captured, the message is posted to the window beneath the cursor.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Flags indicating which X button was released and the modifier keys.</item>
+            /// <item><c>lParam</c> - The x and y coordinates of the cursor.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            XButtonUp = 0x020C,
+
+            /// <summary>
+            /// Posted when the user double-clicks the first or second X button while the cursor is in the client area of a window.
+            /// <para>
+            /// If the mouse is not captured, the message is posted to the window beneath the cursor.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Flags indicating which X button was double-clicked and the modifier keys.</item>
+            /// <item><c>lParam</c> - The x and y coordinates of the cursor.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            XButtonDblClk = 0x020D,
+
+            /// <summary>
+            /// Last mouse message.
+            /// </summary>
+            MouseLast = 0x020D,
+
+            /// <summary>
+            /// Sent to the focus window when the mouse's horizontal scroll wheel is tilted or rotated.
+            /// <para>
+            /// The <c>DefWindowProc</c> function propagates the message up the parent chain until it finds a window that processes it.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - The high-order word indicates the wheel rotation delta; the low-order word is the modifier keys.</item>
+            /// <item><c>lParam</c> - The x and y coordinates of the cursor.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            MouseHWheel = 0x020E,
+
+            /// <summary>
+            /// Posted to a window when the cursor hovers over the client area of the window for the period of time specified in a prior call to <c>TrackMouseEvent</c>.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            MouseHover = 0x02A1,
+
+            /// <summary>
+            /// Posted to a window when the cursor leaves the client area of the window specified in a prior call to <c>TrackMouseEvent</c>.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            MouseLeave = 0x02A3,
+
+            /// <summary>
+            /// Sent to the parent of a child window when the child window is created or destroyed, or when the user clicks a mouse button while the cursor is over the child window.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - The event code (e.g., <c>WM_PARENTNOTIFY</c>).</item>
+            /// <item><c>lParam</c> - Additional event-specific information.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            ParentNotify = 0x0210,
+
+            /// <summary>
+            /// Informs an application's main window procedure that a menu modal loop has been entered.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            EnterMenuLoop = 0x0211,
+
+            /// <summary>
+            /// Informs an application's main window procedure that a menu modal loop has been exited.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            ExitMenuLoop = 0x0212,
+
+            /// <summary>
+            /// Sent to an application when the right or left arrow key is used to switch between the menu bar and the system menu.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            NextMenu = 0x0213,
+
+            /// <summary>
+            /// Sent to a window that the user is resizing. Allows the application to monitor and adjust the size and position of the drag rectangle.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - The edge of the window being sized.</item>
+            /// <item><c>lParam</c> - Pointer to a <c>RECT</c> structure.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            Sizing = 0x0214,
+
+            /// <summary>
+            /// Sent to the window that is losing the mouse capture.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Handle to the window that is gaining the mouse capture.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            CaptureChanged = 0x0215,
+
+            /// <summary>
+            /// Sent to a window that the user is moving. Allows the application to monitor the position of the drag rectangle and, if needed, change its position.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Pointer to a <c>RECT</c> structure.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            Moving = 0x0216,
+
+            /// <summary>
+            /// Notifies applications that a power-management event has occurred.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - The power event (e.g., <c>PBT_APMQUERYSUSPEND</c>).</item>
+            /// <item><c>lParam</c> - Event-specific data.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            PowerBroadcast = 0x0218,
+
+            /// <summary>
+            /// Notifies an application of a change to the hardware configuration of a device or the computer.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - The device change event (e.g., <c>DBT_DEVICEARRIVAL</c>).</item>
+            /// <item><c>lParam</c> - Pointer to a device event structure.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            DeviceChange = 0x0219,
+
+            /// <summary>
+            /// Sent to a multiple-document interface (MDI) client window to create an MDI child window.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Pointer to an <c>MDICREATESTRUCT</c> structure.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            MDICreate = 0x0220,
+
+            /// <summary>
+            /// Sent to a multiple-document interface (MDI) client window to close an MDI child window.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Handle to the MDI child window to close.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            MDIDestroy = 0x0221,
+
+            /// <summary>
+            /// Sent to a multiple-document interface (MDI) client window to activate a different MDI child window.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Handle to the MDI child window to activate.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            MDIActivate = 0x0222,
+
+            /// <summary>
+            /// Sent to a multiple-document interface (MDI) client window to restore an MDI child window from maximized or minimized size.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Handle to the MDI child window to restore.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            MDIRestore = 0x0223,
+
+            /// <summary>
+            /// Sent to a multiple-document interface (MDI) client window to activate the next or previous child window.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Handle to the current MDI child window, or <c>NULL</c>.</item>
+            /// <item><c>lParam</c> - Flags indicating the direction and type.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            MDINext = 0x0224,
+
+            /// <summary>
+            /// Sent to a multiple-document interface (MDI) client window to maximize an MDI child window.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Handle to the MDI child window to maximize.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            MDIMaximize = 0x0225,
+
+            /// <summary>
+            /// Sent to a multiple-document interface (MDI) client window to arrange all of its MDI child windows in a tile format.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Tiling flags.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            MDITile = 0x0226,
+
+            /// <summary>
+            /// Sent to a multiple-document interface (MDI) client window to arrange all its child windows in a cascade format.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            MDICascade = 0x0227,
+
+            /// <summary>
+            /// Sent to a multiple-document interface (MDI) client window to arrange all minimized MDI child windows.
+            /// <para>
+            /// It does not affect child windows that are not minimized.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            MDIIconArrange = 0x0228,
+
+            /// <summary>
+            /// Sent to a multiple-document interface (MDI) client window to retrieve the handle to the active MDI child window.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            MDIGetActive = 0x0229,
+
+            /// <summary>
+            /// Sent to a multiple-document interface (MDI) client window to replace the entire menu of an MDI frame window, to replace the window menu of the frame window, or both.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Handle to the new menu.</item>
+            /// <item><c>lParam</c> - Handle to the new window menu.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            MDISetMenu = 0x0230,
+
+            /// <summary>
+            /// Sent one time to a window after it enters the moving or sizing modal loop.
+            /// <para>
+            /// The window enters the moving or sizing modal loop when the user clicks the window's title bar or sizing border, or when the window passes the <see cref="SysCommand"/> message to <c>DefWindowProc</c> with <c>SC_MOVE</c> or <c>SC_SIZE</c>.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            EnterSizeMove = 0x0231,
+
+            /// <summary>
+            /// Sent one time to a window after it has exited the moving or sizing modal loop.
+            /// <para>
+            /// The window enters the moving or sizing modal loop when the user clicks the window's title bar or sizing border, or when the window passes the <see cref="SysCommand"/> message to <c>DefWindowProc</c> with <c>SC_MOVE</c> or <c>SC_SIZE</c>.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            ExitSizeMove = 0x0232,
+
+            /// <summary>
+            /// Sent when the user drops a file on the window of an application that has registered itself as a recipient of dropped files.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Handle to the drop file structure.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            DropFiles = 0x0233,
+
+            /// <summary>
+            /// Sent to a multiple-document interface (MDI) client window to refresh the window menu of the MDI frame window.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            MDIRefreshMenu = 0x0234,
+
+            /// <summary>
+            /// The first AFX message (used internally by the MFC library).
+            /// </summary>
+            AfxFirst = 0x0360,
+
+            /// <summary>
+            /// The last AFX message (used internally by the MFC library).
+            /// </summary>
+            AfxLast = 0x037F,
+
+            /// <summary>
+            /// The first pen window message.
+            /// </summary>
+            PenWinFirst = 0x0380,
+
+            /// <summary>
+            /// The last pen window message.
+            /// </summary>
+            PenWinLast = 0x038F,
+
+            /// <summary>
+            /// The base value for application-defined private messages.
+            /// <para>
+            /// Applications can define their own custom messages starting from this value.
+            /// Typically used as <c>WM_USER + X</c>.
+            /// </para>
+            /// </summary>
+            User = 0x0400,
+
+            /// <summary>
+            /// The base value for application-defined private messages that are guaranteed to be unique across applications.
+            /// <para>
+            /// Typically used as <c>WM_APP + X</c>.
+            /// </para>
+            /// </summary>
+            App = 0x8000,
+
+            /// <summary>
+            /// Sent to the clipboard owner by a clipboard viewer window to request the name of a <c>CF_OWNERDISPLAY</c> clipboard format.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - The maximum number of characters to copy.</item>
+            /// <item><c>lParam</c> - Pointer to a buffer that receives the format name.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            AskCBFormatName = 0x030C,
+
+            /// <summary>
+            /// Sent to the first window in the clipboard viewer chain when a window is being removed from the chain.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Handle to the window being removed.</item>
+            /// <item><c>lParam</c> - Handle to the next window in the chain.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            ChangeCBChain = 0x030D,
+
+            /// <summary>
+            /// Sent to an edit control or combo box to delete (clear) the current selection from the edit control.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            Clear = 0x0303,
+
+            /// <summary>
+            /// Sent to an edit control or combo box to copy the current selection to the clipboard in <c>CF_TEXT</c> format.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            Copy = 0x0301,
+
+            /// <summary>
+            /// Sent to an edit control or combo box to delete (cut) the current selection and copy the deleted text to the clipboard in <c>CF_TEXT</c> format.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            Cut = 0x0300,
+
+            /// <summary>
+            /// Sent to the clipboard owner when <c>EmptyClipboard</c> empties the clipboard.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            DestroyClipboard = 0x0307,
+
+            /// <summary>
+            /// Sent to the first window in the clipboard viewer chain when the content of the clipboard changes.
+            /// <para>
+            /// Enables a clipboard viewer window to display the new content of the clipboard.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            DrawClipboard = 0x0308,
+
+            /// <summary>
+            /// Sent to the clipboard owner by a clipboard viewer window when the clipboard contains data in the <c>CF_OWNERDISPLAY</c> format and the clipboard viewer's client area needs repainting.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Handle to the clipboard viewer window.</item>
+            /// <item><c>lParam</c> - Pointer to a <c>PAINTSTRUCT</c> structure.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            PaintClipboard = 0x0309,
+
+            /// <summary>
+            /// Sent to the clipboard owner by a clipboard viewer window when the clipboard contains data in the <c>CF_OWNERDISPLAY</c> format and an event occurs in the clipboard viewer's horizontal scroll bar.
+            /// <para>
+            /// The owner should scroll the clipboard image and update the scroll bar values.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - The scroll code and position.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            HScrollClipboard = 0x030E,
+
+            /// <summary>
+            /// Sent to the clipboard owner by a clipboard viewer window when the clipboard contains data in the <c>CF_OWNERDISPLAY</c> format and an event occurs in the clipboard viewer's vertical scroll bar.
+            /// <para>
+            /// The owner should scroll the clipboard image and update the scroll bar values.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - The scroll code and position.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            VScrollClipboard = 0x030A,
+
+            /// <summary>
+            /// Sent to the clipboard owner by a clipboard viewer window when the clipboard contains data in the <c>CF_OWNERDISPLAY</c> format and the clipboard viewer's client area has changed size.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Pointer to a <c>RECT</c> structure.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            SizeClipboard = 0x030B,
+
+            /// <summary>
+            /// Sent to an edit control or combo box to copy the current content of the clipboard to the edit control at the current caret position.
+            /// <para>
+            /// Data is inserted only if the clipboard contains data in <c>CF_TEXT</c> format.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            Paste = 0x0302,
+
+            /// <summary>
+            /// Sent to the clipboard owner before it is destroyed, if the clipboard owner has delayed rendering one or more clipboard formats.
+            /// <para>
+            /// The owner must render data in all the formats it is capable of generating and place the data on the clipboard.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            RenderAllFormats = 0x0306,
+
+            /// <summary>
+            /// Sent to the clipboard owner if it has delayed rendering a specific clipboard format and an application has requested data in that format.
+            /// <para>
+            /// The owner must render data in the specified format and place it on the clipboard.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - The clipboard format to render.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            RenderFormat = 0x0305,
+
+            /// <summary>
+            /// Sent to an edit control to undo the last operation.
+            /// <para>
+            /// The previously deleted text is restored or the previously added text is deleted.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            Undo = 0x0304,
+
+            /// <summary>
+            /// Sent to a window to request that it draw itself in the specified device context, most commonly in a printer device context.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Handle to the device context (DC).</item>
+            /// <item><c>lParam</c> - Flags specifying the drawing options.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            Print = 0x0317,
+
+            /// <summary>
+            /// Sent to a window to request that it draw its client area in the specified device context, most commonly in a printer device context.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Handle to the device context (DC).</item>
+            /// <item><c>lParam</c> - Flags specifying the drawing options.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            PrintClient = 0x0318,
+
+            /// <summary>
+            /// Sent by the OS to all top-level and overlapped windows after the window with the keyboard focus realizes its logical palette.
+            /// <para>
+            /// Enables windows that do not have the keyboard focus to realize their logical palettes and update their client areas.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Handle to the window that realized its palette.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            PaletteChanged = 0x0311,
+
+            /// <summary>
+            /// Informs applications that an application is going to realize its logical palette.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            PaletteIsChanging = 0x0310,
+
+            /// <summary>
+            /// Informs a window that it is about to receive the keyboard focus, giving the window the opportunity to realize its logical palette.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            QueryNewPalette = 0x030F,
+
+            /// <summary>
+            /// Sent to the parent window of a message box before Windows draws the message box.
+            /// <para>
+            /// Allows the owner to set the text and background colors using the given display device context handle.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Handle to the device context (DC).</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            CtlColorMsgBox = 0x0132,
+
+            /// <summary>
+            /// Sent by an edit control that is not read-only or disabled to its parent window when the control is about to be drawn.
+            /// <para>
+            /// Allows the parent to set the text and background colors of the edit control.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Handle to the device context (DC).</item>
+            /// <item><c>lParam</c> - Handle to the edit control.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            CtlColorEdit = 0x0133,
+
+            /// <summary>
+            /// Sent to the parent window of a list box before the system draws the list box.
+            /// <para>
+            /// Allows the parent to set the text and background colors of the list box.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Handle to the device context (DC).</item>
+            /// <item><c>lParam</c> - Handle to the list box control.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            CtlColorListBox = 0x0134,
+
+            /// <summary>
+            /// Sent to the parent window of a button before drawing the button.
+            /// <para>
+            /// Allows the parent to change the button's text and background colors. Only owner-drawn buttons respond to this message.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Handle to the device context (DC).</item>
+            /// <item><c>lParam</c> - Handle to the button control.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            CtlColorBtn = 0x0135,
+
+            /// <summary>
+            /// Sent to a dialog box before the system draws the dialog box.
+            /// <para>
+            /// Allows the dialog box to set its text and background colors using the specified display device context handle.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Handle to the device context (DC).</item>
+            /// <item><c>lParam</c> - Handle to the dialog box.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            CtlColorDlg = 0x0136,
+
+            /// <summary>
+            /// Sent to the parent window of a scroll bar control when the control is about to be drawn.
+            /// <para>
+            /// Allows the parent to set the background color of the scroll bar control.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Handle to the device context (DC).</item>
+            /// <item><c>lParam</c> - Handle to the scroll bar control.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            CtlColorScrollBar = 0x0137,
+
+            /// <summary>
+            /// Sent by a static control, or a read-only or disabled edit control, to its parent window when the control is about to be drawn.
+            /// <para>
+            /// Allows the parent to set the text and background colors of the static control.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Handle to the device context (DC).</item>
+            /// <item><c>lParam</c> - Handle to the static control.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            CtlColorStatic = 0x0138,
+
+            /// <summary>
+            /// Sent to the IME window by an application to direct the IME window to carry out the requested command.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - The command to execute.</item>
+            /// <item><c>lParam</c> - Command-specific data.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            ImeControl = 0x0283,
+
+            /// <summary>
+            /// Sent to an application when the IME window finds no space to extend the area for the composition window.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            ImeCompositionFull = 0x0284,
+
+            /// <summary>
+            /// Sent to an application when the operating system is about to change the current IME.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - New input locale identifier.</item>
+            /// <item><c>lParam</c> - Previous input locale identifier.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            ImeSelect = 0x0285,
+
+            /// <summary>
+            /// Sent to an application when the IME gets a character of the conversion result.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Character code.</item>
+            /// <item><c>lParam</c> - Repeat count, scan code, and other flags.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            ImeChar = 0x0286,
+
+            /// <summary>
+            /// Sent to an application to notify it of changes to the IME window.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Notification code.</item>
+            /// <item><c>lParam</c> - Notification-specific data.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            ImeNotify = 0x0282,
+
+            /// <summary>
+            /// Sent to all top-level windows when a change in the current visual theme has occurred.
+            /// <para>
+            /// This message is broadcast by the system when the user switches themes, modifies theme settings,
+            /// or when an application changes theme-related system parameters through the <c>SetThemeProperties</c>
+            /// function. It provides an opportunity for applications to update their UI elements to match the
+            /// new visual style.
+            /// </para>
+            /// </summary>
+            /// <remarks>
+            /// <para>
+            /// <b>When to handle this message:</b>
+            /// Applications that perform custom drawing or use custom controls should handle this message
+            /// to refresh their visual appearance. Common responses include:
+            /// <list type="bullet">
+            /// <item>Invalidating the window to trigger a repaint (<c>InvalidateRect</c>)</item>
+            /// <item>Requerying theme metrics (<c>GetThemeMetrics</c>)</item>
+            /// <item>Recreating theme-dependent brushes or fonts</item>
+            /// <item>Updating custom-drawn controls to reflect new theme colors and sizes</item>
+            /// </list>
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used; should be ignored.</item>
+            /// <item><c>lParam</c> - Not used; should be ignored.</item>
+            /// </list>
+            /// </para>
+            /// <para>
+            /// <b>Default behavior:</b>
+            /// If not handled, <c>DefWindowProc</c> does nothing with this message, as it is primarily
+            /// a notification for applications to act upon.
+            /// </para>
+            /// <para>
+            /// <b>Related messages:</b>
+            /// This message is often processed alongside <see cref="SysColorChange"/> (0x15) and
+            /// <see cref="SettingChange"/> (0x001A) when system-wide visual settings are modified.
+            /// </para>
+            /// <para>
+            /// <b>Note:</b> This message is defined in <c>uxtheme.h</c> and is part of the Desktop Window Manager (DWM)
+            /// theme API. It was introduced with Windows XP theme support.
+            /// </para>
+            /// </remarks>
+            /// <seealso cref="SysColorChange"/>
+            /// <seealso cref="SettingChange"/>
+            ThemeChanged = 0x31A,
+
+            /// <summary>
+            /// Sent to an application to provide commands and request information.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Request command.</item>
+            /// <item><c>lParam</c> - Request-specific data.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            ImeRequest = 0x0288,
+
+            /// <summary>
+            /// Sent to an application when a window is activated.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used.</item>
+            /// <item><c>lParam</c> - Not used.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            ImeSetContext = 0x0281,
+
+            /// <summary>
+            /// Sent to an application by the IME to notify the application of a key press and to keep message order.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Virtual key code.</item>
+            /// <item><c>lParam</c> - Repeat count, scan code, and other flags.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            ImeKeyDown = 0x0290,
+
+            /// <summary>
+            /// Sent to an application by the IME to notify the application of a key release and to keep message order.
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Virtual key code.</item>
+            /// <item><c>lParam</c> - Repeat count, scan code, and other flags.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            ImeKeyUp = 0x0291,
+
+            /// <summary>
+            /// Posted when the user presses a hot key registered by <c>RegisterHotKey</c>.
+            /// <para>
+            /// The message is placed at the top of the message queue associated with the thread that registered the hot key.
+            /// </para>
+            /// <para>
+            /// <b>Parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - The hot key identifier.</item>
+            /// <item><c>lParam</c> - The virtual key code and modifiers.</item>
+            /// </list>
+            /// </para>
+            /// </summary>
+            HotKey = 0x0312,
+
+            /// <summary>
+            /// Task Dialog notification sent when the expand/collapse button (expando) is clicked by the user.
+            /// <para>
+            /// This notification is sent to the task dialog callback procedure when the user toggles the
+            /// expand/collapse button that controls the visibility of the expanded information area
+            /// in a task dialog.
+            /// </para>
+            /// </summary>
+            /// <remarks>
+            /// <para>
+            /// <b>Usage scenarios:</b>
+            /// <list type="bullet">
+            /// <item>When a task dialog includes expanded information that can be toggled</item>
+            /// <item>To track user interaction with the expando button for analytics</item>
+            /// <item>To update the task dialog's expanded state programmatically</item>
+            /// <item>To respond to state changes in custom task dialog implementations</item>
+            /// </list>
+            /// </para>
+            /// <para>
+            /// <b>Message parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Not used; should be ignored.</item>
+            /// <item><c>lParam</c> - Not used; should be ignored.</item>
+            /// </list>
+            /// </para>
+            /// <para>
+            /// <b>Callback handling:</b>
+            /// When this notification is received in the <c>TaskDialogCallbackProc</c>:
+            /// <list type="number">
+            /// <item>The task dialog's expanded state has already been toggled</item>
+            /// <item>The callback can update any custom UI elements in response</item>
+            /// <item>Return <c>S_OK</c> to continue normal processing</item>
+            /// <item>Returning <c>E_FAIL</c> prevents further processing</item>
+            /// </list>
+            /// </para>
+            /// <para>
+            /// <b>Usage example:</b>
+            /// <code>
+            /// private int TaskDialogCallback(IntPtr hwnd, uint msg, IntPtr wParam, IntPtr lParam, IntPtr lpRefData)
+            /// {
+            ///     switch ((TaskDialogNotification)msg)
+            ///     {
+            ///         case TaskDialogNotification.ExpandoButtonClicked:
+            ///             // User toggled the expando button
+            ///             bool isExpanded = TaskDialog_GetExpandedState(hwnd);
+            ///             UpdateCustomUI(isExpanded);
+            ///             break;
+            ///     }
+            ///     return 0;
+            /// }
+            /// </code>
+            /// </para>
+            /// <para>
+            /// <b>Related notifications:</b>
+            /// <list type="bullet">
+            /// <item><see cref="TaskDialogNotification.Navigated"/> - Sent when the task dialog is navigated</item>
+            /// <item><see cref="TaskDialogNotification.ButtonClicked"/> - Sent when a button is clicked</item>
+            /// <item><see cref="TaskDialogNotification.HyperlinkClicked"/> - Sent when a hyperlink is clicked</item>
+            /// </list>
+            /// </para>
+            /// <para>
+            /// <b>Note:</b> This notification is defined in <c>commctrl.h</c> as part of the Task Dialog API
+            /// (introduced in Windows Vista). The notification code is <c>TDN_EXPANDO_BUTTON_CLICKED</c>
+            /// with a value of 0x1102.
+            /// </para>
+            /// </remarks>
+            /// <seealso cref="TaskDialogNotification.Navigated"/>
+            /// <seealso cref="TaskDialogNotification.ButtonClicked"/>
+            /// <seealso cref="TaskDialogNotification.HyperlinkClicked"/>
+            ExpandoButtonClicked = 0x1102,
+
+            /// <summary>
+            /// A custom application-defined message used to request a refresh of the DirectUI (DUI) state.
+            /// <para>
+            /// This message can be triggered to force DirectUI-based UI elements to update, redraw,
+            /// or synchronize their state with the underlying data model. It is particularly useful
+            /// when multiple components need to refresh their visual representation without
+            /// causing a full window repaint.
+            /// </para>
+            /// </summary>
+            /// <remarks>
+            /// <para>
+            /// <b>Usage scenarios:</b>
+            /// <list type="bullet">
+            /// <item>After data-bound properties change in the view model</item>
+            /// <item>When theme or style changes affect DirectUI visual elements</item>
+            /// <item>To synchronize multiple DirectUI controls after batch updates</item>
+            /// <item>When resuming from a suspended state that may have affected UI state</item>
+            /// </list>
+            /// </para>
+            /// <para>
+            /// <b>Message parameters:</b>
+            /// <list type="bullet">
+            /// <item><c>wParam</c> - Optional parameter; can be used to specify refresh flags or specific element identifiers.</item>
+            /// <item><c>lParam</c> - Optional parameter; can be used to pass additional context or a pointer to refresh data.</item>
+            /// </list>
+            /// </para>
+            /// <para>
+            /// <b>Recommended handling:</b>
+            /// When this message is received, the window procedure should:
+            /// <list type="number">
+            /// <item>Call <c>Invalidate()</c> on affected DirectUI elements</item>
+            /// <item>Rebind any data sources or refresh collections</item>
+            /// <item>Update the visual state to reflect current data</item>
+            /// <item>Optionally force a layout pass if needed</item>
+            /// </list>
+            /// </para>
+            /// <para>
+            /// <b>Scope:</b> This is an application-defined message and can be used
+            /// internally across different modules of the application. It is not a system message
+            /// and will not be sent by Windows.
+            /// </para>
+            /// <para>
+            /// <b>Value:</b> This message is defined as <c>WM_USER + 4242</c> to avoid conflicts with
+            /// other custom messages. The offset 4242 is chosen arbitrarily and can be adjusted
+            /// if conflicts arise.
+            /// </para>
+            /// <para>
+            /// <b>Thread safety:</b> This message should be posted or sent from the UI thread
+            /// to avoid cross-thread issues with DirectUI rendering.
+            /// </para>
+            /// </remarks>
+            /// <seealso cref="WindowsMessage.User"/>
+            /// <seealso cref="WindowsMessage.Paint"/>
+            RefreshDuiState = (uint)User + 4242,
         }
 
         /// <summary>

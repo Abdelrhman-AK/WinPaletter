@@ -2272,11 +2272,26 @@ namespace WinPaletter.Tabs
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
 
-            InvokePaintBackground(this, e);
+            bool isClassicStyle = Flag == Flags.System && (TitlebarType == TitlebarTypes.Classic || TitlebarType == TitlebarTypes.Basic);
 
-            using (Pen P = new(!OS.W7 && !OS.WVista ? scheme.Colors.Line_Hover(0) : win7BorderColor_Inner)) 
-            { 
-                G.DrawLine(P, new Point(0, Height - 1), new Point(Width - 1, Height - 1)); 
+            if (isClassicStyle && Width > 0 && Height > 0)
+            {
+                Rectangle rect = new(0, 0, Width, Height);
+
+                Color c1 = _formFocused ? activeTtl : inactiveTtl;
+                Color c2 = _formFocused ? activeTtlG : inactiveTtlG;
+
+                GradientFillCaptionEased(e.Graphics, rect, c1, c2);
+            }
+            else
+            {
+                // Only call base if not classic, or let the control handle its own BackColor
+                base.OnPaintBackground(e);
+            }
+
+            using (Pen P = new(!OS.W7 && !OS.WVista ? scheme.Colors.Line_Hover(0) : win7BorderColor_Inner))
+            {
+                G.DrawLine(P, new Point(0, Height - 1), new Point(Width - 1, Height - 1));
             }
 
             Rectangle clipRect = new(LeftBoundary, 0, RightBoundary - LeftBoundary, Height);

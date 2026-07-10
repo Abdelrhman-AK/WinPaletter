@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 using WinPaletter.NativeMethods;
+using static WinPaletter.NativeMethods.User32;
 
 namespace WinPaletter.UI.Dark
 {
@@ -88,7 +89,7 @@ namespace WinPaletter.UI.Dark
         {
             if (Program.Style.DarkMode)
             {
-                if (uMsg == User32.WM_COMMAND)
+                if (uMsg == (uint)WindowsMessage.Command)
                 {
                     long wParamLong = (long)wParam;
                     int id = (ushort)(wParamLong & 0xFFFF);
@@ -111,7 +112,7 @@ namespace WinPaletter.UI.Dark
                     }
                 }
 
-                if (uMsg == User32.WM_DRAWITEM && lParam != IntPtr.Zero)
+                if (uMsg == (uint)WindowsMessage.DrawItem && lParam != IntPtr.Zero)
                 {
                     User32.DRAWITEMSTRUCT dis = Marshal.PtrToStructure<User32.DRAWITEMSTRUCT>(lParam);
 
@@ -207,14 +208,14 @@ namespace WinPaletter.UI.Dark
             {
                 if (TryHandleColorMessage(uMsg, wParam, out IntPtr brush)) return brush;
 
-                if (uMsg == User32.WM_ERASEBKGND)
+                if (uMsg == (uint)WindowsMessage.EraseBkgnd)
                 {
                     User32.GetClientRect(hWnd, out var rect);
                     User32.FillRect(wParam, ref rect, DarkBrush);
                     return (IntPtr)1;
                 }
 
-                if (uMsg == User32.WM_PAINT)
+                if (uMsg == (uint)WindowsMessage.Paint)
                 {
                     User32.SendMessage(hWnd, LVM_SETBKCOLOR, IntPtr.Zero, (IntPtr)DARK_COLOR_INT);
                     User32.SendMessage(hWnd, LVM_SETTEXTBKCOLOR, IntPtr.Zero, (IntPtr)DARK_COLOR_INT);
@@ -233,14 +234,14 @@ namespace WinPaletter.UI.Dark
                 // here, that's this dropdown window, not the listbox itself. Without taking this
                 // over, item rows keep painting themselves with their original light-mode colors,
                 // which is exactly why only the empty margins were turning dark before.
-                if (uMsg == User32.WM_DRAWITEM && lParam != IntPtr.Zero)
+                if (uMsg == (uint)WindowsMessage.DrawItem && lParam != IntPtr.Zero)
                 {
                     return DrawDropdownItem(lParam);
                 }
 
                 if (TryHandleColorMessage(uMsg, wParam, out IntPtr brush)) return brush;
 
-                if (uMsg == User32.WM_ERASEBKGND)
+                if (uMsg == (uint)WindowsMessage.EraseBkgnd)
                 {
                     User32.GetClientRect(hWnd, out var rect);
                     User32.FillRect(wParam, ref rect, DarkBrush);
@@ -250,7 +251,7 @@ namespace WinPaletter.UI.Dark
                 // Auto-Suggest Dropdown popups are shown with SWP_NOACTIVATE so they never take focus/activation, which means HCBT_ACTIVATE never fires for them.
                 // Windows reuses the same dropdown window and just shows/repositions/resizes it on every keystroke, so WM_SHOWWINDOW / WM_WINDOWPOSCHANGED are what
                 // reliably fire each time - use those to re-theme whatever children now exist.
-                if (uMsg == User32.WM_SHOWWINDOW || uMsg == User32.WM_WINDOWPOSCHANGED)
+                if (uMsg == (uint)WindowsMessage.ShowWindow || uMsg == (uint)WindowsMessage.WindowPosChanged)
                 {
                     User32.GetChildWindowHandles(hWnd).ForEach(childHwnd => ApplyDarkModeToControl(new Win32Control(childHwnd)));
                     User32.RedrawWindow(hWnd, IntPtr.Zero, IntPtr.Zero, 0x0001 | 0x0004 | 0x0100);

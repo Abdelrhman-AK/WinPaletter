@@ -67,7 +67,7 @@ namespace WinPaletter.Theme.Structures
                 WriteReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "ColorizationColor", Color.FromArgb(Alpha, ColorizationColor).ToArgb(), RegistryValueKind.DWord);
 
                 // Broadcast the system message to notify about the setting change
-                User32.SendMessage(IntPtr.Zero, User32.WindowsMessages.WM_SETTINGCHANGE, IntPtr.Zero, IntPtr.Zero);
+                User32.SendMessage(IntPtr.Zero, User32.WindowsMessage.SettingChange, IntPtr.Zero, IntPtr.Zero);
             }
         }
 
