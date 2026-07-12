@@ -1021,15 +1021,6 @@ namespace WinPaletter.Tabs
     /// </summary>
     public class IconChangeMessageHandler : NativeWindow, IDisposable
     {
-        #region Constants
-
-        /// <summary>
-        /// Windows message constant for setting the icon.
-        /// </summary>
-        private const int WM_SETICON = 0x80;
-
-        #endregion
-
         #region Fields
 
         /// <summary>
@@ -1062,7 +1053,7 @@ namespace WinPaletter.Tabs
         #region NativeWindow Overrides
 
         /// <summary>
-        /// Overrides the window procedure to handle WM_SETICON message.
+        /// Overrides the window procedure to handle setting icon message.
         /// </summary>
         /// <param name="m">Message object.</param>
         protected override void WndProc(ref Message m)
@@ -1070,10 +1061,10 @@ namespace WinPaletter.Tabs
             base.WndProc(ref m);
 
             // Check for the WM_SETICON message
-            if (m.Msg == WM_SETICON)
+            if (m.Msg == (int)User32.WindowsMessage.SetIcon)
             {
                 // Get the current icon handle
-                IntPtr currentIconHandle = User32.SendMessage(Handle, 0x7F /*WM_GETICON*/, (IntPtr)1, IntPtr.Zero);
+                IntPtr currentIconHandle = User32.SendMessage(Handle, (int)User32.WindowsMessage.GetIcon, (IntPtr)1, IntPtr.Zero);
 
                 // If the icon handle has changed, trigger the OnIconChanged event
                 if (lastIconHandle == IntPtr.Zero || lastIconHandle != currentIconHandle)
@@ -1081,6 +1072,10 @@ namespace WinPaletter.Tabs
                     lastIconHandle = currentIconHandle;
                     TabData?.OnIconChanged(new(TabData));
                 }
+            }
+            else if (m.Msg == (int)User32.WindowsMessage.Activate || m.Msg == (int)User32.WindowsMessage.ActivateApp || m.Msg == (int)User32.WindowsMessage.NCActivate)
+            {
+
             }
         }
 

@@ -1,11 +1,9 @@
 ﻿using FluentTransitions;
+using Microsoft.Win32;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
@@ -25,16 +23,17 @@ namespace WinPaletter.UI.WP
         private const uint MF_ENABLED = 0x00000000;
         private const uint MF_GRAYED = 0x00000001;
         private const uint SC_CLOSE = 0xF060;
-        private const uint WM_NCACTIVATE = 0x86U;
-        private const int WM_MOUSEACTIVATE = 0x0021;
         private const int MA_NOACTIVATE = 0x0003;
-        private const int WM_NCHITTEST = 0x0084;
         private const int HTCLIENT = 1;
         private const int HTCAPTION = 2;
         private static readonly IntPtr HWND_BOTTOM = new(1);
         private static readonly IntPtr HWND_NOTOPMOST = new(-2);
         private Panel _backdropPaddingPanel;
         private static bool layeredSet = false;
+        private Bitmap _bordersMsstyles_Active;
+        private Bitmap _bordersMsstyles_Inactive;
+        private bool isCompositionEnabled = DWMAPI.IsCompositionEnabled();
+        private bool _isClassicThemeEnabled = false;
 
         //public new bool DesignMode => base.DesignMode || LicenseManager.UsageMode == LicenseUsageMode.Designtime;
 
@@ -71,11 +70,14 @@ namespace WinPaletter.UI.WP
             if (this is not null && IsHandleCreated) Localized?.Invoke();
             this.DoubleBuffer();
 
+            isCompositionEnabled = DWMAPI.IsCompositionEnabled();
+            _isClassicThemeEnabled = Program.ClassicThemeRunning;
+
             if (!_showIconAndCaptionText) NativeMethods.Helpers.SetFormTitlebarTextAndIcon(Handle, !_showIconAndCaptionText);
 
             CheckForIllegalCrossThreadCalls = false;
 
-            if (FormBorderStyle == FormBorderStyle.None && _borders && DWMAPI.IsCompositionEnabled() && !(OS.WVista || OS.W7 || OS.W8 || OS.W81))
+            if (FormBorderStyle == FormBorderStyle.None && _borders && isCompositionEnabled && !(OS.WVista || OS.W7 || OS.W8 || OS.W81))
             {
                 Opacity = 0;
             }
@@ -87,6 +89,9 @@ namespace WinPaletter.UI.WP
             }
 
             ApplyDWMBorder();
+
+            SystemEvents.UserPreferenceChanged += OnSystemSettingsUpdated;
+            UpdateBordersFromVisualStyles();
 
             base.OnLoad(e);
         }
@@ -111,6 +116,12 @@ namespace WinPaletter.UI.WP
             if (CloseOnClick) Close();
         }
 
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            base.OnSizeChanged(e);
+            UpdateBordersFromVisualStyles();
+        }
+
         /// <summary>
         /// Deactivates the form using an animation.
         /// </summary>
@@ -130,7 +141,9 @@ namespace WinPaletter.UI.WP
 
         public new void Close()
         {
-            if (!DesignMode && FormBorderStyle == FormBorderStyle.None && _borders && DWMAPI.IsCompositionEnabled() && !(OS.WVista || OS.W7 || OS.W8 || OS.W81))
+            SystemEvents.UserPreferenceChanged -= OnSystemSettingsUpdated;
+
+            if (!DesignMode && FormBorderStyle == FormBorderStyle.None && _borders && isCompositionEnabled && !(OS.WVista || OS.W7 || OS.W8 || OS.W81))
             {
                 Deactivate(true);
             }
@@ -186,6 +199,15 @@ namespace WinPaletter.UI.WP
         {
             base.OnFormClosed(e);
             _shown = false;
+
+            Bitmap staleActive = _bordersMsstyles_Active;
+            Bitmap staleInactive = _bordersMsstyles_Inactive;
+
+            _bordersMsstyles_Active = null;
+            _bordersMsstyles_Inactive = null;
+
+            staleActive?.Dispose();
+            staleInactive?.Dispose();
         }
 
         protected override void WndProc(ref Message m)
@@ -198,20 +220,27 @@ namespace WinPaletter.UI.WP
 
             switch (m.Msg)
             {
-                case 0x0014: // WM_ERASEBKGND — never let DefWindowProc paint with DEFAULT_BRUSH
-                    using (var g = Graphics.FromHdc(m.WParam))
-                    using (var b = new SolidBrush(BackColor))
-                        g.FillRectangle(b, ClientRectangle);
-                    m.Result = (IntPtr)1;
-                    break;
+                case (int)User32.WindowsMessage.EraseBkgnd: // Never let DefWindowProc paint with DEFAULT_BRUSH
+                    {
+                        using (Graphics G = Graphics.FromHdc(m.WParam))
+                        using (SolidBrush b = new(BackColor))
+                        {
+                            G.FillRectangle(b, ClientRectangle);
+                        }
+                        m.Result = (IntPtr)1;
+                        break;
+                    }
 
-                // DWM/Aero borders and shadow
-                case DWMAPI.WM_NCPAINT:
-                    ApplyDWMBorder();
-                    break;
+                case (int)User32.WindowsMessage.NCPaint:
+                case (int)User32.WindowsMessage.Paint:
+                case (int)User32.WindowsMessage.SyncPaint:
+                    {
+                        ApplyDWMBorder();
+                        break;
+                    }
 
                 // Prevent focus steal
-                case WM_MOUSEACTIVATE:
+                case (int)User32.WindowsMessage.MouseActivate:
                     if (_preventFocusSteal)
                     {
                         m.Result = (IntPtr)MA_NOACTIVATE;
@@ -219,7 +248,7 @@ namespace WinPaletter.UI.WP
                     }
                     break;
 
-                case WM_NCHITTEST:
+                case (int)User32.WindowsMessage.NCHitTest:
                     // MoveWhenBorderless takes priority
                     if (_moveWhenBorderless && FormBorderStyle == FormBorderStyle.None)
                     {
@@ -239,7 +268,7 @@ namespace WinPaletter.UI.WP
                     break;
 
                 // Close on lost focus
-                case (int)WM_NCACTIVATE:
+                case (int)User32.WindowsMessage.NCActivate:
                     if (CloseOnLostFocus && m.WParam == IntPtr.Zero)
                     {
                         if (Visible && !RectangleToScreen(DisplayRectangle).Contains(Cursor.Position))
@@ -426,10 +455,31 @@ namespace WinPaletter.UI.WP
                     if (!DesignMode && IsHandleCreated)
                     {
                         User32.SetWindowPos(Handle, IntPtr.Zero, 0, 0, 0, 0, User32.SWP_NOMOVE | User32.SWP_NOSIZE | User32.SWP_NOZORDER | User32.SWP_FRAMECHANGED);
+                        UpdateBordersFromVisualStyles();
                     }
                 }
             }
         }
+
+        /// <summary>
+        /// Gets or sets DWM (shadow/glass) borders when using <c>FormBorderStyle.None</c> and <c>Borders</c> is set to true. Works for Windows lower than 10.
+        /// </summary>
+        [Browsable(true)]
+        [Category("Appearance")]
+        [Description("Gets or sets DWM (shadow/glass) borders when using FormBorderStyle.None and Borders is set to true. Works for Windows lower than 10.")]
+        public int? BorderThickness
+        {
+            get => _bordersThickness;
+            set
+            {
+                if (_bordersThickness != value)
+                {
+                    _bordersThickness = value;
+                    ApplyDWMBorder();
+                }
+            }
+        }
+        private int? _bordersThickness = null;
 
         /// <summary>
         /// Override FormBorderStyle to keep the Borders property in sync.
@@ -791,6 +841,18 @@ namespace WinPaletter.UI.WP
 
         private int GetDWMBorderWidth()
         {
+            if (DesignMode) return 1;
+
+            if (_bordersThickness != null && (OS.WXP || OS.WVista || OS.W7 || OS.W8x))
+            {
+                if (_bordersThickness == -1 && ShouldUpdateBorders()) return GetDWMBorderWidth_Internal(); else return _bordersThickness ?? GetDWMBorderWidth_Internal();
+            }
+
+            return GetDWMBorderWidth_Internal();
+        }
+
+        private int GetDWMBorderWidth_Internal()
+        {
             if (OS.WXP) return Math.Max(1, User32.GetSystemMetrics(5)); // SM_CXBORDER = 5
 
             if (OS.WVista || OS.W7 || OS.W8 || OS.W81)
@@ -854,15 +916,195 @@ namespace WinPaletter.UI.WP
             }
 
             Padding m = _backdropMargin == default ? new Padding(0) : _backdropMargin;
-            _backdropPaddingPanel.Bounds = new Rectangle(
-                m.Left,
-                m.Top,
-                Math.Max(0, Width - m.Left - m.Right),
-                Math.Max(0, Height - m.Top - m.Bottom)
-            );
+            _backdropPaddingPanel.Bounds = new Rectangle(m.Left, m.Top, Math.Max(0, Width - m.Left - m.Right), Math.Max(0, Height - m.Top - m.Bottom));
 
             _backdropPaddingPanel.BackColor = _backdropColor;
             _backdropPaddingPanel.Visible = _backdrop;
+        }
+
+        private void OnSystemSettingsUpdated(object sender, UserPreferenceChangedEventArgs e)
+        {
+            isCompositionEnabled = DWMAPI.IsCompositionEnabled();
+
+            bool wasClassicThemeEnabled = _isClassicThemeEnabled;
+            _isClassicThemeEnabled = Program.ClassicThemeRunning;
+
+            if (IsHandleCreated && ShouldUpdateBorders())
+            {
+                UpdateBordersFromVisualStyles();
+            }
+        }
+
+        private bool ShouldUpdateBorders()
+        {
+            // 1. FormBorderStyle is none and _borders property is true
+            bool isBorderlessWithBorders = WindowState == FormWindowState.Normal && FormBorderStyle == FormBorderStyle.None && _borders;
+
+            // 2. Program.ClassicThemeRunning or DWM.IsCompositionEnabled is false
+            bool isLegacyOrClassic = Program.ClassicThemeRunning || !DWMAPI.IsCompositionEnabled();
+
+            // 3. Form is not hosted in a control (Parent is null)
+            bool isTopLevel = Parent == null;
+
+            return !DesignMode && isBorderlessWithBorders && isLegacyOrClassic && isTopLevel;
+        }
+
+        /// <summary>
+        /// Draws flat 3D raised edges around the client area, matching how classic (non-visual-styles) theme
+        /// draws window frames. Used instead of the msstyles frame bitmaps when the classic theme is active,
+        /// since visual style renderers have no frame art to draw from in that case.
+        /// </summary>
+        private void DrawClassicEdges(Graphics g)
+        {
+            Rectangle rect = new(0, 0, Width, Height);
+            ControlPaint.DrawBorder3D(g, rect, Border3DStyle.Raised, Border3DSide.Left | Border3DSide.Right | Border3DSide.Bottom | Border3DSide.Top);
+        }
+
+        private Bitmap GetBordersFromVisualStyles(bool active)
+        {
+            if (Program.ClassicThemeRunning) return null; // Accessing Visual Styles with Classic theme enabled leads to exceptions errors
+            if (!ShouldUpdateBorders()) return null;
+
+            int bordersWidth = GetDWMBorderWidth();
+
+            System.Windows.Forms.VisualStyles.VisualStyleElement el_left;
+            System.Windows.Forms.VisualStyles.VisualStyleElement el_right;
+            System.Windows.Forms.VisualStyles.VisualStyleElement el_bottom;
+
+            el_left = active ? System.Windows.Forms.VisualStyles.VisualStyleElement.Window.FrameLeft.Active :
+                               System.Windows.Forms.VisualStyles.VisualStyleElement.Window.FrameLeft.Inactive;
+
+            el_right = active ? System.Windows.Forms.VisualStyles.VisualStyleElement.Window.FrameRight.Active :
+                                System.Windows.Forms.VisualStyles.VisualStyleElement.Window.FrameRight.Inactive;
+
+            el_bottom = active ? System.Windows.Forms.VisualStyles.VisualStyleElement.Window.FrameBottom.Active :
+                                 System.Windows.Forms.VisualStyles.VisualStyleElement.Window.FrameBottom.Inactive;
+
+            System.Windows.Forms.VisualStyles.VisualStyleRenderer r_left = new(el_left);
+            System.Windows.Forms.VisualStyles.VisualStyleRenderer r_right = new(el_right);
+            System.Windows.Forms.VisualStyles.VisualStyleRenderer r_bottom = new(el_bottom);
+
+            Region reg_left = null;
+            Region reg_right = null;
+            Region reg_bottom = null;
+
+            Rectangle rect = new(0, 0, Width, Height);
+            Rectangle rect_left;
+            Rectangle rect_top;
+            Rectangle rect_right;
+            Rectangle rect_bottom;
+
+            Bitmap b = new(Width, Height);
+
+            try
+            {
+                using (Graphics G = Graphics.FromImage(b))
+                {
+                    reg_left = r_left.GetBackgroundRegion(G, rect);
+                    reg_right = r_right.GetBackgroundRegion(G, rect);
+                    reg_bottom = r_bottom.GetBackgroundRegion(G, rect);
+
+                    rect_left = Rectangle.Round(reg_left.GetBounds(G));
+                    rect_right = Rectangle.Round(reg_right.GetBounds(G));
+                    rect_bottom = Rectangle.Round(reg_bottom.GetBounds(G));
+
+                    Size frame = new(Math.Max(bordersWidth, SystemInformation.FrameBorderSize.Width), Math.Max(bordersWidth, SystemInformation.FrameBorderSize.Height));
+
+                    rect_left = new(rect_left.X, rect_left.Y, frame.Width, rect_left.Height);
+                    rect_right = new(Width - frame.Width, rect_right.Y, frame.Width, rect_right.Height);
+                    rect_bottom = new(rect_bottom.X, Height - frame.Height, rect_bottom.Width, frame.Height);
+                    rect_top = new(rect_bottom.X, 0, rect_bottom.Width, rect_bottom.Height);
+
+                    r_left.DrawBackground(G, rect_left);
+                    r_right.DrawBackground(G, rect_right);
+                    r_bottom.DrawBackground(G, rect_bottom);
+
+                    using (Bitmap b_cropped = b.Clone(rect_bottom, System.Drawing.Imaging.PixelFormat.Format32bppRgb))
+                    {
+                        b_cropped.RotateFlip(RotateFlipType.RotateNoneFlipXY);
+                        G.DrawImage(b_cropped, rect_top);
+                    }
+                }
+
+                return b;
+            }
+            catch
+            {
+                b.Dispose();
+                throw;
+            }
+            finally
+            {
+                reg_left?.Dispose();
+                reg_right?.Dispose();
+                reg_bottom?.Dispose();
+            }
+        }
+
+        private void UpdateBordersFromVisualStyles()
+        {
+            if (DesignMode || !ShouldUpdateBorders())
+            {
+                DisposeBorders();
+                return;
+            }
+
+            // 1. Handle Classic Theme cleanup
+            if (_isClassicThemeEnabled)
+            {
+                DisposeBorders();
+                Invalidate();
+                return;
+            }
+
+            // 2. Generate new resources
+            Bitmap newActive = GetBordersFromVisualStyles(true);
+            Bitmap newInactive = GetBordersFromVisualStyles(false);
+
+            // 3. Swap and dispose old resources safely
+            Bitmap oldActive = _bordersMsstyles_Active;
+            Bitmap oldInactive = _bordersMsstyles_Inactive;
+
+            _bordersMsstyles_Active = newActive;
+            _bordersMsstyles_Inactive = newInactive;
+
+            oldActive?.Dispose();
+            oldInactive?.Dispose();
+
+            Invalidate();
+        }
+
+        /// <summary>
+        /// Helper to cleanly dispose of existing border bitmaps.
+        /// </summary>
+        private void DisposeBorders()
+        {
+            Bitmap tempActive = _bordersMsstyles_Active;
+            Bitmap tempInactive = _bordersMsstyles_Inactive;
+
+            _bordersMsstyles_Active = null;
+            _bordersMsstyles_Inactive = null;
+
+            tempActive?.Dispose();
+            tempInactive?.Dispose();
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+
+            if (ShouldUpdateBorders())
+            {
+                if (_isClassicThemeEnabled)
+                {
+                    DrawClassicEdges(e.Graphics);
+                }
+                else
+                {
+                    Bitmap b = Focused ? _bordersMsstyles_Active : _bordersMsstyles_Inactive;
+                    if (b is not null && b.IsValid()) e.Graphics.DrawImage(b, new Point(0, 0));
+                }
+            }
         }
     }
 }

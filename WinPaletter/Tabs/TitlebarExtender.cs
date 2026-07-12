@@ -1,7 +1,9 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 using static WinPaletter.NativeMethods.User32;
@@ -21,6 +23,7 @@ namespace WinPaletter.Tabs
         private TitlebarTypes? _lastBackdropType = null;
         private Padding _lastBackdropPadding = Padding.Empty;
         private bool _firstBackdropUpdate = true;
+        public static event EventHandler FormFocusChanged;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TitlebarExtender"/> class.
@@ -67,15 +70,6 @@ namespace WinPaletter.Tabs
 
                     // Ensure the backdrop logic also processes the new state
                     UpdateBackDrop();
-
-                    // Force the control to redraw its client area
-                    this.Invalidate();
-
-                    // Redraw seam line if needed
-                    if (Flag == Flags.System && TitlebarType == TitlebarTypes.Classic)
-                    {
-                        _ncPainter.DrawSeamLine(value);
-                    }
                 }
             }
         }
@@ -214,15 +208,6 @@ namespace WinPaletter.Tabs
                 }
 
                 UpdateBackDrop();
-
-                // Force initial seam line draw after control is fully created
-                if (_ncPainter != null && Flag == Flags.System && TitlebarType == TitlebarTypes.Classic)
-                {
-                    this.BeginInvoke(new Action(() =>
-                    {
-                        _ncPainter.DrawSeamLine(_formFocused);
-                    }));
-                }
             }
         }
 
@@ -253,12 +238,6 @@ namespace WinPaletter.Tabs
 
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             UpdateStyles();
-
-            // Force seam line draw after form loads
-            if (_ncPainter != null && Flag == Flags.System && TitlebarType == TitlebarTypes.Classic)
-            {
-                _ncPainter.DrawSeamLine(_formFocused);
-            }
         }
 
         private void OnSystemSettingsUpdated(object sender, UserPreferenceChangedEventArgs e)
@@ -274,12 +253,6 @@ namespace WinPaletter.Tabs
                     _lastBackdropPadding = Padding.Empty;
                     FindForm()?.ResetEffect();
                     UpdateBackDrop();
-
-                    // Redraw seam line after system settings update
-                    if (_ncPainter != null && Flag == Flags.System && TitlebarType == TitlebarTypes.Classic)
-                    {
-                        _ncPainter.DrawSeamLine(_formFocused);
-                    }
                 }
             }
         }
@@ -429,29 +402,36 @@ namespace WinPaletter.Tabs
 
             _lastBackdropType = type;
             _lastBackdropPadding = p;
-
-            // Force seam line redraw if we're in classic mode and the state changed
-            if (type == TitlebarTypes.Classic && (needsRedraw))
-            {
-                _ncPainter?.DrawSeamLine(_formFocused);
-            }
         }
 
         protected override void OnPaintBackground(PaintEventArgs e)
         {
-            // If we are in Classic mode, we handle the background manually in OnPaint to allow for gradients. Do not call base.OnPaintBackground.
-            bool isClassicStyle = Flag == Flags.System && (TitlebarType == TitlebarTypes.Classic || TitlebarType == TitlebarTypes.Basic);
+            // If we are in Classic mode, we handle the background manually in OnPaintBackground to allow for gradients.
+            bool isClassicStyle = Flag == Flags.System && (TitlebarType == TitlebarTypes.Classic);
 
             if (!isClassicStyle)
             {
                 base.OnPaintBackground(e);
             }
+            else if (isClassicStyle && Width > 0 && Height > 0)
+            {
+                Rectangle rect = new(0, 0, Width, Height);
+
+                Color c1 = _formFocused ? activeTtl : inactiveTtl;
+                Color c2 = _formFocused ? activeTtlG : inactiveTtlG;
+
+                GradientFillCaptionEased(e.Graphics, rect, c1, c2);
+            }
+            else
+            {
+                base.OnPaintBackground(e);
+            }
         }
 
-        public static void GradientFillCaptionEased(Graphics G, Rectangle rect, Color start, Color end)
+        private static void GradientFillCaptionEased(Graphics G, Rectangle rect, Rectangle captionRectangle, Color start, Color end)
         {
-            float[] positions = { 0.00f, 0.05f, 0.25f, 0.50f, 0.75f, 0.95f, 1.00f };
-            float[] tEased = { 0.00f, 0.0327f, 0.2456f, 0.5133f, 0.7763f, 0.9934f, 1.00f };
+            float[] positions = [0.00f, 0.05f, 0.25f, 0.50f, 0.75f, 0.95f, 1.00f];
+            float[] tEased = [0.00f, 0.0327f, 0.2456f, 0.5133f, 0.7763f, 0.9934f, 1.00f];
 
             Color Lerp(Color a, Color b, float t) => Color.FromArgb(255,
                 (int)(a.R + (b.R - a.R) * t),
@@ -465,7 +445,7 @@ namespace WinPaletter.Tabs
             };
             for (int i = 0; i < positions.Length; i++) blend.Colors[i] = Lerp(start, end, tEased[i]);
 
-            using (LinearGradientBrush brush = new(rect, start, end, LinearGradientMode.Horizontal))
+            using (LinearGradientBrush brush = new(captionRectangle, start, end, LinearGradientMode.Horizontal))
             {
                 brush.InterpolationColors = blend;
 
@@ -480,28 +460,7 @@ namespace WinPaletter.Tabs
             }
         }
 
-        /// <summary>
-        /// Raises the <see cref="Control.Paint"/> event.
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            bool isClassicStyle = Flag == Flags.System && (TitlebarType == TitlebarTypes.Classic || TitlebarType == TitlebarTypes.Basic);
-
-            if (isClassicStyle && Width > 0 && Height > 0)
-            {
-                Rectangle rect = new(0, 0, Width, Height);
-
-                Color c1 = _formFocused ? activeTtl : inactiveTtl;
-                Color c2 = _formFocused ? activeTtlG : inactiveTtlG;
-
-                GradientFillCaptionEased(e.Graphics, rect, c1, c2);
-            }
-            else
-            {
-                base.OnPaint(e);
-            }
-        }
+        private static void GradientFillCaptionEased(Graphics G, Rectangle rect, Color start, Color end) => GradientFillCaptionEased(G, rect, rect, start, end);
 
         /// <summary>
         /// Handles all WM messages for the form's non-client area drawing with optimized performance
@@ -520,32 +479,62 @@ namespace WinPaletter.Tabs
 
             protected override void WndProc(ref Message m)
             {
-                switch (m.Msg)
+                if (_owner.Flag == Flags.System && (_owner.TitlebarType == TitlebarTypes.Classic))
                 {
-                    case (int)User32.WindowsMessage.NCActivate:
-                    case (int)User32.WindowsMessage.Activate:
-                        // 1. Update the owner state immediately
-                        bool isActive = m.WParam != IntPtr.Zero;
-                        _owner.FormFocused = isActive;
-                        base.WndProc(ref m);
-                        return;
+                    switch (m.Msg)
+                    {
+                        case (int)WindowsMessage.NCActivate:
+                        case (int)WindowsMessage.Activate:
+                        case (int)WindowsMessage.ActivateApp:
+                            _owner.FormFocused = m.WParam != IntPtr.Zero;
+                            FormFocusChanged?.Invoke(_owner, new());
+                            base.WndProc(ref m);
+                            DrawSeamLine(_owner.FormFocused);
+                            return;
+                        case (int)WindowsMessage.NCPaint:
+                        case (int)WindowsMessage.Paint:
+                        case (int)WindowsMessage.NCMouseMove:
+                        case (int)WindowsMessage.EraseBkgnd:
+                        case (int)WindowsMessage.Print:
+                        case (int)WindowsMessage.PrintClient:
+                        case (int)WindowsMessage.DrawItem:
+                        case (int)WindowsMessage.ChangeUIState:
+                        case (int)WindowsMessage.SetText:
+                        case (int)WindowsMessage.Size:
+                        case (int)WindowsMessage.EnterSizeMove:
+                        case (int)WindowsMessage.ExitSizeMove:
+                        case (int)WindowsMessage.GetMinMaxInfo:
+                            base.WndProc(ref m);
+                            DrawSeamLine(_owner.FormFocused);
+                            return;
+                    }
+                }
+                else
+                {
+                    switch (m.Msg)
+                    {
+                        case (int)WindowsMessage.NCActivate:
+                        case (int)WindowsMessage.Activate:
+                        case (int)WindowsMessage.ActivateApp:
+                            _owner.FormFocused = m.WParam != IntPtr.Zero;
+                            FormFocusChanged?.Invoke(_owner, new());
+                            base.WndProc(ref m);
+                            return;
+                    }
                 }
 
                 base.WndProc(ref m);
             }
-
-            public void DrawSeamLine(bool isActive)
+            private void DrawSeamLine(bool isActive)
             {
+                if (_owner.TitlebarType != TitlebarTypes.Classic) return;
+
                 IntPtr hdc = User32.GetWindowDC(_form.Handle);
                 if (hdc == IntPtr.Zero) return;
 
                 try
                 {
-                    User32.GetWindowRect(_form.Handle, out var windowRect);
-                    int windowWidth = windowRect.right - windowRect.left;
-                    int windowHeight = windowRect.bottom - windowRect.top;
-
-                    // Use the form's actual border style logic
+                    // Calculate common metrics
                     Size frame = _form.FormBorderStyle switch
                     {
                         FormBorderStyle.Sizable => SystemInformation.FrameBorderSize,
@@ -553,25 +542,35 @@ namespace WinPaletter.Tabs
                         _ => Size.Empty
                     };
 
+                    User32.GetWindowRect(_form.Handle, out UxTheme.RECT windowRect);
+                    int windowWidth = windowRect.right - windowRect.left;
                     int captionHeight = SystemInformation.CaptionHeight;
-                    int top = frame.Height + captionHeight - 1;
-                    int width = windowWidth - (frame.Width * 2);
 
-                    using (Graphics G = Graphics.FromHdc(hdc))
+                    // Get colors
+                    Color c1 = isActive ? _owner.activeTtl : _owner.inactiveTtl;
+                    Color c2 = isActive ? _owner.activeTtlG : _owner.inactiveTtlG;
+
+                    using (Graphics g = Graphics.FromHdc(hdc))
                     {
-                        // Force anti-alias off for classic look
-                        GraphicsState s = G.Save();
-                        G.SmoothingMode = SmoothingMode.None;
+                        g.SmoothingMode = SmoothingMode.None;
 
+                        // 1. Handle optional covering of text and icon
+                        if (_form is UI.WP.Form wpForm && !wpForm.ShowIconAndCaptionText)
+                        {
+                            SizeF stringSize = _form.Text.Measure(SystemFonts.CaptionFont);
+                            int widthText = (int)(16 + 2 + stringSize.Width);
+                            Rectangle maskRect = new(frame.Width, frame.Height, widthText, captionHeight);
+                            Rectangle fullCaptionRect = new(frame.Width, frame.Height + captionHeight - 1, windowWidth - (frame.Width * 2), captionHeight);
+
+                            GradientFillCaptionEased(g, maskRect, fullCaptionRect, c1, c2);
+                        }
+
+                        // 2. Draw the Seam Line
+                        int top = frame.Height + captionHeight - 1;
+                        int width = windowWidth - (frame.Width * 2);
                         Rectangle lineRect = new(frame.Width, top, width, 1);
 
-                        // Get colors directly from the owner to ensure they're current
-                        Color c1 = isActive ? _owner.activeTtl : _owner.inactiveTtl;
-                        Color c2 = isActive ? _owner.activeTtlG : _owner.inactiveTtlG;
-
-                        GradientFillCaptionEased(G, lineRect, c1, c2);
-
-                        G.Restore(s);
+                        GradientFillCaptionEased(g, lineRect, c1, c2);
                     }
                 }
                 finally

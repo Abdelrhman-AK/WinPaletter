@@ -194,5 +194,10 @@ namespace WinPaletter
         {
             Transition.With(labelAlt1, nameof(labelAlt1.Text), string.Empty).CriticalDamp(Program.AnimationSpan_Quick);
         }
+
+        private void TerminalsDashboard_Load(object sender, EventArgs e)
+        {
+            if ((OS.WVista || OS.W7 || OS.W8x)) labelAlt1.ForeColor = SystemColors.ActiveCaptionText;
+        }
     }
 }

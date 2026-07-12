@@ -745,6 +745,9 @@ namespace WinPaletter.UI.Simulation
                 if (Preview == Preview_Enum.W7Basic)
                     return Active ? Color.Black : Color.FromArgb(76, 76, 76);
 
+                if (Preview == Preview_Enum.W7Aero || Preview == Preview_Enum.W7Opaque)
+                    return Active ? Program.TM.Win32.TitleText : Program.TM.Win32.InactiveTitleText;
+
                 return ForeColor;
             }
         }

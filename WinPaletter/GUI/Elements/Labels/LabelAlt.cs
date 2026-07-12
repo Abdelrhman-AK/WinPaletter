@@ -126,7 +126,7 @@ namespace WinPaletter.UI.WP
 
                     else if (!DesignMode & DrawOnGlass)
                     {
-                        G.DrawCompositedText(Text, Font, new Rectangle(0, 0, Width, Height), Padding, ForeColor, 10, ReturnFormatFlags(Text));
+                        G.DrawCompositedText(Text, Font, new Rectangle(0, 0, Width, Height), Padding, ForeColor, 7, ReturnFormatFlags(Text), false);
                     }
                 }
                 catch

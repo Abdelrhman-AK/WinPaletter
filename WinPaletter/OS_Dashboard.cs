@@ -2,6 +2,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using WinPaletter.UI.WP;
 using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter

@@ -208,7 +208,6 @@ namespace WinPaletter
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.BackdropStyle = WinPaletter.DWM.DWMStyles.None;
             this.ClientSize = new System.Drawing.Size(276, 130);
             this.CloseOnLostFocus = true;
             this.Controls.Add(this.Button6);
@@ -221,8 +220,7 @@ namespace WinPaletter
             this.Controls.Add(this.Button5);
             this.Margin = new System.Windows.Forms.Padding(5, 3, 5, 3);
             this.Name = "TerminalsDashboard";
-            this.ScreenCaptureBlock = WinPaletter.UI.WP.Form.ScreenCaptureBlockType.None;
-            this.WindowState = System.Windows.Forms.FormWindowState.Normal;
+            this.Load += new System.EventHandler(this.TerminalsDashboard_Load);
             this.ResumeLayout(false);
 
         }

@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Windows.Forms;
 
 namespace WinPaletter.TypesExtensions
 {
@@ -91,6 +92,43 @@ namespace WinPaletter.TypesExtensions
             SF.FormatFlags = StringFormatFlags.MeasureTrailingSpaces;
 
             return SF;
+        }
+
+        /// <summary>
+        /// Converts <see cref="StringFormat"/> to <see cref="TextFormatFlags"/>
+        /// </summary>
+        /// <param name="format"></param>
+        /// <returns></returns>
+        public static TextFormatFlags ToTextFormatFlags(this StringFormat format)
+        {
+            TextFormatFlags flags = TextFormatFlags.Default;
+
+            // Map Horizontal Alignment
+            switch (format.Alignment)
+            {
+                case StringAlignment.Center: flags |= TextFormatFlags.HorizontalCenter; break;
+                case StringAlignment.Far: flags |= TextFormatFlags.Right; break;
+                case StringAlignment.Near: flags |= TextFormatFlags.Left; break;
+            }
+
+            // Map Vertical Alignment
+            switch (format.LineAlignment)
+            {
+                case StringAlignment.Center: flags |= TextFormatFlags.VerticalCenter; break;
+                case StringAlignment.Far: flags |= TextFormatFlags.Bottom; break;
+                case StringAlignment.Near: flags |= TextFormatFlags.Top; break;
+            }
+
+            // Handle Trimming
+            if (format.Trimming == StringTrimming.EllipsisCharacter)
+                flags |= TextFormatFlags.EndEllipsis;
+            else if (format.Trimming == StringTrimming.Word)
+                flags |= TextFormatFlags.WordEllipsis;
+
+            // Standard flags for clean rendering
+            flags |= TextFormatFlags.NoPrefix; // Ensures '&' is not rendered as a mnemonic
+
+            return flags;
         }
     }
 }

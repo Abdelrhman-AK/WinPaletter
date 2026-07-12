@@ -99,6 +99,7 @@ namespace WinPaletter
             label5.ForeColor = Color.White;
             label9.ForeColor = Color.White;
             label10.ForeColor = Color.White;
+            if ((OS.WVista || OS.W7 || OS.W8x)) labelAlt1.ForeColor = SystemColors.ActiveCaptionText;
 
             AnimateList.Clear();
             foreach (CursorControl i in Cursors_Container.Controls.OfType<CursorControl>().Where(i => i.Prop_Cursor == Paths.CursorType.AppLoading | i.Prop_Cursor == Paths.CursorType.Busy))

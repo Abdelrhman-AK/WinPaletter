@@ -1,15 +1,16 @@
-﻿using Serilog.Events;
+﻿using Microsoft.Win32;
+using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 using WinPaletter.Properties;
+using static System.ComponentModel.Design.ObjectSelectorEditor;
 using static WinPaletter.UI.Style.Config;
 
 namespace WinPaletter.Tabs
@@ -137,6 +138,8 @@ namespace WinPaletter.Tabs
         private static string closeStr = "✕";
         private static Color win7BorderColor = Color.FromArgb(130, 225, 225, 225);
         private static Color win7BorderColor_Inner = Color.FromArgb(255, 0, 0, 0);
+        private static Color _foreColor;
+        private static Color _foreColorInactive;
 
         private Font selectedFont;
 
@@ -153,6 +156,20 @@ namespace WinPaletter.Tabs
         #endregion
 
         #region Methods
+
+        private void UpdateForeColor()
+        {
+            if (OS.WXP || OS.WVista || OS.W7 || OS.W8x)
+            {
+                _foreColor = SystemColors.ActiveCaptionText;
+                _foreColorInactive = SystemColors.InactiveCaptionText;
+            }
+            else
+            {
+                _foreColor = ForeColor;
+                _foreColorInactive = SystemColors.GrayText;
+            }
+        }
 
         private void InitializeContextMenu()
         {
@@ -1624,6 +1641,21 @@ namespace WinPaletter.Tabs
         public delegate void FormTextChangedDelegate(object sender, TabDataEventArgs e);
         public event FormTextChangedDelegate FormTextChanged;
 
+        private void TabsContainer_FormFocusChanged(object sender, EventArgs e)
+        {
+            Invalidate();
+        }
+
+        private void SystemEvents_UserPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)
+        {
+            if (e.Category == UserPreferenceCategory.General) UpdateForeColor();
+        }
+
+        private void Config_DarkModeChanged()
+        {
+            UpdateForeColor();
+        }
+
         public virtual void OnFormShown(object sender, TabDataEventArgs e)
         {
             FormShown?.Invoke(sender, e);
@@ -2238,6 +2270,24 @@ namespace WinPaletter.Tabs
             parentLevel = this.Level();
         }
 
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            base.OnHandleCreated(e);
+
+            DarkModeChanged += Config_DarkModeChanged;
+            SystemEvents.UserPreferenceChanged += SystemEvents_UserPreferenceChanged;
+            FormFocusChanged += TabsContainer_FormFocusChanged;
+        }
+
+        protected override void OnHandleDestroyed(EventArgs e)
+        {
+            DarkModeChanged -= Config_DarkModeChanged;
+            SystemEvents.UserPreferenceChanged -= SystemEvents_UserPreferenceChanged;
+            FormFocusChanged -= TabsContainer_FormFocusChanged;
+
+            base.OnHandleDestroyed(e);
+        }
+
         #endregion
 
         #region Hover
@@ -2272,26 +2322,18 @@ namespace WinPaletter.Tabs
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
 
-            bool isClassicStyle = Flag == Flags.System && (TitlebarType == TitlebarTypes.Classic || TitlebarType == TitlebarTypes.Basic);
+            bool isClassicStyle = Flag == Flags.System && (TitlebarType == TitlebarTypes.Classic);
 
-            if (isClassicStyle && Width > 0 && Height > 0)
-            {
-                Rectangle rect = new(0, 0, Width, Height);
-
-                Color c1 = _formFocused ? activeTtl : inactiveTtl;
-                Color c2 = _formFocused ? activeTtlG : inactiveTtlG;
-
-                GradientFillCaptionEased(e.Graphics, rect, c1, c2);
-            }
-            else
-            {
-                // Only call base if not classic, or let the control handle its own BackColor
-                base.OnPaintBackground(e);
-            }
+            base.OnPaintBackground(e);
 
             using (Pen P = new(!OS.W7 && !OS.WVista ? scheme.Colors.Line_Hover(0) : win7BorderColor_Inner))
             {
                 G.DrawLine(P, new Point(0, Height - 1), new Point(Width - 1, Height - 1));
+
+                if (isClassicStyle && TitlebarType == TitlebarTypes.Classic)
+                {
+                    G.DrawLine(SystemPens.ButtonFace, new Point(0, Height - 2), new Point(Width - 1, Height - 2));
+                }
             }
 
             Rectangle clipRect = new(LeftBoundary, 0, RightBoundary - LeftBoundary, Height);
@@ -2392,6 +2434,7 @@ namespace WinPaletter.Tabs
         private void DrawTab(Graphics G, TabData tabData, bool isMoving = false)
         {
             Region oldClip = G.Clip;
+            bool isClassicStyle = Flag == Flags.System && (TitlebarType == TitlebarTypes.Classic);
 
             Rectangle rect = !isMoving ? tabData.Rectangle : new Rectangle(_dragX, tabData.Rectangle.Y, tabData.Rectangle.Width, tabData.Rectangle.Height);
             Rectangle textRect = titleRectangle(rect);
@@ -2521,7 +2564,7 @@ namespace WinPaletter.Tabs
                         Rectangle rect_7 = new(rect.X, rect.Y, rect.Width, rect.Height - 1);
 
                         using (GraphicsPath path_7 = rect_7.ToTabPath(_radius, Program.Style.RoundedCorners ? GraphicsExtensions.TabStyle.Rounded : GraphicsExtensions.TabStyle.Sharp))
-                        using (Pen Px = new(Color.FromArgb(Math.Max(0, Math.Min(tabData.SelectionAlpha, win7BorderColor.A)), win7BorderColor)))
+                        using (Pen Px = new(Color.FromArgb(Math.Max(0, Math.Min(tabData.SelectionAlpha, isClassicStyle ? 255 : win7BorderColor.A)), isClassicStyle ? SystemColors.ButtonFace : win7BorderColor)))
                         {
                             DrawTabPath(G, path_7, Px, rect_7, _radius, Program.Style.RoundedCorners);
 
@@ -2590,11 +2633,11 @@ namespace WinPaletter.Tabs
 
             if (sf_middleCenter is not null)
             {
-                DrawTextOnGlass(G, closeStr, Fonts.ConsoleMedium, Color.FromArgb(255 - tabData.CloseButtonAlpha, ForeColor), closeRect, sf_middleCenter);
+                DrawTextOnGlass(G, closeStr, Fonts.ConsoleMedium, Color.FromArgb(255 - tabData.CloseButtonAlpha, FormFocused ? ForeColor : _foreColorInactive), closeRect, 0, sf_middleCenter);
 
                 if (tabData.CloseButtonAlpha > 0)
                 {
-                    DrawTextOnGlass(G, closeStr, Fonts.ConsoleMedium, Color.FromArgb(tabData.CloseButtonAlpha, tabData.Selected ? scheme_secondary.Colors.ForeColor_Accent : ForeColor), closeRect, sf_middleCenter);
+                    DrawTextOnGlass(G, closeStr, Fonts.ConsoleMedium, Color.FromArgb(tabData.CloseButtonAlpha, tabData.Selected ? scheme_secondary.Colors.ForeColor_Accent : FormFocused ? ForeColor : _foreColorInactive), closeRect, 0, sf_middleCenter);
                 }
             }
 
@@ -2602,22 +2645,38 @@ namespace WinPaletter.Tabs
 
             if (rect.Width > minTabWidth && sf is not null)
             {
-                DrawTextOnGlass(G, tabData.Text, tabData.Selected ? selectedFont : Font, ForeColor, textRect, sf);
+                if ((OS.WVista || OS.W7) && DWMAPI.IsCompositionEnabled())
+                {
+                    DrawTextOnGlass(G, tabData.Text, tabData.Selected ? selectedFont : Font, FormFocused ? tabData.Selected ? ForeColor : _foreColor : _foreColorInactive, textRect, tabData.Selected ? 0 : 7, sf);
+                }
+                else
+                {
+                    int unselected = 255 - tabData.SelectionAlpha;
+                    int selected = tabData.SelectionAlpha;
+
+                    if (unselected > 0)
+                        DrawTextOnGlass(G, tabData.Text, tabData.Selected ? selectedFont : Font, Color.FromArgb(unselected, FormFocused ? _foreColor : _foreColorInactive), textRect, 0, sf);
+
+                    if (selected > 0)
+                        DrawTextOnGlass(G, tabData.Text, tabData.Selected ? selectedFont : Font, Color.FromArgb(selected, FormFocused ? ForeColor : _foreColorInactive), textRect, 0, sf);
+                }
             }
 
             G.Clip = oldClip;
         }
 
-        void DrawTextOnGlass(Graphics g, string text, Font font, Color foreColor, Rectangle rect, StringFormat sf)
+        void DrawTextOnGlass(Graphics G, string text, Font font, Color foreColor, Rectangle rect, int glowSize, StringFormat sf)
         {
             if (sf is null) return;
 
-            using (GraphicsPath path = new())
-            {
-                path.AddString(text, font.FontFamily, (int)font.Style, g.DpiY * font.Size / 72 * 0.97f, rect, sf);
+            //using (GraphicsPath path = new())
+            //{
+            //    path.AddString(text, font.FontFamily, (int)font.Style, G.DpiY * font.Size / 72 * 0.97f, rect, sf);
 
-                using (Brush fill = new SolidBrush(foreColor)) g.FillPath(fill, path);
-            }
+            //    using (Brush fill = new SolidBrush(foreColor)) G.FillPath(fill, path);
+            //}
+
+            G.DrawCompositedText(text, font, rect, new(), foreColor, glowSize, sf.ToTextFormatFlags(), true);
         }
     }
 }

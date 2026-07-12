@@ -830,12 +830,17 @@ namespace WinPaletter.TypesExtensions
         /// </remarks>
         /// <exception cref="NotSupportedException">The current operating system does not support glass, or the Desktop Window Manager is not enabled.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="dc"/>, <paramref name="text"/> or <paramref name="font"/> is <see langword="null"/>.</exception>
-        public static void DrawCompositedText(this IDeviceContext dc, string text, Font font, Rectangle bounds, Padding padding, Color foreColor, int glowSize, TextFormatFlags textFormat)
+        public static void DrawCompositedText(this IDeviceContext dc, string text, Font font, Rectangle bounds, Padding padding, Color foreColor, int glowSize, TextFormatFlags textFormat, bool transparentBackground = false)
         {
-            if (!DWMAPI.IsCompositionEnabled()) throw new NotSupportedException("DWM composition is not enabled on this system.");
-            if (dc == null) throw new ArgumentNullException("dc");
-            if (text == null) throw new ArgumentNullException("text");
-            if (font == null) throw new ArgumentNullException("font");
+            if (dc == null) throw new ArgumentNullException(nameof(dc));
+            if (text == null) throw new ArgumentNullException(nameof(text));
+            if (font == null) throw new ArgumentNullException(nameof(font));
+
+            if (!DWMAPI.IsCompositionEnabled())
+            {
+                TextRenderer.DrawText(dc, text, font, bounds, foreColor, Color.Transparent, textFormat);
+                return;
+            }
 
             IntPtr primaryHdc = dc.GetHdc();
 
@@ -843,26 +848,64 @@ namespace WinPaletter.TypesExtensions
             {
                 using (SafeDeviceHandle memoryHdc = GDI32.CreateCompatibleDC_SDH(primaryHdc))
                 using (SafeGDIHandle fontHandle = new(font.ToHfont(), true))
-                using (SafeGDIHandle dib = GDI32.CreateDib(bounds, primaryHdc, memoryHdc))
                 {
+                    // Select font into memory DC
                     GDI32.SelectObject(memoryHdc, fontHandle);
 
-                    System.Windows.Forms.VisualStyles.VisualStyleRenderer renderer = new System.Windows.Forms.VisualStyles.VisualStyleRenderer(System.Windows.Forms.VisualStyles.VisualStyleElement.Window.Caption.Active);
-
+                    // Prepare drawing options
                     UxTheme.DTTOPTS_AsInt32 dttOpts = new()
                     {
                         dwSize = Marshal.SizeOf(typeof(UxTheme.DTTOPTS_AsInt32)),
-                        dwFlags = UxTheme.DrawThemeTextFlags.Composited | UxTheme.DrawThemeTextFlags.GlowSize | UxTheme.DrawThemeTextFlags.TextColor,
+                        dwFlags = UxTheme.DrawThemeTextFlags.Composited |
+                                  UxTheme.DrawThemeTextFlags.GlowSize |
+                                  UxTheme.DrawThemeTextFlags.TextColor,
                         crText = ColorTranslator.ToWin32(foreColor),
                         iGlowSize = glowSize
                     };
 
-                    UxTheme.RECT textBounds = new() { left = padding.Left, top = padding.Top, right = bounds.Width - padding.Right, bottom = bounds.Height - padding.Bottom };
+                    UxTheme.RECT textBounds = new()
+                    {
+                        left = padding.Left,
+                        top = padding.Top,
+                        right = bounds.Width - padding.Right,
+                        bottom = bounds.Height - padding.Bottom
+                    };
 
-                    UxTheme.DrawThemeTextEx(renderer.Handle, memoryHdc, 0, 0, text, text.Length, (int)textFormat, ref textBounds, ref dttOpts);
+                    System.Windows.Forms.VisualStyles.VisualStyleRenderer renderer = new(System.Windows.Forms.VisualStyles.VisualStyleElement.Window.Caption.Active);
 
-                    const int SRCCOPY = 0x00CC0020;
-                    GDI32.BitBlt(primaryHdc, bounds.Left, bounds.Top, bounds.Width, bounds.Height, memoryHdc, 0, 0, SRCCOPY);
+                    if (transparentBackground)
+                    {
+                        // Path for Alpha Transparency
+                        using (SafeGDIHandle dib = Msimg32.CreateAlphaDIBSection(primaryHdc, bounds.Width, bounds.Height, out _))
+                        {
+                            IntPtr oldBitmap = GDI32.SelectObject(memoryHdc, dib);
+
+                            UxTheme.DrawThemeTextEx(renderer.Handle, memoryHdc, 0, 0, text, text.Length, (int)textFormat, ref textBounds, ref dttOpts);
+
+                            Msimg32.BLENDFUNCTION blend = new()
+                            {
+                                BlendOp = 0, // AC_SRC_OVER
+                                BlendFlags = 0,
+                                SourceConstantAlpha = 255,
+                                AlphaFormat = 1 // AC_SRC_ALPHA
+                            };
+
+                            Msimg32.AlphaBlend(primaryHdc, bounds.Left, bounds.Top, bounds.Width, bounds.Height, memoryHdc, 0, 0, bounds.Width, bounds.Height, blend);
+
+                            GDI32.SelectObject(memoryHdc, oldBitmap);
+                        }
+                    }
+                    else
+                    {
+                        // Path for standard GDI BitBlt
+                        using (SafeGDIHandle dib = GDI32.CreateDib(bounds, primaryHdc, memoryHdc))
+                        {
+                            UxTheme.DrawThemeTextEx(renderer.Handle, memoryHdc, 0, 0, text, text.Length, (int)textFormat, ref textBounds, ref dttOpts);
+
+                            const int SRCCOPY = 0x00CC0020;
+                            GDI32.BitBlt(primaryHdc, bounds.Left, bounds.Top, bounds.Width, bounds.Height, memoryHdc, 0, 0, SRCCOPY);
+                        }
+                    }
                 }
             }
             finally

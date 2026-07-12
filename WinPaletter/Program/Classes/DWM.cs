@@ -344,16 +344,14 @@ namespace WinPaletter
         {
             if (hwnd == IntPtr.Zero || !User32.IsWindow(hwnd)) return;
 
-            if (hwnd == IntPtr.Zero) return;
-
             const int GWL_STYLE = -16;
+            const int GWL_EXSTYLE = -20;
             const int WS_BORDER = 0x00800000;
             const int WS_CAPTION = 0x00C00000;
-            const int LWA_ALPHA = 0x2;
             const int WS_EX_LAYERED = 0x00080000;
-            const int GWL_EXSTYLE = -20;
+            const int LWA_COLORKEY = 0x1; // Use Color Key instead of Alpha
 
-            // Remove borders if requested
+            // 1. Handle Borders
             if (noWindowBorders)
             {
                 long style = User32.GetWindowLong(hwnd, GWL_STYLE);
@@ -361,18 +359,21 @@ namespace WinPaletter
                 User32.SetWindowLong(hwnd, GWL_STYLE, style);
             }
 
-            // Enable layered window style
+            // 2. Set Layered Style
             long exStyle = User32.GetWindowLong(hwnd, GWL_EXSTYLE);
-            exStyle |= WS_EX_LAYERED;
-            User32.SetWindowLong(hwnd, GWL_EXSTYLE, exStyle);
+            User32.SetWindowLong(hwnd, GWL_EXSTYLE, exStyle | WS_EX_LAYERED);
 
-            // Set gray color and opacity
-            byte alpha = (byte)(opacity * 255f);
-            var color = Color.FromArgb(5, 5, 5);
-            uint colorRef = (uint)((color.R) | (color.G << 8) | (color.B << 16));
+            // 3. Define a "Transparent" Color
+            // We pick a very specific color that we will paint as the background.
+            // Everything that is this color will be transparent; everything else will be opaque.
+            Color keyColor = Color.FromArgb(254, 254, 254);
+            uint colorRef = (uint)((keyColor.R) | (keyColor.G << 8) | (keyColor.B << 16));
 
-            // Process transparency
-            User32.SetLayeredWindowAttributes(hwnd, colorRef, alpha, LWA_ALPHA);
+            // 4. Apply
+            // By using LWA_COLORKEY, the window background is masked out, 
+            // but controls painted with any other color (or their default colors) 
+            // remain 100% visible and opaque.
+            User32.SetLayeredWindowAttributes(hwnd, colorRef, 0, LWA_COLORKEY);
         }
 
         /// <summary>

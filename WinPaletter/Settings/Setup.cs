@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
 using WinPaletter.Properties;
@@ -20,6 +21,8 @@ namespace WinPaletter
 
             textBox1.Font = Fonts.ConsoleLarge;
             textBox1.Text = Resources.LICENSE;
+
+            if ((OS.WVista || OS.W7 || OS.W8x)) labelAlt1.ForeColor = SystemColors.ActiveCaptionText;
 
             // Get the assembly of the current executing code
             Assembly assembly = Assembly.GetExecutingAssembly();

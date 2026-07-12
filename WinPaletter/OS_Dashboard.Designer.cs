@@ -201,9 +201,9 @@ namespace WinPaletter
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
+            this.BorderThickness = -1;
             this.CancelButton = this.button7;
             this.ClientSize = new System.Drawing.Size(513, 115);
-            this.ControlBox = false;
             this.Controls.Add(this.radioImage8);
             this.Controls.Add(this.radioImage7);
             this.Controls.Add(this.radioImage6);
@@ -213,15 +213,9 @@ namespace WinPaletter
             this.Controls.Add(this.radioImage3);
             this.Controls.Add(this.radioImage1);
             this.Controls.Add(this.radioImage2);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.Name = "OS_Dashboard";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.WindowState = FormWindowState.Normal;
             this.Text = "";
+            this.WindowState = System.Windows.Forms.FormWindowState.Normal;
             this.Load += new System.EventHandler(this.OS_Dashboard_Load);
             this.ResumeLayout(false);
 

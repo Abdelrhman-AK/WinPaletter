@@ -347,6 +347,21 @@ namespace WinPaletter.NativeMethods
         public static extern IntPtr SelectObject(IntPtr hdc, IntPtr h);
 
         /// <summary>
+        /// Selects an object into the specified device context. The new object replaces the previous object of the same
+        /// type.
+        /// </summary>
+        /// <remarks>The caller is responsible for restoring the original object by selecting it back into
+        /// the device context after use. Selecting a bitmap into a device context that is currently selected with a
+        /// different bitmap can cause memory leaks. This function is not thread safe; ensure proper synchronization
+        /// when accessing device contexts from multiple threads.</remarks>
+        /// <param name="hdc">A handle to the device context into which the object is to be selected.</param>
+        /// <param name="h">A handle to the graphics object to be selected. This can be a pen, brush, font, bitmap, or region.</param>
+        /// <returns>If the function succeeds, the return value is a handle to the object being replaced. If the function fails,
+        /// the return value is zero or HGDI_ERROR, depending on the object type.</returns>
+        [DllImport(_gdi32)]
+        public static extern IntPtr SelectObject(SafeDeviceHandle hdc, IntPtr h);
+
+        /// <summary>
         /// Deletes a logical GDI object, releasing all system resources associated with it.
         /// </summary>
         /// <remarks>After a GDI object is deleted, its handle becomes invalid and must not be used in
@@ -520,6 +535,29 @@ namespace WinPaletter.NativeMethods
         /// <returns>A handle to the created device-independent bitmap (DIB) if successful; otherwise, IntPtr.Zero.</returns>
         [DllImport(_gdi32, SetLastError = true)]
         public static extern IntPtr CreateDIBSection(IntPtr hdc, ref BITMAPINFO pbmi, uint iUsage, out IntPtr ppvBits, IntPtr hSection, uint dwOffset);
+
+        /// <summary>
+        /// Creates a device-independent bitmap (DIB) that applications can write to directly and selects it into a
+        /// device context.
+        /// </summary>
+        /// <remarks>The DIB created by this function can be selected into a device context for drawing
+        /// operations. The caller is responsible for releasing the bitmap handle by calling DeleteObject when it is no
+        /// longer needed. This function enables direct access to the bitmap's pixel data, which can improve performance
+        /// for image manipulation tasks.</remarks>
+        /// <param name="hdc">A handle to a device context. If this parameter is not NULL, the function uses the device context's color
+        /// format to initialize the DIB.</param>
+        /// <param name="pbmi">A reference to a BITMAPINFO structure that specifies the dimensions and color format of the DIB.</param>
+        /// <param name="usage">The type of data contained in the color table. This parameter must be either DIB_RGB_COLORS or
+        /// DIB_PAL_COLORS.</param>
+        /// <param name="ppvBits">When the function returns, contains a pointer to the location of the DIB's bit values. This allows direct
+        /// access to the bitmap's pixel data.</param>
+        /// <param name="hSection">A handle to a file mapping object that the function will use to create the DIB. This parameter can be
+        /// IntPtr.Zero if no file mapping is used.</param>
+        /// <param name="offset">The offset, in bytes, from the beginning of the file mapping object referenced by hSection. This value is
+        /// ignored if hSection is IntPtr.Zero.</param>
+        /// <returns>A handle to the created device-independent bitmap (DIB) if successful; otherwise, IntPtr.Zero.</returns>
+        [DllImport(_gdi32, EntryPoint = "CreateDIBSection", SetLastError = true)]
+        public static extern SafeGDIHandle CreateDIBSection_AsSafeGDIHandle(IntPtr hdc, ref BITMAPINFO pbmi, uint iUsage, out IntPtr ppvBits, IntPtr hSection, uint dwOffset);
 
         /// <summary>
         /// Bit-block transfers the color data corresponding to a rectangle of pixels from the specified source device context into a destination device context.

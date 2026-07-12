@@ -645,6 +645,7 @@
     <Compile Include="Program\NativeMethods\Comctl32.cs" />
     <Compile Include="Program\NativeMethods\ComUIAutomation.cs" />
     <Compile Include="Program\NativeMethods\Credui.cs" />
+    <Compile Include="Program\NativeMethods\Msimg32.cs" />
     <Compile Include="Program\NativeMethods\NTDLL.cs" />
     <Compile Include="Program\NativeMethods\Shlwapi.cs" />
     <Compile Include="Program\NativeMethods\SrClient.cs" />

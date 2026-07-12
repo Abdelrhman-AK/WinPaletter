@@ -26,8 +26,9 @@ namespace WinPaletter
             ShowIcon = false;
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.Manual;
-            WindowState = FormWindowState.Maximized;
+            //WindowState = FormWindowState.Maximized;
             PreventFocusSteal = true;
+            BorderThickness = -1;
         }
 
         const int LWA_ALPHA = 0x2;
@@ -39,13 +40,20 @@ namespace WinPaletter
         const uint SWP_NOMOVE = 0x0002;
         const uint SWP_NOACTIVATE = 0x0010;
 
+        public new void Show()
+        {
+            shownOverAParent = false;
+            WindowState = FormWindowState.Maximized;
+            base.Show();
+        }
+
         public void Show(Form parent)
         {
             if (parent is null)
             {
                 shownOverAParent = false;
                 WindowState = FormWindowState.Maximized;
-                Show();
+                base.Show();
                 return;
             }
 
@@ -60,7 +68,7 @@ namespace WinPaletter
 
             Owner = parent;
 
-            Show();
+            base.Show();
 
             User32.SetWindowPos(Handle, parent.Handle, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
         }
@@ -74,7 +82,7 @@ namespace WinPaletter
 
         protected override void OnHandleCreated(EventArgs e)
         {
-            base.OnHandleCreated(e);
+            //base.OnHandleCreated(e);
 
             long exStyle = User32.GetWindowLong(Handle, GWL_EXSTYLE);
             exStyle |= WS_EX_TRANSPARENT | WS_EX_NOACTIVATE;
@@ -91,51 +99,60 @@ namespace WinPaletter
         {
             if (DesignMode || !IsHandleCreated) return;
 
-            if ((OS.W7 || OS.WVista) && DWMAPI.IsCompositionEnabled())
+            if (!Program.ClassicThemeRunning)
             {
-                blurActive = true;
-                RemoveLayeredAlpha();
-
-                DWMAPI.MARGINS margins = new() { leftWidth = -1, rightWidth = -1, topHeight = -1, bottomHeight = -1 };
-                DWMAPI.DwmExtendFrameIntoClientArea(Handle, ref margins);
-
-                IntPtr hRgn = GDI32.CreateRectRgn(0, 0, Math.Max(1, Width), Math.Max(1, Height));
-
-                DWMAPI.DWM_BLURBEHIND blurBehind = new()
+                if ((OS.W7 || OS.WVista) && DWMAPI.IsCompositionEnabled())
                 {
-                    dwFlags = DWMAPI.DWM_BB_ENABLE | DWMAPI.DWM_BB_BLURREGION,
-                    fEnable = true,
-                    hRgnBlur = hRgn,
-                    fTransitionOnMaximized = false
-                };
+                    blurActive = true;
+                    RemoveLayeredAlpha();
 
-                DWMAPI.DwmEnableBlurBehindWindow(Handle, blurBehind);
+                    DWMAPI.MARGINS margins = new() { leftWidth = -1, rightWidth = -1, topHeight = -1, bottomHeight = -1 };
+                    DWMAPI.DwmExtendFrameIntoClientArea(Handle, ref margins);
 
-                if (hRgn != IntPtr.Zero) GDI32.DeleteObject(hRgn);
+                    IntPtr hRgn = GDI32.CreateRectRgn(0, 0, Math.Max(1, Width), Math.Max(1, Height));
 
-                Invalidate();
-            }
-            else if (!OS.WXP && !OS.W8x)
-            {
-                blurActive = false;
-
-                this.DropEffect(Padding.Empty, shownOverAParent, DWM.DWMStyles.Acrylic, true);
-
-                if (shownOverAParent && (OS.W12 || OS.W11))
-                {
-                    bool useRoundedCorners = Program.Settings.Appearance.ManagedByTheme && Program.Settings.Appearance.CustomColors && !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8x && !OS.W10;
-
-                    int argpvAttribute = (int)DWMAPI.FormCornersType.Round;
-                    DWMAPI.DwmSetWindowAttribute(Handle, DWMAPI.DWMWINDOWATTRIBUTE.WINDOW_CORNER_PREFERENCE, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
-
-                    if (useRoundedCorners && !Program.Settings.Appearance.RoundedCorners)
+                    DWMAPI.DWM_BLURBEHIND blurBehind = new()
                     {
-                        int argpvAttribute1 = (int)DWMAPI.FormCornersType.Rectangular;
-                        DWMAPI.DwmSetWindowAttribute(Handle, DWMAPI.DWMWINDOWATTRIBUTE.WINDOW_CORNER_PREFERENCE, ref argpvAttribute1, Marshal.SizeOf(typeof(int)));
-                    }
-                }
+                        dwFlags = DWMAPI.DWM_BB_ENABLE | DWMAPI.DWM_BB_BLURREGION,
+                        fEnable = true,
+                        hRgnBlur = hRgn,
+                        fTransitionOnMaximized = false
+                    };
 
-                ApplyLayeredAlpha();
+                    DWMAPI.DwmEnableBlurBehindWindow(Handle, blurBehind);
+
+                    if (hRgn != IntPtr.Zero) GDI32.DeleteObject(hRgn);
+
+                    Invalidate();
+                }
+                else if (!OS.WXP && !OS.W8x)
+                {
+                    blurActive = false;
+
+                    this.DropEffect(Padding.Empty, shownOverAParent, DWM.DWMStyles.Acrylic, true);
+
+                    if (shownOverAParent && (OS.W12 || OS.W11))
+                    {
+                        bool useRoundedCorners = Program.Settings.Appearance.ManagedByTheme && Program.Settings.Appearance.CustomColors && !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8x && !OS.W10;
+
+                        int argpvAttribute = (int)DWMAPI.FormCornersType.Round;
+                        DWMAPI.DwmSetWindowAttribute(Handle, DWMAPI.DWMWINDOWATTRIBUTE.WINDOW_CORNER_PREFERENCE, ref argpvAttribute, Marshal.SizeOf(typeof(int)));
+
+                        if (useRoundedCorners && !Program.Settings.Appearance.RoundedCorners)
+                        {
+                            int argpvAttribute1 = (int)DWMAPI.FormCornersType.Rectangular;
+                            DWMAPI.DwmSetWindowAttribute(Handle, DWMAPI.DWMWINDOWATTRIBUTE.WINDOW_CORNER_PREFERENCE, ref argpvAttribute1, Marshal.SizeOf(typeof(int)));
+                        }
+                    }
+
+                    ApplyLayeredAlpha();
+                }
+                else
+                {
+                    blurActive = false;
+                    this.DropEffect(Padding.Empty, shownOverAParent, DWM.DWMStyles.None);
+                    ApplyLayeredAlpha();
+                }
             }
             else
             {
@@ -186,6 +203,7 @@ namespace WinPaletter
             // GlassWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.BorderThickness = -1;
             this.ClientSize = new System.Drawing.Size(484, 351);
             this.Name = "GlassWindow";
             this.ResumeLayout(false);
