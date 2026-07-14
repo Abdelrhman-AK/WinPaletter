@@ -117,7 +117,7 @@ namespace WinPaletter.UI.WP
                 CreateParams cpar = base.CreateParams;
                 if (!DesignMode)
                 {
-                    cpar.ExStyle |= 0x20;
+                    cpar.ExStyle |= (int)Win32Control.ControlStyles.Iconic;
                     return cpar;
                 }
                 else

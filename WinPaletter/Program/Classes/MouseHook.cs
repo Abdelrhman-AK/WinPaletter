@@ -9,8 +9,6 @@ namespace WinPaletter
     public class MouseHook : IDisposable
     {
         #region Constants & Delegates
-        private const int WH_MOUSE_LL = 14;
-        private const int WM_MOUSEMOVE = 0x0200;
 
         public delegate void MouseMoveHandler(object sender, MouseEventArgs e);
         public event MouseMoveHandler MouseMoved;
@@ -72,7 +70,7 @@ namespace WinPaletter
             if (_hookHandle != IntPtr.Zero) return;
 
             using ProcessModule curModule = Process.GetCurrentProcess().MainModule;
-            _hookHandle = User32.SetWindowsHookEx(WH_MOUSE_LL, _hookProc, Kernel32.GetModuleHandle(curModule.ModuleName), 0);
+            _hookHandle = User32.SetWindowsHookEx((int)User32.WindowsMessage.MouseLL, _hookProc, Kernel32.GetModuleHandle(curModule.ModuleName), 0);
         }
 
         private void Unhook()
@@ -86,7 +84,7 @@ namespace WinPaletter
 
         private IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
-            if (nCode >= 0 && wParam == (IntPtr)WM_MOUSEMOVE)
+            if (nCode >= 0 && wParam == (IntPtr)User32.WindowsMessage.MouseMove)
             {
                 if (MouseMoved != null)
                 {

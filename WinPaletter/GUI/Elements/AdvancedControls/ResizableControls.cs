@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using WinPaletter.NativeMethods;
 
 namespace WinPaletter.UI.Controllers
 {
@@ -170,69 +171,55 @@ namespace WinPaletter.UI.WP
 {
     public class ResizableHScrollBar : HScrollBar
     {
-        private const int WM_NCHITTEST = 0x84;
-
-        private enum HitTestValues
-        {
-            HTLEFT = 10,
-            HTRIGHT = 11,
-            HTTOP = 12,
-            HTBOTTOM = 15,
-            HTTOPLEFT = 13,
-            HTTOPRIGHT = 14,
-            HTBOTTOMLEFT = 16,
-            HTBOTTOMRIGHT = 17
-        }
-
         protected override void WndProc(ref Message m)
         {
             base.WndProc(ref m);
 
-            if (m.Msg == WM_NCHITTEST && ResizeEnabled)
+            if (m.Msg == (int)User32.WindowsMessage.NCHitTest && ResizeEnabled)
             {
                 Point cursorPos = PointToClient(Cursor.Position);
 
                 if (Dock == DockStyle.Top)
                 {
-                    if (IsOnBottomBorder(cursorPos)) m.Result = (IntPtr)HitTestValues.HTBOTTOM;
+                    if (IsOnBottomBorder(cursorPos)) m.Result = (IntPtr)User32.HitTestValues.HTBOTTOM;
                 }
                 else if (Dock == DockStyle.Bottom)
                 {
-                    if (IsOnTopBorder(cursorPos)) m.Result = (IntPtr)HitTestValues.HTTOP;
+                    if (IsOnTopBorder(cursorPos)) m.Result = (IntPtr)User32.HitTestValues.HTTOP;
                 }
                 else
                 {
                     if (IsOnLeftBorder(cursorPos))
                     {
-                        m.Result = (IntPtr)HitTestValues.HTLEFT;
+                        m.Result = (IntPtr)User32.HitTestValues.HTLEFT;
                     }
                     else if (IsOnRightBorder(cursorPos))
                     {
-                        m.Result = (IntPtr)HitTestValues.HTRIGHT;
+                        m.Result = (IntPtr)User32.HitTestValues.HTRIGHT;
                     }
                     else if (IsOnTopBorder(cursorPos))
                     {
-                        m.Result = (IntPtr)HitTestValues.HTTOP;
+                        m.Result = (IntPtr)User32.HitTestValues.HTTOP;
                     }
                     else if (IsOnBottomBorder(cursorPos))
                     {
-                        m.Result = (IntPtr)HitTestValues.HTBOTTOM;
+                        m.Result = (IntPtr)User32.HitTestValues.HTBOTTOM;
                     }
                     else if (IsOnTopLeftBorder(cursorPos))
                     {
-                        m.Result = (IntPtr)HitTestValues.HTTOPLEFT;
+                        m.Result = (IntPtr)User32.HitTestValues.HTTOPLEFT;
                     }
                     else if (IsOnTopRightBorder(cursorPos))
                     {
-                        m.Result = (IntPtr)HitTestValues.HTTOPRIGHT;
+                        m.Result = (IntPtr)User32.HitTestValues.HTTOPRIGHT;
                     }
                     else if (IsOnBottomLeftBorder(cursorPos))
                     {
-                        m.Result = (IntPtr)HitTestValues.HTBOTTOMLEFT;
+                        m.Result = (IntPtr)User32.HitTestValues.HTBOTTOMLEFT;
                     }
                     else if (IsOnBottomRightBorder(cursorPos))
                     {
-                        m.Result = (IntPtr)HitTestValues.HTBOTTOMRIGHT;
+                        m.Result = (IntPtr)User32.HitTestValues.HTBOTTOMRIGHT;
                     }
                 }
             }
@@ -286,69 +273,55 @@ namespace WinPaletter.UI.WP
 
     public class ResizableVScrollBar : VScrollBar
     {
-        private const int WM_NCHITTEST = 0x84;
-
-        private enum HitTestValues
-        {
-            HTLEFT = 10,
-            HTRIGHT = 11,
-            HTTOP = 12,
-            HTBOTTOM = 15,
-            HTTOPLEFT = 13,
-            HTTOPRIGHT = 14,
-            HTBOTTOMLEFT = 16,
-            HTBOTTOMRIGHT = 17
-        }
-
         protected override void WndProc(ref Message m)
         {
             base.WndProc(ref m);
 
-            if (m.Msg == WM_NCHITTEST && ResizeEnabled)
+            if (m.Msg == (int)User32.WindowsMessage.NCHitTest && ResizeEnabled)
             {
                 Point cursorPos = PointToClient(Cursor.Position);
 
                 if (Dock == DockStyle.Left)
                 {
-                    if (IsOnRightBorder(cursorPos)) m.Result = (IntPtr)HitTestValues.HTRIGHT;
+                    if (IsOnRightBorder(cursorPos)) m.Result = (IntPtr)User32.HitTestValues.HTRIGHT;
                 }
                 else if (Dock == DockStyle.Right)
                 {
-                    if (IsOnLeftBorder(cursorPos)) m.Result = (IntPtr)HitTestValues.HTLEFT;
+                    if (IsOnLeftBorder(cursorPos)) m.Result = (IntPtr)User32.HitTestValues.HTLEFT;
                 }
                 else
                 {
                     if (IsOnLeftBorder(cursorPos))
                     {
-                        m.Result = (IntPtr)HitTestValues.HTLEFT;
+                        m.Result = (IntPtr)User32.HitTestValues.HTLEFT;
                     }
                     else if (IsOnRightBorder(cursorPos))
                     {
-                        m.Result = (IntPtr)HitTestValues.HTRIGHT;
+                        m.Result = (IntPtr)User32.HitTestValues.HTRIGHT;
                     }
                     else if (IsOnTopBorder(cursorPos))
                     {
-                        m.Result = (IntPtr)HitTestValues.HTTOP;
+                        m.Result = (IntPtr)User32.HitTestValues.HTTOP;
                     }
                     else if (IsOnBottomBorder(cursorPos))
                     {
-                        m.Result = (IntPtr)HitTestValues.HTBOTTOM;
+                        m.Result = (IntPtr)User32.HitTestValues.HTBOTTOM;
                     }
                     else if (IsOnTopLeftBorder(cursorPos))
                     {
-                        m.Result = (IntPtr)HitTestValues.HTTOPLEFT;
+                        m.Result = (IntPtr)User32.HitTestValues.HTTOPLEFT;
                     }
                     else if (IsOnTopRightBorder(cursorPos))
                     {
-                        m.Result = (IntPtr)HitTestValues.HTTOPRIGHT;
+                        m.Result = (IntPtr)User32.HitTestValues.HTTOPRIGHT;
                     }
                     else if (IsOnBottomLeftBorder(cursorPos))
                     {
-                        m.Result = (IntPtr)HitTestValues.HTBOTTOMLEFT;
+                        m.Result = (IntPtr)User32.HitTestValues.HTBOTTOMLEFT;
                     }
                     else if (IsOnBottomRightBorder(cursorPos))
                     {
-                        m.Result = (IntPtr)HitTestValues.HTBOTTOMRIGHT;
+                        m.Result = (IntPtr)User32.HitTestValues.HTBOTTOMRIGHT;
                     }
                 }
             }

@@ -13,9 +13,6 @@ namespace WinPaletter.UI.WP
 {
     public partial class Form : System.Windows.Forms.Form
     {
-        private const int GWL_EXSTYLE = -20;
-        private const int WS_EX_TRANSPARENT = 0x00000020;
-        private const int WS_EX_LAYERED = 0x00080000;
         private const int DWMWA_NCRENDERING_POLICY = 2;
         private const int DWMNCRP_ENABLED = 2;
         private const int DWMNCRP_DISABLED = 1;
@@ -286,11 +283,11 @@ namespace WinPaletter.UI.WP
             {
                 CreateParams cp = base.CreateParams;
                 if (DesignMode) return cp;
-
+                
                 if (!_borders && !DWMAPI.IsCompositionEnabled())
                 {
-                    cp.ClassStyle |= DWMAPI.CS_DROPSHADOW;
-                    cp.ExStyle |= 33554432; // WS_EX_LAYERED
+                    cp.ClassStyle |= (int)Win32Control.ControlStyles.DropShadow;
+                    cp.ExStyle |= (int)Win32Control.ControlExtendedStyles.Layered;
                 }
 
                 // On Win7 (Vista/W8/W81 too), WS_EX_LAYERED on a borderless DWM-bordered window
@@ -298,7 +295,7 @@ namespace WinPaletter.UI.WP
                 // Strip it from CreateParams; SetOpacityLayered adds it dynamically later if needed.
                 if ((OS.WVista || OS.W7 || OS.W8 || OS.W81) && _borders && DWMAPI.IsCompositionEnabled())
                 {
-                    cp.ExStyle &= ~33554432; // strip WS_EX_LAYERED
+                    cp.ExStyle &= ~(int)Win32Control.ControlExtendedStyles.Layered;
                 }
 
                 return cp;
@@ -454,7 +451,7 @@ namespace WinPaletter.UI.WP
                     _borders = value;
                     if (!DesignMode && IsHandleCreated)
                     {
-                        User32.SetWindowPos(Handle, IntPtr.Zero, 0, 0, 0, 0, User32.SWP_NOMOVE | User32.SWP_NOSIZE | User32.SWP_NOZORDER | User32.SWP_FRAMECHANGED);
+                        User32.SetWindowPos(Handle, IntPtr.Zero, 0, 0, 0, 0, User32.SetWindowsPosition.NoMove | User32.SetWindowsPosition.NoSize | User32.SetWindowsPosition.NoZOrder | User32.SetWindowsPosition.FrameChanged);
                         UpdateBordersFromVisualStyles();
                     }
                 }
@@ -757,15 +754,15 @@ namespace WinPaletter.UI.WP
 
         private static void SetClickThrough(IntPtr handle, bool enabled)
         {
-            long style = User32.GetWindowLong(handle, GWL_EXSTYLE);
-            if (enabled) style |= WS_EX_TRANSPARENT | WS_EX_LAYERED;
-            else style &= ~WS_EX_TRANSPARENT;
-            User32.SetWindowLong(handle, GWL_EXSTYLE, style);
+            if (enabled) 
+                Win32Control.AppendExtendedStyle(handle, Win32Control.ControlExtendedStyles.Transparent | Win32Control.ControlExtendedStyles.Layered);
+            else
+                Win32Control.RemoveExtendedStyle(handle, Win32Control.ControlExtendedStyles.Transparent);
         }
 
         private static void SetBottomMost(IntPtr handle, bool enabled)
         {
-            User32.SetWindowPos(handle, enabled ? HWND_BOTTOM : HWND_NOTOPMOST, 0, 0, 0, 0, 0x0002 | 0x0001 | 0x0010);
+            User32.SetWindowPos(handle, enabled ? HWND_BOTTOM : HWND_NOTOPMOST, 0, 0, 0, 0, User32.SetWindowsPosition.NoSize | User32.SetWindowsPosition.NoMove | User32.SetWindowsPosition.NoActivate);
         }
 
         private static void SetBasicTheme(IntPtr handle, bool enabled)
@@ -884,14 +881,12 @@ namespace WinPaletter.UI.WP
         {
             if (!layeredSet)
             {
-                long style = User32.GetWindowLong(handle, GWL_EXSTYLE);
-                style |= WS_EX_LAYERED;
-                User32.SetWindowLong(handle, GWL_EXSTYLE, style);
+                Win32Control.AppendExtendedStyle(handle, Win32Control.ControlExtendedStyles.Layered);
                 layeredSet = true;
             }
 
             byte bAlpha = (byte)(Math.Max(0, Math.Min(1, alpha)) * 255d);
-            User32.SetLayeredWindowAttributes(handle, 0, bAlpha, 0x2); // LWA_ALPHA
+            User32.SetLayeredWindowAttributes(handle, 0, bAlpha, NativeMethods.User32.LWA_ALPHA);
         }
 
         private void UpdateBackdropPaddingPanel()
@@ -905,7 +900,7 @@ namespace WinPaletter.UI.WP
 
             if (_backdropPaddingPanel == null)
             {
-                _backdropPaddingPanel = new Panel
+                _backdropPaddingPanel = new()
                 {
                     Parent = this,
                     Enabled = false,

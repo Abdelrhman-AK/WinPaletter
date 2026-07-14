@@ -13,7 +13,6 @@ namespace WinPaletter.UI.WP
     {
         private sealed class ToolTipNativeWindow : NativeWindow
         {
-            private const int WM_DESTROY = 0x0002;
             private readonly ToolTip _owner;
 
             internal ToolTipNativeWindow(ToolTip owner, IntPtr handle)
@@ -24,8 +23,7 @@ namespace WinPaletter.UI.WP
 
             protected override void WndProc(ref Message m)
             {
-                if (m.Msg == WM_DESTROY)
-                    ReleaseHandle();
+                if (m.Msg == (int)NativeMethods.User32.WindowsMessage.Destroy) ReleaseHandle();
                 base.WndProc(ref m);
             }
         }
@@ -504,10 +502,7 @@ namespace WinPaletter.UI.WP
         private void EnsureLayered(IntPtr hwnd)
         {
             if (hwnd == IntPtr.Zero) return;
-            int exStyle = (int)NativeMethods.User32.GetWindowLong(hwnd, NativeMethods.User32.GWL_EXSTYLE);
-            if ((exStyle & NativeMethods.User32.WS_EX_LAYERED) == 0)
-                NativeMethods.User32.SetWindowLong(hwnd, NativeMethods.User32.GWL_EXSTYLE,
-                    exStyle | NativeMethods.User32.WS_EX_LAYERED);
+            Win32Control.AppendExtendedStyle(hwnd, Win32Control.ControlExtendedStyles.Layered);
         }
 
         private void SetOpacity(IntPtr hwnd, int alpha) // alpha 0-255
@@ -745,9 +740,9 @@ namespace WinPaletter.UI.WP
                     if (NativeMethods.User32.GetWindowRect(hwnd, out NativeMethods.UxTheme.RECT r))
                     {
                         NativeMethods.User32.SetWindowPos(hwnd, IntPtr.Zero, 0, 0, 0, 0,
-                            NativeMethods.User32.SWP_NOACTIVATE | NativeMethods.User32.SWP_NOMOVE |
-                            NativeMethods.User32.SWP_NOSIZE | NativeMethods.User32.SWP_NOZORDER |
-                            NativeMethods.User32.SWP_HIDEWINDOW);
+                            NativeMethods.User32.SetWindowsPosition.NoActivate | NativeMethods.User32.SetWindowsPosition.NoMove |
+                            NativeMethods.User32.SetWindowsPosition.NoSize | NativeMethods.User32.SetWindowsPosition.NoZOrder |
+                            NativeMethods.User32.SetWindowsPosition.HideWindow);
 
                         CaptureBlur(Rectangle.FromLTRB(r.left, r.top, r.right, r.bottom));
 
@@ -755,9 +750,9 @@ namespace WinPaletter.UI.WP
                         SetOpacity(hwnd, 0);
 
                         NativeMethods.User32.SetWindowPos(hwnd, IntPtr.Zero, 0, 0, 0, 0,
-                            NativeMethods.User32.SWP_NOACTIVATE | NativeMethods.User32.SWP_NOMOVE |
-                            NativeMethods.User32.SWP_NOSIZE | NativeMethods.User32.SWP_NOZORDER |
-                            NativeMethods.User32.SWP_SHOWWINDOW);
+                            NativeMethods.User32.SetWindowsPosition.NoActivate | NativeMethods.User32.SetWindowsPosition.NoMove |
+                            NativeMethods.User32.SetWindowsPosition.NoSize | NativeMethods.User32.SetWindowsPosition.NoZOrder |
+                            NativeMethods.User32.SetWindowsPosition.ShowWindow);
                     }
 
                     if (_fadeInPending)

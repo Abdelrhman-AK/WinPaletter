@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Drawing;
+using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
+using WinPaletter.UI;
 
 namespace WinPaletter
 {
@@ -30,15 +32,6 @@ namespace WinPaletter
             PreventFocusSteal = true;
             BorderThickness = -1;
         }
-
-        const int LWA_ALPHA = 0x2;
-        const int GWL_EXSTYLE = -20;
-        const int WS_EX_LAYERED = 0x80000;
-        const int WS_EX_TRANSPARENT = 0x20;
-        const int WS_EX_NOACTIVATE = 0x08000000;
-        const uint SWP_NOSIZE = 0x0001;
-        const uint SWP_NOMOVE = 0x0002;
-        const uint SWP_NOACTIVATE = 0x0010;
 
         public new void Show()
         {
@@ -70,7 +63,7 @@ namespace WinPaletter
 
             base.Show();
 
-            User32.SetWindowPos(Handle, parent.Handle, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+            User32.SetWindowPos(Handle, parent.Handle, 0, 0, 0, 0, User32.SetWindowsPosition.NoMove | User32.SetWindowsPosition.NoSize | User32.SetWindowsPosition.NoActivate);
         }
 
         protected override void OnLoad(EventArgs e)
@@ -84,9 +77,7 @@ namespace WinPaletter
         {
             //base.OnHandleCreated(e);
 
-            long exStyle = User32.GetWindowLong(Handle, GWL_EXSTYLE);
-            exStyle |= WS_EX_TRANSPARENT | WS_EX_NOACTIVATE;
-            User32.SetWindowLong(Handle, GWL_EXSTYLE, exStyle);
+            Win32Control.AppendExtendedStyle(Handle, Win32Control.ControlExtendedStyles.Transparent | Win32Control.ControlExtendedStyles.NoActivate);
         }
 
         protected override void OnResize(EventArgs e)
@@ -179,21 +170,13 @@ namespace WinPaletter
 
         private void ApplyLayeredAlpha()
         {
-            long exStyle = User32.GetWindowLong(Handle, GWL_EXSTYLE);
-            exStyle |= WS_EX_LAYERED;
-            User32.SetWindowLong(Handle, GWL_EXSTYLE, exStyle);
-
-            User32.SetLayeredWindowAttributes(Handle, 0, 128, LWA_ALPHA);
+            Win32Control.AppendExtendedStyle(Handle, Win32Control.ControlExtendedStyles.Layered);
+            User32.SetLayeredWindowAttributes(Handle, 0, 128, NativeMethods.User32.LWA_ALPHA);
         }
 
         private void RemoveLayeredAlpha()
         {
-            long exStyle = User32.GetWindowLong(Handle, GWL_EXSTYLE);
-            if ((exStyle & WS_EX_LAYERED) != 0)
-            {
-                exStyle &= ~WS_EX_LAYERED;
-                User32.SetWindowLong(Handle, GWL_EXSTYLE, exStyle);
-            }
+            Win32Control.RemoveExtendedStyle(Handle, Win32Control.ControlExtendedStyles.Layered);
         }
 
         private void InitializeComponent()

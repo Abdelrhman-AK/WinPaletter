@@ -64,6 +64,20 @@ namespace WinPaletter.NativeMethods
         public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
 
         /// <summary>
+        /// Set position of a window in Z order
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <param name="hWndInsertAfter"></param>
+        /// <param name="X"></param>
+        /// <param name="Y"></param>
+        /// <param name="cx"></param>
+        /// <param name="cy"></param>
+        /// <param name="Flags"></param>
+        /// <returns></returns>
+        [DllImport(_user32, SetLastError = true)]
+        public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, SetWindowsPosition Flags);
+
+        /// <summary>
         /// Get a handle to the ancestor of the specified window. The ancestor window is determined based on the specified flags, which can indicate a parent, root, or root owner window. This method is useful for navigating the window hierarchy and retrieving related windows based on their relationships.
         /// </summary>
         /// <param name="hWnd"></param>
@@ -1461,43 +1475,6 @@ namespace WinPaletter.NativeMethods
         public const int RDW_ALLCHILDREN = 0x0080;
 
         /// <summary>
-        /// SetWindowPos flag: Retains the current window size, ignoring the cx and cy parameters.
-        /// </summary>
-        public const uint SWP_NOSIZE = 0x0001;
-
-        /// <summary>
-        /// SetWindowPos flag: Retains the current window position, ignoring the x and y parameters.
-        /// </summary>
-        public const uint SWP_NOMOVE = 0x0002;
-
-        /// <summary>
-        /// SetWindowPos flag: Retains the current Z-order position, ignoring the hWndInsertAfter parameter.
-        /// </summary>
-        public const uint SWP_NOZORDER = 0x0004;
-
-        /// <summary>
-        /// SetWindowPos flag: Does not activate the window. If this flag is not set, the window is activated
-        /// and moved to the top of the Z-order.
-        /// </summary>
-        public const uint SWP_NOACTIVATE = 0x0010;
-
-        /// <summary>
-        /// SetWindowPos flag: Sends a WM_NCCALCSIZE message to the window, even if the window's size is not changing.
-        /// Used to force recalculation of the non-client area.
-        /// </summary>
-        public const uint SWP_FRAMECHANGED = 0x0020;
-
-        /// <summary>
-        /// GetWindowLong/SetWindowLong index: Retrieves or sets the window's style (WS_* flags).
-        /// </summary>
-        public const int GWL_STYLE = -16;
-
-        /// <summary>
-        /// GetWindowLong/SetWindowLong index: Retrieves or sets the window's extended style (WS_EX_* flags).
-        /// </summary>
-        public const int GWL_EXSTYLE = -20;
-
-        /// <summary>
         /// SetWindowDisplayAffinity flag: Removes any display affinity setting, allowing the window to be captured
         /// or displayed normally.
         /// </summary>
@@ -1532,31 +1509,20 @@ namespace WinPaletter.NativeMethods
         public const int SW_SHOWNA = 8;
 
         /// <summary>
-        /// SetWindowPos flag: Displays the window (shows it). Used in conjunction with SWP_NOACTIVATE and other flags.
-        /// </summary>
-        public const uint SWP_SHOWWINDOW = 0x0040;
-
-        /// <summary>
-        /// SetWindowPos flag: Hides the window. Used in conjunction with SWP_NOACTIVATE and other flags.
-        /// </summary>
-        public const uint SWP_HIDEWINDOW = 0x0080;
-
-        /// <summary>
         /// GetAncestor flag: Retrieves the root window of the specified window.
         /// </summary>
         public const uint GA_ROOT = 2;
-
-        /// <summary>
-        /// Extended window style flag: Makes the window layered, enabling transparency, opacity,
-        /// and per-pixel alpha blending.
-        /// </summary>
-        public const int WS_EX_LAYERED = 0x00080000;
 
         /// <summary>
         /// SetLayeredWindowAttributes flag: Uses the alpha value specified to set the opacity of the layered window.
         /// The bAlpha parameter specifies the transparency level (0 = fully transparent, 255 = fully opaque).
         /// </summary>
         public const uint LWA_ALPHA = 0x00000002;
+
+        /// <summary>
+        /// SetLayeredWindowAttributes flag: Uses the color key instead of alpha.
+        /// </summary>
+        public const uint LWA_COLORKEY = 0x1;
 
         /// <summary>
         /// Track mouse event flags: Request mouse leave notification
@@ -1579,64 +1545,14 @@ namespace WinPaletter.NativeMethods
         public const int COLOR_BTNFACE = 15;
 
         /// <summary>
-        /// Window message: Print client area
-        /// </summary>
-        public const uint WM_PRINTCLIENT = 0x0318;
-
-        /// <summary>
         /// Paint/Print flags: Client area
         /// </summary>
         public const uint PRF_CLIENT = 0x00000004;
 
         /// <summary>
-        /// Get window long index: Window ID
-        /// </summary>
-        public const int GWL_ID = -12;
-
-        /// <summary>
         /// Default GUI font identifier
         /// </summary>
         public const int DEFAULT_GUI_FONT = 17;
-
-        /// <summary>
-        /// WS_CHILD window style - Creates a child window
-        /// </summary>
-        public const int WS_CHILD = 0x40000000;
-
-        /// <summary>
-        /// WS_VISIBLE window style - Makes the window initially visible
-        /// </summary>
-        public const int WS_VISIBLE = 0x10000000;
-
-        /// <summary>
-        /// WS_TABSTOP window style - Control can receive focus through tab navigation
-        /// </summary>
-        public const int WS_TABSTOP = 0x00010000;
-
-        /// <summary>
-        /// WS_BORDER window style - Creates a window with a thin-line border
-        /// </summary>
-        public const int WS_BORDER = 0x00800000;
-
-        /// <summary>
-        /// WS_CLIPCHILDREN window style - Excludes child window areas from drawing
-        /// </summary>
-        public const int WS_CLIPCHILDREN = 0x02000000;
-
-        /// <summary>
-        /// WS_EX_CLIENTEDGE extended window style - Adds a sunken edge to the client area
-        /// </summary>
-        public const int WS_EX_CLIENTEDGE = 0x00000200;
-
-        /// <summary>
-        /// ES_AUTOHSCROLL edit style - Automatically scrolls text horizontally when entering text beyond control width
-        /// </summary>
-        public const int ES_AUTOHSCROLL = 0x0080;
-
-        /// <summary>
-        /// ES_LEFT edit style - Aligns text to the left
-        /// </summary>
-        public const int ES_LEFT = 0x0000;
 
         /// <summary>
         /// SW_SHOW show window command - Shows the window in its current position and size
@@ -1649,19 +1565,74 @@ namespace WinPaletter.NativeMethods
         public const int EM_GETSEL = 0x00B0;
 
         /// <summary>
-        /// GWL_WNDPROC window long index - Retrieves the address of the window procedure
-        /// </summary>
-        public const int GWL_WNDPROC = -4;
-
-        /// <summary>
-        /// GWLP_WNDPROC window long pointer index - Retrieves the address of the window procedure (64-bit compatible)
-        /// </summary>
-        public const int GWLP_WNDPROC = -4;
-
-        /// <summary>
         /// WH_CALLWNDPROC hook type - Installs a hook procedure that monitors messages before they are sent to the target window procedure.
         /// </summary>
         public const int WH_CALLWNDPROC = 4;
+
+        [Flags]
+        public enum SetWindowsPosition : int
+        {
+            /// <summary>
+            /// Retains the current window size, ignoring the cx and cy parameters.
+            /// </summary>
+            NoSize = 0x0001,
+
+            /// <summary>
+            /// Retains the current window position, ignoring the x and y parameters.
+            /// </summary>
+            NoMove = 0x0002,
+
+            /// <summary>
+            /// Retains the current Z-order position, ignoring the hWndInsertAfter parameter.
+            /// </summary>
+            NoZOrder = 0x0004,
+
+            /// <summary>
+            /// Does not activate the window. If this flag is not set, the window is activated
+            /// and moved to the top of the Z-order.
+            /// </summary>
+            NoActivate = 0x0010,
+
+            /// <summary>
+            /// Sends a WM_NCCALCSIZE message to the window, even if the window's size is not changing.
+            /// Used to force recalculation of the non-client area.
+            /// </summary>
+            FrameChanged = 0x0020,
+
+            /// <summary>
+            /// Displays the window (shows it). Used in conjunction with NoActivate and other flags.
+            /// </summary>
+            ShowWindow = 0x0040,
+
+            /// <summary>
+            /// Hides the window. Used in conjunction with NoActivate and other flags.
+            /// </summary>
+            HideWindow = 0x0080
+        }
+
+        [Flags]
+        public enum WindowsLongs : int
+        {
+            /// <summary>
+            /// Retrieves the address of the window procedure
+            /// </summary>
+            WndProc = -4,
+
+            /// <summary>
+            /// Window ID
+            /// </summary>
+            ID = -12,
+
+            /// <summary>
+            /// Retrieves or sets the window's style (WS_* flags).
+            /// </summary>
+            Style = -16,
+
+            /// <summary>
+            /// Retrieves or sets the window's extended style (WS_EX_* flags).
+            /// </summary>
+            ExtendedStyle = -20
+        }
 
         /// <summary>
         /// LVITEM structure: Contains information about a list view item, including its state, text, image, and other attributes. This structure is used with list view controls to retrieve or set item information.
@@ -4079,6 +4050,9 @@ namespace WinPaletter.NativeMethods
             /// </summary>
             MouseMove = 0x0200,
 
+
+            MouseLL = 14,
+
             /// <summary>
             /// Posted when the user presses the left mouse button while the cursor is in the client area of a window.
             /// <para>
@@ -5262,6 +5236,12 @@ namespace WinPaletter.NativeMethods
             /// <seealso cref="TaskDialogNotification.HyperlinkClicked"/>
             ExpandoButtonClicked = 0x1102,
 
+
+            /// <summary>
+            /// A custom application-defined message received when DWM composition has changed.
+            /// </summary>
+            DWMCompositionChanged = 0x31e,
+
             /// <summary>
             /// A custom application-defined message used to request a refresh of the DirectUI (DUI) state.
             /// <para>
@@ -5316,6 +5296,18 @@ namespace WinPaletter.NativeMethods
             /// <seealso cref="WindowsMessage.User"/>
             /// <seealso cref="WindowsMessage.Paint"/>
             RefreshDuiState = (uint)User + 4242,
+        }
+
+        public enum HitTestValues
+        {
+            HTLEFT = 10,
+            HTRIGHT = 11,
+            HTTOP = 12,
+            HTBOTTOM = 15,
+            HTTOPLEFT = 13,
+            HTTOPRIGHT = 14,
+            HTBOTTOMLEFT = 16,
+            HTBOTTOMRIGHT = 17
         }
 
         /// <summary>

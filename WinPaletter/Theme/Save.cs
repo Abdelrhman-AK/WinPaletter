@@ -703,13 +703,13 @@ namespace WinPaletter.Theme
                         // Always make it the last operation
                         if (Program.Settings.ThemeApplyingBehavior.UPM_HKU_DEFAULT) Win32.Broadcast_UPM_ToDefUsers(tv);
 
-                        //PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessages.WM_SYSCOLORCHANGE, UIntPtr.Zero, IntPtr.Zero);
-                        //PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessages.WM_PALETTECHANGED, UIntPtr.Zero, IntPtr.Zero);
-                        //PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessages.WM_DWMCOLORIZATIONCOLORCHANGED, UIntPtr.Zero, IntPtr.Zero);
-                        //PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessages.WM_DWMCOMPOSITIONCHANGED, UIntPtr.Zero, IntPtr.Zero);
-                        //PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessages.WM_THEMECHANGED, UIntPtr.Zero, IntPtr.Zero);
-                        //PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessages.WM_SETTINGCHANGE, UIntPtr.Zero, IntPtr.Zero);
-                        //PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessages.WM_WININICHANGE, UIntPtr.Zero, IntPtr.Zero);
+                        //PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessage.SysColorChange, UIntPtr.Zero, IntPtr.Zero);
+                        //PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessage.PaletteChanged, UIntPtr.Zero, IntPtr.Zero);
+                        //PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessage.WM_DWMCOLORIZATIONCOLORCHANGED, UIntPtr.Zero, IntPtr.Zero);
+                        //PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessage.DWMCompositionChanged, UIntPtr.Zero, IntPtr.Zero);
+                        //PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessage.ThemeChanged, UIntPtr.Zero, IntPtr.Zero);
+                        //PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessage.SettingChange, UIntPtr.Zero, IntPtr.Zero);
+                        //PostMessage((IntPtr)User32.HWND_BROADCAST, User32.WindowsMessage.WinIniChange, UIntPtr.Zero, IntPtr.Zero);
 
                         // Add last log node
                         if (ReportProgress)

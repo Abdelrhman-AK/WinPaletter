@@ -172,7 +172,7 @@ namespace WinPaletter.NativeMethods
             UxTheme.SetWindowThemeAttribute(handle, UxTheme.WindowThemeAttributeType.WTA_NONCLIENT, ref options, (uint)Marshal.SizeOf(typeof(UxTheme.WTA_OPTIONS)));
 
             // Force non-client area redraw
-            User32.SetWindowPos(handle, IntPtr.Zero, 0, 0, 0, 0, User32.SWP_NOMOVE | User32.SWP_NOSIZE | User32.SWP_NOZORDER | User32.SWP_FRAMECHANGED | User32.SWP_NOACTIVATE);
+            User32.SetWindowPos(handle, IntPtr.Zero, 0, 0, 0, 0, User32.SetWindowsPosition.NoMove | User32.SetWindowsPosition.NoSize | User32.SetWindowsPosition.NoZOrder | User32.SetWindowsPosition.FrameChanged | User32.SetWindowsPosition.NoActivate);
         }
 
         #endregion

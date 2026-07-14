@@ -12,9 +12,7 @@ namespace WinPaletter.UI.WP
     public class ListView : System.Windows.Forms.ListView
     {
         private const int LVM_GETHEADER = 0x1000 + 31;
-        private const int GWL_WNDPROC = -4;
-        private const int GWL_EXSTYLE = -20;
-        private const int WS_EX_COMPOSITED = 0x02000000;
+
         private IntPtr headerHandle;
         private IntPtr oldHeaderProc = IntPtr.Zero;
         private User32.WndProcDelegate newHeaderProc;
@@ -30,7 +28,7 @@ namespace WinPaletter.UI.WP
             get
             {
                 CreateParams parms = base.CreateParams;
-                parms.Style |= 0x80; // Enable double-buffering style for ListView itself
+                parms.ExStyle |= (int)Win32Control.ControlExtendedStyles.Composited;
                 return parms;
             }
         }
@@ -159,7 +157,7 @@ namespace WinPaletter.UI.WP
         {
             if (headerHandle == IntPtr.Zero || oldHeaderProc == IntPtr.Zero) return;
 
-            User32.SetWindowLongPtr(headerHandle, GWL_WNDPROC, oldHeaderProc);
+            User32.SetWindowLongPtr(headerHandle, (int)NativeMethods.User32.WindowsLongs.WndProc, oldHeaderProc);
             oldHeaderProc = IntPtr.Zero;
             headerHandle = IntPtr.Zero;
             newHeaderProc = null;
@@ -174,11 +172,10 @@ namespace WinPaletter.UI.WP
                 SetControlTheme(Handle, CtrlTheme.DarkExplorer);
 
                 // Enable double-buffering at the window level to avoid flicker
-                long exStyle = User32.GetWindowLong(headerHandle, GWL_EXSTYLE);
-                User32.SetWindowLong(headerHandle, GWL_EXSTYLE, exStyle | WS_EX_COMPOSITED);
+                Win32Control.AppendExtendedStyle(headerHandle, Win32Control.ControlExtendedStyles.Composited);
 
                 newHeaderProc = new User32.WndProcDelegate(HeaderWndProc);
-                oldHeaderProc = User32.SetWindowLongPtr(headerHandle, GWL_WNDPROC, Marshal.GetFunctionPointerForDelegate(newHeaderProc));
+                oldHeaderProc = User32.SetWindowLongPtr(headerHandle, (int)NativeMethods.User32.WindowsLongs.WndProc, Marshal.GetFunctionPointerForDelegate(newHeaderProc));
 
                 InvalidateHeader();
             }
@@ -193,9 +190,7 @@ namespace WinPaletter.UI.WP
         {
             if (DesignMode) return User32.CallWindowProc(oldHeaderProc, hWnd, msg, wParam, lParam);
 
-            const int WM_PAINT = 0x000F;
-
-            if (msg == WM_PAINT && Program.Style.DarkMode)
+            if (msg == (int)User32.WindowsMessage.Paint && Program.Style.DarkMode)
             {
                 User32.GetClientRect(hWnd, out UxTheme.RECT rect);
                 using (Bitmap bmp = new(rect.right - rect.left, rect.bottom - rect.top))
@@ -242,12 +237,9 @@ namespace WinPaletter.UI.WP
 
         protected override void WndProc(ref Message m)
         {
-            if (m.Msg == 0x0008) // WM_KILLFOCUS
-                return;
+            if (m.Msg == (int)User32.WindowsMessage.KillFocus) return;
 
-            const int WM_PAINT = 0x000F;
-
-            if (m.Msg == WM_PAINT && !Enabled && Program.Style.DarkMode)
+            if (m.Msg == (int)User32.WindowsMessage.Paint && !Enabled && Program.Style.DarkMode)
             {
                 // Let Windows do its default paint first into the window DC
                 base.WndProc(ref m);
@@ -269,8 +261,7 @@ namespace WinPaletter.UI.WP
                         // Alternating row tint
                         Color rowColor = (i % 2 == 0) ? Program.Style.Schemes.Disabled.Colors.Button : Program.Style.Schemes.Disabled.Colors.Button_Over;
 
-                        using (SolidBrush rowBrush = new(rowColor))
-                            G.FillRectangle(rowBrush, itemBounds);
+                        using (SolidBrush rowBrush = new(rowColor)) G.FillRectangle(rowBrush, itemBounds);
 
                         for (int j = 0; j < Columns.Count; j++)
                         {

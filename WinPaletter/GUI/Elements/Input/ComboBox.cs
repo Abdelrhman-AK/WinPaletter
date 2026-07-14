@@ -7,6 +7,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using WinPaletter.NativeMethods;
 using WinPaletter.Properties;
 
 namespace WinPaletter.UI.WP
@@ -47,17 +48,14 @@ namespace WinPaletter.UI.WP
 
         protected override void WndProc(ref Message m)
         {
-            const int WM_ERASEBKGND = 0x0014;
-            const int WM_CTLCOLORLISTBOX = 0x0134;
-
-            if (m.Msg == WM_ERASEBKGND)
+            if (m.Msg == (int)User32.WindowsMessage.EraseBkgnd)
             {
                 m.Result = (IntPtr)1;
                 return;
             }
 
             // Let base handle all messages first
-            if (m.Msg == WM_CTLCOLORLISTBOX)
+            if (m.Msg == (int)User32.WindowsMessage.CtlColorListBox)
             {
                 // Call base first to apply dark mode theme
                 base.WndProc(ref m);

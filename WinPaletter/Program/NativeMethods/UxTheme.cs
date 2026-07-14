@@ -254,11 +254,6 @@ namespace WinPaletter.NativeMethods
         public const int DTT_TEXTCOLOR = 0x00000001;
 
         /// <summary>
-        /// Window message: Theme changed
-        /// </summary>
-        public const uint WM_THEMECHANGED = 0x031A;
-
-        /// <summary>
         /// Button part flags: Top-down DIB (device-independent bitmap) rendering
         /// </summary>
         public const int BPBF_TOPDOWNDIB = 2;

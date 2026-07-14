@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
+using WinPaletter.UI;
 
 namespace WinPaletter
 {
@@ -344,24 +345,14 @@ namespace WinPaletter
         {
             if (hwnd == IntPtr.Zero || !User32.IsWindow(hwnd)) return;
 
-            const int GWL_STYLE = -16;
-            const int GWL_EXSTYLE = -20;
-            const int WS_BORDER = 0x00800000;
-            const int WS_CAPTION = 0x00C00000;
-            const int WS_EX_LAYERED = 0x00080000;
-            const int LWA_COLORKEY = 0x1; // Use Color Key instead of Alpha
-
             // 1. Handle Borders
             if (noWindowBorders)
             {
-                long style = User32.GetWindowLong(hwnd, GWL_STYLE);
-                style &= ~WS_BORDER & ~WS_CAPTION;
-                User32.SetWindowLong(hwnd, GWL_STYLE, style);
+                Win32Control.RemoveStyle(hwnd, Win32Control.ControlStyles.Caption);
             }
 
             // 2. Set Layered Style
-            long exStyle = User32.GetWindowLong(hwnd, GWL_EXSTYLE);
-            User32.SetWindowLong(hwnd, GWL_EXSTYLE, exStyle | WS_EX_LAYERED);
+            Win32Control.AppendExtendedStyle(hwnd, Win32Control.ControlExtendedStyles.Layered);
 
             // 3. Define a "Transparent" Color
             // We pick a very specific color that we will paint as the background.
@@ -373,7 +364,7 @@ namespace WinPaletter
             // By using LWA_COLORKEY, the window background is masked out, 
             // but controls painted with any other color (or their default colors) 
             // remain 100% visible and opaque.
-            User32.SetLayeredWindowAttributes(hwnd, colorRef, 0, LWA_COLORKEY);
+            User32.SetLayeredWindowAttributes(hwnd, colorRef, 0, NativeMethods.User32.LWA_COLORKEY);
         }
 
         /// <summary>

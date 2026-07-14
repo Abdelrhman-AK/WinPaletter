@@ -10,7 +10,6 @@ namespace WinPaletter.UI.Dark
 {
     public class DarkWin32 : IDisposable
     {
-        private const int WM_INITDIALOG = 0x0110;
         private const uint LVM_FIRST = 0x1000;
         private const uint LVM_SETBKCOLOR = (LVM_FIRST + 1);
         private const uint LVM_SETTEXTCOLOR = (LVM_FIRST + 3);
@@ -30,16 +29,14 @@ namespace WinPaletter.UI.Dark
         private const int SUBCLASS_ID_LISTVIEW = 2;
         private const int SUBCLASS_ID_DROPDOWN = 3;
 
-        // The path Edit control and OK button inside the common file dialog.
-        // (The Icon ListView no longer needs an ID constant - it's identified via Win32Control.Type below.)
+        // The path Edit control and OK button inside the common file dialog. (The Icon ListView no longer needs an ID constant - it's identified via Win32Control.Type below.)
         private const int CTRL_ID_PATH_EDIT = 12290;
         private const int CTRL_ID_OK_BUTTON = 1;
 
         private readonly int DARK_COLOR_INT = (int)DarkColors.kPrimary.Value;
         private readonly int DARK_COLOR_SELECTION_INT = (int)DarkColors.kSeparator.Value;
 
-        // These used to be static, which meant two DarkWin32 instances (e.g. two dialogs
-        // open at once) would silently overwrite each other's tracked path/dialog handle.
+        // These used to be static, which meant two DarkWin32 instances (e.g. two dialogs open at once) would silently overwrite each other's tracked path/dialog handle.
         private string _acceptedPath = string.Empty;
         private IntPtr _targetDialogHwnd = IntPtr.Zero;
 
@@ -47,13 +44,11 @@ namespace WinPaletter.UI.Dark
         private IntPtr _hookId = IntPtr.Zero;
         private IntPtr _cbtHookId = IntPtr.Zero;
 
-        // Cached GDI brushes - created once on first use, deleted once in Dispose,
-        // instead of allocating a brand new brush on every WM_CTLCOLOR*/WM_ERASEBKGND/WM_PAINT message
+        // Cached GDI brushes - created once on first use, deleted once in Dispose, instead of allocating a brand new brush on every WM_CTLCOLOR*/WM_ERASEBKGND/WM_PAINT message
         private IntPtr _darkBrush = IntPtr.Zero;
         private IntPtr _selectionBrush = IntPtr.Zero;
 
-        // Tracks every window we've subclassed (hwnd -> subclass id) so Dispose can remove
-        // the subclass cleanly instead of leaving dangling delegate references behind
+        // Tracks every window subclassed (hwnd -> subclass id) so Dispose can remove the subclass cleanly instead of leaving dangling delegate references behind
         private readonly Dictionary<IntPtr, UIntPtr> _activeSubclasses = [];
 
         // Delegates moved inside to prevent GC collection while instance is alive
@@ -187,10 +182,9 @@ namespace WinPaletter.UI.Dark
             return Comctl32.DefSubclassProc(hWnd, uMsg, wParam, lParam);
         }
 
-        // Shared WM_CTLCOLORMSGBOX..WM_CTLCOLORSTATIC handling used by every subclass proc
         private bool TryHandleColorMessage(uint uMsg, IntPtr wParam, out IntPtr brush)
         {
-            if (uMsg >= 0x0132 && uMsg <= 0x0138)
+            if (uMsg >= (int)User32.WindowsMessage.CtlColorMsgBox && uMsg <= (int)User32.WindowsMessage.CtlColorStatic)
             {
                 GDI32.SetTextColor(wParam, 0xFFFFFF);
                 GDI32.SetBkColor(wParam, DARK_COLOR_INT);
@@ -229,10 +223,8 @@ namespace WinPaletter.UI.Dark
         {
             if (Program.Style.DarkMode)
             {
-                // The suggestion list is owner-drawn (same as the Icon ListView in the dialog),
-                // and WM_DRAWITEM for an owner-drawn control is sent to its immediate PARENT -
-                // here, that's this dropdown window, not the listbox itself. Without taking this
-                // over, item rows keep painting themselves with their original light-mode colors,
+                // The suggestion list is owner-drawn (same as the Icon ListView in the dialog), and WM_DRAWITEM for an owner-drawn control is sent to its immediate PARENT -
+                // here, that's this dropdown window, not the listbox itself. Without taking this over, item rows keep painting themselves with their original light-mode colors,
                 // which is exactly why only the empty margins were turning dark before.
                 if (uMsg == (uint)WindowsMessage.DrawItem && lParam != IntPtr.Zero)
                 {
@@ -271,6 +263,7 @@ namespace WinPaletter.UI.Dark
 
             // Create a copy of the rectangle for background filling
             var fillRect = dis.rcItem;
+
             // Reduce width by 1px on the right side
             fillRect.right -= 1;
             User32.FillRect(dis.hDC, ref fillRect, selected ? SelectionBrush : DarkBrush);
@@ -359,7 +352,7 @@ namespace WinPaletter.UI.Dark
             {
                 User32.CWPRETSTRUCT msg = Marshal.PtrToStructure<User32.CWPRETSTRUCT>(lParam);
 
-                if (msg.message == WM_INITDIALOG)
+                if (msg.message == (int)User32.WindowsMessage.InitDialog)
                 {
                     if (_targetDialogHwnd == IntPtr.Zero) _targetDialogHwnd = msg.hwnd;
 
@@ -418,27 +411,27 @@ namespace WinPaletter.UI.Dark
         {
             if (!Program.Style.DarkMode) return;
             if (OS.WXP || OS.WVista || OS.W7 || OS.W8x) return;
-            if (ctrl is null || ctrl.Hwnd == IntPtr.Zero) return;
+            if (ctrl is null || ctrl.Handle == IntPtr.Zero) return;
 
-            NativeMethods.Helpers.SetHWNDDarkMode(ctrl.Hwnd, Program.Style.DarkMode);
+            NativeMethods.Helpers.SetHWNDDarkMode(ctrl.Handle, Program.Style.DarkMode);
 
             switch (ctrl.Type)
             {
                 case Win32Control.ControlType.ListView:
                 case Win32Control.ControlType.ListBox:
                 case Win32Control.ControlType.ComboBox:
-                    SubclassWindow(ctrl.Hwnd, _listViewAggressiveSubclass, (UIntPtr)SUBCLASS_ID_LISTVIEW);
-                    UxTheme.SetWindowTheme(ctrl.Hwnd, "Explorer", null);
-                    UxTheme.SetWindowTheme(ctrl.Hwnd, "DarkMode_Explorer", null);
-                    ctrl.RemoveExtendedStyle(Win32Control.WindowExtendedStyles.ClientEdge);
+                    SubclassWindow(ctrl.Handle, _listViewAggressiveSubclass, (UIntPtr)SUBCLASS_ID_LISTVIEW);
+                    UxTheme.SetWindowTheme(ctrl.Handle, "Explorer", null);
+                    UxTheme.SetWindowTheme(ctrl.Handle, "DarkMode_Explorer", null);
+                    ctrl.RemoveExtendedStyle(Win32Control.ControlExtendedStyles.ClientEdge);
                     break;
 
                 default:
-                    UxTheme.SetWindowTheme(ctrl.Hwnd, "DarkMode_Explorer", null);
+                    UxTheme.SetWindowTheme(ctrl.Handle, "DarkMode_Explorer", null);
                     break;
             }
 
-            User32.RedrawWindow(ctrl.Hwnd, IntPtr.Zero, IntPtr.Zero, 0x0001 | 0x0004 | 0x0100);
+            User32.RedrawWindow(ctrl.Handle, IntPtr.Zero, IntPtr.Zero, 0x0001 | 0x0004 | 0x0100);
         }
 
         private void ApplyDarkModeToAutoSuggestDropdown(IntPtr hWnd)

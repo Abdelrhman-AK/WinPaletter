@@ -5,6 +5,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using WinPaletter.NativeMethods;
 using WinPaletter.Properties;
 
 namespace WinPaletter.UI.WP
@@ -15,8 +16,6 @@ namespace WinPaletter.UI.WP
         private const int SB_VERT = 1;
         private const int SIF_RANGE = 0x0001;
         private const int SIF_PAGE = 0x0002;
-        private const int WM_PAINT = 0x000F;
-        private const int WM_ERASEBKGND = 0x0014;
         private int _previousSelectedIndex = -1;
 
         private bool IsVerticalScrollBarVisible()
@@ -207,7 +206,7 @@ namespace WinPaletter.UI.WP
 
         protected override void WndProc(ref Message m)
         {
-            if (m.Msg == WM_ERASEBKGND)
+            if (m.Msg == (int)User32.WindowsMessage.EraseBkgnd)
             {
                 m.Result = (IntPtr)1;
                 return;
@@ -215,7 +214,7 @@ namespace WinPaletter.UI.WP
 
             base.WndProc(ref m);
 
-            if (m.Msg == WM_PAINT)
+            if (m.Msg == (int)User32.WindowsMessage.Paint)
             {
                 using (Graphics G = Graphics.FromHwnd(Handle))
                 {

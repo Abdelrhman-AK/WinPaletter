@@ -664,9 +664,7 @@ namespace WinPaletter.UI.Controllers
 
         protected override void WndProc(ref Message m)
         {
-            const int WM_RBUTTONUP = 0x0205;
-
-            if (m.Msg == WM_RBUTTONUP && !CancelShowingMenu)
+            if (m.Msg == (int)User32.WindowsMessage.RButtonUp && !CancelShowingMenu)
             {
                 _activeTarget = this;
 

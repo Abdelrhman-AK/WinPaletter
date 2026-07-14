@@ -62,11 +62,8 @@ namespace WinPaletter.UI.WP
         {
             if (!DesignMode)
             {
-                const int WM_ERASEBKGND = 0x0014;
-                const int WM_NCPAINT = 0x0085;
                 const int TCM_ADJUSTRECT = 0x1328;
                 const int TCM_SETPADDING = 0x132B;
-                const int WM_PAINT = 0x000F;
 
                 if (m.Msg == TCM_ADJUSTRECT)
                 {
@@ -74,18 +71,18 @@ namespace WinPaletter.UI.WP
                     return;
                 }
 
-                if (m.Msg == WM_PAINT)
+                if (m.Msg == (int)User32.WindowsMessage.Paint)
                 {
                     User32.SendMessage(Handle, TCM_SETPADDING, IntPtr.Zero, MakeLParam(0, 1));
                 }
 
-                if (m.Msg == WM_NCPAINT)
+                if (m.Msg == (int)User32.WindowsMessage.NCPaint)
                 {
                     m.Result = (IntPtr)1;
                     return;
                 }
 
-                if (m.Msg == WM_ERASEBKGND)
+                if (m.Msg == (int)User32.WindowsMessage.EraseBkgnd)
                 {
                     Color fill = Parent?.BackColor ?? BackColor;
                     using (Graphics g = Graphics.FromHdc(m.WParam))

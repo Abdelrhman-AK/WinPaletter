@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using WinPaletter.NativeMethods;
 using WinPaletter.Properties;
 using WinPaletter.Theme.Structures;
 using static WinPaletter.NativeMethods.User32;
@@ -342,9 +343,7 @@ namespace WinPaletter.UI.WP
 
         protected override bool ProcessCmdKey(ref Message m, Keys keyData)
         {
-            const int WM_KEYDOWN = 0x0100;
-
-            if (m.Msg == WM_KEYDOWN)
+            if (m.Msg == (int)User32.WindowsMessage.KeyDown)
             {
                 Keys key = keyData & Keys.KeyCode;
 
@@ -486,9 +485,7 @@ namespace WinPaletter.UI.WP
 
         protected override void WndProc(ref Message m)
         {
-            const int WM_SHOWWINDOW = 0x0018;
-
-            if (m.Msg == WM_SHOWWINDOW && Program.Style.Animations && Handle != IntPtr.Zero)
+            if (m.Msg == (int)User32.WindowsMessage.ShowWindow && Program.Style.Animations && Handle != IntPtr.Zero)
             {
                 bool showing = m.WParam.ToInt32() != 0;
 

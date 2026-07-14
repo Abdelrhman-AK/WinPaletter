@@ -12,15 +12,6 @@ namespace WinPaletter.NativeMethods
         private const string _dwmapi = "dwmapi.dll";
 
         #region Constants
-        /// <summary>
-        /// Represents a constant value for enabling drop shadow in a window.
-        /// </summary>
-        public const int CS_DROPSHADOW = 0x20000;
-
-        /// <summary>
-        /// Represents a constant value for the WM_NCPAINT message.
-        /// </summary>
-        public const int WM_NCPAINT = 0x85;
 
         /// <summary>
         /// Represents a constant value for enabling blur in a region for DWM.
@@ -81,11 +72,7 @@ namespace WinPaletter.NativeMethods
         /// Represents a constant value for DWM visibility.
         /// </summary>
         public const int DWM_TNP_VISIBLE = 8;
-
-        /// <summary>
-        /// Represents a constant value for the WM_DWMCOMPOSITIONCHANGED message.
-        /// </summary>
-        public const int WM_DWMCOMPOSITIONCHANGED = 0x31e;
+   
         #endregion
 
         #region Methods

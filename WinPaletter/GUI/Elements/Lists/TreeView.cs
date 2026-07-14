@@ -11,7 +11,7 @@ namespace WinPaletter.UI.WP
             get
             {
                 CreateParams parms = base.CreateParams;
-                parms.Style |= 0x80;
+                parms.ExStyle |= (int)Win32Control.ControlExtendedStyles.Composited;
                 return parms;
             }
         }

@@ -13,7 +13,7 @@ namespace WinPaletter.Tabs
         //    base.WndProc(ref m);
 
         //    // Handle the WM_NCCALCSIZE message to adjust the client area
-        //    if (m.Msg == 0x83 /*WM_NCCALCSIZE*/)
+        //    if (m.Msg == (int)User32.WindowsMessage.NCCalcSize /*WM_NCCALCSIZE*/)
         //    {
         //        if (m.WParam.ToInt32() == 1 /*TRUE*/)
         //        {

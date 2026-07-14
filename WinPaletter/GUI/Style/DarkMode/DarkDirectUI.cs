@@ -605,12 +605,12 @@ namespace WinPaletter.UI.Dark
             IntPtr hbp = BeginBufferedPaint(hdcWin, ref rcForBuffer, BPBF_TOPDOWNDIB, IntPtr.Zero, out IntPtr hdcBuf);
             if (hbp == IntPtr.Zero)
             {
-                DefSubclassProc(hwnd, WM_PRINTCLIENT, hdcWin, (IntPtr)PRF_CLIENT);
+                DefSubclassProc(hwnd, (int)User32.WindowsMessage.PrintClient, hdcWin, (IntPtr)PRF_CLIENT);
                 return;
             }
 
             // Let comctl32 render the light-mode dialog into the offscreen buffer first.
-            DefSubclassProc(hwnd, WM_PRINTCLIENT, hdcBuf, (IntPtr)PRF_CLIENT);
+            DefSubclassProc(hwnd, (int)User32.WindowsMessage.PrintClient, hdcBuf, (IntPtr)PRF_CLIENT);
 
             // Pixel-swap the panel backgrounds to their dark equivalents.
             COLORREF bgPri = new(Color.FromArgb(255, 255, 255));
@@ -1026,19 +1026,19 @@ namespace WinPaletter.UI.Dark
                         IntPtr hbp = BeginBufferedPaint(hdc, ref rcForBuffer, BPBF_TOPDOWNDIB, IntPtr.Zero, out hdcBuf);
                         if (hbp == IntPtr.Zero)
                         {
-                            DefSubclassProc(hwnd, WM_PRINTCLIENT, hdcBuf, (IntPtr)PRF_CLIENT);
+                            DefSubclassProc(hwnd, (int)User32.WindowsMessage.PrintClient, hdcBuf, (IntPtr)PRF_CLIENT);
                         }
 
-                        DefSubclassProc(hwnd, WM_PRINTCLIENT, hdcBuf, (IntPtr)PRF_CLIENT);
+                        DefSubclassProc(hwnd, (int)User32.WindowsMessage.PrintClient, hdcBuf, (IntPtr)PRF_CLIENT);
 
-                        System.Text.StringBuilder sb = new System.Text.StringBuilder(256);
+                        System.Text.StringBuilder sb = new(256);
                         GetWindowTextW(hwnd, sb, sb.Capacity);
                         string text = sb.ToString();
 
                         SIZE gsize;
                         GetThemePartSize(hThemeBtn, hdcBuf, TaskDialogParts.BP_RADIOBUTTON, TaskDialogParts.RBS_UNCHECKEDNORMAL, IntPtr.Zero, TaskDialogParts.TS_TRUE, out gsize);
 
-                        RECT rcText = new RECT
+                        RECT rcText = new()
                         {
                             left = gsize.cx + 2,
                             top = 0,
@@ -1046,13 +1046,14 @@ namespace WinPaletter.UI.Dark
                             bottom = rcClient.bottom
                         };
 
-                        DTTOPTS dots = new DTTOPTS();
-                        dots.dwSize = (uint)Marshal.SizeOf(typeof(DTTOPTS));
-                        dots.dwFlags = DTT_COMPOSITED | DTT_TEXTCOLOR;
-                        dots.crText = DarkColors.kTextNormal;
+                        DTTOPTS dots = new()
+                        {
+                            dwSize = (uint)Marshal.SizeOf(typeof(DTTOPTS)),
+                            dwFlags = DTT_COMPOSITED | DTT_TEXTCOLOR,
+                            crText = DarkColors.kTextNormal
+                        };
 
-                        LOGFONT logFont;
-                        GetThemeFont(hTheme, hdcBuf, TaskDialogParts.TDLG_RADIOBUTTONPANE, 0, TaskDialogParts.TMT_FONT, out logFont);
+                        GetThemeFont(hTheme, hdcBuf, TaskDialogParts.TDLG_RADIOBUTTONPANE, 0, TaskDialogParts.TMT_FONT, out LOGFONT logFont);
                         IntPtr font = CreateFontIndirect(ref logFont);
                         IntPtr oldFont = SelectObject(hdcBuf, font);
 
@@ -1063,8 +1064,7 @@ namespace WinPaletter.UI.Dark
                         SelectObject(hdcBuf, oldFont);
                         DeleteObject(font);
 
-                        if (hbp != IntPtr.Zero)
-                            EndBufferedPaint(hbp, true);
+                        if (hbp != IntPtr.Zero) EndBufferedPaint(hbp, true);
 
                         EndPaint(hwnd, ref ps);
                         return IntPtr.Zero;
@@ -1166,12 +1166,9 @@ namespace WinPaletter.UI.Dark
         /// <returns></returns>
         private static IntPtr ProgressDuiSubclassProc(IntPtr hwnd, uint uMsg, IntPtr wParam, IntPtr lParam, UIntPtr uIdSubclass, IntPtr dwRefData)
         {
-            const uint WM_DESTROY = 0x0002;
-            const uint WM_PAINT = 0x000F;
-
             switch (uMsg)
             {
-                case WM_PAINT:
+                case (int)User32.WindowsMessage.Paint:
                     if (Program.Style.DarkMode)
                     {
                         // 1. Let DirectUI render ALL its native components untouched (AVI, Main Title, colors stay perfectly clean)
@@ -1262,7 +1259,7 @@ namespace WinPaletter.UI.Dark
                     }
                     break;
 
-                case WM_DESTROY:
+                case (int)User32.WindowsMessage.Destroy:
                     RemoveWindowSubclass(hwnd, s_progressDuiProc, uIdSubclass);
 
                     if (s_hProgressThreadHook != IntPtr.Zero)
@@ -1362,14 +1359,14 @@ namespace WinPaletter.UI.Dark
                 return true;
             }, IntPtr.Zero);
 
-            //// Force dark mode style for progressbar
-            //SendMessage(hwndPD, WM_SYSCOLORCHANGE, IntPtr.Zero, IntPtr.Zero);
-            //SendMessage(hwndPD, WM_THEMECHANGED, IntPtr.Zero, IntPtr.Zero);
+            // Force dark mode style for progressbar
+            SendMessage(hwndPD, (int)User32.WindowsMessage.SysColorChange, IntPtr.Zero, IntPtr.Zero);
+            SendMessage(hwndPD, (int)User32.WindowsMessage.ThemeChanged, IntPtr.Zero, IntPtr.Zero);
 
             //EnumChildWindows(hwndPD, delegate (IntPtr hwndDuiChild, IntPtr lp)
             //{
-            //    SendMessage(hwndDuiChild, WM_SYSCOLORCHANGE, IntPtr.Zero, IntPtr.Zero);
-            //    SendMessage(hwndDuiChild, WM_THEMECHANGED, IntPtr.Zero, IntPtr.Zero);
+            //  SendMessage(hwndDuiChild, (int)User32.WindowsMessage.SysColorChange, IntPtr.Zero, IntPtr.Zero);
+            //  SendMessage(hwndDuiChild, (int)User32.WindowsMessage.ThemeChanged, IntPtr.Zero, IntPtr.Zero);
             //    return true;
             //}, IntPtr.Zero);
 
@@ -1592,7 +1589,7 @@ namespace WinPaletter.UI.Dark
                     return true;
                 }, IntPtr.Zero);
 
-                SendMessage(hwndTD, WM_THEMECHANGED, IntPtr.Zero, IntPtr.Zero);
+                SendMessage(hwndTD, (int)User32.WindowsMessage.ThemeChanged, IntPtr.Zero, IntPtr.Zero);
             }
         }
 

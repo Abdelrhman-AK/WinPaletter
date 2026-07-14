@@ -194,7 +194,7 @@ namespace WinPaletter.UI.Style
             if (!Program.Style.DarkMode) return;
             if (OS.WXP || OS.WVista || OS.W7 || OS.W8x) return;
             if (hwnd == IntPtr.Zero) return;
-            
+
             NativeMethods.Helpers.SetHWNDDarkMode(hwnd, Program.Style.DarkMode);
             if (state.ConfigPointer != IntPtr.Zero) Dark.DarkDirectUI.DarkenTaskDialog(hwnd, state.ConfigPointer);
             state.DarkEditBrush = GDI32.CreateSolidBrush((int)Dark.DarkColors.kSecondary.Value);
@@ -247,10 +247,10 @@ namespace WinPaletter.UI.Style
                 if (!User32.IsWindow(hwnd)) return;
 
                 state.DialogWndProc = (h, msg, wParam, lParam) => DialogWndProc(h, msg, wParam, lParam, state);
-                state.OldDialogWndProc = User32.SetWindowLongPtr(hwnd, User32.GWLP_WNDPROC, Marshal.GetFunctionPointerForDelegate(state.DialogWndProc));
+                state.OldDialogWndProc = User32.SetWindowLongPtr(hwnd, (int)NativeMethods.User32.WindowsLongs.WndProc, Marshal.GetFunctionPointerForDelegate(state.DialogWndProc));
 
                 int parentStyle = (int)User32.GetWindowLong(hwnd, -16);
-                User32.SetWindowLong(hwnd, -16, parentStyle | User32.WS_CLIPCHILDREN);
+                User32.SetWindowLong(hwnd, -16, parentStyle | (int)Win32Control.ControlStyles.ClipChildren);
 
                 IntPtr hContent = User32.GetDlgItem(hwnd, Comctl32.TDLG_CONTENTPANE);
                 bool workingWithContentPane = hContent != IntPtr.Zero && User32.IsWindow(hContent);
@@ -309,13 +309,12 @@ namespace WinPaletter.UI.Style
 
                 if (width < 200) width = 200;
 
-                int exStyle = User32.WS_EX_CLIENTEDGE;
-                int style = User32.WS_CHILD | User32.WS_VISIBLE | User32.WS_TABSTOP | User32.ES_AUTOHSCROLL | User32.ES_LEFT;
+                int style = (int)Win32Control.ControlStyles.Child | (int)Win32Control.ControlStyles.Visible | (int)Win32Control.ControlStyles.TabStop | (int)Win32Control.ControlStyles.AutoScroll | (int)Win32Control.ControlStyles.EditStyle_Left;
 
-                state.hEdit = User32.CreateWindowEx(exStyle, "EDIT", state.DefaultValue ?? string.Empty, style, x, y, width, height, hwnd, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero);
+                state.hEdit = User32.CreateWindowEx((int)Win32Control.ControlExtendedStyles.ClientEdge, "EDIT", state.DefaultValue ?? string.Empty, style, x, y, width, height, hwnd, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero);
                 if (state.hEdit == IntPtr.Zero) return;
 
-                User32.SetWindowPos(state.hEdit, IntPtr.Zero, 0, 0, 0, 0, User32.SWP_NOSIZE | User32.SWP_NOMOVE | User32.SWP_SHOWWINDOW);
+                User32.SetWindowPos(state.hEdit, IntPtr.Zero, 0, 0, 0, 0, User32.SetWindowsPosition.NoSize | User32.SetWindowsPosition.NoMove | User32.SetWindowsPosition.ShowWindow);
 
                 IntPtr hFont = IntPtr.Zero;
                 try
@@ -347,10 +346,10 @@ namespace WinPaletter.UI.Style
                     UxTheme.SetWindowTheme(state.hEdit, null, null);
                 }
 
-                User32.SetWindowPos(state.hEdit, IntPtr.Zero, 0, 0, 0, 0, User32.SWP_NOSIZE | User32.SWP_NOMOVE | User32.SWP_NOZORDER | User32.SWP_FRAMECHANGED);
+                User32.SetWindowPos(state.hEdit, IntPtr.Zero, 0, 0, 0, 0, User32.SetWindowsPosition.NoSize | User32.SetWindowsPosition.NoMove | User32.SetWindowsPosition.NoZOrder | User32.SetWindowsPosition.FrameChanged);
 
                 state.EditWndProc = (h, msg, wParam, lParam) => EditWndProc(h, msg, wParam, lParam, state);
-                state.OldEditWndProc = User32.SetWindowLongPtr(state.hEdit, User32.GWLP_WNDPROC, Marshal.GetFunctionPointerForDelegate(state.EditWndProc));
+                state.OldEditWndProc = User32.SetWindowLongPtr(state.hEdit, (int)NativeMethods.User32.WindowsLongs.WndProc, Marshal.GetFunctionPointerForDelegate(state.EditWndProc));
 
                 User32.ShowWindow(state.hEdit, User32.SW_SHOW);
                 User32.SetFocus(state.hEdit);
@@ -369,8 +368,8 @@ namespace WinPaletter.UI.Style
             if (state == null) return;
             try
             {
-                if (state.hEdit != IntPtr.Zero && state.OldEditWndProc != IntPtr.Zero) User32.SetWindowLongPtr(state.hEdit, User32.GWLP_WNDPROC, state.OldEditWndProc);
-                if (state.hWnd != IntPtr.Zero && state.OldDialogWndProc != IntPtr.Zero) User32.SetWindowLongPtr(state.hWnd, User32.GWLP_WNDPROC, state.OldDialogWndProc);
+                if (state.hEdit != IntPtr.Zero && state.OldEditWndProc != IntPtr.Zero) User32.SetWindowLongPtr(state.hEdit, (int)NativeMethods.User32.WindowsLongs.WndProc, state.OldEditWndProc);
+                if (state.hWnd != IntPtr.Zero && state.OldDialogWndProc != IntPtr.Zero) User32.SetWindowLongPtr(state.hWnd, (int)NativeMethods.User32.WindowsLongs.WndProc, state.OldDialogWndProc);
             }
             catch { }
 

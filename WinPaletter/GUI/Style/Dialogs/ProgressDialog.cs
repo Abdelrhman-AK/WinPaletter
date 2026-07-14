@@ -296,7 +296,7 @@ namespace WinPaletter.UI.WP
 
         private IntPtr ProgressDialogWndProc(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam)
         {
-            // WM_CTLCOLORSTATIC (0x0138) handles the text and background color for static elements
+            // WM_CTLCOLORSTATIC handles the text and background color for static elements
             if (msg == (uint)WindowsMessage.CtlColorStatic)
             {
                 // Text color: White (0x00FFFFFF)
