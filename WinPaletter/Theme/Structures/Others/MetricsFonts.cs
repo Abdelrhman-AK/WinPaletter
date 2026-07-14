@@ -195,12 +195,12 @@ namespace WinPaletter.Theme.Structures
             SystemParametersInfo(null, SPI.SPI_GETICONMETRICS, (int)ICO.cbSize, ref ICO, SPIF.SPIF_NONE);
             SystemParametersInfo(null, SPI.SPI_GETNONCLIENTMETRICS, (int)NCM.cbSize, ref NCM, SPIF.SPIF_NONE);
 
-            CaptionFont = Font.FromLogFont(NCM.lfCaptionFont);
-            MenuFont = Font.FromLogFont(NCM.lfMenuFont);
-            MessageFont = Font.FromLogFont(NCM.lfMessageFont);
-            SmCaptionFont = Font.FromLogFont(NCM.lfSMCaptionFont);
-            StatusFont = Font.FromLogFont(NCM.lfStatusFont);
-            IconFont = Font.FromLogFont(ICO.lfFont);
+            try { CaptionFont = Font.FromLogFont(NCM.lfCaptionFont); } catch { CaptionFont = SystemFonts.CaptionFont; }
+            try { MenuFont = Font.FromLogFont(NCM.lfMenuFont); } catch { MenuFont = SystemFonts.MenuFont; }
+            try { MessageFont = Font.FromLogFont(NCM.lfMessageFont); } catch { MessageFont = SystemFonts.MessageBoxFont; }
+            try { SmCaptionFont = Font.FromLogFont(NCM.lfSMCaptionFont); } catch { SmCaptionFont = SystemFonts.SmallCaptionFont; }
+            try { StatusFont = Font.FromLogFont(NCM.lfStatusFont); } catch { StatusFont = SystemFonts.StatusFont; }
+            try { IconFont = Font.FromLogFont(ICO.lfFont); } catch { IconFont = SystemFonts.IconTitleFont; }
 
             // Get font smoothing state by using both registry and SystemParametersInfo
             bool temp = false;
@@ -439,6 +439,9 @@ namespace WinPaletter.Theme.Structures
                         WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semibold Italic (TrueType)", "seguisbi.ttf", RegistryValueKind.String);
                         WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semilight (TrueType)", "segoeuisl.ttf", RegistryValueKind.String);
                         WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semilight Italic (TrueType)", "seguisli.ttf", RegistryValueKind.String);
+
+                        // Process SegoeUI font substitutes
+                        DeleteValue(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "Segoe UI");
                     }
                     else
                     {
@@ -455,10 +458,10 @@ namespace WinPaletter.Theme.Structures
                         WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semibold Italic (TrueType)", string.Empty, RegistryValueKind.String);
                         WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semilight (TrueType)", string.Empty, RegistryValueKind.String);
                         WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts", "Segoe UI Semilight Italic (TrueType)", string.Empty, RegistryValueKind.String);
-                    }
 
-                    // Process SegoeUI font substitutes
-                    WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "Segoe UI", FontSubstitute_SegoeUI, RegistryValueKind.String);
+                        // Process SegoeUI font substitutes
+                        WriteReg(treeView, @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "Segoe UI", FontSubstitute_SegoeUI, RegistryValueKind.String);
+                    }
 
                     // Restore DPI
                     WriteReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "AppliedDPI", OldDPI);

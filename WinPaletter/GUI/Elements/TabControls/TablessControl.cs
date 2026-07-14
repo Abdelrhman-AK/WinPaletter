@@ -85,9 +85,8 @@ namespace WinPaletter.UI.WP
                 if (m.Msg == (int)User32.WindowsMessage.EraseBkgnd)
                 {
                     Color fill = Parent?.BackColor ?? BackColor;
-                    using (Graphics g = Graphics.FromHdc(m.WParam))
-                    using (SolidBrush b = new SolidBrush(fill))
-                        g.FillRectangle(b, ClientRectangle);
+                    using (Graphics G = Graphics.FromHdc(m.WParam))
+                    using (SolidBrush b = new(fill)) G.FillRectangle(b, ClientRectangle);
                     m.Result = (IntPtr)1;
                     return;
                 }
@@ -98,13 +97,14 @@ namespace WinPaletter.UI.WP
 
         protected override void OnPaintBackground(PaintEventArgs e)
         {
-            if (!DesignMode) e.Graphics.Clear(Parent.BackColor); else base.OnPaint(e);
+            if (!DesignMode) e.Graphics.Clear(Parent != null && !Parent.IsDisposed ? Parent.BackColor : BackColor);
+            else base.OnPaint(e);
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            if (!DesignMode) e.Graphics.Clear(Parent.BackColor); else base.OnPaint(e);
+            if (!DesignMode) e.Graphics.Clear(Parent != null && !Parent.IsDisposed ? Parent.BackColor : BackColor);
+            else base.OnPaint(e);
         }
-
     }
 }

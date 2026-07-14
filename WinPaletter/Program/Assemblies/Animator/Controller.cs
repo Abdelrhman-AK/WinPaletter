@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
@@ -60,6 +61,8 @@ namespace AnimatorNS
 
         public void Dispose()
         {
+            Debug.WriteLine($"[Controller.Dispose] control='{AnimatedControl?.Name}' mode={mode}");
+
             if (ctrlBmp != null)
             {
                 ctrlBmp.Dispose();
@@ -75,11 +78,15 @@ namespace AnimatorNS
                 Frame.Dispose();
                 Frame = null;
             }
-            AnimatedControl = null;
             pixelsBuffer = null;
+
+            // Hide() needs AnimatedControl and mode to correctly restore the real
+            // control's Visible state and to tear down the overlay - it must run
+            // before those fields are cleared, not after.
             Hide();
 
-            // Clear bitmap cache to prevent memory leaks
+            AnimatedControl = null;
+
             BitmapCache.Clear();
         }
 
@@ -92,6 +99,7 @@ namespace AnimatorNS
                 AnimateMode originalMode = mode;
                 Control parent = db.Parent;
                 Rectangle bounds = db.Bounds;
+                Debug.WriteLine($"[Controller.Hide] removing overlay '{db.Name}' for original control '{originalControl?.Name}', mode={originalMode}, invokeRequired={db.InvokeRequired}");
 
                 DoubleBitmap = null;
 
@@ -248,7 +256,40 @@ namespace AnimatorNS
             (DoubleBitmap as IFakeControl).TransfromNeeded += OnTransfromNeeded;
             DoubleBitmap.MouseDown += OnMouseDown;
 
-            this.animation = animation;
+            // For very large animated areas (e.g. a Dock = Fill control on a maximized form), the per-frame blur pass in OnNonLinearTransfromNeeded gets
+            // expensive enough to visibly stutter the animation. Blur adds very little at that scale anyway, so it's disabled by working off a private copy of
+            // the Animation - the passed-in instance is frequently a shared static (Animation.Fade etc.) and must never be mutated directly.
+            Animation effectiveAnimation = animation;
+            Rectangle initialBounds = new(
+                control.Left - animation.Padding.Left,
+                control.Top - animation.Padding.Top,
+                control.Size.Width + animation.Padding.Left + animation.Padding.Right,
+                control.Size.Height + animation.Padding.Top + animation.Padding.Bottom);
+            long area = (long)Math.Max(0, initialBounds.Width) * Math.Max(0, initialBounds.Height);
+            const long LargeAreaThreshold = 2_000_000; // roughly 1600x1250 and up
+
+            if (area > LargeAreaThreshold && animation.BlurRadius > 0f)
+            {
+                Debug.WriteLine($"[Controller] Large animated area {initialBounds.Width}x{initialBounds.Height} ({area} px) for '{control.Name}' - disabling per-frame blur");
+                effectiveAnimation = new()
+                {
+                    SlideCoeff = animation.SlideCoeff,
+                    TransparencyCoeff = animation.TransparencyCoeff,
+                    BlindCoeff = animation.BlindCoeff,
+                    ZoomCoeff = animation.ZoomCoeff,
+                    MinZoomScale = animation.MinZoomScale,
+                    MaxZoomScale = animation.MaxZoomScale,
+                    BlurRadius = 0f,
+                    TimeCoeff = animation.TimeCoeff,
+                    MinTime = animation.MinTime,
+                    MaxTime = animation.MaxTime,
+                    Padding = animation.Padding,
+                    AnimateOnlyDifferences = animation.AnimateOnlyDifferences,
+                    EasingType = animation.EasingType
+                };
+            }
+
+            this.animation = effectiveAnimation;
             this.AnimatedControl = control;
             this.mode = mode;
             this.CustomClipRect = controlClipRect;
@@ -256,7 +297,17 @@ namespace AnimatorNS
             if (mode == AnimateMode.Show || mode == AnimateMode.BeginUpdate)
                 timeStep = -timeStep;
 
-            this.TimeStep = timeStep * (animation.TimeCoeff == 0f ? 1f : animation.TimeCoeff);
+            // Large areas also get a coarser time step: fewer full-cost frames are
+            // rendered over the same total animation duration, which keeps the UI
+            // thread from falling behind on a maximized, docked control.
+            float timeStepScale = 1f;
+            if (area > LargeAreaThreshold)
+            {
+                timeStepScale = area > 6_000_000 ? 2.5f : 1.6f;
+                Debug.WriteLine($"[Controller] Scaling TimeStep by {timeStepScale}x for large area {initialBounds.Width}x{initialBounds.Height}");
+            }
+
+            this.TimeStep = timeStep * timeStepScale * (effectiveAnimation.TimeCoeff == 0f ? 1f : effectiveAnimation.TimeCoeff);
             if (this.TimeStep == 0f)
                 this.TimeStep = 0.01f;
 
@@ -412,16 +463,14 @@ namespace AnimatorNS
                             {
                                 int cw = Math.Max(1, c.Width);
                                 int ch = Math.Max(1, c.Height);
-                                using (Bitmap cb = new(cw, ch))
-                                {
-                                    c.DrawToBitmap(cb, new Rectangle(0, 0, cw, ch));
-                                    if (cb != null)
-                                    {
-                                        G.DrawImage(cb, c.Left - bounds.Left, c.Top - bounds.Top, c.Width, c.Height);
-                                    }
-                                }
+                                Bitmap cb = BitmapCache.GetOrCreate(cw, ch, "bgchild");
+                                c.DrawToBitmap(cb, new Rectangle(0, 0, cw, ch));
+                                G.DrawImage(cb, c.Left - bounds.Left, c.Top - bounds.Top, c.Width, c.Height);
                             }
-                            catch { /* Skip this control if it can't be rendered */ }
+                            catch (Exception ex)
+                            {
+                                Debug.WriteLine($"[Controller.GetBackground] Skipped sibling '{c.Name}': {ex}");
+                            }
                         }
                         if (c == ctrl) break;
                     }

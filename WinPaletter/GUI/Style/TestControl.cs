@@ -107,25 +107,26 @@ namespace WinPaletter.UI.WP
         }
         private States _state = States.None;
 
-        /// <summary>
-        /// Creates and gets the parameters of the control
-        /// </summary>
-        protected override CreateParams CreateParams
-        {
-            get
-            {
-                CreateParams cpar = base.CreateParams;
-                if (!DesignMode)
-                {
-                    cpar.ExStyle |= (int)Win32Control.ControlStyles.Iconic;
-                    return cpar;
-                }
-                else
-                {
-                    return cpar;
-                }
-            }
-        }
+        ///// <summary>
+        ///// Creates and gets the parameters of the control
+        ///// </summary>
+        //protected override CreateParams CreateParams
+        //{
+        //    get
+        //    {
+        //        CreateParams cpar = base.CreateParams;
+        //        if (!DesignMode)
+        //        {
+        //            cpar.ExStyle |= (int)Win32Control.ControlStyles.Iconic;
+        //            return cpar;
+        //        }
+        //        else
+        //        {
+        //            return cpar;
+        //        }
+        //    }
+        //}
+
         #endregion
 
 

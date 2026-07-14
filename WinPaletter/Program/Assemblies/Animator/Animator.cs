@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Text;
@@ -280,7 +281,24 @@ namespace AnimatorNS
                     }
 
                     foreach (var item in completed)
-                        OnCompleted(item);
+                    {
+                        try
+                        {
+                            if (invokerControl != null && invokerControl.IsHandleCreated && !invokerControl.IsDisposed)
+                            {
+                                invokerControl.Invoke(new MethodInvoker(() => OnCompleted(item)));
+                            }
+                            else
+                            {
+                                OnCompleted(item);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine($"[Animator.Work] Failed to marshal OnCompleted to UI thread for '{item.control?.Name}': {ex}");
+                            try { OnCompleted(item); } catch (Exception ex2) { Debug.WriteLine($"[Animator.Work] Fallback OnCompleted also failed: {ex2}"); }
+                        }
+                    }
 
                     foreach (var item in actived)
                     {
@@ -604,8 +622,13 @@ namespace AnimatorNS
 
         void OnCompleted(QueueItem item)
         {
+            Debug.WriteLine($"[Animator.OnCompleted] control='{item.control?.Name}' mode={item.mode} thread={Thread.CurrentThread.ManagedThreadId}");
+
             if (item.controller != null)
             {
+                // Restoring the real control's visible state is separated from disposing the controller. Previously both lived in one try/catch, so an exception
+                // while restoring Visible (e.g. from a stray cross-thread call) silently skipped Dispose() entirely and left the fake overlay control stuck on
+                // screen permanently - this was the cause of the "black bitmap survives ShowSync" bug.
                 try
                 {
                     if (item.control != null && !item.control.IsDisposed && item.control.IsHandleCreated)
@@ -623,7 +646,6 @@ namespace AnimatorNS
 
                         if (item.control.Parent != null && !item.control.Parent.IsDisposed)
                         {
-                            // Check for TablessControl in parent hierarchy
                             Control tablessControl = null;
                             Control current = item.control.Parent;
                             while (current != null)
@@ -638,7 +660,6 @@ namespace AnimatorNS
 
                             if (tablessControl != null)
                             {
-                                // Force TablessControl to repaint - use BeginInvoke to avoid deadlocks
                                 tablessControl.BeginInvoke(new MethodInvoker(() =>
                                 {
                                     try
@@ -649,23 +670,30 @@ namespace AnimatorNS
                                             tablessControl.Update();
                                             tablessControl.Refresh();
 
-                                            // Ensure the animated control is visible/hidden correctly
+                                            foreach (Control ctrl in tablessControl.Controls)
+                                            {
+                                                if (!ctrl.IsDisposed && ctrl != item.control)
+                                                {
+                                                    ctrl.Invalidate();
+                                                    ctrl.Update();
+                                                }
+                                            }
+
                                             if (item.control != null && !item.control.IsDisposed)
                                             {
                                                 item.control.Invalidate();
                                                 item.control.Update();
                                             }
 
-                                            // Force Win32 redraw
                                             try
                                             {
                                                 User32.InvalidateRect(tablessControl.Handle, IntPtr.Zero, true);
                                                 User32.UpdateWindow(tablessControl.Handle);
                                             }
-                                            catch { }
+                                            catch (Exception ex) { Debug.WriteLine($"[Animator.OnCompleted] Win32 redraw failed: {ex}"); }
                                         }
                                     }
-                                    catch { }
+                                    catch (Exception ex) { Debug.WriteLine($"[Animator.OnCompleted] TablessControl repaint failed: {ex}"); }
                                 }));
                             }
                             else
@@ -675,11 +703,22 @@ namespace AnimatorNS
                             }
                         }
                     }
-
-                    item.controller.Dispose();
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"[Animator.OnCompleted] Restoring control state failed for '{item.control?.Name}': {ex}");
+                }
 
+                // This must run regardless of whether the block above succeeded.
+                try
+                {
+                    item.controller.Dispose();
+                    Debug.WriteLine($"[Animator.OnCompleted] Controller disposed for '{item.control?.Name}'");
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"[Animator.OnCompleted] Controller.Dispose() failed for '{item.control?.Name}': {ex}");
+                }
                 item.controller = null;
             }
 
@@ -874,11 +913,13 @@ namespace AnimatorNS
         {
             var controller = new Controller(control, mode, animation, TimeStep, clipRect);
             controller?.TransfromNeeded += OnTransformNeeded;
-            if (NonLinearTransfromNeeded != null)
-                controller?.NonLinearTransfromNeeded += OnNonLinearTransfromNeeded;
+            if (NonLinearTransfromNeeded != null) controller?.NonLinearTransfromNeeded += OnNonLinearTransfromNeeded;
             controller?.MouseDown += OnMouseDown;
             controller?.DoubleBitmap.Cursor = Cursor;
             controller?.FramePainted += OnFramePainted;
+
+            if (controller?.DoubleBitmap is DoubleBitmapControl dbc) dbc.OwnerAnimator = this;
+
             return controller;
         }
 

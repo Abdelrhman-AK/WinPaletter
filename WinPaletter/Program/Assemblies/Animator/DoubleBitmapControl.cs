@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
@@ -12,6 +13,15 @@ namespace AnimatorNS
         Bitmap frame;
         private Control _animatedControl;
         private AnimateMode _mode;
+
+        /// <summary>
+        /// The Animator instance that created this overlay. Used only as a fallback:
+        /// if this overlay somehow survives being clicked by the user, we hand control back to the same Animator that produced it and let it run a
+        /// normal ShowSync instead of tearing the overlay down by hand.
+        /// </summary>
+        public Animator OwnerAnimator { get; set; }
+
+        private bool _fallbackTriggered;
 
         Bitmap IFakeControl.BgBmp
         {
@@ -48,23 +58,23 @@ namespace AnimatorNS
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            // Add safety check - if the control is being disposed, skip painting
-            if (IsDisposed || Disposing)
-                return;
+            if (IsDisposed || Disposing)  return;
 
             OnFramePainting(e);
 
             try
             {
-                if (bgBmp != null && !IsDisposed && bgBmp.IsValid())
-                    e.Graphics.DrawImage(bgBmp, 0, 0);
+                Color fallback = Parent != null && !Parent.IsDisposed ? Parent.BackColor : BackColor;
+                e.Graphics.Clear(fallback);
+
+                if (bgBmp != null && !IsDisposed && bgBmp.IsValid()) e.Graphics.DrawImage(bgBmp, 0, 0);
 
                 if (frame != null && !IsDisposed)
                 {
-                    var ea = new TransfromNeededEventArg
+                    TransfromNeededEventArg ea = new()
                     {
-                        ClientRectangle = new Rectangle(0, 0, Width, Height),
-                        ClipRectangle = new Rectangle(0, 0, Width, Height)
+                        ClientRectangle = new(0, 0, Width, Height),
+                        ClipRectangle = new(0, 0, Width, Height)
                     };
                     OnTransfromNeeded(ea);
                     e.Graphics.SetClip(ea.ClipRectangle);
@@ -72,7 +82,10 @@ namespace AnimatorNS
                     e.Graphics.DrawImage(frame, 0, 0);
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[DoubleBitmapControl] OnPaint failed for '{Name}': {ex}");
+            }
 
             OnFramePainted(e);
         }
@@ -218,6 +231,67 @@ namespace AnimatorNS
         protected virtual void OnFramePainted(PaintEventArgs e)
         {
             FramePainted?.Invoke(this, e);
+        }
+
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            base.OnMouseDown(e);
+
+            if (_fallbackTriggered) return;
+
+            Control realControl = Tag as Control;
+
+            if (OwnerAnimator != null && realControl != null && !realControl.IsDisposed)
+            {
+                _fallbackTriggered = true;
+                Debug.WriteLine($"[DoubleBitmapControl] MouseDown on '{Name}' while overlay still present - forcing Animator.ShowSync('{realControl.Name}')");
+
+                BeginInvoke(new MethodInvoker(() =>
+                {
+                    try
+                    {
+                        OwnerAnimator.ShowSync(realControl);
+                    }
+                    catch (Exception ex)
+                    {
+                        Debug.WriteLine($"[DoubleBitmapControl] Fallback ShowSync failed: {ex}");
+                    }
+                }));
+            }
+            else
+            {
+                // Shouldn't normally happen - no owner Animator or real control known.
+                // Fall back to an immediate, unanimated teardown so input is never
+                // left blocked.
+                Debug.WriteLine($"[DoubleBitmapControl] MouseDown on '{Name}' but no OwnerAnimator/Tag available - forcing immediate removal");
+                _fallbackTriggered = true;
+                BeginInvoke(new MethodInvoker(ForceImmediateRemoval));
+            }
+        }
+
+        private void ForceImmediateRemoval()
+        {
+            try
+            {
+                if (IsDisposed || Disposing)
+                    return;
+
+                Control parent = Parent;
+                Visible = false;
+
+                if (parent != null && !parent.IsDisposed)
+                {
+                    parent.Controls.Remove(this);
+                    parent.Invalidate();
+                    parent.Update();
+                }
+
+                Dispose();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"[DoubleBitmapControl] ForceImmediateRemoval failed: {ex}");
+            }
         }
 
         public void InitParent(Control control, Padding padding)

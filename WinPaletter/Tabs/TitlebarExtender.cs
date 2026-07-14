@@ -345,6 +345,9 @@ namespace WinPaletter.Tabs
         /// <summary>
         /// Updates the backdrop of the control.
         /// </summary>
+        /// <summary>
+        /// Updates the backdrop of the control.
+        /// </summary>
         public void UpdateBackDrop()
         {
             if (!this.IsHandleCreated || this.Handle == IntPtr.Zero || !User32.IsWindow(this.Handle)) return;
@@ -374,19 +377,29 @@ namespace WinPaletter.Tabs
 
             UpdateColors();
 
-            // Process only if changed
+            // ALWAYS process DWM effects if the form is visible.
+            // Don't skip based on _firstBackdropUpdate alone.
             bool needsRedraw = _firstBackdropUpdate || _lastBackdropType == null || type != _lastBackdropType || p != _lastBackdropPadding;
+
+            // For DWM types, always apply the effect when the form is visible
+            bool isDwmType = type == TitlebarTypes.DWM || type == TitlebarTypes.DWM_Aero;
+
+            // On Windows 7 with DWM, we need to reapply the effect every time the form is shown
+            bool forceApply = isDwmType && form.Visible && !_firstBackdropUpdate;
+
             _firstBackdropUpdate = false;
 
             switch (type)
             {
                 case TitlebarTypes.DWM:
                     BackColor = Color.Black;
-                    if (needsRedraw && p != Padding.Empty) form.DropEffect(p, FormStyle: Program.Style.DarkMode ? DWM.DWMStyles.Mica : DWM.DWMStyles.Tabbed);
+                    if ((needsRedraw || forceApply) && p != Padding.Empty)
+                        form.DropEffect(p, FormStyle: Program.Style.DarkMode ? DWM.DWMStyles.Mica : DWM.DWMStyles.Tabbed);
                     break;
                 case TitlebarTypes.DWM_Aero:
                     BackColor = Color.Black;
-                    if (needsRedraw && p != Padding.Empty) form.DropEffect(p, false, DWM.DWMStyles.Aero);
+                    if ((needsRedraw || forceApply) && p != Padding.Empty)
+                        form.DropEffect(p, false, DWM.DWMStyles.Aero);
                     break;
                 case TitlebarTypes.ColorPrevalence:
                     BackColor = _formFocused ? activeTtl : inactiveTtl;

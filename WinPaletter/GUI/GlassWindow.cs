@@ -66,6 +66,12 @@ namespace WinPaletter
             User32.SetWindowPos(Handle, parent.Handle, 0, 0, 0, 0, User32.SetWindowsPosition.NoMove | User32.SetWindowsPosition.NoSize | User32.SetWindowsPosition.NoActivate);
         }
 
+        public new void Close()
+        {
+            shownOverAParent = false;
+            base.Hide();
+        }
+
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
@@ -75,8 +81,7 @@ namespace WinPaletter
 
         protected override void OnHandleCreated(EventArgs e)
         {
-            //base.OnHandleCreated(e);
-
+            base.OnHandleCreated(e);
             Win32Control.AppendExtendedStyle(Handle, Win32Control.ControlExtendedStyles.Transparent | Win32Control.ControlExtendedStyles.NoActivate);
         }
 
@@ -112,7 +117,12 @@ namespace WinPaletter
 
                     DWMAPI.DwmEnableBlurBehindWindow(Handle, blurBehind);
 
-                    if (hRgn != IntPtr.Zero) GDI32.DeleteObject(hRgn);
+                    int hr = DWMAPI.DwmEnableBlurBehindWindow(Handle, blurBehind);
+
+                    if (hr != 0 && hRgn != IntPtr.Zero)
+                    {
+                        GDI32.DeleteObject(hRgn);
+                    }
 
                     Invalidate();
                 }

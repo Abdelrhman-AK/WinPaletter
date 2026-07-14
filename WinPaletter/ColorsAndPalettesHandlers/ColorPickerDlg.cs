@@ -159,7 +159,7 @@ namespace WinPaletter
                     f.Visible = false;
                 }
             }
-            Opacity = 0d;
+            OpacityLayered = 0d;
 
             // 3. Show the magnifier following cursor
             if (_magnifierForm == null || _magnifierForm.IsDisposed)
@@ -184,7 +184,7 @@ namespace WinPaletter
             ChildControls_List.Clear();
 
             // Restore form transparency
-            Opacity = 1d;
+            OpacityLayered = 1d;
 
             // Close magnifier
             if (_magnifierForm != null && !_magnifierForm.IsDisposed) _magnifierForm.Close();

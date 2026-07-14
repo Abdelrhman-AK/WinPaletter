@@ -82,7 +82,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="hWnd">A handle to the window.</param>
         /// <param name="pBlurBehind">A pointer to a DWM_BLURBEHIND structure that describes the blur-behind area.</param>
         [DllImport(_dwmapi, PreserveSig = false)]
-        public static extern void DwmEnableBlurBehindWindow(IntPtr hWnd, DWM_BLURBEHIND pBlurBehind);
+        public static extern int DwmEnableBlurBehindWindow(IntPtr hWnd, DWM_BLURBEHIND pBlurBehind);
 
         /// <summary>
         /// Queries the composition state of Desktop Window Manager (DWM).

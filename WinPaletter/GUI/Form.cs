@@ -312,7 +312,7 @@ namespace WinPaletter.UI.WP
 
         protected override void OnHandleCreated(EventArgs e)
         {
-            base.OnHandleCreated(e);
+            //base.OnHandleCreated(e);
 
             if (!DesignMode && _screenCaptureBlock != ScreenCaptureBlockType.None)
             {
