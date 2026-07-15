@@ -79,6 +79,7 @@ namespace WinPaletter.UI.WP
 
         protected override void WndProc(ref Message m)
         {
+            // Handle Mouse Horizontal Wheel
             if (m.Msg == (uint)WindowsMessage.MouseHWheel)
             {
                 EnsurePositionInitialized();
@@ -87,7 +88,22 @@ namespace WinPaletter.UI.WP
                 if (!_scrollTimer.Enabled) _scrollTimer.Start();
                 return;
             }
-            if (m.Msg == 0x0115 || m.Msg == 0x0114) return;
+
+            // Handle Scrollbar interaction (Drag, Click)
+            if (m.Msg == (uint)WindowsMessage.VScroll || m.Msg == (uint)WindowsMessage.HScroll)
+            {
+                // Let the base class update the scroll position first
+                base.WndProc(ref m);
+
+                // Sync our internal trackers with the new AutoScrollPosition
+                _currentH = -AutoScrollPosition.X;
+                _currentV = -AutoScrollPosition.Y;
+                _targetH = _currentH;
+                _targetV = _currentV;
+
+                return;
+            }
+
             base.WndProc(ref m);
         }
     }

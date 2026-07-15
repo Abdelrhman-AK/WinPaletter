@@ -312,12 +312,56 @@ namespace WinPaletter.UI.WP
 
         protected override void OnHandleCreated(EventArgs e)
         {
-            //base.OnHandleCreated(e);
+            base.OnHandleCreated(e);
 
             if (!DesignMode && _screenCaptureBlock != ScreenCaptureBlockType.None)
             {
                 ApplyScreenCaptureBlock();
             }
+        }
+
+        private Padding _contentPadding = default;
+
+        /// <summary>
+        /// Gets or sets the padding within the form's client area. When FormBorderStyle is None, Borders is enabled, and the border is actually painted onto the client surface (legacy
+        /// non-composited OS or classic theme), the drawn border's width is automatically added on top of this value so docked/anchored child controls don't sit under the border art.
+        /// <br></br>Note: this getter returns the declared content padding, not the combined effective padding actually applied to the control's layout.
+        /// </summary>
+        [Browsable(true)]
+        [Category("Layout")]
+        [Description("Padding within the form's client area, excluding any auto-added border inset.")]
+        public new Padding Padding
+        {
+            get => _contentPadding;
+            set
+            {
+                if (_contentPadding == value) return;
+                _contentPadding = value;
+                UpdateBorderPadding();
+            }
+        }
+
+        private void UpdateBorderPadding()
+        {
+            if (DesignMode || !IsHandleCreated)
+            {
+                base.Padding = _contentPadding;
+                return;
+            }
+
+            Padding effective = _contentPadding;
+
+            if (FormBorderStyle == FormBorderStyle.None && _borders && ShouldUpdateBorders(true))
+            {
+                int borderWidth = GetDWMBorderWidth() - 1;
+                effective.Left += borderWidth;
+                effective.Top += borderWidth;
+                effective.Right += borderWidth;
+                effective.Bottom += borderWidth;
+            }
+
+            base.Padding = effective;
+            PerformLayout();
         }
 
         // Backdrop property
@@ -473,6 +517,7 @@ namespace WinPaletter.UI.WP
                 {
                     _bordersThickness = value;
                     ApplyDWMBorder();
+                    UpdateBorderPadding();
                 }
             }
         }
@@ -489,12 +534,13 @@ namespace WinPaletter.UI.WP
                 if (base.FormBorderStyle != value)
                 {
                     base.FormBorderStyle = value;
-
-                    // Keep Borders in sync: if the style is None, Borders can still be true
-                    _borders = value == FormBorderStyle.None ? _borders : true;
+                    _borders = value != FormBorderStyle.None || _borders;
 
                     if (!DesignMode)
+                    {
+                        UpdateBordersFromVisualStyles();
                         this.Refresh();
+                    }
                 }
             }
         }
@@ -930,13 +976,13 @@ namespace WinPaletter.UI.WP
             }
         }
 
-        private bool ShouldUpdateBorders()
+        private bool ShouldUpdateBorders(bool skipNoDWMCompositopn = false)
         {
             // 1. FormBorderStyle is none and _borders property is true
             bool isBorderlessWithBorders = WindowState == FormWindowState.Normal && FormBorderStyle == FormBorderStyle.None && _borders;
 
             // 2. Program.ClassicThemeRunning or DWM.IsCompositionEnabled is false
-            bool isLegacyOrClassic = Program.ClassicThemeRunning || !DWMAPI.IsCompositionEnabled();
+            bool isLegacyOrClassic = skipNoDWMCompositopn || (Program.ClassicThemeRunning || !DWMAPI.IsCompositionEnabled());
 
             // 3. Form is not hosted in a control (Parent is null)
             bool isTopLevel = Parent == null;
@@ -1041,6 +1087,7 @@ namespace WinPaletter.UI.WP
             if (DesignMode || !ShouldUpdateBorders())
             {
                 DisposeBorders();
+                UpdateBorderPadding();
                 return;
             }
 
@@ -1048,6 +1095,7 @@ namespace WinPaletter.UI.WP
             if (_isClassicThemeEnabled)
             {
                 DisposeBorders();
+                UpdateBorderPadding();
                 Invalidate();
                 return;
             }
@@ -1066,6 +1114,7 @@ namespace WinPaletter.UI.WP
             oldActive?.Dispose();
             oldInactive?.Dispose();
 
+            UpdateBorderPadding();
             Invalidate();
         }
 

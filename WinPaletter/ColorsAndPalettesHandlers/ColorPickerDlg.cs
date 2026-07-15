@@ -244,10 +244,7 @@ namespace WinPaletter
                     colorItem = ci;
                     firstControl ??= key;
                 }
-                else if (firstControl == null)
-                {
-                    firstControl = key;
-                }
+                else firstControl ??= key;
 
                 // If we found both, break early
                 if (colorItem != null && firstControl != null && colorItem != firstControl) break;
@@ -657,42 +654,42 @@ namespace WinPaletter
                         GetColorsFromPalette(Program.TM);
                         break;
                     }
+                //case 1:
+                //    {
+                //        GetColorsFromPalette(Default.Windows12);
+                //        break;
+                //    }
                 case 1:
-                    {
-                        GetColorsFromPalette(Default.Windows12);
-                        break;
-                    }
-                case 2:
                     {
                         GetColorsFromPalette(Default.Windows11);
                         break;
                     }
-                case 3:
+                case 2:
                     {
                         GetColorsFromPalette(Default.Windows10);
                         break;
                     }
-                case 4:
+                case 3:
                     {
                         GetColorsFromPalette(Default.Windows81);
                         break;
                     }
-                case 5:
+                case 4:
                     {
                         GetColorsFromPalette(Default.Windows8);
                         break;
                     }
-                case 6:
+                case 5:
                     {
                         GetColorsFromPalette(Default.Windows7);
                         break;
                     }
-                case 7:
+                case 6:
                     {
                         GetColorsFromPalette(Default.WindowsVista);
                         break;
                     }
-                case 8:
+                case 7:
                     {
                         GetColorsFromPalette(Default.WindowsXP);
                         break;
@@ -726,11 +723,13 @@ namespace WinPaletter
                 {
                     foreach (Color C in colors)
                     {
-                        ColorItem MiniColorItem = new();
-                        MiniColorItem.Size = ColorItem.GetMiniColorItemSize();
-                        MiniColorItem.AllowDrop = false;
-                        MiniColorItem.PauseColorsHistory = true;
-                        MiniColorItem.BackColor = C;
+                        ColorItem MiniColorItem = new()
+                        {
+                            Size = ColorItem.GetMiniColorItemSize(),
+                            AllowDrop = false,
+                            PauseColorsHistory = true,
+                            BackColor = C
+                        };
                         MiniColorItem.DefaultBackColor = MiniColorItem.BackColor;
 
                         ThemePaletteContainer.Controls.Add(MiniColorItem);
@@ -765,11 +764,13 @@ namespace WinPaletter
                         {
                             foreach (Color C in colors)
                             {
-                                ColorItem MiniColorItem = new();
-                                MiniColorItem.Size = ColorItem.GetMiniColorItemSize();
-                                MiniColorItem.AllowDrop = false;
-                                MiniColorItem.PauseColorsHistory = true;
-                                MiniColorItem.BackColor = C;
+                                ColorItem MiniColorItem = new()
+                                {
+                                    Size = ColorItem.GetMiniColorItemSize(),
+                                    AllowDrop = false,
+                                    PauseColorsHistory = true,
+                                    BackColor = C
+                                };
                                 MiniColorItem.DefaultBackColor = MiniColorItem.BackColor;
 
                                 ThemePaletteContainer.Controls.Add(MiniColorItem);
@@ -819,11 +820,13 @@ namespace WinPaletter
                                 {
                                     if (field.FieldType.Name.ToLower() == "color")
                                     {
-                                        ColorItem MiniColorItem = new();
-                                        MiniColorItem.Size = ColorItem.GetMiniColorItemSize();
-                                        MiniColorItem.AllowDrop = false;
-                                        MiniColorItem.PauseColorsHistory = true;
-                                        MiniColorItem.BackColor = (Color)field.GetValue(vs.Metrics.Colors);
+                                        ColorItem MiniColorItem = new()
+                                        {
+                                            Size = ColorItem.GetMiniColorItemSize(),
+                                            AllowDrop = false,
+                                            PauseColorsHistory = true,
+                                            BackColor = (Color)field.GetValue(vs.Metrics.Colors)
+                                        };
                                         MiniColorItem.DefaultBackColor = MiniColorItem.BackColor;
 
                                         ThemePaletteContainer.Controls.Add(MiniColorItem);

@@ -148,7 +148,7 @@ namespace WinPaletter
             this.ColorEditor1.Location = new System.Drawing.Point(3, 3);
             this.ColorEditor1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.ColorEditor1.Name = "ColorEditor1";
-            this.ColorEditor1.Size = new System.Drawing.Size(282, 258);
+            this.ColorEditor1.Size = new System.Drawing.Size(282, 264);
             this.ColorEditor1.TabIndex = 0;
             // 
             // ColorGrid1
@@ -163,7 +163,7 @@ namespace WinPaletter
             this.ColorGrid1.EditMode = Cyotek.Windows.Forms.ColorEditingMode.None;
             this.ColorGrid1.Location = new System.Drawing.Point(3, 3);
             this.ColorGrid1.Name = "ColorGrid1";
-            this.ColorGrid1.Size = new System.Drawing.Size(282, 232);
+            this.ColorGrid1.Size = new System.Drawing.Size(282, 238);
             this.ColorGrid1.TabIndex = 1;
             // 
             // ColorWheel1
@@ -173,12 +173,12 @@ namespace WinPaletter
             this.ColorWheel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.ColorWheel1.Location = new System.Drawing.Point(3, 3);
             this.ColorWheel1.Name = "ColorWheel1";
-            this.ColorWheel1.Size = new System.Drawing.Size(282, 258);
+            this.ColorWheel1.Size = new System.Drawing.Size(282, 264);
             this.ColorWheel1.TabIndex = 2;
             // 
             // ScreenColorPicker1
             // 
-            this.ScreenColorPicker1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.ScreenColorPicker1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.ScreenColorPicker1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.ScreenColorPicker1.Location = new System.Drawing.Point(7, 7);
             this.ScreenColorPicker1.Name = "ScreenColorPicker1";
@@ -189,6 +189,7 @@ namespace WinPaletter
             // 
             // Button6
             // 
+            this.Button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Button6.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(3)))), ((int)(((byte)(112)))), ((int)(((byte)(200)))));
             this.Button6.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.Button6.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -228,6 +229,8 @@ namespace WinPaletter
             // 
             // CheckBox1
             // 
+            this.CheckBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.CheckBox1.Checked = true;
             this.CheckBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox1.ForeColor = System.Drawing.Color.White;
@@ -269,6 +272,8 @@ namespace WinPaletter
             // 
             // ProgressBar1
             // 
+            this.ProgressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.ProgressBar1.Appearance = WinPaletter.UI.WP.ProgressBar.ProgressBarAppearance.Bar;
             this.ProgressBar1.BackColor = System.Drawing.Color.Transparent;
             this.ProgressBar1.Location = new System.Drawing.Point(3, 30);
@@ -304,6 +309,7 @@ namespace WinPaletter
             // 
             // Button4
             // 
+            this.Button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Button4.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(127)))), ((int)(((byte)(0)))));
             this.Button4.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.Button4.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -321,6 +327,8 @@ namespace WinPaletter
             // 
             // TextBox1
             // 
+            this.TextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.TextBox1.ForeColor = System.Drawing.Color.White;
             this.TextBox1.Location = new System.Drawing.Point(86, 33);
             this.TextBox1.MaxLength = 32767;
@@ -339,10 +347,13 @@ namespace WinPaletter
             // 
             // ImgPaletteContainer
             // 
+            this.ImgPaletteContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.ImgPaletteContainer.AutoScroll = true;
             this.ImgPaletteContainer.Location = new System.Drawing.Point(3, 30);
             this.ImgPaletteContainer.Name = "ImgPaletteContainer";
-            this.ImgPaletteContainer.Size = new System.Drawing.Size(274, 197);
+            this.ImgPaletteContainer.Size = new System.Drawing.Size(274, 203);
             this.ImgPaletteContainer.TabIndex = 12;
             // 
             // Label4
@@ -406,7 +417,7 @@ namespace WinPaletter
             this.TabControl1.Controls.Add(this.TabPage2);
             this.TabControl1.Controls.Add(this.TabPage3);
             this.TabControl1.Controls.Add(this.TabPage4);
-            this.TabControl1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.TabControl1.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
             this.TabControl1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.TabControl1.ImageList = this.ImageList1;
@@ -415,7 +426,7 @@ namespace WinPaletter
             this.TabControl1.Multiline = true;
             this.TabControl1.Name = "TabControl1";
             this.TabControl1.SelectedIndex = 0;
-            this.TabControl1.Size = new System.Drawing.Size(332, 272);
+            this.TabControl1.Size = new System.Drawing.Size(332, 278);
             this.TabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.TabControl1.TabIndex = 9;
             // 
@@ -426,7 +437,7 @@ namespace WinPaletter
             this.TabPage5.Location = new System.Drawing.Point(40, 4);
             this.TabPage5.Name = "TabPage5";
             this.TabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage5.Size = new System.Drawing.Size(288, 264);
+            this.TabPage5.Size = new System.Drawing.Size(288, 270);
             this.TabPage5.TabIndex = 4;
             // 
             // TabPage1
@@ -437,7 +448,7 @@ namespace WinPaletter
             this.TabPage1.Location = new System.Drawing.Point(40, 4);
             this.TabPage1.Name = "TabPage1";
             this.TabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage1.Size = new System.Drawing.Size(288, 264);
+            this.TabPage1.Size = new System.Drawing.Size(288, 270);
             this.TabPage1.TabIndex = 0;
             // 
             // Button1
@@ -450,7 +461,7 @@ namespace WinPaletter
             this.Button1.Image = ((System.Drawing.Image)(resources.GetObject("Button1.Image")));
             this.Button1.ImageGlyph = null;
             this.Button1.ImageGlyphEnabled = false;
-            this.Button1.Location = new System.Drawing.Point(3, 235);
+            this.Button1.Location = new System.Drawing.Point(3, 241);
             this.Button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button1.Name = "Button1";
             this.Button1.Size = new System.Drawing.Size(282, 26);
@@ -467,7 +478,7 @@ namespace WinPaletter
             this.TabPage6.Location = new System.Drawing.Point(40, 4);
             this.TabPage6.Name = "TabPage6";
             this.TabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage6.Size = new System.Drawing.Size(288, 264);
+            this.TabPage6.Size = new System.Drawing.Size(288, 270);
             this.TabPage6.TabIndex = 5;
             // 
             // tabPage10
@@ -481,7 +492,7 @@ namespace WinPaletter
             this.tabPage10.Location = new System.Drawing.Point(40, 4);
             this.tabPage10.Name = "tabPage10";
             this.tabPage10.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage10.Size = new System.Drawing.Size(288, 264);
+            this.tabPage10.Size = new System.Drawing.Size(288, 270);
             this.tabPage10.TabIndex = 7;
             // 
             // label12
@@ -516,7 +527,7 @@ namespace WinPaletter
             this.panel1.AutoScroll = true;
             this.panel1.Location = new System.Drawing.Point(6, 87);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(276, 170);
+            this.panel1.Size = new System.Drawing.Size(276, 177);
             this.panel1.TabIndex = 56;
             // 
             // label10
@@ -550,7 +561,7 @@ namespace WinPaletter
             this.TabPage9.Location = new System.Drawing.Point(40, 4);
             this.TabPage9.Name = "TabPage9";
             this.TabPage9.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage9.Size = new System.Drawing.Size(288, 264);
+            this.TabPage9.Size = new System.Drawing.Size(288, 270);
             this.TabPage9.TabIndex = 6;
             // 
             // Label5
@@ -575,10 +586,13 @@ namespace WinPaletter
             // 
             // FlowLayoutPanel1
             // 
+            this.FlowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.FlowLayoutPanel1.AutoScroll = true;
             this.FlowLayoutPanel1.Location = new System.Drawing.Point(5, 36);
             this.FlowLayoutPanel1.Name = "FlowLayoutPanel1";
-            this.FlowLayoutPanel1.Size = new System.Drawing.Size(278, 222);
+            this.FlowLayoutPanel1.Size = new System.Drawing.Size(278, 228);
             this.FlowLayoutPanel1.TabIndex = 34;
             // 
             // TabPage2
@@ -588,7 +602,7 @@ namespace WinPaletter
             this.TabPage2.ForeColor = System.Drawing.Color.White;
             this.TabPage2.Location = new System.Drawing.Point(40, 4);
             this.TabPage2.Name = "TabPage2";
-            this.TabPage2.Size = new System.Drawing.Size(288, 264);
+            this.TabPage2.Size = new System.Drawing.Size(288, 270);
             this.TabPage2.TabIndex = 1;
             // 
             // TabControl2
@@ -602,7 +616,7 @@ namespace WinPaletter
             this.TabControl2.Location = new System.Drawing.Point(0, 0);
             this.TabControl2.Name = "TabControl2";
             this.TabControl2.SelectedIndex = 0;
-            this.TabControl2.Size = new System.Drawing.Size(288, 264);
+            this.TabControl2.Size = new System.Drawing.Size(288, 270);
             this.TabControl2.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.TabControl2.TabIndex = 134;
             // 
@@ -627,12 +641,14 @@ namespace WinPaletter
             this.TabPage7.Controls.Add(this.CheckBox1);
             this.TabPage7.Location = new System.Drawing.Point(4, 30);
             this.TabPage7.Name = "TabPage7";
-            this.TabPage7.Size = new System.Drawing.Size(280, 230);
+            this.TabPage7.Size = new System.Drawing.Size(280, 236);
             this.TabPage7.TabIndex = 0;
             this.TabPage7.Text = "Options";
             // 
             // trackBarX2
             // 
+            this.trackBarX2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.trackBarX2.AnimateChanges = true;
             this.trackBarX2.BackColor = System.Drawing.Color.Transparent;
             this.trackBarX2.DefaultValue = 10;
@@ -648,6 +664,8 @@ namespace WinPaletter
             // 
             // trackBarX1
             // 
+            this.trackBarX1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.trackBarX1.AnimateChanges = true;
             this.trackBarX1.BackColor = System.Drawing.Color.Transparent;
             this.trackBarX1.DefaultValue = 15;
@@ -693,6 +711,8 @@ namespace WinPaletter
             // 
             // CheckBox2
             // 
+            this.CheckBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.CheckBox2.Checked = true;
             this.CheckBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.CheckBox2.ForeColor = System.Drawing.Color.White;
@@ -704,6 +724,7 @@ namespace WinPaletter
             // 
             // RadioButton2
             // 
+            this.RadioButton2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.RadioButton2.Checked = false;
             this.RadioButton2.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton2.ForeColor = System.Drawing.Color.White;
@@ -719,6 +740,8 @@ namespace WinPaletter
             // 
             // RadioButton1
             // 
+            this.RadioButton1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.RadioButton1.Checked = true;
             this.RadioButton1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.RadioButton1.ForeColor = System.Drawing.Color.White;
@@ -743,7 +766,7 @@ namespace WinPaletter
             this.TabPage8.Controls.Add(this.Label4);
             this.TabPage8.Location = new System.Drawing.Point(4, 30);
             this.TabPage8.Name = "TabPage8";
-            this.TabPage8.Size = new System.Drawing.Size(280, 230);
+            this.TabPage8.Size = new System.Drawing.Size(280, 236);
             this.TabPage8.TabIndex = 1;
             this.TabPage8.Text = "Result";
             // 
@@ -763,11 +786,12 @@ namespace WinPaletter
             this.TabPage3.Location = new System.Drawing.Point(40, 4);
             this.TabPage3.Name = "TabPage3";
             this.TabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage3.Size = new System.Drawing.Size(288, 264);
+            this.TabPage3.Size = new System.Drawing.Size(288, 270);
             this.TabPage3.TabIndex = 2;
             // 
             // Button7
             // 
+            this.Button7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.Button7.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(127)))), ((int)(((byte)(0)))));
             this.Button7.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
             this.Button7.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -806,6 +830,8 @@ namespace WinPaletter
             // 
             // ComboBox1
             // 
+            this.ComboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.ComboBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
             this.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ComboBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -841,6 +867,8 @@ namespace WinPaletter
             // 
             // TextBox2
             // 
+            this.TextBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.TextBox2.ForeColor = System.Drawing.Color.White;
             this.TextBox2.Location = new System.Drawing.Point(92, 36);
             this.TextBox2.MaxLength = 32767;
@@ -880,10 +908,13 @@ namespace WinPaletter
             // 
             // ThemePaletteContainer
             // 
+            this.ThemePaletteContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.ThemePaletteContainer.AutoScroll = true;
             this.ThemePaletteContainer.Location = new System.Drawing.Point(6, 97);
             this.ThemePaletteContainer.Name = "ThemePaletteContainer";
-            this.ThemePaletteContainer.Size = new System.Drawing.Size(278, 161);
+            this.ThemePaletteContainer.Size = new System.Drawing.Size(278, 167);
             this.ThemePaletteContainer.TabIndex = 31;
             // 
             // TabPage4
@@ -896,11 +927,13 @@ namespace WinPaletter
             this.TabPage4.Location = new System.Drawing.Point(40, 4);
             this.TabPage4.Name = "TabPage4";
             this.TabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.TabPage4.Size = new System.Drawing.Size(288, 264);
+            this.TabPage4.Size = new System.Drawing.Size(288, 270);
             this.TabPage4.TabIndex = 3;
             // 
             // ComboBox2
             // 
+            this.ComboBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.ComboBox2.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.ComboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ComboBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
@@ -909,7 +942,6 @@ namespace WinPaletter
             this.ComboBox2.ItemHeight = 20;
             this.ComboBox2.Items.AddRange(new object[] {
             "From current theme",
-            "Default Windows 12 theme",
             "Default Windows 11 theme",
             "Default Windows 10 theme",
             "Default Windows 8.1 theme",
@@ -925,10 +957,13 @@ namespace WinPaletter
             // 
             // PaletteContainer
             // 
+            this.PaletteContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.PaletteContainer.AutoScroll = true;
             this.PaletteContainer.Location = new System.Drawing.Point(6, 68);
             this.PaletteContainer.Name = "PaletteContainer";
-            this.PaletteContainer.Size = new System.Drawing.Size(278, 190);
+            this.PaletteContainer.Size = new System.Drawing.Size(278, 196);
             this.PaletteContainer.TabIndex = 48;
             // 
             // Label9
@@ -988,7 +1023,6 @@ namespace WinPaletter
             this.Controls.Add(this.bottom_buttons);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "ColorPickerDlg";
-            this.Opacity = 0D;
             this.Padding = new System.Windows.Forms.Padding(1);
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
