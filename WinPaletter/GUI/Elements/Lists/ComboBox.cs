@@ -46,6 +46,78 @@ namespace WinPaletter.UI.WP
         private IntPtr _listBoxBrush = IntPtr.Zero;
         private IntPtr _lastThemedListBox = IntPtr.Zero;
 
+        private DropDownAnimator _dropDownAnimator;
+
+        #region Native drop-down animation (respects Windows "Slide open combo boxes" / fade preferences)
+
+        private const int DropDownAnimationDurationMs = 150;
+
+        // Subclasses the native drop-down list popup so the plain WM_WINDOWPOSCHANGING "show" can be intercepted and replaced with an AnimateWindow call (fade or slide),
+        // matching the user's system-wide combo box animation preference.
+        private sealed class DropDownAnimator : NativeWindow
+        {
+            private readonly ComboBox _owner;
+            private bool _isAnimating;
+
+            public DropDownAnimator(ComboBox owner)
+            {
+                _owner = owner;
+            }
+
+            protected override void WndProc(ref Message m)
+            {
+                if (m.Msg == (int)User32.WindowsMessage.WindowPosChanging && !_isAnimating)
+                {
+                    User32.WINDOWPOS windowPos = (User32.WINDOWPOS)Marshal.PtrToStructure(m.LParam, typeof(User32.WINDOWPOS));
+
+                    if ((windowPos.flags & (int)User32.SetWindowsPosition.ShowWindow) != 0)
+                    {
+                        // Suppress the default, non-animated show for this position change.
+                        windowPos.flags &= ~(int)User32.SetWindowsPosition.ShowWindow;
+                        Marshal.StructureToPtr(windowPos, m.LParam, true);
+
+                        base.WndProc(ref m);
+
+                        _isAnimating = true;
+                        _owner.PlayDropDownAnimation(Handle);
+                        _isAnimating = false;
+                        return;
+                    }
+                }
+
+                base.WndProc(ref m);
+            }
+        }
+
+        private void PlayDropDownAnimation(IntPtr hwndList)
+        {
+            int comboBoxAnimationEnabled = 0;
+            User32.SystemParametersInfo(User32.SPI.SPI_GETCOMBOBOXANIMATION, 0, ref comboBoxAnimationEnabled, 0);
+
+            if (comboBoxAnimationEnabled == 0)
+            {
+                // System animations are disabled; show it plainly to honor the user's preference.
+                User32.ShowWindow(hwndList, User32.ShowWindowFlags.ShowNoActivate);
+                return;
+            }
+
+            int menuFadeEnabled = 0;
+            User32.SystemParametersInfo(User32.SPI.SPI_GETMENUFADE, 0, ref menuFadeEnabled, 0);
+
+            User32.AnimateWindow(hwndList, DropDownAnimationDurationMs, menuFadeEnabled != 0 ? User32.AnimateWindowFlags.AW_BLEND : User32.AnimateWindowFlags.AW_SLIDE | User32.AnimateWindowFlags.AW_VER_POSITIVE);
+        }
+
+        private void ReleaseDropDownAnimator()
+        {
+            if (_dropDownAnimator != null)
+            {
+                if (_dropDownAnimator.Handle != IntPtr.Zero) _dropDownAnimator.ReleaseHandle();
+                _dropDownAnimator = null;
+            }
+        }
+
+        #endregion
+
         protected override void WndProc(ref Message m)
         {
             if (m.Msg == (int)User32.WindowsMessage.EraseBkgnd)
@@ -103,6 +175,11 @@ namespace WinPaletter.UI.WP
                 }
                 return true;
             }, IntPtr.Zero);
+
+            // Re-subclass the fresh popup window so its native "show" can be animated.
+            ReleaseDropDownAnimator();
+            _dropDownAnimator = new DropDownAnimator(this);
+            _dropDownAnimator.AssignHandle(listBoxHwnd);
         }
 
         protected override void Dispose(bool disposing)
@@ -118,6 +195,7 @@ namespace WinPaletter.UI.WP
             {
                 _noiseBrush?.Dispose();
                 _noiseBrush2?.Dispose();
+                ReleaseDropDownAnimator();
             }
 
             base.Dispose(disposing);
@@ -193,6 +271,7 @@ namespace WinPaletter.UI.WP
             if (CanAnimate) Transition.With(this, nameof(alpha2), 255).CriticalDamp(Program.AnimationSpan);
             else alpha2 = 255;
 
+            ReleaseDropDownAnimator();
             _lastThemedListBox = IntPtr.Zero; // Reset so next open is re-themed.
             base.OnDropDownClosed(e);
         }
@@ -295,7 +374,7 @@ namespace WinPaletter.UI.WP
             Rectangle innerRect = new(1, 1, Width - 3, Height - 3);
 
             // For DropDown style the native edit box lives inside the bounds; reserve space on the left so owner-drawn chrome does not overlap it.
-            Rectangle textRect = DropDownStyle == ComboBoxStyle.DropDown ? 
+            Rectangle textRect = DropDownStyle == ComboBoxStyle.DropDown ?
                 new Rectangle(0, 0, Width - 1, Height - 1) /* edit box handles text */  :
                 new Rectangle(5, 0, Width - 1, Height - 1);
 
@@ -343,8 +422,7 @@ namespace WinPaletter.UI.WP
                 DrawTriangle(tri2, bottomLeft, centerTop, bottomRight, G);
             }
 
-            // Draw selected text only for DropDownList and Simple styles.
-            // For DropDown the native edit control renders the text itself.
+            // Draw selected text only for DropDownList and Simple styles. For DropDown the native edit control renders the text itself.
             if (DropDownStyle != ComboBoxStyle.DropDown)
             {
                 using (StringFormat sf = new()

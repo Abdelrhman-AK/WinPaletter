@@ -351,7 +351,7 @@ namespace WinPaletter.UI.Style
                 state.EditWndProc = (h, msg, wParam, lParam) => EditWndProc(h, msg, wParam, lParam, state);
                 state.OldEditWndProc = User32.SetWindowLongPtr(state.hEdit, (int)NativeMethods.User32.WindowsLongs.WndProc, Marshal.GetFunctionPointerForDelegate(state.EditWndProc));
 
-                User32.ShowWindow(state.hEdit, User32.SW_SHOW);
+                User32.ShowWindow(state.hEdit, User32.ShowWindowFlags.Show);
                 User32.SetFocus(state.hEdit);
                 User32.SendMessage(state.hEdit, User32.EM_SETSEL, IntPtr.Zero, new IntPtr(-1));
                 User32.InvalidateRect(state.hEdit, IntPtr.Zero, true);

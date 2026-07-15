@@ -9,6 +9,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Media;
+using System.Net.NetworkInformation;
 using System.Reflection;
 using System.Runtime;
 using System.Runtime.ExceptionServices;
@@ -22,7 +23,6 @@ using WinPaletter.Theme;
 
 namespace WinPaletter
 {
-
     public partial class BugReport
     {
         public BugReport()
@@ -34,6 +34,16 @@ namespace WinPaletter
         int previousHeight = 540;
         private bool isThrowing = false;
         private Exception exception;
+
+        // Cross-thread dialog coordination:
+        // Multiple background threads can call Throw() at nearly the same time. Without this, each call would create its own BugReport instance and try to ShowDialog() independently,
+        // which either (a) runs on the wrong thread because a brand-new Form's InvokeRequired is unreliable before its handle exists, or (b) opens a second modal dialog
+        // nested on top of the first. Both symptoms look like "clicking buttons does nothing".
+        private static readonly object _dialogLock = new();
+        private static bool _isDialogShowing = false;
+        private static readonly Queue<(Exception Ex, bool NoRecovery, int Win32Error)> _pendingQueue = new();
+        private static readonly Dictionary<string, DateTime> _fingerprintLastShown = [];
+        private static readonly TimeSpan _dedupeWindow = TimeSpan.FromSeconds(3);
 
         private int CollapsedHeight
         {
@@ -123,7 +133,17 @@ namespace WinPaletter
 
             // Win32 error
             if (win32Error != 0)
-                treeView?.Nodes?.Add($"{str} Marshal.GetLastWin32Error").Nodes?.Add(win32Error.ToString());
+            {
+                TreeNode win32Node = treeView?.Nodes?.Add($"{str} Marshal.GetLastWin32Error");
+                win32Node?.Nodes?.Add(win32Error.ToString());
+                win32Node?.Nodes?.Add($"Resolved message: {NativeMethods.Kernel32.GetErrorMessage(win32Error)}");
+            }
+
+            // HRESULT-based lookup (covers COM/HRESULT style codes that Win32Exception alone misses)
+            if (ex.HResult != 0)
+            {
+                treeView?.Nodes?.Add($"{str} HRESULT resolved message").Nodes?.Add(NativeMethods.Kernel32.GetErrorMessage(ex.HResult));
+            }
 
             // Stack trace
             if (!string.IsNullOrWhiteSpace(ex?.StackTrace))
@@ -145,11 +165,11 @@ namespace WinPaletter
                 if (ex.TargetSite.DeclaringType is not null)
                     targetNode?.Nodes?.Add($"Declaring Type: {ex.TargetSite.DeclaringType.FullName}");
 
-                var parameters = ex.TargetSite.GetParameters();
+                ParameterInfo[] parameters = ex.TargetSite.GetParameters();
                 if (parameters.Length > 0)
                 {
                     TreeNode paramsNode = targetNode?.Nodes?.Add("Parameters");
-                    foreach (var param in parameters)
+                    foreach (ParameterInfo param in parameters)
                         paramsNode?.Nodes?.Add($"{param.ParameterType.Name} {param.Name}");
                 }
             }
@@ -187,7 +207,7 @@ namespace WinPaletter
             if (ex is ReflectionTypeLoadException rtlEx && rtlEx.LoaderExceptions?.Length > 0)
             {
                 TreeNode loaderNode = treeView.Nodes?.Add($"{str} loader exceptions");
-                foreach (var le in rtlEx.LoaderExceptions)
+                foreach (Exception le in rtlEx.LoaderExceptions)
                     loaderNode?.Nodes?.Add(le?.Message ?? "[No message]");
             }
 
@@ -195,7 +215,7 @@ namespace WinPaletter
             if (ex is AggregateException aggEx && aggEx.InnerExceptions?.Count > 0)
             {
                 TreeNode aggNode = treeView.Nodes?.Add($"{str} aggregate inner exceptions");
-                foreach (var ie in aggEx.InnerExceptions)
+                foreach (Exception ie in aggEx.InnerExceptions)
                     AddException("Aggregate Inner", ie, treeView);
             }
 
@@ -208,6 +228,7 @@ namespace WinPaletter
                     break;
                 case Win32Exception w32:
                     treeView.Nodes?.Add($"{str} native error code").Nodes?.Add(w32.NativeErrorCode.ToString());
+                    treeView.Nodes?.Add($"{str} native error resolved message").Nodes?.Add(NativeMethods.Kernel32.GetErrorMessage(w32.NativeErrorCode));
                     break;
                 case IOException ioEx when ioEx.HResult != 0:
                     treeView.Nodes?.Add($"{str} HResult detail").Nodes?.Add(ioEx.HResult.ToString());
@@ -228,26 +249,90 @@ namespace WinPaletter
             return exceptions;
         }
 
+        /// <summary>
+        /// Builds a short, stable signature for an exception so repeated identical errors (e.g. from a tight retry loop) don't spawn a fresh modal dialog every single time.
+        /// </summary>
+        /// <param name="ex"></param>
+        /// <returns></returns>
+        private static string ComputeFingerprint(Exception ex)
+        {
+            string topFrame = string.Empty;
+
+            if (!string.IsNullOrWhiteSpace(ex.StackTrace))
+            {
+                topFrame = ex.StackTrace.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries).FirstOrDefault() ?? string.Empty;
+            }
+
+            return $"{ex.GetType().FullName}|{ex.TargetSite?.DeclaringType?.FullName}.{ex.TargetSite?.Name}|{topFrame}";
+        }
+
         [DebuggerHidden]
         public void Throw(Exception ex, bool noRecovery = false, int win32Error = -1)
         {
             if (ex == null) return;
+
             exception = ex;
 
-            if (InvokeRequired)
+            Control uiControl = Forms.MainForm;
+
+            // IMPORTANT: the previous implementation checked `this.InvokeRequired`, but `this` is a brand-new Form whose window handle has not been created yet.
+            // InvokeRequired on a control without a handle does not reliably detect the thread mismatch, so ShowDialog()
+            // could end up running on the throwing background thread instead of the UI thread. A WinForms dialog shown on a thread other than the one running
+            // Application.Run() gets its own disconnected message pump, which is what made the whole app (including button clicks) feel unresponsive.
+            // Marshalling through Forms.MainForm, which is guaranteed to own the real UI thread once the app has started, fixes that.
+            if (uiControl is not null && uiControl.IsHandleCreated)
             {
-                // Use BeginInvoke to avoid blocking background threads
-                Invoke(new Action(() => SafeThrowInner(ex, noRecovery, win32Error)));
+                if (uiControl.InvokeRequired)
+                {
+                    uiControl.BeginInvoke(new Action(() => HandleThrow(ex, noRecovery, win32Error)));
+                }
+                else
+                {
+                    HandleThrow(ex, noRecovery, win32Error);
+                }
             }
             else
             {
-                SafeThrowInner(ex, noRecovery, win32Error);
+                // MainForm isn't ready yet (a very early startup crash). There is no safe UI thread to marshal to, so fall back to showing on the calling thread and log that this
+                // happened, since it's a strong signal something is wrong upstream.
+                Program.Log?.Write(LogEventLevel.Warning, "BugReport.Throw was called before Forms.MainForm was ready; showing on the calling thread.");
+                HandleThrow(ex, noRecovery, win32Error);
             }
+        }
+
+        // Runs on the UI thread. Decides whether to show the dialog now, queue it behind one that's
+        // already showing, or suppress it as a duplicate.
+        private void HandleThrow(Exception ex, bool noRecovery, int win32Error)
+        {
+            string fingerprint = ComputeFingerprint(ex);
+
+            lock (_dialogLock)
+            {
+                if (_fingerprintLastShown.TryGetValue(fingerprint, out DateTime lastShown) && DateTime.UtcNow - lastShown < _dedupeWindow)
+                {
+                    Program.Log?.Write(LogEventLevel.Warning, $"Duplicate exception suppressed within dedupe window: {fingerprint}");
+                    return;
+                }
+
+                _fingerprintLastShown[fingerprint] = DateTime.UtcNow;
+
+                if (_isDialogShowing)
+                {
+                    // Never call ShowDialog() a second time while one is already modal - that opens a nested modal dialog on top of the first, which is what previously made the
+                    // first dialog's buttons appear frozen. Queue it instead.
+                    _pendingQueue.Enqueue((ex, noRecovery, win32Error));
+                    return;
+                }
+
+                _isDialogShowing = true;
+            }
+
+            SafeThrowInner(ex, noRecovery, win32Error);
         }
 
         private void SafeThrowInner(Exception ex, bool noRecovery, int win32Error)
         {
-            if (isThrowing) return; // prevent reentry
+            if (isThrowing) return; // prevent reentry on this instance
             isThrowing = true;
 
             try
@@ -257,6 +342,27 @@ namespace WinPaletter
             finally
             {
                 isThrowing = false;
+
+                (Exception Ex, bool NoRecovery, int Win32Error)? next = null;
+
+                lock (_dialogLock)
+                {
+                    _isDialogShowing = false;
+
+                    if (_pendingQueue.Count > 0)
+                    {
+                        next = _pendingQueue.Dequeue();
+                        _isDialogShowing = true;
+                    }
+                }
+
+                if (next is not null)
+                {
+                    // Show the next queued exception with a fresh dialog instance, after this one
+                    // has fully closed.
+                    BugReport nextReport = new();
+                    nextReport.SafeThrowInner(next.Value.Ex, next.Value.NoRecovery, next.Value.Win32Error);
+                }
             }
         }
 
@@ -336,36 +442,6 @@ namespace WinPaletter
                 Win32Exception win32Exception = new(win32Error);
                 if (win32Exception != null) { AddException("Win32 exception", win32Exception, TreeView1, win32Error); }
             }
-            //// Loaded Assemblies (limited to top 20 to avoid overwhelming)
-            //TreeNode assembliesNode = TreeView1.Nodes?.Add($"Loaded assemblies");
-            //foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
-            //{
-            //    try
-            //    {
-            //        var assemblyNode = assembliesNode?.Nodes?.Add(assembly.GetName().Name);
-            //        assemblyNode?.Nodes?.Add($"_ver: {assembly.GetName()._ver}");
-            //        assemblyNode?.Nodes?.Add($"Location: {assembly.Location ?? "[Dynamic]"}");
-            //        assemblyNode?.Nodes?.Add($"Is Dynamic: {assembly.IsDynamic}");
-            //        assemblyNode?.Nodes?.Add($"Is Fully Trusted: {assembly.IsFullyTrusted}");
-
-            //        // Get referenced assemblies (first 3)
-            //        var referenced = assembly.GetReferencedAssemblies().Take(3);
-            //        if (referenced.Any())
-            //        {
-            //            var refNode = assemblyNode?.Nodes?.Add("Referenced Assemblies (first 3)");
-            //            foreach (var refAssembly in referenced)
-            //            {
-            //                refNode?.Nodes?.Add($"{refAssembly.Name} v{refAssembly._ver}");
-            //            }
-            //        }
-            //    }
-            //    catch
-            //    {
-            //        // Ignore assemblies that can't be inspected
-            //        assembliesNode?.Nodes?.Add($"[Unable to inspect: {assembly.FullName?.Split(',')[0] ?? "Unknown"}]");
-            //    }
-            //}
-            //assembliesNode?.Nodes?.Add($"Total Assemblies Loaded: {AppDomain.CurrentDomain.GetAssemblies().Length}");
 
             // Process information
             TreeNode processNode = TreeView1.Nodes?.Add($"Process info");
@@ -405,6 +481,17 @@ namespace WinPaletter
             runtimeNode?.Nodes?.Add($"GC Latency Mode: {GCSettings.LatencyMode}");
             runtimeNode?.Nodes?.Add($"GC Server Mode: {GCSettings.IsServerGC}");
 
+            // .NET Framework release key (more precise than Environment.Version, e.g. distinguishes 4.8 vs 4.8.1)
+            try
+            {
+                object release = Microsoft.Win32.Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full", "Release", null);
+                if (release is int releaseKey)
+                {
+                    runtimeNode?.Nodes?.Add($".NET Framework release key: {releaseKey}");
+                }
+            }
+            catch { }
+
             // Application Domain information
             TreeNode appDomainNode = TreeView1.Nodes?.Add($"Application domain");
             appDomainNode?.Nodes?.Add($"Name: {AppDomain.CurrentDomain.FriendlyName}");
@@ -417,12 +504,48 @@ namespace WinPaletter
             envNode?.Nodes?.Add($"64-bit OS: {Environment.Is64BitOperatingSystem}");
             envNode?.Nodes?.Add($"64-bit Process: {Environment.Is64BitProcess}");
             envNode?.Nodes?.Add($"System Page Size: {Environment.SystemPageSize}");
+            envNode?.Nodes?.Add($"Machine Name: {Environment.MachineName}");
+            envNode?.Nodes?.Add($"Command Line: {Environment.CommandLine}");
+            envNode?.Nodes?.Add($"Current Directory: {Environment.CurrentDirectory}");
 
             // Culture and regional information
             TreeNode cultureNode = TreeView1.Nodes?.Add($"Culture info");
             cultureNode?.Nodes?.Add($"Current Culture: {Thread.CurrentThread.CurrentCulture.Name}");
             cultureNode?.Nodes?.Add($"Current UI Culture: {Thread.CurrentThread.CurrentUICulture.Name}");
             cultureNode?.Nodes?.Add($"Time Zone: {TimeZoneInfo.Local.StandardName}");
+
+            // Display / DPI information - useful for layout and scaling related bugs
+            TreeNode displayNode = TreeView1.Nodes?.Add("Display info");
+            displayNode?.Nodes?.Add($"DPI: {DeviceDpi} ({DeviceDpi / 96.0:P0} scaling)");
+            int screenIndex = 0;
+            foreach (Screen screen in Screen.AllScreens)
+            {
+                TreeNode screenNode = displayNode?.Nodes?.Add($"Screen {screenIndex}{(screen.Primary ? " (primary)" : string.Empty)}");
+                screenNode?.Nodes?.Add($"Bounds: {screen.Bounds}");
+                screenNode?.Nodes?.Add($"Working area: {screen.WorkingArea}");
+                screenNode?.Nodes?.Add($"Bits per pixel: {screen.BitsPerPixel}");
+                screenIndex++;
+            }
+
+            // Network availability - helps rule in/out connectivity issues for network-related errors
+            TreeNode networkNode = TreeView1.Nodes?.Add("Network info");
+            networkNode?.Nodes?.Add($"Network available: {NetworkInterface.GetIsNetworkAvailable()}");
+
+            // Loaded native modules - helps spot conflicting shell extensions / overlays (e.g. RTSS, antivirus hooks)
+            try
+            {
+                TreeNode modulesNode = TreeView1.Nodes?.Add("Loaded native modules (first 20)");
+                using Process process = Process.GetCurrentProcess();
+                int count = 0;
+                foreach (ProcessModule module in process.Modules)
+                {
+                    if (count >= 20) break;
+                    modulesNode?.Nodes?.Add($"{module.ModuleName} v{module.FileVersionInfo.FileVersion ?? "unknown"}");
+                    count++;
+                    module.Dispose();
+                }
+            }
+            catch { }
 
             // Windows-specific information
             try
@@ -444,7 +567,6 @@ namespace WinPaletter
             TreeView1.ExpandAll();
 
             n?.Collapse();
-            //assembliesNode?.Collapse();
 
             TreeView1.SelectedNode = TreeView1.Nodes[0];
 
@@ -467,54 +589,86 @@ namespace WinPaletter
             if (DialogResult == DialogResult.Abort) Program.ExitAfterException = true; else Program.ExitAfterException = false;
         }
 
+        // NOTE ON THE BUTTON HANDLERS BELOW:
+        // The previous version wrapped every handler's body in `Forms.MainForm.BeginInvoke(...)`.
+        // That was unnecessary and part of the unresponsiveness problem: by the time this dialog is
+        // visible and a user can click a button, we are already executing on the correct UI thread
+        // (Throw()/HandleThrow() above guarantee that). Re-marshalling through BeginInvoke queued the
+        // actual click logic as a *second*, asynchronous hop and silently swallowed any exception
+        // thrown inside it (fire-and-forget), which could make a button appear to do nothing at all.
+        // The handlers now run their logic directly and report failures instead of swallowing them.
+
         private void Button2_Click(object sender, EventArgs e)
         {
-            Forms.MainForm.BeginInvoke(() =>
+            try
             {
                 DialogResult = DialogResult.Abort;
                 Close();
                 Program.ForceExit();
-            });
+            }
+            catch (Exception ex)
+            {
+                Program.Log?.Write(LogEventLevel.Error, $"BugReport Button2_Click (abort) failed: {ex}");
+            }
         }
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            Forms.MainForm.BeginInvoke(() =>
+            try
             {
                 DialogResult = DialogResult.OK;
                 Close();
-            });
+            }
+            catch (Exception ex)
+            {
+                Program.Log?.Write(LogEventLevel.Error, $"BugReport Button1_Click (continue) failed: {ex}");
+            }
         }
 
         private void Button5_Click(object sender, EventArgs e)
         {
-            Forms.MainForm.BeginInvoke(() =>
+            try
             {
                 Forms.GlassWindow.Close();
                 Process.Start(Links.Issues);
-            });
+            }
+            catch (Exception ex)
+            {
+                // Opening a browser can fail (no default browser configured, sandboxed environment,
+                // etc.). Falling back to the clipboard means the user can still get to the link.
+                Program.Log?.Write(LogEventLevel.Error, $"BugReport Button5_Click (open issues) failed: {ex}");
+                try { Clipboard.SetText(Links.Issues); } catch { }
+                MsgBox($"Couldn't open the browser automatically. The issues page link was copied to your clipboard instead.\n\n{Links.Issues}", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            Forms.MainForm.BeginInvoke(() =>
+            try
             {
                 Clipboard.SetText(GetDetails());
-            });
+            }
+            catch (Exception ex)
+            {
+                Program.Log?.Write(LogEventLevel.Error, $"BugReport Button3_Click (copy details) failed: {ex}");
+            }
         }
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            Forms.MainForm.BeginInvoke(() =>
+            try
             {
-                using (SaveFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Localization.Strings.Extensions.SaveJSON })
+                using SaveFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Localization.Strings.Extensions.SaveJSON };
+                if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    if (dlg.ShowDialog() == DialogResult.OK)
-                    {
-                        System.IO.File.WriteAllText(dlg.FileName, TreeView1.ToJSON());
-                    }
+                    File.WriteAllText(dlg.FileName, TreeView1.ToJSON());
                 }
-            });
+            }
+            catch (Exception ex)
+            {
+                Program.Log?.Write(LogEventLevel.Error, $"BugReport Button4_Click (save JSON) failed: {ex}");
+                MsgBox($"Couldn't save the report file:\n{ex.Message}", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         public string GetDetails()
@@ -529,7 +683,7 @@ namespace WinPaletter
 
         private void Button6_Click(object sender, EventArgs e)
         {
-            Forms.MainForm.BeginInvoke(() =>
+            try
             {
                 if (Directory.Exists($@"{SysPaths.appData}\Reports"))
                 {
@@ -540,7 +694,11 @@ namespace WinPaletter
                 {
                     MsgBox(string.Format(Program.Localization.Strings.Messages.Bug_NoReport, $@"{SysPaths.appData}\Reports"), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            });
+            }
+            catch (Exception ex)
+            {
+                Program.Log?.Write(LogEventLevel.Error, $"BugReport Button6_Click (open reports folder) failed: {ex}");
+            }
         }
 
         private void TreeView1_DoubleClick(object sender, EventArgs e)
@@ -550,10 +708,14 @@ namespace WinPaletter
 
         private void button7_Click(object sender, EventArgs e)
         {
-            Forms.MainForm.BeginInvoke(() =>
+            try
             {
                 Forms.SOS.ShowDialog();
-            });
+            }
+            catch (Exception ex)
+            {
+                Program.Log?.Write(LogEventLevel.Error, $"BugReport button7_Click (SOS) failed: {ex}");
+            }
         }
 
         private async void button8_Click(object sender, EventArgs e)
@@ -604,25 +766,264 @@ namespace WinPaletter
 
         private void button9_Click(object sender, EventArgs e)
         {
-            Forms.MainForm.BeginInvoke(() =>
+            try
             {
-                using (SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = string.IsNullOrWhiteSpace(Forms.Home.File) ? Program.TM.Info.ThemeName + ".wpth" : Forms.Home.File, Title = Program.Localization.Strings.Extensions.SaveWinPaletterTheme })
+                using SaveFileDialog dlg = new() { Filter = Program.Filters.WinPaletterTheme, FileName = string.IsNullOrWhiteSpace(Forms.Home.File) ? Program.TM.Info.ThemeName + ".wpth" : Forms.Home.File, Title = Program.Localization.Strings.Extensions.SaveWinPaletterTheme };
+                if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    if (dlg.ShowDialog() == DialogResult.OK)
-                    {
-                        Forms.Home.File = dlg.FileNames[0];
-                        Program.TM.Save(Manager.Source.File, Forms.Home.File);
-                        Forms.Home.Text = Path.GetFileName(Forms.Home.File);
-                        Forms.Home.LoadFromTM(Program.TM);
-                    }
+                    Forms.Home.File = dlg.FileNames[0];
+                    Program.TM.Save(Manager.Source.File, Forms.Home.File);
+                    Forms.Home.Text = Path.GetFileName(Forms.Home.File);
+                    Forms.Home.LoadFromTM(Program.TM);
                 }
-            });
+            }
+            catch (Exception ex)
+            {
+                Program.Log?.Write(LogEventLevel.Error, $"BugReport button9_Click (save theme) failed: {ex}");
+                MsgBox($"Couldn't save the theme file:\n{ex.Message}", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         [DebuggerHidden]
         private void button10_Click(object sender, EventArgs e)
         {
             if (exception is not null && Debugger.IsAttached) ExceptionDispatchInfo.Capture(exception).Throw();
+        }
+
+        /// <summary>
+        /// Manual test harness for BugReport. Wire these up to hidden debug buttons, a debug menu, or call them one at a time from the Immediate Window while the app is running.
+        /// <br></br>Each method is meant to be run in isolation so the resulting dialog(s) can be inspected on their own.
+        /// </summary>
+        public static class Tests
+        {
+            /// <summary>
+            /// Baseline case: a plain exception thrown and caught on the UI thread. Confirms the dialog shows normally, the treeview populates, and none of the queueing logic gets involved.
+            /// </summary>
+            public static void Test_SimpleExceptionOnUIThread()
+            {
+                try
+                {
+                    throw new InvalidOperationException("Test_SimpleExceptionOnUIThread: manual test exception.");
+                }
+                catch (Exception ex)
+                {
+                    new BugReport().Throw(ex);
+                }
+            }
+
+            /// <summary>
+            /// Confirms <c>Throw()</c> correctly marshals to Forms.MainForm when called from a background thread, instead of showing the dialog on the wrong thread.
+            /// This is the scenario that used to leave the dialog's buttons unresponsive.
+            /// </summary>
+            public static void Test_ExceptionFromBackgroundThread()
+            {
+                Thread worker = new(() =>
+                {
+                    try
+                    {
+                        throw new InvalidOperationException("Test_ExceptionFromBackgroundThread: thrown from a non-UI thread.");
+                    }
+                    catch (Exception ex)
+                    {
+                        new BugReport().Throw(ex);
+                    }
+                })
+                {
+                    IsBackground = true,
+                    Name = "BugReportTests.BackgroundThread"
+                };
+
+                worker.Start();
+            }
+
+            /// <summary>
+            /// Fires several distinct exceptions from several threads at (roughly) the same instant. Expect exactly one modal dialog visible at a time, with 
+            /// the rest appearing one after another as each prior dialog is closed - never two dialogs stacked/nested at once.
+            /// </summary>
+            /// <param name="threadCount"></param>
+            public static void Test_ConcurrentExceptionsAreQueued(int threadCount = 4)
+            {
+                for (int i = 0; i < threadCount; i++)
+                {
+                    int index = i;
+
+                    Thread worker = new(() =>
+                    {
+                        try
+                        {
+                            throw new InvalidOperationException($"Test_ConcurrentExceptionsAreQueued: exception #{index} from thread {Thread.CurrentThread.ManagedThreadId}.");
+                        }
+                        catch (Exception ex)
+                        {
+                            new BugReport().Throw(ex);
+                        }
+                    })
+                    {
+                        IsBackground = true,
+                        Name = $"BugReportTests.ConcurrentThread{index}"
+                    };
+
+                    worker.Start();
+                }
+            }
+
+            /// <summary>
+            /// Throws the exact same exception signature repeatedly within a short window. Only the first call should produce a visible dialog; the rest should be
+            /// logged as suppressed duplicates (check the log output, not a second dialog appearing).
+            /// </summary>
+            /// <param name="repeatCount"></param>
+            public static void Test_DuplicateExceptionIsDeduped(int repeatCount = 5)
+            {
+                for (int i = 0; i < repeatCount; i++)
+                {
+                    try
+                    {
+                        throw new InvalidOperationException("Test_DuplicateExceptionIsDeduped: repeated exception.");
+                    }
+                    catch (Exception ex)
+                    {
+                        new BugReport().Throw(ex);
+                    }
+                }
+            }
+
+            /// <summary>
+            /// Exercises the Win32Exception branch and the SystemErrorLookup node next to it.
+            /// <br><c>2 = ERROR_FILE_NOT_FOUND</c>, a code the base system message table resolves on its own.</br>
+            /// </summary>
+            public static void Test_Win32ErrorCode()
+            {
+                const int errorFileNotFound = 2;
+
+                try
+                {
+                    throw new Win32Exception(errorFileNotFound, "Test_Win32ErrorCode: simulated file-not-found.");
+                }
+                catch (Exception ex)
+                {
+                    new BugReport().Throw(ex, false, errorFileNotFound);
+                }
+            }
+
+            /// <summary>
+            /// Exercises the HRESULT lookup path with a CAPI-style error code, the kind that Win32Exception.Message alone would not resolve but the crypt32.dll module walk should.
+            /// <br><c>CRYPT_E_NOT_FOUND = 0x80092004</c>.</br>
+            /// </summary>
+            public static void Test_HResultFromCryptoApi()
+            {
+                const int cryptENotFound = unchecked((int)0x80092004);
+
+                InvalidOperationException ex = new("Test_HResultFromCryptoApi: simulated CAPI failure.");
+
+                typeof(Exception)
+                    .GetField("_HResult", BindingFlags.NonPublic | BindingFlags.Instance)
+                    ?.SetValue(ex, cryptENotFound);
+
+                new BugReport().Throw(ex);
+            }
+
+            /// <summary>
+            /// Confirms the recursive InnerException walk (<c>AddException</c> calling itself) renders a multi-level chain correctly.
+            /// </summary>
+            public static void Test_NestedInnerExceptions()
+            {
+                Exception innermost = new ArgumentNullException("someParameter", "Test_NestedInnerExceptions: innermost cause.");
+                Exception middle = new InvalidOperationException("Test_NestedInnerExceptions: middle layer.", innermost);
+                Exception outer = new ApplicationException("Test_NestedInnerExceptions: outer layer.", middle);
+
+                new BugReport().Throw(outer);
+            }
+
+            /// <summary>
+            /// Exercises the AggregateException branch, e.g. what you'd see from a faulted <c>Task.WhenAll</c>.
+            /// </summary>
+            /// <exception cref="InvalidOperationException"></exception>
+            /// <exception cref="TimeoutException"></exception>
+            public static void Test_AggregateException()
+            {
+                try
+                {
+                    Task first = Task.Run(() => throw new InvalidOperationException("Test_AggregateException: first faulted task."));
+                    Task second = Task.Run(() => throw new TimeoutException("Test_AggregateException: second faulted task."));
+
+                    Task.WaitAll(first, second);
+                }
+                catch (AggregateException ex)
+                {
+                    new BugReport().Throw(ex);
+                }
+            }
+
+            /// <summary>
+            /// Exercises <c>AddData()</c>: populates Exception.Data with a mix of simple values and a nested exception, and confirms both render as separate nodes.
+            /// </summary>
+            public static void Test_ExceptionWithData()
+            {
+                Exception nested = new InvalidOperationException("Test_ExceptionWithData: nested exception stored in Data.");
+
+                Exception ex = new InvalidOperationException("Test_ExceptionWithData: exception carrying extra data.");
+                ex.Data["UserAction"] = "Clicked Apply";
+                ex.Data["ThemeName"] = "Test Theme";
+                ex.Data["NestedException"] = nested;
+
+                new BugReport().Throw(ex);
+            }
+
+            /// <summary>
+            /// Bypasses BugReport entirely and calls <c>SystemErrorLookup</c> directly, so the certutil-style module-walking logic can be checked in isolation without opening the full dialog.
+            /// <br>Prints the resolved message for a base system code and a CAPI-specific code.</br>
+            /// </summary>
+            public static void Test_SystemErrorLookupDirect()
+            {
+                const int errorFileNotFound = 2;
+                const int cryptENotFound = unchecked((int)0x80092004);
+
+                string baseSystemResult = NativeMethods.Kernel32.GetErrorMessage(errorFileNotFound);
+                string capiResult = NativeMethods.Kernel32.GetErrorMessage(cryptENotFound);
+                string unknownResult = NativeMethods.Kernel32.GetErrorMessage(unchecked((int)0xFFFFFFF0));
+
+                string message = "Base system code (2):\n" + baseSystemResult +
+                                  "\n\nCAPI code (0x80092004):\n" + capiResult +
+                                  "\n\nUnrecognized code (0xFFFFFFF0):\n" + unknownResult;
+
+                MessageBox.Show(message, "SystemErrorLookup test", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+            /// <summary>
+            /// Runs every dialog-producing test back to back with short delays, useful as a smoke test after touching <see cref="BugReport"/>.
+            /// <br>Watch that each dialog appears one at a time and closes cleanly before the next shows up.</br>
+            /// </summary>
+            public static async void Test_RunAllSequentially()
+            {
+                Test_SimpleExceptionOnUIThread();
+                await Task.Delay(500);
+
+                Test_ExceptionFromBackgroundThread();
+                await Task.Delay(1500);
+
+                Test_Win32ErrorCode();
+                await Task.Delay(500);
+
+                Test_HResultFromCryptoApi();
+                await Task.Delay(500);
+
+                Test_NestedInnerExceptions();
+                await Task.Delay(500);
+
+                Test_AggregateException();
+                await Task.Delay(500);
+
+                Test_ExceptionWithData();
+                await Task.Delay(500);
+
+                Test_ConcurrentExceptionsAreQueued();
+                await Task.Delay(3000);
+
+                Test_DuplicateExceptionIsDeduped();
+                await Task.Delay(3000);
+
+                Test_SystemErrorLookupDirect();
+            }
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using WinPaletter.NativeMethods;
 using static WinPaletter.NativeMethods.User32;
 
@@ -24,6 +25,10 @@ namespace WinPaletter.Tabs
         private Padding _lastBackdropPadding = Padding.Empty;
         private bool _firstBackdropUpdate = true;
         public static event EventHandler FormFocusChanged;
+        private Color? _basicActive = Color.FromArgb(185, 209, 234);
+        private Color? _basicInactive = Color.FromArgb(215, 228, 242);
+        private static readonly Color _basicActive_Fallback = Color.FromArgb(185, 209, 234);
+        private static readonly Color _basicInactive_Fallback = Color.FromArgb(215, 228, 242);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TitlebarExtender"/> class.
@@ -31,6 +36,7 @@ namespace WinPaletter.Tabs
         public TitlebarExtender()
         {
             SetStyle(ControlStyles.UserPaint | ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw, true);
+            UpdateBasicThemeColors();
             UpdateStyles();
 
             DoubleBuffered = true;
@@ -246,6 +252,7 @@ namespace WinPaletter.Tabs
 
             if (e.Category == UserPreferenceCategory.General)
             {
+                UpdateBasicThemeColors();
                 UpdateColors();
                 if (!DesignMode)
                 {
@@ -257,6 +264,12 @@ namespace WinPaletter.Tabs
             }
         }
 
+        private void UpdateBasicThemeColors()
+        {
+            _basicActive = GetBasicThemeColor(true);
+            _basicInactive = GetBasicThemeColor(false);
+        }
+
         private void UpdateColors()
         {
             if (TitlebarType == TitlebarTypes.ColorPrevalence)
@@ -266,12 +279,35 @@ namespace WinPaletter.Tabs
                 activeTtlG = activeTtl;
                 inactiveTtlG = inactiveTtl;
             }
+            else if (TitlebarType == TitlebarTypes.Basic && !Program.ClassicThemeRunning)
+            {
+                activeTtl = _basicActive ?? _basicActive_Fallback;
+                inactiveTtl = _basicInactive ?? _basicInactive_Fallback;
+                activeTtlG = _basicActive ?? _basicActive_Fallback;
+                inactiveTtlG = _basicInactive ?? _basicInactive_Fallback;
+            }
             else
             {
-                activeTtl = TitlebarType == TitlebarTypes.Basic ? Color.FromArgb(185, 209, 234) : SystemColors.ActiveCaption;
-                inactiveTtl = TitlebarType == TitlebarTypes.Basic ? Color.FromArgb(215, 228, 242) : SystemColors.InactiveCaption;
-                activeTtlG = TitlebarType == TitlebarTypes.Basic ? activeTtl : SystemColors.GradientActiveCaption;
-                inactiveTtlG = TitlebarType == TitlebarTypes.Basic ? inactiveTtl : SystemColors.GradientInactiveCaption;
+                activeTtl = SystemColors.ActiveCaption;
+                inactiveTtl = SystemColors.InactiveCaption;
+                activeTtlG = SystemColors.GradientActiveCaption;
+                inactiveTtlG = SystemColors.GradientInactiveCaption;
+            }
+        }
+
+        private Color? GetBasicThemeColor(bool active)
+        {
+            if (Program.ClassicThemeRunning) return null;
+
+            VisualStyleRenderer renderer = new(active ? VisualStyleElement.Window.Caption.Active : VisualStyleElement.Window.Caption.Inactive);
+            using (Bitmap bmp = new(100, 10))
+            {
+                using (Graphics G = Graphics.FromImage(bmp))
+                {
+                    renderer.DrawBackground(G, new(0, 0, 100, 10));
+                }
+
+                return bmp.AverageColor();
             }
         }
 

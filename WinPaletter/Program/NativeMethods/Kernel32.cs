@@ -70,6 +70,67 @@ namespace WinPaletter.NativeMethods
         [DllImport(_kernel32, CharSet = CharSet.Unicode, SetLastError = true)]
         public static extern bool MoveFileEx(string lpExistingFileName, string lpNewFileName, int dwFlags);
 
+        [DllImport(_kernel32, SetLastError = true, CharSet = CharSet.Auto)]
+        private static extern int FormatMessage(int dwFlags, IntPtr lpSource, int dwMessageId, int dwLanguageId, StringBuilder lpBuffer, int nSize, IntPtr Arguments);
+
+        private const int FORMAT_MESSAGE_FROM_SYSTEM = 0x00001000;
+        private const int FORMAT_MESSAGE_FROM_HMODULE = 0x00000800;
+        private const int FORMAT_MESSAGE_IGNORE_INSERTS = 0x00000200;
+        private const uint LOAD_LIBRARY_AS_DATAFILE = 0x00000002;
+
+        // null = base system tables (kernel32/ntdll) - equivalent to Win32Exception's own lookup.
+        // The rest mirror the DLLs certutil -error consults for CAPI / networking / AD error codes.
+        private static readonly string[] MessageSourceModules =
+        [
+            null,
+            "ntdsbmsg.dll",
+            "certcli.dll",
+            "certadm.dll",
+            "crypt32.dll",
+            "wininet.dll",
+            "winhttp.dll",
+            "es.dll",
+        ];
+
+        public static string GetErrorMessage(int errorCode)
+        {
+            foreach (string module in MessageSourceModules)
+            {
+                string message = TryFormatMessage(errorCode, module);
+                if (!string.IsNullOrWhiteSpace(message))
+                {
+                    return $"{message.Trim()} (0x{(uint)errorCode:X8}, source: {module ?? "system"})";
+                }
+            }
+
+            return $"Unknown error (0x{(uint)errorCode:X8})";
+        }
+
+        private static string TryFormatMessage(int errorCode, string moduleName)
+        {
+            IntPtr moduleHandle = IntPtr.Zero;
+            int flags = FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS;
+
+            try
+            {
+                if (moduleName is not null)
+                {
+                    moduleHandle = LoadLibraryEx(moduleName, IntPtr.Zero, LOAD_LIBRARY_AS_DATAFILE);
+                    if (moduleHandle == IntPtr.Zero) return null;
+                    flags = FORMAT_MESSAGE_FROM_HMODULE | FORMAT_MESSAGE_IGNORE_INSERTS;
+                }
+
+                StringBuilder buffer = new(1024);
+                int length = FormatMessage(flags, moduleHandle, errorCode, 0, buffer, buffer.Capacity, IntPtr.Zero);
+
+                return length > 0 ? buffer.ToString() : null;
+            }
+            finally
+            {
+                if (moduleHandle != IntPtr.Zero) FreeLibrary(moduleHandle);
+            }
+        }
+
         public const int MOVEFILE_WRITE_THROUGH = 0x8;
 
         /// <summary>

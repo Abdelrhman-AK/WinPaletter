@@ -1104,7 +1104,7 @@
     <Compile Include="GUI\Elements\Input\Button.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="GUI\Elements\Input\ComboBox.cs">
+    <Compile Include="GUI\Elements\Lists\ComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="GUI\Elements\Input\NumericUpDown.cs">

@@ -130,7 +130,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="nCmdShow"></param>
         /// <returns></returns>
         [DllImport(_user32)]
-        public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+        public static extern bool ShowWindow(IntPtr hWnd, ShowWindowFlags nCmdShow);
 
         /// <summary>
         /// Loads the specified cursor resource from the application's executable file or a system-defined cursor.
@@ -1498,17 +1498,6 @@ namespace WinPaletter.NativeMethods
         public const int EM_SETSEL = 0x00B1;
 
         /// <summary>
-        /// ShowWindow command: Hides the window and deactivates it.
-        /// </summary>
-        public const int SW_HIDE = 0;
-
-        /// <summary>
-        /// ShowWindow command: Shows the window in its current state without activating it.
-        /// Preserves the window's position and size.
-        /// </summary>
-        public const int SW_SHOWNA = 8;
-
-        /// <summary>
         /// GetAncestor flag: Retrieves the root window of the specified window.
         /// </summary>
         public const uint GA_ROOT = 2;
@@ -1555,11 +1544,6 @@ namespace WinPaletter.NativeMethods
         public const int DEFAULT_GUI_FONT = 17;
 
         /// <summary>
-        /// SW_SHOW show window command - Shows the window in its current position and size
-        /// </summary>
-        public const int SW_SHOW = 5;
-
-        /// <summary>
         /// EM_GETSEL edit message - Gets the starting and ending character positions of the current selection
         /// </summary>
         public const int EM_GETSEL = 0x00B0;
@@ -1568,6 +1552,31 @@ namespace WinPaletter.NativeMethods
         /// WH_CALLWNDPROC hook type - Installs a hook procedure that monitors messages before they are sent to the target window procedure.
         /// </summary>
         public const int WH_CALLWNDPROC = 4;
+
+        [Flags]
+        public enum ShowWindowFlags
+        {
+            /// <summary>
+            /// ShowWindow command: Hides the window and deactivates it.
+            /// </summary>
+            Hide = 0,
+
+            /// <summary>
+            /// Show show window command - Shows the window in its current position and size and activates it.
+            /// </summary>
+            ShowNoActivate = 4,
+
+            /// <summary>
+            /// Show show window command - Shows the window in its current position and size.
+            /// </summary>
+            Show = 5,
+
+            /// <summary>
+            /// ShowWindow command: Shows the window in its current state without activating it.
+            /// Preserves the window's position and size.
+            /// </summary>
+            ShowActivate = 8
+        }
 
         [Flags]
         public enum SetWindowsPosition : int
@@ -1653,6 +1662,18 @@ namespace WinPaletter.NativeMethods
             public int iGroupId;
             public uint cColumns;
             public IntPtr puColumns;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct WINDOWPOS
+        {
+            public IntPtr hwnd;
+            public IntPtr hwndInsertAfter;
+            public int x;
+            public int y;
+            public int cx;
+            public int cy;
+            public int flags;
         }
 
         /// <summary>

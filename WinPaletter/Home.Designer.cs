@@ -509,6 +509,7 @@
             this.titlebarExtender2.Controls.Add(this.winEdition);
             this.titlebarExtender2.Dock = System.Windows.Forms.DockStyle.Top;
             this.titlebarExtender2.Flag = WinPaletter.Tabs.TitlebarExtender.Flags.Tabs_Extended;
+            this.titlebarExtender2.FormFocused = true;
             this.titlebarExtender2.Location = new System.Drawing.Point(0, 0);
             this.titlebarExtender2.Name = "titlebarExtender2";
             this.titlebarExtender2.Size = new System.Drawing.Size(1176, 51);

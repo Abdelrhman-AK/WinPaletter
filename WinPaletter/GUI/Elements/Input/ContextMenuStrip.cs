@@ -477,9 +477,9 @@ namespace WinPaletter.UI.WP
             if (_firstOpen && Program.Style.Animations && Handle != IntPtr.Zero)
             {
                 _firstOpen = false;
-                NativeMethods.User32.ShowWindow(Handle, NativeMethods.User32.SW_HIDE);
+                NativeMethods.User32.ShowWindow(Handle, NativeMethods.User32.ShowWindowFlags.Hide);
                 AnimateWindow(Handle, 80, AnimationType | AnimateWindowFlags.AW_ACTIVATE);
-                NativeMethods.User32.ShowWindow(Handle, NativeMethods.User32.SW_SHOWNA);
+                NativeMethods.User32.ShowWindow(Handle, NativeMethods.User32.ShowWindowFlags.ShowActivate);
             }
         }
 
