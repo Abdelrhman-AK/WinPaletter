@@ -464,6 +464,12 @@
     <Compile Include="Dialogs\ArgsHelp.Designer.cs">
       <DependentUpon>ArgsHelp.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialogs\SystemRestorePoints.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialogs\SystemRestorePoints.Designer.cs">
+      <DependentUpon>SystemRestorePoints.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dialogs\MagnifierDlg.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -1974,6 +1980,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\ArgsHelp.resx">
       <DependentUpon>ArgsHelp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialogs\SystemRestorePoints.resx">
+      <DependentUpon>SystemRestorePoints.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dialogs\MagnifierDlg.resx">
       <DependentUpon>MagnifierDlg.cs</DependentUpon>

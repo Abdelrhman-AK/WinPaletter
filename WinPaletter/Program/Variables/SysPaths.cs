@@ -32,6 +32,11 @@ namespace WinPaletter.GlobalVariables
         public static string SystemResources { get; } = $"{Windows}\\SystemResources";
 
         /// <summary>
+        /// Fonts directory
+        /// </summary>
+        public static string Fonts { get; } = Environment.GetFolderPath(Environment.SpecialFolder.Fonts);
+
+        /// <summary>
         /// User profile directory
         /// </summary>
         public static string UserProfile { get; set; } = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);

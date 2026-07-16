@@ -1,10 +1,10 @@
-﻿using FluentTransitions;
-using System;
+﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
-using System.Threading;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.Interfaces;
@@ -23,9 +23,13 @@ namespace WinPaletter.UI.WP
             taskbarList?.HrInit();
             StyleChanged += ProgressBar_StyleChanged;
 
-            // Initialize animation engine
-            _animationEngine = new AnimationEngine();
-            _animationEngine.FrameUpdate += OnAnimationFrameUpdate;
+            // Animators: each drives its own high-resolution multimedia timer, independent of
+            // the UI thread's message queue backlog. Paint requests are coalesced through
+            // Control.BeginInvoke so a busy UI thread never accumulates a backlog of repaints.
+            _valueAnimator = new ProgressAnimator(this);
+            _marqueeAnimator = new ProgressAnimator(this);
+            _hoverAnimator = new ProgressAnimator(this);
+            _stateColorAnimator = new ColorAnimator(this, Program.Style.Schemes.Tertiary.Colors.Line_Checked_Hover);
         }
 
         #region Variables
@@ -36,187 +40,27 @@ namespace WinPaletter.UI.WP
         private static readonly TextureBrush Noise = new(Resources.Noise);
         private DateTime _lastTaskbarUpdate = DateTime.MinValue;
         private bool _intendedVisible = true;
-
-        // Animation engine - runs on separate thread
-        private readonly AnimationEngine _animationEngine;
-
-        // Animation fields (values updated by animation engine)
-        private float _marqueeOffset = 0;
-        private float _hoverOffset = 0;
-        private int _alpha = 255;
         private bool _disposed = false;
+
+        // Animators (replace the former Thread-based AnimationEngine and FluentTransitions calls)
+        private readonly ProgressAnimator _valueAnimator;
+        private readonly ProgressAnimator _marqueeAnimator;
+        private readonly ProgressAnimator _hoverAnimator;
+        private readonly ColorAnimator _stateColorAnimator;
+
+        // Base loop durations at default speed values (100 for marquee, 300 for highlight), scaled by the speed properties below. Kept as constants rather than an FPS-based
+        // per-tick increment since the new engine advances by elapsed wall-clock time, not ticks.
+        private const double BaseMarqueeLoopMs = 2500;
+        private const double BaseHoverLoopMs = 3000;
+
+        private double MarqueeLoopDurationMs => BaseMarqueeLoopMs * (100.0 / Math.Max(1, _marqueeAnimationSpeed));
+        private double HoverLoopDurationMs => BaseHoverLoopMs * (300.0 / Math.Max(1, _highlightAnimationSpeed));
+
+        private int _alpha = 255;
 
         // Property fields
         private bool _highlightEffectEnabled = true;
         private int _highlightAnimationSpeed = 300;
-        #endregion
-
-        #region Animation Engine (Thread-Safe)
-        private class AnimationEngine : IDisposable
-        {
-            private readonly Thread _animationThread;
-            private volatile bool _isRunning;
-            private volatile bool _disposed;
-            private readonly object _lock = new();
-            private readonly ManualResetEvent _stopEvent = new(false);
-            private int _targetFPS = 60;
-            private int _marqueeSpeed = 100;
-            private int _highlightSpeed = 300;
-            private bool _marqueeActive = false;
-            private bool _highlightActive = false;
-
-            // Animation values
-            public float MarqueeOffset { get; private set; }
-            public float HoverOffset { get; private set; }
-
-            public event EventHandler FrameUpdate;
-
-            public AnimationEngine()
-            {
-                _isRunning = true;
-                _animationThread = new Thread(AnimationLoop)
-                {
-                    IsBackground = true,
-                    Priority = ThreadPriority.AboveNormal // Higher priority for smooth animations
-                };
-                _animationThread.Start();
-            }
-
-            private void AnimationLoop()
-            {
-                while (_isRunning)
-                {
-                    try
-                    {
-                        int interval = 1000 / _targetFPS;
-                        var stopwatch = System.Diagnostics.Stopwatch.StartNew();
-
-                        // Update animation values
-                        UpdateAnimations();
-
-                        // Trigger UI update on UI thread
-                        FrameUpdate?.BeginInvoke(null, EventArgs.Empty, null, null);
-
-                        // Wait for next frame
-                        int elapsed = (int)stopwatch.ElapsedMilliseconds;
-                        int sleepTime = Math.Max(1, interval - elapsed);
-
-                        if (_stopEvent.WaitOne(sleepTime))
-                            break;
-
-                        // If we're running behind, skip the wait
-                        if (elapsed > interval)
-                            Thread.Yield();
-                    }
-                    catch (ThreadAbortException)
-                    {
-                        break;
-                    }
-                    catch
-                    {
-                        // Ignore exceptions in animation loop
-                        Thread.Sleep(16);
-                    }
-                }
-            }
-
-            private void UpdateAnimations()
-            {
-                lock (_lock)
-                {
-                    // Update marquee animation
-                    if (_marqueeActive)
-                    {
-                        float marqueeIncrement = 0.02f * (_marqueeSpeed / 100f);
-                        MarqueeOffset += marqueeIncrement;
-                        if (MarqueeOffset > 1) MarqueeOffset = 0;
-                    }
-                    else
-                    {
-                        MarqueeOffset = 0;
-                    }
-
-                    // Update hover animation
-                    if (_highlightActive)
-                    {
-                        float hoverIncrement = 0.01f * (_highlightSpeed / 300f);
-                        HoverOffset += hoverIncrement;
-                        if (HoverOffset > 1) HoverOffset = 0;
-                    }
-                    else
-                    {
-                        HoverOffset = 0;
-                    }
-                }
-            }
-
-            public void SetMarqueeActive(bool active)
-            {
-                lock (_lock)
-                {
-                    _marqueeActive = active;
-                    if (!active) MarqueeOffset = 0;
-                }
-            }
-
-            public void SetHighlightActive(bool active)
-            {
-                lock (_lock)
-                {
-                    _highlightActive = active;
-                    if (!active) HoverOffset = 0;
-                }
-            }
-
-            public void SetMarqueeSpeed(int speed)
-            {
-                lock (_lock)
-                {
-                    _marqueeSpeed = Math.Max(1, speed);
-                }
-            }
-
-            public void SetHighlightSpeed(int speed)
-            {
-                lock (_lock)
-                {
-                    _highlightSpeed = Math.Max(1, speed);
-                }
-            }
-
-            public void SetFPS(int fps)
-            {
-                lock (_lock)
-                {
-                    _targetFPS = Math.Max(30, Math.Min(120, fps));
-                }
-            }
-
-            public void Dispose()
-            {
-                if (_disposed) return;
-                _disposed = true;
-                _isRunning = false;
-                _stopEvent.Set();
-                _animationThread?.Join(500);
-                _stopEvent?.Dispose();
-            }
-        }
-
-        private void OnAnimationFrameUpdate(object sender, EventArgs e)
-        {
-            if (_disposed || !IsHandleCreated) return;
-
-            // Update animation values from engine
-            _marqueeOffset = _animationEngine.MarqueeOffset;
-            _hoverOffset = _animationEngine.HoverOffset;
-
-            // Invalidate UI if needed
-            if (Style == ProgressBarStyle.Marquee || _highlightEffectEnabled)
-            {
-                Invalidate();
-            }
-        }
         #endregion
 
         #region Events/Overrides
@@ -246,7 +90,6 @@ namespace WinPaletter.UI.WP
                     }
                 }
 
-                // Update animation engine state
                 UpdateAnimationState();
             }
 
@@ -258,9 +101,8 @@ namespace WinPaletter.UI.WP
             SetProgressState(TaskbarProgressBarState.NoProgress);
             SetProgressValue(0);
 
-            // Stop animations
-            _animationEngine.SetMarqueeActive(false);
-            _animationEngine.SetHighlightActive(false);
+            _marqueeAnimator.StopMarquee();
+            _hoverAnimator.StopMarquee();
 
             base.OnHandleDestroyed(e);
         }
@@ -269,21 +111,15 @@ namespace WinPaletter.UI.WP
         {
             if (!DesignMode)
             {
-                if (Style == ProgressBarStyle.Marquee)
+                if (Style != ProgressBarStyle.Marquee)
                 {
-                    _animationEngine.SetMarqueeActive(true);
-                }
-                else
-                {
-                    _animationEngine.SetMarqueeActive(false);
                     if (CanAnimate)
-                        Transition.With(this, nameof(Value_Animation), _value).CriticalDamp(Program.AnimationSpan);
+                        _valueAnimator.AnimateTo(_value, Program.AnimationSpan.TotalMilliseconds);
                     else
-                        Value_Animation = _value;
+                        _valueAnimator.SetImmediate(_value);
                 }
 
-                // Update highlight state
-                UpdateHighlightState();
+                UpdateAnimationState();
             }
 
             await Task.Delay(10);
@@ -298,33 +134,42 @@ namespace WinPaletter.UI.WP
             UpdateHighlightState();
         }
 
+        // NOTE: StartMarquee/StopMarquee below are only called when the running state actually
+        // needs to change (guarded by IsMarquee). UpdateHighlightState runs on every OnValueChanged,
+        // which during a heavy/rapid-progress operation can fire many times per second - calling
+        // StartMarquee unconditionally there would reset the loop's stopwatch on every call and the
+        // sweep would never visibly advance (looks "stuck"). Guarding makes it idempotent: once
+        // running, repeated calls are a no-op and the loop keeps advancing on its own timer.
         private void UpdateHighlightState()
         {
-            if (!DesignMode && Style != ProgressBarStyle.Marquee)
+            bool shouldRun = CanAnimate && _highlightEffectEnabled && Style != ProgressBarStyle.Marquee && _value > Minimum && _value < Maximum;
+
+            if (shouldRun)
             {
-                bool shouldRun = _highlightEffectEnabled && _value > Minimum && _value < Maximum;
-                _animationEngine.SetHighlightActive(shouldRun);
+                if (!_hoverAnimator.IsMarquee)
+                    _hoverAnimator.StartMarquee(HoverLoopDurationMs);
             }
             else
             {
-                _animationEngine.SetHighlightActive(false);
+                _hoverAnimator.StopMarquee();
             }
         }
 
         private void UpdateAnimationState()
         {
-            if (!DesignMode)
+            bool shouldRunMarquee = CanAnimate && Style == ProgressBarStyle.Marquee;
+
+            if (shouldRunMarquee)
             {
-                bool isMarquee = Style == ProgressBarStyle.Marquee;
-                _animationEngine.SetMarqueeActive(isMarquee);
-
-                bool highlightShouldRun = _highlightEffectEnabled && !isMarquee && _value > Minimum && _value < Maximum;
-                _animationEngine.SetHighlightActive(highlightShouldRun);
-
-                // Set FPS based on animation speed
-                int fps = Math.Max(30, Math.Min(60, 60000 / Math.Max(1, _highlightAnimationSpeed)));
-                _animationEngine.SetFPS(fps);
+                if (!_marqueeAnimator.IsMarquee)
+                    _marqueeAnimator.StartMarquee(MarqueeLoopDurationMs);
             }
+            else
+            {
+                _marqueeAnimator.StopMarquee();
+            }
+
+            UpdateHighlightState();
         }
 
         private void ProgressBar_StyleChanged(object sender, EventArgs e)
@@ -339,7 +184,10 @@ namespace WinPaletter.UI.WP
             {
                 if (disposing)
                 {
-                    _animationEngine?.Dispose();
+                    _valueAnimator?.Dispose();
+                    _marqueeAnimator?.Dispose();
+                    _hoverAnimator?.Dispose();
+                    _stateColorAnimator?.Dispose();
                 }
                 _disposed = true;
             }
@@ -389,8 +237,8 @@ namespace WinPaletter.UI.WP
             {
                 SetProgressState(TaskbarProgressBarState.NoProgress);
                 SetProgressValue(0);
-                _animationEngine.SetMarqueeActive(false);
-                _animationEngine.SetHighlightActive(false);
+                _marqueeAnimator.StopMarquee();
+                _hoverAnimator.StopMarquee();
                 _lastTaskbarUpdate = DateTime.MinValue;
             }
         }
@@ -409,9 +257,12 @@ namespace WinPaletter.UI.WP
 
                     if (CanAnimate && Style != ProgressBarStyle.Marquee)
                     {
-                        Transition.With(this, nameof(Value_Animation), _value).CriticalDamp(Program.AnimationSpan);
+                        _valueAnimator.AnimateTo(_value, Program.AnimationSpan.TotalMilliseconds);
                     }
-                    else { Value_Animation = _value; }
+                    else
+                    {
+                        _valueAnimator.SetImmediate(_value);
+                    }
 
                     ThrottleTaskbarUpdate();
                     OnValueChanged(new EventArgs());
@@ -455,11 +306,13 @@ namespace WinPaletter.UI.WP
                 if (_highlightAnimationSpeed != value && value > 0)
                 {
                     _highlightAnimationSpeed = value;
-                    _animationEngine.SetHighlightSpeed(value);
 
-                    // Update FPS based on animation speed
-                    int fps = Math.Max(30, Math.Min(60, 60000 / Math.Max(1, value)));
-                    _animationEngine.SetFPS(fps);
+                    bool shouldRun = CanAnimate && _highlightEffectEnabled && Style != ProgressBarStyle.Marquee && _value > Minimum && _value < Maximum;
+
+                    // Speed change is a deliberate, infrequent user/style action, so a phase reset here is fine
+                    // (unlike UpdateHighlightState, this isn't called on every OnValueChanged).
+                    if (shouldRun)
+                        _hoverAnimator.StartMarquee(HoverLoopDurationMs);
                 }
             }
         }
@@ -503,8 +356,14 @@ namespace WinPaletter.UI.WP
                             }
                     }
 
-                    if (CanAnimate) { Transition.With(this, nameof(StateColor), color).CriticalDamp(Program.AnimationSpan_Quick); }
-                    else { StateColor = color; }
+                    if (CanAnimate)
+                    {
+                        _stateColorAnimator.AnimateTo(color, Program.AnimationSpan_Quick.TotalMilliseconds);
+                    }
+                    else
+                    {
+                        _stateColorAnimator.SetImmediate(color);
+                    }
 
                     ThrottleTaskbarUpdate();
                     Invalidate();
@@ -526,7 +385,7 @@ namespace WinPaletter.UI.WP
             }
         }
 
-        private double Percentage => _animatedValue / (double)(Maximum - Minimum);
+        private double Percentage => _valueAnimator.CurrentValue / (double)(Maximum - Minimum);
         private double Percentage_Actual => _value / (double)(Maximum - Minimum);
 
         private bool _TaskbarBroadcast = true;
@@ -569,34 +428,16 @@ namespace WinPaletter.UI.WP
         [Browsable(false)]
         public int Value_Animation
         {
-            get => _animatedValue;
-            set
-            {
-                if (value != _animatedValue)
-                {
-                    _animatedValue = value;
-                    Invalidate();
-                }
-            }
+            get => (int)Math.Round(_valueAnimator.CurrentValue);
+            set => _valueAnimator.SetImmediate(value);
         }
-
-        private int _animatedValue = 0;
-
-        private Color _stateColor = Program.Style.Schemes.Tertiary.Colors.Line_Checked_Hover;
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [Browsable(false)]
         public Color StateColor
         {
-            get => _stateColor;
-            set
-            {
-                if (value != _stateColor)
-                {
-                    _stateColor = value;
-                    Invalidate();
-                }
-            }
+            get => _stateColorAnimator.CurrentValue;
+            set => _stateColorAnimator.SetImmediate(value);
         }
 
         /// <summary>
@@ -620,7 +461,7 @@ namespace WinPaletter.UI.WP
         /// <summary>
         /// Indicates if marquee animation is active (based on Style)
         /// </summary>
-        public bool IsMarquee => Style == ProgressBarStyle.Marquee && _animationEngine != null;
+        public bool IsMarquee => Style == ProgressBarStyle.Marquee && _marqueeAnimator != null;
 
         /// <summary>
         /// Gets or sets the speed of the marquee animation.
@@ -638,7 +479,9 @@ namespace WinPaletter.UI.WP
                 if (_marqueeAnimationSpeed != value && value > 0)
                 {
                     _marqueeAnimationSpeed = value;
-                    _animationEngine.SetMarqueeSpeed(value);
+
+                    if (Style == ProgressBarStyle.Marquee && CanAnimate)
+                        _marqueeAnimator.StartMarquee(MarqueeLoopDurationMs);
                 }
             }
         }
@@ -845,6 +688,8 @@ namespace WinPaletter.UI.WP
 
             Config.Scheme scheme = Enabled ? Program.Style.Schemes.Main : Program.Style.Schemes.Disabled;
 
+            Color stateColor = _stateColorAnimator.CurrentValue;
+
             Rectangle rect = new(0, 0, Width - 1, Height - 1);
 
             if (Appearance == ProgressBarAppearance.Bar)
@@ -868,7 +713,7 @@ namespace WinPaletter.UI.WP
                 if (Style == ProgressBarStyle.Marquee)
                 {
                     float segmentWidth = rect.Width * 0.25f;
-                    float offsetX = rect.Width * _marqueeOffset;
+                    float offsetX = rect.Width * (float)_marqueeAnimator.CurrentValue;
 
                     RectangleF marqueeRect = new(offsetX, 0, segmentWidth, rect.Height);
 
@@ -876,7 +721,7 @@ namespace WinPaletter.UI.WP
                     {
                         ColorBlend cb = new()
                         {
-                            Colors = [Color.Transparent, Color.FromArgb(_alpha, Program.Style.DarkMode ? _stateColor.Light(0.1f) : _stateColor.Dark(0.1f)), Color.Transparent],
+                            Colors = [Color.Transparent, Color.FromArgb(_alpha, Program.Style.DarkMode ? stateColor.Light(0.1f) : stateColor.Dark(0.1f)), Color.Transparent],
                             Positions = [0f, 0.5f, 1f]
                         };
                         brush.InterpolationColors = cb;
@@ -907,7 +752,7 @@ namespace WinPaletter.UI.WP
                 else
                 {
                     // Normal progress bar with hover highlight effect (copied from Breadcrumb)
-                    using (LinearGradientBrush br = new(rect, Program.Style.DarkMode ? _stateColor.Dark(0.05f) : _stateColor.Light(), _stateColor, (float)Percentage * 360f, true))
+                    using (LinearGradientBrush br = new(rect, Program.Style.DarkMode ? stateColor.Dark(0.05f) : stateColor.Light(), stateColor, (float)Percentage * 360f, true))
                     {
                         if (Dock == DockStyle.None) G.FillRoundedRect(br, rectValue, radius);
                         else G.FillRectangle(br, rectValue);
@@ -924,7 +769,7 @@ namespace WinPaletter.UI.WP
 
                         // Calculate position based on hover offset (0 to 1)
                         // This makes the highlight move from left edge to right edge of the progress portion
-                        float highlightLeft = (_hoverOffset * (rectValue.Width + highlightWidth)) - highlightWidth;
+                        float highlightLeft = ((float)_hoverAnimator.CurrentValue * (rectValue.Width + highlightWidth)) - highlightWidth;
 
                         // Clamp to ensure highlight stays within progress bounds
                         highlightLeft = Math.Max(rectValue.Left - highlightWidth, Math.Min(highlightLeft, rectValue.Right));
@@ -961,7 +806,7 @@ namespace WinPaletter.UI.WP
                         }
 
                         // Draw the highlight with alpha based on visibility
-                        Color hilightColor = Program.Style.DarkMode ? _stateColor.Light() : _stateColor.Dark();
+                        Color hilightColor = Program.Style.DarkMode ? stateColor.Light() : stateColor.Dark();
                         using (LinearGradientBrush brush = new(highlightRect, Color.Transparent, hilightColor, LinearGradientMode.Horizontal))
                         {
                             ColorBlend cb = new()
@@ -985,7 +830,7 @@ namespace WinPaletter.UI.WP
                 G.ResetClip();
 
                 using (Pen P = new(scheme.Colors.Line_Hover(parentLevel)))
-                using (Pen P_Value = new(Color.FromArgb(100, Program.Style.DarkMode ? _stateColor.Light() : _stateColor.Dark())))
+                using (Pen P_Value = new(Color.FromArgb(100, Program.Style.DarkMode ? stateColor.Light() : stateColor.Dark())))
                 {
                     if (Dock == DockStyle.None)
                     {
@@ -1004,7 +849,6 @@ namespace WinPaletter.UI.WP
             {
                 float PenWidth = 0.15f * Math.Max(Width, Height);
                 float _percent = Style == ProgressBarStyle.Continuous ? (float)Percentage : 0.5f;
-                float _startAngle = Style == ProgressBarStyle.Continuous ? -90 : -90; // Start from top for marquee
 
                 RectangleF CircleRect = new(PenWidth, PenWidth, rect.Width - PenWidth * 2, rect.Height - PenWidth * 2 + 1);
 
@@ -1024,9 +868,9 @@ namespace WinPaletter.UI.WP
                 {
                     // Marquee circle animation - rotating segment
                     float sweepAngle = 120; // 120 degree segment
-                    float startAngle = (_marqueeOffset * 360) - 60; // Rotate around
+                    float startAngle = ((float)_marqueeAnimator.CurrentValue * 360) - 60; // Rotate around
 
-                    using (LinearGradientBrush br = new(rect, _stateColor, Program.Style.DarkMode ? _stateColor.Light() : _stateColor.LightLight(), (float)Percentage * 360f, true))
+                    using (LinearGradientBrush br = new(rect, stateColor, Program.Style.DarkMode ? stateColor.Light() : stateColor.LightLight(), (float)Percentage * 360f, true))
                     using (Pen pen = new(br, PenWidth))
                     {
                         pen.StartCap = Program.Style.RoundedCorners ? LineCap.Round : LineCap.Flat;
@@ -1045,7 +889,7 @@ namespace WinPaletter.UI.WP
                 else
                 {
                     // Normal progress circle
-                    using (LinearGradientBrush br = new(rect, _stateColor, Program.Style.DarkMode ? _stateColor.Light() : _stateColor.LightLight(), (float)Percentage * 360f, true))
+                    using (LinearGradientBrush br = new(rect, stateColor, Program.Style.DarkMode ? stateColor.Light() : stateColor.LightLight(), (float)Percentage * 360f, true))
                     using (Pen pen = new(br, PenWidth))
                     {
                         pen.StartCap = Program.Style.RoundedCorners ? LineCap.Round : LineCap.Flat;
@@ -1066,6 +910,241 @@ namespace WinPaletter.UI.WP
             }
 
             base.OnPaint(e);
+        }
+
+        /// <summary>
+        /// Time-based animation driver for numeric values: computes progress by elapsed wall-clock time rather than tick count, so delayed or coalesced ticks never cause visible lag
+        /// accumulation. Also used in a continuous looping mode for marquee and hover sweeps. The paint request is coalesced so a busy UI thread never builds a backlog of pending repaints.
+        /// </summary>
+        private sealed class ProgressAnimator : IDisposable
+        {
+            private readonly NativeMethods.Winmm.MultimediaTimer _timer;
+            private readonly Control _owner;
+            private readonly Stopwatch _stopwatch;
+            private double _fromValue;
+            private double _toValue;
+            private double _durationMs;
+            private volatile bool _paintPending;
+
+            /// <summary>Current interpolated value, safe to read from any thread.</summary>
+            public double CurrentValue { get; private set; }
+
+            /// <summary>True while a one-shot value transition is in progress.</summary>
+            public bool IsAnimating { get; private set; }
+
+            /// <summary>Marquee mode: when true, CurrentValue represents a looping head position in [0..1].</summary>
+            public bool IsMarquee { get; private set; }
+
+            public ProgressAnimator(Control owner, uint tickIntervalMs = 8)
+            {
+                _owner = owner;
+                _stopwatch = new();
+                _timer = new(tickIntervalMs);
+                _timer.Tick += Timer_Tick;
+            }
+
+            /// <summary>Starts an eased value transition from the current value to newValue.</summary>
+            public void AnimateTo(double newValue, double durationMs)
+            {
+                IsMarquee = false;
+                _fromValue = CurrentValue;
+                _toValue = newValue;
+                _durationMs = Math.Max(1, durationMs);
+                IsAnimating = true;
+                _stopwatch.Restart();
+                _timer.Start();
+            }
+
+            /// <summary>Immediately sets the value with no animation and stops any running timer.</summary>
+            public void SetImmediate(double value)
+            {
+                IsMarquee = false;
+                IsAnimating = false;
+                _fromValue = value;
+                _toValue = value;
+                CurrentValue = value;
+                _timer.Stop();
+                RequestPaint();
+            }
+
+            /// <summary>Starts a continuous looping animation, wrapping back to 0 every loopDurationMs.</summary>
+            public void StartMarquee(double loopDurationMs)
+            {
+                IsMarquee = true;
+                IsAnimating = false;
+                _durationMs = Math.Max(1, loopDurationMs);
+                _stopwatch.Restart();
+                _timer.Start();
+            }
+
+            public void StopMarquee()
+            {
+                if (!IsMarquee) return;
+
+                IsMarquee = false;
+                CurrentValue = 0;
+                _timer.Stop();
+                RequestPaint();
+            }
+
+            private void Timer_Tick(object sender, EventArgs e)
+            {
+                double elapsedMs = _stopwatch.Elapsed.TotalMilliseconds;
+
+                if (IsMarquee)
+                {
+                    double loopT = (elapsedMs % _durationMs) / _durationMs;
+                    CurrentValue = loopT;
+                }
+                else if (IsAnimating)
+                {
+                    double t = Math.Min(1.0, elapsedMs / _durationMs);
+                    double eased = EaseOutCubic(t);
+                    CurrentValue = _fromValue + (_toValue - _fromValue) * eased;
+
+                    if (t >= 1.0)
+                    {
+                        IsAnimating = false;
+                        _timer.Stop();
+                    }
+                }
+
+                RequestPaint();
+            }
+
+            private static double EaseOutCubic(double t)
+            {
+                double p = t - 1.0;
+                return p * p * p + 1.0;
+            }
+
+            private void RequestPaint()
+            {
+                // Coalescing guard: never let more than one repaint sit queued on the UI thread.
+                // If the UI thread is backed up, extra ticks are simply skipped until it catches up, and the next paint always reflects the current, time-correct CurrentValue.
+                if (_paintPending) return;
+                if (_owner == null || _owner.IsDisposed || !_owner.IsHandleCreated) return;
+
+                _paintPending = true;
+
+                _owner.BeginInvoke(new MethodInvoker(() =>
+                {
+                    _paintPending = false;
+
+                    if (!_owner.IsDisposed)
+                        _owner.Invalidate();
+                }));
+            }
+
+            public void Dispose()
+            {
+                _timer.Tick -= Timer_Tick;
+                _timer.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Time-based animation driver for Color values, following the same elapsed-time interpolation and paint-coalescing model as ProgressAnimator.
+        /// </summary>
+        private sealed class ColorAnimator : IDisposable
+        {
+            private readonly NativeMethods.Winmm.MultimediaTimer _timer;
+            private readonly Control _owner;
+            private readonly Stopwatch _stopwatch;
+            private Color _fromColor;
+            private Color _toColor;
+            private double _durationMs;
+            private volatile bool _paintPending;
+
+            /// <summary>Current interpolated color, safe to read from any thread.</summary>
+            public Color CurrentValue { get; private set; }
+
+            /// <summary>True while a color transition is in progress.</summary>
+            public bool IsAnimating { get; private set; }
+
+            public ColorAnimator(Control owner, Color initialColor, uint tickIntervalMs = 8)
+            {
+                _owner = owner;
+                CurrentValue = initialColor;
+                _stopwatch = new();
+                _timer = new(tickIntervalMs);
+                _timer.Tick += Timer_Tick;
+            }
+
+            /// <summary>Starts an eased color transition from the current color to toColor.</summary>
+            public void AnimateTo(Color toColor, double durationMs)
+            {
+                _fromColor = CurrentValue;
+                _toColor = toColor;
+                _durationMs = Math.Max(1, durationMs);
+                IsAnimating = true;
+                _stopwatch.Restart();
+                _timer.Start();
+            }
+
+            /// <summary>Immediately sets the color with no animation and stops any running timer.</summary>
+            public void SetImmediate(Color color)
+            {
+                IsAnimating = false;
+                CurrentValue = color;
+                _timer.Stop();
+                RequestPaint();
+            }
+
+            private void Timer_Tick(object sender, EventArgs e)
+            {
+                double elapsedMs = _stopwatch.Elapsed.TotalMilliseconds;
+                double t = Math.Min(1.0, elapsedMs / _durationMs);
+                double eased = EaseOutCubic(t);
+
+                int a = LerpChannel(_fromColor.A, _toColor.A, eased);
+                int r = LerpChannel(_fromColor.R, _toColor.R, eased);
+                int g = LerpChannel(_fromColor.G, _toColor.G, eased);
+                int b = LerpChannel(_fromColor.B, _toColor.B, eased);
+
+                CurrentValue = Color.FromArgb(a, r, g, b);
+
+                if (t >= 1.0)
+                {
+                    IsAnimating = false;
+                    _timer.Stop();
+                }
+
+                RequestPaint();
+            }
+
+            private static int LerpChannel(int from, int to, double t)
+            {
+                return (int)Math.Round(from + (to - from) * t);
+            }
+
+            private static double EaseOutCubic(double t)
+            {
+                double p = t - 1.0;
+                return p * p * p + 1.0;
+            }
+
+            private void RequestPaint()
+            {
+                if (_paintPending) return;
+                if (_owner == null || _owner.IsDisposed || !_owner.IsHandleCreated) return;
+
+                _paintPending = true;
+
+                _owner.BeginInvoke(new MethodInvoker(() =>
+                {
+                    _paintPending = false;
+
+                    if (!_owner.IsDisposed)
+                        _owner.Invalidate();
+                }));
+            }
+
+            public void Dispose()
+            {
+                _timer.Tick -= Timer_Tick;
+                _timer.Dispose();
+            }
         }
     }
 }

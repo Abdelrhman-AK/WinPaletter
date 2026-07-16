@@ -192,44 +192,47 @@ namespace WinPaletter.UI.WP
 
             if (msg == (int)User32.WindowsMessage.Paint && Program.Style.DarkMode)
             {
-                User32.GetClientRect(hWnd, out UxTheme.RECT rect);
-                using (Bitmap bmp = new(rect.right - rect.left, rect.bottom - rect.top))
-                using (Graphics G = Graphics.FromImage(bmp))
+                IntPtr hdcPaint = User32.BeginPaint(hWnd, out User32.PAINTSTRUCT ps);
+                try
                 {
-                    // Draw header background
-                    G.Clear(Enabled ? Program.Style.Schemes.Main.Colors.Button : Program.Style.Schemes.Disabled.Colors.Button);
-
-                    int x = 0;
-
-                    for (int i = 0; i < Columns.Count; i++)
+                    User32.GetClientRect(hWnd, out UxTheme.RECT rect);
+                    using (Bitmap bmp = new(rect.right - rect.left, rect.bottom - rect.top))
+                    using (Graphics G = Graphics.FromImage(bmp))
                     {
-                        int colWidth = Columns[i].Width;
-                        Rectangle cellRect = new(x, 0, colWidth, rect.bottom - rect.top);
+                        G.Clear(Enabled ? Program.Style.Schemes.Main.Colors.Button : Program.Style.Schemes.Disabled.Colors.Button);
 
-                        // Draw column text
-                        TextRenderer.DrawText(G, Columns[i].Text, Font, cellRect, ForeColor, TextFormatFlags.VerticalCenter | TextFormatFlags.Left | TextFormatFlags.EndEllipsis);
-
-                        // Draw splitter line (except after last column)
-                        if (i < Columns.Count - 1)
+                        int x = 0;
+                        for (int i = 0; i < Columns.Count; i++)
                         {
-                            using (Pen splitterPen = new(Enabled ? Program.Style.Schemes.Main.Colors.Line_Hover() : Program.Style.Schemes.Disabled.Colors.Line_Hover()))
+                            int colWidth = Columns[i].Width;
+                            Rectangle cellRect = new(x, 0, colWidth, rect.bottom - rect.top);
+                            TextRenderer.DrawText(G, Columns[i].Text, Font, cellRect, ForeColor, TextFormatFlags.VerticalCenter | TextFormatFlags.Left | TextFormatFlags.EndEllipsis);
+
+                            if (i < Columns.Count - 1)
                             {
-                                int splitterX = x + colWidth - 2; // right edge of the column
-                                G.DrawLine(splitterPen, splitterX, 2, splitterX, rect.bottom - 2);
+                                using (Pen splitterPen = new(Enabled ? Program.Style.Schemes.Main.Colors.Line_Hover() : Program.Style.Schemes.Disabled.Colors.Line_Hover()))
+                                {
+                                    int splitterX = x + colWidth - 2;
+                                    G.DrawLine(splitterPen, splitterX, 2, splitterX, rect.bottom - 2);
+                                }
                             }
+
+                            x += colWidth;
                         }
 
-                        x += colWidth;
-                    }
-
-                    // Blit to header HWND
-                    using (Graphics hdc = Graphics.FromHwnd(hWnd))
-                    {
-                        hdc.DrawImageUnscaled(bmp, 0, 0);
+                        using (Graphics hdc = Graphics.FromHdc(hdcPaint))
+                        {
+                            hdc.DrawImageUnscaled(bmp, 0, 0);
+                        }
                     }
                 }
+                finally
+                {
+                    User32.EndPaint(hWnd, ref ps);
+                }
 
-                return IntPtr.Zero; // skip default painting
+                User32.ValidateRect(hWnd, IntPtr.Zero);
+                return IntPtr.Zero;
             }
 
             return User32.CallWindowProc(oldHeaderProc, hWnd, msg, wParam, lParam);

@@ -87,6 +87,7 @@
                 public string NewTheme { get; set; } = "New theme";
                 public string ThemeName { get; set; } = "Theme name";
                 public string Name { get; set; } = "Name";
+                public string Sequence { get; set; } = "Sequence";
                 public string FilePath { get; set; } = "File path";
                 public string CreationDateTime { get; set; } = "Creation date\\time";
                 public string BackupsCount { get; set; } = "backup(s)";
@@ -100,9 +101,9 @@
                 public string WhatsNewInVersion { get; set; } = "What's new in {0}!";
                 public string Uninstall_Comment { get; set; } = "This will help you delete WinPaletter and clean up its used data";
                 public string CopycatFrom { get; set; } = "Copycat from loaded preferences of {0}";
-                public string RestorePoint_Aspect { get; set; } = "WinPaletter - Before applying {0}";
-                public string RestorePoint_Theme { get; set; } = "WinPaletter - Before applying theme '{0}'";
-                public string RestorePoint_FirstTime { get; set; } = "WinPaletter - First time System Restore Point";
+                public string RestorePoint_Aspect { get; set; } = "Before applying {0}";
+                public string RestorePoint_Theme { get; set; } = "Before applying theme '{0}'";
+                public string RestorePoint_FirstTime { get; set; } = "First time System Restore Point";
                 public string RestorePoint_DialogTitle { get; set; } = "System Restore Point";
                 public string Help { get; set; } = "Help (from online GitHub Wiki)";
                 public string ThanksTo { get; set; } = "Thanks to";

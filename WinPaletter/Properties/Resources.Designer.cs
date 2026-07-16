@@ -708,6 +708,16 @@ namespace WinPaletter.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Restorepoint {
+            get {
+                object obj = ResourceManager.GetObject("Restorepoint", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap SampleApp_Active {
             get {
                 object obj = ResourceManager.GetObject("SampleApp_Active", resourceCulture);

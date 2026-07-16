@@ -23,7 +23,7 @@ namespace WinPaletter.NativeMethods
         /// </remarks>
         /// <param name="lfFaceName">The typeface name of the font.</param>
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-        public struct LOGFONT(string lfFaceName = null)
+        public class LOGFONT(string lfFaceName = null)
         {
             /// <summary>
             /// Specifies the height, in logical units, of the font's character cell or character.
@@ -450,20 +450,13 @@ namespace WinPaletter.NativeMethods
         public static extern bool BitBlt(IntPtr hdcDest, int x, int y, int cx, int cy, IntPtr hdcSrc, int x1, int y1, uint rop);
 
         /// <summary>
-        /// Creates a logical font with the specified characteristics and returns a handle to the font. The font can then be selected into a device context for text rendering.
+        /// Creates a logical font with the specified characteristics and returns a handle to the font. 
+        /// The font can then be selected into a device context for text rendering.
         /// </summary>
-        /// <param name="lplf"></param>
-        /// <returns></returns>
+        /// <param name="lplf">A LOGFONT object that defines the font characteristics.</param>
+        /// <returns>A handle to the font if successful; otherwise, IntPtr.Zero.</returns>
         [DllImport(_gdi32, CharSet = CharSet.Unicode, SetLastError = true)]
         public static extern IntPtr CreateFontIndirect([In] LOGFONT lplf);
-
-        /// <summary>
-        /// Creates a logical font with the specified characteristics and returns a handle to the font. The font can then be selected into a device context for text rendering.
-        /// </summary>
-        /// <param name="lplf"></param>
-        /// <returns></returns>
-        [DllImport(_gdi32, CharSet = CharSet.Unicode, SetLastError = true)]
-        public static extern IntPtr CreateFontIndirect([In] ref LOGFONT lplf);
 
         [DllImport(_gdi32)]
         public static extern IntPtr CreateRectRgn(int nLeftRect, int nTopRect, int nRightRect, int nBottomRect);
@@ -628,6 +621,12 @@ namespace WinPaletter.NativeMethods
         /// <returns></returns>
         [DllImport(_gdi32)]
         public static extern IntPtr CreatePen(int fnPenStyle, int nWidth, int crColor);
+
+        [DllImport(_gdi32, CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern int AddFontResource(string lpszFilename);
+
+        [DllImport(_gdi32, CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern bool RemoveFontResource(string lpFileName);
 
         /// <summary>
         /// Predefined stock objects for GetStockObject.

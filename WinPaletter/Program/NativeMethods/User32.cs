@@ -414,6 +414,9 @@ namespace WinPaletter.NativeMethods
         [DllImport(_user32, SetLastError = true)]
         public static extern bool DrawEdge(IntPtr hdc, ref UxTheme.RECT qrc, uint edge, uint grfFlags);
 
+        [DllImport("user32.dll")]
+        public static extern bool ValidateRect(IntPtr hWnd, IntPtr lpRect);
+
         /// <summary>
         /// Gets the value of a specified class attribute for a window, allowing retrieval of information such as styles, extended styles, or other class-specific data.
         /// </summary>
@@ -1166,6 +1169,9 @@ namespace WinPaletter.NativeMethods
         /// <c>Marshal.GetLastWin32Error</c> to retrieve extended error information.</returns>
         [DllImport(_user32, SetLastError = true, CharSet = CharSet.Auto)]
         public static extern IntPtr SendMessageTimeout(IntPtr hWnd, uint Msg, UIntPtr wParam, string lParam, uint fuFlags, uint uTimeout, out UIntPtr lpdwResult);
+
+        [DllImport(_user32, CharSet = CharSet.Auto)]
+        public static extern IntPtr SendMessageTimeout(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam, uint fuFlags, uint uTimeout, out IntPtr lpdwResult);
 
         /// <summary>
         /// Sends a message to the specified window and waits for the operation to complete or for a timeout period to

@@ -7,13 +7,15 @@ namespace WinPaletter.NativeMethods
     /// </summary>
     public static class SrClient
     {
+        private const string _srclient = "SrClient.dll";
+
         /// <summary>
         /// The SRSetRestorePoint function specifies the beginning and the ending of a set of changes so that System Restore can create a restore point.
         /// </summary>
         /// <param name="pRestorePtSpec">A pointer to a RESTOREPOINTINFOW structure that specifies the restore point.</param>
         /// <param name="pSMgrStatus">A pointer to a STATEMGRSTATUS structure that receives the status information.</param>
         /// <returns>If the function succeeds, the return value is TRUE. Otherwise, it is FALSE.</returns>
-        [DllImport("SrClient.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        [DllImport(_srclient, CharSet = CharSet.Unicode, SetLastError = true)]
         public static extern bool SRSetRestorePointW(ref RESTOREPOINTINFOW pRestorePtSpec, out STATEMGRSTATUS pSMgrStatus);
 
         /// <summary>
@@ -21,7 +23,7 @@ namespace WinPaletter.NativeMethods
         /// </summary>
         /// <param name="Drive">The drive path (e.g., "C:")</param>
         /// <returns>Returns 0 if successful, non-zero if failed.</returns>
-        [DllImport("SrClient.dll", SetLastError = true)]
+        [DllImport(_srclient, SetLastError = true)]
         public static extern int DisableSR([MarshalAs(UnmanagedType.LPWStr)] string Drive);
 
         /// <summary>
@@ -29,8 +31,11 @@ namespace WinPaletter.NativeMethods
         /// </summary>
         /// <param name="Drive">The drive path (e.g., "C:")</param>
         /// <returns>Returns 0 if successful, non-zero if failed.</returns>
-        [DllImport("SrClient.dll", SetLastError = true)]
+        [DllImport(_srclient, SetLastError = true)]
         public static extern int EnableSR([MarshalAs(UnmanagedType.LPWStr)] string Drive);
+
+        [DllImport(_srclient, CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern int SRRemoveRestorePoint(uint dwRPNum);
 
         /// <summary>
         ///     The type of event. For more information, see <see cref="CreateRestorePoint"/>.

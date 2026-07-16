@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.Assets;
+using WinPaletter.Dialogs;
 using WinPaletter.NativeMethods;
 using WinPaletter.Properties;
 using WinPaletter.Theme;
@@ -116,6 +117,8 @@ namespace WinPaletter
             Program.ToolTip.SetToolTip(Button6, T.Releases_Title, T.Releases_Desc, Button6.ImageGlyph);
             Program.ToolTip.SetToolTip(button4, T.Logs_Title, T.Logs_Desc, button4.ImageGlyph);
             Program.ToolTip.SetToolTip(Button12, T.About_Title, T.About_Desc, Button12.ImageGlyph);
+            Program.ToolTip.SetToolTip(button16, T.RestorePoints_Title, T.RestorePoints_Desc, button16.ImageGlyph);
+
 
             LoadOSData_ToolTip();
             LoadData(true);
@@ -986,6 +989,12 @@ namespace WinPaletter
         private void pin_button_Click(object sender, EventArgs e)
         {
             Forms.MainForm.AddTab(this);
+        }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+            SystemRestorePoints rp = new();
+            Forms.MainForm.AddTab(rp);
         }
     }
 }

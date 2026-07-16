@@ -72,6 +72,7 @@
             this.separatorV1 = new WinPaletter.UI.WP.SeparatorV();
             this.Button11 = new WinPaletter.UI.WP.Button();
             this.Button5 = new WinPaletter.UI.WP.Button();
+            this.button16 = new WinPaletter.UI.WP.Button();
             this.Button31 = new WinPaletter.UI.WP.Button();
             this.button8 = new WinPaletter.UI.WP.Button();
             this.button1 = new WinPaletter.UI.WP.Button();
@@ -492,7 +493,7 @@
             this.button15.Image = null;
             this.button15.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_GitHub;
             this.button15.ImageGlyphEnabled = true;
-            this.button15.Location = new System.Drawing.Point(490, 3);
+            this.button15.Location = new System.Drawing.Point(530, 3);
             this.button15.Name = "button15";
             this.button15.Size = new System.Drawing.Size(32, 35);
             this.button15.TabIndex = 35;
@@ -533,6 +534,7 @@
             this.flowLayoutPanel2.Controls.Add(this.separatorV1);
             this.flowLayoutPanel2.Controls.Add(this.Button11);
             this.flowLayoutPanel2.Controls.Add(this.Button5);
+            this.flowLayoutPanel2.Controls.Add(this.button16);
             this.flowLayoutPanel2.Controls.Add(this.Button31);
             this.flowLayoutPanel2.Controls.Add(this.button15);
             this.flowLayoutPanel2.Controls.Add(this.button8);
@@ -769,6 +771,25 @@
             this.Button5.UseVisualStyleBackColor = false;
             this.Button5.Click += new System.EventHandler(this.Button5_Click);
             // 
+            // button16
+            // 
+            this.button16.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.button16.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
+            this.button16.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
+            this.button16.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button16.ForeColor = System.Drawing.Color.White;
+            this.button16.Image = null;
+            this.button16.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button16.ImageGlyph")));
+            this.button16.ImageGlyphEnabled = true;
+            this.button16.Location = new System.Drawing.Point(451, 3);
+            this.button16.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.button16.Name = "button16";
+            this.button16.Size = new System.Drawing.Size(32, 35);
+            this.button16.TabIndex = 159;
+            this.button16.Tag = "Settings";
+            this.button16.UseVisualStyleBackColor = false;
+            this.button16.Click += new System.EventHandler(this.button16_Click);
+            // 
             // Button31
             // 
             this.Button31.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -779,7 +800,7 @@
             this.Button31.Image = null;
             this.Button31.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button31.ImageGlyph")));
             this.Button31.ImageGlyphEnabled = true;
-            this.Button31.Location = new System.Drawing.Point(451, 3);
+            this.Button31.Location = new System.Drawing.Point(491, 3);
             this.Button31.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button31.Name = "Button31";
             this.Button31.Size = new System.Drawing.Size(32, 35);
@@ -798,7 +819,7 @@
             this.button8.Image = null;
             this.button8.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button8.ImageGlyph")));
             this.button8.ImageGlyphEnabled = true;
-            this.button8.Location = new System.Drawing.Point(528, 3);
+            this.button8.Location = new System.Drawing.Point(568, 3);
             this.button8.Name = "button8";
             this.button8.Size = new System.Drawing.Size(32, 35);
             this.button8.TabIndex = 36;
@@ -816,7 +837,7 @@
             this.button1.Image = null;
             this.button1.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button1.ImageGlyph")));
             this.button1.ImageGlyphEnabled = true;
-            this.button1.Location = new System.Drawing.Point(567, 3);
+            this.button1.Location = new System.Drawing.Point(607, 3);
             this.button1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(32, 35);
@@ -835,7 +856,7 @@
             this.Button39.Image = null;
             this.Button39.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button39.ImageGlyph")));
             this.Button39.ImageGlyphEnabled = true;
-            this.Button39.Location = new System.Drawing.Point(607, 3);
+            this.Button39.Location = new System.Drawing.Point(647, 3);
             this.Button39.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button39.Name = "Button39";
             this.Button39.Size = new System.Drawing.Size(32, 35);
@@ -854,7 +875,7 @@
             this.Button6.Image = null;
             this.Button6.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button6.ImageGlyph")));
             this.Button6.ImageGlyphEnabled = true;
-            this.Button6.Location = new System.Drawing.Point(647, 3);
+            this.Button6.Location = new System.Drawing.Point(687, 3);
             this.Button6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button6.Name = "Button6";
             this.Button6.Size = new System.Drawing.Size(32, 35);
@@ -873,7 +894,7 @@
             this.button4.Image = null;
             this.button4.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button4.ImageGlyph")));
             this.button4.ImageGlyphEnabled = true;
-            this.button4.Location = new System.Drawing.Point(687, 3);
+            this.button4.Location = new System.Drawing.Point(727, 3);
             this.button4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(32, 35);
@@ -892,7 +913,7 @@
             this.Button12.Image = null;
             this.Button12.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("Button12.ImageGlyph")));
             this.Button12.ImageGlyphEnabled = true;
-            this.Button12.Location = new System.Drawing.Point(727, 3);
+            this.Button12.Location = new System.Drawing.Point(767, 3);
             this.Button12.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Button12.Name = "Button12";
             this.Button12.Size = new System.Drawing.Size(32, 35);
@@ -906,7 +927,7 @@
             this.separatorV2.AlternativeLook = false;
             this.separatorV2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.separatorV2.BackColor = System.Drawing.Color.Transparent;
-            this.separatorV2.Location = new System.Drawing.Point(766, 3);
+            this.separatorV2.Location = new System.Drawing.Point(806, 3);
             this.separatorV2.Name = "separatorV2";
             this.separatorV2.Size = new System.Drawing.Size(1, 35);
             this.separatorV2.TabIndex = 156;
@@ -919,7 +940,7 @@
             this.tip_label.AutoSize = true;
             this.tip_label.BackColor = System.Drawing.Color.Transparent;
             this.tip_label.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tip_label.Location = new System.Drawing.Point(773, 13);
+            this.tip_label.Location = new System.Drawing.Point(813, 13);
             this.tip_label.Name = "tip_label";
             this.tip_label.Size = new System.Drawing.Size(0, 15);
             this.tip_label.TabIndex = 154;
@@ -1053,5 +1074,6 @@
         internal UI.WP.Button button4;
         internal UI.WP.Button button14;
         internal UI.WP.Button button15;
+        internal UI.WP.Button button16;
     }
 }

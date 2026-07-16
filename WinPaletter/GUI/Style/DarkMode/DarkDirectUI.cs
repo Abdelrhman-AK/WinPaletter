@@ -800,7 +800,7 @@ namespace WinPaletter.UI.Dark
                     };
 
                     LOGFONT lf = GetThemedFont(uiPart);
-                    IntPtr hFont = CreateFontIndirect(ref lf);
+                    IntPtr hFont = CreateFontIndirect(lf);
                     IntPtr oldFont = hFont != IntPtr.Zero ? SelectObject(hdcBuf, hFont) : IntPtr.Zero;
 
                     if (!s_hasNativeTheme) FillRect(hdcBuf, ref rcText, brBg);
@@ -1054,7 +1054,7 @@ namespace WinPaletter.UI.Dark
                         };
 
                         GetThemeFont(hTheme, hdcBuf, TaskDialogParts.TDLG_RADIOBUTTONPANE, 0, TaskDialogParts.TMT_FONT, out LOGFONT logFont);
-                        IntPtr font = CreateFontIndirect(ref logFont);
+                        IntPtr font = CreateFontIndirect(logFont);
                         IntPtr oldFont = SelectObject(hdcBuf, font);
 
                         DrawThemeTextEx(hTheme, hdcBuf, TaskDialogParts.TDLG_RADIOBUTTONPANE, 0, text, -1, GDI32.DT_LEFT | GDI32.DT_VCENTER | 0x00008000 /* DT_END_ELLIPSIS */, ref rcText, ref dots);
@@ -1227,8 +1227,8 @@ namespace WinPaletter.UI.Dark
                                                     DeleteObject(bgBrush);
 
                                                     // 5. EXTRACT DESIGNATED SYSTEM LOGFONT & DRAW THE WHITE TEXT OVERLAY
-                                                    LOGFONT lf = GetThemedFont(7); // Part 7 maps perfectly to TDLG_CONTENTPANE (Description typography metrics)
-                                                    IntPtr hFont = GDI32.CreateFontIndirect(ref lf);
+                                                    LOGFONT lf = GetThemedFont(7); // Part 7 maps perfectly to TDLG_CONTENTPANE (RawName typography metrics)
+                                                    IntPtr hFont = GDI32.CreateFontIndirect(lf);
                                                     IntPtr oldFont = IntPtr.Zero;
 
                                                     if (hFont != IntPtr.Zero) oldFont = GDI32.SelectObject(hdcScreen, hFont);

@@ -234,11 +234,6 @@ namespace WinPaletter
                     Palette?.Clear();
                     Palette = temporaryList;
 
-                    // 3. OPTIONAL: Force unmanaged GDI+ release if you still see RAM creeping up
-                    // Since Bitmaps use unmanaged memory, forcing a collection here kills the native handles.
-                    GC.Collect();
-                    GC.WaitForPendingFinalizers();
-
                     // Update UI safely
                     ImgPaletteContainer.Controls.Clear();
                     List<ColorItem> colorItems = [];

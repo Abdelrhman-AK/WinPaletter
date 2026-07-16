@@ -74,6 +74,9 @@
                 public string About_Title { get; set; } = "About";
                 public string About_Desc { get; set; } = "Displays application information such as version, build details, credits, and links related to WinPaletter.";
 
+                public string RestorePoints_Title { get; set; } = "WinPaletter Restore Points";
+                public string RestorePoints_Desc { get; set; } = "Manage and create system restore points to ensure you can revert your Windows configuration to a previous stable state.";
+
                 public string UserButton_Desc { get; set; } = "Manages linked user accounts, including the current Windows user account that WinPaletter modifies, and the connected GitHub account, allowing you to switch accounts or manage theme publishing.";
                 public string UserButton_WinAccountPart { get; set; } = "Windows User Account";
                 public string UserButton_GitHubPart { get; set; } = "GitHub Account";

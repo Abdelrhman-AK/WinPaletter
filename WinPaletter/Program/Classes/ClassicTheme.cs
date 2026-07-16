@@ -3,7 +3,7 @@
 // ============================================================================
 // Original Project: ClassicThemeTray
 // Author: spitfirex86
-// Description: Provides tools to enable/disable Windows classic theme for console windows
+// RawName: Provides tools to enable/disable Windows classic theme for console windows
 // License: MIT
 // Source: https://github.com/spitfirex86/ClassicThemeTray/blob/master/ClassicThemeTray/Program.cs
 // ============================================================================
