@@ -17,7 +17,7 @@ namespace AnimatorNS
         {
             _factory = factory ?? (() => new T());
             _resetAction = resetAction;
-            
+
             // Pre-populate pool
             for (int i = 0; i < initialCapacity; i++)
             {
@@ -43,7 +43,7 @@ namespace AnimatorNS
         public void Return(T item)
         {
             if (item == null) return;
-            
+
             _resetAction?.Invoke(item);
             _pool.Push(item);
         }
@@ -91,7 +91,7 @@ namespace AnimatorNS
         public void Return(byte[] array)
         {
             if (array == null) return;
-            
+
             lock (_lock)
             {
                 if (!_pools.TryGetValue(array.Length, out var pool))
@@ -99,7 +99,7 @@ namespace AnimatorNS
                     pool = new Stack<byte[]>();
                     _pools[array.Length] = pool;
                 }
-                
+
                 // Limit pool size to prevent memory bloat
                 if (pool.Count < 50)
                 {

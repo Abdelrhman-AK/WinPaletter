@@ -1249,7 +1249,7 @@ namespace WinPaletter.UI.Dark
                             }
                             catch (Exception ex)
                             {
-                                Program.Log?.Write(Serilog.Events.LogEventLevel.Debug, $"[ProgressDialog Direct Overlay Error] {ex.Message}");
+                                Program.Log?.Debug($"[ProgressDialog Direct Overlay Error]", ex);
                             }
 
                             User32.ReleaseDC(hwnd, hdcScreen);

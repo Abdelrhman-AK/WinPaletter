@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+using WinPaletter;
 using WinPaletter.NativeMethods;
 using WinPaletter.UI.WP;
 
@@ -58,7 +58,7 @@ namespace AnimatorNS
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            if (IsDisposed || Disposing)  return;
+            if (IsDisposed || Disposing) return;
 
             OnFramePainting(e);
 
@@ -84,7 +84,7 @@ namespace AnimatorNS
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"[DoubleBitmapControl] OnPaint failed for '{Name}': {ex}");
+                if (Animator._debug) Program.Log?.Debug($"[DoubleBitmapControl] OnPaint failed for '{Name}'.", ex);
             }
 
             OnFramePainted(e);
@@ -244,7 +244,7 @@ namespace AnimatorNS
             if (OwnerAnimator != null && realControl != null && !realControl.IsDisposed)
             {
                 _fallbackTriggered = true;
-                Debug.WriteLine($"[DoubleBitmapControl] MouseDown on '{Name}' while overlay still present - forcing Animator.ShowSync('{realControl.Name}')");
+                if (Animator._debug) Program.Log?.Debug($"[DoubleBitmapControl] MouseDown on '{Name}' while overlay still present - forcing Animator.ShowSync('{realControl.Name}')");
 
                 BeginInvoke(new MethodInvoker(() =>
                 {
@@ -254,7 +254,7 @@ namespace AnimatorNS
                     }
                     catch (Exception ex)
                     {
-                        Debug.WriteLine($"[DoubleBitmapControl] Fallback ShowSync failed: {ex}");
+                        if (Animator._debug) Program.Log?.Debug($"[DoubleBitmapControl] Fallback ShowSync failed.", ex);
                     }
                 }));
             }
@@ -263,7 +263,7 @@ namespace AnimatorNS
                 // Shouldn't normally happen - no owner Animator or real control known.
                 // Fall back to an immediate, unanimated teardown so input is never
                 // left blocked.
-                Debug.WriteLine($"[DoubleBitmapControl] MouseDown on '{Name}' but no OwnerAnimator/Tag available - forcing immediate removal");
+                if (Animator._debug) Program.Log?.Debug($"[DoubleBitmapControl] MouseDown on '{Name}' but no OwnerAnimator/Tag available - forcing immediate removal");
                 _fallbackTriggered = true;
                 BeginInvoke(new MethodInvoker(ForceImmediateRemoval));
             }
@@ -290,7 +290,7 @@ namespace AnimatorNS
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"[DoubleBitmapControl] ForceImmediateRemoval failed: {ex}");
+                if (Animator._debug) Program.Log?.Debug($"[DoubleBitmapControl] ForceImmediateRemoval failed.", ex);
             }
         }
 

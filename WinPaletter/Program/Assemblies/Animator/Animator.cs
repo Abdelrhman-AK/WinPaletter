@@ -1,16 +1,13 @@
-// Optimized for .NET Framework 2.0, improved memory usage and performance
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using WinPaletter;
 using WinPaletter.NativeMethods;
-using WinPaletter.UI.WP;
 using Timer = System.Windows.Forms.Timer;
 
 namespace AnimatorNS
@@ -30,6 +27,12 @@ namespace AnimatorNS
         public event EventHandler<NonLinearTransfromNeededEventArg> NonLinearTransfromNeeded;
         public event EventHandler<MouseEventArgs> MouseDown;
         public event EventHandler<PaintEventArgs> FramePainted;
+
+#if DEBUG
+        internal static bool _debug = true;
+#else
+        internal static bool _debug = false;
+#endif
 
         [DefaultValue(1500)]
         public int MaxAnimationTime { get; set; }
@@ -295,8 +298,8 @@ namespace AnimatorNS
                         }
                         catch (Exception ex)
                         {
-                            Debug.WriteLine($"[Animator.Work] Failed to marshal OnCompleted to UI thread for '{item.control?.Name}': {ex}");
-                            try { OnCompleted(item); } catch (Exception ex2) { Debug.WriteLine($"[Animator.Work] Fallback OnCompleted also failed: {ex2}"); }
+                            if (_debug) Program.Log?.Debug($"[Animator.Work] Failed to marshal OnCompleted to UI thread for '{item.control?.Name}'", ex);
+                            try { OnCompleted(item); } catch (Exception ex2) { if (_debug) Program.Log?.Debug($"[Animator.Work] Fallback OnCompleted also failed.", ex2); }
                         }
                     }
 
@@ -622,7 +625,7 @@ namespace AnimatorNS
 
         void OnCompleted(QueueItem item)
         {
-            Debug.WriteLine($"[Animator.OnCompleted] control='{item.control?.Name}' mode={item.mode} thread={Thread.CurrentThread.ManagedThreadId}");
+            if (_debug) Program.Log?.Debug($"[Animator.OnCompleted] control='{item.control?.Name}' mode={item.mode} thread={Thread.CurrentThread.ManagedThreadId}");
 
             if (item.controller != null)
             {
@@ -690,10 +693,10 @@ namespace AnimatorNS
                                                 User32.InvalidateRect(tablessControl.Handle, IntPtr.Zero, true);
                                                 User32.UpdateWindow(tablessControl.Handle);
                                             }
-                                            catch (Exception ex) { Debug.WriteLine($"[Animator.OnCompleted] Win32 redraw failed: {ex}"); }
+                                            catch (Exception ex) { if (_debug) Program.Log?.Debug($"[Animator.OnCompleted] Win32 redraw failed", ex); }
                                         }
                                     }
-                                    catch (Exception ex) { Debug.WriteLine($"[Animator.OnCompleted] TablessControl repaint failed: {ex}"); }
+                                    catch (Exception ex) { if (_debug) Program.Log?.Debug($"[Animator.OnCompleted] TablessControl repaint failed", ex); }
                                 }));
                             }
                             else
@@ -706,18 +709,18 @@ namespace AnimatorNS
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine($"[Animator.OnCompleted] Restoring control state failed for '{item.control?.Name}': {ex}");
+                    if (_debug) Program.Log?.Debug($"[Animator.OnCompleted] Restoring control state failed for '{item.control?.Name}'.", ex);
                 }
 
                 // This must run regardless of whether the block above succeeded.
                 try
                 {
                     item.controller.Dispose();
-                    Debug.WriteLine($"[Animator.OnCompleted] Controller disposed for '{item.control?.Name}'");
+                    if (_debug) Program.Log?.Debug($"[Animator.OnCompleted] Controller disposed for '{item.control?.Name}'");
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine($"[Animator.OnCompleted] Controller.Dispose() failed for '{item.control?.Name}': {ex}");
+                    if (_debug) Program.Log?.Debug($"[Animator.OnCompleted] Controller.Dispose() failed for '{item.control?.Name}'.", ex);
                 }
                 item.controller = null;
             }

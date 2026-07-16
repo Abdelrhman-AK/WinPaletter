@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Windows.Forms;
+using WinPaletter;
 using WinPaletter.NativeMethods;
 
 namespace AnimatorNS
@@ -61,7 +61,7 @@ namespace AnimatorNS
 
         public void Dispose()
         {
-            Debug.WriteLine($"[Controller.Dispose] control='{AnimatedControl?.Name}' mode={mode}");
+            if (Animator._debug) Program.Log?.Debug($"[Controller.Dispose] control='{AnimatedControl?.Name}' mode={mode}");
 
             if (ctrlBmp != null)
             {
@@ -99,7 +99,7 @@ namespace AnimatorNS
                 AnimateMode originalMode = mode;
                 Control parent = db.Parent;
                 Rectangle bounds = db.Bounds;
-                Debug.WriteLine($"[Controller.Hide] removing overlay '{db.Name}' for original control '{originalControl?.Name}', mode={originalMode}, invokeRequired={db.InvokeRequired}");
+                if (Animator._debug) Program.Log?.Debug($"[Controller.Hide] removing overlay '{db.Name}' for original control '{originalControl?.Name}', mode={originalMode}, invokeRequired={db.InvokeRequired}");
 
                 DoubleBitmap = null;
 
@@ -270,7 +270,7 @@ namespace AnimatorNS
 
             if (area > LargeAreaThreshold && animation.BlurRadius > 0f)
             {
-                Debug.WriteLine($"[Controller] Large animated area {initialBounds.Width}x{initialBounds.Height} ({area} px) for '{control.Name}' - disabling per-frame blur");
+                if (Animator._debug) Program.Log?.Debug($"[Controller] Large animated area {initialBounds.Width}x{initialBounds.Height} ({area} px) for '{control.Name}' - disabling per-frame blur");
                 effectiveAnimation = new()
                 {
                     SlideCoeff = animation.SlideCoeff,
@@ -304,7 +304,7 @@ namespace AnimatorNS
             if (area > LargeAreaThreshold)
             {
                 timeStepScale = area > 6_000_000 ? 2.5f : 1.6f;
-                Debug.WriteLine($"[Controller] Scaling TimeStep by {timeStepScale}x for large area {initialBounds.Width}x{initialBounds.Height}");
+                if (Animator._debug) Program.Log?.Debug($"[Controller] Scaling TimeStep by {timeStepScale}x for large area {initialBounds.Width}x{initialBounds.Height}");
             }
 
             this.TimeStep = timeStep * timeStepScale * (effectiveAnimation.TimeCoeff == 0f ? 1f : effectiveAnimation.TimeCoeff);
@@ -469,7 +469,7 @@ namespace AnimatorNS
                             }
                             catch (Exception ex)
                             {
-                                Debug.WriteLine($"[Controller.GetBackground] Skipped sibling '{c.Name}': {ex}");
+                                if (Animator._debug) Program.Log?.Debug($"[Controller.GetBackground] Skipped sibling '{c.Name}'.", ex);
                             }
                         }
                         if (c == ctrl) break;

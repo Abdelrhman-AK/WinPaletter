@@ -135,6 +135,9 @@ namespace WinPaletter
         /// <inheritdoc cref="Write"/>
         public void Debug(string messageTemplate) => Write(LogEventLevel.Debug, messageTemplate);
 
+        /// <inheritdoc cref="Write"/>
+        public void Debug(string messageTemplate, Exception ex) => Write(LogEventLevel.Debug, messageTemplate, ex);
+
         /// <summary>
         /// Writes a registry-related log entry when <c>AppLog.Reg</c> is enabled and the entry
         /// falls within <paramref name="scope"/>.
