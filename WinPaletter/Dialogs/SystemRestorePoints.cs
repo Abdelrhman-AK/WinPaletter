@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -8,7 +9,7 @@ namespace WinPaletter.Dialogs
 {
     public partial class SystemRestorePoints : WinPaletter.UI.WP.Form
     {
-        private static readonly ImageList imageList = new() { ImageSize = new(24, 24), ColorDepth = ColorDepth.Depth32Bit };
+        private static readonly ImageList imageList = new() { ImageSize = new(20, 20), ColorDepth = ColorDepth.Depth32Bit };
         private bool isBusy = false;
 
         public SystemRestorePoints()
@@ -79,13 +80,19 @@ namespace WinPaletter.Dialogs
                 string.Format(Program.Localization.Strings.Messages.SysRestore_Delete_Msg1, Program.SystemPartition)) == DialogResult.Yes)
             {
                 SetBusyState(true);
-                bool success = await Task.Run(() => SystemRestoreHelper.DeleteRestorePoint(rp.SequenceNumber));
+                bool success = await Task.Run(() => SystemRestoreHelper.DeleteRestorePoint(rp.SequenceNumber, true));
 
                 if (!success)
                 {
                     if (MsgBox(string.Format(Program.Localization.Strings.Messages.SysRestore_Delete_Error0, rp.Name), MessageBoxButtons.YesNo, MessageBoxIcon.Error, Program.Localization.Strings.Messages.SysRestore_Delete_Error1) == DialogResult.Yes)
                         StartRstrui();
                 }
+                else
+                {
+                    respoints.Items.Remove(respoints.SelectedItems[0]);
+                }
+
+                SetBusyState(false);
                 await RefreshListAsync();
             }
         }
@@ -101,13 +108,30 @@ namespace WinPaletter.Dialogs
                 int failed = await Task.Run(() =>
                 {
                     int f = 0;
-                    foreach (ListViewItem item in respoints.Items) if (item.Tag is RestorePointInfo rp && !SystemRestoreHelper.DeleteRestorePoint(rp.SequenceNumber)) f++;
+                    foreach (ListViewItem item in respoints.Items)
+                    {
+                        if (item.Tag is RestorePointInfo rp)
+                        {
+                            if (SystemRestoreHelper.DeleteRestorePoint(rp.SequenceNumber, false))
+                            {
+                                respoints.Items.Remove(item);
+                            }
+                            else
+                            {
+                                f++;
+                            }
+                        }
+                    }
                     return f;
                 });
 
                 if (failed > 0 && MsgBox(Program.Localization.Strings.Messages.SysRestore_DeleteAll_Error0, MessageBoxButtons.YesNo, MessageBoxIcon.Error, Program.Localization.Strings.Messages.SysRestore_Delete_Error1) == DialogResult.Yes)
+                {
                     StartRstrui();
+                }
 
+                Thread.Sleep(500); // Wait to flush restore point list in system
+                SetBusyState(false);
                 await RefreshListAsync();
             }
         }
@@ -124,7 +148,7 @@ namespace WinPaletter.Dialogs
         private async void Button4_Click(object sender, EventArgs e)
         {
             string name = InputBox(Program.Localization.Strings.Messages.SysRestore_EnterName);
-            if (!string.IsNullOrWhiteSpace(name) && SystemRestoreHelper.CreateRestorePoint(name)) await RefreshListAsync();
+            if (!string.IsNullOrWhiteSpace(name) && SystemRestoreHelper.CreateRestorePoint(name, true)) await RefreshListAsync();
         }
 
         private void respoints_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -139,5 +163,5 @@ namespace WinPaletter.Dialogs
         private void Button7_Click(object sender, EventArgs e) => Close();
 
         private void button3_Click(object sender, EventArgs e) => StartRstrui();
-   }
+    }
 }

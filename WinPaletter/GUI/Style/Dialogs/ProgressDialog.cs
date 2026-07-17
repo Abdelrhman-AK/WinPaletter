@@ -1,6 +1,10 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.AxHost;
 using static WinPaletter.NativeMethods.User32;
@@ -40,7 +44,7 @@ namespace WinPaletter.UI.WP
         private int _percentProgress;
         private IntPtr _ownerHandle;
         private IntPtr _dialogHandle;
-        private readonly BackgroundWorker _backgroundWorker = new BackgroundWorker();
+        private readonly BackgroundWorker _backgroundWorker = new();
         private IntPtr _originalWndProc = IntPtr.Zero;
         private NativeMethods.User32.WndProcDelegate _hookedWndProcDelegate;
         private IntPtr _darkBackgroundBrush = IntPtr.Zero;
@@ -263,35 +267,168 @@ namespace WinPaletter.UI.WP
 
         private void SubclassDialog(IntPtr hwnd)
         {
-            if (hwnd == IntPtr.Zero || !Program.Style.DarkMode) return;
+            if (hwnd == IntPtr.Zero || !Program.Style.DarkMode || !NativeMethods.User32.IsWindow(hwnd)) return;
+
+            // Clean up any previous subclass first
+            RemoveSubclass();
+
+            // Small delay to ensure window is fully created (CRITICAL FOR FORCED DARK MODE APPLICATION)
+            Thread.Sleep(10);
 
             // Create a dark brush matching your app's theme background color
-            _darkBackgroundBrush = NativeMethods.GDI32.CreateSolidBrush(0x202020);
+            if (_darkBackgroundBrush == IntPtr.Zero)
+            {
+                _darkBackgroundBrush = NativeMethods.GDI32.CreateSolidBrush(0x202020);
+                if (_darkBackgroundBrush == IntPtr.Zero)
+                    return;
+            }
 
             // Keep the delegate alive in a field so garbage collection doesn't kill it
-            _hookedWndProcDelegate = new NativeMethods.User32.WndProcDelegate(ProgressDialogWndProc);
+            if (_hookedWndProcDelegate == null)
+            {
+                _hookedWndProcDelegate = new NativeMethods.User32.WndProcDelegate(ProgressDialogWndProc);
+            }
+
+            IntPtr lpfnWndProc = Marshal.GetFunctionPointerForDelegate(_hookedWndProcDelegate);
+            if (lpfnWndProc == IntPtr.Zero) return;
 
             // Subclass the main dialog window
-            long lpfnWndProc = Marshal.GetFunctionPointerForDelegate(_hookedWndProcDelegate).ToInt64();
-            _originalWndProc = (IntPtr)NativeMethods.User32.SetWindowLongPtr(hwnd, -4, (IntPtr)lpfnWndProc);
+            IntPtr result = NativeMethods.User32.SetWindowLongPtr(hwnd, -4, lpfnWndProc);
+            if (result == IntPtr.Zero || result == new IntPtr(-1))
+            {
+                if (_darkBackgroundBrush != IntPtr.Zero)
+                {
+                    NativeMethods.GDI32.DeleteObject(_darkBackgroundBrush);
+                    _darkBackgroundBrush = IntPtr.Zero;
+                }
+                _hookedWndProcDelegate = null;
+                return;
+            }
 
-            // CRITICAL: Strip the modern UX themes from the static text child controls.
-            // This forces Windows to fall back to classic drawing, which honors WM_CTLCOLORSTATIC.
+            _originalWndProc = result;
+            _dialogHandle = hwnd;
+
+            // Strip the modern UX themes from the static text child controls.
             NativeMethods.User32.EnumChildWindows(hwnd, (childHwnd, lParam) =>
             {
-                System.Text.StringBuilder className = new(256);
+                StringBuilder className = new(256);
                 NativeMethods.User32.GetClassName(childHwnd, className, className.Capacity);
 
                 if (className.ToString().Equals("Static", StringComparison.OrdinalIgnoreCase))
                 {
-                    // Passing empty strings strips the UxTheme engine controls off this element
                     NativeMethods.UxTheme.SetWindowTheme(childHwnd, "", "");
                 }
                 return true;
             }, IntPtr.Zero);
 
-            // Force the window and its children to redraw immediately with the new configurations
-            NativeMethods.User32.RedrawWindow(hwnd, IntPtr.Zero, IntPtr.Zero, 0x0101 /* RDW_INVALIDATE | RDW_ERASE */);
+            // Force the window and its children to redraw
+            NativeMethods.User32.RedrawWindow(hwnd, IntPtr.Zero, IntPtr.Zero, 0x0101);
+        }
+
+        private void RemoveSubclass()
+        {
+            if (_dialogHandle != IntPtr.Zero && _originalWndProc != IntPtr.Zero)
+            {
+                if (NativeMethods.User32.IsWindow(_dialogHandle))
+                {
+                    try
+                    {
+                        NativeMethods.User32.SetWindowLongPtr(_dialogHandle, (int)NativeMethods.User32.WindowsLongs.WndProc, _originalWndProc);
+                    }
+                    catch { }
+                }
+                _originalWndProc = IntPtr.Zero;
+                _dialogHandle = IntPtr.Zero;
+            }
+
+            if (_darkBackgroundBrush != IntPtr.Zero)
+            {
+                try
+                {
+                    NativeMethods.GDI32.DeleteObject(_darkBackgroundBrush);
+                }
+                catch { }
+                finally
+                {
+                    _darkBackgroundBrush = IntPtr.Zero;
+                }
+            }
+        }
+
+        private IntPtr GetDialogHandle()
+        {
+            // First try to find by title (the most reliable way)
+            if (!string.IsNullOrEmpty(WindowTitle))
+            {
+                IntPtr hwnd = NativeMethods.User32.FindWindow(null, WindowTitle);
+                if (hwnd != IntPtr.Zero)
+                {
+                    NativeMethods.User32.GetWindowThreadProcessId(hwnd, out uint processId);
+                    if (processId == (uint)System.Diagnostics.Process.GetCurrentProcess().Id && NativeMethods.User32.IsWindow(hwnd))
+                        return hwnd;
+                }
+            }
+
+            // If still not found, wait a bit and try again
+            for (int i = 0; i < 10; i++)
+            {
+                Thread.Sleep(50); // (CRITICAL FOR FORCED DARK MODE APPLICATION)
+                if (!string.IsNullOrEmpty(WindowTitle))
+                {
+                    IntPtr hwnd = NativeMethods.User32.FindWindow(null, WindowTitle);
+                    if (hwnd != IntPtr.Zero)
+                    {
+                        NativeMethods.User32.GetWindowThreadProcessId(hwnd, out uint processId);
+                        if (processId == (uint)System.Diagnostics.Process.GetCurrentProcess().Id && NativeMethods.User32.IsWindow(hwnd))
+                            return hwnd;
+                    }
+                }
+            }
+
+            return IntPtr.Zero;
+        }
+
+        private void CleanupDialog()
+        {
+            RemoveSubclass();
+
+            if (_dialog != null)
+            {
+                try
+                {
+                    _dialog.StopProgressDialog();
+                }
+                catch (Exception ex)
+                {
+                    Program.Log?.Debug($"CleanupDialog: Exception stopping dialog", ex);
+                }
+                finally
+                {
+                    Marshal.FinalReleaseComObject(_dialog);
+                    _dialog = null;
+                }
+            }
+
+            if (_currentAnimationModuleHandle != null)
+            {
+                _currentAnimationModuleHandle.Dispose();
+                _currentAnimationModuleHandle = null;
+            }
+
+            if (_ownerHandle != IntPtr.Zero)
+            {
+                try
+                {
+                    NativeMethods.User32.EnableWindow(_ownerHandle, true);
+                }
+                catch (Exception ex)
+                {
+                    Program.Log?.Debug($"CleanupDialog: Exception enabling owner", ex);
+                }
+            }
+
+            // Don't reset _dialogHandle and _originalWndProc here - they're reset in RemoveSubclass
+            Program.Log?.Debug("CleanupDialog: Reset handles and delegates");
         }
 
         private IntPtr ProgressDialogWndProc(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam)
@@ -322,7 +459,11 @@ namespace WinPaletter.UI.WP
 
         private void RunProgressDialog(IntPtr owner, object argument)
         {
-            if (_backgroundWorker.IsBusy) throw new InvalidOperationException("The progress dialog is already running.");
+            if (_backgroundWorker.IsBusy)
+            {
+                Program.Log?.Debug("RunProgressDialog: Dialog is already running");
+                throw new InvalidOperationException("The progress dialog is already running.");
+            }
 
             if (Animation != null)
             {
@@ -330,8 +471,9 @@ namespace WinPaletter.UI.WP
                 {
                     _currentAnimationModuleHandle = Animation.LoadLibrary();
                 }
-                catch
+                catch (Exception ex)
                 {
+                    Program.Log?.Debug($"RunProgressDialog: Failed to load animation", ex);
                     _currentAnimationModuleHandle = null;
                 }
             }
@@ -339,14 +481,11 @@ namespace WinPaletter.UI.WP
             _cancellationPending = false;
             _ownerHandle = owner;
             _dialogHandle = IntPtr.Zero;
+            _originalWndProc = IntPtr.Zero;
+            _hookedWndProcDelegate = null;
 
             try
             {
-                // "new Interop.IProgressDialog()" is not a typo - IProgressDialog carries a
-                // [CoClass] attribute, and the C# compiler specifically recognizes "new" on a
-                // CoClass-attributed interface, translating it into CoCreateInstance(CLSID) then
-                // QueryInterface(IID). This only works now because IProgressDialog's [Guid] was
-                // corrected to the real IID_IProgressDialog - see the interface's doc comment.
                 _dialog = new Interop.IProgressDialog();
 
                 _dialog.SetTitle(WindowTitle);
@@ -356,13 +495,19 @@ namespace WinPaletter.UI.WP
                     _dialog.SetAnimation(_currentAnimationModuleHandle.DangerousGetHandle(), (ushort)Animation.ResourceId);
                 }
 
-                if (!string.IsNullOrEmpty(CancellationText)) _dialog.SetCancelMsg(CancellationText, null);
+                if (!string.IsNullOrEmpty(CancellationText))
+                {
+                    _dialog.SetCancelMsg(CancellationText, null);
+                }
 
                 _dialog.SetLine(1, Text, UseCompactPathsForText, IntPtr.Zero);
                 _dialog.SetLine(2, Description, UseCompactPathsForDescription, IntPtr.Zero);
 
                 Interop.ProgressDialogFlags flags = Interop.ProgressDialogFlags.Normal;
-                if (owner != IntPtr.Zero) flags |= Interop.ProgressDialogFlags.Modal;
+                if (owner != IntPtr.Zero)
+                {
+                    flags |= Interop.ProgressDialogFlags.Modal;
+                }
 
                 switch (ProgressBarStyle)
                 {
@@ -370,80 +515,90 @@ namespace WinPaletter.UI.WP
                         flags |= Interop.ProgressDialogFlags.NoProgressBar;
                         break;
                     case ProgressBarStyle.MarqueeProgressBar:
-                        // Marquee style requires Vista+; older shells simply don't support it, so fall back to hiding the progress bar entirely on XP.
-                        if (!OS.WXP) flags |= Interop.ProgressDialogFlags.MarqueeProgress;
-                        else flags |= Interop.ProgressDialogFlags.NoProgressBar;
+                        if (!OS.WXP)
+                        {
+                            flags |= Interop.ProgressDialogFlags.MarqueeProgress;
+                        }
+                        else
+                        {
+                            flags |= Interop.ProgressDialogFlags.NoProgressBar;
+                        }
                         break;
                 }
 
-                if (ShowTimeRemaining) flags |= Interop.ProgressDialogFlags.AutoTime;
-                if (!ShowCancelButton) flags |= Interop.ProgressDialogFlags.NoCancel;
-                if (!MinimizeBox) flags |= Interop.ProgressDialogFlags.NoMinimize;
+                if (ShowTimeRemaining)
+                {
+                    flags |= Interop.ProgressDialogFlags.AutoTime;
+                }
+                if (!ShowCancelButton)
+                {
+                    flags |= Interop.ProgressDialogFlags.NoCancel;
+                }
+                if (!MinimizeBox)
+                {
+                    flags |= Interop.ProgressDialogFlags.NoMinimize;
+                }
 
                 _dialog.StartProgressDialog(owner, null, flags, IntPtr.Zero);
+                Thread.Sleep(50); // CRITICAL FOR FORCED DARK MODE APPLICATION
 
+                // Wait for the dialog to be created and get its handle
                 _dialogHandle = GetDialogHandle();
-                DialogHandleAvailable?.Invoke(this, _dialogHandle);
+                Program.Log?.Debug($"RunProgressDialog: Got dialog handle=0x{_dialogHandle.ToInt64():X}");
 
-                // 1. Set the main window title/frame to dark mode
-                ApplyDarkModeToWindow(_dialogHandle);
+                if (_dialogHandle == IntPtr.Zero)
+                {
+                    Program.Log?.Debug("RunProgressDialog: Failed to get dialog handle!");
+                }
+                else
+                {
+                    ApplyDarkModeToWindow(_dialogHandle);
+                    SubclassDialog(_dialogHandle);
+                    DialogHandleAvailable?.Invoke(this, _dialogHandle);
+                }
 
-                // 2. Subclass the window to intercept the text painting messages
-                SubclassDialog(_dialogHandle);
-
+                Program.Log?.Debug("RunProgressDialog: Starting BackgroundWorker");
                 _backgroundWorker.RunWorkerAsync(argument);
+
+                while (_backgroundWorker.IsBusy)
+                {
+                    Application.DoEvents();
+                    Thread.Sleep(10);
+                }
+
+                Program.Log?.Debug("RunProgressDialog: BackgroundWorker completed");
             }
-            catch
+            catch (Exception ex)
             {
+                Program.Log?.Debug($"RunProgressDialog: Exception: {ex.Message}\n{ex.StackTrace}");
+                // Clean up on exception
+                RemoveSubclass();
                 if (_dialog != null)
                 {
+                    try { _dialog.StopProgressDialog(); } catch { }
                     Marshal.FinalReleaseComObject(_dialog);
                     _dialog = null;
                 }
                 throw;
             }
-        }
-
-        private IntPtr GetDialogHandle()
-        {
-            IntPtr hwnd = NativeMethods.User32.FindWindow("ProgressDialog", null);
-            if (hwnd != IntPtr.Zero)
+            finally
             {
-                NativeMethods.User32.GetWindowThreadProcessId(hwnd, out uint processId);
-                if (processId == (uint)System.Diagnostics.Process.GetCurrentProcess().Id) return hwnd;
+                // Ensure cleanup happens even if the dialog is closed unexpectedly
+                if (!_backgroundWorker.IsBusy)
+                {
+                    Program.Log?.Debug("RunProgressDialog: Calling CleanupDialog from finally");
+                    CleanupDialog();
+                }
             }
-
-            if (!string.IsNullOrEmpty(WindowTitle))
-            {
-                hwnd = NativeMethods.User32.FindWindow(null, WindowTitle);
-                if (hwnd != IntPtr.Zero) return hwnd;
-            }
-
-            return IntPtr.Zero;
         }
-
-        private void _backgroundWorker_DoWork(object sender, DoWorkEventArgs e) => OnDoWork(e);
 
         private void _backgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if (_dialog != null)
-            {
-                _dialog.StopProgressDialog();
-                Marshal.FinalReleaseComObject(_dialog);
-                _dialog = null;
-            }
-
-            if (_currentAnimationModuleHandle != null)
-            {
-                _currentAnimationModuleHandle.Dispose();
-                _currentAnimationModuleHandle = null;
-            }
-
-            if (_ownerHandle != IntPtr.Zero) NativeMethods.User32.EnableWindow(_ownerHandle, true);
-
-            _dialogHandle = IntPtr.Zero;
+            CleanupDialog();
             OnRunWorkerCompleted(new RunWorkerCompletedEventArgs((!e.Cancelled && e.Error == null) ? e.Result : null, e.Error, e.Cancelled));
         }
+
+        private void _backgroundWorker_DoWork(object sender, DoWorkEventArgs e) => OnDoWork(e);
 
         private void _backgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {

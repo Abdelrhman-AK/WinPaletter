@@ -35,7 +35,6 @@
             this.Button4 = new WinPaletter.UI.WP.Button();
             this.button1 = new WinPaletter.UI.WP.Button();
             this.button2 = new WinPaletter.UI.WP.Button();
-            this.separatorV1 = new WinPaletter.UI.WP.SeparatorV();
             this.respoints = new WinPaletter.UI.WP.ListView();
             this.bottom_buttons = new WinPaletter.UI.WP.GroupBox();
             this.button3 = new WinPaletter.UI.WP.Button();
@@ -71,7 +70,6 @@
             this.flowLayoutPanel1.Controls.Add(this.Button4);
             this.flowLayoutPanel1.Controls.Add(this.button1);
             this.flowLayoutPanel1.Controls.Add(this.button2);
-            this.flowLayoutPanel1.Controls.Add(this.separatorV1);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(9, 7);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(868, 40);
@@ -148,18 +146,6 @@
             this.button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // separatorV1
-            // 
-            this.separatorV1.AlternativeLook = false;
-            this.separatorV1.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.separatorV1.BackColor = System.Drawing.Color.Transparent;
-            this.separatorV1.Location = new System.Drawing.Point(274, 5);
-            this.separatorV1.Name = "separatorV1";
-            this.separatorV1.Size = new System.Drawing.Size(1, 30);
-            this.separatorV1.TabIndex = 217;
-            this.separatorV1.TabStop = false;
-            this.separatorV1.Text = "separatorV1";
             // 
             // respoints
             // 
@@ -307,7 +293,6 @@
         internal System.Windows.Forms.Label Label9;
         internal UI.WP.Button Button7;
         internal UI.WP.Button button2;
-        private UI.WP.SeparatorV separatorV1;
         internal UI.WP.Button button3;
     }
 }

@@ -94,6 +94,10 @@ namespace WinPaletter.NativeMethods
         [DllImport(_user32, SetLastError = true)]
         public static extern bool IsWindowVisible(IntPtr hWnd);
 
+        [DllImport(_user32)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool IsChild(IntPtr hWndParent, IntPtr hWnd);
+
         /// <summary>
         /// Retrieves the specified system metric or system configuration setting.
         /// </summary>
@@ -652,16 +656,6 @@ namespace WinPaletter.NativeMethods
         private static extern int GetWindowLong32(IntPtr hWnd, int nIndex);
 
         /// <summary>
-        /// Sets a new value for the specified window attribute (32-bit version).
-        /// </summary>
-        /// <param name="hWnd">A handle to the window whose attribute is to be modified.</param>
-        /// <param name="nIndex">The zero-based offset of the attribute to set, such as GWL_STYLE or GWL_EXSTYLE.</param>
-        /// <param name="dwNewLong">The new value to assign to the specified window attribute.</param>
-        /// <returns>The previous value of the specified attribute. Returns zero on failure.</returns>
-        [DllImport(_user32, EntryPoint = "SetWindowLong")]
-        private static extern int SetWindowLong32(IntPtr hWnd, int nIndex, int dwNewLong);
-
-        /// <summary>
         /// Retrieves information about the specified window (64-bit version).
         /// </summary>
         /// <param name="hWnd">A handle to the window whose information is to be retrieved.</param>
@@ -669,16 +663,6 @@ namespace WinPaletter.NativeMethods
         /// <returns>The requested window attribute as an <see cref="IntPtr"/>. Returns zero on failure.</returns>
         [DllImport(_user32, EntryPoint = "GetWindowLongPtr")]
         private static extern IntPtr GetWindowLongPtr64(IntPtr hWnd, int nIndex);
-
-        /// <summary>
-        /// Sets a new value for the specified window attribute (64-bit version).
-        /// </summary>
-        /// <param name="hWnd">A handle to the window whose attribute is to be modified.</param>
-        /// <param name="nIndex">The zero-based offset of the attribute to set, such as GWL_STYLE or GWL_EXSTYLE.</param>
-        /// <param name="dwNewLong">The new value to assign to the specified window attribute.</param>
-        /// <returns>The previous value of the specified attribute as an <see cref="IntPtr"/>. Returns zero on failure.</returns>
-        [DllImport(_user32, EntryPoint = "SetWindowLongPtr")]
-        private static extern IntPtr SetWindowLongPtr64(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
 
         /// <summary>
         /// Retrieves information about the specified window attribute, automatically selecting the correct
@@ -715,6 +699,26 @@ namespace WinPaletter.NativeMethods
             if (Environment.Is64BitProcess) return SetWindowLongPtr64(hWnd, nIndex, dwNewLong);
             else return new IntPtr(SetWindowLong32(hWnd, nIndex, dwNewLong.ToInt32()));
         }
+
+        /// <summary>
+        /// Sets a new value for the specified window attribute (64-bit version).
+        /// </summary>
+        /// <param name="hWnd">A handle to the window whose attribute is to be modified.</param>
+        /// <param name="nIndex">The zero-based offset of the attribute to set, such as GWL_STYLE or GWL_EXSTYLE.</param>
+        /// <param name="dwNewLong">The new value to assign to the specified window attribute.</param>
+        /// <returns>The previous value of the specified attribute as an <see cref="IntPtr"/>. Returns zero on failure.</returns>
+        [DllImport(_user32, EntryPoint = "SetWindowLongPtr", SetLastError = true)]
+        private static extern IntPtr SetWindowLongPtr64(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
+
+        /// <summary>
+        /// Sets a new value for the specified window attribute (32-bit version).
+        /// </summary>
+        /// <param name="hWnd">A handle to the window whose attribute is to be modified.</param>
+        /// <param name="nIndex">The zero-based offset of the attribute to set, such as GWL_STYLE or GWL_EXSTYLE.</param>
+        /// <param name="dwNewLong">The new value to assign to the specified window attribute.</param>
+        /// <returns>The previous value of the specified attribute. Returns zero on failure.</returns>
+        [DllImport(_user32, EntryPoint = "SetWindowLong", SetLastError = true)]
+        private static extern int SetWindowLong32(IntPtr hWnd, int nIndex, int dwNewLong);
 
         /// <summary>
         /// Sets a specified attribute or property for a window identified by its handle, accepting a
@@ -799,6 +803,9 @@ namespace WinPaletter.NativeMethods
         /// </summary>
         [DllImport(_user32, SetLastError = true)]
         public static extern IntPtr SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+
+        [DllImport(_user32, CharSet = CharSet.Auto)]
+        public static extern IntPtr DefWindowProc(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
 
         /// <summary>
         /// Passes a window message to the specified window procedure for processing.

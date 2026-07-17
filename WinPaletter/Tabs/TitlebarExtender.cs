@@ -61,7 +61,7 @@ namespace WinPaletter.Tabs
                     accentOnTitlebars = value;
                 }
             }
-        }
+        } 
         private static bool accentOnTitlebars = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "ColorPrevalence", 1) == 1;
 
         public bool _formFocused = true;

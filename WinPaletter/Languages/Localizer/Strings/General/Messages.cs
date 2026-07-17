@@ -58,8 +58,8 @@
                 public string SysRestore_Delete_Error0 { get; set; } = "Could not delete the restore point \"{0}\". Please delete it manually using the Windows System Restore utility.";
                 public string SysRestore_Delete_Error1 { get; set; } = "Press 'Yes' to open the Windows System Restore utility.";
                 public string SysRestore_DeleteAll_Msg0 { get; set; } = "Are you sure you want to delete all system restore points made by WinPaletter?";
-                public string SysRestore_DeleteAll_Msg1 { get; set; } = "This will free up {0} on your system partition ({1}:), but you will no longer be able to restore your system to any point.";
-                public string SysRestore_DeleteAll_Error0 { get; set; } = "Could not delete {0} restore point\\s. Please do deletion manually using the Windows System Restore utility.";
+                public string SysRestore_DeleteAll_Msg1 { get; set; } = "This will free up less than {0} on your system partition ({1}:). {0} is the total size of all restore points created by Windows and WinPaletter. However, you will no longer be able to restore your system to any previous restore point.";
+                public string SysRestore_DeleteAll_Error0 { get; set; } = "Could not delete some or all restore points. Please do deletion manually using the Windows System Restore utility.";
                 public string SysRestore_EnterName { get; set; } = "Enter restore point name here";
                 public string RerunSetup_Msg0 { get; set; } = "WinPaletter will launch setup in the next application session when you press 'Yes'.";
                 public string ExitWinPaletter { get; set; } = "Do you want to restart WinPaletter now?";

@@ -119,7 +119,6 @@ namespace WinPaletter
             Program.ToolTip.SetToolTip(Button12, T.About_Title, T.About_Desc, Button12.ImageGlyph);
             Program.ToolTip.SetToolTip(button16, T.RestorePoints_Title, T.RestorePoints_Desc, button16.ImageGlyph);
 
-
             LoadOSData_ToolTip();
             LoadData(true);
         }

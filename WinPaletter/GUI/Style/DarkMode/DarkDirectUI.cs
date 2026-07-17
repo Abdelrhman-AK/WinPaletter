@@ -374,8 +374,8 @@ namespace WinPaletter.UI.Dark
         public delegate bool WNDENUMPROC(IntPtr hWnd, IntPtr lParam);
         private static readonly UIntPtr kProgressDuiSubclassId = (UIntPtr)0xDEADBEEF02UL;
         private static readonly SUBCLASSPROC s_progressDuiProc = ProgressDuiSubclassProc;
-        private static User32.HookProc s_progressThreadHookDelegate;
-        private static IntPtr s_hProgressThreadHook = IntPtr.Zero;
+        private static readonly Dictionary<uint, IntPtr> s_progressThreadHooks = [];
+        private static readonly Dictionary<uint, User32.HookProc> s_progressThreadHookDelegates = [];
         private static IntPtr s_solidSecondaryBrush = IntPtr.Zero;
 
         private static bool IsDarkThemeActive(string dark, string baseClass)
@@ -1262,11 +1262,12 @@ namespace WinPaletter.UI.Dark
                 case (int)User32.WindowsMessage.Destroy:
                     RemoveWindowSubclass(hwnd, s_progressDuiProc, uIdSubclass);
 
-                    if (s_hProgressThreadHook != IntPtr.Zero)
+                    uint destroyedThreadId = User32.GetWindowThreadProcessId(hwnd, out _);
+                    if (destroyedThreadId != 0 && s_progressThreadHooks.TryGetValue(destroyedThreadId, out IntPtr hHookToRemove))
                     {
-                        User32.UnhookWindowsHookEx(s_hProgressThreadHook);
-                        s_hProgressThreadHook = IntPtr.Zero;
-                        s_progressThreadHookDelegate = null;
+                        User32.UnhookWindowsHookEx(hHookToRemove);
+                        s_progressThreadHooks.Remove(destroyedThreadId);
+                        s_progressThreadHookDelegates.Remove(destroyedThreadId);
                     }
                     break;
             }
@@ -1287,14 +1288,16 @@ namespace WinPaletter.UI.Dark
         }
 
         /// <summary>
-        /// Manipulates the visual style of a progress dialog window to apply dark mode theming. This method checks for the presence of native dark theme support and applies appropriate window themes and subclass procedures to ensure that the progress dialog and its child controls are rendered correctly in dark mode.
+        /// Manipulates the visual style of a progress dialog window to apply dark mode theming.
         /// </summary>
-        /// <param name="hwndPD"></param>
         public static void DarkenProgressDialog(IntPtr hwndPD)
         {
             if (!Program.Style.DarkMode) return;
             if (OS.WXP || OS.WVista || OS.W7 || OS.W8x) return;
             if (hwndPD == IntPtr.Zero) return;
+
+            // Clean up any existing state for this window first
+            CleanupProgressDialog(hwndPD);
 
             bool hasNativeTheme = IsDarkThemeActive("DarkMode_Explorer::TaskDialog", "TaskDialog") || IsDarkThemeActive("DarkMode_DarkTheme::TaskDialog", "TaskDialog");
             bool hasCopyEngine = IsDarkThemeActive("DarkMode_CopyEngine::Progress", "Progress");
@@ -1305,18 +1308,17 @@ namespace WinPaletter.UI.Dark
             // GET THE BACKGROUND THREAD ID MANAGING THE PROGRESS DIALOG
             uint progressThreadId = User32.GetWindowThreadProcessId(hwndPD, out _);
 
-            if (progressThreadId != 0 && s_hProgressThreadHook == IntPtr.Zero)
+            if (progressThreadId != 0 && !s_progressThreadHooks.ContainsKey(progressThreadId))
             {
-                // Install a thread-context hook to intercept messages within the background thread
-                s_progressThreadHookDelegate = (int nCode, IntPtr wParam, IntPtr lParam) =>
+                User32.HookProc hookDelegate = null;
+                hookDelegate = (int nCode, IntPtr wParam, IntPtr lParam) =>
                 {
                     if (nCode >= 0 && lParam != IntPtr.Zero)
                     {
-                        // Structure mapping to capture window activation/creation events
                         var cwp = (User32.CWPSTRUCT)Marshal.PtrToStructure(lParam, typeof(User32.CWPSTRUCT));
 
-                        // Check if message targets a valid window structure handle
-                        if (cwp.hwnd != IntPtr.Zero)
+                        // Scope to descendants of THIS progress dialog only
+                        if (cwp.hwnd != IntPtr.Zero && User32.IsChild(hwndPD, cwp.hwnd))
                         {
                             System.Text.StringBuilder className = new(256);
                             User32.GetClassName(cwp.hwnd, className, className.Capacity);
@@ -1324,21 +1326,42 @@ namespace WinPaletter.UI.Dark
 
                             if (clsName == "ProgressDialogUI" || clsName == "DirectUIHWND")
                             {
-                                // We are now executing INSIDE the correct thread context! SetWindowSubclass will succeed.
                                 if (!GetWindowSubclass(cwp.hwnd, s_progressDuiProc, kProgressDuiSubclassId, out _))
                                 {
-                                    bool success = SetWindowSubclass(cwp.hwnd, s_progressDuiProc, kProgressDuiSubclassId, IntPtr.Zero);
+                                    SetWindowSubclass(cwp.hwnd, s_progressDuiProc, kProgressDuiSubclassId, IntPtr.Zero);
                                 }
                             }
                         }
                     }
-                    return User32.CallNextHookEx(s_hProgressThreadHook, nCode, wParam, lParam);
+                    IntPtr selfHook = s_progressThreadHooks.TryGetValue(progressThreadId, out IntPtr h) ? h : IntPtr.Zero;
+                    return User32.CallNextHookEx(selfHook, nCode, wParam, lParam);
                 };
 
-                s_hProgressThreadHook = User32.SetWindowsHookEx(User32.WH_CALLWNDPROC, s_progressThreadHookDelegate, IntPtr.Zero, progressThreadId);
+                IntPtr hHook = User32.SetWindowsHookEx(User32.WH_CALLWNDPROC, hookDelegate, IntPtr.Zero, progressThreadId);
+
+                if (hHook != IntPtr.Zero)
+                {
+                    s_progressThreadHookDelegates[progressThreadId] = hookDelegate;
+                    s_progressThreadHooks[progressThreadId] = hHook;
+                }
             }
 
-            // Enumerate standard Win32 child controls that leak out to style their frames
+            // Fallback: subclass DirectUI child directly if it already exists
+            EnumChildWindows(hwndPD, delegate (IntPtr hwndChild, IntPtr lp)
+            {
+                System.Text.StringBuilder cn = new(256);
+                User32.GetClassName(hwndChild, cn, cn.Capacity);
+                string cls = cn.ToString();
+
+                if ((cls == "ProgressDialogUI" || cls == "DirectUIHWND") &&
+                    !GetWindowSubclass(hwndChild, s_progressDuiProc, kProgressDuiSubclassId, out _))
+                {
+                    SetWindowSubclass(hwndChild, s_progressDuiProc, kProgressDuiSubclassId, IntPtr.Zero);
+                }
+                return true;
+            }, IntPtr.Zero);
+
+            // Enumerate standard Win32 child controls
             EnumChildWindows(hwndPD, delegate (IntPtr hwndChild, IntPtr lp)
             {
                 NativeMethods.IUIAutomationElement el;
@@ -1359,25 +1382,14 @@ namespace WinPaletter.UI.Dark
                 return true;
             }, IntPtr.Zero);
 
-            // Force dark mode style for progressbar
+            // Force dark mode style
             SendMessage(hwndPD, (int)User32.WindowsMessage.SysColorChange, IntPtr.Zero, IntPtr.Zero);
             SendMessage(hwndPD, (int)User32.WindowsMessage.ThemeChanged, IntPtr.Zero, IntPtr.Zero);
-
-            //EnumChildWindows(hwndPD, delegate (IntPtr hwndDuiChild, IntPtr lp)
-            //{
-            //  SendMessage(hwndDuiChild, (int)User32.WindowsMessage.SysColorChange, IntPtr.Zero, IntPtr.Zero);
-            //  SendMessage(hwndDuiChild, (int)User32.WindowsMessage.ThemeChanged, IntPtr.Zero, IntPtr.Zero);
-            //    return true;
-            //}, IntPtr.Zero);
-
-            //RedrawWindow(hwndPD, IntPtr.Zero, IntPtr.Zero, RDW_INVALIDATE | RDW_UPDATENOW | RDW_ALLCHILDREN);
         }
 
         /// <summary>
-        /// Manipulates the visual style of a TaskDialog window to apply dark mode theming. This method checks for the presence of native dark theme support and applies appropriate window themes and subclass procedures to ensure that the TaskDialog and its child controls are rendered correctly in dark mode.
+        /// Manipulates the visual style of a TaskDialog window to apply dark mode theming.
         /// </summary>
-        /// <param name="hwndTD"></param>
-        /// <param name="pCfg"></param>
         public static void DarkenTaskDialog(IntPtr hwndTD, IntPtr pCfg)
         {
             if (!Program.Style.DarkMode) return;
@@ -1398,7 +1410,7 @@ namespace WinPaletter.UI.Dark
                 }
             }
 
-            // Remove path
+            // Remove path first to ensure clean state
             if (!dark)
             {
                 UxTheme.SetWindowTheme(hwndTD, null, null);
@@ -1436,6 +1448,12 @@ namespace WinPaletter.UI.Dark
                 return;
             }
 
+            // Clear any existing state for this window before applying dark mode
+            if (s_states.ContainsKey(hwndTD))
+            {
+                s_states.Remove(hwndTD);
+            }
+
             // Attach path
             bool found = false;
 
@@ -1451,7 +1469,7 @@ namespace WinPaletter.UI.Dark
                     return true;
                 }
                 if (el == null) return true;
-             
+
                 string cls = ComUIAutomation.GetPropertyValueString(el, ComUIAutomation.UIA_ClassNamePropertyId);
 
                 // CCSysLink — footnote / content hyperlinks
@@ -1484,6 +1502,18 @@ namespace WinPaletter.UI.Dark
 
                 IntPtr hDUI = ComUIAutomation.GetNativeWindowHandle(el);
                 if (hDUI == IntPtr.Zero) return true;
+
+                // Remove any existing subclassing for this DUI window
+                if (GetWindowSubclass(hDUI, s_directUiProc, kDirectUISubclassId, out _))
+                {
+                    RemoveWindowSubclass(hDUI, s_directUiProc, kDirectUISubclassId);
+                }
+
+                // Clear existing state for this DUI window
+                if (s_states.ContainsKey(hDUI))
+                {
+                    s_states.Remove(hDUI);
+                }
 
                 // Class background brush
                 {
@@ -1550,7 +1580,7 @@ namespace WinPaletter.UI.Dark
                 // Window theme for TaskPage — must be set after children.
                 SetWindowTheme(hDUI, "DarkMode_Explorer");
 
-                // Store state and attach DirectUI subclass (idempotent)
+                // Store state and attach DirectUI subclass
                 {
                     DirectUIState s = GetState(hDUI);
                     s.pCfg = pCfg;
@@ -1594,12 +1624,65 @@ namespace WinPaletter.UI.Dark
         }
 
         /// <summary>
+        /// Clean up all progress dialog state for a specific window or all windows
+        /// </summary>
+        public static void CleanupProgressDialog(IntPtr hwndPD)
+        {
+            if (hwndPD != IntPtr.Zero)
+            {
+                // Remove subclassing from the window and its children
+                RemoveWindowSubclass(hwndPD, s_progressDuiProc, kProgressDuiSubclassId);
+
+                EnumChildWindows(hwndPD, delegate (IntPtr hwndChild, IntPtr lp)
+                {
+                    RemoveWindowSubclass(hwndChild, s_progressDuiProc, kProgressDuiSubclassId);
+                    return true;
+                }, IntPtr.Zero);
+
+                // Remove thread hook for this window's thread
+                uint threadId = User32.GetWindowThreadProcessId(hwndPD, out _);
+                if (threadId != 0 && s_progressThreadHooks.TryGetValue(threadId, out IntPtr hHook))
+                {
+                    User32.UnhookWindowsHookEx(hHook);
+                    s_progressThreadHooks.Remove(threadId);
+                    if (s_progressThreadHookDelegates.ContainsKey(threadId))
+                    {
+                        s_progressThreadHookDelegates.Remove(threadId);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Clean up all progress dialog state globally
+        /// </summary>
+        public static void CleanupAllProgressDialogs()
+        {
+            // Unhook all progress thread hooks
+            foreach (var hook in s_progressThreadHooks.Values)
+            {
+                try { User32.UnhookWindowsHookEx(hook); } catch { }
+            }
+            s_progressThreadHooks.Clear();
+            s_progressThreadHookDelegates.Clear();
+
+            // Clean up global brush
+            if (s_solidSecondaryBrush != IntPtr.Zero)
+            {
+                try { DeleteObject(s_solidSecondaryBrush); } catch { }
+                s_solidSecondaryBrush = IntPtr.Zero;
+            }
+        }
+
+        /// <summary>
         /// RemoveFromTaskDialog
         /// </summary>
         /// <param name="hwndTD"></param>
         public static void RemoveFromTaskDialog(IntPtr hwndTD)
         {
+            // Only remove subclassing for the specific window
             RemoveWindowSubclass(hwndTD, s_mainProc, kMainSubclassId);
+
             EnumChildWindows(hwndTD, delegate (IntPtr hwndChild, IntPtr lp)
             {
                 if (GetWindowSubclass(hwndChild, s_directUiProc, kDirectUISubclassId, out IntPtr ex))
@@ -1607,10 +1690,17 @@ namespace WinPaletter.UI.Dark
                     RemoveWindowSubclass(hwndChild, s_directUiProc, kDirectUISubclassId);
                     DestroyState(hwndChild);
                 }
-                if (GetWindowSubclass(hwndChild, s_ctColorProc, kCtlColorId, out ex)) RemoveWindowSubclass(hwndChild, s_ctColorProc, kCtlColorId);
+                if (GetWindowSubclass(hwndChild, s_ctColorProc, kCtlColorId, out ex))
+                    RemoveWindowSubclass(hwndChild, s_ctColorProc, kCtlColorId);
                 UxTheme.SetWindowTheme(hwndChild, null, null);
                 return true;
             }, IntPtr.Zero);
+
+            // Clean up any state associated with this specific window
+            if (s_states.ContainsKey(hwndTD))
+            {
+                s_states.Remove(hwndTD);
+            }
         }
     }
 }

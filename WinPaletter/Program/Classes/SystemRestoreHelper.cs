@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management;
+using System.Threading;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 using static WinPaletter.NativeMethods.SrClient;
@@ -84,11 +85,10 @@ namespace WinPaletter
         /// Method to create a system restore point.
         /// </summary>
         /// <param name="description">The description of the restore point. The WinPaletter tag is added automatically.</param>
-        public static bool CreateRestorePoint(string description)
+        public static bool CreateRestorePoint(string description, bool waitForFlushing = false)
         {
             UI.WP.ProgressDialog dlg = null;
             bool result = false;
-            bool completed = false;
 
             try
             {
@@ -111,7 +111,7 @@ namespace WinPaletter
                 {
                     Animation = UI.WP.AnimationResource.GetShellAnimation(UI.WP.ShellAnimation.FlyingPapers),
                     Text = Program.Localization.Strings.General.RestorePoint_DialogTitle,
-                    Description = description,
+                    Description = $"{Program.Localization.Strings.General.Name}: {description}",
                     ProgressBarStyle = UI.WP.ProgressBarStyle.MarqueeProgressBar,
                     ShowCancelButton = false,
                     MinimizeBox = false,
@@ -153,20 +153,12 @@ namespace WinPaletter
                     {
                         Program.Log?.Write(LogEventLevel.Error, "Failed to create system restore point via any available driver");
                     }
-
-                    completed = true;
                 };
 
-                // ShowDialog() only starts the shell dialog and the background worker, then returns
-                // immediately - it does not block until the work is finished. Pump the message loop
-                // here until RunWorkerCompleted has actually fired, otherwise we return the still-default result.
                 dlg.ShowDialog();
 
-                while (!completed)
-                {
-                    Application.DoEvents();
-                    System.Threading.Thread.Sleep(15);
-                }
+                // Waits for seconds so that a reloaded information can get newly created point
+                if (waitForFlushing) Thread.Sleep(500);
 
                 return result;
             }
@@ -307,7 +299,7 @@ namespace WinPaletter
         /// Deletes a single restore point by its sequence number.
         /// </summary>
         /// <param name="sequenceNumber">The sequence number of the restore point, as returned by <see cref="GetWinPaletterRestorePoints"/>.</param>
-        public static bool DeleteRestorePoint(uint sequenceNumber)
+        public static bool DeleteRestorePoint(uint sequenceNumber, bool waitForFlushing)
         {
             try
             {
@@ -324,6 +316,7 @@ namespace WinPaletter
                 if (result == 0)
                 {
                     Program.Log?.Write(LogEventLevel.Information, $"Restore point #{sequenceNumber} deleted successfully");
+                    if (waitForFlushing) Thread.Sleep(500);
                     return true;
                 }
 
@@ -342,14 +335,14 @@ namespace WinPaletter
         /// Deletes every restore point created by WinPaletter (identified by tag). Does not touch restore points created by anything else.
         /// </summary>
         /// <returns>The count of restore points successfully deleted and the count that failed.</returns>
-        public static (int Succeeded, int Failed) DeleteAllWinPaletterRestorePoints()
+        public static (int Succeeded, int Failed) DeleteAllWinPaletterRestorePoints(bool waitForFlushing)
         {
             int succeeded = 0;
             int failed = 0;
 
             foreach (RestorePointInfo restorePoint in GetWinPaletterRestorePoints())
             {
-                if (DeleteRestorePoint(restorePoint.SequenceNumber))
+                if (DeleteRestorePoint(restorePoint.SequenceNumber, false))
                 {
                     succeeded++;
                 }
@@ -360,7 +353,7 @@ namespace WinPaletter
             }
 
             Program.Log?.Write(LogEventLevel.Information, $"Deleted {succeeded} WinPaletter restore point(s), {failed} failed");
-
+            if (waitForFlushing) Thread.Sleep(500);
             return (succeeded, failed);
         }
 
