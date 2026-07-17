@@ -120,6 +120,10 @@ namespace WinPaletter.UI.WP
         private const double SCROLL_SPEED = 0.25;
         private const double SNAP_THRESHOLD = 0.5;
 
+        private bool _recalculatingScroll;
+        private int _lastMeasuredWidth = -1;
+        private int _lastMeasuredHeight = -1;
+
         public SmoothFlowLayoutPanel()
         {
             this.DoubleBuffer();
@@ -143,6 +147,25 @@ namespace WinPaletter.UI.WP
                     _scrollTimer.Stop();
                 }
             };
+
+            // Handle window state changes
+            this.HandleCreated += (s, e) =>
+            {
+                if (this.FindForm() is Form form)
+                {
+                    form.Resize += (sender, args) =>
+                    {
+                        if (form.WindowState == FormWindowState.Normal ||
+                            form.WindowState == FormWindowState.Maximized)
+                        {
+                            // Force recalculation when window is restored
+                            _lastMeasuredWidth = -1;
+                            _lastMeasuredHeight = -1;
+                            this.BeginInvoke(new Action(() => RecalculateScrollableAreaIfNeeded()));
+                        }
+                    };
+                }
+            };
         }
 
         private void EnsurePositionInitialized()
@@ -155,6 +178,113 @@ namespace WinPaletter.UI.WP
                 _targetV = _currentV;
                 _positionInitialized = true;
             }
+        }
+
+        protected override void OnLayout(LayoutEventArgs levent)
+        {
+            base.OnLayout(levent);
+            RecalculateScrollableAreaIfNeeded();
+        }
+
+        protected override void OnClientSizeChanged(EventArgs e)
+        {
+            base.OnClientSizeChanged(e);
+            RecalculateScrollableAreaIfNeeded();
+        }
+
+        protected override void OnControlAdded(ControlEventArgs e)
+        {
+            base.OnControlAdded(e);
+            _lastMeasuredWidth = -1;
+            _lastMeasuredHeight = -1;
+            RecalculateScrollableAreaIfNeeded();
+        }
+
+        protected override void OnControlRemoved(ControlEventArgs e)
+        {
+            base.OnControlRemoved(e);
+            _lastMeasuredWidth = -1;
+            _lastMeasuredHeight = -1;
+            RecalculateScrollableAreaIfNeeded();
+        }
+
+        private void RecalculateScrollableAreaIfNeeded()
+        {
+            if (_recalculatingScroll || !AutoScroll || !IsHandleCreated) return;
+
+            // Use a flag to prevent re-entrancy
+            _recalculatingScroll = true;
+            try
+            {
+                int currentWidth = ClientSize.Width;
+
+                // Force recalculation if width changed significantly
+                if (Math.Abs(currentWidth - _lastMeasuredWidth) > 5)
+                {
+                    _lastMeasuredWidth = currentWidth;
+                    _lastMeasuredHeight = -1; // Force height recalculation
+                }
+
+                // Calculate the bottom-most point of the child controls
+                int maxBottom = 0;
+                foreach (Control c in Controls)
+                {
+                    if (c.Visible)
+                    {
+                        // Ensure control is properly laid out
+                        if (c.Width > 0 && c.Height > 0)
+                        {
+                            maxBottom = Math.Max(maxBottom, c.Bottom + c.Margin.Bottom);
+                        }
+                    }
+                }
+
+                // Add padding if necessary
+                int requiredHeight = maxBottom + Padding.Bottom;
+
+                // Add a small buffer to prevent clipping
+                if (requiredHeight > 0)
+                    requiredHeight += 2;
+
+                // Only update if the height has actually changed to avoid layout loops
+                if (_lastMeasuredHeight != requiredHeight)
+                {
+                    _lastMeasuredHeight = requiredHeight;
+
+                    BeginInvoke(() =>
+                    {
+                        RefreshLayout();
+                        Invalidate();
+                        Update();
+                    });
+
+                    // Re-sync smooth-scroll trackers
+                    _currentH = -AutoScrollPosition.X;
+                    _currentV = -AutoScrollPosition.Y;
+                    _targetH = _currentH;
+                    _targetV = _currentV;
+                    _positionInitialized = true;
+
+                    // Force a refresh to update the display
+                    this.Invalidate();
+                }
+            }
+            finally
+            {
+                _recalculatingScroll = false;
+            }
+        }
+
+        private void RefreshLayout()
+        {
+            SuspendLayout();
+
+            PerformLayout();
+
+            if (Parent != null)
+                Parent.PerformLayout();
+
+            ResumeLayout(true);
         }
 
         protected override void OnMouseWheel(MouseEventArgs e)
