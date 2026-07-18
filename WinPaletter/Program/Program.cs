@@ -72,7 +72,8 @@ namespace WinPaletter
             //TaskScheduler.UnobservedTaskException -= TaskScheduler_UnobservedTaskException;
             //AppDomain.CurrentDomain.FirstChanceException -= CurrentDomain_FirstChanceException;
             User.UserSwitch -= User.OnUserSwitch;
-            //SystemEvents.UserPreferenceChanged -= OldWinPreferenceChanged;
+            Microsoft.Win32.SystemEvents.UserPreferenceChanged -= WallpaperMonitor.OnUserPreferenceChanged;
+            Microsoft.Win32.SystemEvents.UserPreferenceChanged -= SystemEvents_UserPreferenceChanged;
 
             Log?.Write(LogEventLevel.Information, "WinPaletter has exited successfully.");
         }

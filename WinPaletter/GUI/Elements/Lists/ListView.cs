@@ -137,7 +137,7 @@ namespace WinPaletter.UI.WP
             SetControlTheme(Handle, CtrlTheme.DarkExplorer);
             SubclassHeader();
         }
-        
+
         #region Header Subclass
 
         protected override void OnEnabledChanged(EventArgs e)
@@ -190,57 +190,106 @@ namespace WinPaletter.UI.WP
         {
             if (DesignMode) return User32.CallWindowProc(oldHeaderProc, hWnd, msg, wParam, lParam);
 
-            if (msg == (int)User32.WindowsMessage.Paint && Program.Style.DarkMode)
+            switch (msg)
             {
-                IntPtr hdcPaint = User32.BeginPaint(hWnd, out User32.PAINTSTRUCT ps);
-                try
-                {
-                    User32.GetClientRect(hWnd, out UxTheme.RECT rect);
-                    using (Bitmap bmp = new(rect.right - rect.left, rect.bottom - rect.top))
-                    using (Graphics G = Graphics.FromImage(bmp))
-                    {
-                        G.Clear(Enabled ? Program.Style.Schemes.Main.Colors.Button : Program.Style.Schemes.Disabled.Colors.Button);
+                case (uint)User32.WindowsMessage.EraseBkgnd:
+                    // Block default background erasure to stop flickering
+                    return (IntPtr)1;
 
-                        int x = 0;
-                        for (int i = 0; i < Columns.Count; i++)
-                        {
-                            int colWidth = Columns[i].Width;
-                            Rectangle cellRect = new(x, 0, colWidth, rect.bottom - rect.top);
-                            TextRenderer.DrawText(G, Columns[i].Text, Font, cellRect, ForeColor, TextFormatFlags.VerticalCenter | TextFormatFlags.Left | TextFormatFlags.EndEllipsis);
+                case (uint)User32.WindowsMessage.NCPaint:
+                    // Prevent theme from drawing non-client borders over our custom paint
+                    return IntPtr.Zero;
 
-                            if (i < Columns.Count - 1)
-                            {
-                                using (Pen splitterPen = new(Enabled ? Program.Style.Schemes.Main.Colors.Line_Hover() : Program.Style.Schemes.Disabled.Colors.Line_Hover()))
-                                {
-                                    int splitterX = x + colWidth - 2;
-                                    G.DrawLine(splitterPen, splitterX, 2, splitterX, rect.bottom - 2);
-                                }
-                            }
-
-                            x += colWidth;
-                        }
-
-                        using (Graphics hdc = Graphics.FromHdc(hdcPaint))
-                        {
-                            hdc.DrawImageUnscaled(bmp, 0, 0);
-                        }
-                    }
-                }
-                finally
-                {
-                    User32.EndPaint(hWnd, ref ps);
-                }
-
-                User32.ValidateRect(hWnd, IntPtr.Zero);
-                return IntPtr.Zero;
+                case (uint)User32.WindowsMessage.Paint:
+                case (uint)User32.WindowsMessage.PrintClient:
+                    PaintHeaderControl(hWnd, msg, wParam);
+                    return IntPtr.Zero;
             }
 
             return User32.CallWindowProc(oldHeaderProc, hWnd, msg, wParam, lParam);
         }
 
+        private void PaintHeaderControl(IntPtr hWnd, uint msg, IntPtr wParam)
+        {
+            User32.PAINTSTRUCT ps = new();
+            IntPtr hdc = (msg == (uint)User32.WindowsMessage.Paint) ? User32.BeginPaint(hWnd, out ps) : wParam;
+
+            try
+            {
+                User32.GetClientRect(hWnd, out UxTheme.RECT rect);
+                int width = rect.right - rect.left;
+                int height = rect.bottom - rect.top;
+
+                if (width <= 0 || height <= 0) return;
+
+                using (Graphics g = Graphics.FromHdc(hdc))
+                {
+                    // 1. Draw Background
+                    Color backColor = Enabled ? Program.Style.Schemes.Main.Colors.Button : Program.Style.Schemes.Disabled.Colors.Button;
+                    g.Clear(backColor);
+
+                    // 2. Draw Columns
+                    int x = 0;
+                    for (int i = 0; i < Columns.Count; i++)
+                    {
+                        int colWidth = Columns[i].Width;
+                        Rectangle cellRect = new(x, 0, colWidth, height);
+
+                        TextRenderer.DrawText(g, Columns[i].Text, Font, cellRect, ForeColor, TextFormatFlags.VerticalCenter | TextFormatFlags.Left | TextFormatFlags.EndEllipsis);
+
+                        // 3. Draw Splitter
+                        if (i < Columns.Count - 1)
+                        {
+                            Color lineColor = Enabled ? Program.Style.Schemes.Main.Colors.Line_Hover() : Program.Style.Schemes.Disabled.Colors.Line_Hover();
+                            using (Pen splitterPen = new(lineColor))
+                            {
+                                int splitterX = x + colWidth - 2;
+                                g.DrawLine(splitterPen, splitterX, 2, splitterX, height - 2);
+                            }
+                        }
+                        x += colWidth;
+                    }
+                }
+            }
+            finally
+            {
+                if (msg == (uint)User32.WindowsMessage.Paint)
+                {
+                    User32.EndPaint(hWnd, ref ps);
+                }
+
+                // Ensure the OS knows we have handled the painting
+                User32.ValidateRect(hWnd, IntPtr.Zero);
+            }
+        }
+
         protected override void WndProc(ref Message m)
         {
             if (m.Msg == (int)User32.WindowsMessage.KillFocus) return;
+
+            if (m.Msg == (int)User32.WindowsMessage.WindowPosChanged)
+            {
+                base.WndProc(ref m);
+                InvalidateHeader();
+                return;
+            }
+
+            if (m.Msg == (int)User32.WindowsMessage.EraseBkgnd)
+            {
+                // Tell Windows we handled the background erasure to prevent flickering
+                m.Result = (IntPtr)1;
+                return;
+            }
+
+            if (m.Msg == (int)User32.WindowsMessage.Paint || m.Msg == (int)User32.WindowsMessage.Notify)
+            {
+                IntPtr currentHeader = User32.SendMessage(Handle, LVM_GETHEADER, IntPtr.Zero, IntPtr.Zero);
+                if (currentHeader != IntPtr.Zero && currentHeader != headerHandle)
+                {
+                    // Re-subclass because the header handle has changed (Tab switch occurred)
+                    SubclassHeader();
+                }
+            }
 
             if (m.Msg == (int)User32.WindowsMessage.Paint && !Enabled && Program.Style.DarkMode)
             {

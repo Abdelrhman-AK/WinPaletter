@@ -1,36 +1,31 @@
-﻿using Serilog.Events;
+﻿using Microsoft.Win32;
+using Serilog.Events;
 using System;
 using System.Collections.Generic;
 using System.Management;
+using System.Threading.Channels;
 using System.Windows.Forms;
+using WinPaletter.NativeMethods;
+using static WinPaletter.UI.WP.AlertBox;
 
 namespace WinPaletter
 {
     internal partial class Program
     {
-        /// <summary>
-        /// List of watchers and their event handlers
-        /// </summary>
         static readonly List<Tuple<ManagementEventWatcher, EventArrivedEventHandler>> Watchers = [];
 
-        /// <summary>
-        /// Monitor Windows preference changes (wallpaper, dark mode, and personalization).
-        /// </summary>
         public static void Monitor()
         {
-            // Stop monitoring if already active to prevent duplicates
             if (Watchers.Count > 0) StopWatchers();
 
             string sid = User.Identity.User.Value;
 
-            //Predefine key paths
             const string Personalize = @"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize";
             const string DWM = @"SOFTWARE\Microsoft\Windows\DWM";
             const string Transparency = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize";
 
             WallpaperMonitor.Start();
 
-            // Register modern Windows-specific events only if supported
             if (OS.W10 || OS.W11 || OS.W12)
             {
                 RegisterRegistryChangeEvent(sid, Personalize, "AppsUseLightTheme", DarkMode_Changed_EventHandler);
@@ -39,13 +34,35 @@ namespace WinPaletter
 
             if (!OS.WXP)
             {
-                // Register DWM/Transparency events (titlebar, effects, etc.)
                 RegisterRegistryChangeEvent(sid, Personalize, "EnableTransparency", PreferencesRelatedToTitlebarExtenderChanged);
                 RegisterRegistryChangeEvent(sid, DWM, "ColorPrevalence", PreferencesRelatedToTitlebarExtenderChanged);
             }
 
-            // Automatically clean up on exit
             Application.ApplicationExit += (_, _) => StopWatchers();
+        }
+
+        /// <summary>
+        /// Handles OS-level user preference change notifications, filtering for Visual Style changes only.
+        /// </summary>
+        private static void SystemEvents_UserPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)
+        {
+            if (e.Category != UserPreferenceCategory.General && e.Category != UserPreferenceCategory.VisualStyle) return;
+
+            string currentThemeFile = !ClassicThemeRunning ? UxTheme.GetCurrentVS().Item1 : string.Empty;
+            if (string.Equals(currentThemeFile, s_lastThemeFile, StringComparison.OrdinalIgnoreCase)) return;
+
+            s_lastThemeFile = currentThemeFile;
+
+            VisualStyle_Changed_EventHandler(sender, e);
+        }
+        private static string s_lastThemeFile = !ClassicThemeRunning ? UxTheme.GetCurrentVS().Item1 : string.Empty;
+
+        /// <summary>
+        /// Raised when the active Visual Style (.msstyles theme) changes.
+        /// </summary>
+        private static void VisualStyle_Changed_EventHandler(object sender, UserPreferenceChangedEventArgs e)
+        {
+            Program.Style.RoundedCorners = GetRoundedCorners();
         }
 
         /// <summary>

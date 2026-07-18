@@ -140,6 +140,10 @@
       <HintPath>..\packages\Serilog.4.4.0-dev-02437\lib\net471\Serilog.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Serilog.Formatting.Compact, Version=3.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
+      <HintPath>..\packages\Serilog.Formatting.Compact.3.0.0\lib\net471\Serilog.Formatting.Compact.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Serilog.Sinks.File, Version=8.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
       <HintPath>..\packages\Serilog.Sinks.File.8.0.0-nblumhardt-02322\lib\net471\Serilog.Sinks.File.dll</HintPath>
       <Private>False</Private>

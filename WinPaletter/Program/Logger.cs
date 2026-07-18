@@ -1,7 +1,8 @@
 ﻿using Serilog;
 using Serilog.Events;
-using Serilog.Formatting.Json;
+using Serilog.Formatting.Compact;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -40,6 +41,13 @@ namespace WinPaletter
         private static System.Threading.Timer _statusResetTimer;
         private const int ResetMs = 3000;
 
+        // How many past session log files to keep on disk. Older ones are pruned on startup.
+        private const int MaxRetainedLogFiles = 10;
+
+        // Hard cap per session file; if a single run somehow produces more than this, Serilog
+        // rolls to a new numbered file instead of growing unbounded.
+        private const long MaxLogFileSizeBytes = 10_000_000;
+
         private bool _disposed;
 
         /// <summary>Initialises the logger instance (calls <see cref="Initialize"/> once).</summary>
@@ -73,18 +81,45 @@ namespace WinPaletter
 
                 Directory.CreateDirectory(SysPaths.LogsDir); // no-op if already exists
 
+                PruneOldLogFiles(SysPaths.LogsDir, MaxRetainedLogFiles);
+
+                // CompactJsonFormatter avoids the nested "Properties" object and duplicate Timestamp/Message fields that JsonFormatter produces, cutting per-line size
+                // roughly 3-4x with no loss of information.
                 _log = new LoggerConfiguration()
-                    .Enrich.WithProperty("App", "WinPaletter")
                     .WriteTo.File(
-                        new JsonFormatter(),
+                        new CompactJsonFormatter(),
                         Program.LogFile,
                         rollingInterval: RollingInterval.Infinite,
                         shared: false,
-                        fileSizeLimitBytes: null)
+                        fileSizeLimitBytes: MaxLogFileSizeBytes,
+                        rollOnFileSizeLimit: true,
+                        retainedFileCountLimit: 3)
                     .CreateLogger();
 
                 _initialized = true;
             }
+        }
+
+        /// <summary>
+        /// Deletes older session log files beyond <paramref name="maxFilesToKeep"/>, keeping the
+        /// most recently written ones. Best-effort: never throws, never blocks startup.
+        /// </summary>
+        private static void PruneOldLogFiles(string logsDir, int maxFilesToKeep)
+        {
+            try
+            {
+                FileInfo[] logFiles = new DirectoryInfo(logsDir).GetFiles("WinPaletter_Log_*.json");
+
+                IEnumerable<FileInfo> filesToDelete = logFiles
+                    .OrderByDescending(f => f.LastWriteTimeUtc)
+                    .Skip(maxFilesToKeep);
+
+                foreach (FileInfo file in filesToDelete)
+                {
+                    try { file.Delete(); } catch { /* may be locked by another running instance */ }
+                }
+            }
+            catch { /* pruning is best-effort; never let it block logger init */ }
         }
 
         /// <summary>
@@ -124,12 +159,12 @@ namespace WinPaletter
 
             if (!Program.Settings.AppLog.SaveInLogFile) return;
 
-            // Use Serilog structured properties instead of embedding values into the template
-            // string — this keeps JSON output queryable by field rather than as raw text.
+            // No embedded timestamp here — CompactJsonFormatter already writes an "@t" field per
+            // event, so duplicating it in the message template just wastes bytes.
             if (ex is null)
-                _log?.Write(level, "[{Timestamp}] {Message}", DateTime.Now, messageTemplate);
+                _log?.Write(level, "{Message}", messageTemplate);
             else
-                _log?.Write(level, ex, "[{Timestamp}] {Message}", DateTime.Now, messageTemplate);
+                _log?.Write(level, ex, "{Message}", messageTemplate);
         }
 
         /// <inheritdoc cref="Write"/>

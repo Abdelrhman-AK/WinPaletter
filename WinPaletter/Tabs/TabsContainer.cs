@@ -140,6 +140,7 @@ namespace WinPaletter.Tabs
         private static Color win7BorderColor_Inner = Color.FromArgb(255, 0, 0, 0);
         private static Color _foreColor;
         private static Color _foreColorInactive;
+        private static bool _isClassicThemeRunning;
 
         private Font selectedFont;
 
@@ -1648,7 +1649,12 @@ namespace WinPaletter.Tabs
 
         private void SystemEvents_UserPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)
         {
-            if (e.Category == UserPreferenceCategory.General) UpdateForeColor();
+            if (e.Category == UserPreferenceCategory.General)
+            {
+                _isClassicThemeRunning = Program.ClassicThemeRunning;
+                UpdateForeColor();
+                Invalidate();
+            }
         }
 
         private void Config_DarkModeChanged()
@@ -2274,6 +2280,7 @@ namespace WinPaletter.Tabs
         {
             base.OnHandleCreated(e);
 
+            _isClassicThemeRunning = Program.ClassicThemeRunning;
             DarkModeChanged += Config_DarkModeChanged;
             SystemEvents.UserPreferenceChanged += SystemEvents_UserPreferenceChanged;
             FormFocusChanged += TabsContainer_FormFocusChanged;
@@ -2559,7 +2566,7 @@ namespace WinPaletter.Tabs
                         G.Clip = oldClip;
                     }
 
-                    if (OS.WVista || OS.W7)
+                    if (_isClassicThemeRunning || OS.WXP || OS.WVista || OS.W7)
                     {
                         Rectangle rect_7 = new(rect.X, rect.Y, rect.Width, rect.Height - 1);
 

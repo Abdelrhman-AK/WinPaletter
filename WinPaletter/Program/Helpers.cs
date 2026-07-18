@@ -414,6 +414,7 @@ namespace WinPaletter
                 // Force SystemEvents window creation to avoid Windows XP crashes when subscribing to UserPreferenceChanged event
                 var dummy = typeof(SystemEvents);
                 SystemEvents.UserPreferenceChanged += WallpaperMonitor.OnUserPreferenceChanged;
+                SystemEvents.UserPreferenceChanged += SystemEvents_UserPreferenceChanged;
                 WallpaperMonitor.FireWallpaperChanged(); // Init wallpaper
             }
         }
