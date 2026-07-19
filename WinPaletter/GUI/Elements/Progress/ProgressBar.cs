@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.Interfaces;
+using WinPaletter.NativeMethods;
 using WinPaletter.Properties;
 
 namespace WinPaletter.UI.WP
@@ -94,6 +95,8 @@ namespace WinPaletter.UI.WP
             }
 
             base.OnHandleCreated(e);
+
+            if (!DesignMode) RemoveNativeEdge();
         }
 
         protected override void OnHandleDestroyed(EventArgs e)
@@ -487,6 +490,14 @@ namespace WinPaletter.UI.WP
         }
 
         private int _marqueeAnimationSpeed = 100;
+
+        // Strips the native sunken edge (WS_EX_CLIENTEDGE/STATICEDGE) that classic theme draws around msctls_progress32.
+        private void RemoveNativeEdge()
+        {
+            if (!IsHandleCreated) return;
+
+            Win32Control.RemoveExtendedStyle(Handle, Win32Control.ControlExtendedStyles.ClientEdge | Win32Control.ControlExtendedStyles.StaticEdge);
+        }
 
         #endregion
 

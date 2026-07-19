@@ -1437,7 +1437,7 @@ namespace WinPaletter.UI.Dark
                     if (GetWindowSubclass(hwndChild, s_ctColorProc, kCtlColorId, out ex))
                         RemoveWindowSubclass(hwndChild, s_ctColorProc, kCtlColorId);
 
-                    RedrawWindow(hwndChild, IntPtr.Zero, IntPtr.Zero, RDW_INVALIDATE | RDW_UPDATENOW | RDW_ALLCHILDREN);
+                    RedrawWindow(hwndChild, IntPtr.Zero, IntPtr.Zero, RedrawWindowFlags.Invalidate | RedrawWindowFlags.UpdateNow | RedrawWindowFlags.AllChildren);
                     return true;
                 }, IntPtr.Zero);
 

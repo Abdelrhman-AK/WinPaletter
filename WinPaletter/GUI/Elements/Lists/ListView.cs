@@ -28,7 +28,8 @@ namespace WinPaletter.UI.WP
             get
             {
                 CreateParams parms = base.CreateParams;
-                parms.ExStyle |= (int)Win32Control.ControlExtendedStyles.Composited;
+                // WS_EX_COMPOSITED keeps an off-screen buffer on XP that goes stale when this control is hosted inside a Form reparented into a TabPage - removing it and
+                // relying on manual double buffering avoids the corrupted-header symptom entirely.
                 return parms;
             }
         }
@@ -168,17 +169,62 @@ namespace WinPaletter.UI.WP
             headerHandle = User32.SendMessage(Handle, LVM_GETHEADER, IntPtr.Zero, IntPtr.Zero);
             if (headerHandle != IntPtr.Zero)
             {
-                // Process modern Explorer theme for smoother rendering
                 SetControlTheme(Handle, CtrlTheme.DarkExplorer);
-
-                // Enable double-buffering at the window level to avoid flicker
-                Win32Control.AppendExtendedStyle(headerHandle, Win32Control.ControlExtendedStyles.Composited);
 
                 newHeaderProc = new User32.WndProcDelegate(HeaderWndProc);
                 oldHeaderProc = User32.SetWindowLongPtr(headerHandle, (int)NativeMethods.User32.WindowsLongs.WndProc, Marshal.GetFunctionPointerForDelegate(newHeaderProc));
 
-                InvalidateHeader();
+                ForceHeaderRepaintDirect();
             }
+        }
+
+        private void ForceHeaderRepaintDirect()
+        {
+            if (headerHandle == IntPtr.Zero) return;
+
+            IntPtr hdc = User32.GetDC(headerHandle);
+            if (hdc == IntPtr.Zero) return;
+
+            try
+            {
+                // Paint straight into the header's live DC instead of relying on InvalidateRect + WM_PAINT, which can be swallowed or raced against
+                // a stale off-screen buffer during Form reparenting/show cycles.
+                PaintHeaderControl(headerHandle, (uint)User32.WindowsMessage.PrintClient, hdc);
+            }
+            finally
+            {
+                User32.ReleaseDC(headerHandle, hdc);
+            }
+        }
+
+        private void ForceFullRedrawDeferred()
+        {
+            if (!IsHandleCreated) return;
+
+            Parent?.Invalidate(Bounds, true);
+            ForceHeaderRepaintDirect();
+            Invalidate(true);
+        }
+
+        protected override void OnVisibleChanged(EventArgs e)
+        {
+            base.OnVisibleChanged(e);
+            if (DesignMode) return;
+            if (!IsHandleCreated) return;
+            if (!Visible) return;
+
+            BeginInvoke(new MethodInvoker(() =>
+            {
+                if (!IsHandleCreated) return;
+                ForceFullRedrawDeferred();
+
+                // Second post: guards against handle recreation still finishing after the first deferred call runs, which happens when this control lives
+                // inside a Form that gets reparented/re-shown by a TabPage.
+                BeginInvoke(new MethodInvoker(() =>
+                {
+                    if (IsHandleCreated) ForceFullRedrawDeferred();
+                }));
+            }));
         }
 
         private void InvalidateHeader()

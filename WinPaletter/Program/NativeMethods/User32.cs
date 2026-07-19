@@ -1456,21 +1456,6 @@ namespace WinPaletter.NativeMethods
         public static extern bool GetClassInfoEx(IntPtr hInstance, string lpClassName, ref WNDCLASSEX lpwcx);
 
         /// <summary>
-        /// RedrawWindow flags: Invalidates the window, causing it to be redrawn. This flag is used with the RedrawWindow function to specify that the entire window should be invalidated and repainted.
-        /// </summary>
-        public const uint RDW_INVALIDATE = 0x0001;
-
-        /// <summary>
-        /// RedrawWindow flags: Causes the non-client area (frame) of the window to be redrawn. This flag is used with the RedrawWindow function to specify that the window's frame should be repainted.
-        /// </summary>
-        public const uint RDW_FRAME = 0x0400;
-
-        /// <summary>
-        /// RedrawWindow flags: Causes the window to be updated immediately before the function returns, rather than queuing the update for later. This flag is used with the RedrawWindow function to force an immediate repaint of the window.
-        /// </summary>
-        public const uint RDW_UPDATENOW = 0x0100;
-
-        /// <summary>
         /// Constant for LoadImage function specifying the type of image to load.
         /// </summary>
         public const uint IMAGE_CURSOR = 2;
@@ -1481,11 +1466,6 @@ namespace WinPaletter.NativeMethods
         /// <remarks>This constant is used with the <c>SendMessageTimeout</c> function to indicate that
         /// the operation  should be aborted if the receiving application is not responding.</remarks>
         public const uint SMTO_ABORTIFHUNG = 0x0002;
-
-        /// <summary>
-        /// RedrawWindow flag: Causes all child windows of the specified window to be invalidated or updated.
-        /// </summary>
-        public const int RDW_ALLCHILDREN = 0x0080;
 
         /// <summary>
         /// SetWindowDisplayAffinity flag: Removes any display affinity setting, allowing the window to be captured

@@ -58,11 +58,11 @@
             this.tablessControl1.Controls.Add(this.tabPage1);
             this.tablessControl1.Controls.Add(this.tabPage2);
             this.tablessControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tablessControl1.Location = new System.Drawing.Point(0, 0);
+            this.tablessControl1.Location = new System.Drawing.Point(1, 1);
             this.tablessControl1.Multiline = true;
             this.tablessControl1.Name = "tablessControl1";
             this.tablessControl1.SelectedIndex = 0;
-            this.tablessControl1.Size = new System.Drawing.Size(347, 178);
+            this.tablessControl1.Size = new System.Drawing.Size(345, 176);
             this.tablessControl1.TabIndex = 0;
             // 
             // tabPage1
@@ -74,7 +74,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(339, 150);
+            this.tabPage1.Size = new System.Drawing.Size(337, 148);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "0";
             // 
@@ -91,7 +91,7 @@
             this.button1.ImageGlyphEnabled = false;
             this.button1.Location = new System.Drawing.Point(5, 102);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(329, 34);
+            this.button1.Size = new System.Drawing.Size(327, 34);
             this.button1.TabIndex = 132;
             this.button1.Text = "Manage && upload themes";
             this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -111,7 +111,7 @@
             this.Button2.ImageGlyphEnabled = false;
             this.Button2.Location = new System.Drawing.Point(5, 139);
             this.Button2.Name = "Button2";
-            this.Button2.Size = new System.Drawing.Size(329, 34);
+            this.Button2.Size = new System.Drawing.Size(327, 34);
             this.Button2.TabIndex = 131;
             this.Button2.Text = "Sign out";
             this.Button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -127,7 +127,7 @@
             this.groupBox1.Controls.Add(this.pictureBox2);
             this.groupBox1.Location = new System.Drawing.Point(6, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(327, 92);
+            this.groupBox1.Size = new System.Drawing.Size(325, 92);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.UseDecorationPattern = false;
             this.groupBox1.UseSharpStyle = false;
@@ -141,7 +141,7 @@
             this.label2.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(80, 15);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(235, 62);
+            this.label2.Size = new System.Drawing.Size(233, 62);
             this.label2.TabIndex = 88;
             this.label2.Text = "0";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -296,6 +296,7 @@
             this.Controls.Add(this.tablessControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "GitHub_Dashboard";
+            this.Padding = new System.Windows.Forms.Padding(1);
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "";
             this.Load += new System.EventHandler(this.Form1_Load);
