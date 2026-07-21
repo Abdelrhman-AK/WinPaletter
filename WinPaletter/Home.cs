@@ -60,6 +60,7 @@ namespace WinPaletter
             isLoggedIn = User.GitHub_LoggedIn;
             GitHub.Events.GitHubUserSwitch += User_GitHubUserSwitch;
             GitHub.Events.GitHubAvatarUpdated += UpdateUserButtonAvatar;
+            Config.DarkModeChanged += Home_Localized;
 
             Icon = Properties.Resources.Icon;
             NotifyUpdates.Icon = Icon;

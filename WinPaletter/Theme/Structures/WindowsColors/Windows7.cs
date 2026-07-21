@@ -30,6 +30,8 @@ namespace WinPaletter.Theme.Structures
         /// <summary>Control amount of aero glass reflection</summary>
         public int ColorizationGlassReflectionIntensity { get; set; } = 0;
 
+        private bool _unlockRegionalThemes = true;
+
         /// <summary>
         /// Represents the visual styles configuration for the application.
         /// </summary>
@@ -90,6 +92,27 @@ namespace WinPaletter.Theme.Structures
                 WriteReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\DWM", "EnableWindowColorization", 1);
 
                 Program.RefreshDWM(TM);
+
+                if (_unlockRegionalThemes)
+                {
+                    string key0 = "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\InstalledThemes\\MCT";
+                    WriteReg(treeView, key0, "%windir%\\Globalization\\MCT\\MCT-AU\\Theme\\AU.theme", string.Empty, Microsoft.Win32.RegistryValueKind.String);
+                    WriteReg(treeView, key0, "%windir%\\Globalization\\MCT\\MCT-CA\\Theme\\CA.theme", string.Empty, Microsoft.Win32.RegistryValueKind.String);
+                    WriteReg(treeView, key0, "%windir%\\Globalization\\MCT\\MCT-DE\\Theme\\DE.theme", string.Empty, Microsoft.Win32.RegistryValueKind.String);
+                    WriteReg(treeView, key0, "%windir%\\Globalization\\MCT\\MCT-GB\\Theme\\GB.theme", string.Empty, Microsoft.Win32.RegistryValueKind.String);
+                    WriteReg(treeView, key0, "%windir%\\Globalization\\MCT\\MCT-JP\\Theme\\JP.theme", string.Empty, Microsoft.Win32.RegistryValueKind.String);
+                    WriteReg(treeView, key0, "%windir%\\Globalization\\MCT\\MCT-US\\Theme\\US.theme", string.Empty, Microsoft.Win32.RegistryValueKind.String);
+                    WriteReg(treeView, key0, "%windir%\\Globalization\\MCT\\MCT-ZA\\Theme\\ZA.theme", string.Empty, Microsoft.Win32.RegistryValueKind.String);
+
+                    string key1 = "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Wallpapers\\0\\KnownFolders\\Windows Wallpapers\\MergeFolders";
+                    WriteReg(treeView, key1, "%windir%\\Globalization\\MCT\\MCT-AU\\Wallpaper", string.Empty, Microsoft.Win32.RegistryValueKind.String);
+                    WriteReg(treeView, key1, "%windir%\\Globalization\\MCT\\MCT-CA\\Wallpaper", string.Empty, Microsoft.Win32.RegistryValueKind.String);
+                    WriteReg(treeView, key1, "%windir%\\Globalization\\MCT\\MCT-DE\\Wallpaper", string.Empty, Microsoft.Win32.RegistryValueKind.String);
+                    WriteReg(treeView, key1, "%windir%\\Globalization\\MCT\\MCT-GB\\Wallpaper", string.Empty, Microsoft.Win32.RegistryValueKind.String);
+                    WriteReg(treeView, key1, "%windir%\\Globalization\\MCT\\MCT-JP\\Wallpaper", string.Empty, Microsoft.Win32.RegistryValueKind.String);
+                    WriteReg(treeView, key1, "%windir%\\Globalization\\MCT\\MCT-US\\Wallpaper", string.Empty, Microsoft.Win32.RegistryValueKind.String);
+                    WriteReg(treeView, key1, "%windir%\\Globalization\\MCT\\MCT-ZA\\Wallpaper", string.Empty, Microsoft.Win32.RegistryValueKind.String);
+                }
             }
         }
 

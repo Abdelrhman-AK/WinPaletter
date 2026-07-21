@@ -16,27 +16,7 @@ using static WinPaletter.UI.Style.Config;
 namespace WinPaletter.Tabs
 {
     /// <summary>
-    /// TabsContainer is a UI control that renders and manages a set of tab-like
-    /// items (TabData) backed by a standard WinForms TabControl. Responsibilities:
-    /// - Maintain a lightweight cached TabDataList representing current tabs.
-    /// - Handle input (mouse move/click/drag/drop) to support selection,
-    ///   reordering, detaching and close-button interactions.
-    /// - Render tabs with optimized painting (two-pass rendering to reduce overdraw)
-    /// - Manage lightweight animations (selection, hover, progress) while avoiding
-    ///   unnecessary allocations and GC pressure.
-    ///
-    /// Performance notes for maintainers:
-    /// - Avoid LINQ allocations in hot paths (MouseMove/OnPaint/Timers). Use indexed
-    ///   loops over TabDataList instead. This control is optimized to reduce GC spikes
-    ///   caused by frequent mouse events and paint passes.
-    /// - Hover processing is throttled to `_hoverProcessIntervalMs` to reduce CPU
-    ///   spikes on flood MouseMove events while preserving visual responsiveness.
-    /// - When updating per-tab visual flags (Hover/CloseButtonAlpha) always
-    ///   Invalidate the affected rectangle to ensure immediate repaint and avoid
-    ///   stale visuals.
-    ///
-    /// Note: This class intentionally avoids changing visual behaviour. Refactors
-    /// should keep semantics identical while improving perf.
+    /// TabsContainer is a UI control that renders and manages a set of tab-like items (TabData) backed by a standard WinForms TabControl.
     /// </summary>
     public class TabsContainer : TitlebarExtender
     {
@@ -141,6 +121,7 @@ namespace WinPaletter.Tabs
         private static Color _foreColor;
         private static Color _foreColorInactive;
         private static bool _isClassicThemeRunning;
+        private static bool _isCompositEnabled;
 
         private Font selectedFont;
 
@@ -1652,6 +1633,7 @@ namespace WinPaletter.Tabs
             if (e.Category == UserPreferenceCategory.General)
             {
                 _isClassicThemeRunning = Program.ClassicThemeRunning;
+                _isCompositEnabled = DWMAPI.IsCompositionEnabled();
                 UpdateForeColor();
                 Invalidate();
             }
@@ -2281,6 +2263,7 @@ namespace WinPaletter.Tabs
             base.OnHandleCreated(e);
 
             _isClassicThemeRunning = Program.ClassicThemeRunning;
+            _isCompositEnabled = DWMAPI.IsCompositionEnabled();
             DarkModeChanged += Config_DarkModeChanged;
             SystemEvents.UserPreferenceChanged += SystemEvents_UserPreferenceChanged;
             FormFocusChanged += TabsContainer_FormFocusChanged;
@@ -2293,6 +2276,12 @@ namespace WinPaletter.Tabs
             FormFocusChanged -= TabsContainer_FormFocusChanged;
 
             base.OnHandleDestroyed(e);
+        }
+
+        protected override void OnForeColorChanged(EventArgs e)
+        {
+            base.OnForeColorChanged(e);
+            UpdateForeColor();
         }
 
         #endregion
@@ -2652,7 +2641,7 @@ namespace WinPaletter.Tabs
 
             if (rect.Width > minTabWidth && sf is not null)
             {
-                if ((OS.WVista || OS.W7) && DWMAPI.IsCompositionEnabled())
+                if ((OS.WVista || OS.W7) && _isCompositEnabled)
                 {
                     DrawTextOnGlass(G, tabData.Text, tabData.Selected ? selectedFont : Font, FormFocused ? tabData.Selected ? ForeColor : _foreColor : _foreColorInactive, textRect, tabData.Selected ? 0 : 7, sf);
                 }

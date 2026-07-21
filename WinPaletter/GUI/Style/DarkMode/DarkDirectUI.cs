@@ -521,7 +521,7 @@ namespace WinPaletter.UI.Dark
             public byte sR, sG, sB, dR, dG, dB;
         }
 
-        private static unsafe void PixelSwap(IntPtr pxPtr, int rw, int w, int h, SwapRule[] rules)
+        private static unsafe void PixelSwap(IntPtr pxPtr, int rw, int w, int h, SwapRule[] rules, RECT? excludeRect = null)
         {
             byte* basePtr = (byte*)pxPtr.ToPointer();
             for (int y = 0; y < h; y++)
@@ -529,8 +529,13 @@ namespace WinPaletter.UI.Dark
                 byte* row = basePtr + (y * rw * 4);
                 for (int x = 0; x < w; x++)
                 {
+                    if (excludeRect.HasValue)
+                    {
+                        RECT ex = excludeRect.Value;
+                        if (x >= ex.left && x < ex.right && y >= ex.top && y < ex.bottom) continue;
+                    }
+
                     byte* p = row + (x * 4);
-                    // RGBQUAD layout: rgbBlue, rgbGreen, rgbRed, rgbReserved
                     byte pb = p[0];
                     byte pg = p[1];
                     byte pr = p[2];
@@ -1164,6 +1169,10 @@ namespace WinPaletter.UI.Dark
         /// <param name="uIdSubclass"></param>
         /// <param name="dwRefData"></param>
         /// <returns></returns>
+        /// <summary>
+        /// Windows subclass procedure for the progress dialog's DirectUI window. Dispatches to the native-theme overlay fix on Windows 11 or to full manual dark-forcing on Windows 10,
+        /// depending on the hasNativeTheme flag captured in dwRefData when this subclass was installed.
+        /// </summary>
         private static IntPtr ProgressDuiSubclassProc(IntPtr hwnd, uint uMsg, IntPtr wParam, IntPtr lParam, UIntPtr uIdSubclass, IntPtr dwRefData)
         {
             switch (uMsg)
@@ -1171,91 +1180,22 @@ namespace WinPaletter.UI.Dark
                 case (int)User32.WindowsMessage.Paint:
                     if (Program.Style.DarkMode)
                     {
-                        // 1. Let DirectUI render ALL its native components untouched (AVI, Main Title, colors stay perfectly clean)
-                        IntPtr res = DefSubclassProc(hwnd, uMsg, wParam, lParam);
+                        bool hasNativeTheme = dwRefData != IntPtr.Zero;
 
-                        // 2. Acquire a true surface DC to draw over the specific text boundaries
-                        IntPtr hdcScreen = User32.GetDC(hwnd);
-
-                        if (hdcScreen != IntPtr.Zero)
+                        if (hasNativeTheme)
                         {
-                            try
-                            {
-                                UxTheme.RECT winRect;
-                                User32.GetWindowRect(hwnd, out winRect);
-
-                                NativeMethods.IUIAutomationElement baseEl = ComUIAutomation.FromHandle(hwnd);
-                                if (baseEl != null)
-                                {
-                                    // 3. Scan for windowless text elements (UIA_TextControlTypeId = 50020)
-                                    foreach (NativeMethods.IUIAutomationElement child in ComUIAutomation.GetContentChildren(baseEl))
-                                    {
-                                        int controlType = ComUIAutomation.GetPropertyValueInt(child, ComUIAutomation.UIA_ControlTypePropertyId);
-
-                                        if (controlType == 50020)
-                                        {
-                                            // Get the Automation ID property to safely distinguish the elements
-                                            string autoId = ComUIAutomation.GetPropertyValueString(child, ComUIAutomation.UIA_AutomationIdPropertyId);
-
-                                            // LocLabel1 is description label, theme it only (other parts are themed correctly before)
-                                            if (!string.IsNullOrEmpty(autoId) && autoId.Equals("LocLabel1", StringComparison.OrdinalIgnoreCase))
-                                            {
-                                                string textValue = ComUIAutomation.GetPropertyValueString(child, ComUIAutomation.UIA_NamePropertyId);
-                                                if (string.IsNullOrWhiteSpace(textValue)) continue;
-
-                                                child.GetCurrentPropertyValue(ComUIAutomation.UIA_BoundingRectanglePropertyId, out object propValue);
-                                                double[] boundingBox = propValue as double[];
-
-                                                if (boundingBox != null && boundingBox.Length == 4)
-                                                {
-                                                    int screenLeft = (int)boundingBox[0];
-                                                    int screenTop = (int)boundingBox[1];
-                                                    int screenWidth = (int)boundingBox[2];
-                                                    int screenHeight = (int)boundingBox[3];
-
-                                                    RECT clientTextRect = new()
-                                                    {
-                                                        left = screenLeft - winRect.left,
-                                                        top = screenTop - winRect.top,
-                                                        right = (screenLeft - winRect.left) + screenWidth,
-                                                        bottom = (screenTop - winRect.top) + screenHeight
-                                                    };
-
-                                                    // 4. PINPOINT MASKING: Wipe ONLY the exact description string coordinate area.
-                                                    IntPtr bgBrush = CreateSolidBrush(DarkColors.kSecondary);
-                                                    User32.FillRect(hdcScreen, ref clientTextRect, bgBrush);
-                                                    DeleteObject(bgBrush);
-
-                                                    // 5. EXTRACT DESIGNATED SYSTEM LOGFONT & DRAW THE WHITE TEXT OVERLAY
-                                                    LOGFONT lf = GetThemedFont(7); // Part 7 maps perfectly to TDLG_CONTENTPANE (RawName typography metrics)
-                                                    IntPtr hFont = GDI32.CreateFontIndirect(lf);
-                                                    IntPtr oldFont = IntPtr.Zero;
-
-                                                    if (hFont != IntPtr.Zero) oldFont = GDI32.SelectObject(hdcScreen, hFont);
-
-                                                    GDI32.SetTextColor(hdcScreen, (uint)ColorTranslator.ToWin32(Color.White));
-                                                    GDI32.SetBkMode(hdcScreen, 1); // TRANSPARENT
-
-                                                    User32.DrawText(hdcScreen, textValue, textValue.Length, ref clientTextRect,
-                                                        0x00000000 /* DT_LEFT */ | 0x00000010 /* DT_SINGLELINE */ | 0x00000004 /* DT_VCENTER */ | 0x00008000 /* DT_NOPREFIX */ | 0x00000020 /* DT_PATH_ELLIPSIS */);
-
-                                                    if (oldFont != IntPtr.Zero) GDI32.SelectObject(hdcScreen, oldFont);
-                                                    if (hFont != IntPtr.Zero) GDI32.DeleteObject(hFont);
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                Program.Log?.Debug($"[ProgressDialog Direct Overlay Error]", ex);
-                            }
-
-                            User32.ReleaseDC(hwnd, hdcScreen);
+                            // Windows 11: DarkMode_Explorer / DarkMode_DarkTheme msstyles already paint the dialog correctly. Let DirectUI render untouched, then patch the one
+                            // text element ("LocLabel1") the native theme still gets wrong.
+                            IntPtr res = DefSubclassProc(hwnd, uMsg, wParam, lParam);
+                            OverlayProgressDialogLabel(hwnd);
+                            return res;
                         }
-
-                        return res; // Return the exact result from the procedure chain
+                        else
+                        {
+                            // Windows 10 has no dark ProgressDialogUI msstyles at all -- force dark mode by printing the native light client into an offscreen buffer, pixel-swapping
+                            // its light backgrounds to the dark palette, then overdrawing every text element found via UI Automation in white on the darkened background.
+                            return PaintProgressDialogForced(hwnd);
+                        }
                     }
                     break;
 
@@ -1273,6 +1213,213 @@ namespace WinPaletter.UI.Dark
             }
 
             return DefSubclassProc(hwnd, uMsg, wParam, lParam);
+        }
+
+        /// <summary>
+        /// Windows 11 path: patches the "LocLabel1" description label, which the native dark msstyles leave in the wrong color, without touching any other element the native theme
+        /// already handles.
+        /// </summary>
+        private static void OverlayProgressDialogLabel(IntPtr hwnd)
+        {
+            IntPtr hdcScreen = User32.GetDC(hwnd);
+            if (hdcScreen == IntPtr.Zero) return;
+
+            try
+            {
+                User32.GetWindowRect(hwnd, out UxTheme.RECT winRect);
+
+                NativeMethods.IUIAutomationElement baseEl = ComUIAutomation.FromHandle(hwnd);
+                if (baseEl == null) return;
+
+                foreach (NativeMethods.IUIAutomationElement child in ComUIAutomation.GetContentChildren(baseEl))
+                {
+                    int controlType = ComUIAutomation.GetPropertyValueInt(child, ComUIAutomation.UIA_ControlTypePropertyId);
+                    if (controlType != 50020) continue; // UIA_TextControlTypeId
+
+                    string autoId = ComUIAutomation.GetPropertyValueString(child, ComUIAutomation.UIA_AutomationIdPropertyId);
+                    if (string.IsNullOrEmpty(autoId) || !autoId.Equals("LocLabel1", StringComparison.OrdinalIgnoreCase)) continue;
+
+                    string textValue = ComUIAutomation.GetPropertyValueString(child, ComUIAutomation.UIA_NamePropertyId);
+                    if (string.IsNullOrWhiteSpace(textValue)) continue;
+
+                    child.GetCurrentPropertyValue(ComUIAutomation.UIA_BoundingRectanglePropertyId, out object propValue);
+                    double[] boundingBox = propValue as double[];
+                    if (boundingBox == null || boundingBox.Length != 4) continue;
+
+                    int screenLeft = (int)boundingBox[0];
+                    int screenTop = (int)boundingBox[1];
+                    int screenWidth = (int)boundingBox[2];
+                    int screenHeight = (int)boundingBox[3];
+
+                    RECT clientTextRect = new()
+                    {
+                        left = screenLeft - winRect.left,
+                        top = screenTop - winRect.top,
+                        right = (screenLeft - winRect.left) + screenWidth,
+                        bottom = (screenTop - winRect.top) + screenHeight
+                    };
+
+                    IntPtr bgBrush = CreateSolidBrush(DarkColors.kSecondary);
+                    FillRect(hdcScreen, ref clientTextRect, bgBrush);
+                    DeleteObject(bgBrush);
+
+                    LOGFONT lf = GetThemedFont(TaskDialogParts.TDLG_CONTENTPANE);
+                    IntPtr hFont = CreateFontIndirect(lf);
+                    IntPtr oldFont = hFont != IntPtr.Zero ? SelectObject(hdcScreen, hFont) : IntPtr.Zero;
+
+                    SetTextColor(hdcScreen, (uint)ColorTranslator.ToWin32(Color.White));
+                    GDI32.SetBkMode(hdcScreen, 1); // TRANSPARENT
+
+                    User32.DrawText(hdcScreen, textValue, textValue.Length, ref clientTextRect,
+                        0x00000000 /* DT_LEFT */ | 0x00000010 /* DT_SINGLELINE */ | 0x00000004 /* DT_VCENTER */ | 0x00008000 /* DT_NOPREFIX */ | 0x00000020 /* DT_PATH_ELLIPSIS */);
+
+                    if (oldFont != IntPtr.Zero) SelectObject(hdcScreen, oldFont);
+                    if (hFont != IntPtr.Zero) DeleteObject(hFont);
+                }
+            }
+            catch (Exception ex)
+            {
+                Program.Log?.Debug($"[ProgressDialog Native Overlay Error]", ex);
+            }
+            finally
+            {
+                User32.ReleaseDC(hwnd, hdcScreen);
+            }
+        }
+
+        /// <summary>
+        /// Windows 10 path: no dark ProgressDialogUI msstyles exist on this OS, so the whole client area is forced dark manually -- print the native light rendering into a buffer,
+        /// pixel-swap the known light background tones to the dark palette, then overdraw every UI Automation text element in white so nothing is left unreadable on the darkened background.
+        /// </summary>
+        /// <summary>
+        /// Windows 10 path: no dark ProgressDialogUI msstyles exist on this OS, so the client area is forced dark manually - print the native light rendering into a buffer,
+        /// pixel-swap its light backgrounds to the dark palette (excluding the AVI animation region, which must stay untouched since it repaints itself independently of this subclass),
+        /// then overdraw only the known label control in white on the darkened background.
+        /// </summary>
+        private static IntPtr PaintProgressDialogForced(IntPtr hwnd)
+        {
+            IntPtr hdc = BeginPaint(hwnd, out PAINTSTRUCT ps);
+
+            GetClientRect(hwnd, out RECT rc);
+            RECT rcForBuffer = rc;
+            IntPtr hbp = BeginBufferedPaint(hdc, ref rcForBuffer, BPBF_TOPDOWNDIB, IntPtr.Zero, out IntPtr hdcBuf);
+            if (hbp == IntPtr.Zero)
+            {
+                DefSubclassProc(hwnd, (int)User32.WindowsMessage.PrintClient, hdc, (IntPtr)PRF_CLIENT);
+                EndPaint(hwnd, ref ps);
+                return IntPtr.Zero;
+            }
+
+            // Render the native light-mode ProgressDialogUI into the offscreen buffer first.
+            DefSubclassProc(hwnd, (int)User32.WindowsMessage.PrintClient, hdcBuf, (IntPtr)PRF_CLIENT);
+
+            User32.GetWindowRect(hwnd, out UxTheme.RECT winRect);
+            NativeMethods.IUIAutomationElement baseEl = null;
+            try { baseEl = ComUIAutomation.FromHandle(hwnd); } catch { }
+
+            // Locate the AVI animation control so its region is excluded from both the pixel swap and
+            // the text overdraw -- it repaints its own frames independently and must be left alone.
+            RECT? aviRect = null;
+            if (baseEl != null)
+            {
+                foreach (NativeMethods.IUIAutomationElement child in ComUIAutomation.GetContentChildren(baseEl))
+                {
+                    string cls = ComUIAutomation.GetPropertyValueString(child, ComUIAutomation.UIA_ClassNamePropertyId);
+                    string id = ComUIAutomation.GetPropertyValueString(child, ComUIAutomation.UIA_AutomationIdPropertyId);
+
+                    bool looksLikeAvi = (!string.IsNullOrEmpty(cls) && cls.Equals("SysAnimate32", StringComparison.OrdinalIgnoreCase))
+                                      || (!string.IsNullOrEmpty(id) && id.IndexOf("Avi", StringComparison.OrdinalIgnoreCase) >= 0);
+
+                    if (!looksLikeAvi) continue;
+
+                    child.GetCurrentPropertyValue(ComUIAutomation.UIA_BoundingRectanglePropertyId, out object bb);
+                    if (bb is double[] box && box.Length == 4)
+                    {
+                        aviRect = new RECT
+                        {
+                            left = (int)box[0] - winRect.left,
+                            top = (int)box[1] - winRect.top,
+                            right = (int)(box[0] + box[2]) - winRect.left,
+                            bottom = (int)(box[1] + box[3]) - winRect.top
+                        };
+                    }
+                    break;
+                }
+            }
+
+            // Pixel-swap light backgrounds to the dark palette, skipping the AVI rect if found.
+            if (GetBufferedPaintBits(hbp, out IntPtr pPx, out int rw) == 0)
+            {
+                GetBufferedPaintTargetRect(hbp, out RECT rcBuf);
+                int w = rcBuf.right - rcBuf.left;
+                int h = rcBuf.bottom - rcBuf.top;
+
+                SwapRule[] rules =
+                [
+                    new SwapRule { sR = 255, sG = 255, sB = 255, dR = DarkColors.kSecondary.R, dG = DarkColors.kSecondary.G, dB = DarkColors.kSecondary.B },
+                    new SwapRule { sR = 240, sG = 240, sB = 240, dR = DarkColors.kSecondary.R, dG = DarkColors.kSecondary.G, dB = DarkColors.kSecondary.B },
+                    new SwapRule { sR = 128, sG = 128, sB = 128, dR = DarkColors.kSeparator.R, dG = DarkColors.kSeparator.G, dB = DarkColors.kSeparator.B },
+                    new SwapRule { sR = 223, sG = 223, sB = 223, dR = DarkColors.kSeparator.R, dG = DarkColors.kSeparator.G, dB = DarkColors.kSeparator.B },
+                ];
+                PixelSwap(pPx, rw, w, h, rules, aviRect);
+            }
+
+            // Overdraw only the known label control below the header -- targeted, not every text element, so stale/duplicate UIA nodes don't surface the wrong string.
+            if (baseEl != null)
+            {
+                try
+                {
+                    foreach (NativeMethods.IUIAutomationElement child in ComUIAutomation.GetContentChildren(baseEl))
+                    {
+                        int controlType = ComUIAutomation.GetPropertyValueInt(child, ComUIAutomation.UIA_ControlTypePropertyId);
+                        if (controlType != 50020) continue; // UIA_TextControlTypeId
+
+                        string autoId = ComUIAutomation.GetPropertyValueString(child, ComUIAutomation.UIA_AutomationIdPropertyId);
+                        if (string.IsNullOrEmpty(autoId) || !autoId.Equals("LocLabel1", StringComparison.OrdinalIgnoreCase)) continue;
+
+                        string textValue = ComUIAutomation.GetPropertyValueString(child, ComUIAutomation.UIA_NamePropertyId);
+                        if (string.IsNullOrWhiteSpace(textValue)) continue;
+
+                        child.GetCurrentPropertyValue(ComUIAutomation.UIA_BoundingRectanglePropertyId, out object propValue);
+                        if (propValue is not double[] boundingBox || boundingBox.Length != 4) continue;
+
+                        RECT clientTextRect = new()
+                        {
+                            left = (int)boundingBox[0] - winRect.left,
+                            top = (int)boundingBox[1] - winRect.top,
+                            right = (int)(boundingBox[0] + boundingBox[2]) - winRect.left,
+                            bottom = (int)(boundingBox[1] + boundingBox[3]) - winRect.top
+                        };
+
+                        IntPtr bgBrush = CreateSolidBrush(DarkColors.kSecondary);
+                        FillRect(hdcBuf, ref clientTextRect, bgBrush);
+                        DeleteObject(bgBrush);
+
+                        LOGFONT lf = GetThemedFont(TaskDialogParts.TDLG_CONTENTPANE);
+                        IntPtr hFont = CreateFontIndirect(lf);
+                        IntPtr oldFont = hFont != IntPtr.Zero ? SelectObject(hdcBuf, hFont) : IntPtr.Zero;
+
+                        SetTextColor(hdcBuf, (uint)ColorTranslator.ToWin32(Color.White));
+                        GDI32.SetBkMode(hdcBuf, 1); // TRANSPARENT
+
+                        User32.DrawText(hdcBuf, textValue, textValue.Length, ref clientTextRect,
+                            0x00000000 /* DT_LEFT */ | 0x00000004 /* DT_VCENTER */ | 0x00000010 /* DT_SINGLELINE */ | 0x00008000 /* DT_NOPREFIX */ | 0x00000020 /* DT_PATH_ELLIPSIS */);
+
+                        if (oldFont != IntPtr.Zero) SelectObject(hdcBuf, oldFont);
+                        if (hFont != IntPtr.Zero) DeleteObject(hFont);
+
+                        break; // only one LocLabel1 exists
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Program.Log?.Debug($"[ProgressDialog Forced-Dark Overlay Error]", ex);
+                }
+            }
+
+            EndBufferedPaint(hbp, true);
+            EndPaint(hwnd, ref ps);
+            return IntPtr.Zero;
         }
 
         private static void EnableForTLW(IntPtr hwnd, bool dark = true)
@@ -1317,7 +1464,6 @@ namespace WinPaletter.UI.Dark
                     {
                         var cwp = (User32.CWPSTRUCT)Marshal.PtrToStructure(lParam, typeof(User32.CWPSTRUCT));
 
-                        // Scope to descendants of THIS progress dialog only
                         if (cwp.hwnd != IntPtr.Zero && User32.IsChild(hwndPD, cwp.hwnd))
                         {
                             System.Text.StringBuilder className = new(256);
@@ -1328,7 +1474,7 @@ namespace WinPaletter.UI.Dark
                             {
                                 if (!GetWindowSubclass(cwp.hwnd, s_progressDuiProc, kProgressDuiSubclassId, out _))
                                 {
-                                    SetWindowSubclass(cwp.hwnd, s_progressDuiProc, kProgressDuiSubclassId, IntPtr.Zero);
+                                    SetWindowSubclass(cwp.hwnd, s_progressDuiProc, kProgressDuiSubclassId, hasNativeTheme ? (IntPtr)1 : IntPtr.Zero);
                                 }
                             }
                         }
@@ -1345,6 +1491,21 @@ namespace WinPaletter.UI.Dark
                     s_progressThreadHooks[progressThreadId] = hHook;
                 }
             }
+
+            // Fallback: subclass DirectUI child directly if it already exists
+            EnumChildWindows(hwndPD, delegate (IntPtr hwndChild, IntPtr lp)
+            {
+                System.Text.StringBuilder cn = new(256);
+                User32.GetClassName(hwndChild, cn, cn.Capacity);
+                string cls = cn.ToString();
+
+                if ((cls == "ProgressDialogUI" || cls == "DirectUIHWND") &&
+                    !GetWindowSubclass(hwndChild, s_progressDuiProc, kProgressDuiSubclassId, out _))
+                {
+                    SetWindowSubclass(hwndChild, s_progressDuiProc, kProgressDuiSubclassId, hasNativeTheme ? (IntPtr)1 : IntPtr.Zero);
+                }
+                return true;
+            }, IntPtr.Zero);
 
             // Fallback: subclass DirectUI child directly if it already exists
             EnumChildWindows(hwndPD, delegate (IntPtr hwndChild, IntPtr lp)

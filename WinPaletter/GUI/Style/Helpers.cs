@@ -278,7 +278,8 @@ namespace WinPaletter.UI.Style
                     break;
 
                 case WP.LinkLabel label1:
-                    ctrl.ForeColor = DarkMode ? Color.White : Color.Black;
+                    label1.ForeColor = DarkMode ? Color.White : Color.Black;
+                    label1.LinkColor = DarkMode ? Color.White : Color.Black;
                     break;
 
                 case TreeView tree:

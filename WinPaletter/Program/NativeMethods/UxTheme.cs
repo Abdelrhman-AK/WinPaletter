@@ -68,6 +68,15 @@ namespace WinPaletter.NativeMethods
         [DllImport(_uxtheme)]
         public static extern int CloseThemeData(IntPtr hTheme);
 
+        [DllImport(_uxtheme)]
+        public static extern bool IsThemeActive();
+
+        [DllImport(_uxtheme)]
+        public static extern bool IsAppThemed();
+
+        [DllImport(_uxtheme)]
+        public static extern bool IsThemePartDefined(IntPtr hTheme, int iPartId, int iStateId);
+
         /// <summary>
         /// Gets the font associated with a specified theme part and state.
         /// </summary>

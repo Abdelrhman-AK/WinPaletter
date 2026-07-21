@@ -307,7 +307,7 @@ namespace WinPaletter.Tabs
                     renderer.DrawBackground(G, new(0, 0, 100, 10));
                 }
 
-                return bmp.AverageColor();
+                return bmp.GetPixel(bmp.Width / 2, bmp.Height - 1);
             }
         }
 
