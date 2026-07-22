@@ -690,19 +690,22 @@ namespace WinPaletter.UI.Simulation
                 RectMiddle = new(Rect.X + (Rect.Width - pW) / 2f, Rect.Y + (Rect.Height - 36) / 2f, pW, pH);
                 RectMiddleBorder = new(RectMiddle.X + pX, RectMiddle.Y + pY, RectMiddle.Width - pX * 2, RectMiddle.Height - pY * 2);
 
-                using (Bitmap b0 = i0.ReplaceColor(Color.FromArgb(204, 204, 204), Color.FromArgb(alpha, FC)))
-                using (Bitmap b1 = i1.ReplaceColor(Color.FromArgb(204, 204, 204), Color.FromArgb(alpha, PCF)))
-                using (Bitmap b2 = i1.ReplaceColor(Color.FromArgb(204, 204, 204), Color.FromArgb(alpha, PCF)))
+                using (Bitmap b0 = i0.ReplaceColor(Color.FromArgb(204, 204, 204), FC))
+                using (Bitmap b1 = i1.ReplaceColor(Color.FromArgb(204, 204, 204), PCF))
+                using (Bitmap b2 = i1.ReplaceColor(Color.FromArgb(204, 204, 204), PCF))
+                using (Bitmap b0_alpha = b0.Fade(alpha / 255f))
+                using (Bitmap b1_alpha = b1.Fade(alpha / 255f))
+                using (Bitmap b2_alpha = b2.Fade(alpha / 255f))
                 using (SolidBrush br = new(Color.FromArgb(alpha, PCB)))
                 using (Pen P = new(Color.FromArgb(alpha, PCF)))
                 {
-                    G.DrawImage(b0, new Point(0, 1));
-                    G.DrawImage(b1, new Point((int)(RectMiddle.X + (RectMiddle.Width - i1.Width) / 2f), (int)(RectMiddle.Y + (RectMiddle.Height - i1.Height) / 2f)));
+                    G.DrawImage(b0_alpha, new Point(0, 1));
+                    G.DrawImage(b1_alpha, new Point((int)(RectMiddle.X + (RectMiddle.Width - i1.Width) / 2f), (int)(RectMiddle.Y + (RectMiddle.Height - i1.Height) / 2f)));
 
                     G.FillRectangle(br, RectMiddle);
                     G.DrawRectangle(P, RectMiddleBorder.X, RectMiddleBorder.Y, RectMiddleBorder.Width, RectMiddleBorder.Height);
 
-                    G.DrawImageUnscaled(b2, new Point((int)(RectMiddle.X + (RectMiddle.Width - i1.Width) / 2f), (int)(RectMiddle.Y + (RectMiddle.Height - i1.Height) / 2f)));
+                    G.DrawImageUnscaled(b2_alpha, new Point((int)(RectMiddle.X + (RectMiddle.Width - i1.Width) / 2f), (int)(RectMiddle.Y + (RectMiddle.Height - i1.Height) / 2f)));
                 }
             }
 
