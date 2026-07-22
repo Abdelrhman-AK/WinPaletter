@@ -3,6 +3,7 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Text;
+using System.Threading;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 using WinPaletter.Tabs;
@@ -254,13 +255,7 @@ namespace WinPaletter.UI.Style
             {
                 if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8x)
                 {
-                    SetControlTheme(ctrl.Handle, DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default);
-
-                    User32.EnumChildWindows(ctrl.Handle, (child, _) =>
-                    {
-                        SetControlTheme(child, Program.Style.DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Explorer);
-                        return true;
-                    }, IntPtr.Zero);
+                    SetControlTheme(ctrl.Handle, DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default, true);
                 }
 
                 ctrl.ForeColor = DarkMode ? Color.White : Color.Black;
@@ -290,6 +285,7 @@ namespace WinPaletter.UI.Style
                 case ListView listView:
                     listView.BackColor = ctrl.Parent.BackColor;
                     listView.ForeColor = DarkMode ? Color.White : Color.Black;
+                    SetControlTheme(listView.Handle, CtrlTheme.Explorer); // Keeps it msstyle-themed correctly
                     break;
 
                 case ListBox listBox:
@@ -383,50 +379,54 @@ namespace WinPaletter.UI.Style
         /// </summary>
         /// <param name="handle">The handle of the control.</param>
         /// <param name="theme">The theme to set for the control.</param>
+        /// <param name="recursive">If true, applies the theme to all child controls recursively.</param>
         /// <returns>Zero if successful, otherwise an error code.</returns>
-        public static int SetControlTheme(IntPtr handle, CtrlTheme theme)
+        public static int SetControlTheme(IntPtr handle, CtrlTheme theme, bool recursive = false)
         {
-            // Check if the handle is valid
             if (handle == IntPtr.Zero) return 0;
 
-            try
-            {
-                switch (theme)
-                {
-                    case CtrlTheme.None:
-                        {
-                            // Set the control theme to None
-                            UxTheme.SetWindowTheme(handle, string.Empty, null);
-                            break;
-                        }
-                    case CtrlTheme.Explorer:
-                        {
-                            // Set the control theme to Explorer
-                            UxTheme.SetWindowTheme(handle, "Explorer", null);
-                            break;
-                        }
-                    case CtrlTheme.DarkExplorer:
-                        {
-                            // Set the control theme to DarkExplorer
-                            UxTheme.SetWindowTheme(handle, "DarkMode_Explorer", null);
-                            break;
-                        }
-                    case CtrlTheme.Default:
-                        {
-                            // Set the control theme to the default system theme
-                            UxTheme.SetWindowTheme(handle, null, null);
-                            break;
-                        }
-                    default:
-                        {
-                            UxTheme.SetWindowTheme(handle, null, null);
-                            break;
-                        }
-                }
+            // Determine the appTheme and subAppName arguments for UxTheme.SetWindowTheme
+            string appTheme;
+            string subAppName = null;
 
-                return 1;
+            switch (theme)
+            {
+                case CtrlTheme.None:
+                    appTheme = string.Empty;
+                    break;
+                case CtrlTheme.Explorer:
+                    appTheme = "Explorer";
+                    break;
+                case CtrlTheme.DarkExplorer:
+                    appTheme = "DarkMode_Explorer";
+                    break;
+                case CtrlTheme.Default:
+                default:
+                    appTheme = null;
+                    break;
             }
-            catch { return 0; }
+
+            // Apply theme to the current window
+            int result = UxTheme.SetWindowTheme(handle, appTheme, subAppName);
+
+            // Track the primary result, but continue even if individual children fail so we attempt styling the rest of the tree.
+            int finalResult = result;
+
+            // Recursively apply to child windows if requested
+            if (recursive)
+            {
+                User32.EnumChildWindows(handle, (child, _) =>
+                {
+                    int childResult = SetControlTheme(child, theme, true);
+                    if (childResult != 0 && finalResult == 0)
+                    {
+                        finalResult = childResult; // Capture the first encountered error
+                    }
+                    return true; // Return true to continue enumerating all remaining child windows
+                }, IntPtr.Zero);
+            }
+
+            return finalResult;
         }
     }
 }

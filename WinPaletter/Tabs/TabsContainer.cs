@@ -474,7 +474,7 @@ namespace WinPaletter.Tabs
 
         private Rectangle closeRectangle(Rectangle rectangle)
         {
-            return new Rectangle(rectangle.Right - _closeButtonSize - (rectangle.Height - _closeButtonSize) / 2, rectangle.Y + (rectangle.Height - _closeButtonSize) / 2, _closeButtonSize, _closeButtonSize);
+            return new Rectangle(rectangle.Right - _closeButtonSize - (rectangle.Height - _closeButtonSize) / 2 - 1, rectangle.Y + (rectangle.Height - _closeButtonSize) / 2, _closeButtonSize + 1, _closeButtonSize);
         }
 
         private Rectangle iconRectangle(Rectangle rectangle)
@@ -2629,6 +2629,9 @@ namespace WinPaletter.Tabs
 
             if (sf_middleCenter is not null)
             {
+                closeRect.X++;
+                closeRect.Y++;
+
                 DrawTextOnGlass(G, closeStr, Fonts.ConsoleMedium, Color.FromArgb(255 - tabData.CloseButtonAlpha, FormFocused ? ForeColor : _foreColorInactive), closeRect, 0, sf_middleCenter);
 
                 if (tabData.CloseButtonAlpha > 0)

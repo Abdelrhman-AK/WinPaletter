@@ -143,7 +143,7 @@ namespace WinPaletter.NativeMethods
 
             DWMAPI.DwmSetWindowAttribute(hWnd, (int)DWMAPI.DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, ref mica, Marshal.SizeOf<int>());
 
-            SetControlTheme(hWnd, Program.Style.DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default);
+            SetControlTheme(hWnd, Program.Style.DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default, true);
         }
 
         #endregion

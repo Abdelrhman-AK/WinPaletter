@@ -217,7 +217,7 @@ namespace WinPaletter.UI.Style
             switch (uMsg)
             {
                 case (uint)WindowsMessage.CtlColorEdit:
-                    // CRITICAL FIX: Only intercept colors if we are explicitly in Dark Mode
+                    // Only intercept colors if we are explicitly in Dark Mode
                     if (Program.Style.DarkMode && lParam == state.hEdit && state.hEdit != IntPtr.Zero && state.DarkEditBrush != IntPtr.Zero)
                     {
                         GDI32.SetTextColor(wParam, (int)Dark.DarkColors.kTextContent.Value);

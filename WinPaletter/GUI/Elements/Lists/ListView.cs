@@ -135,7 +135,7 @@ namespace WinPaletter.UI.WP
             if (DesignMode) return;
 
             RestoreHeaderSubclass(); // clean up any stale subclass from a previous handle
-            SetControlTheme(Handle, CtrlTheme.DarkExplorer);
+            SetControlTheme(Handle, CtrlTheme.Explorer);
             SubclassHeader();
         }
 
@@ -149,7 +149,7 @@ namespace WinPaletter.UI.WP
 
             // Windows resets the visual theme when the control is disabled,
             // so we forcefully reapply it regardless of Enabled state.
-            SetControlTheme(Handle, CtrlTheme.DarkExplorer);
+            SetControlTheme(Handle, CtrlTheme.Explorer);
             RestoreHeaderSubclass();
             SubclassHeader();
         }
@@ -169,7 +169,7 @@ namespace WinPaletter.UI.WP
             headerHandle = User32.SendMessage(Handle, LVM_GETHEADER, IntPtr.Zero, IntPtr.Zero);
             if (headerHandle != IntPtr.Zero)
             {
-                SetControlTheme(Handle, CtrlTheme.DarkExplorer);
+                SetControlTheme(Handle, CtrlTheme.Explorer);
 
                 newHeaderProc = new User32.WndProcDelegate(HeaderWndProc);
                 oldHeaderProc = User32.SetWindowLongPtr(headerHandle, (int)NativeMethods.User32.WindowsLongs.WndProc, Marshal.GetFunctionPointerForDelegate(newHeaderProc));
