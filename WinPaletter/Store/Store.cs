@@ -476,6 +476,8 @@ namespace WinPaletter
 
         void SetAspectsIcons()
         {
+            if (this is null || !IsHandleCreated || !IsShown) return;
+
             aspect_winTheme.Image?.Dispose();
             aspect_winTheme.Image = Program.Style.DarkMode ? Assets.Store.StoreAspect_WindowsTheme : Assets.Store.StoreAspect_WindowsTheme.Invert();
 

@@ -97,6 +97,8 @@ namespace WinPaletter
 
         private void Home_Localized()
         {
+            if (this is null || !IsHandleCreated || !IsShown) return;
+
             var T = Program.Localization.Strings.Tips;
 
             Program.ToolTip.SetToolTip(pin_button, string.Format(T.PinToTabs_Title, Text), T.PinToTabs_Desc, pin_button.Image);

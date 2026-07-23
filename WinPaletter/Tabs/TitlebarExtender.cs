@@ -233,6 +233,8 @@ namespace WinPaletter.Tabs
 
         private void Config_DarkModeChanged()
         {
+            if (this is null || !IsHandleCreated) return;
+
             UpdateStyles();
         }
 

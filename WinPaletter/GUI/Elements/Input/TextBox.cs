@@ -293,7 +293,10 @@ namespace WinPaletter.UI.WP
 
         private void DarkModeChanged()
         {
-            if (tb.IsHandleCreated) SetControlTheme(tb.Handle, Program.Style.DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Explorer);
+            if (this is null || !IsHandleCreated) return;
+            if (tb is null || !tb.IsHandleCreated) return;
+
+             SetControlTheme(tb.Handle, Program.Style.DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Explorer);
         }
 
         /// <summary>
