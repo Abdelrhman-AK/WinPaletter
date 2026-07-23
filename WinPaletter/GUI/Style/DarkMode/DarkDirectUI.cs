@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 using static WinPaletter.NativeMethods.Comctl32;
@@ -832,7 +833,7 @@ namespace WinPaletter.UI.Dark
 
             EndBufferedPaint(hbp, true);
         }
-        
+
         private static bool LooksLikePath(string token)
         {
             if (string.IsNullOrEmpty(token)) return false;
@@ -1658,8 +1659,8 @@ namespace WinPaletter.UI.Dark
                     return true;
                 }
 
-                // "TaskDialog" — the DirectUI TaskPage window
-                if (cls != "TaskDialog") return true;
+                // UIA reports "TaskDialog" from the main UI thread, "DirectUIHWND" when queried from other threads
+                if (cls != "TaskDialog" && cls != "DirectUIHWND") return true;
 
                 IntPtr hDUI = ComUIAutomation.GetNativeWindowHandle(el);
                 if (hDUI == IntPtr.Zero) return true;

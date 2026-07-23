@@ -74,6 +74,17 @@ namespace WinPaletter.UI.Style
             return string.Join(" ", c);
         }
 
+        private static IntPtr ResolveOwnerHandle()
+        {
+            IntPtr active = User32.GetActiveWindow();
+            if (active != IntPtr.Zero) return active;
+
+            IntPtr fallback = Form.ActiveForm?.Handle ?? IntPtr.Zero;
+            if (fallback != IntPtr.Zero) return fallback;
+
+            return Application.OpenForms.Count > 0 ? Application.OpenForms[0].Handle : IntPtr.Zero;
+        }
+
         /// <summary>
         /// Windows Vista/7 Styled MsgBox
         /// </summary>
@@ -104,7 +115,7 @@ namespace WinPaletter.UI.Style
                     TASKDIALOGCONFIG config = new()
                     {
                         cbSize = (uint)Marshal.SizeOf<TASKDIALOGCONFIG>(),
-                        hwndParent = IntPtr.Zero,
+                        hwndParent = ResolveOwnerHandle(),
                         hInstance = IntPtr.Zero,
                         dwFlags = TaskDialogFlags.EnableHyperlinks | TaskDialogFlags.AllowDialogCancellation,
                         dwCommonButtons = 0,

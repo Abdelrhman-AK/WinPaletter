@@ -43,6 +43,7 @@ namespace WinPaletter
 
             // Start showing home page tab.
             tabControl1.Visible = false;
+            Status_pnl.BackColor = Program.Style.Schemes.Main.Colors.Back();
             Status_pnl.Visible = Program.Settings.AppLog.StatusPanel;
             Status_lbl.Font = Fonts.Console;
             AddTab(Forms.Home);
@@ -161,7 +162,7 @@ namespace WinPaletter
 
         private void Status_lbl_Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.Clear((sender as Label).BackColor);
+            //e.Graphics.Clear((sender as Label).BackColor);
             TextFormatFlags flags = TextFormatFlags.Left | TextFormatFlags.VerticalCenter | TextFormatFlags.EndEllipsis;
             string status = (sender as Label).Text.Trim().Replace("\r\n", " <br> ");
             TextRenderer.DrawText(e.Graphics, status, (sender as Label).Font, (sender as Label).ClientRectangle, (sender as Label).ForeColor, flags);

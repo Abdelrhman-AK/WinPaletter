@@ -222,10 +222,10 @@ namespace WinPaletter
             var color = StatusColor(level);
             if (Program.Style.Animations)
                 FluentTransitions.Transition
-                    .With(mainForm.Status_lbl, nameof(mainForm.Status_lbl.BackColor), color)
+                    .With(mainForm.Status_pnl, nameof(mainForm.Status_pnl.BackColor), color)
                     .CriticalDamp(Program.AnimationSpan_Quick);
             else
-                mainForm.Status_lbl.BackColor = color;
+                mainForm.Status_pnl.BackColor = color;
         }
 
         private void UpdateStatusLabel(LogEventLevel level, string message)

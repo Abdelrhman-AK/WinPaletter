@@ -13,7 +13,7 @@ namespace WinPaletter
         private void Welcome_Load(object sender, EventArgs e)
         {
             Button1.Text = Program.Localization.Strings.General.Next;
-
+            Icon = Properties.Resources.Icon;
             checkBox1.Checked = Program.Settings.Miscellaneous.ShowWelcomeDialog;
         }
 

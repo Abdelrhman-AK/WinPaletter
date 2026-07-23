@@ -1073,10 +1073,6 @@ namespace WinPaletter.Tabs
                     TabData?.OnIconChanged(new(TabData));
                 }
             }
-            else if (m.Msg == (int)User32.WindowsMessage.Activate || m.Msg == (int)User32.WindowsMessage.ActivateApp || m.Msg == (int)User32.WindowsMessage.NCActivate)
-            {
-
-            }
         }
 
         #endregion
