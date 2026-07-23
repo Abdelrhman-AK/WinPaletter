@@ -853,12 +853,12 @@ namespace WinPaletter.TypesExtensions
                     GDI32.SelectObject(memoryHdc, fontHandle);
 
                     // Prepare drawing options
-                    UxTheme.DTTOPTS_AsInt32 dttOpts = new()
+                    UxTheme.DTTOPTS dttOpts = new()
                     {
-                        dwSize = Marshal.SizeOf(typeof(UxTheme.DTTOPTS_AsInt32)),
-                        dwFlags = UxTheme.DrawThemeTextFlags.Composited |
+                        dwSize = (uint)Marshal.SizeOf(typeof(UxTheme.DTTOPTS)),
+                        dwFlags = (uint)(UxTheme.DrawThemeTextFlags.Composited |
                                   UxTheme.DrawThemeTextFlags.GlowSize |
-                                  UxTheme.DrawThemeTextFlags.TextColor,
+                                  UxTheme.DrawThemeTextFlags.TextColor),
                         crText = ColorTranslator.ToWin32(foreColor),
                         iGlowSize = glowSize
                     };

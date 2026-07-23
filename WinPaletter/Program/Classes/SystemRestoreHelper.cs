@@ -290,67 +290,7 @@ namespace WinPaletter
         /// </summary>
         public static long? GetSystemVolumeShadowStorageUsedBytes()
         {
-            if (OS.WXP)
-            {
-                Program.Log?.Debug("GetSystemVolumeShadowStorageUsedBytes: OS.WXP is true, returning null (Win32_ShadowStorage is a VSS construct, not applicable to XP restore points).");
-                return null;
-            }
-
-            try
-            {
-                Program.Log?.Debug("GetSystemVolumeShadowStorageUsedBytes: querying root\\cimv2:Win32_ShadowStorage");
-
-                string systemDrive = Program.SystemPartition + ":\\";
-
-                using (ManagementObjectSearcher searcher = new(@"root\cimv2", "SELECT * FROM Win32_ShadowStorage"))
-                {
-                    foreach (ManagementObject obj in searcher.Get().Cast<ManagementObject>())
-                    {
-                        if (obj["UsedSpace"] == null) continue;
-
-                        try
-                        {
-                            using (ManagementObject volume = new(obj["Volume"]?.ToString() ?? string.Empty))
-                            {
-                                string deviceId = volume["DeviceID"]?.ToString();
-
-                                // Prefer the entry that matches the system drive when the volume path resolves.
-                                if (!string.IsNullOrEmpty(deviceId) && deviceId.IndexOf(systemDrive.TrimEnd('\\'), StringComparison.OrdinalIgnoreCase) >= 0)
-                                {
-                                    long matched = Convert.ToInt64(obj["UsedSpace"]);
-                                    Program.Log?.Debug($"GetSystemVolumeShadowStorageUsedBytes: matched system drive {systemDrive}, UsedSpace: {matched} bytes");
-                                    return matched;
-                                }
-                            }
-                        }
-                        catch (ManagementException ex)
-                        {
-                            // Volume path could not be resolved on this OS version; ignore and keep looking.
-                            Program.Log?.Debug("GetSystemVolumeShadowStorageUsedBytes: could not resolve a Volume reference, continuing to next entry", ex);
-                        }
-                    }
-
-                    // No entry matched the system drive specifically (or the match couldn't be resolved); fall back to the first available shadow storage entry as a rough indicator.
-                    foreach (ManagementObject obj in searcher.Get().Cast<ManagementObject>())
-                    {
-                        if (obj["UsedSpace"] != null)
-                        {
-                            long fallback = Convert.ToInt64(obj["UsedSpace"]);
-                            Program.Log?.Debug($"GetSystemVolumeShadowStorageUsedBytes: no drive-specific match, falling back to first entry, UsedSpace: {fallback} bytes");
-                            return fallback;
-                        }
-                    }
-                }
-
-                Program.Log?.Debug("GetSystemVolumeShadowStorageUsedBytes: no Win32_ShadowStorage entries with UsedSpace found, returning null");
-            }
-            catch (Exception ex)
-            {
-                Program.Log?.Write(LogEventLevel.Warning, "Could not read shadow storage usage", ex);
-                Program.Log?.Debug("Exception thrown in GetSystemVolumeShadowStorageUsedBytes", ex);
-            }
-
-            return null;
+            return TryGetSystemVolumeShadowStorageUsedBytes();
         }
 
         /// <summary>
@@ -864,9 +804,14 @@ namespace WinPaletter
 
                 Program.Log?.Debug("TryGetSystemVolumeShadowStorageUsedBytes: no Win32_ShadowStorage entries with UsedSpace found, returning null");
             }
+            catch (ManagementException ex)
+            {
+                Program.Log?.Debug("WMI initialization or query failed safely while getting shadow storage usage");
+                Program.Log?.Debug("ManagementException thrown in TryGetSystemVolumeShadowStorageUsedBytes", ex);
+            }
             catch (Exception ex)
             {
-                Program.Log?.Write(LogEventLevel.Warning, "Could not read shadow storage usage", ex);
+                Program.Log?.Debug("Could not read shadow storage usage");
                 Program.Log?.Debug("Exception thrown in TryGetSystemVolumeShadowStorageUsedBytes", ex);
             }
 

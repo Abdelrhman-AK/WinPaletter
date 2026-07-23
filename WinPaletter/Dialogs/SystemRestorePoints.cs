@@ -57,7 +57,9 @@ namespace WinPaletter.Dialogs
             respoints.Items.AddRange([.. items]);
             respoints.EndUpdate();
 
-            Label9.Text = (SystemRestoreHelper.GetSystemVolumeShadowStorageUsedBytes() ?? 0).ToStringFileSize();
+            long? sysVolShadow = SystemRestoreHelper.GetSystemVolumeShadowStorageUsedBytes();
+            Label9.Text = (sysVolShadow ?? 0).ToStringFileSize();
+            flowLayoutPanel2.Visible = sysVolShadow.HasValue && sysVolShadow.Value > 0;
             SetBusyState(false);
         }
 

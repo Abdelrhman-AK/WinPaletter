@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Threading;
-using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 using static WinPaletter.NativeMethods.Comctl32;
 using static WinPaletter.NativeMethods.DWMAPI;
@@ -89,8 +86,6 @@ namespace WinPaletter.UI.Dark
     /// </summary>
     internal sealed class DirectUIState
     {
-        // "TaskDialog"      -> panel bg, ExpandoButton glyph drawing
-        // "TaskDialogStyle" -> text colour / font queries for all text parts
         public IntPtr hTD = IntPtr.Zero;
         public IntPtr hTDS = IntPtr.Zero;
         public IntPtr hButton = IntPtr.Zero;
@@ -112,6 +107,7 @@ namespace WinPaletter.UI.Dark
         public bool isChecked;
         public bool defExpanded;
         public bool defChecked;
+        public bool _toggleHandled; // Flag to prevent double-toggling
 
         public IntPtr pCfg = IntPtr.Zero;
 
@@ -144,211 +140,45 @@ namespace WinPaletter.UI.Dark
     /// </summary>
     internal static class TaskDialogParts
     {
-        /// <summary>
-        /// Primary panel part ID
-        /// </summary>
         public const int TDLG_PRIMARYPANEL = 1;
-
-        /// <summary>
-        /// Secondary panel part ID
-        /// </summary>
         public const int TDLG_SECONDARYPANEL = 8;
-
-        /// <summary>
-        /// Main instruction pane part ID
-        /// </summary>
         public const int TDLG_MAININSTRUCTIONPANE = 5;
-
-        /// <summary>
-        /// Content pane part ID
-        /// </summary>
         public const int TDLG_CONTENTPANE = 7;
-
-        /// <summary>
-        /// Expand/Collapse text part ID
-        /// </summary>
         public const int TDLG_EXPANDOTEXT = 12;
-
-        /// <summary>
-        /// Expand/Collapse button part ID
-        /// </summary>
         public const int TDLG_EXPANDOBUTTON = 13;
-
-        /// <summary>
-        /// Verification checkbox text part ID
-        /// </summary>
         public const int TDLG_VERIFICATIONTEXT = 14;
-
-        /// <summary>
-        /// Footnote pane part ID
-        /// </summary>
         public const int TDLG_FOOTNOTEPANE = 15;
-
-        /// <summary>
-        /// Footnote separator part ID
-        /// </summary>
         public const int TDLG_FOOTNOTESEPARATOR = 16;
-
-        /// <summary>
-        /// Expanded footer area part ID
-        /// </summary>
         public const int TDLG_EXPANDEDFOOTERAREA = 18;
-
-        /// <summary>
-        /// Radio button pane part ID
-        /// </summary>
         public const int TDLG_RADIOBUTTONPANE = 20;
-
-        /// <summary>
-        /// Expanded info pane part ID
-        /// </summary>
         public const int TDLG_EXPINFOPANE = 9;
 
-        /// <summary>
-        /// Expand/Collapse button normal state
-        /// </summary>
         public const int TDLGEBS_NORMAL = 1;
-
-        /// <summary>
-        /// Expand/Collapse button hover state
-        /// </summary>
         public const int TDLGEBS_HOVER = 2;
-
-        /// <summary>
-        /// Expand/Collapse button pressed state
-        /// </summary>
         public const int TDLGEBS_PRESSED = 3;
-
-        /// <summary>
-        /// Expand/Collapse button expanded normal state
-        /// </summary>
         public const int TDLGEBS_EXPANDEDNORMAL = 4;
-
-        /// <summary>
-        /// Expand/Collapse button expanded hover state
-        /// </summary>
         public const int TDLGEBS_EXPANDEDHOVER = 5;
-
-        /// <summary>
-        /// Expand/Collapse button expanded pressed state
-        /// </summary>
         public const int TDLGEBS_EXPANDEDPRESSED = 6;
 
-        /// <summary>
-        /// Checkbox button part ID
-        /// </summary>
         public const int BP_CHECKBOX = 3;
-
-        /// <summary>
-        /// Checkbox unchecked normal state
-        /// </summary>
         public const int CBS_UNCHECKEDNORMAL = 1;
-
-        /// <summary>
-        /// Checkbox unchecked hot (hover) state
-        /// </summary>
         public const int CBS_UNCHECKEDHOT = 2;
-
-        /// <summary>
-        /// Checkbox unchecked pressed state
-        /// </summary>
         public const int CBS_UNCHECKEDPRESSED = 3;
-
-        /// <summary>
-        /// Checkbox checked normal state
-        /// </summary>
         public const int CBS_CHECKEDNORMAL = 5;
-
-        /// <summary>
-        /// Checkbox checked hot (hover) state
-        /// </summary>
         public const int CBS_CHECKEDHOT = 6;
-
-        /// <summary>
-        /// Checkbox checked pressed state
-        /// </summary>
         public const int CBS_CHECKEDPRESSED = 7;
 
-        /// <summary>
-        /// Radio button part ID
-        /// </summary>
         public const int BP_RADIOBUTTON = 2;
-
-        /// <summary>
-        /// Radio button unchecked normal state
-        /// </summary>
         public const int RBS_UNCHECKEDNORMAL = 1;
 
-        /// <summary>
-        /// Theme property: Text color
-        /// </summary>
         public const int TMT_TEXTCOLOR = 3803;
-
-        /// <summary>
-        /// Theme property: Fill color
-        /// </summary>
         public const int TMT_FILLCOLOR = 3802;
-
-        /// <summary>
-        /// Theme property: Content margins
-        /// </summary>
         public const int TMT_CONTENTMARGINS = 3602;
-
-        /// <summary>
-        /// Theme property: Font
-        /// </summary>
         public const int TMT_FONT = 210;
-
-        /// <summary>
-        /// True value for theme properties
-        /// </summary>
         public const int TS_TRUE = 1;
-
-        /// <summary>
-        /// Draw flag for theme properties
-        /// </summary>
         public const int TS_DRAW = 1;
     }
 
-    /// <summary>
-    /// WinPaletter — Dark-mode support for Win32 TaskDialog on Windows 10 and 11.
-    /// </summary>
-    /// <remarks>
-    /// <para>
-    /// This namespace provides a dark-theme extension for the native Win32 TaskDialog
-    /// control, enabling dark backgrounds, inverted text colours, and themed child
-    /// controls (buttons, radio buttons, checkboxes, progress bars, and hyperlinks)
-    /// without modifying the calling application's visual style.
-    /// </para>
-    /// <para>
-    /// The implementation supports two rendering paths:
-    /// <list type="bullet">
-    ///   <item><description><b>Windows 10 (no native dark theme):</b> Pixel-swap of panel backgrounds, overdraw of icons, glyphs, and text using GDI + UxTheme.</description></item>
-    ///   <item><description><b>Windows 11 (native dark theme):</b> Leverages <c>DarkMode_Explorer</c> and <c>DarkMode_DarkTheme</c> theme classes, with fallback rendering for legacy controls.</description></item>
-    /// </list>
-    /// </para>
-    /// <para>
-    /// The dark-mode state is attached via window subclassing (<c>SetWindowSubclass</c>)
-    /// to the main TaskDialog window and its DirectUI child windows. Removing subclasses
-    /// reverts the dialog to the system-light appearance.
-    /// </para>
-    /// <para>
-    /// The <see cref="DarkDirectUI.DarkenTaskDialog"/> method is the main entry point for
-    /// applying dark mode to a TaskDialog window. It must be called after the dialog
-    /// has been created and its window handle is known.
-    /// </para>
-    /// <para>
-    /// <b>UI Automation:</b> Element discovery talks directly to uiautomationcore.dll
-    /// through the raw COM interfaces defined in <see cref="ComUIAutomation"/>, matching
-    /// the original C++ implementation's approach and content-view walking behaviour
-    /// without going through the managed <c>System.Windows.Automation</c> wrapper.
-    /// </para>
-    /// <para>
-    /// <b>Configuration:</b> This file depends on a <c>TASKDIALOGCONFIG</c> structure
-    /// defined elsewhere in the project. If absent, a minimal definition can be enabled
-    /// by defining the <c>DARKMODE_DEFINE_TASKDIALOGCONFIG</c> symbol.
-    /// </para>
-    /// </remarks>
     public static class DarkDirectUI
     {
         private const int STATE_SYSTEM_CHECKED = 0x00000010;
@@ -356,24 +186,19 @@ namespace WinPaletter.UI.Dark
 
         private static bool s_hasNativeTheme;
 
-        private static readonly UIntPtr kMainSubclassId = (UIntPtr)0xDEADBEEFUL;
-        private static readonly UIntPtr kDirectUISubclassId = (UIntPtr)0xBADF00DUL;
-        private static readonly UIntPtr kCtlColorId = (UIntPtr)0xC0FFEE01UL;
+        private static readonly UIntPtr kMainSubclassId = new(0xDEADBEEF);
+        private static readonly UIntPtr kDirectUISubclassId = new(0xBADF00D);
+        private static readonly UIntPtr kCtlColorId = new(0xC0FFEE01);
+        private static readonly UIntPtr kProgressDuiSubclassId = new(0xDEADBEF2);
 
         private static readonly Dictionary<IntPtr, DirectUIState> s_states = [];
 
-        // Keep delegate instances alive for the lifetime of the process --
-        // SetWindowSubclass only stores a function pointer, so the CLR must
-        // not garbage-collect these delegates while native code can still
-        // call back into them.
         private static readonly SUBCLASSPROC s_directUiProc = DirectUISubclassProc;
         private static readonly SUBCLASSPROC s_ctColorProc = WmCtColorSubclassProc;
         private static readonly SUBCLASSPROC s_radioProc = RadioSubclassProc;
         private static readonly SUBCLASSPROC s_mainProc = TaskDialogMainSubclassProc;
 
-        // delegates
         public delegate bool WNDENUMPROC(IntPtr hWnd, IntPtr lParam);
-        private static readonly UIntPtr kProgressDuiSubclassId = (UIntPtr)0xDEADBEEF02UL;
         private static readonly SUBCLASSPROC s_progressDuiProc = ProgressDuiSubclassProc;
         private static readonly Dictionary<uint, IntPtr> s_progressThreadHooks = [];
         private static readonly Dictionary<uint, User32.HookProc> s_progressThreadHookDelegates = [];
@@ -410,11 +235,6 @@ namespace WinPaletter.UI.Dark
             }
         }
 
-        /// <summary>
-        /// Theme handles
-        /// </summary>
-        /// <param name="hwnd"></param>
-        /// <param name="s"></param>
         private static void RefreshThemes(IntPtr hwnd, DirectUIState s)
         {
             s.CloseThemes();
@@ -470,10 +290,6 @@ namespace WinPaletter.UI.Dark
             };
         }
 
-        // Same TaskDialogStyle unreliability applies to automatic font resolution
-        // once the wrong theme handle/class is involved -- an explicit Segoe UI
-        // font is created and selected instead of trusting DrawThemeTextEx's
-        // per-part theme-font lookup.
         private static LOGFONT GetThemedFont(int uifilePart)
         {
             bool isMainInstruction = uifilePart == TaskDialogParts.TDLG_MAININSTRUCTIONPANE;
@@ -485,22 +301,49 @@ namespace WinPaletter.UI.Dark
             };
         }
 
-        private static void RefreshElements(IntPtr hwnd, DirectUIState s)
+        private static void RefreshElements(IntPtr hwnd, DirectUIState s, bool preserveManualState = true)
         {
+            // Store manual state if we want to preserve it
+            bool manualExpanded = s.isExpanded;
+            bool manualChecked = s.isChecked;
+
             ComUIAutomation.QueryElements(hwnd, s.elements);
+
+            bool foundCheckbox = false;
+            bool foundExpando = false;
 
             foreach (ComUIAutomation.UIAElementInfo el in s.elements)
             {
                 if (el.automationId == "VerificationCheckBox")
                 {
-                    s.isChecked = (el.toggleState + STATE_SYSTEM_CHECKED) != 0;
+                    foundCheckbox = true;
+                    if (!preserveManualState) s.isChecked = (el.toggleState == ComUIAutomation.ToggleState.On);
                 }
                 else if (el.automationId == "ExpandoButton")
                 {
-                    s.isExpanded = el.expandCollapseState is ComUIAutomation.ExpandCollapseState.Expanded or ComUIAutomation.ExpandCollapseState.PartiallyExpanded;
+                    foundExpando = true;
+                    if (!preserveManualState) s.isExpanded = el.expandCollapseState is ComUIAutomation.ExpandCollapseState.Expanded or ComUIAutomation.ExpandCollapseState.PartiallyExpanded;
                 }
             }
-            if (s.defChecked) s.isChecked = true;
+
+            // Only apply defaults if we're not preserving manual state
+            if (!preserveManualState)
+            {
+                if (s.defChecked)
+                {
+                    s.isChecked = true;
+                }
+                if (s.defExpanded)
+                {
+                    s.isExpanded = true;
+                }
+            }
+            else
+            {
+                // Restore manual state
+                s.isExpanded = manualExpanded;
+                s.isChecked = manualChecked;
+            }
 
             s.elemsOk = true;
         }
@@ -514,9 +357,6 @@ namespace WinPaletter.UI.Dark
             return -1;
         }
 
-        /// <summary>
-        /// Pixel-swap pass
-        /// </summary>
         private struct SwapRule
         {
             public byte sR, sG, sB, dR, dG, dB;
@@ -525,6 +365,7 @@ namespace WinPaletter.UI.Dark
         private static unsafe void PixelSwap(IntPtr pxPtr, int rw, int w, int h, SwapRule[] rules, RECT? excludeRect = null)
         {
             byte* basePtr = (byte*)pxPtr.ToPointer();
+
             for (int y = 0; y < h; y++)
             {
                 byte* row = basePtr + (y * rw * 4);
@@ -556,13 +397,6 @@ namespace WinPaletter.UI.Dark
             }
         }
 
-        /// <summary>
-        /// Icon helper
-        /// <br>NOTE: Adjust member access below to match the project's actual TASKDIALOGCONFIG layout/marshalling helper.</br>
-        /// </summary>
-        /// <param name="cfg"></param>
-        /// <param name="isMain"></param>
-        /// <returns></returns>
         private static IntPtr ResolveIcon(TaskDialogConfigView cfg, bool isMain)
         {
             if (isMain)
@@ -595,12 +429,6 @@ namespace WinPaletter.UI.Dark
             return IntPtr.Zero;
         }
 
-        /// <summary>
-        /// PaintDirectUI
-        /// </summary>
-        /// <param name="hwnd"></param>
-        /// <param name="hdcWin"></param>
-        /// <param name="s"></param>
         private static void PaintDirectUI(IntPtr hwnd, IntPtr hdcWin, DirectUIState s)
         {
             if (!s.themesOk) RefreshThemes(hwnd, s);
@@ -651,7 +479,7 @@ namespace WinPaletter.UI.Dark
                 }
             }
 
-            // Icon overdraw applies only to the Windows 10 pixel-swap path; the native Windows 11 theme already paints icons correctly.
+            // Icon overdraw
             if (s.pCfg != IntPtr.Zero && !s_hasNativeTheme)
             {
                 TaskDialogConfigView cfgView = TaskDialogConfigView.FromPointer(s.pCfg);
@@ -680,7 +508,7 @@ namespace WinPaletter.UI.Dark
                 }
             }
 
-            // Glyph overdraw for the ExpandoButton arrow and the verification checkbox.
+            // Glyph overdraw for ExpandoButton and VerificationCheckBox
             if (s.hTD != IntPtr.Zero || s.hButton != IntPtr.Zero)
             {
                 for (int i = 0; i < s.elements.Count; i++)
@@ -712,6 +540,7 @@ namespace WinPaletter.UI.Dark
                     else if (el.automationId == "VerificationCheckBox" && s.hButton != IntPtr.Zero && !s_hasNativeTheme)
                     {
                         GetThemePartSize(s.hButton, hdcBuf, TaskDialogParts.BP_CHECKBOX, TaskDialogParts.CBS_UNCHECKEDNORMAL, IntPtr.Zero, TaskDialogParts.TS_DRAW, out SIZE cs);
+
                         int mg = (el.rect.bottom - el.rect.top - cs.cy) / 3;
                         RECT rcGlyph = new()
                         {
@@ -735,9 +564,9 @@ namespace WinPaletter.UI.Dark
                 }
             }
 
-            // Text overdraw for every whitelisted TaskDialog text part.
+            // Text overdraw
             {
-                IntPtr hThm = s.hTD; // valid dark-capable "TaskDialog" handle; only used for part plumbing, not color/font
+                IntPtr hThm = s.hTD;
 
                 foreach (ComUIAutomation.UIAElementInfo el in s.elements)
                 {
@@ -818,7 +647,6 @@ namespace WinPaletter.UI.Dark
                         uiPart == TaskDialogParts.TDLG_EXPANDEDFOOTERAREA ||
                         uiPart == TaskDialogParts.TDLG_FOOTNOTEPANE;
 
-                    // Cap an embedded path/URL at 3/4 of the available line width so it shrinks instead of dominating the wrapped line it sits on.
                     string drawText = eligibleForPathCompaction ? CompactEmbeddedPaths(hdcBuf, el.name, (rcText.right - rcText.left)) : el.name;
 
                     DrawThemeTextEx(hThm, hdcBuf, uiPart, 0, drawText, -1, dtFlags, ref rcText, ref opts);
@@ -858,16 +686,6 @@ namespace WinPaletter.UI.Dark
             return string.Concat(tokens);
         }
 
-        /// <summary>
-        /// Windows subclass procedure for DirectUI child windows. This is used to intercept paint and mouse messages for the DirectUI elements of a TaskDialog, allowing custom rendering and interaction handling for dark mode support.
-        /// </summary>
-        /// <param name="hwnd"></param>
-        /// <param name="msg"></param>
-        /// <param name="wParam"></param>
-        /// <param name="lParam"></param>
-        /// <param name="uId"></param>
-        /// <param name="refData"></param>
-        /// <returns></returns>
         private static IntPtr DirectUISubclassProc(IntPtr hwnd, uint msg, IntPtr wParam, IntPtr lParam, UIntPtr uId, IntPtr refData)
         {
             switch (msg)
@@ -879,7 +697,8 @@ namespace WinPaletter.UI.Dark
                     {
                         IntPtr hdc = BeginPaint(hwnd, out PAINTSTRUCT ps);
                         DirectUIState s = GetState(hwnd);
-                        RefreshElements(hwnd, s);
+                        // Preserve the manual toggle state during paint
+                        RefreshElements(hwnd, s, preserveManualState: true);
                         PaintDirectUI(hwnd, hdc, s);
                         EndPaint(hwnd, ref ps);
                         return IntPtr.Zero;
@@ -906,6 +725,7 @@ namespace WinPaletter.UI.Dark
                         if (newHot != s.hotIdx)
                         {
                             s.hotIdx = newHot;
+                            // Preserve state on mouse move (just invalidate, don't refresh)
                             InvalidateRect(hwnd, IntPtr.Zero, false);
                         }
                         break;
@@ -926,16 +746,51 @@ namespace WinPaletter.UI.Dark
                     {
                         DirectUIState s = GetState(hwnd);
                         s.pressing = true;
-                        RefreshElements(hwnd, s);
+                        // Preserve state on mouse down
+                        RefreshElements(hwnd, s, preserveManualState: true);
                         InvalidateRect(hwnd, IntPtr.Zero, false);
                         break;
                     }
                 case (uint)WindowsMessage.LButtonUp:
                     {
                         DirectUIState s = GetState(hwnd);
-                        if (s.pressing) s.pressing = false;
-                        RefreshElements(hwnd, s);
-                        InvalidateRect(hwnd, IntPtr.Zero, false);
+
+                        if (s.pressing)
+                        {
+                            s.pressing = false;
+                            s._toggleHandled = false; // Reset flag
+
+                            int x = unchecked((short)((long)lParam & 0xFFFF));
+                            int y = unchecked((short)(((long)lParam >> 16) & 0xFFFF));
+                            POINT pt = new POINT { X = x, Y = y };
+                            int hitIdx = HitTest(s.elements, pt);
+
+                            bool toggled = false;
+                            if (hitIdx >= 0)
+                            {
+                                string automationId = s.elements[hitIdx].automationId;
+
+                                if (automationId == "ExpandoButton")
+                                {
+                                    s.isExpanded = !s.isExpanded;
+                                    s._toggleHandled = true; // Mark that toggle is handled
+                                    toggled = true;
+                                    PostMessage(GetParent(hwnd), (uint)WindowsMessage.ExpandoButtonClicked, IntPtr.Zero, IntPtr.Zero);
+                                }
+                                else if (automationId == "VerificationCheckBox")
+                                {
+                                    s.isChecked = !s.isChecked;
+                                    s._toggleHandled = true;
+                                    toggled = true;
+                                }
+                            }
+
+                            RefreshElements(hwnd, s, preserveManualState: toggled);
+
+                            InvalidateRect(hwnd, IntPtr.Zero, false);
+                            UpdateWindow(hwnd);
+                        }
+
                         break;
                     }
 
@@ -944,19 +799,12 @@ namespace WinPaletter.UI.Dark
                     RemoveWindowSubclass(hwnd, s_directUiProc, uId);
                     break;
             }
-            return DefSubclassProc(hwnd, msg, wParam, lParam);
+
+            IntPtr result = DefSubclassProc(hwnd, msg, wParam, lParam);
+
+            return result;
         }
 
-        /// <summary>
-        /// Windows subclass procedure for WM_CTLCOLOR* messages. This is used to intercept control color messages and apply custom background and text colors for child controls in dark mode, ensuring that they are drawn correctly according to the dark theme.
-        /// </summary>
-        /// <param name="hwnd"></param>
-        /// <param name="msg"></param>
-        /// <param name="wParam"></param>
-        /// <param name="lParam"></param>
-        /// <param name="uId"></param>
-        /// <param name="dwRef"></param>
-        /// <returns></returns>
         private static IntPtr WmCtColorSubclassProc(IntPtr hwnd, uint msg, IntPtr wParam, IntPtr lParam, UIntPtr uId, IntPtr dwRef)
         {
             switch (msg)
@@ -983,7 +831,7 @@ namespace WinPaletter.UI.Dark
                         int bg = DarkColors.kSecondary;
                         if (dwRef != IntPtr.Zero)
                         {
-                            LOGBRUSH lb = new LOGBRUSH();
+                            LOGBRUSH lb = new();
                             GetObject(dwRef, Marshal.SizeOf(typeof(LOGBRUSH)), ref lb);
                             if (lb.lbStyle == BS_SOLID) bg = lb.lbColor;
                         }
@@ -1000,16 +848,6 @@ namespace WinPaletter.UI.Dark
             return DefSubclassProc(hwnd, msg, wParam, lParam);
         }
 
-        /// <summary>
-        /// Windows subclass procedure for TaskDialog radio buttons. This is used to intercept paint messages and apply custom rendering for radio buttons in dark mode, ensuring that they are drawn correctly according to the dark theme.
-        /// </summary>
-        /// <param name="hwnd"></param>
-        /// <param name="msg"></param>
-        /// <param name="wParam"></param>
-        /// <param name="lParam"></param>
-        /// <param name="uId"></param>
-        /// <param name="dwRef"></param>
-        /// <returns></returns>
         private static IntPtr RadioSubclassProc(IntPtr hwnd, uint msg, IntPtr wParam, IntPtr lParam, UIntPtr uId, IntPtr dwRef)
         {
             switch (msg)
@@ -1063,7 +901,7 @@ namespace WinPaletter.UI.Dark
                         IntPtr font = CreateFontIndirect(logFont);
                         IntPtr oldFont = SelectObject(hdcBuf, font);
 
-                        DrawThemeTextEx(hTheme, hdcBuf, TaskDialogParts.TDLG_RADIOBUTTONPANE, 0, text, -1, GDI32.DT_LEFT | GDI32.DT_VCENTER | 0x00008000 /* DT_END_ELLIPSIS */, ref rcText, ref dots);
+                        DrawThemeTextEx(hTheme, hdcBuf, TaskDialogParts.TDLG_RADIOBUTTONPANE, 0, text, -1, GDI32.DT_LEFT | GDI32.DT_VCENTER | 0x00008000, ref rcText, ref dots);
 
                         CloseThemeData(hTheme);
                         CloseThemeData(hThemeBtn);
@@ -1083,16 +921,6 @@ namespace WinPaletter.UI.Dark
             return DefSubclassProc(hwnd, msg, wParam, lParam);
         }
 
-        /// <summary>
-        /// Windows subclass procedure for the main TaskDialog window. This is used to intercept messages related to theming, dark mode, and UI updates, allowing for custom rendering and behavior in dark mode scenarios.
-        /// </summary>
-        /// <param name="hwnd"></param>
-        /// <param name="msg"></param>
-        /// <param name="wParam"></param>
-        /// <param name="lParam"></param>
-        /// <param name="uId"></param>
-        /// <param name="dwRef"></param>
-        /// <returns></returns>
         private static IntPtr TaskDialogMainSubclassProc(IntPtr hwnd, uint msg, IntPtr wParam, IntPtr lParam, UIntPtr uId, IntPtr dwRef)
         {
             switch (msg)
@@ -1129,8 +957,16 @@ namespace WinPaletter.UI.Dark
                         if (GetWindowSubclass(hwndChild, s_directUiProc, kDirectUISubclassId, out _))
                         {
                             DirectUIState s = GetState(hwndChild);
-                            // Force-invert the state locally ahead of UIA synchronization
-                            s.isExpanded = !s.isExpanded;
+
+                            // Only toggle if the DirectUI handler didn't already handle it
+                            if (!s._toggleHandled)
+                            {
+                                s.isExpanded = !s.isExpanded;
+                            }
+                            else
+                            {
+                                s._toggleHandled = false; // Reset for next time
+                            }
                         }
                         return true;
                     }, IntPtr.Zero);
@@ -1145,10 +981,15 @@ namespace WinPaletter.UI.Dark
                         {
                             DirectUIState s = GetState(hwndChild);
 
-                            // Retain the manual toggle state across the refresh safely
-                            bool expectedState = s.isExpanded;
-                            RefreshElements(hwndChild, s);
-                            s.isExpanded = expectedState;
+                            // Preserve the manual state during refresh
+                            bool expectedExpanded = s.isExpanded;
+                            bool expectedChecked = s.isChecked;
+
+                            RefreshElements(hwndChild, s, preserveManualState: true);
+
+                            // Restore our manual state if RefreshElements tried to override it
+                            s.isExpanded = expectedExpanded;
+                            s.isChecked = expectedChecked;
 
                             InvalidateRect(hwndChild, IntPtr.Zero, false);
                             UpdateWindow(hwndChild);
@@ -1185,16 +1026,12 @@ namespace WinPaletter.UI.Dark
 
                         if (hasNativeTheme)
                         {
-                            // Windows 11: DarkMode_Explorer / DarkMode_DarkTheme msstyles already paint the dialog correctly. Let DirectUI render untouched, then patch the one
-                            // text element ("LocLabel1") the native theme still gets wrong.
                             IntPtr res = DefSubclassProc(hwnd, uMsg, wParam, lParam);
                             OverlayProgressDialogLabel(hwnd);
                             return res;
                         }
                         else
                         {
-                            // Windows 10 has no dark ProgressDialogUI msstyles at all -- force dark mode by printing the native light client into an offscreen buffer, pixel-swapping
-                            // its light backgrounds to the dark palette, then overdrawing every text element found via UI Automation in white on the darkened background.
                             return PaintProgressDialogForced(hwnd);
                         }
                     }
@@ -1216,10 +1053,6 @@ namespace WinPaletter.UI.Dark
             return DefSubclassProc(hwnd, uMsg, wParam, lParam);
         }
 
-        /// <summary>
-        /// Windows 11 path: patches the "LocLabel1" description label, which the native dark msstyles leave in the wrong color, without touching any other element the native theme
-        /// already handles.
-        /// </summary>
         private static void OverlayProgressDialogLabel(IntPtr hwnd)
         {
             IntPtr hdcScreen = User32.GetDC(hwnd);
@@ -1241,6 +1074,7 @@ namespace WinPaletter.UI.Dark
                     if (string.IsNullOrEmpty(autoId) || !autoId.Equals("LocLabel1", StringComparison.OrdinalIgnoreCase)) continue;
 
                     string textValue = ComUIAutomation.GetPropertyValueString(child, ComUIAutomation.UIA_NamePropertyId);
+
                     if (string.IsNullOrWhiteSpace(textValue)) continue;
 
                     child.GetCurrentPropertyValue(ComUIAutomation.UIA_BoundingRectanglePropertyId, out object propValue);
@@ -1276,6 +1110,8 @@ namespace WinPaletter.UI.Dark
 
                     if (oldFont != IntPtr.Zero) SelectObject(hdcScreen, oldFont);
                     if (hFont != IntPtr.Zero) DeleteObject(hFont);
+
+                    break;
                 }
             }
             catch (Exception ex)
@@ -1288,15 +1124,6 @@ namespace WinPaletter.UI.Dark
             }
         }
 
-        /// <summary>
-        /// Windows 10 path: no dark ProgressDialogUI msstyles exist on this OS, so the whole client area is forced dark manually -- print the native light rendering into a buffer,
-        /// pixel-swap the known light background tones to the dark palette, then overdraw every UI Automation text element in white so nothing is left unreadable on the darkened background.
-        /// </summary>
-        /// <summary>
-        /// Windows 10 path: no dark ProgressDialogUI msstyles exist on this OS, so the client area is forced dark manually - print the native light rendering into a buffer,
-        /// pixel-swap its light backgrounds to the dark palette (excluding the AVI animation region, which must stay untouched since it repaints itself independently of this subclass),
-        /// then overdraw only the known label control in white on the darkened background.
-        /// </summary>
         private static IntPtr PaintProgressDialogForced(IntPtr hwnd)
         {
             IntPtr hdc = BeginPaint(hwnd, out PAINTSTRUCT ps);
@@ -1311,15 +1138,13 @@ namespace WinPaletter.UI.Dark
                 return IntPtr.Zero;
             }
 
-            // Render the native light-mode ProgressDialogUI into the offscreen buffer first.
             DefSubclassProc(hwnd, (int)User32.WindowsMessage.PrintClient, hdcBuf, (IntPtr)PRF_CLIENT);
 
             User32.GetWindowRect(hwnd, out UxTheme.RECT winRect);
             NativeMethods.IUIAutomationElement baseEl = null;
             try { baseEl = ComUIAutomation.FromHandle(hwnd); } catch { }
 
-            // Locate the AVI animation control so its region is excluded from both the pixel swap and
-            // the text overdraw -- it repaints its own frames independently and must be left alone.
+            // Find AVI rect to exclude
             RECT? aviRect = null;
             if (baseEl != null)
             {
@@ -1331,24 +1156,25 @@ namespace WinPaletter.UI.Dark
                     bool looksLikeAvi = (!string.IsNullOrEmpty(cls) && cls.Equals("SysAnimate32", StringComparison.OrdinalIgnoreCase))
                                       || (!string.IsNullOrEmpty(id) && id.IndexOf("Avi", StringComparison.OrdinalIgnoreCase) >= 0);
 
-                    if (!looksLikeAvi) continue;
-
-                    child.GetCurrentPropertyValue(ComUIAutomation.UIA_BoundingRectanglePropertyId, out object bb);
-                    if (bb is double[] box && box.Length == 4)
+                    if (looksLikeAvi)
                     {
-                        aviRect = new RECT
+                        child.GetCurrentPropertyValue(ComUIAutomation.UIA_BoundingRectanglePropertyId, out object bb);
+                        if (bb is double[] box && box.Length == 4)
                         {
-                            left = (int)box[0] - winRect.left,
-                            top = (int)box[1] - winRect.top,
-                            right = (int)(box[0] + box[2]) - winRect.left,
-                            bottom = (int)(box[1] + box[3]) - winRect.top
-                        };
+                            aviRect = new RECT
+                            {
+                                left = (int)box[0] - winRect.left,
+                                top = (int)box[1] - winRect.top,
+                                right = (int)(box[0] + box[2]) - winRect.left,
+                                bottom = (int)(box[1] + box[3]) - winRect.top
+                            };
+                        }
+                        break;
                     }
-                    break;
                 }
             }
 
-            // Pixel-swap light backgrounds to the dark palette, skipping the AVI rect if found.
+            // Pixel-swap
             if (GetBufferedPaintBits(hbp, out IntPtr pPx, out int rw) == 0)
             {
                 GetBufferedPaintTargetRect(hbp, out RECT rcBuf);
@@ -1365,7 +1191,7 @@ namespace WinPaletter.UI.Dark
                 PixelSwap(pPx, rw, w, h, rules, aviRect);
             }
 
-            // Overdraw only the known label control below the header -- targeted, not every text element, so stale/duplicate UIA nodes don't surface the wrong string.
+            // Overdraw LocLabel1
             if (baseEl != null)
             {
                 try
@@ -1373,12 +1199,13 @@ namespace WinPaletter.UI.Dark
                     foreach (NativeMethods.IUIAutomationElement child in ComUIAutomation.GetContentChildren(baseEl))
                     {
                         int controlType = ComUIAutomation.GetPropertyValueInt(child, ComUIAutomation.UIA_ControlTypePropertyId);
-                        if (controlType != 50020) continue; // UIA_TextControlTypeId
+                        if (controlType != 50020) continue;
 
                         string autoId = ComUIAutomation.GetPropertyValueString(child, ComUIAutomation.UIA_AutomationIdPropertyId);
                         if (string.IsNullOrEmpty(autoId) || !autoId.Equals("LocLabel1", StringComparison.OrdinalIgnoreCase)) continue;
 
                         string textValue = ComUIAutomation.GetPropertyValueString(child, ComUIAutomation.UIA_NamePropertyId);
+
                         if (string.IsNullOrWhiteSpace(textValue)) continue;
 
                         child.GetCurrentPropertyValue(ComUIAutomation.UIA_BoundingRectanglePropertyId, out object propValue);
@@ -1426,13 +1253,20 @@ namespace WinPaletter.UI.Dark
         private static void EnableForTLW(IntPtr hwnd, bool dark = true)
         {
             int use = dark ? 1 : 0;
+
             int hr = DwmSetWindowAttribute(hwnd, DWMWINDOWATTRIBUTE.USE_IMMERSIVE_DARK_MODE, ref use, sizeof(int));
-            if (hr < 0) DwmSetWindowAttribute(hwnd, DWMWINDOWATTRIBUTE.USE_IMMERSIVE_DARK_MODE_BEFORE_20H1, ref use, sizeof(int));
+            if (hr < 0)
+            {
+                hr = DwmSetWindowAttribute(hwnd, DWMWINDOWATTRIBUTE.USE_IMMERSIVE_DARK_MODE_BEFORE_20H1, ref use, sizeof(int));
+            }
         }
 
         private static void SetWindowTheme(IntPtr hwnd, string theme)
         {
-            if (hwnd != IntPtr.Zero && !string.IsNullOrEmpty(theme)) UxTheme.SetWindowTheme(hwnd, theme, null);
+            if (hwnd != IntPtr.Zero && !string.IsNullOrEmpty(theme))
+            {
+                UxTheme.SetWindowTheme(hwnd, theme, null);
+            }
         }
 
         /// <summary>
@@ -1500,8 +1334,7 @@ namespace WinPaletter.UI.Dark
                 User32.GetClassName(hwndChild, cn, cn.Capacity);
                 string cls = cn.ToString();
 
-                if ((cls == "ProgressDialogUI" || cls == "DirectUIHWND") &&
-                    !GetWindowSubclass(hwndChild, s_progressDuiProc, kProgressDuiSubclassId, out _))
+                if ((cls == "ProgressDialogUI" || cls == "DirectUIHWND") && !GetWindowSubclass(hwndChild, s_progressDuiProc, kProgressDuiSubclassId, out _))
                 {
                     SetWindowSubclass(hwndChild, s_progressDuiProc, kProgressDuiSubclassId, hasNativeTheme ? (IntPtr)1 : IntPtr.Zero);
                 }
@@ -1509,21 +1342,6 @@ namespace WinPaletter.UI.Dark
             }, IntPtr.Zero);
 
             // Fallback: subclass DirectUI child directly if it already exists
-            EnumChildWindows(hwndPD, delegate (IntPtr hwndChild, IntPtr lp)
-            {
-                System.Text.StringBuilder cn = new(256);
-                User32.GetClassName(hwndChild, cn, cn.Capacity);
-                string cls = cn.ToString();
-
-                if ((cls == "ProgressDialogUI" || cls == "DirectUIHWND") &&
-                    !GetWindowSubclass(hwndChild, s_progressDuiProc, kProgressDuiSubclassId, out _))
-                {
-                    SetWindowSubclass(hwndChild, s_progressDuiProc, kProgressDuiSubclassId, IntPtr.Zero);
-                }
-                return true;
-            }, IntPtr.Zero);
-
-            // Enumerate standard Win32 child controls
             EnumChildWindows(hwndPD, delegate (IntPtr hwndChild, IntPtr lp)
             {
                 NativeMethods.IUIAutomationElement el;
@@ -1534,7 +1352,8 @@ namespace WinPaletter.UI.Dark
 
                 if (cls == "CCProgressBar")
                 {
-                    SetWindowTheme(hwndChild, hasCopyEngine ? "DarkMode_CopyEngine" : "DarkMode_Explorer");
+                    string theme = hasCopyEngine ? "DarkMode_CopyEngine" : "DarkMode_Explorer";
+                    SetWindowTheme(hwndChild, theme);
                 }
                 else if (cls == "CCPushButton" || cls == "Button")
                 {
@@ -1648,24 +1467,24 @@ namespace WinPaletter.UI.Dark
                             bool isFootnote = id == "FootnoteTextLink" || id == "ExpandedFooterTextLink" || id.Contains("Footnote") || id.Contains("ExpandedFooter");
 
                             int bg = isFootnote && !s_hasNativeTheme ? DarkColors.kFootnote : DarkColors.kPrimary;
-
-                            if (id == "ContentLink")
-                                bg = s_hasNativeTheme ? DarkColors.kFootnote : DarkColors.kPrimary;
+                            if (id == "ContentLink") bg = s_hasNativeTheme ? DarkColors.kFootnote : DarkColors.kPrimary;
 
                             if (!GetWindowSubclass(hParent, s_ctColorProc, kCtlColorId, out IntPtr ex))
+                            {
                                 SetWindowSubclass(hParent, s_ctColorProc, kCtlColorId, CreateSolidBrush(bg));
+                            }
                         }
                     }
                     return true;
                 }
 
-                // UIA reports "TaskDialog" from the main UI thread, "DirectUIHWND" when queried from other threads
+                // DirectUI
                 if (cls != "TaskDialog" && cls != "DirectUIHWND") return true;
 
                 IntPtr hDUI = ComUIAutomation.GetNativeWindowHandle(el);
                 if (hDUI == IntPtr.Zero) return true;
 
-                // Remove any existing subclassing for this DUI window
+                // Remove existing subclassing
                 if (GetWindowSubclass(hDUI, s_directUiProc, kDirectUISubclassId, out _))
                 {
                     RemoveWindowSubclass(hDUI, s_directUiProc, kDirectUISubclassId);
@@ -1688,23 +1507,28 @@ namespace WinPaletter.UI.Dark
                 foreach (NativeMethods.IUIAutomationElement child in ComUIAutomation.GetContentChildren(el))
                 {
                     int controlType = ComUIAutomation.GetPropertyValueInt(child, ComUIAutomation.UIA_ControlTypePropertyId);
+                    string id = ComUIAutomation.GetPropertyValueString(child, ComUIAutomation.UIA_AutomationIdPropertyId);
 
-                    if (controlType == ComUIAutomation.UIA_ButtonControlTypeId || controlType == ComUIAutomation.UIA_RadioButtonControlTypeId || controlType == ComUIAutomation.UIA_ProgressBarControlTypeId || controlType == ComUIAutomation.UIA_HyperlinkControlTypeId || controlType == ComUIAutomation.UIA_ScrollBarControlTypeId || controlType == ComUIAutomation.UIA_PaneControlTypeId)
+                    if (controlType == ComUIAutomation.UIA_ButtonControlTypeId ||
+                        controlType == ComUIAutomation.UIA_RadioButtonControlTypeId ||
+                        controlType == ComUIAutomation.UIA_ProgressBarControlTypeId ||
+                        controlType == ComUIAutomation.UIA_HyperlinkControlTypeId ||
+                        controlType == ComUIAutomation.UIA_ScrollBarControlTypeId ||
+                        controlType == ComUIAutomation.UIA_PaneControlTypeId)
                     {
                         IntPtr hBtn = ComUIAutomation.GetNativeWindowHandle(child);
                         if (hBtn != IntPtr.Zero)
                         {
-                            string id = ComUIAutomation.GetPropertyValueString(child, ComUIAutomation.UIA_AutomationIdPropertyId);
                             IntPtr hP = GetParent(hBtn);
 
                             if (controlType == ComUIAutomation.UIA_ProgressBarControlTypeId)
                             {
                                 bool hasCopyEngine = IsDarkThemeActive("DarkMode_CopyEngine::Progress", "Progress");
-                                SetWindowTheme(hBtn, hasCopyEngine ? "DarkMode_CopyEngine" : "DarkMode_Explorer");
+                                string theme = hasCopyEngine ? "DarkMode_CopyEngine" : "DarkMode_Explorer";
+                                SetWindowTheme(hBtn, theme);
                             }
                             else if (controlType == ComUIAutomation.UIA_RadioButtonControlTypeId || id.StartsWith("RadioButton_") || controlType == ComUIAutomation.UIA_HyperlinkControlTypeId)
                             {
-                                IntPtr ex;
                                 bool hasDarkTheme = IsDarkThemeActive("DarkMode_DarkTheme::TaskDialog", "TaskDialog");
                                 if (hasDarkTheme)
                                 {
@@ -1712,12 +1536,16 @@ namespace WinPaletter.UI.Dark
                                 }
                                 else
                                 {
-                                    if (!GetWindowSubclass(hBtn, s_radioProc, kCtlColorId, out ex))
+                                    if (!GetWindowSubclass(hBtn, s_radioProc, kCtlColorId, out IntPtr ex0))
+                                    {
                                         SetWindowSubclass(hBtn, s_radioProc, kCtlColorId, CreateSolidBrush(s_hasNativeTheme ? DarkColors.kSecondary : DarkColors.kPrimary));
+                                    }
                                 }
 
-                                if (hP != IntPtr.Zero && !GetWindowSubclass(hP, s_ctColorProc, kCtlColorId, out ex))
+                                if (hP != IntPtr.Zero && !GetWindowSubclass(hP, s_ctColorProc, kCtlColorId, out IntPtr ex1))
+                                {
                                     SetWindowSubclass(hP, s_ctColorProc, kCtlColorId, CreateSolidBrush(s_hasNativeTheme ? DarkColors.kSecondary : DarkColors.kPrimary));
+                                }
                             }
                             else if (id.StartsWith("CommandLink_"))
                             {
@@ -1755,10 +1583,12 @@ namespace WinPaletter.UI.Dark
                     s.isChecked = s.defChecked;
 
                     s.elemsOk = false;
-                    RefreshElements(hDUI, s);
+                    RefreshElements(hDUI, s, preserveManualState: false);
 
                     if (!GetWindowSubclass(hDUI, s_directUiProc, kDirectUISubclassId, out IntPtr ex))
+                    {
                         SetWindowSubclass(hDUI, s_directUiProc, kDirectUISubclassId, pCfg);
+                    }
                 }
 
                 found = true;
@@ -1771,9 +1601,10 @@ namespace WinPaletter.UI.Dark
 
                 EnableForTLW(hwndTD);
 
-                IntPtr existing;
-                if (!GetWindowSubclass(hwndTD, s_mainProc, kMainSubclassId, out existing))
+                if (!GetWindowSubclass(hwndTD, s_mainProc, kMainSubclassId, out IntPtr existing))
+                {
                     SetWindowSubclass(hwndTD, s_mainProc, kMainSubclassId, pCfg);
+                }
 
                 EnumChildWindows(hwndTD, delegate (IntPtr hwndDuiChild, IntPtr lp)
                 {
@@ -1785,14 +1616,10 @@ namespace WinPaletter.UI.Dark
             }
         }
 
-        /// <summary>
-        /// Clean up all progress dialog state for a specific window or all windows
-        /// </summary>
         public static void CleanupProgressDialog(IntPtr hwndPD)
         {
             if (hwndPD != IntPtr.Zero)
             {
-                // Remove subclassing from the window and its children
                 RemoveWindowSubclass(hwndPD, s_progressDuiProc, kProgressDuiSubclassId);
 
                 EnumChildWindows(hwndPD, delegate (IntPtr hwndChild, IntPtr lp)
@@ -1801,7 +1628,6 @@ namespace WinPaletter.UI.Dark
                     return true;
                 }, IntPtr.Zero);
 
-                // Remove thread hook for this window's thread
                 uint threadId = User32.GetWindowThreadProcessId(hwndPD, out _);
                 if (threadId != 0 && s_progressThreadHooks.TryGetValue(threadId, out IntPtr hHook))
                 {
@@ -1815,34 +1641,8 @@ namespace WinPaletter.UI.Dark
             }
         }
 
-        /// <summary>
-        /// Clean up all progress dialog state globally
-        /// </summary>
-        public static void CleanupAllProgressDialogs()
-        {
-            // Unhook all progress thread hooks
-            foreach (var hook in s_progressThreadHooks.Values)
-            {
-                try { User32.UnhookWindowsHookEx(hook); } catch { }
-            }
-            s_progressThreadHooks.Clear();
-            s_progressThreadHookDelegates.Clear();
-
-            // Clean up global brush
-            if (s_solidSecondaryBrush != IntPtr.Zero)
-            {
-                try { DeleteObject(s_solidSecondaryBrush); } catch { }
-                s_solidSecondaryBrush = IntPtr.Zero;
-            }
-        }
-
-        /// <summary>
-        /// RemoveFromTaskDialog
-        /// </summary>
-        /// <param name="hwndTD"></param>
         public static void RemoveFromTaskDialog(IntPtr hwndTD)
         {
-            // Only remove subclassing for the specific window
             RemoveWindowSubclass(hwndTD, s_mainProc, kMainSubclassId);
 
             EnumChildWindows(hwndTD, delegate (IntPtr hwndChild, IntPtr lp)
@@ -1858,7 +1658,6 @@ namespace WinPaletter.UI.Dark
                 return true;
             }, IntPtr.Zero);
 
-            // Clean up any state associated with this specific window
             if (s_states.ContainsKey(hwndTD))
             {
                 s_states.Remove(hwndTD);

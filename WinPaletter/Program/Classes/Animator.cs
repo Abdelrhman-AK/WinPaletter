@@ -13,7 +13,7 @@ namespace WinPaletter
             _animator = new AnimatorNS.Animator
             {
                 Interval = 15,
-                TimeStep = 0.05f,
+                TimeStep = 0.07f,
                 DefaultAnimation = Animation.FadeZoom,
                 AnimationType = AnimationType.FadeZoom
             };

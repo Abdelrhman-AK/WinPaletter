@@ -251,34 +251,41 @@ namespace WinPaletter.NativeMethods
         {
             if (element == null) return null;
 
-            UIAElementInfo info = new()
+            try
             {
-                automationId = GetPropertyValueString(element, UIA_AutomationIdPropertyId),
-                name = GetPropertyValueString(element, UIA_NamePropertyId)
-            };
+                UIAElementInfo info = new()
+                {
+                    automationId = GetPropertyValueString(element, UIA_AutomationIdPropertyId),
+                    name = GetPropertyValueString(element, UIA_NamePropertyId)
+                };
 
-            RECT screenRect = GetBoundingRectangleScreen(element);
+                RECT screenRect = GetBoundingRectangleScreen(element);
 
-            POINT topLeft = new() { X = screenRect.left, Y = screenRect.top };
-            POINT bottomRight = new() { X = screenRect.right, Y = screenRect.bottom };
-            ScreenToClient(hwndForClientCoords, ref topLeft);
-            ScreenToClient(hwndForClientCoords, ref bottomRight);
+                POINT topLeft = new() { X = screenRect.left, Y = screenRect.top };
+                POINT bottomRight = new() { X = screenRect.right, Y = screenRect.bottom };
+                ScreenToClient(hwndForClientCoords, ref topLeft);
+                ScreenToClient(hwndForClientCoords, ref bottomRight);
 
-            info.rect.left = topLeft.X;
-            info.rect.top = topLeft.Y;
-            info.rect.right = bottomRight.X;
-            info.rect.bottom = bottomRight.Y;
+                info.rect.left = topLeft.X;
+                info.rect.top = topLeft.Y;
+                info.rect.right = bottomRight.X;
+                info.rect.bottom = bottomRight.Y;
 
-            if (info.automationId == "VerificationCheckBox")
-            {
-                info.toggleState = GetToggleState(element);
+                if (info.automationId == "VerificationCheckBox")
+                {
+                    info.toggleState = GetToggleState(element);
+                }
+                else if (info.automationId == "ExpandoButton")
+                {
+                    info.expandCollapseState = GetExpandCollapseState(element);
+                }
+
+                return info;
             }
-            else if (info.automationId == "ExpandoButton")
+            catch
             {
-                info.expandCollapseState = GetExpandCollapseState(element);
+                return null; // Gracefully discard elements that drop or invalidate during marshaling
             }
-
-            return info;
         }
 
         private static readonly HashSet<string> s_whitelistedAutomationIds =
@@ -408,6 +415,12 @@ namespace WinPaletter.NativeMethods
         int GetCurrentPropertyValue(int propertyId, out object value);
 
         [PreserveSig]
+        int GetCurrentParent([MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement parent);
+
+        [PreserveSig]
+        int GetCurrentChildren([MarshalAs(UnmanagedType.Interface)] out IUIAutomationElementArray children);
+
+        [PreserveSig]
         int GetCurrentPropertyValueEx(int propertyId, [MarshalAs(UnmanagedType.Bool)] bool ignoreDefault, out object value);
 
         [PreserveSig]
@@ -427,14 +440,6 @@ namespace WinPaletter.NativeMethods
 
         [PreserveSig]
         int GetCachedChildren([MarshalAs(UnmanagedType.Interface)] out IUIAutomationElementArray children);
-
-        [PreserveSig]
-        int GetCurrentParent([MarshalAs(UnmanagedType.Interface)] out IUIAutomationElement parent);
-
-        [PreserveSig]
-        int GetCurrentChildren([MarshalAs(UnmanagedType.Interface)] out IUIAutomationElementArray children);
-
-        // Additional methods omitted for brevity
     }
 
     /// <summary>
@@ -515,8 +520,6 @@ namespace WinPaletter.NativeMethods
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     internal interface IUIAutomationExpandCollapsePattern
     {
-        // Methods must be in vtable order
-
         [PreserveSig]
         int Expand();
 
@@ -524,10 +527,10 @@ namespace WinPaletter.NativeMethods
         int Collapse();
 
         [PreserveSig]
-        int get_CurrentExpandCollapseState(out int state);
+        int get_CurrentExpandCollapseState(out int retVal);
 
         [PreserveSig]
-        int get_CachedExpandCollapseState(out int state);
+        int get_CachedExpandCollapseState(out int retVal);
     }
 
     /// <summary>
