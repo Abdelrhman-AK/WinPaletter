@@ -198,7 +198,7 @@ namespace WinPaletter.UI.Dark
         private static readonly SUBCLASSPROC s_radioProc = RadioSubclassProc;
         private static readonly SUBCLASSPROC s_mainProc = TaskDialogMainSubclassProc;
 
-        public delegate bool WNDENUMPROC(IntPtr hWnd, IntPtr lParam);
+        private delegate bool WNDENUMPROC(IntPtr hWnd, IntPtr lParam);
         private static readonly SUBCLASSPROC s_progressDuiProc = ProgressDuiSubclassProc;
         private static readonly Dictionary<uint, IntPtr> s_progressThreadHooks = [];
         private static readonly Dictionary<uint, User32.HookProc> s_progressThreadHookDelegates = [];
