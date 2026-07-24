@@ -29,7 +29,19 @@ While significant new features are not anticipated, the goal is to place the pro
 
 - **Real-time Preview:** Witness your color choices come to life with the real-time preview feature, allowing you to fine-tune your color scheme effortlessly.
   
-![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Preview.png?raw=true)
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Preview_0.png?raw=true)
+
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Preview_1.png?raw=true)
+
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Preview_2.png?raw=true)
+
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Preview_3.png?raw=true)
+
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Preview_4.png?raw=true)
+
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Preview_5.png?raw=true)
+
+![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Preview_6.png?raw=true)
 
 ## ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/GettingStarted.png?raw=true) Getting Started
 
@@ -114,7 +126,7 @@ WinPaletter is developed and maintained by [Abdelrhman-AK](https://github.com/Ab
 
 - [Controls animations by Pavel Torgashov](https://www.codeproject.com/Articles/548769/Animator-for-WinForms)
 
-- [Modern dialogs design (messages boxes) by Ookii.Dialogs.WinForms](https://github.com/ookii-dialogs/ookii-dialogs-winforms)
+- [Dark Task Dialog based on memoarfaa/DarkTaskDialog-Native, extended by WinPaletter for more dialogs](https://github.com/memoarfaa/DarkTaskDialog-Native)
 
 - [FastCloner by lofcz (used inside theme manager core)](https://github.com/lofcz/FastCloner)
 
