@@ -68,7 +68,7 @@ While significant new features are not anticipated, the goal is to place the pro
      
      - Microsoft WinGet: 
        
-       `winget install Abdelrhman-AK.WinPaletter -l "UnzipPath"`
+       `winget install Abdelrhman-AK.WinPaletter` and run in Terminal by typing `WinPaletter`
      
      - Chocolatey:
        
@@ -81,10 +81,6 @@ While significant new features are not anticipated, the goal is to place the pro
 ## ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Help.png?raw=true) Wiki (Help)
 
 [Click here](https://github.com/Abdelrhman-AK/WinPaletter/wiki) to learn more about WinPaletter.
-
-## ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Help.png?raw=true) Changelog
-
-[Click here](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/CHANGELOG.md) to view all changes that have been made to WinPaletter since its initial release.
 
 ## ![alt text](https://github.com/Abdelrhman-AK/WinPaletter/blob/master/Media/Mini-Icons/Languages.png?raw=true) Languages
 
@@ -99,8 +95,6 @@ While significant new features are not anticipated, the goal is to place the pro
 WinPaletter is developed and maintained by [Abdelrhman-AK](https://github.com/Abdelrhman-AK) and the incredible open-source community:
 
 - Modifying Modern Windows Elements Inspired by u/aveyo and u/Egg-Tricky on Reddit: [Link 1](https://www.reddit.com/r/Windows11/comments/sw15u0/dark_theme_did_you_notice_the_ugly_pale_accent), [Link 2](https://www.reddit.com/r/Windows11/comments/tkvet4/pitch_black_themereg_now_for_ctrlaltdel_as_well)
-
-- [Patching UxTheme.dll to apply unsigned Visual Styles by SecureUxTheme, developed by namazso](https://github.com/namazso/SecureUxTheme)
 
 - [Logging WinPaletter events into JSON files by Serilog](https://github.com/serilog/serilog)
 
