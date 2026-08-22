@@ -877,32 +877,79 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Get the Windows Screen Scaling Factor
+        /// Get the Windows screen scaling factor for the primary monitor.
         /// </summary>
-        /// <param name="percentage"></param>
-        /// <returns></returns>
+        /// <param name="percentage">If true, returns e.g. 150f for 150% scaling; otherwise returns the ratio, e.g. 1.5f.</param>
         public static float GetWindowsScreenScalingFactor(bool percentage = true)
         {
-            using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+            Program.Log?.Write(LogEventLevel.Information, $"Getting Windows Screen Scaling Factor. Returning as percentage: {percentage}");
+
+            float scalingFactor = 1.0f;
+
+            using (Graphics graphicsObject = Graphics.FromHwnd(IntPtr.Zero))
             {
-                Program.Log?.Write(LogEventLevel.Information, $"Getting Windows Screen Scaling Factor. Returning as percentage: {percentage}");
+                IntPtr deviceContextHandle = graphicsObject.GetHdc();
 
-                Graphics GraphicsObject = Graphics.FromHwnd(IntPtr.Zero);
-                IntPtr DeviceContextHandle = GraphicsObject.GetHdc();
-                int LogicalScreenHeight = GDI32.GetDeviceCaps(DeviceContextHandle, (int)GDI32.DeviceCap.VERTRES);
-                int PhysicalScreenHeight = GDI32.GetDeviceCaps(DeviceContextHandle, (int)GDI32.DeviceCap.DESKTOPVERTRES);
-                float ScreenScalingFactor = PhysicalScreenHeight / (float)LogicalScreenHeight;
+                try
+                {
+                    int logicalScreenHeight = GDI32.GetDeviceCaps(deviceContextHandle, (int)GDI32.DeviceCap.VERTRES);
+                    int physicalScreenHeight = GDI32.GetDeviceCaps(deviceContextHandle, (int)GDI32.DeviceCap.DESKTOPVERTRES);
 
-                if (percentage) ScreenScalingFactor *= 100.0f;
-
-                GraphicsObject.ReleaseHdc(DeviceContextHandle);
-                GraphicsObject.Dispose();
-
-                wic.Undo();
-
-                Program.Log?.Write(LogEventLevel.Information, $"Windows Screen Scaling Factor: {ScreenScalingFactor} (as percentage: {percentage})");
-                return ScreenScalingFactor;
+                    if (logicalScreenHeight > 0) scalingFactor = physicalScreenHeight / (float)logicalScreenHeight;
+                }
+                finally
+                {
+                    graphicsObject?.ReleaseHdc(deviceContextHandle);
+                }
             }
+
+            if (percentage) scalingFactor *= 100.0f;
+
+            Program.Log?.Write(LogEventLevel.Information, $"Windows Screen Scaling Factor: {scalingFactor} (as percentage: {percentage})");
+            return scalingFactor;
+        }
+
+        /// <summary>
+        /// Get the Windows screen scaling factor for the monitor that a specific window is currently on.
+        /// Falls back to the primary-monitor GDI method on OS versions that lack per-monitor DPI APIs.
+        /// </summary>
+        /// <param name="hWnd">Handle of the window whose monitor's scaling should be queried.</param>
+        /// <param name="percentage">If true, returns e.g. 150f for 150% scaling; otherwise returns the ratio, e.g. 1.5f.</param>
+        public static float GetWindowsScreenScalingFactor(IntPtr hWnd, bool percentage = true)
+        {
+            Program.Log?.Write(LogEventLevel.Information, $"Getting Windows Screen Scaling Factor for HWND {hWnd}. Returning as percentage: {percentage}");
+
+            float scalingFactor = 1.0f;
+            bool resolved = false;
+
+            // Windows 10 1607+ : DPI for the specific window, tracks whichever monitor it's currently on.
+            if (hWnd != IntPtr.Zero && !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8x)
+            {
+                try
+                {
+                    uint dpi = User32.GetDpiForWindow(hWnd);
+                    if (dpi > 0)
+                    {
+                        scalingFactor = dpi / 96.0f;
+                        resolved = true;
+                    }
+                }
+                catch (EntryPointNotFoundException)
+                {
+                    // API unavailable on this build; fall through to legacy path.
+                }
+            }
+
+            if (!resolved)
+            {
+                // Legacy fallback: primary-monitor scaling only.
+                scalingFactor = GetWindowsScreenScalingFactor(percentage: false);
+            }
+
+            if (percentage) scalingFactor *= 100.0f;
+
+            Program.Log?.Write(LogEventLevel.Information, $"Windows Screen Scaling Factor: {scalingFactor} (as percentage: {percentage})");
+            return scalingFactor;
         }
 
         /// <summary>

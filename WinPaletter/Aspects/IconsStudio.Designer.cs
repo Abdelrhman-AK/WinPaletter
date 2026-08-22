@@ -88,6 +88,46 @@
             this.groupBox10 = new WinPaletter.UI.WP.GroupBox();
             this.button15 = new WinPaletter.UI.WP.Button();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.groupBox18 = new WinPaletter.UI.WP.GroupBox();
+            this.pictureBox22 = new System.Windows.Forms.PictureBox();
+            this.pictureBox23 = new System.Windows.Forms.PictureBox();
+            this.pictureBox24 = new System.Windows.Forms.PictureBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.button33 = new WinPaletter.UI.WP.Button();
+            this.textBox14 = new WinPaletter.UI.WP.TextBox();
+            this.button34 = new WinPaletter.UI.WP.Button();
+            this.groupBox17 = new WinPaletter.UI.WP.GroupBox();
+            this.pictureBox19 = new System.Windows.Forms.PictureBox();
+            this.pictureBox20 = new System.Windows.Forms.PictureBox();
+            this.pictureBox21 = new System.Windows.Forms.PictureBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.button31 = new WinPaletter.UI.WP.Button();
+            this.textBox13 = new WinPaletter.UI.WP.TextBox();
+            this.button32 = new WinPaletter.UI.WP.Button();
+            this.groupBox16 = new WinPaletter.UI.WP.GroupBox();
+            this.pictureBox16 = new System.Windows.Forms.PictureBox();
+            this.pictureBox17 = new System.Windows.Forms.PictureBox();
+            this.pictureBox18 = new System.Windows.Forms.PictureBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.button29 = new WinPaletter.UI.WP.Button();
+            this.textBox12 = new WinPaletter.UI.WP.TextBox();
+            this.button30 = new WinPaletter.UI.WP.Button();
+            this.groupBox15 = new WinPaletter.UI.WP.GroupBox();
+            this.pictureBox13 = new System.Windows.Forms.PictureBox();
+            this.pictureBox14 = new System.Windows.Forms.PictureBox();
+            this.pictureBox15 = new System.Windows.Forms.PictureBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.button27 = new WinPaletter.UI.WP.Button();
+            this.textBox11 = new WinPaletter.UI.WP.TextBox();
+            this.button28 = new WinPaletter.UI.WP.Button();
+            this.groupBox14 = new WinPaletter.UI.WP.GroupBox();
+            this.pictureBox10 = new System.Windows.Forms.PictureBox();
+            this.pictureBox11 = new System.Windows.Forms.PictureBox();
+            this.pictureBox12 = new System.Windows.Forms.PictureBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.button25 = new WinPaletter.UI.WP.Button();
+            this.textBox10 = new WinPaletter.UI.WP.TextBox();
+            this.button26 = new WinPaletter.UI.WP.Button();
             this.alertBox4 = new WinPaletter.UI.WP.AlertBox();
             this.groupBox13 = new WinPaletter.UI.WP.GroupBox();
             this.pictureBox7 = new System.Windows.Forms.PictureBox();
@@ -155,6 +195,26 @@
             ((System.ComponentModel.ISupportInitialize)(this.explorerData)).BeginInit();
             this.groupBox10.SuspendLayout();
             this.tabPage5.SuspendLayout();
+            this.groupBox18.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox22)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox23)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox24)).BeginInit();
+            this.groupBox17.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox19)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox20)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox21)).BeginInit();
+            this.groupBox16.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox16)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox17)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox18)).BeginInit();
+            this.groupBox15.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox13)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox14)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox15)).BeginInit();
+            this.groupBox14.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).BeginInit();
             this.groupBox13.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
@@ -1071,6 +1131,11 @@
             // tabPage5
             // 
             this.tabPage5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
+            this.tabPage5.Controls.Add(this.groupBox18);
+            this.tabPage5.Controls.Add(this.groupBox17);
+            this.tabPage5.Controls.Add(this.groupBox16);
+            this.tabPage5.Controls.Add(this.groupBox15);
+            this.tabPage5.Controls.Add(this.groupBox14);
             this.tabPage5.Controls.Add(this.alertBox4);
             this.tabPage5.Controls.Add(this.groupBox13);
             this.tabPage5.Controls.Add(this.groupBox12);
@@ -1082,6 +1147,586 @@
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "Drives";
             // 
+            // groupBox18
+            // 
+            this.groupBox18.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox18.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox18.Controls.Add(this.pictureBox22);
+            this.groupBox18.Controls.Add(this.pictureBox23);
+            this.groupBox18.Controls.Add(this.pictureBox24);
+            this.groupBox18.Controls.Add(this.label14);
+            this.groupBox18.Controls.Add(this.button33);
+            this.groupBox18.Controls.Add(this.textBox14);
+            this.groupBox18.Controls.Add(this.button34);
+            this.groupBox18.Location = new System.Drawing.Point(6, 341);
+            this.groupBox18.Name = "groupBox18";
+            this.groupBox18.Size = new System.Drawing.Size(790, 61);
+            this.groupBox18.TabIndex = 250;
+            this.groupBox18.UseDecorationPattern = false;
+            this.groupBox18.UseSharpStyle = false;
+            // 
+            // pictureBox22
+            // 
+            this.pictureBox22.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox22.Image")));
+            this.pictureBox22.Location = new System.Drawing.Point(60, 18);
+            this.pictureBox22.Name = "pictureBox22";
+            this.pictureBox22.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox22.TabIndex = 245;
+            this.pictureBox22.TabStop = false;
+            // 
+            // pictureBox23
+            // 
+            this.pictureBox23.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox23.Location = new System.Drawing.Point(90, 6);
+            this.pictureBox23.Name = "pictureBox23";
+            this.pictureBox23.Size = new System.Drawing.Size(48, 48);
+            this.pictureBox23.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox23.TabIndex = 244;
+            this.pictureBox23.TabStop = false;
+            // 
+            // pictureBox24
+            // 
+            this.pictureBox24.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox24.Location = new System.Drawing.Point(6, 6);
+            this.pictureBox24.Name = "pictureBox24";
+            this.pictureBox24.Size = new System.Drawing.Size(48, 48);
+            this.pictureBox24.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox24.TabIndex = 243;
+            this.pictureBox24.TabStop = false;
+            // 
+            // label14
+            // 
+            this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label14.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(145, 3);
+            this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(641, 22);
+            this.label14.TabIndex = 1;
+            this.label14.Text = "3.5\" floppy disk";
+            this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // button33
+            // 
+            this.button33.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button33.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button33.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button33.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button33.ForeColor = System.Drawing.Color.White;
+            this.button33.Image = null;
+            this.button33.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button33.ImageGlyph")));
+            this.button33.ImageGlyphEnabled = true;
+            this.button33.Location = new System.Drawing.Point(709, 29);
+            this.button33.Name = "button33";
+            this.button33.Size = new System.Drawing.Size(34, 24);
+            this.button33.TabIndex = 235;
+            this.button33.UseVisualStyleBackColor = false;
+            this.button33.Click += new System.EventHandler(this.button33_Click);
+            // 
+            // textBox14
+            // 
+            this.textBox14.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox14.Location = new System.Drawing.Point(145, 29);
+            this.textBox14.MaxLength = 32767;
+            this.textBox14.Multiline = false;
+            this.textBox14.Name = "textBox14";
+            this.textBox14.ReadOnly = false;
+            this.textBox14.Scrollbars = System.Windows.Forms.ScrollBars.None;
+            this.textBox14.SelectedText = "";
+            this.textBox14.SelectionLength = 0;
+            this.textBox14.SelectionStart = 0;
+            this.textBox14.Size = new System.Drawing.Size(558, 24);
+            this.textBox14.TabIndex = 6;
+            this.textBox14.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.textBox14.UseSystemPasswordChar = false;
+            this.textBox14.WordWrap = true;
+            this.textBox14.TextChanged += new System.EventHandler(this.textBox14_TextChanged);
+            // 
+            // button34
+            // 
+            this.button34.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button34.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(127)))), ((int)(((byte)(0)))));
+            this.button34.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
+            this.button34.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button34.ForeColor = System.Drawing.Color.White;
+            this.button34.Image = null;
+            this.button34.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Browse;
+            this.button34.ImageGlyphEnabled = true;
+            this.button34.Location = new System.Drawing.Point(750, 29);
+            this.button34.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.button34.Name = "button34";
+            this.button34.Size = new System.Drawing.Size(34, 24);
+            this.button34.TabIndex = 220;
+            this.button34.UseVisualStyleBackColor = false;
+            this.button34.Click += new System.EventHandler(this.button34_Click);
+            // 
+            // groupBox17
+            // 
+            this.groupBox17.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox17.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox17.Controls.Add(this.pictureBox19);
+            this.groupBox17.Controls.Add(this.pictureBox20);
+            this.groupBox17.Controls.Add(this.pictureBox21);
+            this.groupBox17.Controls.Add(this.label13);
+            this.groupBox17.Controls.Add(this.button31);
+            this.groupBox17.Controls.Add(this.textBox13);
+            this.groupBox17.Controls.Add(this.button32);
+            this.groupBox17.Location = new System.Drawing.Point(6, 207);
+            this.groupBox17.Name = "groupBox17";
+            this.groupBox17.Size = new System.Drawing.Size(790, 61);
+            this.groupBox17.TabIndex = 249;
+            this.groupBox17.UseDecorationPattern = false;
+            this.groupBox17.UseSharpStyle = false;
+            // 
+            // pictureBox19
+            // 
+            this.pictureBox19.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox19.Image")));
+            this.pictureBox19.Location = new System.Drawing.Point(60, 18);
+            this.pictureBox19.Name = "pictureBox19";
+            this.pictureBox19.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox19.TabIndex = 245;
+            this.pictureBox19.TabStop = false;
+            // 
+            // pictureBox20
+            // 
+            this.pictureBox20.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox20.Location = new System.Drawing.Point(90, 6);
+            this.pictureBox20.Name = "pictureBox20";
+            this.pictureBox20.Size = new System.Drawing.Size(48, 48);
+            this.pictureBox20.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox20.TabIndex = 244;
+            this.pictureBox20.TabStop = false;
+            // 
+            // pictureBox21
+            // 
+            this.pictureBox21.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox21.Location = new System.Drawing.Point(6, 6);
+            this.pictureBox21.Name = "pictureBox21";
+            this.pictureBox21.Size = new System.Drawing.Size(48, 48);
+            this.pictureBox21.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox21.TabIndex = 243;
+            this.pictureBox21.TabStop = false;
+            // 
+            // label13
+            // 
+            this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label13.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(145, 3);
+            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(641, 22);
+            this.label13.TabIndex = 1;
+            this.label13.Text = "CD/DVD-ROM drive";
+            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // button31
+            // 
+            this.button31.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button31.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button31.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button31.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button31.ForeColor = System.Drawing.Color.White;
+            this.button31.Image = null;
+            this.button31.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button31.ImageGlyph")));
+            this.button31.ImageGlyphEnabled = true;
+            this.button31.Location = new System.Drawing.Point(709, 29);
+            this.button31.Name = "button31";
+            this.button31.Size = new System.Drawing.Size(34, 24);
+            this.button31.TabIndex = 235;
+            this.button31.UseVisualStyleBackColor = false;
+            this.button31.Click += new System.EventHandler(this.button31_Click);
+            // 
+            // textBox13
+            // 
+            this.textBox13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox13.Location = new System.Drawing.Point(145, 29);
+            this.textBox13.MaxLength = 32767;
+            this.textBox13.Multiline = false;
+            this.textBox13.Name = "textBox13";
+            this.textBox13.ReadOnly = false;
+            this.textBox13.Scrollbars = System.Windows.Forms.ScrollBars.None;
+            this.textBox13.SelectedText = "";
+            this.textBox13.SelectionLength = 0;
+            this.textBox13.SelectionStart = 0;
+            this.textBox13.Size = new System.Drawing.Size(558, 24);
+            this.textBox13.TabIndex = 6;
+            this.textBox13.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.textBox13.UseSystemPasswordChar = false;
+            this.textBox13.WordWrap = true;
+            this.textBox13.TextChanged += new System.EventHandler(this.textBox13_TextChanged);
+            // 
+            // button32
+            // 
+            this.button32.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button32.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(127)))), ((int)(((byte)(0)))));
+            this.button32.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
+            this.button32.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button32.ForeColor = System.Drawing.Color.White;
+            this.button32.Image = null;
+            this.button32.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Browse;
+            this.button32.ImageGlyphEnabled = true;
+            this.button32.Location = new System.Drawing.Point(750, 29);
+            this.button32.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.button32.Name = "button32";
+            this.button32.Size = new System.Drawing.Size(34, 24);
+            this.button32.TabIndex = 220;
+            this.button32.UseVisualStyleBackColor = false;
+            this.button32.Click += new System.EventHandler(this.button32_Click);
+            // 
+            // groupBox16
+            // 
+            this.groupBox16.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox16.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox16.Controls.Add(this.pictureBox16);
+            this.groupBox16.Controls.Add(this.pictureBox17);
+            this.groupBox16.Controls.Add(this.pictureBox18);
+            this.groupBox16.Controls.Add(this.label12);
+            this.groupBox16.Controls.Add(this.button29);
+            this.groupBox16.Controls.Add(this.textBox12);
+            this.groupBox16.Controls.Add(this.button30);
+            this.groupBox16.Location = new System.Drawing.Point(6, 274);
+            this.groupBox16.Name = "groupBox16";
+            this.groupBox16.Size = new System.Drawing.Size(790, 61);
+            this.groupBox16.TabIndex = 248;
+            this.groupBox16.UseDecorationPattern = false;
+            this.groupBox16.UseSharpStyle = false;
+            // 
+            // pictureBox16
+            // 
+            this.pictureBox16.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox16.Image")));
+            this.pictureBox16.Location = new System.Drawing.Point(60, 18);
+            this.pictureBox16.Name = "pictureBox16";
+            this.pictureBox16.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox16.TabIndex = 245;
+            this.pictureBox16.TabStop = false;
+            // 
+            // pictureBox17
+            // 
+            this.pictureBox17.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox17.Location = new System.Drawing.Point(90, 6);
+            this.pictureBox17.Name = "pictureBox17";
+            this.pictureBox17.Size = new System.Drawing.Size(48, 48);
+            this.pictureBox17.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox17.TabIndex = 244;
+            this.pictureBox17.TabStop = false;
+            // 
+            // pictureBox18
+            // 
+            this.pictureBox18.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox18.Location = new System.Drawing.Point(6, 6);
+            this.pictureBox18.Name = "pictureBox18";
+            this.pictureBox18.Size = new System.Drawing.Size(48, 48);
+            this.pictureBox18.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox18.TabIndex = 243;
+            this.pictureBox18.TabStop = false;
+            // 
+            // label12
+            // 
+            this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label12.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(145, 3);
+            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(641, 22);
+            this.label12.TabIndex = 1;
+            this.label12.Text = "5.25\" floppy disk";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // button29
+            // 
+            this.button29.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button29.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button29.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button29.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button29.ForeColor = System.Drawing.Color.White;
+            this.button29.Image = null;
+            this.button29.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button29.ImageGlyph")));
+            this.button29.ImageGlyphEnabled = true;
+            this.button29.Location = new System.Drawing.Point(709, 29);
+            this.button29.Name = "button29";
+            this.button29.Size = new System.Drawing.Size(34, 24);
+            this.button29.TabIndex = 235;
+            this.button29.UseVisualStyleBackColor = false;
+            this.button29.Click += new System.EventHandler(this.button29_Click);
+            // 
+            // textBox12
+            // 
+            this.textBox12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox12.Location = new System.Drawing.Point(145, 29);
+            this.textBox12.MaxLength = 32767;
+            this.textBox12.Multiline = false;
+            this.textBox12.Name = "textBox12";
+            this.textBox12.ReadOnly = false;
+            this.textBox12.Scrollbars = System.Windows.Forms.ScrollBars.None;
+            this.textBox12.SelectedText = "";
+            this.textBox12.SelectionLength = 0;
+            this.textBox12.SelectionStart = 0;
+            this.textBox12.Size = new System.Drawing.Size(558, 24);
+            this.textBox12.TabIndex = 6;
+            this.textBox12.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.textBox12.UseSystemPasswordChar = false;
+            this.textBox12.WordWrap = true;
+            this.textBox12.TextChanged += new System.EventHandler(this.textBox12_TextChanged);
+            // 
+            // button30
+            // 
+            this.button30.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button30.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(127)))), ((int)(((byte)(0)))));
+            this.button30.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
+            this.button30.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button30.ForeColor = System.Drawing.Color.White;
+            this.button30.Image = null;
+            this.button30.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Browse;
+            this.button30.ImageGlyphEnabled = true;
+            this.button30.Location = new System.Drawing.Point(750, 29);
+            this.button30.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.button30.Name = "button30";
+            this.button30.Size = new System.Drawing.Size(34, 24);
+            this.button30.TabIndex = 220;
+            this.button30.UseVisualStyleBackColor = false;
+            this.button30.Click += new System.EventHandler(this.button30_Click);
+            // 
+            // groupBox15
+            // 
+            this.groupBox15.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox15.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox15.Controls.Add(this.pictureBox13);
+            this.groupBox15.Controls.Add(this.pictureBox14);
+            this.groupBox15.Controls.Add(this.pictureBox15);
+            this.groupBox15.Controls.Add(this.label11);
+            this.groupBox15.Controls.Add(this.button27);
+            this.groupBox15.Controls.Add(this.textBox11);
+            this.groupBox15.Controls.Add(this.button28);
+            this.groupBox15.Location = new System.Drawing.Point(6, 475);
+            this.groupBox15.Name = "groupBox15";
+            this.groupBox15.Size = new System.Drawing.Size(790, 61);
+            this.groupBox15.TabIndex = 247;
+            this.groupBox15.UseDecorationPattern = false;
+            this.groupBox15.UseSharpStyle = false;
+            // 
+            // pictureBox13
+            // 
+            this.pictureBox13.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox13.Image")));
+            this.pictureBox13.Location = new System.Drawing.Point(60, 18);
+            this.pictureBox13.Name = "pictureBox13";
+            this.pictureBox13.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox13.TabIndex = 245;
+            this.pictureBox13.TabStop = false;
+            // 
+            // pictureBox14
+            // 
+            this.pictureBox14.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox14.Location = new System.Drawing.Point(90, 6);
+            this.pictureBox14.Name = "pictureBox14";
+            this.pictureBox14.Size = new System.Drawing.Size(48, 48);
+            this.pictureBox14.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox14.TabIndex = 244;
+            this.pictureBox14.TabStop = false;
+            // 
+            // pictureBox15
+            // 
+            this.pictureBox15.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox15.Location = new System.Drawing.Point(6, 6);
+            this.pictureBox15.Name = "pictureBox15";
+            this.pictureBox15.Size = new System.Drawing.Size(48, 48);
+            this.pictureBox15.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox15.TabIndex = 243;
+            this.pictureBox15.TabStop = false;
+            // 
+            // label11
+            // 
+            this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label11.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(145, 3);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(641, 22);
+            this.label11.TabIndex = 1;
+            this.label11.Text = "Network drive (disconnected)";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // button27
+            // 
+            this.button27.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button27.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button27.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button27.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button27.ForeColor = System.Drawing.Color.White;
+            this.button27.Image = null;
+            this.button27.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button27.ImageGlyph")));
+            this.button27.ImageGlyphEnabled = true;
+            this.button27.Location = new System.Drawing.Point(709, 29);
+            this.button27.Name = "button27";
+            this.button27.Size = new System.Drawing.Size(34, 24);
+            this.button27.TabIndex = 235;
+            this.button27.UseVisualStyleBackColor = false;
+            this.button27.Click += new System.EventHandler(this.button27_Click);
+            // 
+            // textBox11
+            // 
+            this.textBox11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox11.Location = new System.Drawing.Point(145, 29);
+            this.textBox11.MaxLength = 32767;
+            this.textBox11.Multiline = false;
+            this.textBox11.Name = "textBox11";
+            this.textBox11.ReadOnly = false;
+            this.textBox11.Scrollbars = System.Windows.Forms.ScrollBars.None;
+            this.textBox11.SelectedText = "";
+            this.textBox11.SelectionLength = 0;
+            this.textBox11.SelectionStart = 0;
+            this.textBox11.Size = new System.Drawing.Size(558, 24);
+            this.textBox11.TabIndex = 6;
+            this.textBox11.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.textBox11.UseSystemPasswordChar = false;
+            this.textBox11.WordWrap = true;
+            this.textBox11.TextChanged += new System.EventHandler(this.textBox11_TextChanged);
+            // 
+            // button28
+            // 
+            this.button28.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button28.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(127)))), ((int)(((byte)(0)))));
+            this.button28.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
+            this.button28.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button28.ForeColor = System.Drawing.Color.White;
+            this.button28.Image = null;
+            this.button28.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Browse;
+            this.button28.ImageGlyphEnabled = true;
+            this.button28.Location = new System.Drawing.Point(750, 29);
+            this.button28.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.button28.Name = "button28";
+            this.button28.Size = new System.Drawing.Size(34, 24);
+            this.button28.TabIndex = 220;
+            this.button28.UseVisualStyleBackColor = false;
+            this.button28.Click += new System.EventHandler(this.button28_Click);
+            // 
+            // groupBox14
+            // 
+            this.groupBox14.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox14.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox14.Controls.Add(this.pictureBox10);
+            this.groupBox14.Controls.Add(this.pictureBox11);
+            this.groupBox14.Controls.Add(this.pictureBox12);
+            this.groupBox14.Controls.Add(this.label10);
+            this.groupBox14.Controls.Add(this.button25);
+            this.groupBox14.Controls.Add(this.textBox10);
+            this.groupBox14.Controls.Add(this.button26);
+            this.groupBox14.Location = new System.Drawing.Point(6, 408);
+            this.groupBox14.Name = "groupBox14";
+            this.groupBox14.Size = new System.Drawing.Size(790, 61);
+            this.groupBox14.TabIndex = 246;
+            this.groupBox14.UseDecorationPattern = false;
+            this.groupBox14.UseSharpStyle = false;
+            // 
+            // pictureBox10
+            // 
+            this.pictureBox10.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox10.Image")));
+            this.pictureBox10.Location = new System.Drawing.Point(60, 18);
+            this.pictureBox10.Name = "pictureBox10";
+            this.pictureBox10.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox10.TabIndex = 245;
+            this.pictureBox10.TabStop = false;
+            // 
+            // pictureBox11
+            // 
+            this.pictureBox11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox11.Location = new System.Drawing.Point(90, 6);
+            this.pictureBox11.Name = "pictureBox11";
+            this.pictureBox11.Size = new System.Drawing.Size(48, 48);
+            this.pictureBox11.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox11.TabIndex = 244;
+            this.pictureBox11.TabStop = false;
+            // 
+            // pictureBox12
+            // 
+            this.pictureBox12.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox12.Location = new System.Drawing.Point(6, 6);
+            this.pictureBox12.Name = "pictureBox12";
+            this.pictureBox12.Size = new System.Drawing.Size(48, 48);
+            this.pictureBox12.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox12.TabIndex = 243;
+            this.pictureBox12.TabStop = false;
+            // 
+            // label10
+            // 
+            this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label10.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(145, 3);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(641, 22);
+            this.label10.TabIndex = 1;
+            this.label10.Text = "Network drive (mapped, connected)";
+            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // button25
+            // 
+            this.button25.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button25.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(130)))), ((int)(((byte)(200)))));
+            this.button25.Flag = WinPaletter.UI.WP.Button.Flags.TintedOnHover;
+            this.button25.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button25.ForeColor = System.Drawing.Color.White;
+            this.button25.Image = null;
+            this.button25.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button25.ImageGlyph")));
+            this.button25.ImageGlyphEnabled = true;
+            this.button25.Location = new System.Drawing.Point(709, 29);
+            this.button25.Name = "button25";
+            this.button25.Size = new System.Drawing.Size(34, 24);
+            this.button25.TabIndex = 235;
+            this.button25.UseVisualStyleBackColor = false;
+            this.button25.Click += new System.EventHandler(this.button25_Click);
+            // 
+            // textBox10
+            // 
+            this.textBox10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox10.Location = new System.Drawing.Point(145, 29);
+            this.textBox10.MaxLength = 32767;
+            this.textBox10.Multiline = false;
+            this.textBox10.Name = "textBox10";
+            this.textBox10.ReadOnly = false;
+            this.textBox10.Scrollbars = System.Windows.Forms.ScrollBars.None;
+            this.textBox10.SelectedText = "";
+            this.textBox10.SelectionLength = 0;
+            this.textBox10.SelectionStart = 0;
+            this.textBox10.Size = new System.Drawing.Size(558, 24);
+            this.textBox10.TabIndex = 6;
+            this.textBox10.TextAlign = System.Windows.Forms.HorizontalAlignment.Left;
+            this.textBox10.UseSystemPasswordChar = false;
+            this.textBox10.WordWrap = true;
+            this.textBox10.TextChanged += new System.EventHandler(this.textBox10_TextChanged);
+            // 
+            // button26
+            // 
+            this.button26.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button26.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(127)))), ((int)(((byte)(0)))));
+            this.button26.Flag = WinPaletter.UI.WP.Button.Flags.CustomColorOnHover;
+            this.button26.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.button26.ForeColor = System.Drawing.Color.White;
+            this.button26.Image = null;
+            this.button26.ImageGlyph = global::WinPaletter.Properties.Resources.Glyph_Browse;
+            this.button26.ImageGlyphEnabled = true;
+            this.button26.Location = new System.Drawing.Point(750, 29);
+            this.button26.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.button26.Name = "button26";
+            this.button26.Size = new System.Drawing.Size(34, 24);
+            this.button26.TabIndex = 220;
+            this.button26.UseVisualStyleBackColor = false;
+            this.button26.Click += new System.EventHandler(this.button26_Click);
+            // 
             // alertBox4
             // 
             this.alertBox4.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
@@ -1091,7 +1736,7 @@
             this.alertBox4.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
             this.alertBox4.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.alertBox4.Image = null;
-            this.alertBox4.Location = new System.Drawing.Point(6, 207);
+            this.alertBox4.Location = new System.Drawing.Point(6, 542);
             this.alertBox4.Name = "alertBox4";
             this.alertBox4.Size = new System.Drawing.Size(423, 22);
             this.alertBox4.TabIndex = 245;
@@ -1844,6 +2489,26 @@
             this.groupBox10.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
+            this.groupBox18.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox22)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox23)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox24)).EndInit();
+            this.groupBox17.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox19)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox20)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox21)).EndInit();
+            this.groupBox16.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox16)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox17)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox18)).EndInit();
+            this.groupBox15.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox13)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox14)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox15)).EndInit();
+            this.groupBox14.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox11)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox12)).EndInit();
             this.groupBox13.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
@@ -1979,5 +2644,45 @@
         private UI.WP.TextBox textBox9;
         internal UI.WP.Button button22;
         private UI.WP.AlertBox alertBox4;
+        private UI.WP.GroupBox groupBox17;
+        private System.Windows.Forms.PictureBox pictureBox19;
+        private System.Windows.Forms.PictureBox pictureBox20;
+        private System.Windows.Forms.PictureBox pictureBox21;
+        private System.Windows.Forms.Label label13;
+        internal UI.WP.Button button31;
+        private UI.WP.TextBox textBox13;
+        internal UI.WP.Button button32;
+        private UI.WP.GroupBox groupBox16;
+        private System.Windows.Forms.PictureBox pictureBox16;
+        private System.Windows.Forms.PictureBox pictureBox17;
+        private System.Windows.Forms.PictureBox pictureBox18;
+        private System.Windows.Forms.Label label12;
+        internal UI.WP.Button button29;
+        private UI.WP.TextBox textBox12;
+        internal UI.WP.Button button30;
+        private UI.WP.GroupBox groupBox15;
+        private System.Windows.Forms.PictureBox pictureBox13;
+        private System.Windows.Forms.PictureBox pictureBox14;
+        private System.Windows.Forms.PictureBox pictureBox15;
+        private System.Windows.Forms.Label label11;
+        internal UI.WP.Button button27;
+        private UI.WP.TextBox textBox11;
+        internal UI.WP.Button button28;
+        private UI.WP.GroupBox groupBox14;
+        private System.Windows.Forms.PictureBox pictureBox10;
+        private System.Windows.Forms.PictureBox pictureBox11;
+        private System.Windows.Forms.PictureBox pictureBox12;
+        private System.Windows.Forms.Label label10;
+        internal UI.WP.Button button25;
+        private UI.WP.TextBox textBox10;
+        internal UI.WP.Button button26;
+        private UI.WP.GroupBox groupBox18;
+        private System.Windows.Forms.PictureBox pictureBox22;
+        private System.Windows.Forms.PictureBox pictureBox23;
+        private System.Windows.Forms.PictureBox pictureBox24;
+        private System.Windows.Forms.Label label14;
+        internal UI.WP.Button button33;
+        private UI.WP.TextBox textBox14;
+        internal UI.WP.Button button34;
     }
 }

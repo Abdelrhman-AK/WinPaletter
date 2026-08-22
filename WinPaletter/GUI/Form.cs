@@ -900,24 +900,25 @@ namespace WinPaletter.UI.WP
 
             if (OS.WVista || OS.W7 || OS.W8 || OS.W81)
             {
-                // SM_CXSIZEFRAME (32) = resize border, SM_CXPADDEDBORDER (92) = DWM padding
-                // Together they form the full invisible DWM border on Aero glass windows
-                int sizeFrame = User32.GetSystemMetrics(32); // SM_CXSIZEFRAME
+                int sizeFrame = User32.GetSystemMetrics(32);    // SM_CXSIZEFRAME
                 int paddedBorder = User32.GetSystemMetrics(92); // SM_CXPADDEDBORDER
                 return Math.Max(1, sizeFrame + paddedBorder);
             }
 
             // DWMWA_EXTENDED_FRAME_BOUNDS = 9
-            // Returns the visible frame rect excluding the invisible resize border
             int result = DWMAPI.DwmGetWindowAttribute(Handle, 9, out RECT extendedFrame, Marshal.SizeOf<RECT>());
 
-            if (result != 0) // S_OK
-                return 1;
+            if (result != 0) return 1;
 
             User32.GetWindowRect(Handle, out RECT windowRect);
 
-            // The difference on any edge is the invisible DWM border thickness
-            int borderWidth = extendedFrame.left - windowRect.left;
+            // DwmGetWindowAttribute(EXTENDED_FRAME_BOUNDS) always returns TRUE PHYSICAL pixels, but GetWindowRect returns DPI-virtualized (logical) pixels unless the process is
+            // Per-Monitor-V2 DPI aware. Above 100% scaling this mismatch inflates the delta, so bring extendedFrame back into the same logical space before subtracting.
+            float scale = Program.GetWindowsScreenScalingFactor(false);
+            if (scale <= 0) scale = 1f;
+
+            double logicalExtendedLeft = extendedFrame.left / scale;
+            int borderWidth = (int)Math.Round(logicalExtendedLeft - windowRect.left);
 
             // Clamp: should always be >= 1 on a bordered window, but never negative
             return Math.Max(1, borderWidth);

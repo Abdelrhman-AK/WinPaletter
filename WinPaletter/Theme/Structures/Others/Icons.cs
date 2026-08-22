@@ -172,6 +172,16 @@ namespace WinPaletter.Theme.Structures
         public string SystemDriveIcon = string.Empty;
 
         /// <summary>
+        /// Icon used for system drive
+        /// </summary>
+        public string DVDIcon = string.Empty;
+
+        /// <summary>
+        /// Icon used for system drive
+        /// </summary>
+        public string CDIcon = string.Empty;
+
+        /// <summary>
         /// Creates a new Icons structure with default values
         /// </summary>
         public Icons() { }
@@ -299,6 +309,9 @@ namespace WinPaletter.Theme.Structures
                 WriteReg(treeView, @$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", DesktopCLSIDs.ElementAt(4).Item1, RecycleBin_HideInDesktop);
 
                 WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Icons", "SystemDrive", SystemDriveIcon, RegistryValueKind.String);
+                WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Icons", "DVDIcon", DVDIcon, RegistryValueKind.String);
+                WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Icons", "CDIcon", CDIcon, RegistryValueKind.String);
+
                 string sysDrive = Environment.GetFolderPath(Environment.SpecialFolder.System).Substring(0, 1);
 
                 if (!string.IsNullOrWhiteSpace(SystemDriveIcon))

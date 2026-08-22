@@ -172,6 +172,31 @@ namespace WinPaletter
                 if (drv != null) pictureBox9.Image = drv.ToBitmap();
             }
 
+            using (Icon drv = PE.GetIcon($"{SysPaths.System32}\\shell32.dll", -12))
+            {
+                if (drv != null) pictureBox21.Image = drv.ToBitmap();
+            }
+
+            using (Icon drv = PE.GetIcon($"{SysPaths.System32}\\shell32.dll", -6))
+            {
+                if (drv != null) pictureBox18.Image = drv.ToBitmap();
+            }
+
+            using (Icon drv = PE.GetIcon($"{SysPaths.System32}\\shell32.dll", -7))
+            {
+                if (drv != null) pictureBox24.Image = drv.ToBitmap();
+            }
+
+            using (Icon drv = PE.GetIcon($"{SysPaths.System32}\\shell32.dll", -10))
+            {
+                if (drv != null) pictureBox12.Image = drv.ToBitmap();
+            }
+
+            using (Icon drv = PE.GetIcon($"{SysPaths.System32}\\shell32.dll", -11))
+            {
+                if (drv != null) pictureBox15.Image = drv.ToBitmap();
+            }
+
             LoadFromTM(Program.TM);
         }
 
@@ -701,6 +726,11 @@ namespace WinPaletter
 
             if (e.RowIndex == 7) textBox8.Text = rawValue;
             else if (e.RowIndex == 8) textBox9.Text = rawValue;
+            else if (e.RowIndex == 12) textBox13.Text = rawValue;
+            else if (e.RowIndex == 5) textBox12.Text = rawValue;
+            else if (e.RowIndex == 6) textBox14.Text = rawValue;
+            else if (e.RowIndex == 9) textBox10.Text = rawValue;
+            else if (e.RowIndex == 10) textBox11.Text = rawValue;
         }
 
         private static void DisposeIconAtCell(DataGridViewRow row, int columnIndex)
@@ -1231,6 +1261,81 @@ namespace WinPaletter
         private void button24_Click(object sender, EventArgs e)
         {
             PickIconForDesktopIcons(textBox8);
+        }
+
+        private void button32_Click(object sender, EventArgs e)
+        {
+            PickIconForDesktopIcons(textBox13);
+        }
+
+        private void button30_Click(object sender, EventArgs e)
+        {
+            PickIconForDesktopIcons(textBox12);
+        }
+
+        private void button34_Click(object sender, EventArgs e)
+        {
+            PickIconForDesktopIcons(textBox14);
+        }
+
+        private void button26_Click(object sender, EventArgs e)
+        {
+            PickIconForDesktopIcons(textBox10);
+        }
+
+        private void button28_Click(object sender, EventArgs e)
+        {
+            PickIconForDesktopIcons(textBox11);
+        }
+
+        private void button31_Click(object sender, EventArgs e)
+        {
+            textBox13.Text = string.Empty;
+        }
+
+        private void button29_Click(object sender, EventArgs e)
+        {
+            textBox12.Text = string.Empty;
+        }
+
+        private void button33_Click(object sender, EventArgs e)
+        {
+            textBox14.Text = string.Empty;
+        }
+
+        private void button25_Click(object sender, EventArgs e)
+        {
+            textBox10.Text = string.Empty;
+        }
+
+        private void button27_Click(object sender, EventArgs e)
+        {
+            textBox11.Text = string.Empty;
+        }
+
+        private void textBox13_TextChanged(object sender, EventArgs e)
+        {
+            HandleTextBoxIconChange(sender as UI.WP.TextBox, pictureBox20, shell32Data, 3, 11);
+        }
+
+        private void textBox12_TextChanged(object sender, EventArgs e)
+        {
+            HandleTextBoxIconChange(sender as UI.WP.TextBox, pictureBox17, shell32Data, 3, 5);
+        }
+
+        private void textBox14_TextChanged(object sender, EventArgs e)
+        {
+            HandleTextBoxIconChange(sender as UI.WP.TextBox, pictureBox23, shell32Data, 3, 6);
+        }
+
+        private void textBox10_TextChanged(object sender, EventArgs e)
+        {
+            HandleTextBoxIconChange(sender as UI.WP.TextBox, pictureBox11, shell32Data, 3, 9);
+        }
+
+        private void textBox11_TextChanged(object sender, EventArgs e)
+        {
+            HandleTextBoxIconChange(sender as UI.WP.TextBox, pictureBox14, shell32Data, 3, 10);
         }
     }
 }

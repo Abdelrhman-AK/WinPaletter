@@ -84,7 +84,7 @@ namespace WinPaletter
         /// Gets if WinPaletter's current version is designed as beta or not
         /// <br>Don't forget to make it <b>true</b> when you design a beta one</br>
         /// </summary>
-        public static bool IsBeta => true;
+        public static bool IsBeta => false;
 
         /// <summary>
         /// A boolean that represents if WinPaletter has started with a classic theme enabled (Loaded at application startup)
