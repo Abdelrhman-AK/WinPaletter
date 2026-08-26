@@ -1,10 +1,11 @@
 ﻿using Ressy;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.Theme;
 using WinPaletter.UI.Simulation;
@@ -14,13 +15,17 @@ namespace WinPaletter
 {
     public partial class IconsStudio : AspectsTemplate
     {
-        private static readonly Dictionary<int, Bitmap> _shell32IconCache = [];
-        private static readonly Dictionary<string, Bitmap> _controlPanelIconCache = new(StringComparer.OrdinalIgnoreCase);
-        private static readonly Dictionary<string, Bitmap> _explorerIconCache = new(StringComparer.OrdinalIgnoreCase);
+        private static readonly ConcurrentDictionary<int, Bitmap> _shell32IconCache = new();
+        private static readonly ConcurrentDictionary<string, Bitmap> _controlPanelIconCache = new(StringComparer.OrdinalIgnoreCase);
+        private static readonly ConcurrentDictionary<string, Bitmap> _explorerIconCache = new(StringComparer.OrdinalIgnoreCase);
+        private const int Shell32ThumbSize = 32;
 
         public IconsStudio()
         {
             InitializeComponent();
+            shell32Data.DoubleBuffer();
+            cpData.DoubleBuffer();
+            explorerData.DoubleBuffer();
         }
 
         protected override void OnHandleCreated(EventArgs e)
@@ -111,7 +116,7 @@ namespace WinPaletter
             Cursor = Cursors.Default;
         }
 
-        private void IconsStudio_Load(object sender, EventArgs e)
+        private async void IconsStudio_Load(object sender, EventArgs e)
         {
             DesignerData data = new(this)
             {
@@ -134,9 +139,7 @@ namespace WinPaletter
 
             LoadData(data);
 
-            PopulateShell32Icons();
-            PopulateControlPanelIcons();
-            PopulateExplorerIcons();
+            Cursor = System.Windows.Forms.Cursors.WaitCursor;
 
             pnl_preview.BackgroundImage = Program.WallpaperMonitor.Get(Program.TM, Program.WindowStyle);
             pnl_preview.BackColor = Program.TM.Win32.Background;
@@ -147,57 +150,80 @@ namespace WinPaletter
             }
 
             winIcon2.Text = User.Name;
-            winIcon1.Text = OS.W8x || OS.W10 || OS.W11 || OS.W12 ? "This PC" : "Computer";
+            winIcon1.Text = OS.W8x || OS.W10 || OS.W11 || OS.W12 ? Program.Localization.Strings.Previewer.Preview_ThisPC : !OS.WXP ? Program.Localization.Strings.Previewer.Preview_Computer : Program.Localization.Strings.Previewer.Preview_MyComputer;
             label3.Text = winIcon1.Text;
+
+            LoadFromTM(Program.TM);
+
+            await PopulateExplorerIcons();
+            await PopulateShell32Icons();
+            await PopulateControlPanelIcons();
+
+            void SetPictureBoxImage(PictureBox pictureBox, Bitmap newImage)
+            {
+                Image oldImage = pictureBox.Image;
+                pictureBox.Image = newImage;
+                if (oldImage != null) oldImage.Dispose();
+            }
+
+            Bitmap GetShell32Bitmap(int iconIndex)
+            {
+                if (iconIndex < 0 || iconIndex >= shell32Data.Rows.Count) return null;
+
+                object cellValue = shell32Data.Rows[iconIndex].Cells[1].Value;
+                if (cellValue is Bitmap img) return img.Clone() as Bitmap;
+
+                return null;
+            }
 
             if (!OS.WXP)
             {
                 using (Icon sysdrv = PE.GetIcon(SysPaths.imageres, -36))
                 {
-                    if (sysdrv != null) pictureBox1.Image = sysdrv.ToBitmap();
+                    if (sysdrv != null) SetPictureBoxImage(pictureBox1, sysdrv.ToBitmap());
                 }
             }
 
-            using (Icon drv = PE.GetIcon($"{SysPaths.System32}\\shell32.dll", -9))
+            using (Bitmap bmp = GetShell32Bitmap(8))
             {
-                if (drv != null)
+                if (bmp != null)
                 {
-                    pictureBox6.Image = drv.ToBitmap();
-                    if (OS.WXP) pictureBox1.Image = drv.ToBitmap();
+                    SetPictureBoxImage(pictureBox6, bmp.Clone() as Bitmap);
+                    if (OS.WXP) SetPictureBoxImage(pictureBox1, bmp.Clone() as Bitmap);
                 }
             }
 
-            using (Icon drv = PE.GetIcon($"{SysPaths.System32}\\shell32.dll", -8))
+            using (Bitmap bmp = GetShell32Bitmap(7))
             {
-                if (drv != null) pictureBox9.Image = drv.ToBitmap();
+                if (bmp != null) SetPictureBoxImage(pictureBox9, bmp.Clone() as Bitmap);
             }
 
-            using (Icon drv = PE.GetIcon($"{SysPaths.System32}\\shell32.dll", -12))
+            using (Bitmap bmp = GetShell32Bitmap(11))
             {
-                if (drv != null) pictureBox21.Image = drv.ToBitmap();
+                if (bmp != null) SetPictureBoxImage(pictureBox21, bmp.Clone() as Bitmap);
             }
 
-            using (Icon drv = PE.GetIcon($"{SysPaths.System32}\\shell32.dll", -6))
+            using (Bitmap bmp = GetShell32Bitmap(5))
             {
-                if (drv != null) pictureBox18.Image = drv.ToBitmap();
+                if (bmp != null) SetPictureBoxImage(pictureBox18, bmp.Clone() as Bitmap);
             }
 
-            using (Icon drv = PE.GetIcon($"{SysPaths.System32}\\shell32.dll", -7))
+            using (Bitmap bmp = GetShell32Bitmap(6))
             {
-                if (drv != null) pictureBox24.Image = drv.ToBitmap();
+                if (bmp != null) SetPictureBoxImage(pictureBox24, bmp.Clone() as Bitmap);
             }
 
-            using (Icon drv = PE.GetIcon($"{SysPaths.System32}\\shell32.dll", -10))
+            using (Bitmap bmp = GetShell32Bitmap(9))
             {
-                if (drv != null) pictureBox12.Image = drv.ToBitmap();
+                if (bmp != null) SetPictureBoxImage(pictureBox12, bmp.Clone() as Bitmap);
             }
 
-            using (Icon drv = PE.GetIcon($"{SysPaths.System32}\\shell32.dll", -11))
+            using (Bitmap bmp = GetShell32Bitmap(10))
             {
-                if (drv != null) pictureBox15.Image = drv.ToBitmap();
+                if (bmp != null) SetPictureBoxImage(pictureBox15, bmp.Clone() as Bitmap);
             }
 
-            LoadFromTM(Program.TM);
+            Cursor = System.Windows.Forms.Cursors.Default;
         }
 
         // Reusable helper to dispose any previous icon safely
@@ -247,41 +273,40 @@ namespace WinPaletter
             CleanUp();
         }
 
-        void PopulateShell32Icons()
+        async Task PopulateShell32Icons()
         {
-            shell32Data.SuspendLayout();
             shell32Data.Rows.Clear();
-
             Cursor = Cursors.WaitCursor;
 
             try
             {
                 string shell32 = System.IO.Path.Combine(SysPaths.System32, "shell32.dll");
-                int count = PE.GetIconGroupCount(shell32);
+                int count = await Task.Run(() => PE.GetIconGroupCount(shell32));
 
-                // Reuse list with preallocated capacity to reduce reallocations
-                List<DataGridViewRow> rowsToAdd = new(count);
-
-                // Batch load icons with caching
-                for (int i = 0; i < count; i++)
+                List<(int Index, Bitmap Bitmap)> extracted = await Task.Run(() =>
                 {
-                    if (!_shell32IconCache.TryGetValue(i, out Bitmap iconBmp))
+                    List<(int, Bitmap)> results = new(count);
+                    for (int i = 0; i < count; i++)
                     {
-                        using Icon ico = PE.GetIcon(shell32, i);
-                        iconBmp = ico?.ToBitmap();
-                        if (iconBmp != null) _shell32IconCache[i] = iconBmp;
+                        int index = i;
+                        Bitmap iconBmp = _shell32IconCache.GetOrAdd(index, idx => { using Icon ico = PE.GetIcon(shell32, idx, Shell32ThumbSize); return ico?.ToBitmap(); });
+                        results.Add((index, iconBmp));
                     }
+                    return results;
+                });
 
-                    // Create row
+                shell32Data.SuspendLayout();
+
+                List<DataGridViewRow> rowsToAdd = new(extracted.Count);
+                foreach ((int index, Bitmap bitmap) in extracted)
+                {
                     DataGridViewRow row = new();
-                    row.CreateCells(shell32Data, i, iconBmp, null, string.Empty, Program.Localization.Strings.General.Browse);
+                    row.CreateCells(shell32Data, index, bitmap, null, string.Empty, Program.Localization.Strings.General.Browse);
                     rowsToAdd.Add(row);
                 }
 
-                // Add all rows in one go
                 shell32Data.Rows.AddRange([.. rowsToAdd]);
 
-                // Ensure no default [X] icon shows up
                 foreach (DataGridViewColumn column in shell32Data.Columns)
                 {
                     if (column is DataGridViewImageColumn imgCol) imgCol.DefaultCellStyle.NullValue = null;
@@ -298,48 +323,43 @@ namespace WinPaletter
             }
         }
 
-        void PopulateControlPanelIcons()
+        async Task PopulateControlPanelIcons()
         {
-            cpData.SuspendLayout();
             cpData.Visible = false;
             cpData.Rows.Clear();
-
             Cursor = Cursors.WaitCursor;
 
             try
             {
                 List<Tuple<string, string, string>> clsidList = Theme.Structures.Icons.ControlPanelCLSIDs;
-                int count = clsidList.Count;
-                List<DataGridViewRow> rowsToAdd = new(count);
 
-                for (int i = 0; i < count; i++)
+                List<(string Clsid, string Name, Bitmap Bitmap)> extracted = await Task.Run(() =>
                 {
-                    var (clsid, name, defaultIconPath) = clsidList[i];
-
-                    Bitmap iconBmp = null;
-
-                    if (!string.IsNullOrWhiteSpace(defaultIconPath))
+                    List<(string, string, Bitmap)> results = new(clsidList.Count);
+                    foreach ((string clsid, string name, string defaultIconPath) in clsidList)
                     {
-                        string resolvedPath = Environment.ExpandEnvironmentVariables(defaultIconPath);
-
-                        // Cache by path
-                        if (_controlPanelIconCache.TryGetValue(resolvedPath, out var cached))
+                        Bitmap iconBmp = null;
+                        if (!string.IsNullOrWhiteSpace(defaultIconPath))
                         {
-                            iconBmp = cached;
+                            string resolvedPath = Environment.ExpandEnvironmentVariables(defaultIconPath);
+                            iconBmp = _controlPanelIconCache.GetOrAdd(resolvedPath, p => TryExtractBitmap(p, Shell32ThumbSize));
                         }
-                        else
-                        {
-                            iconBmp = TryExtractBitmap(resolvedPath);
-                            if (iconBmp != null) _controlPanelIconCache[resolvedPath] = iconBmp;
-                        }
+                        results.Add((clsid, name, iconBmp));
                     }
+                    return results;
+                });
 
+                cpData.SuspendLayout();
+
+                List<DataGridViewRow> rowsToAdd = new(extracted.Count);
+                foreach ((string clsid, string name, Bitmap bitmap) in extracted)
+                {
                     DataGridViewRow row = new();
-                    row.CreateCells(cpData, name, clsid, iconBmp, null, string.Empty, Program.Localization.Strings.General.Browse);
+                    row.CreateCells(cpData, name, clsid, bitmap, null, string.Empty, Program.Localization.Strings.General.Browse);
                     rowsToAdd.Add(row);
                 }
 
-                cpData.Rows.AddRange(rowsToAdd.ToArray());
+                cpData.Rows.AddRange([.. rowsToAdd]);
 
                 foreach (DataGridViewColumn column in cpData.Columns)
                 {
@@ -358,48 +378,43 @@ namespace WinPaletter
             }
         }
 
-        void PopulateExplorerIcons()
+        async Task PopulateExplorerIcons()
         {
-            explorerData.SuspendLayout();
             explorerData.Visible = false;
             explorerData.Rows.Clear();
-
             Cursor = Cursors.WaitCursor;
 
             try
             {
                 List<Tuple<string, string, string>> clsidList = Theme.Structures.Icons.ExplorerCLSIDs;
-                int count = clsidList.Count;
 
-                List<DataGridViewRow> rowsToAdd = new(count);
-
-                for (int i = 0; i < count; i++)
+                List<(string Clsid, string Name, Bitmap Bitmap)> extracted = await Task.Run(() =>
                 {
-                    var (clsid, name, defaultIconPath) = clsidList[i];
-
-                    Bitmap iconBmp = null;
-
-                    if (!string.IsNullOrWhiteSpace(defaultIconPath))
+                    List<(string, string, Bitmap)> results = new(clsidList.Count);
+                    foreach ((string clsid, string name, string defaultIconPath) in clsidList)
                     {
-                        string resolvedPath = Environment.ExpandEnvironmentVariables(defaultIconPath);
-
-                        if (_explorerIconCache.TryGetValue(resolvedPath, out var cached))
+                        Bitmap iconBmp = null;
+                        if (!string.IsNullOrWhiteSpace(defaultIconPath))
                         {
-                            iconBmp = cached;
+                            string resolvedPath = Environment.ExpandEnvironmentVariables(defaultIconPath);
+                            iconBmp = _explorerIconCache.GetOrAdd(resolvedPath, p => TryExtractBitmap(p, Shell32ThumbSize));
                         }
-                        else
-                        {
-                            iconBmp = TryExtractBitmap(resolvedPath);
-                            if (iconBmp != null) _explorerIconCache[resolvedPath] = iconBmp;
-                        }
+                        results.Add((clsid, name, iconBmp));
                     }
+                    return results;
+                });
 
+                explorerData.SuspendLayout();
+
+                List<DataGridViewRow> rowsToAdd = new(extracted.Count);
+                foreach ((string clsid, string name, Bitmap bitmap) in extracted)
+                {
                     DataGridViewRow row = new();
-                    row.CreateCells(explorerData, name, clsid, iconBmp, null, string.Empty, Program.Localization.Strings.General.Browse);
+                    row.CreateCells(explorerData, name, clsid, bitmap, null, string.Empty, Program.Localization.Strings.General.Browse);
                     rowsToAdd.Add(row);
                 }
 
-                explorerData.Rows.AddRange(rowsToAdd.ToArray());
+                explorerData.Rows.AddRange([.. rowsToAdd]);
 
                 foreach (DataGridViewColumn column in explorerData.Columns)
                 {
@@ -408,7 +423,7 @@ namespace WinPaletter
             }
             catch (Exception ex)
             {
-                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"ailed to load Explorer icons: {ex.Message}");
+                Program.Log?.Write(Serilog.Events.LogEventLevel.Error, $"Failed to load Explorer icons: {ex.Message}");
             }
             finally
             {
@@ -418,7 +433,7 @@ namespace WinPaletter
             }
         }
 
-        private static Bitmap TryExtractBitmap(string iconPath)
+        private static Bitmap TryExtractBitmap(string iconPath, int size)
         {
             try
             {
@@ -430,11 +445,11 @@ namespace WinPaletter
 
                 if (System.IO.Path.GetExtension(path).Equals(".ico", StringComparison.OrdinalIgnoreCase))
                 {
-                    using Icon ico = new(path);
+                    using Icon ico = new(path, new Size(size, size));
                     return ico.ToBitmap();
                 }
 
-                using Icon extracted = PE.GetIcon(path, index);
+                using Icon extracted = PE.GetIcon(path, index, size);
                 return extracted?.ToBitmap();
             }
             catch
@@ -487,22 +502,6 @@ namespace WinPaletter
             DisposeIconsAndClear(explorerData, 2, 3);
             DisposeIconsAndClear(cpData, 2, 3);
             DisposeIconsAndClear(shell32Data, 1, 2);
-
-            ClearCache(_shell32IconCache);
-            ClearCache(_controlPanelIconCache);
-            ClearCache(_explorerIconCache);
-        }
-
-        private static void ClearCache(Dictionary<int, Bitmap> cache)
-        {
-            foreach (var kv in cache) kv.Value?.Dispose();
-            cache.Clear();
-        }
-
-        private static void ClearCache(Dictionary<string, Bitmap> cache)
-        {
-            foreach (var kv in cache) kv.Value?.Dispose();
-            cache.Clear();
         }
 
         public void LoadFromTM(Manager TM)
@@ -516,6 +515,7 @@ namespace WinPaletter
             textBox5.Text = TM.Icons.Network;
             textBox4.Text = TM.Icons.ControlPanel;
             textBox7.Text = TM.Icons.SystemDriveIcon;
+            textBox13.Text = TM.Icons.CDDVDIcon;
 
             checkBox1.Checked = !TM.Icons.Computer_HideInDesktop;
             checkBox2.Checked = !TM.Icons.User_HideInDesktop;
@@ -613,6 +613,7 @@ namespace WinPaletter
             TM.Icons.Network = textBox5.Text;
             TM.Icons.ControlPanel = textBox4.Text;
             TM.Icons.SystemDriveIcon = textBox7.Text;
+            TM.Icons.CDDVDIcon = textBox13.Text;
 
             TM.Icons.Computer_HideInDesktop = !checkBox1.Checked;
             TM.Icons.User_HideInDesktop = !checkBox2.Checked;
@@ -726,7 +727,6 @@ namespace WinPaletter
 
             if (e.RowIndex == 7) textBox8.Text = rawValue;
             else if (e.RowIndex == 8) textBox9.Text = rawValue;
-            else if (e.RowIndex == 12) textBox13.Text = rawValue;
             else if (e.RowIndex == 5) textBox12.Text = rawValue;
             else if (e.RowIndex == 6) textBox14.Text = rawValue;
             else if (e.RowIndex == 9) textBox10.Text = rawValue;
@@ -1195,6 +1195,14 @@ namespace WinPaletter
             {
                 DisposeImage(targetBox);
                 targetBox.Image = null;
+
+                // Reset the corresponding DataGridView cell when text is cleared
+                if (dataGrid != null && rowIndex >= 0 && rowIndex < dataGrid.Rows.Count && columnIndex >= 0 && columnIndex < dataGrid.ColumnCount)
+                {
+                    string current = dataGrid[columnIndex, rowIndex].Value?.ToString();
+                    if (!string.IsNullOrEmpty(current)) dataGrid[columnIndex, rowIndex].Value = string.Empty;
+                }
+
                 return;
             }
 
@@ -1315,7 +1323,7 @@ namespace WinPaletter
 
         private void textBox13_TextChanged(object sender, EventArgs e)
         {
-            HandleTextBoxIconChange(sender as UI.WP.TextBox, pictureBox20, shell32Data, 3, 11);
+            HandleTextBoxIconChange(sender as UI.WP.TextBox, pictureBox20, null, -1, -1);
         }
 
         private void textBox12_TextChanged(object sender, EventArgs e)

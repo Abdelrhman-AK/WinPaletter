@@ -128,7 +128,6 @@
             this.button25 = new WinPaletter.UI.WP.Button();
             this.textBox10 = new WinPaletter.UI.WP.TextBox();
             this.button26 = new WinPaletter.UI.WP.Button();
-            this.alertBox4 = new WinPaletter.UI.WP.AlertBox();
             this.groupBox13 = new WinPaletter.UI.WP.GroupBox();
             this.pictureBox7 = new System.Windows.Forms.PictureBox();
             this.pictureBox8 = new System.Windows.Forms.PictureBox();
@@ -258,7 +257,7 @@
             this.tabControl1.Multiline = true;
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(950, 561);
+            this.tabControl1.Size = new System.Drawing.Size(950, 550);
             this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl1.TabIndex = 119;
             // 
@@ -277,7 +276,7 @@
             this.tabPage3.Location = new System.Drawing.Point(144, 4);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(802, 553);
+            this.tabPage3.Size = new System.Drawing.Size(802, 686);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Desktop";
             // 
@@ -1001,7 +1000,7 @@
             this.tabPage4.Location = new System.Drawing.Point(144, 4);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(802, 553);
+            this.tabPage4.Size = new System.Drawing.Size(802, 686);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Explorer";
             // 
@@ -1034,7 +1033,7 @@
             this.explorerData.ShowCellToolTips = false;
             this.explorerData.ShowEditingIcon = false;
             this.explorerData.ShowRowErrors = false;
-            this.explorerData.Size = new System.Drawing.Size(796, 502);
+            this.explorerData.Size = new System.Drawing.Size(796, 635);
             this.explorerData.TabIndex = 4;
             this.explorerData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.explorerData_CellContentClick);
             this.explorerData.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.explorerData_CellValueChanged);
@@ -1136,14 +1135,13 @@
             this.tabPage5.Controls.Add(this.groupBox16);
             this.tabPage5.Controls.Add(this.groupBox15);
             this.tabPage5.Controls.Add(this.groupBox14);
-            this.tabPage5.Controls.Add(this.alertBox4);
             this.tabPage5.Controls.Add(this.groupBox13);
             this.tabPage5.Controls.Add(this.groupBox12);
             this.tabPage5.Controls.Add(this.groupBox11);
             this.tabPage5.Location = new System.Drawing.Point(144, 4);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(802, 553);
+            this.tabPage5.Size = new System.Drawing.Size(802, 542);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "Drives";
             // 
@@ -1727,22 +1725,6 @@
             this.button26.UseVisualStyleBackColor = false;
             this.button26.Click += new System.EventHandler(this.button26_Click);
             // 
-            // alertBox4
-            // 
-            this.alertBox4.AlertStyle = WinPaletter.UI.WP.AlertBox.Style.Simple;
-            this.alertBox4.AutoSize = true;
-            this.alertBox4.BackColor = System.Drawing.Color.Transparent;
-            this.alertBox4.CenterText = false;
-            this.alertBox4.CustomColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(81)))), ((int)(((byte)(210)))));
-            this.alertBox4.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.alertBox4.Image = null;
-            this.alertBox4.Location = new System.Drawing.Point(6, 542);
-            this.alertBox4.Name = "alertBox4";
-            this.alertBox4.Size = new System.Drawing.Size(423, 22);
-            this.alertBox4.TabIndex = 245;
-            this.alertBox4.TabStop = false;
-            this.alertBox4.Text = "If you want to change icons for CD/DVD drives, manually patch imageres.dll.";
-            // 
             // groupBox13
             // 
             this.groupBox13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -2100,7 +2082,7 @@
             this.tabPage2.Location = new System.Drawing.Point(144, 4);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(802, 553);
+            this.tabPage2.Size = new System.Drawing.Size(802, 686);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Control Panel page";
             // 
@@ -2133,7 +2115,7 @@
             this.cpData.ShowCellToolTips = false;
             this.cpData.ShowEditingIcon = false;
             this.cpData.ShowRowErrors = false;
-            this.cpData.Size = new System.Drawing.Size(796, 502);
+            this.cpData.Size = new System.Drawing.Size(796, 635);
             this.cpData.TabIndex = 3;
             this.cpData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.cpData_CellContentClick);
             this.cpData.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.cpData_CellValueChanged);
@@ -2254,7 +2236,7 @@
             this.tabPage1.Location = new System.Drawing.Point(144, 4);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(802, 553);
+            this.tabPage1.Size = new System.Drawing.Size(802, 686);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "System icons (shell32)";
             // 
@@ -2286,7 +2268,7 @@
             this.shell32Data.ShowCellToolTips = false;
             this.shell32Data.ShowEditingIcon = false;
             this.shell32Data.ShowRowErrors = false;
-            this.shell32Data.Size = new System.Drawing.Size(796, 463);
+            this.shell32Data.Size = new System.Drawing.Size(796, 596);
             this.shell32Data.TabIndex = 2;
             this.shell32Data.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.shell32Data_CellContentClick);
             this.shell32Data.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.shell32Data_CellValueChanged);
@@ -2463,7 +2445,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.CanGeneratePalette = true;
-            this.ClientSize = new System.Drawing.Size(974, 673);
+            this.ClientSize = new System.Drawing.Size(974, 662);
             this.Controls.Add(this.tabControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsShown = true;
@@ -2488,7 +2470,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.explorerData)).EndInit();
             this.groupBox10.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
-            this.tabPage5.PerformLayout();
             this.groupBox18.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox22)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox23)).EndInit();
@@ -2643,7 +2624,6 @@
         internal UI.WP.Button button21;
         private UI.WP.TextBox textBox9;
         internal UI.WP.Button button22;
-        private UI.WP.AlertBox alertBox4;
         private UI.WP.GroupBox groupBox17;
         private System.Windows.Forms.PictureBox pictureBox19;
         private System.Windows.Forms.PictureBox pictureBox20;

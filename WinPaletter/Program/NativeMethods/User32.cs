@@ -1219,6 +1219,11 @@ namespace WinPaletter.NativeMethods
             SendMessageTimeout(new IntPtr(HWND_BROADCAST), WindowsMessage.SettingChange, UIntPtr.Zero, section, SMTO_ABORTIFHUNG, 100, out _);
         }
 
+        public static void NotifySettingChangedTimeout(string section = "ImmersiveColorSet", uint timeout = 100)
+        {
+            SendMessageTimeout(new IntPtr(HWND_BROADCAST), WindowsMessage.SettingChange, UIntPtr.Zero, section, SMTO_ABORTIFHUNG, timeout, out _);
+        }
+
         /// <summary>
         /// Releases the mouse capture from a window in the current thread.
         /// </summary>

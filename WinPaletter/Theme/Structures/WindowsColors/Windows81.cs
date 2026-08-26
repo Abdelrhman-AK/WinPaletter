@@ -109,11 +109,12 @@ namespace WinPaletter.Theme.Structures
                 using (WindowsImpersonationContext wic = User.Identity.Impersonate())
                 {
                     // Broadcast the system message to notify about the setting change
-                    Program.Log?.Write(LogEventLevel.Information, "Broadcasting system message to notify about the setting change (User32.SendMessage(IntPtr.Zero, User32.WindowsMessages.WM_SETTINGCHANGE, IntPtr.Zero, IntPtr.Zero)).");
+                    Program.Log?.Write(LogEventLevel.Information, "Broadcasting system message to notify about the setting change (User32.SendMessageTimeout(HWND_BROADCAST, User32.WindowsMessages.WM_SETTINGCHANGE, IntPtr.Zero, IntPtr.Zero)).");
 
-                    User32.SendMessage(IntPtr.Zero, User32.WindowsMessage.SettingChange, IntPtr.Zero, IntPtr.Zero);
-                    User32.NotifySettingChanged("ImmersiveColorSet");  // for theme/accent
-                    User32.NotifySettingChanged("WindowsThemeElement"); // Win8-style themes
+                    IntPtr result;
+                    User32.SendMessageTimeout(new IntPtr(User32.HWND_BROADCAST), (uint)User32.WindowsMessage.SettingChange, IntPtr.Zero, IntPtr.Zero, User32.SMTO_ABORTIFHUNG, 100, out result);
+                    User32.NotifySettingChanged("ImmersiveColorSet"); 
+                    User32.NotifySettingChanged("WindowsThemeElement");
 
                     wic.Undo();
                 }

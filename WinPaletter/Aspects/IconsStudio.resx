@@ -118,27 +118,6 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="pictureBox13.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAWdJREFUSEvt
-        kFFLwlAUx6/Vay9huIFQbroVOesj9AV87NNE4DeooMC78klzKiqFpdRLzz30UIRBqJvo7tzUPkAQJ7Zs
-        yFoPrb3lDw7n4Zz7+18OQjNm/AST6wmMRLpskRwigIBz/ifCpd4SIxGdLWoQLWkQqwzSvoZweRJki5pu
-        ycsD4Cpm6djXEKbQ52LlATHlfFWHtXMD1i8MafsWFpy7nuFLKs9XdW0ih43aEOJXw8K3EKExenLrK9n+
-        w2pOhUheBUYiYN98cpapn3/KL4cg1EcQPZPv0Q7M2wHmglv3Ik80xrB5PYZotvVoB5iP3LpX+dbNK8Rr
-        2psdEMmTF7fOSqTpRS7UjffI6XPSDvBMCuYoLGcoLAOV7kDouAXL+011MXXHOVd/jykXlQwtKkCbAVZ1
-        1OBR2wc5QojCyp4l/yosGyHcFpx7nqGxsjsVYIRwzz+5BUCAFuUDWlS64ZNOwjme8Y/4AB7CVtzbnE02
-        AAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="button27.ImageGlyph" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOBJREFUOE/N
-        0j1KQ1EQxfE00bgFFUkRXILYuQc7SyUYBSshexHNcsRCERFUSGlpY+FXxMJfmMdNeA4RtNI/THPOnHnv
-        3juNxr8D8+jjCo94wCl62MAwZ6ZgqQRfcFxCuzjBCPeQcxVo4Ro3WE7eOj4ijM+6NwWH5csrM7wYvomd
-        qOxX4AJHWc9gAWtZD+MZ21nPYCt6s/6bAV08ZT2Msx8eYRC9WQ/j4LtLnIA2XrGfvckCxTPeojPDX8Vd
-        2ZO57FfUFumttkhR8duxSJdYzLkvxHTslWd9L3VeBjVz/98zBusTIztk+9C3AAAAAElFTkSuQmCC
-</value>
-  </data>
   <data name="button13.ImageGlyph" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOBJREFUOE/N
@@ -193,24 +172,6 @@
         2ZO57FfUFumttkhR8duxSJdYzLkvxHTslWd9L3VeBjVz/98zBusTIztk+9C3AAAAAElFTkSuQmCC
 </value>
   </data>
-  <metadata name="dataGridViewTextBoxColumn3.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="dataGridViewTextBoxColumn4.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="dataGridViewImageColumn3.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="dataGridViewImageColumn4.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="dataGridViewTextBoxColumn5.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="dataGridViewLinkColumn2.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
   <metadata name="dataGridViewTextBoxColumn3.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -299,6 +260,27 @@
 </value>
   </data>
   <data name="button29.ImageGlyph" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOBJREFUOE/N
+        0j1KQ1EQxfE00bgFFUkRXILYuQc7SyUYBSshexHNcsRCERFUSGlpY+FXxMJfmMdNeA4RtNI/THPOnHnv
+        3juNxr8D8+jjCo94wCl62MAwZ6ZgqQRfcFxCuzjBCPeQcxVo4Ro3WE7eOj4ijM+6NwWH5csrM7wYvomd
+        qOxX4AJHWc9gAWtZD+MZ21nPYCt6s/6bAV08ZT2Msx8eYRC9WQ/j4LtLnIA2XrGfvckCxTPeojPDX8Vd
+        2ZO57FfUFumttkhR8duxSJdYzLkvxHTslWd9L3VeBjVz/98zBusTIztk+9C3AAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="pictureBox13.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAWdJREFUSEvt
+        kFFLwlAUx6/Vay9huIFQbroVOesj9AV87NNE4DeooMC78klzKiqFpdRLzz30UIRBqJvo7tzUPkAQJ7Zs
+        yFoPrb3lDw7n4Zz7+18OQjNm/AST6wmMRLpskRwigIBz/ifCpd4SIxGdLWoQLWkQqwzSvoZweRJki5pu
+        ycsD4Cpm6djXEKbQ52LlATHlfFWHtXMD1i8MafsWFpy7nuFLKs9XdW0ih43aEOJXw8K3EKExenLrK9n+
+        w2pOhUheBUYiYN98cpapn3/KL4cg1EcQPZPv0Q7M2wHmglv3Ik80xrB5PYZotvVoB5iP3LpX+dbNK8Rr
+        2psdEMmTF7fOSqTpRS7UjffI6XPSDvBMCuYoLGcoLAOV7kDouAXL+011MXXHOVd/jykXlQwtKkCbAVZ1
+        1OBR2wc5QojCyp4l/yosGyHcFpx7nqGxsjsVYIRwzz+5BUCAFuUDWlS64ZNOwjme8Y/4AB7CVtzbnE02
+        AAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="button27.ImageGlyph" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAOBJREFUOE/N
         0j1KQ1EQxfE00bgFFUkRXILYuQc7SyUYBSshexHNcsRCERFUSGlpY+FXxMJfmMdNeA4RtNI/THPOnHnv
@@ -409,24 +391,6 @@
   <metadata name="dataGridViewLinkColumn1.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="Column2.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="dataGridViewTextBoxColumn1.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="dataGridViewImageColumn1.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="dataGridViewImageColumn2.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="dataGridViewTextBoxColumn2.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="dataGridViewLinkColumn1.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
   <data name="button16.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABGdBTUEAALGPC/xhBQAAAhJJREFUOE+9
@@ -442,21 +406,6 @@
         QmCC
 </value>
   </data>
-  <metadata name="ID.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="StockIcon.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="SelectedImage.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="Path.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="Column1.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
   <metadata name="ID.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>

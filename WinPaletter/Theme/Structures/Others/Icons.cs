@@ -2,6 +2,7 @@
 using Serilog.Events;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -15,7 +16,7 @@ namespace WinPaletter.Theme.Structures
         /// <summary>
         /// List of Control Panel CLSIDs and their icons (used as helpers)
         /// </summary>
-        public static readonly List<Tuple<string, string, string>> ControlPanelCLSIDs =
+        public static List<Tuple<string, string, string>> ControlPanelCLSIDs { get; } =
         [
             Tuple.Create("{D20EA4E1-3957-11d2-A40B-0C5020524153}", "Administrative Tools", $"{SysPaths.imageres},-114"),
             Tuple.Create("{9C60DE1E-E5FC-40f4-A487-460851A8D915}", "AutoPlay", $"{SysPaths.System32}\\autoplay.dll,-1"),
@@ -63,7 +64,7 @@ namespace WinPaletter.Theme.Structures
         /// <summary>
         /// List of Desktop CLSIDs and their icons (used as helpers)
         /// </summary>
-        public static readonly List<Tuple<string, string, string>> DesktopCLSIDs =
+        public static List<Tuple<string, string, string>> DesktopCLSIDs { get; } =
         [
             Tuple.Create("{20D04FE0-3AEA-1069-A2D8-08002B30309D}", "Computer", $"{SysPaths.imageres},-109"),
             Tuple.Create("{5399E694-6CE5-4D6C-8FCE-1D8870FDCBA0}", "Control Panel", $"{SysPaths.imageres},-27"),
@@ -75,7 +76,7 @@ namespace WinPaletter.Theme.Structures
         /// <summary>
         /// List of Explorer CLSIDs and their icons (used as helpers)
         /// </summary>
-        public static readonly List<Tuple<string, string, string>> ExplorerCLSIDs =
+        public static List<Tuple<string, string, string>> ExplorerCLSIDs { get; } =
         [
             Tuple.Create("{B4BFCC3A-DB2C-424C-B029-7FE99A87C641}", "Desktop", $"{SysPaths.imageres},-183"),
             Tuple.Create("{D3162B92-9365-467A-956B-92703ACA08AF}", "Documents", $"{SysPaths.imageres},-112"),
@@ -88,98 +89,93 @@ namespace WinPaletter.Theme.Structures
         ];
 
         /// <summary>Controls if this feature is enabled or not</summary>
-        public bool Enabled = false;
+        public bool Enabled { get; set; } = false;
 
         /// <summary>
         /// List of Shell32 wrapper data: (value, data)
         /// <br><c>value</c> is the index of icon in real <c>shell32.dll</c> in your system</br>
         /// <br><c>data</c> is the deflected icon path. If File is a PE File <c>(*.exe,*.dll,...)</c>, you can specify index by '<c>File.dll,i</c>' without quotes where <c>i</c> is the index of icon insie this PE File.</br>
         /// </summary>
-        public Dictionary<string, string> Shell32Wrapper = [];
+        public Dictionary<string, string> Shell32Wrapper { get; set; } = [];
 
         /// <summary>
         /// List of Control Panel wrapper data: (value, data)
         /// <br><c>value</c> is the CLSID of Control Panel item</br>
         /// <br><c>data</c> is the deflected icon path. If File is a PE File <c>(*.exe,*.dll,...)</c>, you can specify index by '<c>File.dll,i</c>' without quotes where <c>i</c> is the index of icon insie this PE File.</br>
         /// </summary>
-        public Dictionary<string, string> ControlPanelWrapper = [];
+        public Dictionary<string, string> ControlPanelWrapper { get; set; } = [];
 
         /// <summary>
         /// List of Explorer icons wrapper data: (value, data)
         /// <br><c>value</c> is the CLSID of Explorer item</br>
         /// <br><c>data</c> is the deflected icon path. If File is a PE File <c>(*.exe,*.dll,...)</c>, you can specify index by '<c>File.dll,i</c>' without quotes where <c>i</c> is the index of icon insie this PE File.</br>
         /// </summary>
-        public Dictionary<string, string> ExplorerWrapper = [];
+        public Dictionary<string, string> ExplorerWrapper { get; set; } = [];
 
         /// <summary>
         /// FileSystem to Computer icon
         /// </summary>
-        public string Computer = DesktopCLSIDs.ElementAt(0).Item3;
+        public string Computer { get; set; } = DesktopCLSIDs.ElementAt(0).Item3;
 
         /// <summary>
         /// FileSystem to Control Panel icon
         /// </summary>
-        public string ControlPanel = DesktopCLSIDs.ElementAt(1).Item3;
+        public string ControlPanel { get; set; } = DesktopCLSIDs.ElementAt(1).Item3;
 
         /// <summary>
         /// FileSystem to Network icon
         /// </summary>
-        public string Network = DesktopCLSIDs.ElementAt(2).Item3;
+        public string Network { get; set; } = DesktopCLSIDs.ElementAt(2).Item3;
 
         /// <summary>
         /// FileSystem to User icon
         /// </summary>
-        public string User = DesktopCLSIDs.ElementAt(3).Item3;
+        public string User { get; set; } = DesktopCLSIDs.ElementAt(3).Item3;
 
         /// <summary>
         /// FileSystem to Recycle Bin empty icon
         /// </summary>
-        public string RecycleBinEmpty = DesktopCLSIDs.ElementAt(4).Item3.Split('|')[0];
+        public string RecycleBinEmpty { get; set; } = DesktopCLSIDs.ElementAt(4).Item3.Split('|')[0];
 
         /// <summary>
         /// FileSystem to Recycle Bin full icon
         /// </summary>
-        public string RecycleBinFull = DesktopCLSIDs.ElementAt(4).Item3.Split('|')[1];
+        public string RecycleBinFull { get; set; } = DesktopCLSIDs.ElementAt(4).Item3.Split('|')[1];
 
         /// <summary>
         /// Hide Computer icon in desktop
         /// </summary>
-        public bool Computer_HideInDesktop = true;
+        public bool Computer_HideInDesktop { get; set; } = true;
 
         /// <summary>
         /// Hide Control Panel icon in desktop
         /// </summary>
-        public bool ControlPanel_HideInDesktop = true;
+        public bool ControlPanel_HideInDesktop { get; set; } = true;
 
         /// <summary>
         /// Hide Network icon in desktop
         /// </summary>
-        public bool Network_HideInDesktop = true;
+        public bool Network_HideInDesktop { get; set; } = true;
 
         /// <summary>
         /// Hide User icon in desktop
         /// </summary>
-        public bool User_HideInDesktop = true;
+        public bool User_HideInDesktop { get; set; } = true;
 
         /// <summary>
         /// Hide Recycle Bin icon in desktop
         /// </summary>
-        public bool RecycleBin_HideInDesktop = false;
+        public bool RecycleBin_HideInDesktop { get; set; } = false;
 
         /// <summary>
         /// Icon used for system drive
         /// </summary>
-        public string SystemDriveIcon = string.Empty;
+        public string SystemDriveIcon { get; set; } = string.Empty;
 
         /// <summary>
-        /// Icon used for system drive
+        /// Icon used for CD\DVD drive
         /// </summary>
-        public string DVDIcon = string.Empty;
-
-        /// <summary>
-        /// Icon used for system drive
-        /// </summary>
-        public string CDIcon = string.Empty;
+        public string CDDVDIcon { get; set; } = string.Empty;
 
         /// <summary>
         /// Creates a new Icons structure with default values
@@ -244,6 +240,7 @@ namespace WinPaletter.Theme.Structures
             RecycleBin_HideInDesktop = ReadReg(@$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", DesktopCLSIDs.ElementAt(4).Item1, @default.RecycleBin_HideInDesktop);
 
             SystemDriveIcon = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Icons", "SystemDrive", @default.SystemDriveIcon);
+            CDDVDIcon = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\Icons", "CDDVDIcon", @default.CDDVDIcon);
         }
 
         /// <summary>
@@ -309,8 +306,7 @@ namespace WinPaletter.Theme.Structures
                 WriteReg(treeView, @$"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel", DesktopCLSIDs.ElementAt(4).Item1, RecycleBin_HideInDesktop);
 
                 WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Icons", "SystemDrive", SystemDriveIcon, RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Icons", "DVDIcon", DVDIcon, RegistryValueKind.String);
-                WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Icons", "CDIcon", CDIcon, RegistryValueKind.String);
+                WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Icons", "CDDVDIcon", CDDVDIcon, RegistryValueKind.String);
 
                 string sysDrive = Environment.GetFolderPath(Environment.SpecialFolder.System).Substring(0, 1);
 
@@ -321,6 +317,30 @@ namespace WinPaletter.Theme.Structures
                 else
                 {
                     DeleteKey($"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\DriveIcons\\{sysDrive}\\DefaultIcon");
+                }
+
+                // Apply an icon to every other detected drive letter based on its DriveType.
+                // Note: System.IO.DriveInfo cannot distinguish DVD-ROM from CD-ROM media - both report DriveType.CDRom. DVDIcon takes priority over CDIcon when both are set.
+                foreach (DriveInfo drive in DriveInfo.GetDrives())
+                {
+                    string driveLetter = drive.Name.Substring(0, 1);
+
+                    if (string.Equals(driveLetter, sysDrive, StringComparison.OrdinalIgnoreCase)) continue;
+
+                    string icon = drive.DriveType switch
+                    {
+                        DriveType.CDRom => CDDVDIcon,
+                        _ => string.Empty,
+                    };
+
+                    if (!string.IsNullOrWhiteSpace(icon))
+                    {
+                        WriteReg($"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\DriveIcons\\{driveLetter}\\DefaultIcon", string.Empty, icon, RegistryValueKind.String);
+                    }
+                    else
+                    {
+                        DeleteKey($"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\DriveIcons\\{driveLetter}\\DefaultIcon");
+                    }
                 }
             }
         }

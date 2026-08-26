@@ -31,6 +31,9 @@
                 public string ColorsEffects { get; set; } = "Colors effects";
                 public string SaveAs_MSTheme { get; set; } = "Save as *.theme file";
                 public string SaveAs_MSTheme_OneAspect { get; set; } = "Save this aspect only as *.theme file";
+                public string Preview_MyComputer { get; set; } = "My Computer";
+                public string Preview_Computer { get; set; } = "Computer";
+                public string Preview_ThisPC { get; set; } = "This PC";
             }
         }
     }

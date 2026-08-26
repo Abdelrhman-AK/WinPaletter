@@ -379,18 +379,19 @@ namespace WinPaletter.Theme.Structures
 
         private void BroadcastChanges()
         {
-            // UpdatePerUserSystemParameters must NOT run under impersonation — it triggers CThemeService to replay the active .theme file for the impersonated session, overwriting the registry values WinPaletter just wrote.
-            // It must run as the elevated process token so CThemeService reloads the current session's settings without triggering a .theme replay.
             Program.Log?.Write(LogEventLevel.Information, "Broadcasting system message to notify about the setting change (User32.UpdatePerUserSystemParameters(1, true)).");
             User32.UpdatePerUserSystemParameters(1, true);
 
-            // WM_SETTINGCHANGE and ImmersiveColorSet notifications however must be sent under impersonation so the target user's shell receives them, not just the elevated admin process's window station.
             using (WindowsImpersonationContext wic = User.Identity.Impersonate())
             {
-                Program.Log?.Write(LogEventLevel.Information, "Broadcasting system message to notify about the setting change (User32.SendMessage).");
-                User32.SendMessage(IntPtr.Zero, User32.WindowsMessage.SettingChange, IntPtr.Zero, IntPtr.Zero);
-                User32.NotifySettingChanged("ImmersiveColorSet");
-                User32.NotifySettingChanged("WindowsThemeElement");
+                Program.Log?.Write(LogEventLevel.Information, "Broadcasting system message to notify about the setting change (User32.SendMessageTimeout).");
+
+                IntPtr result;
+                User32.SendMessageTimeout(new IntPtr(User32.HWND_BROADCAST), (uint)User32.WindowsMessage.SettingChange, IntPtr.Zero, IntPtr.Zero, User32.SMTO_ABORTIFHUNG, 3000, out result);
+
+                User32.NotifySettingChangedTimeout("ImmersiveColorSet", 3000);
+                User32.NotifySettingChangedTimeout("WindowsThemeElement", 3000);
+                User32.NotifySettingChangedTimeout("TraySettings", 3000);
 
                 wic.Undo();
             }
