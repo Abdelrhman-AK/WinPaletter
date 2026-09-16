@@ -664,37 +664,54 @@ namespace WinPaletter.Theme.Structures
                     // Handle empty string
                     if (string.IsNullOrEmpty(hexColor)) return Color.Empty; // Return a default color.
 
+                    // Windows Terminal theme keywords ("terminalBackground", "accent") are resolved to real hex colors by ResolveThemeBackgroundKeywords() BEFORE deserialization runs
+                    // (see WinTerminal's JSONFile loading branch), using data from the same JSON document (schemes/profiles). This check is only a crash guard for paths that bypass that
+                    // pre-pass (e.g. Mode.WinPaletterFile, which copies fields via reflection instead of re-parsing JSON).
+                    if (hexColor.Equals("terminalBackground", StringComparison.OrdinalIgnoreCase) ||
+                        hexColor.Equals("accent", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return Color.Empty;
+                    }
+
                     // Remove unsupported characters
                     hexColor = Regex.Replace(hexColor, "[，、]", ",");
 
                     // Replace spaces with commas if exist as ColorTranslator.FromHtml does not support spaces
                     if (hexColor.Contains(" ") && !hexColor.Contains(",")) hexColor = hexColor.Replace(" ", ", ");
 
-                    // Check if the color is HEX or RGB/ARGB format
-                    if (!hexColor.Contains(","))
+                    try
                     {
-                        return ColorTranslator.FromHtml(hexColor);
-                    }
-                    else
-                    {
-                        string[] colors = hexColor.Split([','], StringSplitOptions.RemoveEmptyEntries);
-                        if (colors.Length == 3)
+                        // Check if the color is HEX or RGB/ARGB format
+                        if (!hexColor.Contains(","))
                         {
-                            return Color.FromArgb(Math.Min(255, Math.Max(0, int.Parse(colors[0].Trim()))),
-                                                  Math.Min(255, Math.Max(0, int.Parse(colors[1].Trim()))),
-                                                  Math.Min(255, Math.Max(0, int.Parse(colors[2].Trim()))));
-                        }
-                        else if (colors.Length == 4)
-                        {
-                            return Color.FromArgb(Math.Min(255, Math.Max(0, int.Parse(colors[0].Trim()))),
-                                                  Math.Min(255, Math.Max(0, int.Parse(colors[1].Trim()))),
-                                                  Math.Min(255, Math.Max(0, int.Parse(colors[2].Trim()))),
-                                                  Math.Min(255, Math.Max(0, int.Parse(colors[3].Trim()))));
+                            return ColorTranslator.FromHtml(hexColor);
                         }
                         else
                         {
-                            return Color.Empty;
+                            string[] colors = hexColor.Split([','], StringSplitOptions.RemoveEmptyEntries);
+                            if (colors.Length == 3)
+                            {
+                                return Color.FromArgb(Math.Min(255, Math.Max(0, int.Parse(colors[0].Trim()))),
+                                                      Math.Min(255, Math.Max(0, int.Parse(colors[1].Trim()))),
+                                                      Math.Min(255, Math.Max(0, int.Parse(colors[2].Trim()))));
+                            }
+                            else if (colors.Length == 4)
+                            {
+                                return Color.FromArgb(Math.Min(255, Math.Max(0, int.Parse(colors[0].Trim()))),
+                                                      Math.Min(255, Math.Max(0, int.Parse(colors[1].Trim()))),
+                                                      Math.Min(255, Math.Max(0, int.Parse(colors[2].Trim()))),
+                                                      Math.Min(255, Math.Max(0, int.Parse(colors[3].Trim()))));
+                            }
+                            else
+                            {
+                                return Color.Empty;
+                            }
                         }
+                    }
+                    catch
+                    {
+                        // Any unrecognized keyword or malformed value (current or future Windows Terminal schema additions) should never crash theme loading - just skip the override.
+                        return Color.Empty;
                     }
                 }
 
@@ -1186,32 +1203,8 @@ namespace WinPaletter.Theme.Structures
             return JToken.DeepEquals(value1, value2);
         }
 
-        private readonly List<Scheme> DefaultSchemes =
+        private static readonly List<Scheme> DefaultSchemes =
         [
-        new Scheme
-        {
-            Name = "CGA",
-            Background = Color.FromArgb(0, 0, 0),
-            Black = Color.FromArgb(0, 0, 0),
-            Blue = Color.FromArgb(0, 0, 170),
-            BrightBlack = Color.FromArgb(85, 85, 85),
-            BrightBlue = Color.FromArgb(85, 85, 255),
-            BrightCyan = Color.FromArgb(85, 255, 255),
-            BrightGreen = Color.FromArgb(85, 255, 85),
-            BrightPurple = Color.FromArgb(255, 85, 255),
-            BrightRed = Color.FromArgb(255, 85, 85),
-            BrightWhite = Color.FromArgb(255, 255, 255),
-            BrightYellow = Color.FromArgb(255, 255, 85),
-            CursorColor = Color.FromArgb(0, 170, 0),
-            Cyan = Color.FromArgb(0, 170, 170),
-            Foreground = Color.FromArgb(170, 170, 170),
-            Green = Color.FromArgb(0, 170, 0),
-            Purple = Color.FromArgb(170, 0, 170),
-            Red = Color.FromArgb(170, 0, 0),
-            SelectionBackground = Color.FromArgb(255, 255, 255),
-            White = Color.FromArgb(170, 170, 170),
-            Yellow = Color.FromArgb(170, 85, 0)
-        },
         new Scheme
         {
             Name = "Campbell",
@@ -1260,7 +1253,31 @@ namespace WinPaletter.Theme.Structures
             White = Color.FromArgb(204, 204, 204),
             Yellow = Color.FromArgb(196, 156, 0)
         },
-                new Scheme
+        new Scheme
+        {
+            Name = "CGA",
+            Background = Color.FromArgb(0, 0, 0),
+            Black = Color.FromArgb(0, 0, 0),
+            Blue = Color.FromArgb(0, 0, 170),
+            BrightBlack = Color.FromArgb(85, 85, 85),
+            BrightBlue = Color.FromArgb(85, 85, 255),
+            BrightCyan = Color.FromArgb(85, 255, 255),
+            BrightGreen = Color.FromArgb(85, 255, 85),
+            BrightPurple = Color.FromArgb(255, 85, 255),
+            BrightRed = Color.FromArgb(255, 85, 85),
+            BrightWhite = Color.FromArgb(255, 255, 255),
+            BrightYellow = Color.FromArgb(255, 255, 85),
+            CursorColor = Color.FromArgb(0, 170, 0),
+            Cyan = Color.FromArgb(0, 170, 170),
+            Foreground = Color.FromArgb(170, 170, 170),
+            Green = Color.FromArgb(0, 170, 0),
+            Purple = Color.FromArgb(170, 0, 170),
+            Red = Color.FromArgb(170, 0, 0),
+            SelectionBackground = Color.FromArgb(255, 255, 255),
+            White = Color.FromArgb(170, 170, 170),
+            Yellow = Color.FromArgb(170, 85, 0)
+        },
+        new Scheme
         {
             Name = "Dark+",
             Background = Color.FromArgb(30, 30, 30),
@@ -1542,8 +1559,8 @@ namespace WinPaletter.Theme.Structures
                 ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver()
             };
 
-            // Reusable serializer (no per-call allocations)
-            private static readonly JsonSerializer serializer = JsonSerializer.Create(cachedSettings);
+            // Reusable serializer (no per-call allocations). Made internal (was private) so DeserializeFast and the pre-parse keyword-resolution path can share the same instance.
+            internal static readonly JsonSerializer Serializer = JsonSerializer.Create(cachedSettings);
 
             // The optimized deserializer method
             public static T DeserializeFast<T>(string json)
@@ -1558,7 +1575,295 @@ namespace WinPaletter.Theme.Structures
                     SupportMultipleContent = false
                 };
 
-                return serializer.Deserialize<T>(reader);
+                return Serializer.Deserialize<T>(reader);
+            }
+
+            /// <summary>
+            /// Every JSON property name that WinTerminal's C# model deserializes as a <see cref="Color"/>
+            /// via <c>ColorConverter</c>. Kept in one place so the keyword-resolution walk below stays in
+            /// sync automatically if new Color-typed properties are added to the model later.
+            /// </summary>
+            private static readonly HashSet<string> ColorPropertyNames =
+                GetColorPropertyNames();
+
+            private static HashSet<string> GetColorPropertyNames()
+            {
+                var result = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+
+                // GetNestedTypes() is NOT recursive - it only returns types declared directly inside
+                // the given type. All of Profile/Scheme/TabSettings/TabRowSettings/etc. are nested one
+                // level deeper, inside WinTerminal.Types, not directly inside WinTerminal - so this must
+                // walk the whole nested-type tree, not just the immediate children.
+                foreach (Type type in GetAllNestedTypesRecursively(typeof(WinTerminal)))
+                {
+                    AddColorProperties(type, result);
+                }
+
+                // Also include WinTerminal itself, in case it ever gets a Color property directly.
+                AddColorProperties(typeof(WinTerminal), result);
+
+                return result;
+            }
+
+            private static IEnumerable<Type> GetAllNestedTypesRecursively(Type root)
+            {
+                foreach (Type nested in root.GetNestedTypes(BindingFlags.Public | BindingFlags.NonPublic))
+                {
+                    yield return nested;
+
+                    foreach (Type deeper in GetAllNestedTypesRecursively(nested))
+                    {
+                        yield return deeper;
+                    }
+                }
+            }
+
+            private static void AddColorProperties(
+                Type type,
+                HashSet<string> result)
+            {
+                foreach (PropertyInfo property in type.GetProperties(
+                    BindingFlags.Instance |
+                    BindingFlags.Static |
+                    BindingFlags.Public |
+                    BindingFlags.NonPublic))
+                {
+                    if (property.PropertyType != typeof(Color))
+                        continue;
+
+                    JsonPropertyAttribute attribute =
+                        property.GetCustomAttribute<JsonPropertyAttribute>();
+
+                    string jsonName = attribute?.PropertyName ?? property.Name;
+
+                    result.Add(jsonName);
+                }
+            }
+
+            /// <summary>
+            /// Resolves Windows Terminal's special color keywords ("terminalBackground", "accent") into
+            /// concrete hex colors, wherever a Color-typed property can hold one anywhere in the settings
+            /// JSON. Must run on the raw JObject BEFORE deserialization into WinTerminal: resolving from
+            /// "this" mid-deserialization is unreliable because Profiles/Schemes may not be populated yet,
+            /// depending on property order in the source file.
+            /// </summary>
+            public static void ResolveThemeBackgroundKeywords(JObject root)
+            {
+                // Resolve profile defaults first.
+                JObject defaults = root["profiles"]?["defaults"] as JObject;
+
+                string defaultSchemeName = GetSchemeNameForProfile(defaults, "Campbell");
+
+                // Resolve defaults themselves.
+                if (defaults != null)
+                {
+                    Walk(defaults, defaultSchemeName, root);
+                }
+
+                // Resolve every profile using its own scheme,
+                // falling back to profiles.defaults.
+                if (root["profiles"]?["list"] is JArray profiles)
+                {
+                    foreach (JObject profile in profiles.OfType<JObject>())
+                    {
+                        string profileSchemeName =
+                            GetSchemeNameForProfile(profile, defaultSchemeName);
+
+                        Walk(profile, profileSchemeName, root);
+                    }
+                }
+
+                // Resolve everything else.
+                foreach (JProperty property in root.Properties().ToList())
+                {
+                    if (property.Name.Equals("schemes", StringComparison.OrdinalIgnoreCase) ||
+                        property.Name.Equals("profiles", StringComparison.OrdinalIgnoreCase))
+                    {
+                        continue;
+                    }
+
+                    Walk(property.Value, defaultSchemeName, root);
+                }
+            }
+
+            /// <summary>
+            /// Recursively visits every node in the tree. "currentSchemeName" tracks which color scheme
+            /// applies to "terminalBackground" lookups at this point - it's re-derived whenever we enter a
+            /// profile object (each profile can reference its own scheme) and inherited by everything
+            /// nested under it (e.g. a theme has no profile of its own, so it keeps using the ambient
+            /// default-profile scheme passed in from the top level).
+            /// </summary>
+            private static void Walk(JToken node, string currentSchemeName, JObject root)
+            {
+                if (node is JObject obj)
+                {
+                    // If this object looks like a profile (carries its own colorScheme), colors nested
+                    // directly in it should resolve against its scheme, not the ambient one.
+                    if (obj["colorScheme"] != null)
+                    {
+                        currentSchemeName = GetSchemeNameForProfile(obj, currentSchemeName);
+                    }
+
+                    // Snapshot properties before iterating: ResolveColorKeyword can mutate/remove the property it's called on, which would invalidate a live enumerator over
+                    // obj.Properties() and throw InvalidOperationException mid-loop.
+                    foreach (JProperty property in obj.Properties().ToList())
+                    {
+                        if (ColorPropertyNames.Contains(property.Name) && obj[property.Name] is JValue { Type: JTokenType.String })
+                        {
+                            ResolveColorKeyword(obj, property.Name, root, currentSchemeName);
+                        }
+                        else
+                        {
+                            Walk(property.Value, currentSchemeName, root);
+                        }
+                    }
+                }
+                else if (node is JArray arr)
+                {
+                    foreach (JToken child in arr)
+                    {
+                        Walk(child, currentSchemeName, root);
+                    }
+                }
+            }
+
+            /// <summary>
+            /// Resolves a single property, if a recognized keyword string, into a real hex color in place.
+            /// "terminalBackground" resolves against schemeName's "background" entry; "accent" resolves
+            /// against the current system accent color. Anything else (an actual hex/rgb string) is left
+            /// untouched for ColorConverter to parse normally during deserialization.
+            /// </summary>
+            private static void ResolveColorKeyword(
+                JObject container,
+                string propertyName,
+                JObject root,
+                string schemeName)
+            {
+                if (container[propertyName] is not JValue value ||
+                    value.Type != JTokenType.String)
+                    return;
+
+                string colorValue = value.Value<string>();
+
+                if (string.IsNullOrWhiteSpace(colorValue))
+                    return;
+
+                if (colorValue.Equals(
+                        "terminalBackground",
+                        StringComparison.OrdinalIgnoreCase))
+                {
+                    string background = GetSchemeBackgroundHex(
+                        schemeName,
+                        root);
+
+                    if (!string.IsNullOrWhiteSpace(background))
+                    {
+                        container[propertyName] = background;
+                    }
+                    else
+                    {
+                        // Keep the property rather than deleting it.
+                        // The C# ColorConverter can then safely return Color.Empty.
+                    }
+                }
+                else if (colorValue.Equals(
+                             "accent",
+                             StringComparison.OrdinalIgnoreCase))
+                {
+                    Color accent = GetSystemAccentColor();
+
+                    container[propertyName] =
+                        ColorTranslator.ToHtml(accent);
+                }
+            }
+
+            /// <summary>
+            /// Gets the color scheme name that applies to a given profile: its own "colorScheme" if set,
+            /// else the fallback passed in (typically the "defaults" profile's resolved scheme), else
+            /// Windows Terminal's built-in default.
+            /// </summary>
+            private static string GetSchemeNameForProfile(JObject profile, string fallbackSchemeName)
+            {
+                return ExtractSchemeName(profile?["colorScheme"]) ?? fallbackSchemeName ?? "Campbell";
+            }
+
+            /// <summary>
+            /// "colorScheme" can be a plain string or a {"dark": "...", "light": "..."} object; either way
+            /// we want the name to look up in "schemes" (dark takes precedence, matching WinTerminal's
+            /// runtime default-theme behavior).
+            /// </summary>
+            private static string ExtractSchemeName(JToken colorSchemeToken)
+            {
+                return colorSchemeToken?.Type == JTokenType.Object
+                    ? colorSchemeToken["dark"]?.Value<string>() ?? colorSchemeToken["light"]?.Value<string>()
+                    : colorSchemeToken?.Value<string>();
+            }
+
+            /// <summary>
+            /// Looks up a scheme by name and returns its background hex string. Checks the file's own
+            /// "schemes" array first (by property name, from the SAME JObject being deserialized - that
+            /// data is already fully present in the raw JSON regardless of where other properties sit).
+            /// If the file doesn't define a matching scheme - common, since many settings.json files omit
+            /// "schemes" entirely and rely on Windows Terminal's compiled-in defaults - falls back to this
+            /// class's own DefaultSchemes list, which mirrors those built-ins. Returns null only if the
+            /// scheme name matches nothing in either source.
+            /// </summary>
+            private static string GetSchemeBackgroundHex(string schemeName, JObject root)
+            {
+                if (string.IsNullOrWhiteSpace(schemeName))
+                    return null;
+
+                JObject scheme = (root["schemes"] as JArray)?
+                    .Children<JObject>()
+                    .FirstOrDefault(s =>
+                        string.Equals(
+                            s["name"]?.Value<string>(),
+                            schemeName,
+                            StringComparison.OrdinalIgnoreCase));
+
+                string background = scheme?["background"]?.Value<string>();
+
+                if (!string.IsNullOrWhiteSpace(background))
+                {
+                    // Do not recursively resolve terminalBackground here. A scheme referring to itself would otherwise recurse forever.
+                    if (!background.Equals("terminalBackground", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return background;
+                    }
+                }
+
+                Scheme builtIn = DefaultSchemes.FirstOrDefault(
+                    s => string.Equals(
+                        s.Name,
+                        schemeName,
+                        StringComparison.OrdinalIgnoreCase));
+
+                return builtIn != null
+                    ? ColorTranslator.ToHtml(builtIn.Background)
+                    : null;
+            }
+
+            /// <summary>
+            /// Reads the current Windows accent color (DWM colorization color) from the registry.
+            /// </summary>
+            private static Color GetSystemAccentColor()
+            {
+                try
+                {
+                    using var key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\DWM");
+                    if (key?.GetValue("AccentColor") is int abgr)
+                    {
+                        // Stored as 0xAABBGGRR
+                        byte a = (byte)((abgr >> 24) & 0xFF);
+                        byte b = (byte)((abgr >> 16) & 0xFF);
+                        byte g = (byte)((abgr >> 8) & 0xFF);
+                        byte r = (byte)(abgr & 0xFF);
+                        return Color.FromArgb(a, r, g, b);
+                    }
+                }
+                catch { /* fall through to default */ }
+
+                return Color.FromArgb(0, 120, 215); // Windows default accent as last resort
             }
         }
 
@@ -1598,8 +1903,18 @@ namespace WinPaletter.Theme.Structures
                                 St.Close();
                             }
 
-                            if (!string.IsNullOrEmpty(JSON_String)) result = JsonHelper.DeserializeFast<WinTerminal>(JSON_String);
-                            else Program.Log?.Write(LogEventLevel.Information, $"Couldn't load Windows Terminal {(Version == Version.Stable ? "Stable" : "Preview")} settings from JSON file `{File}`.");
+                            if (!string.IsNullOrEmpty(JSON_String))
+                            {
+                                // Parse to a JObject first so theme keyword resolution can look up "profiles"/"schemes" data directly by name in the raw JSON, regardless
+                                // of where "themes" appears relative to them in the source file.
+                                JObject root = JObject.Parse(JSON_String);
+                                JsonHelper.ResolveThemeBackgroundKeywords(root);
+                                result = root.ToObject<WinTerminal>(JsonHelper.Serializer);
+                            }
+                            else
+                            {
+                                Program.Log?.Write(LogEventLevel.Information, $"Couldn't load Windows Terminal {(Version == Version.Stable ? "Stable" : "Preview")} settings from JSON file `{File}`.");
+                            }
 
                             Program.Log?.Write(LogEventLevel.Information, $"Windows Terminal {(Version == Version.Stable ? "Stable" : "Preview")} settings have been loaded from JSON file `{File}`.");
                         }
@@ -1713,9 +2028,9 @@ namespace WinPaletter.Theme.Structures
                                     {
                                         SettingsFile = SysPaths.TerminalPreviewJSON;
                                     }
-                                    else if (System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Stable_Path))
+                                    else if (System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Preview_Path))
                                     {
-                                        SettingsFile = Program.Settings.WindowsTerminals.Terminal_Stable_Path;
+                                        SettingsFile = Program.Settings.WindowsTerminals.Terminal_Preview_Path;
                                     }
                                     else
                                     {

@@ -11,6 +11,7 @@ using WinPaletter.Theme;
 using WinPaletter.Theme.Structures;
 using WinPaletter.UI.Controllers;
 using static WinPaletter.PreviewHelpers;
+using static WinPaletter.Theme.Structures.WinTerminal.Types;
 
 namespace WinPaletter
 {
@@ -21,6 +22,13 @@ namespace WinPaletter
         public WinTerminal _TerminalDefault;
         public WinTerminal.Version SaveState;
         public string CCat;
+
+        // Set to true while TerSchemes.SelectedIndex/SelectedItem is being changed PROGRAMMATICALLY to
+        // reflect a profile's existing scheme (from TerProfiles_SelectedIndexChanged). Prevents
+        // TerSchemes_SelectedIndexChanged from treating that display sync as a real user pick and writing
+        // it back into the profile's ColorScheme - which is what silently corrupted a profile's real scheme
+        // (or its "use Default" null) into whatever scheme the display-only fallback happened to land on.
+        private bool _suppressSchemeSelectionHandling;
 
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
         {
@@ -181,6 +189,9 @@ namespace WinPaletter
 
             Cursor = System.Windows.Forms.Cursors.WaitCursor;
 
+            _Terminal.Enabled = AspectEnabled;
+            _Terminal.SaveToggleState();
+
             if (AspectEnabled)
             {
                 if (Program.Settings.BackupTheme.Enabled && Program.Settings.BackupTheme.AutoBackupOnApplySingleAspect)
@@ -325,9 +336,11 @@ namespace WinPaletter
             Terminal1.PreviewVersion = Mode == WinTerminal.Version.Preview;
             Terminal2.PreviewVersion = Mode == WinTerminal.Version.Preview;
 
-            if (_Terminal.Theme != null)
+            string terminalTheme = _Terminal.Theme;
+
+            if (terminalTheme != null)
             {
-                if (_Terminal.Theme.ToLower() == "dark")
+                if (terminalTheme.Equals("dark", StringComparison.OrdinalIgnoreCase))
                 {
                     TerThemes.SelectedIndex = 1;
                     TerTitlebarActive.BackColor = default;
@@ -339,7 +352,7 @@ namespace WinPaletter
                     Terminal2.Light = false;
                 }
 
-                else if (_Terminal.Theme.ToLower() == "light")
+                if (terminalTheme.Equals("light", StringComparison.OrdinalIgnoreCase))
                 {
                     TerThemes.SelectedIndex = 2;
                     TerTitlebarActive.BackColor = default;
@@ -351,7 +364,7 @@ namespace WinPaletter
                     Terminal2.Light = true;
                 }
 
-                else if (_Terminal.Theme.ToLower() == "system")
+                if (terminalTheme.Equals("system", StringComparison.OrdinalIgnoreCase))
                 {
                     TerThemes.SelectedIndex = 3;
                     TerTitlebarActive.BackColor = default;
@@ -395,9 +408,9 @@ namespace WinPaletter
                     }
                 }
 
-                else if (TerThemes.Items.Contains(_Terminal.Theme))
+                else if (TerThemes.Items.Contains(terminalTheme))
                 {
-                    TerThemes.SelectedItem = _Terminal.Theme;
+                    TerThemes.SelectedItem = terminalTheme;
                     TerThemesContainer.Enabled = true;
 
                     WinTerminal.Types.Theme temp = _Terminal.Themes[TerThemes.SelectedIndex - 4];
@@ -408,6 +421,43 @@ namespace WinPaletter
                     TerMode.Checked = !(temp.Window.ApplicationTheme.ToLower() == "light");
                     Terminal1.Light = !(temp.Window.ApplicationTheme.ToLower() == "light");
                     Terminal2.Light = !(temp.Window.ApplicationTheme.ToLower() == "light");
+                }
+            }
+            else
+            {
+                switch (Program.WindowStyle)
+                {
+                    case WindowStyle.W12:
+                        {
+                            TerMode.Checked = !Program.TM.Windows12.AppMode_Light;
+                            Terminal1.Light = Program.TM.Windows12.AppMode_Light;
+                            Terminal2.Light = Program.TM.Windows12.AppMode_Light;
+                            break;
+                        }
+
+                    case WindowStyle.W11:
+                        {
+                            TerMode.Checked = !Program.TM.Windows11.AppMode_Light;
+                            Terminal1.Light = Program.TM.Windows11.AppMode_Light;
+                            Terminal2.Light = Program.TM.Windows11.AppMode_Light;
+                            break;
+                        }
+
+                    case WindowStyle.W10:
+                        {
+                            TerMode.Checked = !Program.TM.Windows10.AppMode_Light;
+                            Terminal1.Light = Program.TM.Windows10.AppMode_Light;
+                            Terminal2.Light = Program.TM.Windows10.AppMode_Light;
+                            break;
+                        }
+
+                    default:
+                        {
+                            TerMode.Checked = !Program.TM.Windows11.AppMode_Light;
+                            Terminal1.Light = Program.TM.Windows11.AppMode_Light;
+                            Terminal2.Light = Program.TM.Windows11.AppMode_Light;
+                            break;
+                        }
                 }
             }
 
@@ -461,22 +511,37 @@ namespace WinPaletter
             {
                 SetDefaultsToScheme(TerSchemes.SelectedItem.ToString());
 
-                WinTerminal.Types.Scheme temp = new();
+                Scheme temp = new();
 
                 if (TerSchemes.SelectedIndex == 0 && TerProfiles.SelectedIndex > 0)
                 {
-                    temp = _Terminal.Schemes.Where(s => s.Name.ToLower() == (_Terminal.Profiles.Defaults.ColorScheme.ToString() ?? string.Empty).ToLower()).FirstOrDefault() ?? _Terminal.Schemes.FirstOrDefault();
-                    _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].ColorScheme = null;
+                    temp = _Terminal.Schemes
+                        .FirstOrDefault(s => string.Equals(s.Name, _Terminal.Profiles.Defaults.ColorScheme?.ToString() ?? string.Empty, StringComparison.OrdinalIgnoreCase))
+                        ?? _Terminal.Schemes.FirstOrDefault();
+
+                    // Only clear the profile's ColorScheme when this was a genuine user pick of "(Default)" -
+                    // not when TerProfiles_SelectedIndexChanged set this index just to DISPLAY the profile's
+                    // existing (already-null) scheme while navigating.
+                    if (!_suppressSchemeSelectionHandling)
+                    {
+                        _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].ColorScheme = null;
+                    }
                 }
                 else if (TerSchemes.SelectedIndex > 0)
                 {
-                    if (TerProfiles.SelectedIndex == 0)
+                    // Same guard: don't persist a scheme that wasn't actually chosen by the user - this is
+                    // what previously corrupted a profile's scheme whenever the display-only "couldn't find a
+                    // match, falling back to index 1" branch in TerProfiles_SelectedIndexChanged fired.
+                    if (!_suppressSchemeSelectionHandling)
                     {
-                        _Terminal.Profiles.Defaults.ColorScheme = TerSchemes.SelectedItem.ToString();
-                    }
-                    else if (TerProfiles.SelectedIndex > 0)
-                    {
-                        _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].ColorScheme = TerSchemes.SelectedItem.ToString();
+                        if (TerProfiles.SelectedIndex == 0)
+                        {
+                            _Terminal.Profiles.Defaults.ColorScheme = TerSchemes.SelectedItem.ToString();
+                        }
+                        else if (TerProfiles.SelectedIndex > 0)
+                        {
+                            _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].ColorScheme = TerSchemes.SelectedItem.ToString();
+                        }
                     }
 
                     temp = _Terminal.Schemes[TerSchemes.SelectedIndex - 1];
@@ -514,20 +579,31 @@ namespace WinPaletter
             WinTerminal.Types.Profile profile = TerProfiles.SelectedIndex == 0 ? _Terminal.Profiles.Defaults : _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1];
 
             string schemeName = (profile.ColorScheme ?? string.Empty).ToString();
-            if (string.IsNullOrWhiteSpace(schemeName))
-            {
-                if (TerProfiles.SelectedIndex == 0 && TerSchemes.Items.Count > 1)
-                    TerSchemes.SelectedIndex = 1;
-                else
-                    TerSchemes.SelectedIndex = 0;
-            }
-            else if (TerSchemes.Items.Contains(schemeName)) TerSchemes.SelectedItem = schemeName;
-            else if (TerSchemes.Items.Count > 1) TerSchemes.SelectedIndex = 1; else TerSchemes.SelectedIndex = 0;
 
-            string themeName = (_Terminal.Theme ?? string.Empty).ToString();
-            if (string.IsNullOrWhiteSpace(themeName)) TerThemes.SelectedIndex = 0;
-            else if (TerThemes.Items.Contains(themeName)) TerThemes.SelectedItem = themeName;
-            else if (TerThemes.Items.Count > 1) TerThemes.SelectedIndex = 1; else TerThemes.SelectedIndex = 0;
+            _suppressSchemeSelectionHandling = true;
+            try
+            {
+                if (string.IsNullOrWhiteSpace(schemeName))
+                {
+                    TerSchemes.SelectedIndex = 0;
+                }
+                else if (TerSchemes.Items.Contains(schemeName))
+                {
+                    TerSchemes.SelectedItem = schemeName;
+                }
+                else if (TerSchemes.Items.Count > 1)
+                {
+                    TerSchemes.SelectedIndex = 1;
+                }
+                else
+                {
+                    TerSchemes.SelectedIndex = 0;
+                }
+            }
+            finally
+            {
+                _suppressSchemeSelectionHandling = false;
+            }
 
             TerBackImage.Text = profile.BackgroundImage;
             TerImageOpacity.Value = (int)(profile.BackgroundImageOpacity * 100f);
@@ -904,13 +980,23 @@ namespace WinPaletter
 
             if (TerProfiles.SelectedIndex == 0)
             {
+                string schemeName = _Terminal.Profiles.Defaults.ColorScheme?.ToString() ?? string.Empty;
+
                 scheme = _Terminal.Schemes
-                    .Where(s => s.Name.ToLower() == (_Terminal.Profiles.Defaults.ColorScheme.ToString() ?? string.Empty).ToLower()).FirstOrDefault();
+                    .FirstOrDefault(s => string.Equals(s.Name, schemeName, StringComparison.OrdinalIgnoreCase));
             }
             else if (TerProfiles.SelectedIndex > 0)
             {
+                Profile profile = _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1];
+
+                // A profile can omit "colorScheme" entirely (Profile.ColorScheme == null in that case), in which case Windows Terminal falls back to
+                // profiles.defaults' scheme - mirror that here instead of crashing on a null-reference when calling .ToString() on a null ColorScheme.
+                string schemeName = profile.ColorScheme?.ToString()
+                    ?? _Terminal.Profiles.Defaults.ColorScheme?.ToString()
+                    ?? string.Empty;
+
                 scheme = _Terminal.Schemes
-                    .Where(s => s.Name.ToLower() == _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].ColorScheme.ToString().ToLower()).FirstOrDefault();
+                    .FirstOrDefault(s => string.Equals(s.Name, schemeName, StringComparison.OrdinalIgnoreCase));
             }
 
             if (TerThemes.SelectedIndex > 3)
@@ -1088,7 +1174,9 @@ namespace WinPaletter
                 }
                 else if (TerProfiles.SelectedIndex > 0)
                 {
-                    temp = _Terminal.Schemes.Where(s => s.Name.ToLower() == (_Terminal.Profiles.Defaults.ColorScheme.ToString() ?? string.Empty).ToLower()).FirstOrDefault() ?? _Terminal.Schemes.FirstOrDefault();
+                    temp = _Terminal.Schemes
+                        .FirstOrDefault(s => string.Equals(s.Name, _Terminal.Profiles.Defaults.ColorScheme?.ToString() ?? string.Empty, StringComparison.OrdinalIgnoreCase))
+                        ?? _Terminal.Schemes.FirstOrDefault();
                 }
             }
             else if (TerSchemes.SelectedIndex > 0)
@@ -1958,12 +2046,12 @@ namespace WinPaletter
             if (TerProfiles.SelectedIndex == 0)
             {
                 scheme = _Terminal.Schemes
-                    .Where(s => s.Name.ToLower() == (_Terminal.Profiles.Defaults.ColorScheme.ToString() ?? string.Empty).ToLower()).FirstOrDefault();
+                    .FirstOrDefault(s => string.Equals(s.Name, _Terminal.Profiles.Defaults.ColorScheme?.ToString() ?? string.Empty, StringComparison.OrdinalIgnoreCase));
             }
             else if (TerProfiles.SelectedIndex > 0)
             {
-                scheme = _Terminal.Schemes
-                    .Where(s => s.Name.ToLower() == _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].ColorScheme.ToString().ToLower()).FirstOrDefault();
+                string schemeName = _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].ColorScheme?.ToString() ?? string.Empty;
+                scheme = _Terminal.Schemes.FirstOrDefault(s => string.Equals(s.Name, schemeName, StringComparison.OrdinalIgnoreCase));
             }
 
             if (TerThemes.SelectedIndex > 3)
