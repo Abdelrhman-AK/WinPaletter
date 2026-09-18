@@ -199,8 +199,17 @@ namespace WinPaletter
 
             RadioImage2.Image = WinLogos.WinXP;
 
-            pnl_preview1.BackgroundImage = Program.WallpaperMonitor.Get(Program.TM, Program.WindowStyle);
-            Classic_Preview1.BackgroundImage = pnl_preview1.BackgroundImage.Clone() as Bitmap;
+            Bitmap bg = Program.WallpaperMonitor.Get(Program.TM, Program.WindowStyle);
+            if (bg != null)
+            {
+                pnl_preview1.BackgroundImage = bg;
+                Classic_Preview1.BackgroundImage = bg.Clone() as Bitmap;
+            }
+            else
+            {
+                pnl_preview1.BackgroundImage = null;
+                Classic_Preview1.BackgroundImage = null;
+            }
 
             pnl_preview1.BackColor = Program.TM.Win32.Background;
             Classic_Preview1.BackColor = Program.TM.Win32.Background;
