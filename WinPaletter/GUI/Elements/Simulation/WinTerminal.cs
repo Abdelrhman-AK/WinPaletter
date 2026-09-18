@@ -8,10 +8,10 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinPaletter.Properties;
+using static WinPaletter.NativeMethods.Shell32;
 
 namespace WinPaletter.UI.Simulation
 {
-
     [Description("Simulated Windows Terminals")]
     [DefaultEvent("Click")]
     public class WinTerminal : Control
@@ -28,20 +28,16 @@ namespace WinPaletter.UI.Simulation
         {
             get
             {
-                // First check at control level
                 if (DesignMode)
                     return true;
 
-                // Check at license context level
                 if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
                     return true;
 
-                // Check through the site
                 ISite site = Site;
                 if (site != null && site.DesignMode)
                     return true;
 
-                // Check parent chain
                 Control parent = Parent;
                 while (parent != null)
                 {
@@ -59,6 +55,7 @@ namespace WinPaletter.UI.Simulation
         private static TextureBrush Noise;
         private Bitmap adaptedBack;
         private Bitmap adaptedBackBlurred;
+        private Bitmap titlebarBlurClone;
 
         static WinTerminal()
         {
@@ -70,7 +67,9 @@ namespace WinPaletter.UI.Simulation
             Noise?.Dispose();
             adaptedBack?.Dispose();
             adaptedBackBlurred?.Dispose();
+            titlebarBlurClone?.Dispose();
         }
+
         private bool tick = false;
         private Image img;
 
@@ -88,13 +87,29 @@ namespace WinPaletter.UI.Simulation
 
         #region Cached GDI Resources
 
-        // Cached fonts — created once, reused on every paint. The tab-icon font (_iconFont) is NOT cached because the original code
-        // recreates it on every paint based on OS detection, and its lifecycle is scoped to a single OnPaint call.
         private static Font _tabTitleFont = new("Segoe UI", 8f, FontStyle.Bold);
         private static Font _tabRegularFont = new("Segoe UI", 8f, FontStyle.Regular);
         private static Font _closeIconFont = new("Segoe MDL2 Assets", 6f, FontStyle.Regular);
         private static Font _iconFont_W11 = new("Segoe Fluent Icons", 12f);
         private static Font _iconFont_W10 = new("Segoe MDL2 Assets", 12f);
+        private static StringFormat _sf_tc = ContentAlignment.TopCenter.ToStringFormat();
+        private static StringFormat _sf_mc = ContentAlignment.MiddleCenter.ToStringFormat();
+        private static StringFormat _sf_ml = ContentAlignment.MiddleLeft.ToStringFormat();
+        private static readonly Pen _borderPen = new(Color.FromArgb(45, 45, 45));
+        private static readonly Color _transparent = Color.FromArgb(0, 0, 0, 0);
+
+        #endregion
+
+        #region Cached Layout & Colors
+
+        private Rectangle _rect, _rectTitlebar, _rectConsole;
+        private RectangleF _rectConsoleText0, _rectConsoleText1, _rectConsoleText2, _rectConsoleCursor;
+        private SizeF _s1X, _s2X, _s3X;
+        private string _s1, _s2, _s3, _anotherTab;
+        private bool _layoutDirty = true;
+
+        private Color _cachedTitlebar, _cachedTitlebarUnfocused, _cachedTabFocused, _cachedTabUnfocused;
+        private bool _colorsDirty = true;
 
         #endregion
 
@@ -153,6 +168,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _color_Titlebar)
                 {
                     _color_Titlebar = value;
+                    _colorsDirty = true;
                     Invalidate();
                 }
             }
@@ -167,6 +183,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _color_Titlebar_Unfocused)
                 {
                     _color_Titlebar_Unfocused = value;
+                    _colorsDirty = true;
                     Invalidate();
                 }
             }
@@ -181,6 +198,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _color_TabFocused)
                 {
                     _color_TabFocused = value;
+                    _colorsDirty = true;
                     Invalidate();
                 }
             }
@@ -195,6 +213,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _color_TabUnFocused)
                 {
                     _color_TabUnFocused = value;
+                    _colorsDirty = true;
                     Invalidate();
                 }
             }
@@ -209,6 +228,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _color_Background)
                 {
                     _color_Background = value;
+                    _colorsDirty = true;
                     Invalidate();
                 }
             }
@@ -293,6 +313,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _light)
                 {
                     _light = value;
+                    _colorsDirty = true;
                     Invalidate();
                 }
             }
@@ -363,6 +384,7 @@ namespace WinPaletter.UI.Simulation
                 if (value != _previewVersion)
                 {
                     _previewVersion = value;
+                    _colorsDirty = true;
                     Invalidate();
                 }
             }
@@ -397,7 +419,6 @@ namespace WinPaletter.UI.Simulation
             }
         }
 
-
         private Image _tabIcon = null;
         public Image TabIcon
         {
@@ -411,7 +432,6 @@ namespace WinPaletter.UI.Simulation
                 }
             }
         }
-
 
         #endregion
 
@@ -442,6 +462,9 @@ namespace WinPaletter.UI.Simulation
 
         protected override void OnSizeChanged(EventArgs e)
         {
+            _layoutDirty = true;
+            titlebarBlurClone?.Dispose();
+            titlebarBlurClone = null;
             ProcessBack();
 
             base.OnSizeChanged(e);
@@ -449,6 +472,7 @@ namespace WinPaletter.UI.Simulation
 
         protected override async void OnFontChanged(EventArgs e)
         {
+            _layoutDirty = true;
             await Task.Delay(10);
             Invalidate();
 
@@ -485,6 +509,7 @@ namespace WinPaletter.UI.Simulation
                 img?.Dispose();
                 adaptedBack?.Dispose();
                 adaptedBackBlurred?.Dispose();
+                titlebarBlurClone?.Dispose();
             }
 
             base.Dispose(disposing);
@@ -582,11 +607,88 @@ namespace WinPaletter.UI.Simulation
             adaptedBackBlurred?.Dispose();
             adaptedBackBlurred = null;
             adaptedBackBlurred = adaptedBack?.Blur(13);
+
+            titlebarBlurClone?.Dispose();
+            titlebarBlurClone = null;
+
+            if (adaptedBackBlurred != null && Width > 0 && Height > 0)
+            {
+                Rectangle tb = new(0, 0, Width - 1, 41);
+                if (tb.Width > 0 && tb.Height > 0)  titlebarBlurClone = adaptedBackBlurred.Clone(tb, PixelFormat.Format32bppArgb);
+            }
         }
 
         private void NoiseBack()
         {
             using (Bitmap b = Resources.Noise.Fade(0.5f)) { Noise = new(b); }
+        }
+
+        private void RebuildLayout()
+        {
+            _rect = new Rectangle(0, 0, Width - 1, Height - 1);
+            _rectTitlebar = new Rectangle(0, 0, Width - 1, 41);
+            _rectConsole = new Rectangle(1, _rectTitlebar.Bottom - 1, Width - 3, Height - _rectTitlebar.Bottom);
+
+            _s1 = Program.Localization.Strings.Aspects.Terminals.ConsoleSample;
+            _s2 = Program.Localization.Strings.Aspects.Terminals.ThisIsASelection;
+            _s3 = $"{SysPaths.System32}>";
+            _anotherTab = Program.Localization.Strings.Aspects.Terminals.Another;
+
+            _s1X = _s1.Measure(Font) + new SizeF(5f, 0f);
+            _s2X = _s2.Measure(Font) + new SizeF(5f, 0f);
+            _s3X = _s3.Measure(Font) + new SizeF(2f, 0f);
+
+            _rectConsoleText0 = new RectangleF(8, _rectTitlebar.Bottom + 8, _s1X.Width, _s1X.Height);
+            _rectConsoleText1 = new RectangleF(8, _rectConsoleText0.Bottom + 3, _s2X.Width, _s2X.Height);
+            _rectConsoleText2 = new RectangleF(8, _rectConsoleText1.Bottom + _rectConsoleText1.Height + 3, _s3X.Width, _s3X.Height);
+            _rectConsoleCursor = new RectangleF(_rectConsoleText2.Right, _rectConsoleText2.Y - 2, 50, _rectConsoleText2.Height - 1);
+
+            _layoutDirty = false;
+        }
+
+        private void RebuildColors()
+        {
+            if (PreviewVersion)
+            {
+                if (!Light)
+                {
+                    _cachedTitlebar = _color_Titlebar == _transparent ? Color.FromArgb(46, 46, 46) : _color_Titlebar;
+                    _cachedTabFocused = _color_TabFocused == _transparent ? _color_Background : _color_TabFocused;
+
+                    _cachedTabUnfocused = _color_TabUnFocused == _transparent
+                        ? (_cachedTabFocused == _color_Background ? _cachedTitlebar : _cachedTabFocused.Dark())
+                        : _color_TabUnFocused;
+
+                    _cachedTitlebarUnfocused = _color_Titlebar_Unfocused == _transparent ? Color.FromArgb(46, 46, 46) : _color_Titlebar_Unfocused;
+                }
+                else
+                {
+                    _cachedTitlebar = _color_Titlebar == _transparent ? Color.FromArgb(232, 232, 232) : _color_Titlebar;
+                    _cachedTabFocused = _color_TabFocused == _transparent ? _color_Background : _color_TabFocused;
+
+                    _cachedTabUnfocused = _color_TabUnFocused == _transparent
+                        ? (_cachedTabFocused == _color_Background ? _cachedTitlebar : _cachedTabFocused.Light())
+                        : _color_TabUnFocused;
+
+                    _cachedTitlebarUnfocused = _color_Titlebar_Unfocused == _transparent ? Color.FromArgb(255, 255, 255) : _color_Titlebar_Unfocused;
+                }
+            }
+            else if (!Light)
+            {
+                _cachedTitlebar = Color.FromArgb(10, 10, 10);
+                _cachedTitlebarUnfocused = Color.FromArgb(10, 10, 10);
+                _cachedTabFocused = Color.FromArgb(40, 40, 40);
+                _cachedTabUnfocused = _cachedTitlebar;
+            }
+            else
+            {
+                _cachedTitlebar = Color.FromArgb(218, 218, 218);
+                _cachedTitlebarUnfocused = Color.FromArgb(218, 218, 218);
+                _cachedTabFocused = Color.FromArgb(249, 249, 249);
+                _cachedTabUnfocused = _cachedTitlebar;
+            }
+
+            _colorsDirty = false;
         }
 
         #endregion
@@ -606,183 +708,88 @@ namespace WinPaletter.UI.Simulation
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
 
-            if (PreviewVersion)
-            {
-                if (!Light)
-                {
-                    if (Color_Titlebar == Color.FromArgb(0, 0, 0, 0))  Color_Titlebar = Color.FromArgb(46, 46, 46);
-                    if (Color_TabFocused == Color.FromArgb(0, 0, 0, 0)) Color_TabFocused = Color_Background;
+            if (_colorsDirty) RebuildColors();
+            if (_layoutDirty) RebuildLayout();
 
-                    if (Color_TabUnFocused == Color.FromArgb(0, 0, 0, 0))
-                    {
-                        if (Color_TabFocused == Color_Background) Color_TabUnFocused = Color_Titlebar;
-                        else Color_TabUnFocused = Color_TabFocused.Dark();
-                    }
-
-                    if (Color_Titlebar_Unfocused == Color.FromArgb(0, 0, 0, 0)) Color_Titlebar_Unfocused = Color.FromArgb(46, 46, 46);
-                }
-                else
-                {
-                    if (Color_Titlebar == Color.FromArgb(0, 0, 0, 0)) Color_Titlebar = Color.FromArgb(232, 232, 232);
-                    if (Color_TabFocused == Color.FromArgb(0, 0, 0, 0)) Color_TabFocused = Color_Background;
-
-                    if (Color_TabUnFocused == Color.FromArgb(0, 0, 0, 0))
-                    {
-                        if (Color_TabFocused == Color_Background) Color_TabUnFocused = Color_Titlebar;
-                        else Color_TabUnFocused = Color_TabFocused.Light();
-                    }
-
-                    if (Color_Titlebar_Unfocused == Color.FromArgb(0, 0, 0, 0)) Color_Titlebar_Unfocused = Color.FromArgb(255, 255, 255);
-                }
-            }
-            else if (!Light)
-            {
-                Color_Titlebar = Color.FromArgb(10, 10, 10);
-                Color_Titlebar_Unfocused = Color.FromArgb(10, 10, 10);
-                Color_TabFocused = Color.FromArgb(40, 40, 40);
-                Color_TabUnFocused = Color_Titlebar;
-            }
-            else
-            {
-                Color_Titlebar = Color.FromArgb(218, 218, 218);
-                Color_Titlebar_Unfocused = Color.FromArgb(218, 218, 218);
-                Color_TabFocused = Color.FromArgb(249, 249, 249);
-                Color_TabUnFocused = Color_Titlebar;
-            }
-
-            Rectangle Rect = new(0, 0, Width - 1, Height - 1);
-            Rectangle Rect_Titlebar = new(0, 0, Width - 1, 32);
-            Rectangle Rect_Console = new(1, Rect_Titlebar.Bottom - 1, Width - 3, Height - Rect_Titlebar.Height);
-
-            string s1 = Program.Localization.Strings.Aspects.Terminals.ConsoleSample;
-            string s2 = Program.Localization.Strings.Aspects.Terminals.ThisIsASelection;
-            string s3 = $"{SysPaths.System32}>";
-
-            SizeF s1X = s1.Measure(Font) + new SizeF(5f, 0f);
-            SizeF s2X = s2.Measure(Font) + new SizeF(5f, 0f);
-            SizeF s3X = s3.Measure(Font) + new SizeF(2f, 0f);
-            RectangleF Rect_ConsoleText0 = new(8, Rect_Titlebar.Bottom + 8, s1X.Width, s1X.Height);
-            RectangleF Rect_ConsoleText1 = new(8, Rect_ConsoleText0.Bottom + 3, s2X.Width, s2X.Height);
-            RectangleF Rect_ConsoleText2 = new(8, Rect_ConsoleText1.Bottom + Rect_ConsoleText1.Height + 3, s3X.Width, s3X.Height);
-            RectangleF Rect_ConsoleCursor = new(Rect_ConsoleText2.Right, Rect_ConsoleText2.Y - 2, 50, Rect_ConsoleText2.Height - 1);
-
+            // Background
             if (UseAcrylic)
             {
-                if (adaptedBackBlurred != null) G.DrawRoundImage(adaptedBackBlurred, Rect);
-                G.FillRoundedRect(Noise, Rect);
-                using (SolidBrush br = new(Color.FromArgb((int)(_Opacity / 100f * 255f), Color_Background)))
-                {
-                    G.FillRoundedRect(br, Rect);
-                }
-                if (BackImage is not null) G.DrawRoundImage(img, Rect);
+                if (adaptedBackBlurred != null) G.DrawRoundImage(adaptedBackBlurred, _rect);
+                G.FillRoundedRect(Noise, _rect);
+                using (SolidBrush br = new(Color.FromArgb((int)(_Opacity / 100f * 255f), Color_Background))) G.FillRoundedRect(br, _rect);
+                if (BackImage is not null) G.DrawRoundImage(img, _rect);
             }
             else
             {
-                if (adaptedBack != null) G.DrawRoundImage(adaptedBack, Rect);
-                using (SolidBrush br = new(Color.FromArgb((int)(_Opacity / 100f * 255f), Color_Background)))
-                {
-                    G.FillRoundedRect(br, Rect);
-                }
-                if (BackImage is not null) G.DrawRoundImage(img, Rect);
+                if (adaptedBack != null) G.DrawRoundImage(adaptedBack, _rect);
+                using (SolidBrush br = new(Color.FromArgb((int)(_Opacity / 100f * 255f), Color_Background))) G.FillRoundedRect(br, _rect);
+                if (BackImage is not null) G.DrawRoundImage(img, _rect);
             }
 
+            // Titlebar
             if (UseAcrylicOnTitlebar & !DesignMode)
             {
                 if (Program.Style.RoundedCorners)
                 {
-                    if (adaptedBackBlurred != null)
-                    {
-                        using (Bitmap clone = adaptedBackBlurred.Clone(Rect_Titlebar, PixelFormat.Format32bppArgb)) FillSemiImg(G, clone, Rect_Titlebar);
-                    }
-                    FillSemiRect(G, Noise, Rect_Titlebar);
+                    if (titlebarBlurClone != null) FillSemiImg(G, titlebarBlurClone, _rectTitlebar);
+                    FillSemiRect(G, Noise, _rectTitlebar);
                 }
                 else
                 {
-                    if (adaptedBackBlurred != null)
-                    {
-                        using (Bitmap clone = adaptedBackBlurred.Clone(Rect_Titlebar, PixelFormat.Format32bppArgb)) G.DrawImage(clone, Rect_Titlebar);
-                    }
-                    G.FillRectangle(Noise, Rect_Titlebar);
+                    if (titlebarBlurClone != null) G.DrawImage(titlebarBlurClone, _rectTitlebar);
+                    G.FillRectangle(Noise, _rectTitlebar);
                 }
 
                 if (!Light)
                 {
-                    if (Program.Style.RoundedCorners)
+                    using (SolidBrush br = new(Color.FromArgb(IsFocused ? 100 : 255, 35, 35, 35)))
                     {
-                        using (SolidBrush br = new(Color.FromArgb(IsFocused ? 100 : 255, 35, 35, 35)))
-                        {
-                            FillSemiRect(G, br, Rect_Titlebar);
-                        }
-                    }
-                    else
-                    {
-                        using (SolidBrush br = new(Color.FromArgb(IsFocused ? 100 : 255, 35, 35, 35)))
-                        {
-                            G.FillRectangle(br, Rect_Titlebar);
-                        }
-                    }
-                }
-                else if (Program.Style.RoundedCorners)
-                {
-                    using (SolidBrush br = new(Color.FromArgb(IsFocused ? 180 : 255, 232, 232, 232)))
-                    {
-                        FillSemiRect(G, br, Rect_Titlebar);
+                        if (Program.Style.RoundedCorners) FillSemiRect(G, br, _rectTitlebar);
+                        else G.FillRectangle(br, _rectTitlebar);
                     }
                 }
                 else
                 {
                     using (SolidBrush br = new(Color.FromArgb(IsFocused ? 180 : 255, 232, 232, 232)))
                     {
-                        G.FillRectangle(br, Rect_Titlebar);
+                        if (Program.Style.RoundedCorners) FillSemiRect(G, br, _rectTitlebar);
+                        else G.FillRectangle(br, _rectTitlebar);
                     }
                 }
-
             }
 
             if (!UseAcrylicOnTitlebar)
             {
-                if (Program.Style.RoundedCorners)
+                using (SolidBrush br = new(IsFocused ? _cachedTitlebar : _cachedTitlebarUnfocused))
                 {
-                    using (SolidBrush br = new(IsFocused ? Color_Titlebar : Color_Titlebar_Unfocused))
-                    {
-                        FillSemiRect(G, br, Rect_Titlebar);
-                    }
-                }
-                else
-                {
-                    using (SolidBrush br = new(IsFocused ? Color_Titlebar : Color_Titlebar_Unfocused))
-                    {
-                        G.FillRectangle(br, Rect_Titlebar);
-                    }
+                    if (Program.Style.RoundedCorners) FillSemiRect(G, br, _rectTitlebar);
+                    else G.FillRectangle(br, _rectTitlebar);
                 }
             }
 
-            Color TabFocusedFinalColor;
-
-            if (TabColor != Color.FromArgb(0, 0, 0, 0) && TabColor != Color.Empty)
-            {
-                TabFocusedFinalColor = TabColor;
-            }
-            else
-            {
-                TabFocusedFinalColor = Color_TabFocused;
-            }
+            // Tabs
+            Color TabFocusedFinalColor = (TabColor != _transparent && TabColor != Color.Empty) ? TabColor : _cachedTabFocused;
 
             int Radius = 5;
-            int TabHeight = 22;
-            Rectangle Rect_Tab0 = new(10, Rect_Titlebar.Bottom - TabHeight, 150, TabHeight);
+            int tabTopPadding = 9;
+            int TabHeight = _rectTitlebar.Height - tabTopPadding;
+            int iconSize = 16;
+
+            Rectangle Rect_Tab0 = new(10, _rectTitlebar.Bottom - TabHeight, 220, TabHeight);
             Rectangle Rect_Tab1 = Rect_Tab0;
             Rect_Tab1.X = Rect_Tab0.X + Rect_Tab0.Width - Radius;
 
-            Rectangle IconRect0 = new(Rect_Tab0.X + 10, Rect_Tab0.Y + 3, 16, 16);
-            Color FC0 = TabFocusedFinalColor.IsDark() ? Color.White : Color.Black;
-            Rectangle RectText_Tab0 = new(IconRect0.Right + 1, IconRect0.Y + 1, Rect_Tab0.Width - 35 - IconRect0.Width, IconRect0.Height);
-            Rectangle RectClose_Tab0 = new(RectText_Tab0.Right + 2, RectText_Tab0.Y - 1, 15, RectText_Tab0.Height);
+            Rectangle IconRect0 = new(Rect_Tab0.X + iconSize, Rect_Tab0.Y + (Rect_Tab0.Height - iconSize) / 2, iconSize, iconSize);
+            int iconPadding = IconRect0.Left - Rect_Tab0.X;
 
-            Rectangle IconRect1 = new(Rect_Tab1.X + 10, Rect_Tab1.Y + 3, 16, 16);
-            Color FC1 = Color_TabUnFocused.IsDark() ? Color.White : Color.Black;
-            Rectangle RectText_Tab1 = new(IconRect1.Right + 1, IconRect1.Y + 1, Rect_Tab1.Width - 35 - IconRect1.Width, IconRect1.Height);
-            Rectangle RectClose_Tab1 = new(RectText_Tab1.Right + 2, RectText_Tab1.Y - 1, 15, RectText_Tab1.Height);
+            Color FC0 = TabFocusedFinalColor.IsDark() ? Color.White : Color.Black;
+            Rectangle RectClose_Tab0 = new(Rect_Tab0.Right - iconPadding - iconSize + 2, IconRect0.Y, iconSize, iconSize);
+            Rectangle RectText_Tab0 = new(IconRect0.Right + iconPadding / 2, IconRect0.Y + 1, RectClose_Tab0.Left - iconPadding / 2 - (IconRect0.Right + iconPadding / 2), IconRect0.Height);
+
+            Rectangle IconRect1 = new(Rect_Tab1.X + iconPadding, Rect_Tab1.Y + (Rect_Tab1.Height - iconSize) / 2, iconSize, iconSize);
+            Color FC1 = _cachedTabUnfocused.IsDark() ? Color.White : Color.Black;
+            Rectangle RectClose_Tab1 = new(Rect_Tab1.Right - iconPadding - iconSize + 2, IconRect1.Y, iconSize, iconSize);
+            Rectangle RectText_Tab1 = new(IconRect1.Right + iconPadding / 2, IconRect1.Y + 1, RectClose_Tab1.Left - iconPadding / 2 - (IconRect1.Right + iconPadding / 2), IconRect1.Height);
 
             if (IsFocused)
             {
@@ -801,20 +808,16 @@ namespace WinPaletter.UI.Simulation
                 {
                     if (!UseAcrylicOnTitlebar)
                     {
-                        using (SolidBrush br = new(Color_TabUnFocused))
-                        {
-                            G.FillPath(br, path);
-                        }
+                        using (SolidBrush br = new(_cachedTabUnfocused)) G.FillPath(br, path);
                     }
-                    else if (Color_TabUnFocused != Color_Titlebar)
+                    else if (_cachedTabUnfocused != _cachedTitlebar)
                     {
-                        using (SolidBrush br = new(Color_TabUnFocused))
-                        {
-                            G.FillPath(br, path);
-                        }
+                        using (SolidBrush br = new(_cachedTabUnfocused)) G.FillPath(br, path);
                     }
                 }
             }
+
+            Font iconFont = (OS.W12 || OS.W11) ? _iconFont_W11 : _iconFont_W10;
 
             if (TabIcon is not null)
             {
@@ -822,126 +825,72 @@ namespace WinPaletter.UI.Simulation
             }
             else
             {
-                using (StringFormat sf = ContentAlignment.TopCenter.ToStringFormat())
-                {
-                    using (SolidBrush br = new(FC0))
-                    {
-                        G.DrawString(_tabIconButItIsString, OS.W12 || OS.W11 ? _iconFont_W11 : _iconFont_W10, br, IconRect0, sf);
-                    }
-                }
+                using (SolidBrush br = new(FC0))  G.DrawString(_tabIconButItIsString, iconFont, br, IconRect0, _sf_tc);
             }
 
-            using (StringFormat sf = ContentAlignment.TopCenter.ToStringFormat())
-            {
-                using (SolidBrush br = new(FC1))
-                {
-                    G.DrawString(_tabIconButItIsString_Default, OS.W12 || OS.W11 ? _iconFont_W11 : _iconFont_W10, br, IconRect1, sf);
-                }
-            }
+            using (SolidBrush br = new(FC1)) G.DrawString(_tabIconButItIsString_Default, iconFont, br, IconRect1, _sf_tc);
 
             TextRenderer.DrawText(G, TabTitle, _tabTitleFont, RectText_Tab0, FC0, Color.Transparent, TextFormatFlags.WordEllipsis);
-            TextRenderer.DrawText(G, Program.Localization.Strings.Aspects.Terminals.Another, _tabRegularFont, RectText_Tab1, FC1, Color.Transparent, TextFormatFlags.WordEllipsis);
+            TextRenderer.DrawText(G, _anotherTab, _tabRegularFont, RectText_Tab1, FC1, Color.Transparent, TextFormatFlags.WordEllipsis);
 
-            using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
-            {
-                using (SolidBrush br = new(FC0))
-                {
-                    G.DrawString("", _closeIconFont, br, RectClose_Tab0, sf);
-                }
-                using (SolidBrush br = new(FC1))
-                {
-                    G.DrawString("", _closeIconFont, br, RectClose_Tab1, sf);
-                }
-            }
+            using (SolidBrush br = new(FC0))  G.DrawString("", _closeIconFont, br, RectClose_Tab0, _sf_mc);
+            using (SolidBrush br = new(FC1))  G.DrawString("", _closeIconFont, br, RectClose_Tab1, _sf_mc);
 
-            using (StringFormat sf = ContentAlignment.MiddleLeft.ToStringFormat())
-            {
-                using (SolidBrush br = new(Color_Foreground))
-                {
-                    G.DrawString(s1, Font, br, Rect_ConsoleText0, sf);
-                }
+            using (SolidBrush br = new(Color_Foreground)) G.DrawString(_s1, Font, br, _rectConsoleText0, _sf_ml);
 
-                using (SolidBrush br = new(Color.FromArgb(125, Color_Selection)))
-                {
-                    G.FillRectangle(br, Rect_ConsoleText1);
-                }
+            using (SolidBrush br = new(Color.FromArgb(125, Color_Selection))) G.FillRectangle(br, _rectConsoleText1);
 
-                using (SolidBrush br = new(Color.FromArgb(255 - 125, Color_Foreground)))
-                {
-                    G.DrawString(s2, Font, br, Rect_ConsoleText1, sf);
-                }
+            using (SolidBrush br = new(Color.FromArgb(255 - 125, Color_Foreground))) G.DrawString(_s2, Font, br, _rectConsoleText1, _sf_ml);
 
-                using (SolidBrush br = new(Color_Foreground))
-                {
-                    G.DrawString(s3, Font, br, Rect_ConsoleText2, sf);
-                }
-            }
+            using (SolidBrush br = new(Color_Foreground)) G.DrawString(_s3, Font, br, _rectConsoleText2, _sf_ml);
+
+            // Cursor tick
             if (tick & IsFocused)
             {
+                GraphicsState state = G.Save();
+                G.SetClip(_rectConsoleCursor, CombineMode.Intersect);
                 G.SmoothingMode = SmoothingMode.HighSpeed;
 
                 using (SolidBrush br = new(Color_Cursor))
                 {
-
                     switch (CursorType)
                     {
                         case CursorShape_Enum.bar:
-                            {
-                                G.FillRectangle(br, new RectangleF(Rect_ConsoleCursor.X, Rect_ConsoleCursor.Y, 1, Rect_ConsoleCursor.Height));
-                                break;
-                            }
+                            G.FillRectangle(br, new RectangleF(_rectConsoleCursor.X, _rectConsoleCursor.Y, 1, _rectConsoleCursor.Height));
+                            break;
 
                         case CursorShape_Enum.doubleUnderscore:
-                            {
-                                G.FillRectangle(br, new RectangleF(Rect_ConsoleCursor.X, Rect_ConsoleCursor.Bottom, Rect_ConsoleCursor.Height * 0.5f, 1));
-                                G.FillRectangle(br, new RectangleF(Rect_ConsoleCursor.X, Rect_ConsoleCursor.Bottom - 3, Rect_ConsoleCursor.Height * 0.5f, 1));
-                                break;
-                            }
+                            G.FillRectangle(br, new RectangleF(_rectConsoleCursor.X, _rectConsoleCursor.Bottom, _rectConsoleCursor.Height * 0.5f, 1));
+                            G.FillRectangle(br, new RectangleF(_rectConsoleCursor.X, _rectConsoleCursor.Bottom - 3, _rectConsoleCursor.Height * 0.5f, 1));
+                            break;
 
                         case CursorShape_Enum.emptyBox:
-                            {
-                                using (Pen p = new(Color_Cursor))
-                                {
-                                    G.DrawRectangle(p, Rect_ConsoleCursor.X, Rect_ConsoleCursor.Y, Rect_ConsoleCursor.Height * 0.5f, Rect_ConsoleCursor.Height);
-                                }
-
-                                break;
-                            }
+                            using (Pen p = new(Color_Cursor))
+                                G.DrawRectangle(p, _rectConsoleCursor.X, _rectConsoleCursor.Y, _rectConsoleCursor.Height * 0.5f, _rectConsoleCursor.Height);
+                            break;
 
                         case CursorShape_Enum.filledBox:
-                            {
-                                G.FillRectangle(br, new RectangleF(Rect_ConsoleCursor.X, Rect_ConsoleCursor.Y, Rect_ConsoleCursor.Height * 0.5f, Rect_ConsoleCursor.Height));
-                                break;
-                            }
+                            G.FillRectangle(br, new RectangleF(_rectConsoleCursor.X, _rectConsoleCursor.Y, _rectConsoleCursor.Height * 0.5f, _rectConsoleCursor.Height));
+                            break;
 
                         case CursorShape_Enum.underscore:
-                            {
-                                G.FillRectangle(br, new RectangleF(Rect_ConsoleCursor.X, Rect_ConsoleCursor.Bottom - 1, Rect_ConsoleCursor.Height * 0.5f, 1));
-                                break;
-                            }
+                            G.FillRectangle(br, new RectangleF(_rectConsoleCursor.X, _rectConsoleCursor.Bottom - 1, _rectConsoleCursor.Height * 0.5f, 1));
+                            break;
 
                         case CursorShape_Enum.vintage:
-                            {
-                                G.FillRectangle(br, new RectangleF(Rect_ConsoleCursor.X, Rect_ConsoleCursor.Bottom - CursorHeight / 100f * Rect_ConsoleCursor.Height, Rect_ConsoleCursor.Height * 0.5f, CursorHeight / 100f * Rect_ConsoleCursor.Height));
-                                break;
-                            }
+                            G.FillRectangle(br, new RectangleF(_rectConsoleCursor.X, _rectConsoleCursor.Bottom - CursorHeight / 100f * _rectConsoleCursor.Height, _rectConsoleCursor.Height * 0.5f, CursorHeight / 100f * _rectConsoleCursor.Height));
+                            break;
 
                         default:
-                            {
-                                G.FillRectangle(br, new RectangleF(Rect_ConsoleCursor.X, Rect_ConsoleCursor.Y, 1, Rect_ConsoleCursor.Height));
-                                break;
-                            }
-
+                            G.FillRectangle(br, new RectangleF(_rectConsoleCursor.X, _rectConsoleCursor.Y, 1, _rectConsoleCursor.Height));
+                            break;
                     }
                 }
 
-                G.SmoothingMode = SmoothingMode.AntiAlias;
+                G.Restore(state);
             }
 
-            using (Pen P = new(Color.FromArgb(45, 45, 45)))
-            {
-                G.DrawRoundedRect(P, Rect);
-            }
+            G.DrawRoundedRect(_borderPen, _rect);
 
             base.OnPaint(e);
         }
