@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 using WinPaletter.NativeMethods;
@@ -29,14 +28,13 @@ namespace WinPaletter.UI.Dark
         private const int SUBCLASS_ID_LISTVIEW = 2;
         private const int SUBCLASS_ID_DROPDOWN = 3;
 
-        // The path Edit control and OK button inside the common file dialog. (The Icon ListView no longer needs an ID constant - it's identified via Win32Control.Type below.)
+        // The path Edit control and OK button inside the common file dialog.
         private const int CTRL_ID_PATH_EDIT = 12290;
         private const int CTRL_ID_OK_BUTTON = 1;
 
         private readonly int DARK_COLOR_INT = (int)DarkColors.kPrimary.Value;
         private readonly int DARK_COLOR_SELECTION_INT = (int)DarkColors.kSeparator.Value;
 
-        // These used to be static, which meant two DarkWin32 instances (e.g. two dialogs open at once) would silently overwrite each other's tracked path/dialog handle.
         private string _acceptedPath = string.Empty;
         private IntPtr _targetDialogHwnd = IntPtr.Zero;
 
@@ -44,22 +42,25 @@ namespace WinPaletter.UI.Dark
         private IntPtr _hookId = IntPtr.Zero;
         private IntPtr _cbtHookId = IntPtr.Zero;
 
-        // Cached GDI brushes - created once on first use, deleted once in Dispose, instead of allocating a brand new brush on every WM_CTLCOLOR*/WM_ERASEBKGND/WM_PAINT message
+        // Cached GDI brushes - created once on first use, deleted once in Dispose.
         private IntPtr _darkBrush = IntPtr.Zero;
         private IntPtr _selectionBrush = IntPtr.Zero;
 
-        // Tracks every window subclassed (hwnd -> subclass id) so Dispose can remove the subclass cleanly instead of leaving dangling delegate references behind
+        // Tracks every window subclassed (hwnd -> subclass id) so Dispose can remove the subclass cleanly.
         private readonly Dictionary<IntPtr, UIntPtr> _activeSubclasses = [];
 
-        // Delegates moved inside to prevent GC collection while instance is alive
+        // Dedicated handler for the Windows Font Dialog (ChooseFont).
+        private readonly FontDialogDarkHandler _fontDialogHandler;
+
+        // Delegates moved inside to prevent GC collection while instance is alive.
         private readonly Comctl32.SUBCLASSPROC _dialogSubclassDelegate;
         private readonly Comctl32.SUBCLASSPROC _listViewAggressiveSubclass;
         private readonly Comctl32.SUBCLASSPROC _dropdownSubclassDelegate;
         private readonly User32.HookProc _hookDelegate;
         private readonly User32.HookProc _cbtDelegate;
 
-        private IntPtr DarkBrush => _darkBrush != IntPtr.Zero ? _darkBrush : (_darkBrush = GDI32.CreateSolidBrush(DARK_COLOR_INT));
-        private IntPtr SelectionBrush => _selectionBrush != IntPtr.Zero ? _selectionBrush : (_selectionBrush = GDI32.CreateSolidBrush(DARK_COLOR_SELECTION_INT));
+        internal IntPtr DarkBrush => _darkBrush != IntPtr.Zero ? _darkBrush : (_darkBrush = GDI32.CreateSolidBrush(DARK_COLOR_INT));
+        internal IntPtr SelectionBrush => _selectionBrush != IntPtr.Zero ? _selectionBrush : (_selectionBrush = GDI32.CreateSolidBrush(DARK_COLOR_SELECTION_INT));
 
         public DarkWin32()
         {
@@ -72,6 +73,9 @@ namespace WinPaletter.UI.Dark
             _dropdownSubclassDelegate = DropdownSubclassProc;
             _hookDelegate = HookProc;
             _cbtDelegate = CbtProc;
+
+            // Font dialog handler shares this instance's subclass registry and brushes.
+            _fontDialogHandler = new FontDialogDarkHandler(this);
 
             uint threadId = Kernel32.GetCurrentThreadId();
             _hookId = User32.SetWindowsHookEx(WH_CALLWNDPROCRET, _hookDelegate, IntPtr.Zero, threadId);
@@ -118,10 +122,8 @@ namespace WinPaletter.UI.Dark
                         if ((int)dis.itemID < 0) return (IntPtr)1;
                         bool selected = (dis.itemState & ODS_SELECTED) != 0;
 
-                        // Fill rect
                         User32.FillRect(dis.hDC, ref dis.rcItem, selected ? SelectionBrush : DarkBrush);
 
-                        // Step 2: Draw the icon
                         IntPtr hIcon = Shell32.ExtractIcon(IntPtr.Zero, _acceptedPath, (int)dis.itemID);
                         if (hIcon != IntPtr.Zero)
                         {
@@ -132,40 +134,29 @@ namespace WinPaletter.UI.Dark
                             User32.DestroyIcon(hIcon);
                         }
 
-                        // Step 3: If selected, draw a border rectangle on top
-                        if ((dis.itemState & 0x0001) != 0) // ODS_SELECTED
+                        if (selected)
                         {
-                            // Create a border pen with DarkColors.kTextInstruct color
                             IntPtr borderPen = GDI32.CreatePen(0, 1, DarkColors.kTextInstruct);
                             IntPtr oldPen = GDI32.SelectObject(dis.hDC, borderPen);
-
-                            // Create a hollow brush for the border (just outline)
                             IntPtr nullBrush = GDI32.GetStockObject(GDI32.StockObjects.NULL_BRUSH);
                             IntPtr oldBrush = GDI32.SelectObject(dis.hDC, nullBrush);
 
                             try
                             {
-                                // Draw the border rectangle
                                 var borderRect = dis.rcItem;
                                 borderRect.left += 1;
                                 borderRect.top += 1;
                                 borderRect.right -= 1;
                                 borderRect.bottom -= 1;
-
                                 GDI32.Rectangle(dis.hDC, borderRect.left, borderRect.top, borderRect.right, borderRect.bottom);
                             }
                             finally
                             {
-                                // Restore original objects and delete the pen
                                 GDI32.SelectObject(dis.hDC, oldPen);
                                 GDI32.SelectObject(dis.hDC, oldBrush);
                                 GDI32.DeleteObject(borderPen);
                             }
-                        }
 
-                        // Draw focus rect
-                        if (selected)
-                        {
                             User32.DrawFocusRect(dis.hDC, ref dis.rcItem);
                         }
 
@@ -182,7 +173,7 @@ namespace WinPaletter.UI.Dark
             return Comctl32.DefSubclassProc(hWnd, uMsg, wParam, lParam);
         }
 
-        private bool TryHandleColorMessage(uint uMsg, IntPtr wParam, out IntPtr brush)
+        internal bool TryHandleColorMessage(uint uMsg, IntPtr wParam, out IntPtr brush)
         {
             if (uMsg >= (int)User32.WindowsMessage.CtlColorMsgBox && uMsg <= (int)User32.WindowsMessage.CtlColorStatic)
             {
@@ -223,9 +214,6 @@ namespace WinPaletter.UI.Dark
         {
             if (Program.Style.DarkMode)
             {
-                // The suggestion list is owner-drawn (same as the Icon ListView in the dialog), and WM_DRAWITEM for an owner-drawn control is sent to its immediate PARENT -
-                // here, that's this dropdown window, not the listbox itself. Without taking this over, item rows keep painting themselves with their original light-mode colors,
-                // which is exactly why only the empty margins were turning dark before.
                 if (uMsg == (uint)WindowsMessage.DrawItem && lParam != IntPtr.Zero)
                 {
                     return DrawDropdownItem(lParam);
@@ -240,9 +228,6 @@ namespace WinPaletter.UI.Dark
                     return (IntPtr)1;
                 }
 
-                // Auto-Suggest Dropdown popups are shown with SWP_NOACTIVATE so they never take focus/activation, which means HCBT_ACTIVATE never fires for them.
-                // Windows reuses the same dropdown window and just shows/repositions/resizes it on every keystroke, so WM_SHOWWINDOW / WM_WINDOWPOSCHANGED are what
-                // reliably fire each time - use those to re-theme whatever children now exist.
                 if (uMsg == (uint)WindowsMessage.ShowWindow || uMsg == (uint)WindowsMessage.WindowPosChanged)
                 {
                     User32.GetChildWindowHandles(hWnd).ForEach(childHwnd => ApplyDarkModeToControl(new Win32Control(childHwnd)));
@@ -258,13 +243,9 @@ namespace WinPaletter.UI.Dark
 
             if (dis.hDC == IntPtr.Zero || dis.hwndItem == IntPtr.Zero || dis.itemID == unchecked((uint)-1)) return (IntPtr)1;
 
-            // Fill background
             bool selected = (dis.itemState & ODS_SELECTED) != 0;
 
-            // Create a copy of the rectangle for background filling
             var fillRect = dis.rcItem;
-
-            // Reduce width by 1px on the right side
             fillRect.right -= 1;
             User32.FillRect(dis.hDC, ref fillRect, selected ? SelectionBrush : DarkBrush);
 
@@ -275,17 +256,14 @@ namespace WinPaletter.UI.Dark
                 const uint LVM_GETITEMTEXTW = (0x1000 + 115);
                 const int MAX_TEXT_LENGTH = 256;
 
-                // Allocate buffer for text
                 IntPtr textBuffer = Marshal.AllocHGlobal(MAX_TEXT_LENGTH * 2);
                 try
                 {
-                    // Zero the buffer
                     for (int i = 0; i < MAX_TEXT_LENGTH * 2; i++) Marshal.WriteByte(textBuffer, i, 0);
 
-                    // Prepare LVITEM structure
                     User32.LVITEM lvItem = new()
                     {
-                        mask = 0x0001, // LVIF_TEXT
+                        mask = 0x0001,
                         iItem = (int)dis.itemID,
                         iSubItem = 0,
                         cchTextMax = MAX_TEXT_LENGTH,
@@ -298,28 +276,23 @@ namespace WinPaletter.UI.Dark
                         Marshal.StructureToPtr(lvItem, ptrLvItem, false);
                         User32.SendMessage(dis.hwndItem, LVM_GETITEMTEXTW, (IntPtr)dis.itemID, ptrLvItem);
 
-                        // Get the text
                         string itemText = Marshal.PtrToStringUni(textBuffer);
 
                         if (!string.IsNullOrEmpty(itemText))
                         {
-                            // Set text color to white
                             GDI32.SetTextColor(dis.hDC, 0xFFFFFF);
                             GDI32.SetBkMode(dis.hDC, 1);
 
-                            // Get and select the font
                             IntPtr hFont = User32.SendMessage(dis.hwndItem, 0x0031, IntPtr.Zero, IntPtr.Zero);
                             IntPtr hOldFont = IntPtr.Zero;
                             if (hFont != IntPtr.Zero) hOldFont = GDI32.SelectObject(dis.hDC, hFont);
 
-                            // Draw the text with padding
                             var rect = dis.rcItem;
                             rect.left += 6;
-                            rect.right -= 7; // Reduced by an extra 1px to account for the selection rectangle shrink
+                            rect.right -= 7;
 
                             User32.DrawText(dis.hDC, itemText, -1, ref rect, GDI32.DT_LEFT | GDI32.DT_VCENTER | GDI32.DT_SINGLELINE | GDI32.DT_NOPREFIX);
 
-                            // Restore original font
                             if (hOldFont != IntPtr.Zero) GDI32.SelectObject(dis.hDC, hOldFont);
                         }
                     }
@@ -334,10 +307,8 @@ namespace WinPaletter.UI.Dark
                 }
             }
 
-            // Draw focus rect if needed
             if ((dis.itemState & ODS_FOCUS) != 0)
             {
-                // Also reduce the focus rect by 1px on the right
                 var focusRect = dis.rcItem;
                 focusRect.right -= 1;
                 User32.DrawFocusRect(dis.hDC, ref focusRect);
@@ -360,7 +331,6 @@ namespace WinPaletter.UI.Dark
                     {
                         IntPtr dialogHwnd = msg.hwnd;
 
-                        // Initialize _acceptedPath
                         IntPtr hEdit = User32.GetDlgItem(dialogHwnd, CTRL_ID_PATH_EDIT);
                         int len = User32.GetWindowTextLength(hEdit);
                         if (len > 0)
@@ -388,15 +358,15 @@ namespace WinPaletter.UI.Dark
 
                 if (ctrl.Type == Win32Control.ControlType.AutoSuggestDropdown)
                 {
-                    // HCBT_CREATEWND fires once, before the dropdown's inner suggestion list exists as a child, so theming it right then often has nothing to theme yet.
-                    // Windows also reuses the same dropdown window across keystrokes instead of recreating it, so HCBT_CREATEWND never fires again either. Re-applying on
-                    // every HCBT_ACTIVATE (each time the dropdown shows) covers both cases.
                     ApplyDarkModeToAutoSuggestDropdown(wParam);
+                }
+                else if (_fontDialogHandler is not null && _fontDialogHandler.IsFontDialog(wParam))
+                {
+                    _fontDialogHandler.ApplyDarkMode(wParam);
                 }
             }
             else if (nCode == HCBT_DESTROYWND)
             {
-                // Stop tracking windows once they're gone so the subclass map doesn't grow forever
                 _activeSubclasses.Remove(wParam);
             }
 
@@ -407,7 +377,7 @@ namespace WinPaletter.UI.Dark
 
         #region Theming helpers
 
-        private void ApplyDarkModeToControl(Win32Control ctrl)
+        internal void ApplyDarkModeToControl(Win32Control ctrl)
         {
             if (!Program.Style.DarkMode) return;
             if (OS.WXP || OS.WVista || OS.W7 || OS.W8x) return;
@@ -444,23 +414,37 @@ namespace WinPaletter.UI.Dark
             UxTheme.SetWindowTheme(hWnd, "DarkMode_Explorer", null);
             SubclassWindow(hWnd, _dropdownSubclassDelegate, (UIntPtr)SUBCLASS_ID_DROPDOWN);
 
-            // The inner suggestion list is a child of the dropdown and may not have existed yet
-            // at HCBT_CREATEWND time - theme whatever children are actually present right now.
             User32.GetChildWindowHandles(hWnd).ForEach(childHwnd => ApplyDarkModeToControl(new Win32Control(childHwnd)));
 
             User32.RedrawWindow(hWnd, IntPtr.Zero, IntPtr.Zero, 0x0001 | 0x0004 | 0x0100);
         }
 
-        // Applies a subclass only once per hwnd and remembers it so Dispose can remove it cleanly.
-        // (SetWindowSubclass with the same id again is basically a no-op update, but tracking here
-        // is what lets us call RemoveWindowSubclass on the exact same delegate+id pair later.)
-        private void SubclassWindow(IntPtr hWnd, Comctl32.SUBCLASSPROC proc, UIntPtr id)
+        /// <summary>
+        /// Applies a subclass only once per hwnd and remembers it so Dispose can remove it cleanly.
+        /// Used by both DarkWin32 itself and the FontDialogDarkHandler.
+        /// </summary>
+        internal void SubclassWindow(IntPtr hWnd, Comctl32.SUBCLASSPROC proc, UIntPtr id)
         {
             if (_activeSubclasses.ContainsKey(hWnd)) return;
 
             Comctl32.SetWindowSubclass(hWnd, proc, id, IntPtr.Zero);
             _activeSubclasses[hWnd] = id;
         }
+
+        /// <summary>
+        /// Removes a previously registered subclass. Called by Dispose and by handlers
+        /// that want to unregister their own subclasses explicitly.
+        /// </summary>
+        internal void UnsubclassWindow(IntPtr hWnd, Comctl32.SUBCLASSPROC proc, UIntPtr id)
+        {
+            if (!_activeSubclasses.TryGetValue(hWnd, out UIntPtr existing)) return;
+            if (existing != id) return;
+
+            Comctl32.RemoveWindowSubclass(hWnd, proc, id);
+            _activeSubclasses.Remove(hWnd);
+        }
+
+        internal bool IsSubclassed(IntPtr hWnd) => _activeSubclasses.ContainsKey(hWnd);
 
         #endregion
 
@@ -486,14 +470,20 @@ namespace WinPaletter.UI.Dark
                     _cbtHookId = IntPtr.Zero;
                 }
 
-                // Remove every subclass we installed so no dangling delegate references remain
-                // on windows that could outlive this instance (e.g. shared/common dialogs)
+                // Let the font dialog handler release its own tracked subclasses first.
+                _fontDialogHandler?.Dispose();
+
+                // Remove every subclass we installed so no dangling delegate references remain.
                 foreach (KeyValuePair<IntPtr, UIntPtr> entry in _activeSubclasses)
                 {
                     Comctl32.SUBCLASSPROC proc = (int)entry.Value switch
                     {
                         SUBCLASS_ID_DIALOG => _dialogSubclassDelegate,
                         SUBCLASS_ID_DROPDOWN => _dropdownSubclassDelegate,
+                        FontDialogDarkHandler.SUBCLASS_ID_FONTDLG => _fontDialogHandler.DialogProcDelegate,
+                        FontDialogDarkHandler.SUBCLASS_ID_FONTLIST => _fontDialogHandler.ListProcDelegate,
+                        FontDialogDarkHandler.SUBCLASS_ID_FONTSAMPLE => _fontDialogHandler.SampleProcDelegate,
+                        FontDialogDarkHandler.SUBCLASS_ID_FONTCOMBO => _fontDialogHandler.ComboProcDelegate,
                         _ => _listViewAggressiveSubclass,
                     };
                     Comctl32.RemoveWindowSubclass(entry.Key, proc, entry.Value);

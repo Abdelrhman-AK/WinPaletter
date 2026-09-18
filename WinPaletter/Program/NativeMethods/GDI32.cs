@@ -297,6 +297,66 @@ namespace WinPaletter.NativeMethods
         }
 
         /// <summary>
+        /// Retrieves the text metrics for the specified device context. The text metrics provide information about the font characteristics, such as height, ascent, descent, and other attributes.
+        /// </summary>
+        /// <param name="hdc"></param>
+        /// <param name="lptm"></param>
+        /// <returns></returns>
+        [DllImport(_gdi32, SetLastError = true, CharSet = CharSet.Unicode)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool GetTextMetrics(IntPtr hdc, out TEXTMETRIC lptm);
+
+        /// <summary>
+        /// Represents the metrics of a font, including height, ascent, descent, and other characteristics.
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+        public struct TEXTMETRIC
+        {
+            public int tmHeight;
+            public int tmAscent;
+            public int tmDescent;
+            public int tmInternalLeading;
+            public int tmExternalLeading;
+            public int tmAveCharWidth;
+            public int tmMaxCharWidth;
+            public int tmWeight;
+            public int tmOverhang;
+            public int tmDigitizedAspectX;
+            public int tmDigitizedAspectY;
+            public char tmFirstChar;
+            public char tmLastChar;
+            public char tmDefaultChar;
+            public char tmBreakChar;
+            public byte tmItalic;
+            public byte tmUnderlined;
+            public byte tmStruckOut;
+            public byte tmPitchAndFamily;
+            public byte tmCharSet;
+        }
+
+        /// <summary>
+        /// Retrieves information about the specified graphics object, such as a font, and fills a buffer with the object's attributes. This function can be used to obtain details about a font's characteristics, including its typeface name, height, weight, and other properties.
+        /// </summary>
+        /// <param name="hObject"></param>
+        /// <param name="nCount"></param>
+        /// <param name="lpObject"></param>
+        /// <returns></returns>
+        [DllImport(_gdi32, SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "GetObjectW")]
+        public static extern int GetObjectFont(IntPtr hObject, int nCount, ref LOGFONT lpObject);
+
+        /// <summary>
+        /// Retrieves the dimensions of a specified string of text when rendered in the specified device context. The function calculates the width and height of the text based on the current font selected into the device context.
+        /// </summary>
+        /// <param name="hdc"></param>
+        /// <param name="lpString"></param>
+        /// <param name="c"></param>
+        /// <param name="lpSize"></param>
+        /// <returns></returns>
+        [DllImport(_gdi32, SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "GetTextExtentPoint32W")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool GetTextExtentPoint32(IntPtr hdc, string lpString, int c, out SIZE lpSize);
+
+        /// <summary>
         /// Adds a font resource to the system. The font resource is specified by the contents of a block of data.
         /// </summary>
         /// <param name="pbFont">A pointer to the font resource data block.</param>

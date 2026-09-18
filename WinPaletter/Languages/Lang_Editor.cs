@@ -1245,6 +1245,7 @@ namespace WinPaletter
         private void Button6_Click(object sender, EventArgs e)
         {
             using (FontDialog dlg = new() { Font = textbox_new.Font })
+            using (UI.Dark.DarkWin32 dark = new())
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {

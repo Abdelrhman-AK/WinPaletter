@@ -873,6 +873,7 @@ namespace WinPaletter.UI.Retro
             else if (IsMetricsCaptionFont)
             {
                 using (FontDialog fd = new() { Font = Font })
+                using (UI.Dark.DarkWin32 dark = new())
                 {
                     if (fd.ShowDialog() == DialogResult.OK)
                     {

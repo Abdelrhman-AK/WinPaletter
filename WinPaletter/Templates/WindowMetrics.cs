@@ -1869,6 +1869,7 @@ namespace WinPaletter.Templates
         private void msgLbl_Click(object sender, EventArgs e)
         {
             using (FontDialog fd = new() { Font = lbl.Font })
+            using (UI.Dark.DarkWin32 dark = new())
             {
                 if (fd.ShowDialog() == DialogResult.OK)
                 {
@@ -1881,6 +1882,7 @@ namespace WinPaletter.Templates
         private void statusLbl_Click(object sender, EventArgs e)
         {
             using (FontDialog fd = new() { Font = status.Font })
+            using (UI.Dark.DarkWin32 dark = new())
             {
                 if (fd.ShowDialog() == DialogResult.OK)
                 {
@@ -1926,6 +1928,7 @@ namespace WinPaletter.Templates
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
             using (FontDialog fd = new() { Font = (sender as UI.WP.ToolStripMenuItem).Font })
+            using (UI.Dark.DarkWin32 dark = new())
             {
                 if (fd.ShowDialog() == DialogResult.OK)
                 {

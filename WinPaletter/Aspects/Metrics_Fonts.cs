@@ -553,6 +553,7 @@ namespace WinPaletter
         private void Button1_Click(object sender, EventArgs e)
         {
             using (FontDialog dlg = new() { Font = Label1.Font })
+            using (UI.Dark.DarkWin32 dark = new())
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -566,6 +567,7 @@ namespace WinPaletter
         private void Button2_Click(object sender, EventArgs e)
         {
             using (FontDialog dlg = new() { Font = Label2.Font })
+            using (UI.Dark.DarkWin32 dark = new())
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -579,6 +581,7 @@ namespace WinPaletter
         private void Button3_Click(object sender, EventArgs e)
         {
             using (FontDialog dlg = new() { Font = Label3.Font })
+            using (UI.Dark.DarkWin32 dark = new())
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -592,6 +595,7 @@ namespace WinPaletter
         private void Button4_Click(object sender, EventArgs e)
         {
             using (FontDialog dlg = new() { Font = Label4.Font })
+            using (UI.Dark.DarkWin32 dark = new())
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -605,6 +609,7 @@ namespace WinPaletter
         private void Button5_Click(object sender, EventArgs e)
         {
             using (FontDialog dlg = new() { Font = Label5.Font })
+            using (UI.Dark.DarkWin32 dark = new())
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -618,6 +623,7 @@ namespace WinPaletter
         private void Button6_Click(object sender, EventArgs e)
         {
             using (FontDialog dlg = new() { Font = Label6.Font })
+            using (UI.Dark.DarkWin32 dark = new())
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -645,6 +651,7 @@ namespace WinPaletter
         {
             using (Font F = new(TextBox1.Text, 9f, FontStyle.Regular))
             using (FontDialog dlg = new() { Font = F })
+            using (UI.Dark.DarkWin32 dark = new())
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -657,6 +664,7 @@ namespace WinPaletter
         {
             using (Font F = new(TextBox2.Text, 9f, FontStyle.Regular))
             using (FontDialog dlg = new() { Font = F })
+            using (UI.Dark.DarkWin32 dark = new())
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
@@ -669,6 +677,7 @@ namespace WinPaletter
         {
             using (Font F = new(TextBox3.Text, 9f, FontStyle.Regular))
             using (FontDialog dlg = new() { Font = F })
+            using (UI.Dark.DarkWin32 dark = new())
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {

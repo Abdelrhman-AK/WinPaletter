@@ -903,6 +903,7 @@ namespace WinPaletter.UI.Simulation
             else if (!DesignMode && _MetricsEdit_CaptionFont)
             {
                 using (FontDialog fd = new FontDialog { Font = Font })
+                using (UI.Dark.DarkWin32 dark = new())
                 {
                     if (fd.ShowDialog() == DialogResult.OK)
                     {

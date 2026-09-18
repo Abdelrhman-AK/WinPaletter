@@ -252,6 +252,7 @@ namespace WinPaletter.UI.Simulation
                 if (LabelRect.Contains(e.Location))
                 {
                     using (FontDialog fd = new() { Font = Font })
+                    using (UI.Dark.DarkWin32 dark = new())
                     {
                         if (fd.ShowDialog() == DialogResult.OK)
                         {

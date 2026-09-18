@@ -502,10 +502,6 @@ namespace WinPaletter.UI.Simulation
                 Timer.Tick -= Timer_Tick;
                 Timer.Dispose();
 
-                _tabTitleFont?.Dispose();
-                _tabRegularFont?.Dispose();
-                _closeIconFont?.Dispose();
-
                 img?.Dispose();
                 adaptedBack?.Dispose();
                 adaptedBackBlurred?.Dispose();
@@ -614,7 +610,7 @@ namespace WinPaletter.UI.Simulation
             if (adaptedBackBlurred != null && Width > 0 && Height > 0)
             {
                 Rectangle tb = new(0, 0, Width - 1, 41);
-                if (tb.Width > 0 && tb.Height > 0)  titlebarBlurClone = adaptedBackBlurred.Clone(tb, PixelFormat.Format32bppArgb);
+                if (tb.Width > 0 && tb.Height > 0) titlebarBlurClone = adaptedBackBlurred.Clone(tb, PixelFormat.Format32bppArgb);
             }
         }
 
@@ -784,12 +780,12 @@ namespace WinPaletter.UI.Simulation
 
             Color FC0 = TabFocusedFinalColor.IsDark() ? Color.White : Color.Black;
             Rectangle RectClose_Tab0 = new(Rect_Tab0.Right - iconPadding - iconSize + 2, IconRect0.Y, iconSize, iconSize);
-            Rectangle RectText_Tab0 = new(IconRect0.Right + iconPadding / 2, IconRect0.Y + 1, RectClose_Tab0.Left - iconPadding / 2 - (IconRect0.Right + iconPadding / 2), IconRect0.Height);
+            Rectangle RectText_Tab0 = new(IconRect0.Right + iconPadding / 2 - 2, IconRect0.Y + 1, RectClose_Tab0.Left - iconPadding / 2 - (IconRect0.Right + iconPadding / 2) + 2, IconRect0.Height);
 
             Rectangle IconRect1 = new(Rect_Tab1.X + iconPadding, Rect_Tab1.Y + (Rect_Tab1.Height - iconSize) / 2, iconSize, iconSize);
             Color FC1 = _cachedTabUnfocused.IsDark() ? Color.White : Color.Black;
             Rectangle RectClose_Tab1 = new(Rect_Tab1.Right - iconPadding - iconSize + 2, IconRect1.Y, iconSize, iconSize);
-            Rectangle RectText_Tab1 = new(IconRect1.Right + iconPadding / 2, IconRect1.Y + 1, RectClose_Tab1.Left - iconPadding / 2 - (IconRect1.Right + iconPadding / 2), IconRect1.Height);
+            Rectangle RectText_Tab1 = new(IconRect1.Right + iconPadding / 2 - 2, IconRect1.Y + 1, RectClose_Tab1.Left - iconPadding / 2 - (IconRect1.Right + iconPadding / 2) + 2, IconRect1.Height);
 
             if (IsFocused)
             {
@@ -825,7 +821,7 @@ namespace WinPaletter.UI.Simulation
             }
             else
             {
-                using (SolidBrush br = new(FC0))  G.DrawString(_tabIconButItIsString, iconFont, br, IconRect0, _sf_tc);
+                using (SolidBrush br = new(FC0)) G.DrawString(_tabIconButItIsString, iconFont, br, IconRect0, _sf_tc);
             }
 
             using (SolidBrush br = new(FC1)) G.DrawString(_tabIconButItIsString_Default, iconFont, br, IconRect1, _sf_tc);
@@ -833,8 +829,8 @@ namespace WinPaletter.UI.Simulation
             TextRenderer.DrawText(G, TabTitle, _tabTitleFont, RectText_Tab0, FC0, Color.Transparent, TextFormatFlags.WordEllipsis);
             TextRenderer.DrawText(G, _anotherTab, _tabRegularFont, RectText_Tab1, FC1, Color.Transparent, TextFormatFlags.WordEllipsis);
 
-            using (SolidBrush br = new(FC0))  G.DrawString("", _closeIconFont, br, RectClose_Tab0, _sf_mc);
-            using (SolidBrush br = new(FC1))  G.DrawString("", _closeIconFont, br, RectClose_Tab1, _sf_mc);
+            using (SolidBrush br = new(FC0)) G.DrawString("", _closeIconFont, br, RectClose_Tab0, _sf_mc);
+            using (SolidBrush br = new(FC1)) G.DrawString("", _closeIconFont, br, RectClose_Tab1, _sf_mc);
 
             using (SolidBrush br = new(Color_Foreground)) G.DrawString(_s1, Font, br, _rectConsoleText0, _sf_ml);
 

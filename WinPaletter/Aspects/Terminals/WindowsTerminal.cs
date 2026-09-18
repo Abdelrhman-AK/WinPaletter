@@ -554,8 +554,10 @@ namespace WinPaletter
 
             SetDefaultsToScheme(TerSchemes.SelectedItem?.ToString());
 
-            // Never mutate the live model just by changing the combo-box selection. Only mutate when the user actually edits a color (via the color handlers).
             WinTerminal.Types.Scheme scheme = GetCurrentScheme() ?? new();
+            Profile profile = GetCurrentProfile();
+            profile.ColorScheme.Dark = scheme.Name;
+            profile.ColorScheme.Light = scheme.Name;
 
             TerBackground.BackColor = scheme.Background;
             TerForeground.BackColor = scheme.Foreground;
@@ -634,6 +636,7 @@ namespace WinPaletter
 
             Terminal1.Opacity = profile.Opacity;
             Terminal1.OpacityBackImage = (float)profile.BackgroundImageOpacity * 100f;
+            Terminal1.TabIcon?.Dispose();
 
             if (!string.IsNullOrEmpty(profile.TabTitle))
             {
@@ -667,7 +670,11 @@ namespace WinPaletter
 
                 if (File.Exists(path))
                 {
-                    Terminal1.TabIcon = ((Icon)NativeMethods.Helpers.ExtractSmallIcon(path)).ToBitmap();
+                    using (Icon ico = NativeMethods.Helpers.ExtractSmallIcon(path))
+                    {
+                        Terminal1.TabIcon = ico.ToBitmap();
+                    }
+
                     Terminal1.TabIconButItIsString = null;
                 }
                 else
@@ -1804,6 +1811,7 @@ namespace WinPaletter
 
                         Terminal1.Opacity = CCatFrom.Opacity;
                         Terminal1.OpacityBackImage = (float)CCatFrom.BackgroundImageOpacity * 100f;
+                        Terminal1.TabIcon?.Dispose();
 
                         if (!string.IsNullOrEmpty(CCatFrom.TabTitle))
                         {
@@ -1838,8 +1846,11 @@ namespace WinPaletter
 
                             if (File.Exists(path))
                             {
-                                Terminal1.TabIcon = ((Icon)NativeMethods.Helpers.ExtractSmallIcon(path)).ToBitmap();
-                                Terminal1.TabIconButItIsString = null;
+                                using (Icon ico = NativeMethods.Helpers.ExtractSmallIcon(path))
+                                {
+                                    Terminal1.TabIcon = ico.ToBitmap();
+                                    Terminal1.TabIconButItIsString = null;
+                                }
                             }
                             else
                             {
@@ -1991,6 +2002,7 @@ namespace WinPaletter
         private void Button23_Click(object sender, EventArgs e)
         {
             using (FontDialog dlg = new() { Font = Terminal1.Font, FixedPitchOnly = !Program.Settings.WindowsTerminals.ListAllFonts })
+            using (UI.Dark.DarkWin32 dark = new())
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {

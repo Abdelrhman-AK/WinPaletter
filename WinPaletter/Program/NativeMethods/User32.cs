@@ -546,7 +546,7 @@ namespace WinPaletter.NativeMethods
         /// Msg parameter.</param>
         /// <returns>The result of the message processing, which depends on the message sent. If the function fails, the return
         /// value is IntPtr.Zero.</returns>
-        [DllImport(_user32, SetLastError = true)]
+        [DllImport(_user32, CharSet = CharSet.Unicode, SetLastError = true)]
         public static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
 
         /// <summary>
@@ -567,7 +567,7 @@ namespace WinPaletter.NativeMethods
         /// Msg parameter.</param>
         /// <returns>The result of the message processing, which depends on the message sent. If the function fails, the return
         /// value is IntPtr.Zero.</returns>
-        [DllImport(_user32, SetLastError = true)]
+        [DllImport(_user32, CharSet = CharSet.Unicode, SetLastError = true)]
         public static extern IntPtr SendMessage(IntPtr hWnd, WindowsMessage Msg, IntPtr wParam, IntPtr lParam);
 
         /// <summary>
@@ -588,7 +588,7 @@ namespace WinPaletter.NativeMethods
         /// Msg parameter.</param>
         /// <returns>The result of the message processing, which depends on the message sent. If the function fails, the return
         /// value is IntPtr.Zero.</returns>
-        [DllImport(_user32, SetLastError = true)]
+        [DllImport(_user32, CharSet = CharSet.Unicode, SetLastError = true)]
         public static extern IntPtr SendMessage(IntPtr hWnd, uint Msg, IntPtr wParam, StringBuilder lParam);
 
         /// <summary>
@@ -1080,7 +1080,7 @@ namespace WinPaletter.NativeMethods
         /// </summary>
         /// <param name="hWnd"></param>
         /// <returns></returns>
-        [DllImport(_user32)]
+        [DllImport(_user32, CharSet = CharSet.Unicode)]
         public static extern int GetWindowTextLength(IntPtr hWnd);
 
         /// <summary>
@@ -1094,7 +1094,7 @@ namespace WinPaletter.NativeMethods
         /// character.</param>
         /// <returns>The length of the class name string, in characters, not including the null-terminating character, if
         /// successful; otherwise, 0 if the function fails.</returns>
-        [DllImport(_user32, SetLastError = true, CharSet = CharSet.Auto)]
+        [DllImport(_user32, SetLastError = true, CharSet = CharSet.Unicode)]
         public static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
 
         /// <summary>

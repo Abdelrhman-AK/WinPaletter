@@ -588,7 +588,7 @@ namespace WinPaletter.Theme.Structures
             {
                 /// <summary>
                 /// Write values in JSON format. Never writes null - falls back to "Campbell" so the
-                /// key is always present and cannot be silently dropped by the merge step.
+                /// key is always present and cannot be silently dropped.
                 /// </summary>
                 /// <param name="writer"></param>
                 /// <param name="value"></param>
@@ -1060,107 +1060,6 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>
-        /// Merging two JObjects with desired behavior.
-        /// <br>The desired behavior is to merge two JSONs without including null values.</br>
-        /// </summary>
-        /// <param name="original"></param>
-        /// <param name="newJson"></param>
-        void Merge(JObject original, JObject newJson)
-        {
-            foreach (JProperty newProperty in newJson.Properties())
-            {
-                JProperty originalProperty = original.Property(newProperty.Name);
-
-                if (originalProperty != null)
-                {
-                    if (newProperty.Value.Type == JTokenType.Object && originalProperty.Value.Type == JTokenType.Object)
-                    {
-                        // Recursively merge subproperties
-                        Merge((JObject)originalProperty.Value, (JObject)newProperty.Value);
-                    }
-                    else if (newProperty.Value.Type == JTokenType.Array && originalProperty.Value.Type == JTokenType.Array)
-                    {
-                        // Merge arrays if both properties are arrays
-                        MergeArrays((JArray)originalProperty.Value, (JArray)newProperty.Value);
-                    }
-                    else
-                    {
-                        // Update existing property with the one from newJson if it is not null or empty
-                        if (!IsNullOrWhiteSpace(newProperty.Value))
-                        {
-                            originalProperty.Value = newProperty.Value;
-                        }
-                    }
-                }
-                else
-                {
-                    // Add new property if not found in original JSON and it is not null or empty
-                    if (!IsNullOrWhiteSpace(newProperty.Value))
-                    {
-                        original.Add(newProperty);
-                    }
-                }
-            }
-
-            // Check for properties in originalJson that are not in newJson
-            foreach (JProperty originalProperty in original.Properties().ToList())
-            {
-                if (!newJson.Properties().Any(p => p.Name == originalProperty.Name))
-                {
-                    // Add original property if it is not null or empty
-                    if (!IsNullOrWhiteSpace(originalProperty.Value))
-                    {
-                        // Check if the property already exists in the original JSON
-                        JProperty newProperty = newJson.Property(originalProperty.Name);
-                        if (newProperty != null && !IsNullOrWhiteSpace(newProperty.Value))
-                        {
-                            // Update the existing property with the one from newJson
-                            originalProperty.Value = newProperty.Value;
-                        }
-                    }
-                }
-            }
-        }
-
-        /// <summary>
-        /// Merge two JArrays without duplications
-        /// </summary>
-        /// <param name="originalArray"></param>
-        /// <param name="newArray"></param>
-        private void MergeArrays(JArray originalArray, JArray newArray)
-        {
-            List<JObject> originalItems = [.. originalArray.Children<JObject>()];
-
-            foreach (JObject newItem in newArray.Children<JObject>())
-            {
-                JObject existingItem = originalItems.FirstOrDefault(
-                    x => x.Property("guid")?.Value.ToString() == newItem.Property("guid")?.Value.ToString()
-                );
-
-                if (existingItem != null)
-                {
-                    // Update existing item with values from new item
-                    Merge(existingItem, newItem);
-                }
-                else
-                {
-                    // Add new item to the original array
-                    originalArray.Add(newItem);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Check if a JToken is null or empty string
-        /// </summary>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        bool IsNullOrWhiteSpace(JToken token)
-        {
-            return token == null || (token.Type == JTokenType.String && string.IsNullOrWhiteSpace(token.Value<string>())) || (token.Type == JTokenType.Null);
-        }
-
-        /// <summary>
         /// Remove default properties from a <see cref="JObject"></see> based on a default scheme.
         /// <br>Useful for making schemes that has values exist in default scheme being got from default scheme not from scheme itself (Same Windows Terminal behaviour).</br>
         /// </summary>
@@ -1598,8 +1497,7 @@ namespace WinPaletter.Theme.Structures
             /// via <c>ColorConverter</c>. Kept in one place so the keyword-resolution walk below stays in
             /// sync automatically if new Color-typed properties are added to the model later.
             /// </summary>
-            private static readonly HashSet<string> ColorPropertyNames =
-                GetColorPropertyNames();
+            private static readonly HashSet<string> ColorPropertyNames = GetColorPropertyNames();
 
             private static HashSet<string> GetColorPropertyNames()
             {
@@ -1633,21 +1531,14 @@ namespace WinPaletter.Theme.Structures
                 }
             }
 
-            private static void AddColorProperties(
-                Type type,
-                HashSet<string> result)
+            private static void AddColorProperties(Type type, HashSet<string> result)
             {
-                foreach (PropertyInfo property in type.GetProperties(
-                    BindingFlags.Instance |
-                    BindingFlags.Static |
-                    BindingFlags.Public |
-                    BindingFlags.NonPublic))
+                foreach (PropertyInfo property in type.GetProperties(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic))
                 {
                     if (property.PropertyType != typeof(Color))
                         continue;
 
-                    JsonPropertyAttribute attribute =
-                        property.GetCustomAttribute<JsonPropertyAttribute>();
+                    JsonPropertyAttribute attribute = property.GetCustomAttribute<JsonPropertyAttribute>();
 
                     string jsonName = attribute?.PropertyName ?? property.Name;
 
@@ -1828,28 +1719,17 @@ namespace WinPaletter.Theme.Structures
             /// against the current system accent color. Anything else (an actual hex/rgb string) is left
             /// untouched for ColorConverter to parse normally during deserialization.
             /// </summary>
-            private static void ResolveColorKeyword(
-                JObject container,
-                string propertyName,
-                JObject root,
-                string schemeName)
+            private static void ResolveColorKeyword(JObject container, string propertyName, JObject root, string schemeName)
             {
-                if (container[propertyName] is not JValue value ||
-                    value.Type != JTokenType.String)
-                    return;
+                if (container[propertyName] is not JValue value || value.Type != JTokenType.String) return;
 
                 string colorValue = value.Value<string>();
 
-                if (string.IsNullOrWhiteSpace(colorValue))
-                    return;
+                if (string.IsNullOrWhiteSpace(colorValue)) return;
 
-                if (colorValue.Equals(
-                        "terminalBackground",
-                        StringComparison.OrdinalIgnoreCase))
+                if (colorValue.Equals("terminalBackground", StringComparison.OrdinalIgnoreCase))
                 {
-                    string background = GetSchemeBackgroundHex(
-                        schemeName,
-                        root);
+                    string background = GetSchemeBackgroundHex(schemeName, root);
 
                     if (!string.IsNullOrWhiteSpace(background))
                     {
@@ -1861,14 +1741,11 @@ namespace WinPaletter.Theme.Structures
                         // The C# ColorConverter can then safely return Color.Empty.
                     }
                 }
-                else if (colorValue.Equals(
-                             "accent",
-                             StringComparison.OrdinalIgnoreCase))
+                else if (colorValue.Equals("accent", StringComparison.OrdinalIgnoreCase))
                 {
                     Color accent = GetSystemAccentColor();
 
-                    container[propertyName] =
-                        ColorTranslator.ToHtml(accent);
+                    container[propertyName] = ColorTranslator.ToHtml(accent);
                 }
             }
 
@@ -2164,6 +2041,23 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>
+        /// The top-level Windows Terminal keys WinPaletter actually manages. Only these are ever
+        /// written into or removed from the user's settings.json when saving - every other
+        /// top-level key already on disk ($schema, $help, actions, keybindings,
+        /// confirmCloseAllTabs, launchMode, and so on) has no model in this class and is left
+        /// completely untouched, so WinPaletter can never clobber settings it doesn't understand.
+        /// </summary>
+        private static readonly string[] ManagedTopLevelKeys =
+        [
+            "defaultProfile",
+            "profiles",
+            "schemes",
+            "theme",
+            "themes",
+            "useAcrylicInTabRow"
+        ];
+
+        /// <summary>
         /// The Windows Terminal built-in defaults, expressed as a JObject, used as the baseline
         /// for the compaction pass during save. Anything that matches the corresponding entry here
         /// is omitted from the output, exactly like Windows Terminal itself does.
@@ -2212,20 +2106,11 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>
-        /// Windows Terminal's built-in Campbell scheme, used as the baseline for compacting user
-        /// schemes. Any key in a user scheme that equals Campbell's corresponding key is omitted.
-        /// </summary>
-        private static JObject GetBuiltInScheme()
-        {
-            // Serialize the first DefaultSchemes entry (Campbell) through the same serializer used
-            // elsewhere, so the JSON representation matches exactly what gets written for user schemes.
-            return JObject.FromObject(DefaultSchemes[0], JsonHelper.Serializer);
-        }
-
-        /// <summary>
         /// Windows Terminal's built-in default theme(s), used as the baseline for compacting user
-        /// themes. Windows Terminal does not ship named themes by default, so the baseline is empty
-        /// apart from the implicit "applicationTheme" and the two tab/tabRow color slots.
+        /// themes. Windows Terminal does not ship named themes by default, so the baseline is just
+        /// the implicit "applicationTheme" and the four tab/tabRow color slots, each of which
+        /// serializes as "" when unset (Color.Empty via ColorConverter) rather than being omitted -
+        /// see the comment on GetBuiltInProfileDefaults for why that baseline entry is necessary.
         /// </summary>
         private static JObject GetBuiltInTheme()
         {
@@ -2235,8 +2120,16 @@ namespace WinPaletter.Theme.Structures
                 {
                     ["applicationTheme"] = "system"
                 },
-                ["tab"] = new JObject(),
-                ["tabRow"] = new JObject()
+                ["tab"] = new JObject
+                {
+                    ["background"] = "",
+                    ["unfocusedBackground"] = ""
+                },
+                ["tabRow"] = new JObject
+                {
+                    ["background"] = "",
+                    ["unfocusedBackground"] = ""
+                }
             };
         }
 
@@ -2255,6 +2148,13 @@ namespace WinPaletter.Theme.Structures
                 ["useAcrylic"] = false,
                 ["opacity"] = 100,
                 ["backgroundImageOpacity"] = 1.0,
+                // TabColor is a Color struct, never CLR-null, so ColorConverter always serializes it -
+                // an unset tabColor becomes ColorTranslator.ToHtml(Color.Empty), which is "". Likewise
+                // BackgroundImage/Commandline default to string.Empty, not null, so NullValueHandling
+                // never suppresses them either. All three need an explicit baseline entry to compact.
+                ["tabColor"] = "",
+                ["backgroundImage"] = "",
+                ["commandline"] = "",
                 ["font"] = new JObject
                 {
                     ["face"] = "Cascadia Mono",
@@ -2262,6 +2162,30 @@ namespace WinPaletter.Theme.Structures
                     ["weight"] = "normal"
                 }
             };
+        }
+
+        /// <summary>
+        /// Windows Terminal's built-in scheme matching <paramref name="name"/> (e.g. "CGA", "Dark+",
+        /// "Solarized Dark"). Every in-box scheme compacts against its OWN built-in colors, not
+        /// always Campbell's - so an untouched "CGA" scheme collapses away instead of being written
+        /// out in full. "name" is deliberately excluded from the returned reference: CompactAgainst
+        /// must never be able to strip the identifying "name" key out from under a scheme that has
+        /// only been partially customized. Returns null for a genuinely custom scheme name, which is
+        /// then kept as-is.
+        /// </summary>
+        private static JObject GetBuiltInSchemeByName(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name)) return null;
+
+            Scheme builtIn = DefaultSchemes.FirstOrDefault(
+                s => string.Equals(s.Name, name, StringComparison.OrdinalIgnoreCase));
+
+            if (builtIn == null) return null;
+
+            JObject result = JObject.FromObject(builtIn, JsonHelper.Serializer);
+            result.Remove("name");
+
+            return result;
         }
 
         /// <summary>
@@ -2330,15 +2254,6 @@ namespace WinPaletter.Theme.Structures
         /// and arrays. After this runs, <paramref name="value"/> contains only the keys that
         /// actually differ from the reference - which is exactly the "compact" representation
         /// Windows Terminal itself writes.
-        /// <para>
-        /// Special cases:
-        /// <list type="bullet">
-        /// <item>For <c>profiles.list</c>, the compaction is per-profile (each profile has its own
-        /// reference: <c>profiles.defaults</c> after its own compaction).</item>
-        /// <item>For <c>schemes</c>, each scheme is compacted against the built-in Campbell scheme.</item>
-        /// <item>For <c>themes</c>, each theme is compacted against the built-in theme defaults.</item>
-        /// </list>
-        /// </para>
         /// </summary>
         private static void CompactAgainst(JObject value, JObject reference)
         {
@@ -2466,6 +2381,95 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>
+        /// Builds the compact Windows Terminal representation of THIS instance directly from its
+        /// current in-memory state - not by merging a full expansion onto whatever is already on
+        /// disk and then trying to strip defaults back out afterward. Every change made to this
+        /// instance is guaranteed to be present in the result: there is no separate merge pass for
+        /// a changed value to get lost in.
+        /// </summary>
+        private JObject BuildCompactJson()
+        {
+            JObject json = JObject.FromObject(this, JsonHelper.Serializer);
+
+            // "enabled" is a WinPaletter-internal feature toggle (see SaveToggleState, which writes
+            // it to the registry separately) - it is not part of Windows Terminal's own schema and
+            // must never reach the real settings.json.
+            json.Remove("enabled");
+
+            if (json["profiles"] is JObject profilesObj)
+            {
+                JObject defaultsObj = profilesObj["defaults"] as JObject;
+
+                // Compact each profile against the FULL, still-uncompacted defaults object first,
+                // mirroring Windows Terminal's own inheritance model: a profile key that merely
+                // repeats whatever profiles.defaults currently says (custom or built-in) is
+                // redundant and gets omitted, exactly like Windows Terminal itself does.
+                if (profilesObj["list"] is JArray profilesList && defaultsObj != null)
+                {
+                    foreach (JObject profile in profilesList.OfType<JObject>())
+                    {
+                        CompactAgainst(profile, defaultsObj);
+                    }
+                }
+
+                // Only now compact defaults itself against the Windows Terminal built-in profile
+                // defaults, so it carries only what's actually customized.
+                if (defaultsObj != null)
+                {
+                    CompactAgainst(defaultsObj, GetBuiltInProfileDefaults());
+                }
+            }
+
+            if (json["schemes"] is JArray schemesArr)
+            {
+                for (int i = schemesArr.Count - 1; i >= 0; i--)
+                {
+                    if (schemesArr[i] is not JObject scheme) continue;
+
+                    string schemeName = scheme["name"]?.Value<string>();
+                    JObject builtInScheme = GetBuiltInSchemeByName(schemeName);
+
+                    if (builtInScheme != null)
+                    {
+                        CompactAgainst(scheme, builtInScheme);
+
+                        // Every color matched the built-in scheme's own colors: nothing to say,
+                        // so drop the scheme entirely rather than leave a name-only stub.
+                        if (scheme.Properties().All(p => p.Name == "name"))
+                        {
+                            schemesArr.RemoveAt(i);
+                        }
+                    }
+                }
+            }
+
+            if (json["themes"] is JArray themesArr)
+            {
+                JObject builtInTheme = GetBuiltInTheme();
+
+                foreach (JObject theme in themesArr.OfType<JObject>())
+                {
+                    CompactAgainst(theme, builtInTheme);
+                }
+
+                for (int i = themesArr.Count - 1; i >= 0; i--)
+                {
+                    if (themesArr[i] is JObject t && !t.Properties().Any(p => p.Name != "name"))
+                    {
+                        themesArr.RemoveAt(i);
+                    }
+                }
+            }
+
+            // Top-level scalars (defaultProfile, theme, useAcrylicInTabRow, ...) against the
+            // Windows Terminal built-in defaults.
+            CompactAgainst(json, GetBuiltInDefaults());
+            RemoveEmptyContainers(json);
+
+            return json;
+        }
+
+        /// <summary>
         /// Save Windows Terminal settings data
         /// </summary>
         /// <param name="treeView">TreeView control for logging</param>
@@ -2529,7 +2533,9 @@ namespace WinPaletter.Theme.Structures
                                 }
                         }
 
-                        // Load the original JSON from the File
+                        // Load the original JSON from the File. Keys WinPaletter doesn't manage
+                        // (actions, keybindings, $schema, confirmCloseAllTabs, launchMode, ...) live
+                        // here untouched and are carried straight through to the output.
                         JObject existingJson;
 
                         if (System.IO.File.Exists(SettingsFile))
@@ -2546,102 +2552,42 @@ namespace WinPaletter.Theme.Structures
                             existingJson = [];
                         }
 
-                        // Create a new JObject from the current instance
-                        JObject newJson = JObject.FromObject(this, JsonHelper.Serializer);
+                        // Build our own compact state directly from this instance, then splice ONLY
+                        // the keys WinPaletter manages into the disk file. This replaces the old
+                        // "expand to full JSON -> deep-merge onto disk -> compact back down" pipeline,
+                        // which could silently drop in-memory changes (mismatched array-merge keys,
+                        // a merge branch that never executed, etc.) - here, every key either comes
+                        // straight from the freshly-built compact state or is left alone.
+                        JObject compact = BuildCompactJson();
 
-                        // Merge properties from newJson to existingJson
-                        Merge(existingJson, newJson);
-
-                        // Schemes from new JSON are taken unmodified first, then compacted against
-                        // the built-in Campbell scheme, so user schemes only carry what differs.
-                        existingJson["schemes"] = newJson["schemes"];
-
-                        // Compact the whole document against the Windows Terminal built-in defaults.
-                        // This removes:
-                        //   - top-level keys whose value equals the built-in default,
-                        //   - profiles.defaults keys whose value equals the built-in profile defaults,
-                        //   - per-profile keys whose value equals the (possibly already-compacted) defaults,
-                        //   - per-scheme keys whose value equals the built-in Campbell scheme,
-                        //   - per-theme keys whose value equals the built-in theme defaults,
-                        //   - empty objects and empty arrays everywhere.
-                        JObject builtInDefaults = GetBuiltInDefaults();
-                        CompactAgainst(existingJson, builtInDefaults);
-
-                        // profiles.list: compact each profile against profiles.defaults.
-                        if (existingJson["profiles"] is JObject profilesObj)
+                        foreach (string key in ManagedTopLevelKeys)
                         {
-                            JObject defaultsObj = profilesObj["defaults"] as JObject;
+                            JToken value = compact[key];
 
-                            if (profilesObj["list"] is JArray profilesList && defaultsObj != null)
+                            bool hasContent = value switch
                             {
-                                foreach (JObject profile in profilesList.OfType<JObject>())
-                                {
-                                    CompactAgainst(profile, defaultsObj);
-                                }
+                                JObject o => o.Properties().Any(),
+                                JArray a => a.Any(),
+                                null => false,
+                                _ => true
+                            };
 
-                                // Remove any profile that became empty (all its keys matched the defaults).
-                                for (int i = profilesList.Count - 1; i >= 0; i--)
-                                {
-                                    if (profilesList[i] is JObject p && !p.Properties().Any())
-                                    {
-                                        profilesList.RemoveAt(i);
-                                    }
-                                }
+                            if (hasContent)
+                            {
+                                existingJson[key] = value.DeepClone();
                             }
-
-                            // profiles.defaults itself: compact against the built-in profile defaults.
-                            if (defaultsObj != null)
+                            else
                             {
-                                CompactAgainst(defaultsObj, GetBuiltInProfileDefaults());
+                                // Compacted away entirely: this now equals the Windows Terminal
+                                // built-in default, so omit the key and let Windows Terminal fall
+                                // back to it itself.
+                                existingJson.Remove(key);
                             }
                         }
-
-                        // schemes: compact each against the built-in Campbell scheme.
-                        if (existingJson["schemes"] is JArray schemesArr)
-                        {
-                            JObject builtInScheme = GetBuiltInScheme();
-
-                            foreach (JObject scheme in schemesArr.OfType<JObject>())
-                            {
-                                CompactAgainst(scheme, builtInScheme);
-                            }
-
-                            // Remove empty schemes (a scheme whose only content was "name" equal to Campbell is meaningless; drop it).
-                            for (int i = schemesArr.Count - 1; i >= 0; i--)
-                            {
-                                if (schemesArr[i] is JObject s && !s.Properties().Any())
-                                {
-                                    schemesArr.RemoveAt(i);
-                                }
-                            }
-                        }
-
-                        // themes: compact each against the built-in theme defaults.
-                        if (existingJson["themes"] is JArray themesArr)
-                        {
-                            JObject builtInTheme = GetBuiltInTheme();
-
-                            foreach (JObject theme in themesArr.OfType<JObject>())
-                            {
-                                CompactAgainst(theme, builtInTheme);
-                            }
-
-                            for (int i = themesArr.Count - 1; i >= 0; i--)
-                            {
-                                if (themesArr[i] is JObject t && !t.Properties().Any())
-                                {
-                                    themesArr.RemoveAt(i);
-                                }
-                            }
-                        }
-
-                        // Final pass: strip any remaining nulls / empty containers from the root.
-                        RemoveEmptyContainers(existingJson);
 
                         // Re-add the keys that Windows Terminal's schema requires to be present, even
-                        // when they are empty. RemoveEmptyContainers above would have stripped them;
-                        // this guarantees schemes: [], themes: [], profiles: { defaults: {}, list: [] }
-                        // are always written, matching what Windows Terminal itself produces.
+                        // when they are empty, since Windows Terminal will refuse to load a
+                        // settings.json that is missing any of them.
                         EnsureRequiredKeys(existingJson);
 
                         // Serialize the merged JObject to a JSON string. Formatting.Indented matches

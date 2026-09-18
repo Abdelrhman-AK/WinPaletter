@@ -22,40 +22,27 @@ namespace WinPaletter.NativeMethods
         /// <param name="Path">The path of the File.</param>
         /// <param name="IconIndex">Optional index of the icon in the File. Default is 0.</param>
         /// <returns>An Icon object representing the extracted small icon.</returns>
-        public static object ExtractSmallIcon(string Path, int IconIndex = 0)
+        public static Icon ExtractSmallIcon(string path, int iconIndex = 0)
         {
-            // Create a null Icon object.
-            Icon ico = null;
+            IntPtr hLargeIcon = IntPtr.Zero;
+            IntPtr hSmallIcon = IntPtr.Zero;
 
-            // Make the nIconSize value (See the Msdn documents). 
-            // The LOWORD is the Large Icon Size. The HIWORD is the Small Icon Size.
-            // The largest size for an icon is 256.
-            uint LargeAndSmallSize = 256 << 16 | 16 & 0xFFFF;
+            uint iconSize = 16u;
 
-            // Initialize handles for large and small icons.
-            IntPtr hLrgIcon = IntPtr.Zero;
-            IntPtr hSmlIcon = IntPtr.Zero;
+            int result = Shell32.SHDefExtractIconW(path, iconIndex, 0, ref hLargeIcon, ref hSmallIcon, iconSize);
 
-            // Call the SHDefExtractIconW function to extract icons.
-            int result = Shell32.SHDefExtractIconW(Path, IconIndex, 0U, ref hLrgIcon, ref hSmlIcon, LargeAndSmallSize);
+            if (result != 0 || hSmallIcon == IntPtr.Zero) return null;
 
-            // Check if the extraction was successful (result == 0).
-            if (result == 0)
+            try
             {
-                // Dispose the existing Icon if not null.
-                if (ico is not null)
-                    ico.Dispose();
-
-                // If the small icon was created in unmanaged memory, clone it to managed memory and then delete the unmanaged icon.
-                if (hSmlIcon != IntPtr.Zero)
-                {
-                    ico = (Icon)Icon.FromHandle(hSmlIcon).Clone();
-                    User32.DestroyIcon(hSmlIcon);
-                }
+                return (Icon)Icon.FromHandle(hSmallIcon).Clone();
             }
+            finally
+            {
+                User32.DestroyIcon(hSmallIcon);
 
-            // Return the extracted small icon.
-            return ico;
+                if (hLargeIcon != IntPtr.Zero) User32.DestroyIcon(hLargeIcon);
+            }
         }
 
         /// <summary>

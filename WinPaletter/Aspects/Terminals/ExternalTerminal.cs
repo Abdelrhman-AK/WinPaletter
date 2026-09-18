@@ -1705,6 +1705,7 @@ namespace WinPaletter
         private void Button5_Click(object sender, EventArgs e)
         {
             using (FontDialog dlg = new() { Font = CMD_Preview.Font, FixedPitchOnly = !Program.Settings.WindowsTerminals.ListAllFonts })
+            using (UI.Dark.DarkWin32 dark = new())
             {
                 if (dlg.ShowDialog() == DialogResult.OK)
                 {
