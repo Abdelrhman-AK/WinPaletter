@@ -23,13 +23,6 @@ namespace WinPaletter
         public WinTerminal.Version SaveState;
         public string CCat;
 
-        // Set to true while TerSchemes.SelectedIndex/SelectedItem is being changed PROGRAMMATICALLY to
-        // reflect a profile's existing scheme (from TerProfiles_SelectedIndexChanged). Prevents
-        // TerSchemes_SelectedIndexChanged from treating that display sync as a real user pick and writing
-        // it back into the profile's ColorScheme - which is what silently corrupted a profile's real scheme
-        // (or its "use Default" null) into whatever scheme the display-only fallback happened to land on.
-        private bool _suppressSchemeSelectionHandling;
-
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
         {
             Process.Start(Links.Wiki.Terminals);
@@ -511,64 +504,54 @@ namespace WinPaletter
             {
                 SetDefaultsToScheme(TerSchemes.SelectedItem.ToString());
 
-                Scheme temp = new();
+                Scheme scheme = new();
 
-                if (TerSchemes.SelectedIndex == 0 && TerProfiles.SelectedIndex > 0)
+                bool isDefaultProfile = TerProfiles.SelectedIndex == 0;
+                bool isDefaultScheme = TerSchemes.SelectedIndex == 0;
+
+                Profile profile = isDefaultProfile ? _Terminal.Profiles.Defaults : _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1];
+
+                if (isDefaultScheme)
                 {
-                    temp = _Terminal.Schemes
-                        .FirstOrDefault(s => string.Equals(s.Name, _Terminal.Profiles.Defaults.ColorScheme?.ToString() ?? string.Empty, StringComparison.OrdinalIgnoreCase))
-                        ?? _Terminal.Schemes.FirstOrDefault();
+                    profile.ColorScheme = null;
 
-                    // Only clear the profile's ColorScheme when this was a genuine user pick of "(Default)" -
-                    // not when TerProfiles_SelectedIndexChanged set this index just to DISPLAY the profile's
-                    // existing (already-null) scheme while navigating.
-                    if (!_suppressSchemeSelectionHandling)
-                    {
-                        _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].ColorScheme = null;
-                    }
+                    scheme = isDefaultProfile
+                        ? _Terminal.Schemes.FirstOrDefault()
+                        : _Terminal.Schemes.FirstOrDefault(s =>
+                            string.Equals(
+                                s.Name,
+                                _Terminal.Profiles.Defaults.ColorScheme?.ToString(),
+                                StringComparison.OrdinalIgnoreCase))
+                          ?? _Terminal.Schemes.FirstOrDefault();
                 }
-                else if (TerSchemes.SelectedIndex > 0)
+                else
                 {
-                    // Same guard: don't persist a scheme that wasn't actually chosen by the user - this is
-                    // what previously corrupted a profile's scheme whenever the display-only "couldn't find a
-                    // match, falling back to index 1" branch in TerProfiles_SelectedIndexChanged fired.
-                    if (!_suppressSchemeSelectionHandling)
-                    {
-                        if (TerProfiles.SelectedIndex == 0)
-                        {
-                            _Terminal.Profiles.Defaults.ColorScheme = TerSchemes.SelectedItem.ToString();
-                        }
-                        else if (TerProfiles.SelectedIndex > 0)
-                        {
-                            _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].ColorScheme = TerSchemes.SelectedItem.ToString();
-                        }
-                    }
-
-                    temp = _Terminal.Schemes[TerSchemes.SelectedIndex - 1];
+                    scheme = _Terminal.Schemes[TerSchemes.SelectedIndex - 1];
+                    profile.ColorScheme = TerSchemes.SelectedItem.ToString();
                 }
 
-                TerBackground.BackColor = temp.Background;
-                TerForeground.BackColor = temp.Foreground;
-                TerSelection.BackColor = temp.SelectionBackground;
-                TerCursor.BackColor = temp.CursorColor;
+                TerBackground.BackColor = scheme.Background;
+                TerForeground.BackColor = scheme.Foreground;
+                TerSelection.BackColor = scheme.SelectionBackground;
+                TerCursor.BackColor = scheme.CursorColor;
 
-                TerBlack.BackColor = temp.Black;
-                TerBlue.BackColor = temp.Blue;
-                TerGreen.BackColor = temp.Green;
-                TerCyan.BackColor = temp.Cyan;
-                TerRed.BackColor = temp.Red;
-                TerPurple.BackColor = temp.Purple;
-                TerYellow.BackColor = temp.Yellow;
-                TerWhite.BackColor = temp.White;
+                TerBlack.BackColor = scheme.Black;
+                TerBlue.BackColor = scheme.Blue;
+                TerGreen.BackColor = scheme.Green;
+                TerCyan.BackColor = scheme.Cyan;
+                TerRed.BackColor = scheme.Red;
+                TerPurple.BackColor = scheme.Purple;
+                TerYellow.BackColor = scheme.Yellow;
+                TerWhite.BackColor = scheme.White;
 
-                TerBlackB.BackColor = temp.BrightBlack;
-                TerBlueB.BackColor = temp.BrightBlue;
-                TerGreenB.BackColor = temp.BrightGreen;
-                TerCyanB.BackColor = temp.BrightCyan;
-                TerRedB.BackColor = temp.BrightRed;
-                TerPurpleB.BackColor = temp.BrightPurple;
-                TerYellowB.BackColor = temp.BrightYellow;
-                TerWhiteB.BackColor = temp.BrightWhite;
+                TerBlackB.BackColor = scheme.BrightBlack;
+                TerBlueB.BackColor = scheme.BrightBlue;
+                TerGreenB.BackColor = scheme.BrightGreen;
+                TerCyanB.BackColor = scheme.BrightCyan;
+                TerRedB.BackColor = scheme.BrightRed;
+                TerPurpleB.BackColor = scheme.BrightPurple;
+                TerYellowB.BackColor = scheme.BrightYellow;
+                TerWhiteB.BackColor = scheme.BrightWhite;
 
                 if (IsShown) ApplyPreview(_Terminal);
             }
@@ -580,29 +563,17 @@ namespace WinPaletter
 
             string schemeName = (profile.ColorScheme ?? string.Empty).ToString();
 
-            _suppressSchemeSelectionHandling = true;
-            try
+            if (string.IsNullOrWhiteSpace(schemeName))
             {
-                if (string.IsNullOrWhiteSpace(schemeName))
-                {
-                    TerSchemes.SelectedIndex = 0;
-                }
-                else if (TerSchemes.Items.Contains(schemeName))
-                {
-                    TerSchemes.SelectedItem = schemeName;
-                }
-                else if (TerSchemes.Items.Count > 1)
-                {
-                    TerSchemes.SelectedIndex = 1;
-                }
-                else
-                {
-                    TerSchemes.SelectedIndex = 0;
-                }
+                TerSchemes.SelectedIndex = 0;
             }
-            finally
+            else if (TerSchemes.Items.Contains(schemeName))
             {
-                _suppressSchemeSelectionHandling = false;
+                TerSchemes.SelectedItem = schemeName;
+            }
+            else
+            {
+                TerSchemes.SelectedIndex = 0;
             }
 
             TerBackImage.Text = profile.BackgroundImage;

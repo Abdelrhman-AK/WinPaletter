@@ -111,7 +111,7 @@ namespace WinPaletter.Theme.Structures
                 /// Gets or sets the default profile settings.
                 /// </summary>
                 [JsonProperty("defaults")]
-                public Profile Defaults { get; set; } = new() { ColorScheme = new() { Dark = "Campbell", Light = "Campbell" } };
+                public Profile Defaults { get; set; } = new() { ColorScheme = new() /*{ Dark = "Campbell", Light = "Campbell" }*/ };
 
                 /// <summary>
                 /// Gets or sets the list of profiles.
