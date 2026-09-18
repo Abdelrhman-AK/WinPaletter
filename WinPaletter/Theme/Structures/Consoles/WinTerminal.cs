@@ -50,7 +50,7 @@ namespace WinPaletter.Theme.Structures
         private string _signature;
 
         [JsonIgnore]
-        private string signatureEnabled => $"{_signature}_Enabled";   
+        private string signatureEnabled => $"{_signature}_Enabled";
 
         /// <summary>
         /// Controls if this feature is enabled or not
@@ -108,10 +108,15 @@ namespace WinPaletter.Theme.Structures
             public class Profiles : ICloneable
             {
                 /// <summary>
-                /// Gets or sets the default profile settings.
+                /// Gets or sets the default profile settings. Initialised to the Windows Terminal
+                /// built-in default scheme (Campbell), mirroring Windows Terminal's own runtime
+                /// defaults, so serialisation always produces a real scheme name rather than null.
                 /// </summary>
                 [JsonProperty("defaults")]
-                public Profile Defaults { get; set; } = new() { ColorScheme = new() /*{ Dark = "Campbell", Light = "Campbell" }*/ };
+                public Profile Defaults { get; set; } = new()
+                {
+                    ColorScheme = new ColorScheme { Dark = "Campbell", Light = "Campbell" }
+                };
 
                 /// <summary>
                 /// Gets or sets the list of profiles.
@@ -436,21 +441,20 @@ namespace WinPaletter.Theme.Structures
                 }
 
                 /// <summary>
-                /// Returns string format of current color scheme
+                /// Returns a single string that identifies this color scheme. Prefers the pair's
+                /// shared value when Dark and Light agree; falls back to whichever is set, and
+                /// finally to the Windows Terminal built-in default ("Campbell") so callers never
+                /// receive null.
                 /// </summary>
                 /// <returns></returns>
                 public override string ToString()
                 {
-                    return Light ?? Dark;
+                    if (!string.IsNullOrWhiteSpace(Dark) && !string.IsNullOrWhiteSpace(Light) && Dark == Light)
+                    {
+                        return Dark;
+                    }
 
-                    //// Check if dark and light are the same; if so, return a single value
-                    //if (Dark == Light)
-                    //{
-                    //    return Dark;
-                    //}
-
-                    //// Otherwise, return the ColorScheme object as JSON
-                    //return JsonConvert.SerializeObject(this);
+                    return Light ?? Dark ?? "Campbell";
                 }
             }
 
@@ -583,19 +587,22 @@ namespace WinPaletter.Theme.Structures
             private class ColorSchemeConverter : JsonConverter<ColorScheme>
             {
                 /// <summary>
-                /// Write values in JSON format
+                /// Write values in JSON format. Never writes null - falls back to "Campbell" so the
+                /// key is always present and cannot be silently dropped by the merge step.
                 /// </summary>
                 /// <param name="writer"></param>
                 /// <param name="value"></param>
                 /// <param name="serializer"></param>
                 public override void WriteJson(JsonWriter writer, ColorScheme value, JsonSerializer serializer)
                 {
-                    // Use the custom ToString method for serialization
-                    writer.WriteValue(value.ToString());
+                    string serialized = value?.ToString();
+
+                    writer.WriteValue(string.IsNullOrWhiteSpace(serialized) ? "Campbell" : serialized);
                 }
 
                 /// <summary>
-                /// Read values in JSON format and convert them to <see cref="ColorScheme"/> objects
+                /// Read values in JSON format and convert them to <see cref="ColorScheme"/> objects.
+                /// Missing values fall back to Campbell so neither slot is ever null.
                 /// </summary>
                 /// <param name="reader"></param>
                 /// <param name="objectType"></param>
@@ -608,17 +615,25 @@ namespace WinPaletter.Theme.Structures
                     if (reader.TokenType == JsonToken.String)
                     {
                         // If it's a string, create a ColorScheme with both dark and light set to the string value
-                        return new() { Dark = reader.Value.ToString(), Light = reader.Value.ToString() };
+                        string s = reader.Value?.ToString();
+                        if (string.IsNullOrWhiteSpace(s)) s = "Campbell";
+                        return new() { Dark = s, Light = s };
                     }
                     else if (reader.TokenType == JsonToken.StartObject)
                     {
                         // If it's an object, use the default deserialization for ColorScheme
-                        return serializer.Deserialize<ColorScheme>(reader);
+                        ColorScheme result = serializer.Deserialize<ColorScheme>(reader) ?? new ColorScheme();
+
+                        // Neither slot may end up null - fall back to the other slot, then to Campbell.
+                        if (string.IsNullOrWhiteSpace(result.Dark)) result.Dark = string.IsNullOrWhiteSpace(result.Light) ? "Campbell" : result.Light;
+                        if (string.IsNullOrWhiteSpace(result.Light)) result.Light = result.Dark;
+
+                        return result;
                     }
                     else
                     {
-                        // If it's neither a string nor an object, create a ColorScheme with both dark and light set to null
-                        return new ColorScheme { Dark = null, Light = null };
+                        // Missing colorScheme: inherit the Windows Terminal built-in default.
+                        return new ColorScheme { Dark = "Campbell", Light = "Campbell" };
                     }
                 }
             }
@@ -1386,7 +1401,7 @@ namespace WinPaletter.Theme.Structures
             BrightPurple = Color.FromArgb(197, 119, 221),
             BrightRed = Color.FromArgb(223, 108, 117),
             BrightWhite = Color.FromArgb(255, 255, 255),
-            BrightYellow = Color.FromArgb(228, 192, 122),
+            BrightYellow = Color.FromArgb(228, 196, 122),
             CursorColor = Color.FromArgb(79, 82, 93),
             Cyan = Color.FromArgb(9, 151, 179),
             Foreground = Color.FromArgb(56, 58, 66),
@@ -1687,6 +1702,86 @@ namespace WinPaletter.Theme.Structures
             }
 
             /// <summary>
+            /// Layering pass that runs on the raw settings JSON before deserialization.
+            /// <para>
+            /// Windows Terminal's own runtime semantics are: a value in a profile overrides the same
+            /// value in <c>profiles.defaults</c>; if the profile omits the key entirely, the value
+            /// from <c>profiles.defaults</c> is used. After JSON has been deserialized into the C#
+            /// model, "key omitted" and "key present with the CLR default" are indistinguishable for
+            /// value-typed members (<c>bool</c>, <c>int</c>, <c>double</c>, enums, <c>Color</c>) -
+            /// <c>useAcrylic</c> omitted becomes <c>false</c>, <c>opacity</c> omitted becomes <c>100</c>,
+            /// and so on. This method restores the "omitted means inherit" semantics by copying the
+            /// defaults' value into any profile that did not carry the key, so that deserialization
+            /// then sees the inherited value as if the profile had set it.
+            /// </para>
+            /// <para>
+            /// Reference-typed members (<c>colorScheme</c>, <c>icon</c>, <c>tabTitle</c>, <c>font</c>)
+            /// are handled too, but the model-side <c>InheritNullValuesFromDefaults()</c> pass is what
+            /// guarantees their inheritance in the WinPaletterFile path where no raw JSON exists.
+            /// </para>
+            /// </summary>
+            public static void ApplyProfileDefaultsLayering(JObject root)
+            {
+                JObject defaults = root["profiles"]?["defaults"] as JObject;
+                if (defaults == null) return;
+
+                if (root["profiles"]?["list"] is not JArray profiles) return;
+
+                foreach (JObject profile in profiles.OfType<JObject>())
+                {
+                    // Top-level scalar members.
+                    InheritMissingKey(profile, defaults, "useAcrylic");
+                    InheritMissingKey(profile, defaults, "opacity");
+                    InheritMissingKey(profile, defaults, "cursorShape");
+                    InheritMissingKey(profile, defaults, "cursorHeight");
+                    InheritMissingKey(profile, defaults, "backgroundImageOpacity");
+                    InheritMissingKey(profile, defaults, "tabColor");
+                    InheritMissingKey(profile, defaults, "colorScheme");
+                    InheritMissingKey(profile, defaults, "backgroundImage");
+                    InheritMissingKey(profile, defaults, "commandline");
+                    InheritMissingKey(profile, defaults, "icon");
+                    InheritMissingKey(profile, defaults, "tabTitle");
+
+                    // "font" is an object in JSON and has its own three sub-keys. Only layer the
+                    // sub-keys the profile's font object actually omits; leave whatever the profile
+                    // set alone.
+                    if (profile["font"] is JObject profileFont)
+                    {
+                        if (defaults["font"] is JObject defaultFont)
+                        {
+                            InheritMissingKey(profileFont, defaultFont, "face");
+                            InheritMissingKey(profileFont, defaultFont, "size");
+                            InheritMissingKey(profileFont, defaultFont, "weight");
+                        }
+                    }
+                    else
+                    {
+                        // Profile has no "font" at all - inherit the whole object.
+                        JToken defaultFont = defaults["font"];
+                        if (defaultFont != null)
+                        {
+                            profile["font"] = defaultFont.DeepClone();
+                        }
+                    }
+                }
+            }
+
+            /// <summary>
+            /// If <paramref name="source"/> does not contain the given property, copies it from
+            /// <paramref name="donor"/>. Used to implement "omitted means inherit from defaults" on
+            /// raw JSON, before the value-typed defaults of the C# model can mask the omission.
+            /// </summary>
+            private static void InheritMissingKey(JObject source, JObject donor, string propertyName)
+            {
+                if (source[propertyName] != null) return;
+
+                JToken donorValue = donor[propertyName];
+                if (donorValue == null) return;
+
+                source[propertyName] = donorValue.DeepClone();
+            }
+
+            /// <summary>
             /// Recursively visits every node in the tree. "currentSchemeName" tracks which color scheme
             /// applies to "terminalBackground" lookups at this point - it's re-derived whenever we enter a
             /// profile object (each profile can reference its own scheme) and inherited by everything
@@ -1905,10 +2000,18 @@ namespace WinPaletter.Theme.Structures
 
                             if (!string.IsNullOrEmpty(JSON_String))
                             {
-                                // Parse to a JObject first so theme keyword resolution can look up "profiles"/"schemes" data directly by name in the raw JSON, regardless
-                                // of where "themes" appears relative to them in the source file.
+                                // Parse to a JObject first so:
+                                //  1. theme keyword resolution can look up "profiles"/"schemes" data
+                                //     directly by name in the raw JSON, regardless of where "themes"
+                                //     appears relative to them in the source file, and
+                                //  2. profile->defaults layering can distinguish "key omitted" from
+                                //     "key present with a value equal to the CLR default" for value-typed
+                                //     members like useAcrylic (bool), opacity (int), etc.
                                 JObject root = JObject.Parse(JSON_String);
+
                                 JsonHelper.ResolveThemeBackgroundKeywords(root);
+                                JsonHelper.ApplyProfileDefaultsLayering(root);
+
                                 result = root.ToObject<WinTerminal>(JsonHelper.Serializer);
                             }
                             else
@@ -1930,6 +2033,11 @@ namespace WinPaletter.Theme.Structures
                         Schemes = result.Schemes.Count == 0 ? DefaultSchemes : result.Schemes;
                         Themes = result.Themes;
                         UseAcrylicInTabRow = result.UseAcrylicInTabRow;
+
+                        // Safety net for reference-typed members (colorScheme/icon/tabTitle/font) that
+                        // could still be null for profiles whose defaults also lacked the key, or which
+                        // reached this point through a code path that bypassed the raw-JSON layering.
+                        InheritNullValuesFromDefaults();
 
                         break;
                     }
@@ -1953,6 +2061,11 @@ namespace WinPaletter.Theme.Structures
                             }
                         }
 
+                        // No raw JSON is available on this path, so the JSON pre-pass cannot run.
+                        // Fall back to the reference-typed-only inheritance here; value-typed members
+                        // are expected to have been baked into the .wpth file at save time.
+                        InheritNullValuesFromDefaults();
+
                         Program.Log?.Write(LogEventLevel.Information, $"Windows Terminal {(Version == Version.Stable ? "Stable" : "Preview")} settings have been loaded from WinPaletter theme file `{File}`.");
 
                         break;
@@ -1968,6 +2081,77 @@ namespace WinPaletter.Theme.Structures
         }
 
         /// <summary>
+        /// For every profile in <see cref="Profiles.List"/>, fills any null/missing reference-typed
+        /// field from <see cref="Types.Profiles.Defaults"/>. Mirrors Windows Terminal's runtime
+        /// behaviour where a profile only overrides what it explicitly sets, and everything else is
+        /// inherited from profiles.defaults.
+        /// <para>
+        /// This method can only see <c>null</c> for reference-typed members. Value-typed members
+        /// (<c>bool</c>, <c>int</c>, <c>double</c>, enums, <c>Color</c>) cannot be <c>null</c> after
+        /// deserialization, so their "omitted means inherit" semantics must be established on the raw
+        /// JSON instead - see <see cref="JsonHelper.ApplyProfileDefaultsLayering"/>.
+        /// </para>
+        /// </summary>
+        private void InheritNullValuesFromDefaults()
+        {
+            if (Profiles?.Defaults == null || Profiles.List == null) return;
+
+            Profile defaults = Profiles.Defaults;
+
+            foreach (Profile profile in Profiles.List)
+            {
+                if (profile == null || ReferenceEquals(profile, defaults)) continue;
+
+                if (profile.ColorScheme == null)
+                {
+                    profile.ColorScheme = defaults.ColorScheme;
+                }
+
+                if (profile.Icon == null)
+                {
+                    profile.Icon = defaults.Icon;
+                }
+
+                if (profile.TabTitle == null)
+                {
+                    profile.TabTitle = defaults.TabTitle;
+                }
+
+                if (profile.Font == null)
+                {
+                    profile.Font = defaults.Font != null
+                        ? (FontSettings)defaults.Font.Clone()
+                        : new FontSettings();
+                }
+                else
+                {
+                    if (defaults.Font != null)
+                    {
+                        if (profile.Font.Face == null)
+                        {
+                            profile.Font.Face = defaults.Font.Face;
+                        }
+
+                        if (profile.Font.Size <= 0)
+                        {
+                            profile.Font.Size = defaults.Font.Size;
+                        }
+                    }
+                }
+
+                if (string.IsNullOrEmpty(profile.BackgroundImage))
+                {
+                    profile.BackgroundImage = defaults.BackgroundImage ?? string.Empty;
+                }
+
+                if (string.IsNullOrEmpty(profile.Commandline))
+                {
+                    profile.Commandline = defaults.Commandline ?? string.Empty;
+                }
+            }
+        }
+
+        /// <summary>
         /// Save Windows Terminal settings data
         /// </summary>
         /// <param name="File">File into which data will be saved, either JSON or WinPaletter theme File</param>
@@ -1977,6 +2161,308 @@ namespace WinPaletter.Theme.Structures
         public string Save(Mode Mode, Version Version = Version.Stable)
         {
             return Save(null, Mode, Version);
+        }
+
+        /// <summary>
+        /// The Windows Terminal built-in defaults, expressed as a JObject, used as the baseline
+        /// for the compaction pass during save. Anything that matches the corresponding entry here
+        /// is omitted from the output, exactly like Windows Terminal itself does.
+        /// </summary>
+        private static JObject GetBuiltInDefaults()
+        {
+            // Build a JObject that mirrors what Windows Terminal writes when a profile/scheme/theme does not override anything.
+            // These values match the WT schema defaults documented at https://learn.microsoft.com/windows/terminal/customize-settings/profile-general
+            return new JObject
+            {
+                ["$help"] = "https://aka.ms/terminal-documentation",
+                ["$schema"] = "https://aka.ms/terminal-profiles-schema",
+                ["defaultProfile"] = null,
+                ["profiles"] = new JObject
+                {
+                    ["defaults"] = new JObject(),
+                    ["list"] = new JArray()
+                },
+                ["schemes"] = new JArray(),
+                ["themes"] = new JArray(),
+                ["actions"] = new JArray(),
+                ["keybindings"] = new JArray(),
+                ["useAcrylicInTabRow"] = false,
+                ["theme"] = "system",
+                ["showTabsInTitlebar"] = true,
+                ["showTerminalTitleInTitlebar"] = true,
+                ["initialCols"] = 120,
+                ["initialRows"] = 30,
+                ["launchMode"] = "default",
+                ["confirmCloseAllTabs"] = true,
+                ["startOnUserLogin"] = false,
+                ["snapToGridOnResize"] = true,
+                ["tabWidthMode"] = "equal",
+                ["alwaysShowTabs"] = true,
+                ["copyOnSelect"] = false,
+                ["copyFormatting"] = false,
+                ["focusFollowMouse"] = false,
+                ["wordDelimiters"] = " /\\()\"'-:,.;<>~!@#$%^&*|+=[]{}~?\u2502",
+                ["trimBlockSelection"] = true,
+                ["debugFeaturesEnabled"] = false,
+                ["startupActions"] = "nt",
+                ["windowingBehavior"] = "useNew",
+                ["useTabSwitcher"] = true,
+                ["disableAnimations"] = false
+            };
+        }
+
+        /// <summary>
+        /// Windows Terminal's built-in Campbell scheme, used as the baseline for compacting user
+        /// schemes. Any key in a user scheme that equals Campbell's corresponding key is omitted.
+        /// </summary>
+        private static JObject GetBuiltInScheme()
+        {
+            // Serialize the first DefaultSchemes entry (Campbell) through the same serializer used
+            // elsewhere, so the JSON representation matches exactly what gets written for user schemes.
+            return JObject.FromObject(DefaultSchemes[0], JsonHelper.Serializer);
+        }
+
+        /// <summary>
+        /// Windows Terminal's built-in default theme(s), used as the baseline for compacting user
+        /// themes. Windows Terminal does not ship named themes by default, so the baseline is empty
+        /// apart from the implicit "applicationTheme" and the two tab/tabRow color slots.
+        /// </summary>
+        private static JObject GetBuiltInTheme()
+        {
+            return new JObject
+            {
+                ["window"] = new JObject
+                {
+                    ["applicationTheme"] = "system"
+                },
+                ["tab"] = new JObject(),
+                ["tabRow"] = new JObject()
+            };
+        }
+
+        /// <summary>
+        /// Windows Terminal's built-in profile defaults, used as the baseline for compacting both
+        /// <c>profiles.defaults</c> and individual profiles. Keys matching these values are omitted,
+        /// exactly like Windows Terminal itself does.
+        /// </summary>
+        private static JObject GetBuiltInProfileDefaults()
+        {
+            return new JObject
+            {
+                ["colorScheme"] = "Campbell",
+                ["cursorShape"] = "bar",
+                ["cursorHeight"] = 25,
+                ["useAcrylic"] = false,
+                ["opacity"] = 100,
+                ["backgroundImageOpacity"] = 1.0,
+                ["font"] = new JObject
+                {
+                    ["face"] = "Cascadia Mono",
+                    ["size"] = 12,
+                    ["weight"] = "normal"
+                }
+            };
+        }
+
+        /// <summary>
+        /// Keys that Windows Terminal's schema requires to be present, even when empty. These are
+        /// re-added after every compaction pass, because Windows Terminal will refuse to load a
+        /// settings.json that is missing any of them.
+        /// <para>
+        /// Path syntax: "/" separates JSON object properties; a leading "/" is the document root.
+        /// Each entry also specifies the kind of container (object or array) that must exist at
+        /// that path.
+        /// </para>
+        /// </summary>
+        private static readonly (string Path, JTokenType Kind)[] RequiredKeys =
+        [
+            ("/profiles",            JTokenType.Object),
+            ("/profiles/defaults",   JTokenType.Object),
+            ("/profiles/list",       JTokenType.Array),
+            ("/schemes",             JTokenType.Array),
+            ("/themes",              JTokenType.Array)
+        ];
+
+        /// <summary>
+        /// Ensures every key listed in <see cref="RequiredKeys"/> exists at its expected path with
+        /// the expected container type. Missing keys are created empty.
+        /// </summary>
+        private static void EnsureRequiredKeys(JObject root)
+        {
+            foreach ((string path, JTokenType kind) in RequiredKeys)
+            {
+                EnsureRequiredKey(root, path, kind);
+            }
+        }
+
+        private static void EnsureRequiredKey(JObject root, string path, JTokenType kind)
+        {
+            string[] segments = path.Split(['/'], StringSplitOptions.RemoveEmptyEntries);
+
+            JObject current = root;
+
+            for (int i = 0; i < segments.Length - 1; i++)
+            {
+                string segment = segments[i];
+
+                if (current[segment] is not JObject next)
+                {
+                    // Missing or wrong type intermediate: replace with a fresh object.
+                    next = new JObject();
+                    current[segment] = next;
+                }
+
+                current = next;
+            }
+
+            string leaf = segments[segments.Length - 1];
+            JToken existing = current[leaf];
+
+            if (existing == null || existing.Type != kind)
+            {
+                current[leaf] = kind == JTokenType.Array ? new JArray() : new JObject();
+            }
+        }
+
+        /// <summary>
+        /// Removes from <paramref name="value"/> any property whose value is deep-equal to the
+        /// corresponding property in <paramref name="reference"/>. Recurses into nested objects
+        /// and arrays. After this runs, <paramref name="value"/> contains only the keys that
+        /// actually differ from the reference - which is exactly the "compact" representation
+        /// Windows Terminal itself writes.
+        /// <para>
+        /// Special cases:
+        /// <list type="bullet">
+        /// <item>For <c>profiles.list</c>, the compaction is per-profile (each profile has its own
+        /// reference: <c>profiles.defaults</c> after its own compaction).</item>
+        /// <item>For <c>schemes</c>, each scheme is compacted against the built-in Campbell scheme.</item>
+        /// <item>For <c>themes</c>, each theme is compacted against the built-in theme defaults.</item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private static void CompactAgainst(JObject value, JObject reference)
+        {
+            foreach (JProperty property in value.Properties().ToList())
+            {
+                JToken refValue = reference[property.Name];
+
+                if (refValue == null)
+                {
+                    // No matching reference key: keep it. But still recurse into it if it's an object,
+                    // to strip empty nested objects.
+                    if (property.Value is JObject childObj) RemoveEmptyContainers(childObj);
+                    continue;
+                }
+
+                if (property.Value is JObject obj && refValue is JObject refObj)
+                {
+                    CompactAgainst(obj, refObj);
+
+                    // If the object is now empty, drop it entirely.
+                    if (!obj.Properties().Any())
+                    {
+                        property.Remove();
+                    }
+                    else
+                    {
+                        RemoveEmptyContainers(obj);
+                    }
+                }
+                else if (property.Value is JArray arr && refValue is JArray refArr)
+                {
+                    // Arrays are not compacted element-by-element against a reference; they are
+                    // simply stripped of empty entries and dropped entirely if empty.
+                    StripEmptyEntries(arr);
+
+                    if (!arr.Any())
+                    {
+                        property.Remove();
+                    }
+                }
+                else if (JToken.DeepEquals(property.Value, refValue))
+                {
+                    property.Remove();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Removes any property whose value is null, an empty object, or an empty array - recursively.
+        /// </summary>
+        private static void RemoveEmptyContainers(JObject obj)
+        {
+            foreach (JProperty property in obj.Properties().ToList())
+            {
+                JToken value = property.Value;
+
+                if (value.Type == JTokenType.Null)
+                {
+                    property.Remove();
+                    continue;
+                }
+
+                if (value is JObject childObj)
+                {
+                    RemoveEmptyContainers(childObj);
+
+                    if (!childObj.Properties().Any())
+                    {
+                        property.Remove();
+                    }
+                }
+                else if (value is JArray childArr)
+                {
+                    StripEmptyEntries(childArr);
+
+                    if (!childArr.Any())
+                    {
+                        property.Remove();
+                    }
+                }
+                else if (value.Type == JTokenType.String && string.IsNullOrEmpty(value.Value<string>()))
+                {
+                    // Do not strip empty strings in general - the "name" or "backgroundImage" key may
+                    // legitimately be an empty string. Only strip if the key is one whose empty value
+                    // is equivalent to "unset". Windows Terminal itself keeps "" for backgroundImage
+                    // when present, so leave empty strings alone.
+                }
+            }
+        }
+
+        /// <summary>
+        /// Removes empty entries from an array. Array elements are not compared against anything.
+        /// </summary>
+        private static void StripEmptyEntries(JArray arr)
+        {
+            for (int i = arr.Count - 1; i >= 0; i--)
+            {
+                JToken item = arr[i];
+
+                if (item.Type == JTokenType.Null)
+                {
+                    arr.RemoveAt(i);
+                    continue;
+                }
+
+                if (item is JObject obj)
+                {
+                    RemoveEmptyContainers(obj);
+
+                    if (!obj.Properties().Any())
+                    {
+                        arr.RemoveAt(i);
+                    }
+                }
+                else if (item is JArray innerArr)
+                {
+                    StripEmptyEntries(innerArr);
+
+                    if (!innerArr.Any())
+                    {
+                        arr.RemoveAt(i);
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -2061,48 +2547,105 @@ namespace WinPaletter.Theme.Structures
                         }
 
                         // Create a new JObject from the current instance
-                        JObject newJson = JObject.FromObject(this);
+                        JObject newJson = JObject.FromObject(this, JsonHelper.Serializer);
 
                         // Merge properties from newJson to existingJson
                         Merge(existingJson, newJson);
 
-                        // Get schemes from new JSON unmodified (solve the problem of schemes not being merged correctly)
+                        // Schemes from new JSON are taken unmodified first, then compacted against
+                        // the built-in Campbell scheme, so user schemes only carry what differs.
                         existingJson["schemes"] = newJson["schemes"];
 
-                        // Remove default properties from other profiles, so Windows Terminal will handle this and apply default values automatically (Like what it actually does)
+                        // Compact the whole document against the Windows Terminal built-in defaults.
+                        // This removes:
+                        //   - top-level keys whose value equals the built-in default,
+                        //   - profiles.defaults keys whose value equals the built-in profile defaults,
+                        //   - per-profile keys whose value equals the (possibly already-compacted) defaults,
+                        //   - per-scheme keys whose value equals the built-in Campbell scheme,
+                        //   - per-theme keys whose value equals the built-in theme defaults,
+                        //   - empty objects and empty arrays everywhere.
+                        JObject builtInDefaults = GetBuiltInDefaults();
+                        CompactAgainst(existingJson, builtInDefaults);
+
+                        // profiles.list: compact each profile against profiles.defaults.
+                        if (existingJson["profiles"] is JObject profilesObj)
                         {
-                            Program.Log?.Write(LogEventLevel.Information, $"Removing default properties from other profiles, so Windows Terminal will handle this and apply default values automatically (Like what it actually does).");
+                            JObject defaultsObj = profilesObj["defaults"] as JObject;
 
-                            // Retrieve the list of profiles and the defaults JObject
-                            JArray profilesList = (JArray)existingJson["profiles"]["list"];
-                            JObject defaults = existingJson["profiles"]["defaults"] as JObject;
-
-                            for (int i = 0; i < profilesList.Count; i++)
+                            if (profilesObj["list"] is JArray profilesList && defaultsObj != null)
                             {
-                                // Retrieve each profile from the list
-                                JObject profile = (JObject)profilesList[i];
-
-                                // Remove default properties from the profile
-                                profile = RemoveDefaultProperties(profile, defaults);
-
-                                // Remove the profile if it is empty
-                                if (!profile.Properties().Any())
+                                foreach (JObject profile in profilesList.OfType<JObject>())
                                 {
-                                    profilesList.RemoveAt(i);
-                                    i--;
+                                    CompactAgainst(profile, defaultsObj);
                                 }
-                                else
+
+                                // Remove any profile that became empty (all its keys matched the defaults).
+                                for (int i = profilesList.Count - 1; i >= 0; i--)
                                 {
-                                    // Put the modified profile back into the list
-                                    profilesList[i] = profile;
+                                    if (profilesList[i] is JObject p && !p.Properties().Any())
+                                    {
+                                        profilesList.RemoveAt(i);
+                                    }
                                 }
                             }
 
-                            // Update the profiles list in the existingJson JObject
-                            existingJson["profiles"]["list"] = profilesList;
+                            // profiles.defaults itself: compact against the built-in profile defaults.
+                            if (defaultsObj != null)
+                            {
+                                CompactAgainst(defaultsObj, GetBuiltInProfileDefaults());
+                            }
                         }
 
-                        // Serialize the merged JObject to a JSON string
+                        // schemes: compact each against the built-in Campbell scheme.
+                        if (existingJson["schemes"] is JArray schemesArr)
+                        {
+                            JObject builtInScheme = GetBuiltInScheme();
+
+                            foreach (JObject scheme in schemesArr.OfType<JObject>())
+                            {
+                                CompactAgainst(scheme, builtInScheme);
+                            }
+
+                            // Remove empty schemes (a scheme whose only content was "name" equal to Campbell is meaningless; drop it).
+                            for (int i = schemesArr.Count - 1; i >= 0; i--)
+                            {
+                                if (schemesArr[i] is JObject s && !s.Properties().Any())
+                                {
+                                    schemesArr.RemoveAt(i);
+                                }
+                            }
+                        }
+
+                        // themes: compact each against the built-in theme defaults.
+                        if (existingJson["themes"] is JArray themesArr)
+                        {
+                            JObject builtInTheme = GetBuiltInTheme();
+
+                            foreach (JObject theme in themesArr.OfType<JObject>())
+                            {
+                                CompactAgainst(theme, builtInTheme);
+                            }
+
+                            for (int i = themesArr.Count - 1; i >= 0; i--)
+                            {
+                                if (themesArr[i] is JObject t && !t.Properties().Any())
+                                {
+                                    themesArr.RemoveAt(i);
+                                }
+                            }
+                        }
+
+                        // Final pass: strip any remaining nulls / empty containers from the root.
+                        RemoveEmptyContainers(existingJson);
+
+                        // Re-add the keys that Windows Terminal's schema requires to be present, even
+                        // when they are empty. RemoveEmptyContainers above would have stripped them;
+                        // this guarantees schemes: [], themes: [], profiles: { defaults: {}, list: [] }
+                        // are always written, matching what Windows Terminal itself produces.
+                        EnsureRequiredKeys(existingJson);
+
+                        // Serialize the merged JObject to a JSON string. Formatting.Indented matches
+                        // what Windows Terminal itself writes.
                         string result = existingJson.ToString(Formatting.Indented);
 
                         // Take ownership of Windows Terminal settings JSON File

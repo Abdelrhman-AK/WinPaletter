@@ -86,6 +86,18 @@ namespace WinPaletter.UI.Simulation
 
         #endregion
 
+        #region Cached GDI Resources
+
+        // Cached fonts — created once, reused on every paint. The tab-icon font (_iconFont) is NOT cached because the original code
+        // recreates it on every paint based on OS detection, and its lifecycle is scoped to a single OnPaint call.
+        private static Font _tabTitleFont = new("Segoe UI", 8f, FontStyle.Bold);
+        private static Font _tabRegularFont = new("Segoe UI", 8f, FontStyle.Regular);
+        private static Font _closeIconFont = new("Segoe MDL2 Assets", 6f, FontStyle.Regular);
+        private static Font _iconFont_W11 = new("Segoe Fluent Icons", 12f);
+        private static Font _iconFont_W10 = new("Segoe MDL2 Assets", 12f);
+
+        #endregion
+
         #region Properties
 
         private float _Opacity = 1f;
@@ -356,7 +368,8 @@ namespace WinPaletter.UI.Simulation
             }
         }
 
-        private string _tabIconButItIsString = "";
+        private static string _tabIconButItIsString_Default = "";
+        private string _tabIconButItIsString = _tabIconButItIsString_Default;
         public string TabIconButItIsString
         {
             get => _tabIconButItIsString;
@@ -458,6 +471,25 @@ namespace WinPaletter.UI.Simulation
             NoiseBack();
         }
 
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Timer.Tick -= Timer_Tick;
+                Timer.Dispose();
+
+                _tabTitleFont?.Dispose();
+                _tabRegularFont?.Dispose();
+                _closeIconFont?.Dispose();
+
+                img?.Dispose();
+                adaptedBack?.Dispose();
+                adaptedBackBlurred?.Dispose();
+            }
+
+            base.Dispose(disposing);
+        }
+
         #endregion
 
         #region Methods
@@ -526,8 +558,8 @@ namespace WinPaletter.UI.Simulation
             if ((Program.Style.RoundedCorners | ForcedRoundCorner) & Radius > 0)
             {
                 using (GraphicsPath path = RoundedSemiRectangle(Rectangle, Radius))
+                using (Region reg = new(path))
                 {
-                    Region reg = new(path);
                     Graphics.Clip = reg;
                     Graphics.DrawImage(Image, Rectangle);
                     Graphics.ResetClip();
@@ -578,47 +610,29 @@ namespace WinPaletter.UI.Simulation
             {
                 if (!Light)
                 {
-                    if (Color_Titlebar == Color.FromArgb(0, 0, 0, 0))
-                        Color_Titlebar = Color.FromArgb(46, 46, 46);
-                    if (Color_TabFocused == Color.FromArgb(0, 0, 0, 0))
-                        Color_TabFocused = Color_Background;
+                    if (Color_Titlebar == Color.FromArgb(0, 0, 0, 0))  Color_Titlebar = Color.FromArgb(46, 46, 46);
+                    if (Color_TabFocused == Color.FromArgb(0, 0, 0, 0)) Color_TabFocused = Color_Background;
 
                     if (Color_TabUnFocused == Color.FromArgb(0, 0, 0, 0))
                     {
-                        if (Color_TabFocused == Color_Background)
-                        {
-                            Color_TabUnFocused = Color_Titlebar;
-                        }
-                        else
-                        {
-                            Color_TabUnFocused = Color_TabFocused.Dark();
-                        }
+                        if (Color_TabFocused == Color_Background) Color_TabUnFocused = Color_Titlebar;
+                        else Color_TabUnFocused = Color_TabFocused.Dark();
                     }
 
-                    if (Color_Titlebar_Unfocused == Color.FromArgb(0, 0, 0, 0))
-                        Color_Titlebar_Unfocused = Color.FromArgb(46, 46, 46);
+                    if (Color_Titlebar_Unfocused == Color.FromArgb(0, 0, 0, 0)) Color_Titlebar_Unfocused = Color.FromArgb(46, 46, 46);
                 }
                 else
                 {
-                    if (Color_Titlebar == Color.FromArgb(0, 0, 0, 0))
-                        Color_Titlebar = Color.FromArgb(232, 232, 232);
-                    if (Color_TabFocused == Color.FromArgb(0, 0, 0, 0))
-                        Color_TabFocused = Color_Background;
+                    if (Color_Titlebar == Color.FromArgb(0, 0, 0, 0)) Color_Titlebar = Color.FromArgb(232, 232, 232);
+                    if (Color_TabFocused == Color.FromArgb(0, 0, 0, 0)) Color_TabFocused = Color_Background;
 
                     if (Color_TabUnFocused == Color.FromArgb(0, 0, 0, 0))
                     {
-                        if (Color_TabFocused == Color_Background)
-                        {
-                            Color_TabUnFocused = Color_Titlebar;
-                        }
-                        else
-                        {
-                            Color_TabUnFocused = Color_TabFocused.Light();
-                        }
+                        if (Color_TabFocused == Color_Background) Color_TabUnFocused = Color_Titlebar;
+                        else Color_TabUnFocused = Color_TabFocused.Light();
                     }
 
-                    if (Color_Titlebar_Unfocused == Color.FromArgb(0, 0, 0, 0))
-                        Color_Titlebar_Unfocused = Color.FromArgb(255, 255, 255);
+                    if (Color_Titlebar_Unfocused == Color.FromArgb(0, 0, 0, 0)) Color_Titlebar_Unfocused = Color.FromArgb(255, 255, 255);
                 }
             }
             else if (!Light)
@@ -660,8 +674,7 @@ namespace WinPaletter.UI.Simulation
                 {
                     G.FillRoundedRect(br, Rect);
                 }
-                if (BackImage is not null)
-                    G.DrawRoundImage(img, Rect);
+                if (BackImage is not null) G.DrawRoundImage(img, Rect);
             }
             else
             {
@@ -670,20 +683,25 @@ namespace WinPaletter.UI.Simulation
                 {
                     G.FillRoundedRect(br, Rect);
                 }
-                if (BackImage is not null)
-                    G.DrawRoundImage(img, Rect);
+                if (BackImage is not null) G.DrawRoundImage(img, Rect);
             }
 
             if (UseAcrylicOnTitlebar & !DesignMode)
             {
                 if (Program.Style.RoundedCorners)
                 {
-                    if (adaptedBackBlurred != null) FillSemiImg(G, adaptedBackBlurred.Clone(Rect_Titlebar, PixelFormat.Format32bppArgb), Rect_Titlebar);
+                    if (adaptedBackBlurred != null)
+                    {
+                        using (Bitmap clone = adaptedBackBlurred.Clone(Rect_Titlebar, PixelFormat.Format32bppArgb)) FillSemiImg(G, clone, Rect_Titlebar);
+                    }
                     FillSemiRect(G, Noise, Rect_Titlebar);
                 }
                 else
                 {
-                    if (adaptedBackBlurred != null) G.DrawImage(adaptedBackBlurred.Clone(Rect_Titlebar, PixelFormat.Format32bppArgb), Rect_Titlebar);
+                    if (adaptedBackBlurred != null)
+                    {
+                        using (Bitmap clone = adaptedBackBlurred.Clone(Rect_Titlebar, PixelFormat.Format32bppArgb)) G.DrawImage(clone, Rect_Titlebar);
+                    }
                     G.FillRectangle(Noise, Rect_Titlebar);
                 }
 
@@ -798,17 +816,6 @@ namespace WinPaletter.UI.Simulation
                 }
             }
 
-            Font fx;
-
-            if (OS.W12 || OS.W11)
-            {
-                fx = new("Segoe Fluent Icons", 12f);
-            }
-            else
-            {
-                fx = new("Segoe MDL2 Assets", 12f);
-            }
-
             if (TabIcon is not null)
             {
                 G.DrawImage(TabIcon, IconRect0);
@@ -819,7 +826,7 @@ namespace WinPaletter.UI.Simulation
                 {
                     using (SolidBrush br = new(FC0))
                     {
-                        G.DrawString(TabIconButItIsString, fx, br, IconRect0, sf);
+                        G.DrawString(_tabIconButItIsString, OS.W12 || OS.W11 ? _iconFont_W11 : _iconFont_W10, br, IconRect0, sf);
                     }
                 }
             }
@@ -828,21 +835,22 @@ namespace WinPaletter.UI.Simulation
             {
                 using (SolidBrush br = new(FC1))
                 {
-                    G.DrawString(TabIconButItIsString, fx, br, IconRect1, sf);
+                    G.DrawString(_tabIconButItIsString_Default, OS.W12 || OS.W11 ? _iconFont_W11 : _iconFont_W10, br, IconRect1, sf);
                 }
             }
-            TextRenderer.DrawText(G, TabTitle, new Font("Segoe UI", 8f, FontStyle.Bold), RectText_Tab0, FC0, Color.Transparent, TextFormatFlags.WordEllipsis);
-            TextRenderer.DrawText(G, Program.Localization.Strings.Aspects.Terminals.Another, new Font("Segoe UI", 8f, FontStyle.Regular), RectText_Tab1, FC1, Color.Transparent, TextFormatFlags.WordEllipsis);
+
+            TextRenderer.DrawText(G, TabTitle, _tabTitleFont, RectText_Tab0, FC0, Color.Transparent, TextFormatFlags.WordEllipsis);
+            TextRenderer.DrawText(G, Program.Localization.Strings.Aspects.Terminals.Another, _tabRegularFont, RectText_Tab1, FC1, Color.Transparent, TextFormatFlags.WordEllipsis);
 
             using (StringFormat sf = ContentAlignment.MiddleCenter.ToStringFormat())
             {
                 using (SolidBrush br = new(FC0))
                 {
-                    G.DrawString("", new Font("Segoe MDL2 Assets", 6f, FontStyle.Regular), br, RectClose_Tab0, sf);
+                    G.DrawString("", _closeIconFont, br, RectClose_Tab0, sf);
                 }
                 using (SolidBrush br = new(FC1))
                 {
-                    G.DrawString("", new Font("Segoe MDL2 Assets", 6f, FontStyle.Regular), br, RectClose_Tab1, sf);
+                    G.DrawString("", _closeIconFont, br, RectClose_Tab1, sf);
                 }
             }
 
@@ -936,8 +944,6 @@ namespace WinPaletter.UI.Simulation
             }
 
             base.OnPaint(e);
-
-
         }
     }
 }

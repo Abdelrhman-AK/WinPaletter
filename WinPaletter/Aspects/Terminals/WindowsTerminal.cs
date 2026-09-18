@@ -30,8 +30,8 @@ namespace WinPaletter
 
         public WindowsTerminal()
         {
-            SaveState = Mode;
             InitializeComponent();
+            SaveState = Mode;
         }
 
         private void LoadFromWPTH(object sender, EventArgs e)
@@ -55,19 +55,7 @@ namespace WinPaletter
             {
                 if (Mode == WinTerminal.Version.Stable)
                 {
-                    string TerDir;
-
-                    // Check if the user has enabled the path redirection feature or not
-                    if (!Program.Settings.WindowsTerminals.Path_Deflection)
-                    {
-                        TerDir = SysPaths.TerminalJSON;
-                    }
-                    else
-                    {
-                        if (System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Stable_Path))
-                        { TerDir = Program.Settings.WindowsTerminals.Terminal_Stable_Path; }
-                        else { TerDir = SysPaths.TerminalJSON; }
-                    }
+                    string TerDir = ResolveTerminalPath(WinTerminal.Version.Stable);
 
                     if (System.IO.File.Exists(TerDir)) { TMx.Terminal = new(TerDir, WinTerminal.Mode.JSONFile); }
                     else { TMx.Terminal = new(string.Empty, WinTerminal.Mode.Empty); }
@@ -76,19 +64,7 @@ namespace WinPaletter
                 }
                 else
                 {
-                    string TerPreDir;
-
-                    // Check if the user has enabled the path redirection feature or not
-                    if (!Program.Settings.WindowsTerminals.Path_Deflection)
-                    {
-                        TerPreDir = SysPaths.TerminalPreviewJSON;
-                    }
-                    else
-                    {
-                        if (System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Preview_Path))
-                        { TerPreDir = Program.Settings.WindowsTerminals.Terminal_Preview_Path; }
-                        else { TerPreDir = SysPaths.TerminalPreviewJSON; }
-                    }
+                    string TerPreDir = ResolveTerminalPath(WinTerminal.Version.Preview);
 
                     if (System.IO.File.Exists(TerPreDir)) { TMx.TerminalPreview = new(TerPreDir, WinTerminal.Mode.JSONFile, WinTerminal.Version.Preview); }
                     else { TMx.TerminalPreview = new(string.Empty, WinTerminal.Mode.Empty, WinTerminal.Version.Preview); }
@@ -200,34 +176,8 @@ namespace WinPaletter
                 {
                     Cursor = System.Windows.Forms.Cursors.WaitCursor;
 
-                    string TerDir;
-                    string TerPreDir;
-
-                    if (!Program.Settings.WindowsTerminals.Path_Deflection)
-                    {
-                        TerDir = SysPaths.TerminalJSON;
-                        TerPreDir = SysPaths.TerminalPreviewJSON;
-                    }
-                    else
-                    {
-                        if (File.Exists(Program.Settings.WindowsTerminals.Terminal_Stable_Path))
-                        {
-                            TerDir = Program.Settings.WindowsTerminals.Terminal_Stable_Path;
-                        }
-                        else
-                        {
-                            TerDir = SysPaths.TerminalJSON;
-                        }
-
-                        if (File.Exists(Program.Settings.WindowsTerminals.Terminal_Preview_Path))
-                        {
-                            TerPreDir = Program.Settings.WindowsTerminals.Terminal_Preview_Path;
-                        }
-                        else
-                        {
-                            TerPreDir = SysPaths.TerminalPreviewJSON;
-                        }
-                    }
+                    string TerDir = ResolveTerminalPath(WinTerminal.Version.Stable);
+                    string TerPreDir = ResolveTerminalPath(WinTerminal.Version.Preview);
 
                     if (File.Exists(TerDir) && Mode == WinTerminal.Version.Stable)
                     {
@@ -280,7 +230,7 @@ namespace WinPaletter
                 case WinTerminal.Version.Stable:
                     {
                         _Terminal = Program.TM.Terminal;
-                        _TerminalDefault = Program.TM.Terminal;
+                        _TerminalDefault = (WinTerminal)Program.TM.Terminal.Clone();
                         Text = Program.Localization.Strings.Aspects.TerminalStable;
                         AspectEnabled = Program.TM.Terminal.Enabled;
                         break;
@@ -289,13 +239,11 @@ namespace WinPaletter
                 case WinTerminal.Version.Preview:
                     {
                         _Terminal = Program.TM.TerminalPreview;
-                        _TerminalDefault = Program.TM.TerminalPreview;
-
+                        _TerminalDefault = (WinTerminal)Program.TM.TerminalPreview.Clone();
                         Text = Program.Localization.Strings.Aspects.TerminalPreview;
                         AspectEnabled = Program.TM.TerminalPreview.Enabled;
                         break;
                     }
-
             }
 
             Load_FromTerminal();
@@ -318,6 +266,8 @@ namespace WinPaletter
 
         public void Load_FromTerminal()
         {
+            if (_Terminal == null) return;
+
             AspectEnabled = _Terminal.Enabled;
 
             FillTerminalSchemes(_Terminal, TerSchemes);
@@ -344,8 +294,7 @@ namespace WinPaletter
                     Terminal1.Light = false;
                     Terminal2.Light = false;
                 }
-
-                if (terminalTheme.Equals("light", StringComparison.OrdinalIgnoreCase))
+                else if (terminalTheme.Equals("light", StringComparison.OrdinalIgnoreCase))
                 {
                     TerThemes.SelectedIndex = 2;
                     TerTitlebarActive.BackColor = default;
@@ -356,8 +305,7 @@ namespace WinPaletter
                     Terminal1.Light = true;
                     Terminal2.Light = true;
                 }
-
-                if (terminalTheme.Equals("system", StringComparison.OrdinalIgnoreCase))
+                else if (terminalTheme.Equals("system", StringComparison.OrdinalIgnoreCase))
                 {
                     TerThemes.SelectedIndex = 3;
                     TerTitlebarActive.BackColor = default;
@@ -365,96 +313,75 @@ namespace WinPaletter
                     TerTabActive.BackColor = default;
                     TerTabInactive.BackColor = default;
 
-                    switch (Program.WindowStyle)
-                    {
-                        case WindowStyle.W12:
-                            {
-                                TerMode.Checked = !Program.TM.Windows12.AppMode_Light;
-                                Terminal1.Light = Program.TM.Windows12.AppMode_Light;
-                                Terminal2.Light = Program.TM.Windows12.AppMode_Light;
-                                break;
-                            }
-
-                        case WindowStyle.W11:
-                            {
-                                TerMode.Checked = !Program.TM.Windows11.AppMode_Light;
-                                Terminal1.Light = Program.TM.Windows11.AppMode_Light;
-                                Terminal2.Light = Program.TM.Windows11.AppMode_Light;
-                                break;
-                            }
-
-                        case WindowStyle.W10:
-                            {
-                                TerMode.Checked = !Program.TM.Windows10.AppMode_Light;
-                                Terminal1.Light = Program.TM.Windows10.AppMode_Light;
-                                Terminal2.Light = Program.TM.Windows10.AppMode_Light;
-                                break;
-                            }
-
-                        default:
-                            {
-                                TerMode.Checked = !Program.TM.Windows11.AppMode_Light;
-                                Terminal1.Light = Program.TM.Windows11.AppMode_Light;
-                                Terminal2.Light = Program.TM.Windows11.AppMode_Light;
-                                break;
-                            }
-                    }
+                    ApplySystemThemeToPreview();
                 }
-
                 else if (TerThemes.Items.Contains(terminalTheme))
                 {
                     TerThemes.SelectedItem = terminalTheme;
                     TerThemesContainer.Enabled = true;
 
-                    WinTerminal.Types.Theme temp = _Terminal.Themes[TerThemes.SelectedIndex - 4];
-                    TerTitlebarActive.BackColor = temp.TabRow.Background;
-                    TerTitlebarInactive.BackColor = temp.TabRow.UnfocusedBackground;
-                    TerTabActive.BackColor = temp.Tab.Background;
-                    TerTabInactive.BackColor = temp.Tab.UnfocusedBackground;
-                    TerMode.Checked = !(temp.Window.ApplicationTheme.ToLower() == "light");
-                    Terminal1.Light = !(temp.Window.ApplicationTheme.ToLower() == "light");
-                    Terminal2.Light = !(temp.Window.ApplicationTheme.ToLower() == "light");
+                    int idx = TerThemes.SelectedIndex - 4;
+                    if (idx >= 0 && idx < _Terminal.Themes.Count)
+                    {
+                        WinTerminal.Types.Theme temp = _Terminal.Themes[idx];
+                        TerTitlebarActive.BackColor = temp.TabRow.Background;
+                        TerTitlebarInactive.BackColor = temp.TabRow.UnfocusedBackground;
+                        TerTabActive.BackColor = temp.Tab.Background;
+                        TerTabInactive.BackColor = temp.Tab.UnfocusedBackground;
+                        TerMode.Checked = !(temp.Window.ApplicationTheme?.ToLower() == "light");
+                        Terminal1.Light = !(temp.Window.ApplicationTheme?.ToLower() == "light");
+                        Terminal2.Light = !(temp.Window.ApplicationTheme?.ToLower() == "light");
+                    }
+                }
+                else
+                {
+                    ApplySystemThemeToPreview();
                 }
             }
             else
             {
-                switch (Program.WindowStyle)
-                {
-                    case WindowStyle.W12:
-                        {
-                            TerMode.Checked = !Program.TM.Windows12.AppMode_Light;
-                            Terminal1.Light = Program.TM.Windows12.AppMode_Light;
-                            Terminal2.Light = Program.TM.Windows12.AppMode_Light;
-                            break;
-                        }
-
-                    case WindowStyle.W11:
-                        {
-                            TerMode.Checked = !Program.TM.Windows11.AppMode_Light;
-                            Terminal1.Light = Program.TM.Windows11.AppMode_Light;
-                            Terminal2.Light = Program.TM.Windows11.AppMode_Light;
-                            break;
-                        }
-
-                    case WindowStyle.W10:
-                        {
-                            TerMode.Checked = !Program.TM.Windows10.AppMode_Light;
-                            Terminal1.Light = Program.TM.Windows10.AppMode_Light;
-                            Terminal2.Light = Program.TM.Windows10.AppMode_Light;
-                            break;
-                        }
-
-                    default:
-                        {
-                            TerMode.Checked = !Program.TM.Windows11.AppMode_Light;
-                            Terminal1.Light = Program.TM.Windows11.AppMode_Light;
-                            Terminal2.Light = Program.TM.Windows11.AppMode_Light;
-                            break;
-                        }
-                }
+                ApplySystemThemeToPreview();
             }
 
             ApplyPreview(_Terminal);
+        }
+
+        private void ApplySystemThemeToPreview()
+        {
+            switch (Program.WindowStyle)
+            {
+                case WindowStyle.W12:
+                    {
+                        TerMode.Checked = !Program.TM.Windows12.AppMode_Light;
+                        Terminal1.Light = Program.TM.Windows12.AppMode_Light;
+                        Terminal2.Light = Program.TM.Windows12.AppMode_Light;
+                        break;
+                    }
+
+                case WindowStyle.W11:
+                    {
+                        TerMode.Checked = !Program.TM.Windows11.AppMode_Light;
+                        Terminal1.Light = Program.TM.Windows11.AppMode_Light;
+                        Terminal2.Light = Program.TM.Windows11.AppMode_Light;
+                        break;
+                    }
+
+                case WindowStyle.W10:
+                    {
+                        TerMode.Checked = !Program.TM.Windows10.AppMode_Light;
+                        Terminal1.Light = Program.TM.Windows10.AppMode_Light;
+                        Terminal2.Light = Program.TM.Windows10.AppMode_Light;
+                        break;
+                    }
+
+                default:
+                    {
+                        TerMode.Checked = !Program.TM.Windows11.AppMode_Light;
+                        Terminal1.Light = Program.TM.Windows11.AppMode_Light;
+                        Terminal2.Light = Program.TM.Windows11.AppMode_Light;
+                        break;
+                    }
+            }
         }
 
         public void FillTerminalSchemes(WinTerminal Terminal, UI.WP.ComboBox Combobox)
@@ -462,7 +389,7 @@ namespace WinPaletter
             Combobox.Items.Clear();
             Combobox.Items.Add($"({Program.Localization.Strings.General.Default})");
 
-            if (Terminal.Schemes.Count > 0)
+            if (Terminal?.Schemes != null && Terminal.Schemes.Count > 0)
             {
                 for (int x = 0, loopTo = Terminal.Schemes.Count - 1; x <= loopTo; x++)
                     Combobox.Items.Add(Terminal.Schemes[x].Name);
@@ -478,7 +405,7 @@ namespace WinPaletter
             Combobox.Items.Add($"{Program.Localization.Strings.General.Light}");
             Combobox.Items.Add($"{Program.Localization.Strings.General.System}");
 
-            if (Terminal.Themes.Count > 0)
+            if (Terminal?.Themes != null && Terminal.Themes.Count > 0)
             {
                 for (int x = 0, loopTo = Terminal.Themes.Count - 1; x <= loopTo; x++) Combobox.Items.Add(Terminal.Themes[x].Name);
             }
@@ -489,10 +416,140 @@ namespace WinPaletter
             Combobox.Items.Clear();
             Combobox.Items.Add($"{Program.Localization.Strings.General.Defaults}");
 
-            if (Terminal.Profiles.List.Count > 0)
+            if (Terminal?.Profiles?.List != null && Terminal.Profiles.List.Count > 0)
             {
                 for (int x = 0, loopTo = Terminal.Profiles.List.Count - 1; x <= loopTo; x++) Combobox.Items.Add(Terminal.Profiles.List[x].Name);
             }
+        }
+
+        // --------------------------------------------------------------------
+        // Profile resolution helpers
+        // --------------------------------------------------------------------
+
+        /// <summary>
+        /// Returns the current profile (or defaults) from the model, or null if the index is out of range.
+        /// </summary>
+        private WinTerminal.Types.Profile GetCurrentProfile()
+        {
+            if (_Terminal == null || TerProfiles.SelectedIndex < 0) return null;
+
+            if (TerProfiles.SelectedIndex == 0) return _Terminal.Profiles.Defaults;
+
+            int idx = TerProfiles.SelectedIndex - 1;
+            if (_Terminal.Profiles?.List == null || idx >= _Terminal.Profiles.List.Count) return _Terminal.Profiles?.Defaults;
+
+            return _Terminal.Profiles.List[idx];
+        }
+
+        /// <summary>
+        /// Returns the "defaults" profile for the current terminal, or null if unavailable.
+        /// Used as the fallback source whenever a selected profile omits a value.
+        /// </summary>
+        private WinTerminal.Types.Profile GetDefaultsProfile()
+        {
+            return _Terminal?.Profiles?.Defaults;
+        }
+
+        /// <summary>
+        /// Returns an effective profile: the selected profile with any unset field filled in from
+        /// profiles.defaults. If the selected profile IS defaults (index 0), it is returned as-is.
+        /// A non-null instance is always returned (a fresh empty profile if the model has nothing).
+        /// </summary>
+        private WinTerminal.Types.Profile GetEffectiveProfile()
+        {
+            WinTerminal.Types.Profile selected = GetCurrentProfile();
+            WinTerminal.Types.Profile defaults = GetDefaultsProfile();
+
+            if (selected == null && defaults == null) return new WinTerminal.Types.Profile();
+            if (selected == null) return defaults;
+            if (selected == defaults) return selected;
+
+            return new WinTerminal.Types.Profile
+            {
+                Name = selected.Name,
+                Guid = selected.Guid,
+                TabColor = selected.TabColor == Color.Empty ? defaults?.TabColor ?? Color.Empty : selected.TabColor,
+                BackgroundImage = string.IsNullOrEmpty(selected.BackgroundImage) ? defaults?.BackgroundImage ?? string.Empty : selected.BackgroundImage,
+                CursorShape = selected.CursorShape,
+                // ColorScheme is a reference; null means "inherit from defaults".
+                ColorScheme = selected.ColorScheme ?? defaults?.ColorScheme,
+                CursorHeight = selected.CursorHeight > 0 ? selected.CursorHeight : defaults?.CursorHeight ?? 25,
+                Opacity = selected.Opacity > 0 ? selected.Opacity : defaults?.Opacity ?? 100,
+                BackgroundImageOpacity = selected.BackgroundImageOpacity > 0 ? selected.BackgroundImageOpacity : defaults?.BackgroundImageOpacity ?? 100,
+                UseAcrylic = selected.UseAcrylic,
+                Font = new WinTerminal.Types.FontSettings
+                {
+                    Face = string.IsNullOrEmpty(selected.Font?.Face) ? defaults?.Font?.Face ?? "Cascadia Mono" : selected.Font.Face,
+                    Size = selected.Font != null && selected.Font.Size > 0 ? selected.Font.Size : defaults?.Font?.Size ?? 12f,
+                    Weight = selected.Font != null ? selected.Font.Weight : defaults?.Font?.Weight ?? WinTerminal.Types.FontWeight.Normal
+                },
+                Commandline = string.IsNullOrEmpty(selected.Commandline) ? defaults?.Commandline ?? string.Empty : selected.Commandline,
+                Icon = string.IsNullOrEmpty(selected.Icon) ? defaults?.Icon : selected.Icon,
+                TabTitle = string.IsNullOrEmpty(selected.TabTitle) ? defaults?.TabTitle : selected.TabTitle
+            };
+        }
+
+        /// <summary>
+        /// Returns the current scheme (or null if none / out of range).
+        /// The "default" scheme (index 0) resolves via the effective profile's ColorScheme name,
+        /// falling back to the first available scheme.
+        /// </summary>
+        private WinTerminal.Types.Scheme GetCurrentScheme()
+        {
+            if (_Terminal?.Schemes == null || _Terminal.Schemes.Count == 0) return null;
+
+            if (TerSchemes.SelectedIndex <= 0)
+            {
+                string schemeName =
+                    GetEffectiveProfile()?.ColorScheme?.ToString()
+                    ?? _Terminal.Profiles?.Defaults?.ColorScheme?.ToString();
+
+                if (string.IsNullOrWhiteSpace(schemeName)) return _Terminal.Schemes.FirstOrDefault();
+
+                return _Terminal.Schemes.FirstOrDefault(s => string.Equals(s.Name, schemeName, StringComparison.OrdinalIgnoreCase))
+                    ?? _Terminal.Schemes.FirstOrDefault();
+            }
+
+            int idx = TerSchemes.SelectedIndex - 1;
+            if (idx >= _Terminal.Schemes.Count) return null;
+
+            return _Terminal.Schemes[idx];
+        }
+
+        /// <summary>
+        /// Returns the current theme (or null if index points to a built-in).
+        /// </summary>
+        private WinTerminal.Types.Theme GetCurrentTheme()
+        {
+            if (_Terminal?.Themes == null) return null;
+            if (TerThemes.SelectedIndex <= 3) return null;
+
+            int idx = TerThemes.SelectedIndex - 4;
+            if (idx >= _Terminal.Themes.Count) return null;
+
+            return _Terminal.Themes[idx];
+        }
+
+        /// <summary>
+        /// Resolves the on-disk path of the Windows Terminal settings JSON, honoring path deflection.
+        /// </summary>
+        private static string ResolveTerminalPath(WinTerminal.Version version)
+        {
+            if (!Program.Settings.WindowsTerminals.Path_Deflection)
+            {
+                return version == WinTerminal.Version.Stable ? SysPaths.TerminalJSON : SysPaths.TerminalPreviewJSON;
+            }
+
+            if (version == WinTerminal.Version.Stable)
+            {
+                return System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Stable_Path)
+                    ? Program.Settings.WindowsTerminals.Terminal_Stable_Path
+                    : SysPaths.TerminalJSON;
+            }
+
+            return System.IO.File.Exists(Program.Settings.WindowsTerminals.Terminal_Preview_Path)
+                ? Program.Settings.WindowsTerminals.Terminal_Preview_Path
+                : SysPaths.TerminalPreviewJSON;
         }
 
         private void TerSchemes_SelectedIndexChanged(object sender, EventArgs e)
@@ -500,68 +557,49 @@ namespace WinPaletter
             TerDeleteScheme.Enabled = TerSchemes.SelectedIndex > 0;
             TerEditScheme.Enabled = TerSchemes.SelectedIndex > 0;
 
-            if (TerSchemes.SelectedIndex > -1)
-            {
-                SetDefaultsToScheme(TerSchemes.SelectedItem.ToString());
+            if (TerSchemes.SelectedIndex <= -1) return;
 
-                Scheme scheme = new();
+            SetDefaultsToScheme(TerSchemes.SelectedItem?.ToString());
 
-                bool isDefaultProfile = TerProfiles.SelectedIndex == 0;
-                bool isDefaultScheme = TerSchemes.SelectedIndex == 0;
+            // Never mutate the live model just by changing the combo-box selection.
+            // Only mutate when the user actually edits a color (via the color handlers).
+            WinTerminal.Types.Scheme scheme = GetCurrentScheme() ?? new();
 
-                Profile profile = isDefaultProfile ? _Terminal.Profiles.Defaults : _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1];
+            TerBackground.BackColor = scheme.Background;
+            TerForeground.BackColor = scheme.Foreground;
+            TerSelection.BackColor = scheme.SelectionBackground;
+            TerCursor.BackColor = scheme.CursorColor;
 
-                if (isDefaultScheme)
-                {
-                    profile.ColorScheme = null;
+            TerBlack.BackColor = scheme.Black;
+            TerBlue.BackColor = scheme.Blue;
+            TerGreen.BackColor = scheme.Green;
+            TerCyan.BackColor = scheme.Cyan;
+            TerRed.BackColor = scheme.Red;
+            TerPurple.BackColor = scheme.Purple;
+            TerYellow.BackColor = scheme.Yellow;
+            TerWhite.BackColor = scheme.White;
 
-                    scheme = isDefaultProfile
-                        ? _Terminal.Schemes.FirstOrDefault()
-                        : _Terminal.Schemes.FirstOrDefault(s =>
-                            string.Equals(
-                                s.Name,
-                                _Terminal.Profiles.Defaults.ColorScheme?.ToString(),
-                                StringComparison.OrdinalIgnoreCase))
-                          ?? _Terminal.Schemes.FirstOrDefault();
-                }
-                else
-                {
-                    scheme = _Terminal.Schemes[TerSchemes.SelectedIndex - 1];
-                    profile.ColorScheme = TerSchemes.SelectedItem.ToString();
-                }
+            TerBlackB.BackColor = scheme.BrightBlack;
+            TerBlueB.BackColor = scheme.BrightBlue;
+            TerGreenB.BackColor = scheme.BrightGreen;
+            TerCyanB.BackColor = scheme.BrightCyan;
+            TerRedB.BackColor = scheme.BrightRed;
+            TerPurpleB.BackColor = scheme.BrightPurple;
+            TerYellowB.BackColor = scheme.BrightYellow;
+            TerWhiteB.BackColor = scheme.BrightWhite;
 
-                TerBackground.BackColor = scheme.Background;
-                TerForeground.BackColor = scheme.Foreground;
-                TerSelection.BackColor = scheme.SelectionBackground;
-                TerCursor.BackColor = scheme.CursorColor;
-
-                TerBlack.BackColor = scheme.Black;
-                TerBlue.BackColor = scheme.Blue;
-                TerGreen.BackColor = scheme.Green;
-                TerCyan.BackColor = scheme.Cyan;
-                TerRed.BackColor = scheme.Red;
-                TerPurple.BackColor = scheme.Purple;
-                TerYellow.BackColor = scheme.Yellow;
-                TerWhite.BackColor = scheme.White;
-
-                TerBlackB.BackColor = scheme.BrightBlack;
-                TerBlueB.BackColor = scheme.BrightBlue;
-                TerGreenB.BackColor = scheme.BrightGreen;
-                TerCyanB.BackColor = scheme.BrightCyan;
-                TerRedB.BackColor = scheme.BrightRed;
-                TerPurpleB.BackColor = scheme.BrightPurple;
-                TerYellowB.BackColor = scheme.BrightYellow;
-                TerWhiteB.BackColor = scheme.BrightWhite;
-
-                if (IsShown) ApplyPreview(_Terminal);
-            }
+            if (IsShown) ApplyPreview(_Terminal);
         }
 
         private void TerProfiles_SelectedIndexChanged(object sender, EventArgs e)
         {
-            WinTerminal.Types.Profile profile = TerProfiles.SelectedIndex == 0 ? _Terminal.Profiles.Defaults : _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1];
+            // Use the effective profile so any field the profile left unset is filled in from
+            // profiles.defaults (same layering Windows Terminal itself performs at runtime).
+            WinTerminal.Types.Profile profile = GetEffectiveProfile();
 
-            string schemeName = (profile.ColorScheme ?? string.Empty).ToString();
+            if (profile == null) return;
+
+            string schemeName = (profile.ColorScheme ?? (object)string.Empty).ToString();
 
             if (string.IsNullOrWhiteSpace(schemeName))
             {
@@ -576,31 +614,32 @@ namespace WinPaletter
                 TerSchemes.SelectedIndex = 0;
             }
 
-            TerBackImage.Text = profile.BackgroundImage;
-            TerImageOpacity.Value = (int)(profile.BackgroundImageOpacity * 100f);
+            TerBackImage.Text = profile.BackgroundImage ?? string.Empty;
+            TerImageOpacity.Value = Math.Min(TerImageOpacity.Maximum, Math.Max(TerImageOpacity.Minimum, (int)(profile.BackgroundImageOpacity * 100f)));
 
-            TerCursorStyle.SelectedIndex = (int)profile.CursorShape;
-            TerCursorHeightBar.Value = profile.CursorHeight;
+            TerCursorStyle.SelectedIndex = Math.Min(TerCursorStyle.Items.Count - 1, Math.Max(0, (int)profile.CursorShape));
+            TerCursorHeightBar.Value = Math.Min(TerCursorHeightBar.Maximum, Math.Max(TerCursorHeightBar.Minimum, profile.CursorHeight));
 
-            TerFontName.Text = profile.Font.Face;
+            TerFontName.Text = profile.Font?.Face ?? string.Empty;
             GDI32.LOGFONT fx = new();
 
-            using (Font f_cmd = new(profile.Font.Face, profile.Font.Size))
+            using (Font f_cmd = new(profile.Font?.Face ?? "Cascadia Mono", profile.Font?.Size ?? 12f))
             {
                 f_cmd.ToLogFont(fx);
-                fx.lfWeight = (int)profile.Font.Weight * 100;
+                fx.lfWeight = (int)(profile.Font?.Weight ?? WinTerminal.Types.FontWeight.Normal) * 100;
 
-                using (Font f_cmd_x = new(f_cmd.Name, f_cmd.Size, Font.FromLogFont(fx).Style))
+                using (Font temp = Font.FromLogFont(fx))
+                using (Font f_cmd_x = new(f_cmd.Name, f_cmd.Size, temp.Style))
                 {
                     TerFontName.Font = new(f_cmd_x.Name, 9f, f_cmd_x.Style);
                 }
             }
 
-            TerFontSizeBar.Value = (int)profile.Font.Size;
-            TerFontWeight.SelectedIndex = (int)profile.Font.Weight;
+            TerFontSizeBar.Value = Math.Min(TerFontSizeBar.Maximum, Math.Max(TerFontSizeBar.Minimum, (int)(profile.Font?.Size ?? 12f)));
+            TerFontWeight.SelectedIndex = Math.Min(TerFontWeight.Items.Count - 1, Math.Max(0, (int)(profile.Font?.Weight ?? WinTerminal.Types.FontWeight.Normal)));
 
             TerAcrylic.Checked = profile.UseAcrylic;
-            TerOpacityBar.Value = profile.Opacity;
+            TerOpacityBar.Value = Math.Min(TerOpacityBar.Maximum, Math.Max(TerOpacityBar.Minimum, profile.Opacity));
 
             Terminal1.Opacity = profile.Opacity;
             Terminal1.OpacityBackImage = (float)profile.BackgroundImageOpacity * 100f;
@@ -625,8 +664,8 @@ namespace WinPaletter
             if (File.Exists(profile.Icon))
             {
                 Terminal1.TabIcon = BitmapMgr.Load(profile.Icon);
+                Terminal1.TabIconButItIsString = null;
             }
-
             else
             {
                 IntPtr intPtr = IntPtr.Zero;
@@ -634,11 +673,12 @@ namespace WinPaletter
                 string path = string.Empty;
                 if (profile.Commandline is not null)
                     path = profile.Commandline.Replace("%SystemRoot%", SysPaths.Windows);
-                Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
+                Kernel32.Wow64RevertWow64FsRedirection(intPtr);
 
                 if (File.Exists(path))
                 {
                     Terminal1.TabIcon = ((Icon)NativeMethods.Helpers.ExtractSmallIcon(path)).ToBitmap();
+                    Terminal1.TabIconButItIsString = null;
                 }
                 else
                 {
@@ -656,15 +696,15 @@ namespace WinPaletter
 
             if (!IsShown) return;
 
-            WinTerminal.Types.Profile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.Profiles.Defaults : _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1];
-            temp.CursorShape = (WinTerminal.Types.CursorShape)TerCursorStyle.SelectedIndex;
+            WinTerminal.Types.Profile temp = GetCurrentProfile();
+            if (temp != null) temp.CursorShape = (WinTerminal.Types.CursorShape)TerCursorStyle.SelectedIndex;
         }
 
         public void SetDefaultsToScheme(string Scheme)
         {
-            switch (Scheme.ToLower() ?? string.Empty)
+            switch (Scheme?.ToLower() ?? string.Empty)
             {
-                case var @case when @case == ("Campbell".ToLower() ?? string.Empty):
+                case var @case when @case == ("Campbell".ToLower()):
                     {
                         TerBackground.DefaultBackColor = Color.FromArgb(12, 12, 12);
                         TerBlack.DefaultBackColor = Color.FromArgb(12, 12, 12);
@@ -689,7 +729,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case1 when case1 == ("Campbell Powershell".ToLower() ?? string.Empty):
+                case var case1 when case1 == ("Campbell Powershell".ToLower()):
                     {
                         TerBackground.DefaultBackColor = Color.FromArgb(1, 36, 86);
                         TerBlack.DefaultBackColor = Color.FromArgb(12, 12, 12);
@@ -714,7 +754,107 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case2 when case2 == ("One Half Dark".ToLower() ?? string.Empty):
+                case var caseCGA when caseCGA == ("CGA".ToLower()):
+                    {
+                        TerBackground.DefaultBackColor = Color.FromArgb(0, 0, 0);
+                        TerBlack.DefaultBackColor = Color.FromArgb(0, 0, 0);
+                        TerBlue.DefaultBackColor = Color.FromArgb(0, 0, 170);
+                        TerBlackB.DefaultBackColor = Color.FromArgb(85, 85, 85);
+                        TerBlueB.DefaultBackColor = Color.FromArgb(85, 85, 255);
+                        TerCyanB.DefaultBackColor = Color.FromArgb(85, 255, 255);
+                        TerGreenB.DefaultBackColor = Color.FromArgb(85, 255, 85);
+                        TerPurpleB.DefaultBackColor = Color.FromArgb(255, 85, 255);
+                        TerRedB.DefaultBackColor = Color.FromArgb(255, 85, 85);
+                        TerWhiteB.DefaultBackColor = Color.FromArgb(255, 255, 255);
+                        TerYellowB.DefaultBackColor = Color.FromArgb(255, 255, 85);
+                        TerCursor.DefaultBackColor = Color.FromArgb(0, 170, 0);
+                        TerCyan.DefaultBackColor = Color.FromArgb(0, 170, 170);
+                        TerForeground.DefaultBackColor = Color.FromArgb(170, 170, 170);
+                        TerGreen.DefaultBackColor = Color.FromArgb(0, 170, 0);
+                        TerPurple.DefaultBackColor = Color.FromArgb(170, 0, 170);
+                        TerRed.DefaultBackColor = Color.FromArgb(170, 0, 0);
+                        TerSelection.DefaultBackColor = Color.FromArgb(255, 255, 255);
+                        TerWhite.DefaultBackColor = Color.FromArgb(170, 170, 170);
+                        TerYellow.DefaultBackColor = Color.FromArgb(170, 85, 0);
+                        break;
+                    }
+
+                case var caseDarkPlus when caseDarkPlus == ("Dark+".ToLower()):
+                    {
+                        TerBackground.DefaultBackColor = Color.FromArgb(30, 30, 30);
+                        TerBlack.DefaultBackColor = Color.FromArgb(0, 0, 0);
+                        TerBlue.DefaultBackColor = Color.FromArgb(36, 114, 200);
+                        TerBlackB.DefaultBackColor = Color.FromArgb(102, 102, 102);
+                        TerBlueB.DefaultBackColor = Color.FromArgb(59, 142, 234);
+                        TerCyanB.DefaultBackColor = Color.FromArgb(41, 184, 219);
+                        TerGreenB.DefaultBackColor = Color.FromArgb(35, 209, 139);
+                        TerPurpleB.DefaultBackColor = Color.FromArgb(214, 112, 214);
+                        TerRedB.DefaultBackColor = Color.FromArgb(241, 76, 76);
+                        TerWhiteB.DefaultBackColor = Color.FromArgb(229, 229, 229);
+                        TerYellowB.DefaultBackColor = Color.FromArgb(245, 245, 67);
+                        TerCursor.DefaultBackColor = Color.FromArgb(128, 128, 128);
+                        TerCyan.DefaultBackColor = Color.FromArgb(17, 168, 205);
+                        TerForeground.DefaultBackColor = Color.FromArgb(204, 204, 204);
+                        TerGreen.DefaultBackColor = Color.FromArgb(13, 188, 121);
+                        TerPurple.DefaultBackColor = Color.FromArgb(188, 63, 188);
+                        TerRed.DefaultBackColor = Color.FromArgb(205, 49, 49);
+                        TerSelection.DefaultBackColor = Color.FromArgb(255, 255, 255);
+                        TerWhite.DefaultBackColor = Color.FromArgb(229, 229, 229);
+                        TerYellow.DefaultBackColor = Color.FromArgb(229, 229, 16);
+                        break;
+                    }
+
+                case var caseDimidium when caseDimidium == ("Dimidium".ToLower()):
+                    {
+                        TerBackground.DefaultBackColor = Color.FromArgb(20, 20, 20);
+                        TerBlack.DefaultBackColor = Color.FromArgb(0, 0, 0);
+                        TerBlue.DefaultBackColor = Color.FromArgb(5, 117, 216);
+                        TerBlackB.DefaultBackColor = Color.FromArgb(129, 126, 126);
+                        TerBlueB.DefaultBackColor = Color.FromArgb(104, 141, 253);
+                        TerCyanB.DefaultBackColor = Color.FromArgb(50, 224, 251);
+                        TerGreenB.DefaultBackColor = Color.FromArgb(55, 229, 123);
+                        TerPurpleB.DefaultBackColor = Color.FromArgb(237, 111, 233);
+                        TerRedB.DefaultBackColor = Color.FromArgb(255, 100, 59);
+                        TerWhiteB.DefaultBackColor = Color.FromArgb(211, 216, 217);
+                        TerYellowB.DefaultBackColor = Color.FromArgb(252, 205, 26);
+                        TerCursor.DefaultBackColor = Color.FromArgb(55, 229, 123);
+                        TerCyan.DefaultBackColor = Color.FromArgb(29, 182, 187);
+                        TerForeground.DefaultBackColor = Color.FromArgb(186, 183, 182);
+                        TerGreen.DefaultBackColor = Color.FromArgb(96, 180, 66);
+                        TerPurple.DefaultBackColor = Color.FromArgb(175, 94, 210);
+                        TerRed.DefaultBackColor = Color.FromArgb(207, 73, 76);
+                        TerSelection.DefaultBackColor = Color.FromArgb(255, 255, 255);
+                        TerWhite.DefaultBackColor = Color.FromArgb(186, 183, 182);
+                        TerYellow.DefaultBackColor = Color.FromArgb(219, 156, 17);
+                        break;
+                    }
+
+                case var caseIBM5153 when caseIBM5153 == ("IBM 5153".ToLower()):
+                    {
+                        TerBackground.DefaultBackColor = Color.FromArgb(0, 0, 0);
+                        TerBlack.DefaultBackColor = Color.FromArgb(0, 0, 0);
+                        TerBlue.DefaultBackColor = Color.FromArgb(0, 0, 170);
+                        TerBlackB.DefaultBackColor = Color.FromArgb(85, 85, 85);
+                        TerBlueB.DefaultBackColor = Color.FromArgb(85, 85, 255);
+                        TerCyanB.DefaultBackColor = Color.FromArgb(85, 255, 255);
+                        TerGreenB.DefaultBackColor = Color.FromArgb(85, 255, 85);
+                        TerPurpleB.DefaultBackColor = Color.FromArgb(255, 85, 255);
+                        TerRedB.DefaultBackColor = Color.FromArgb(255, 85, 85);
+                        TerWhiteB.DefaultBackColor = Color.FromArgb(255, 255, 255);
+                        TerYellowB.DefaultBackColor = Color.FromArgb(255, 255, 85);
+                        TerCursor.DefaultBackColor = Color.FromArgb(0, 170, 0);
+                        TerCyan.DefaultBackColor = Color.FromArgb(0, 170, 170);
+                        TerForeground.DefaultBackColor = Color.FromArgb(170, 170, 170);
+                        TerGreen.DefaultBackColor = Color.FromArgb(0, 170, 0);
+                        TerPurple.DefaultBackColor = Color.FromArgb(170, 0, 170);
+                        TerRed.DefaultBackColor = Color.FromArgb(170, 0, 0);
+                        TerSelection.DefaultBackColor = Color.FromArgb(255, 255, 255);
+                        TerWhite.DefaultBackColor = Color.FromArgb(170, 170, 170);
+                        TerYellow.DefaultBackColor = Color.FromArgb(196, 126, 0);
+                        break;
+                    }
+
+                case var case2 when case2 == ("One Half Dark".ToLower()):
                     {
                         TerBackground.DefaultBackColor = Color.FromArgb(40, 44, 52);
                         TerBlack.DefaultBackColor = Color.FromArgb(40, 44, 52);
@@ -739,7 +879,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case3 when case3 == ("One Half Light".ToLower() ?? string.Empty):
+                case var case3 when case3 == ("One Half Light".ToLower()):
                     {
                         TerBackground.DefaultBackColor = Color.FromArgb(250, 250, 250);
                         TerBlack.DefaultBackColor = Color.FromArgb(56, 58, 66);
@@ -764,7 +904,32 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case4 when case4 == ("Solarized Dark".ToLower() ?? string.Empty):
+                case var caseOttosson when caseOttosson == ("Ottosson".ToLower()):
+                    {
+                        TerBackground.DefaultBackColor = Color.FromArgb(0, 0, 0);
+                        TerBlack.DefaultBackColor = Color.FromArgb(0, 0, 0);
+                        TerBlue.DefaultBackColor = Color.FromArgb(32, 77, 190);
+                        TerBlackB.DefaultBackColor = Color.FromArgb(128, 128, 128);
+                        TerBlueB.DefaultBackColor = Color.FromArgb(47, 106, 255);
+                        TerCyanB.DefaultBackColor = Color.FromArgb(0, 225, 240);
+                        TerGreenB.DefaultBackColor = Color.FromArgb(88, 234, 81);
+                        TerPurpleB.DefaultBackColor = Color.FromArgb(252, 116, 255);
+                        TerRedB.DefaultBackColor = Color.FromArgb(255, 62, 48);
+                        TerWhiteB.DefaultBackColor = Color.FromArgb(255, 255, 255);
+                        TerYellowB.DefaultBackColor = Color.FromArgb(255, 201, 68);
+                        TerCursor.DefaultBackColor = Color.FromArgb(255, 255, 255);
+                        TerCyan.DefaultBackColor = Color.FromArgb(0, 167, 178);
+                        TerForeground.DefaultBackColor = Color.FromArgb(190, 190, 190);
+                        TerGreen.DefaultBackColor = Color.FromArgb(63, 174, 58);
+                        TerPurple.DefaultBackColor = Color.FromArgb(187, 84, 190);
+                        TerRed.DefaultBackColor = Color.FromArgb(190, 44, 33);
+                        TerSelection.DefaultBackColor = Color.FromArgb(146, 164, 253);
+                        TerWhite.DefaultBackColor = Color.FromArgb(190, 190, 190);
+                        TerYellow.DefaultBackColor = Color.FromArgb(190, 154, 74);
+                        break;
+                    }
+
+                case var case4 when case4 == ("Solarized Dark".ToLower()):
                     {
                         TerBackground.DefaultBackColor = Color.FromArgb(0, 43, 54);
                         TerBlack.DefaultBackColor = Color.FromArgb(0, 43, 54);
@@ -789,7 +954,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case5 when case5 == ("Solarized Light".ToLower() ?? string.Empty):
+                case var case5 when case5 == ("Solarized Light".ToLower()):
                     {
                         TerBackground.DefaultBackColor = Color.FromArgb(253, 246, 227);
                         TerBlack.DefaultBackColor = Color.FromArgb(0, 43, 54);
@@ -814,7 +979,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case6 when case6 == ("Tango Dark".ToLower() ?? string.Empty):
+                case var case6 when case6 == ("Tango Dark".ToLower()):
                     {
                         TerBackground.DefaultBackColor = Color.FromArgb(0, 0, 0);
                         TerBlack.DefaultBackColor = Color.FromArgb(0, 0, 0);
@@ -839,7 +1004,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case7 when case7 == ("Tango Light".ToLower() ?? string.Empty):
+                case var case7 when case7 == ("Tango Light".ToLower()):
                     {
                         TerBackground.DefaultBackColor = Color.FromArgb(255, 255, 255);
                         TerBlack.DefaultBackColor = Color.FromArgb(0, 0, 0);
@@ -864,7 +1029,7 @@ namespace WinPaletter
                         break;
                     }
 
-                case var case8 when case8 == ("Vintage".ToLower() ?? string.Empty):
+                case var case8 when case8 == ("Vintage".ToLower()):
                     {
                         TerBackground.DefaultBackColor = Color.FromArgb(0, 0, 0);
                         TerBlack.DefaultBackColor = Color.FromArgb(0, 0, 0);
@@ -913,12 +1078,13 @@ namespace WinPaletter
                         TerYellow.DefaultBackColor = Color.FromArgb(193, 156, 0);
                         break;
                     }
-
             }
         }
 
         private void Button12_Click(object sender, EventArgs e)
         {
+            if (_Terminal?.Schemes == null) return;
+
             string s = InputBox(Program.Localization.Strings.Aspects.Terminals.TypeSchemeName, $"{Program.Localization.Strings.General.NewScheme} #{TerSchemes.Items.Count - 1}");
             if (string.IsNullOrWhiteSpace(s)) return;
             _Terminal.Schemes.Add(new WinTerminal.Types.Scheme() { Name = s });
@@ -946,75 +1112,28 @@ namespace WinPaletter
 
         private void ColorMainsClick(object sender, EventArgs e)
         {
-            WinTerminal.Types.Scheme scheme = new();
-            WinTerminal.Types.Theme theme = new();
+            WinTerminal.Types.Scheme scheme = GetCurrentScheme();
+            WinTerminal.Types.Theme theme = GetCurrentTheme();
 
-            if (TerProfiles.SelectedIndex == 0)
-            {
-                string schemeName = _Terminal.Profiles.Defaults.ColorScheme?.ToString() ?? string.Empty;
+            if (scheme == null) return;
 
-                scheme = _Terminal.Schemes
-                    .FirstOrDefault(s => string.Equals(s.Name, schemeName, StringComparison.OrdinalIgnoreCase));
-            }
-            else if (TerProfiles.SelectedIndex > 0)
-            {
-                Profile profile = _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1];
-
-                // A profile can omit "colorScheme" entirely (Profile.ColorScheme == null in that case), in which case Windows Terminal falls back to
-                // profiles.defaults' scheme - mirror that here instead of crashing on a null-reference when calling .ToString() on a null ColorScheme.
-                string schemeName = profile.ColorScheme?.ToString()
-                    ?? _Terminal.Profiles.Defaults.ColorScheme?.ToString()
-                    ?? string.Empty;
-
-                scheme = _Terminal.Schemes
-                    .FirstOrDefault(s => string.Equals(s.Name, schemeName, StringComparison.OrdinalIgnoreCase));
-            }
-
-            if (TerThemes.SelectedIndex > 3)
-            {
-                theme = _Terminal.Themes[TerThemes.SelectedIndex - 4] ?? new();
-            }
+            // Don't mutate the model from a combo-box-driven selection unless the user actually edits.
+            // For schemes, GetCurrentScheme() returns a live reference; for themes, GetCurrentTheme() may be null.
+            string name = ((ColorItem)sender).Name.ToString().ToLower();
 
             if (e is DragEventArgs)
             {
-                if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerBackground.Name.ToLower()))
-                {
-                    scheme.Background = ((ColorItem)sender).BackColor;
-                }
+                if (name.Contains(TerBackground.Name.ToLower())) scheme.Background = ((ColorItem)sender).BackColor;
+                if (name.Contains(TerForeground.Name.ToLower())) scheme.Foreground = ((ColorItem)sender).BackColor;
+                if (name.Contains(TerSelection.Name.ToLower())) scheme.SelectionBackground = ((ColorItem)sender).BackColor;
+                if (name.Contains(TerCursor.Name.ToLower())) scheme.CursorColor = ((ColorItem)sender).BackColor;
 
-                if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerForeground.Name.ToLower()))
+                if (theme != null)
                 {
-                    scheme.Foreground = ((ColorItem)sender).BackColor;
-                }
-
-                if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerSelection.Name.ToLower()))
-                {
-                    scheme.SelectionBackground = ((ColorItem)sender).BackColor;
-                }
-
-                if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerCursor.Name.ToLower()))
-                {
-                    scheme.CursorColor = ((ColorItem)sender).BackColor;
-                }
-
-                if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerTabActive.Name.ToLower()))
-                {
-                    theme.Tab.Background = ((ColorItem)sender).BackColor;
-                }
-
-                if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerTabInactive.Name.ToLower()))
-                {
-                    theme.Tab.UnfocusedBackground = ((ColorItem)sender).BackColor;
-                }
-
-                if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerTitlebarActive.Name.ToLower()))
-                {
-                    theme.TabRow.Background = ((ColorItem)sender).BackColor;
-                }
-
-                if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerTitlebarInactive.Name.ToLower()))
-                {
-                    theme.TabRow.UnfocusedBackground = ((ColorItem)sender).BackColor;
+                    if (name.Contains(TerTabActive.Name.ToLower())) theme.Tab.Background = ((ColorItem)sender).BackColor;
+                    if (name.Contains(TerTabInactive.Name.ToLower())) theme.Tab.UnfocusedBackground = ((ColorItem)sender).BackColor;
+                    if (name.Contains(TerTitlebarActive.Name.ToLower())) theme.TabRow.Background = ((ColorItem)sender).BackColor;
+                    if (name.Contains(TerTitlebarInactive.Name.ToLower())) theme.TabRow.UnfocusedBackground = ((ColorItem)sender).BackColor;
                 }
 
                 ApplyPreview(_Terminal);
@@ -1027,88 +1146,61 @@ namespace WinPaletter
                 { colorItem, new string[] { nameof(colorItem.BackColor) } },
             };
 
-            if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerBackground.Name.ToLower()))
+            if (name.Contains(TerBackground.Name.ToLower()))
             {
                 CList.Add(Terminal1, [nameof(Terminal1.Color_Background)]);
                 CList.Add(Terminal2, [nameof(Terminal2.Color_Background)]);
             }
 
-            if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerForeground.Name.ToLower()))
+            if (name.Contains(TerForeground.Name.ToLower()))
             {
                 CList.Add(Terminal1, [nameof(Terminal1.Color_Foreground)]);
                 CList.Add(Terminal2, [nameof(Terminal2.Color_Foreground)]);
             }
 
-            if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerSelection.Name.ToLower()))
+            if (name.Contains(TerSelection.Name.ToLower()))
             {
                 CList.Add(Terminal1, [nameof(Terminal1.Color_Selection)]);
                 CList.Add(Terminal2, [nameof(Terminal2.Color_Selection)]);
             }
 
-            if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerCursor.Name.ToLower()))
+            if (name.Contains(TerCursor.Name.ToLower()))
             {
                 CList.Add(Terminal1, [nameof(Terminal1.Color_Cursor)]);
                 CList.Add(Terminal2, [nameof(Terminal2.Color_Cursor)]);
             }
 
-            if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerTabActive.Name.ToLower()))
+            if (name.Contains(TerTabActive.Name.ToLower()))
             {
                 CList.Add(Terminal1, [nameof(Terminal1.TabColor)]);
                 CList.Add(Terminal2, [nameof(Terminal2.TabColor)]);
             }
 
-            if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerTabInactive.Name.ToLower()))
+            if (name.Contains(TerTabInactive.Name.ToLower()))
             {
                 CList.Add(Terminal1, [nameof(Terminal1.Color_TabUnFocused)]);
                 CList.Add(Terminal2, [nameof(Terminal2.Color_TabUnFocused)]);
             }
 
-            if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerTitlebarActive.Name.ToLower()))
+            if (name.Contains(TerTitlebarActive.Name.ToLower()))
                 CList.Add(Terminal1, [nameof(Terminal1.Color_Titlebar)]);
 
-            if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerTitlebarInactive.Name.ToLower()))
+            if (name.Contains(TerTitlebarInactive.Name.ToLower()))
                 CList.Add(Terminal2, [nameof(Terminal2.Color_Titlebar_Unfocused)]);
 
             Color C = Forms.ColorPickerDlg.Pick(CList);
 
-            if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerBackground.Name.ToLower()))
-            {
-                scheme.Background = C;
-            }
+            if (name.Contains(TerBackground.Name.ToLower())) scheme.Background = C;
+            if (name.Contains(TerForeground.Name.ToLower())) scheme.Foreground = C;
+            if (name.Contains(TerSelection.Name.ToLower())) scheme.SelectionBackground = C;
+            if (name.Contains(TerCursor.Name.ToLower())) scheme.CursorColor = C;
 
-            if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerForeground.Name.ToLower()))
+            if (theme != null)
             {
-                scheme.Foreground = C;
-            }
-
-            if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerSelection.Name.ToLower()))
-            {
-                scheme.SelectionBackground = C;
-            }
-
-            if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerCursor.Name.ToLower()))
-            {
-                scheme.CursorColor = C;
-            }
-
-            if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerTabActive.Name.ToLower()))
-            {
-                theme.Tab.Background = C;
-            }
-
-            if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerTabInactive.Name.ToLower()))
-            {
-                theme.Tab.UnfocusedBackground = C;
-            }
-
-            if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerTitlebarActive.Name.ToLower()))
-            {
-                theme.TabRow.Background = C;
-            }
-
-            if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerTitlebarInactive.Name.ToLower()))
-            {
-                theme.TabRow.UnfocusedBackground = C;
+                if (name.Contains(TerTabActive.Name.ToLower())) theme.Tab.Background = C;
+                if (name.Contains(TerTabInactive.Name.ToLower())) theme.Tab.UnfocusedBackground = C;
+                if (name.Contains(TerTitlebarActive.Name.ToLower())) theme.TabRow.Background = C;
+                if (name.Contains(TerTitlebarInactive.Name.ToLower())) theme.TabRow.UnfocusedBackground = C;
             }
 
             ApplyPreview(_Terminal);
@@ -1120,49 +1212,33 @@ namespace WinPaletter
 
         public void ApplyPreview(WinTerminal Terminal)
         {
+            if (Terminal == null) return;
+
             Terminal1.UseAcrylicOnTitlebar = Terminal.UseAcrylicInTabRow;
+
+            // Use the effective profile so unset fields are inherited from profiles.defaults.
+            WinTerminal.Types.Profile currentProfile = GetEffectiveProfile();
 
             if (TerProfiles.SelectedIndex == 0)
             {
-                Terminal1.TabColor = Terminal.Profiles.Defaults.TabColor;
+                Terminal1.TabColor = Terminal.Profiles?.Defaults?.TabColor ?? Color.Empty;
             }
-            else if (Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].TabColor == Color.FromArgb(0, 0, 0, 0))
+            else if (currentProfile != null && currentProfile.TabColor == Color.FromArgb(0, 0, 0, 0))
             {
-                Terminal1.TabColor = Terminal.Profiles.Defaults.TabColor;
+                Terminal1.TabColor = Terminal.Profiles?.Defaults?.TabColor ?? Color.Empty;
             }
-            else
+            else if (currentProfile != null)
             {
-                Terminal1.TabColor = Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].TabColor;
+                Terminal1.TabColor = currentProfile.TabColor;
             }
 
-            WinTerminal.Types.Scheme temp = new();
-
-            if (TerSchemes.SelectedIndex == 0)
-            {
-                if (TerProfiles.SelectedIndex == 0)
-                {
-                    temp = _Terminal.Schemes.FirstOrDefault();
-                }
-                else if (TerProfiles.SelectedIndex > 0)
-                {
-                    temp = _Terminal.Schemes
-                        .FirstOrDefault(s => string.Equals(s.Name, _Terminal.Profiles.Defaults.ColorScheme?.ToString() ?? string.Empty, StringComparison.OrdinalIgnoreCase))
-                        ?? _Terminal.Schemes.FirstOrDefault();
-                }
-            }
-            else if (TerSchemes.SelectedIndex > 0)
-            {
-                temp = _Terminal.Schemes[TerSchemes.SelectedIndex - 1];
-            }
-
-            if (temp == null) temp = new();
+            WinTerminal.Types.Scheme temp = GetCurrentScheme() ?? new();
 
             Terminal1.Color_Background = temp.Background;
             Terminal1.Color_Foreground = temp.Foreground;
             Terminal1.Color_Selection = temp.SelectionBackground;
             Terminal1.Color_Cursor = temp.CursorColor;
 
-            //if (Terminal1.TabColor == null || Terminal1.TabColor == Color.EmptyError || Terminal1.TabColor == Color.FromArgb(0, 0, 0, 0)) Terminal1.TabColor = profile.Background;
             Terminal2.Color_Background = Terminal1.Color_Background;
             Terminal2.Color_Foreground = Terminal1.Color_Foreground;
             Terminal2.Color_Selection = Terminal1.Color_Selection;
@@ -1170,7 +1246,7 @@ namespace WinPaletter
 
             if (TerThemesContainer.Enabled)
             {
-                WinTerminal.Types.Theme theme = _Terminal.Themes[TerThemes.SelectedIndex - 4] ?? new();
+                WinTerminal.Types.Theme theme = GetCurrentTheme() ?? new();
                 Terminal1.Color_TabFocused = theme.Tab.Background;
                 Terminal1.Color_TabUnFocused = theme.Tab.UnfocusedBackground;
                 Terminal1.Color_Titlebar = theme.TabRow.Background;
@@ -1187,52 +1263,43 @@ namespace WinPaletter
 
             if (TerThemes.SelectedItem is not null)
             {
-                if (TerThemes.SelectedItem.ToString().ToLower() == "dark")
+                string selected = TerThemes.SelectedItem.ToString().ToLower();
+
+                if (selected == "dark")
                 {
                     Terminal1.Light = false;
                     Terminal2.Light = false;
                 }
-
-                else if (TerThemes.SelectedItem.ToString().ToLower() == "light")
+                else if (selected == "light")
                 {
                     Terminal1.Light = true;
                     Terminal2.Light = true;
                 }
-
-                else if (TerThemes.SelectedItem.ToString().ToLower() == "system")
+                else if (selected == "system")
                 {
                     switch (Program.WindowStyle)
                     {
                         case WindowStyle.W12:
-                            {
-                                Terminal1.Light = Program.TM.Windows12.AppMode_Light;
-                                Terminal2.Light = Program.TM.Windows12.AppMode_Light;
-                                break;
-                            }
+                            Terminal1.Light = Program.TM.Windows12.AppMode_Light;
+                            Terminal2.Light = Program.TM.Windows12.AppMode_Light;
+                            break;
 
                         case WindowStyle.W11:
-                            {
-                                Terminal1.Light = Program.TM.Windows11.AppMode_Light;
-                                Terminal2.Light = Program.TM.Windows11.AppMode_Light;
-                                break;
-                            }
+                            Terminal1.Light = Program.TM.Windows11.AppMode_Light;
+                            Terminal2.Light = Program.TM.Windows11.AppMode_Light;
+                            break;
 
                         case WindowStyle.W10:
-                            {
-                                Terminal1.Light = Program.TM.Windows10.AppMode_Light;
-                                Terminal2.Light = Program.TM.Windows10.AppMode_Light;
-                                break;
-                            }
+                            Terminal1.Light = Program.TM.Windows10.AppMode_Light;
+                            Terminal2.Light = Program.TM.Windows10.AppMode_Light;
+                            break;
 
                         default:
-                            {
-                                Terminal1.Light = Program.TM.Windows11.AppMode_Light;
-                                Terminal2.Light = Program.TM.Windows11.AppMode_Light;
-                                break;
-                            }
+                            Terminal1.Light = Program.TM.Windows11.AppMode_Light;
+                            Terminal2.Light = Program.TM.Windows11.AppMode_Light;
+                            break;
                     }
                 }
-
                 else
                 {
                     Terminal1.Light = !TerMode.Checked;
@@ -1240,17 +1307,25 @@ namespace WinPaletter
                 }
             }
 
-            WinTerminal.Types.Profile temp_p = TerProfiles.SelectedIndex == 0 ? _Terminal.Profiles.Defaults : _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1];
-            GDI32.LOGFONT fx = new();
-            Font f_cmd = new(temp_p.Font.Face, temp_p.Font.Size);
-            f_cmd.ToLogFont(fx);
-            fx.lfWeight = (int)temp_p.Font.Weight * 100;
-            f_cmd = new(f_cmd.Name, f_cmd.Size, Font.FromLogFont(fx).Style);
-            Terminal1.Font = f_cmd;
+            WinTerminal.Types.Profile temp_p = currentProfile ?? Terminal.Profiles?.Defaults;
+            if (temp_p?.Font != null)
+            {
+                GDI32.LOGFONT fx = new();
+                Font f_cmd = new(temp_p.Font.Face, temp_p.Font.Size);
+                f_cmd.ToLogFont(fx);
+                fx.lfWeight = (int)temp_p.Font.Weight * 100;
+                using (Font temp_s = Font.FromLogFont(fx))
+                {
+                    f_cmd = new(f_cmd.Name, f_cmd.Size, temp_s.Style);
+                }
+                Terminal1.Font = f_cmd;
+            }
         }
 
         private void Button3_Click(object sender, EventArgs e)
         {
+            if (_Terminal?.Themes == null) return;
+
             string s = InputBox(Program.Localization.Strings.Aspects.Terminals.TypeSchemeName, $"{Program.Localization.Strings.General.NewTheme} #{TerThemes.Items.Count - 4}");
             if (string.IsNullOrWhiteSpace(s)) return;
             _Terminal.Themes.Add(new() { Name = s });
@@ -1263,15 +1338,17 @@ namespace WinPaletter
             GDI32.LOGFONT fx = new();
             Font f_cmd = new(Terminal1.Font.Name, Terminal1.Font.Size, Terminal1.Font.Style);
             f_cmd.ToLogFont(fx);
-            fx.lfWeight = TerFontWeight.SelectedIndex * 100;
+            fx.lfWeight = Math.Max(100, TerFontWeight.SelectedIndex * 100);
             {
-                Font temp = Font.FromLogFont(fx);
-                f_cmd = new(Terminal1.Font.Name, Terminal1.Font.Size, temp.Style);
+                using (Font temp = Font.FromLogFont(fx))
+                {
+                    f_cmd = new(Terminal1.Font.Name, Terminal1.Font.Size, temp.Style);
+                }
             }
             Terminal1.Font = f_cmd;
 
-            WinTerminal.Types.Profile temp1 = TerProfiles.SelectedIndex == 0 ? _Terminal.Profiles.Defaults : _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1];
-            temp1.Font.Weight = (WinTerminal.Types.FontWeight)TerFontWeight.SelectedIndex;
+            WinTerminal.Types.Profile temp1 = GetCurrentProfile();
+            if (temp1 != null) temp1.Font.Weight = (WinTerminal.Types.FontWeight)TerFontWeight.SelectedIndex;
         }
 
         private void TerThemes_SelectedIndexChanged(object sender, EventArgs e)
@@ -1284,7 +1361,7 @@ namespace WinPaletter
             if (TerThemes.SelectedIndex > 3)
             {
                 TerThemesContainer.Enabled = true;
-                WinTerminal.Types.Theme theme = _Terminal.Themes[TerThemes.SelectedIndex - 4] ?? new();
+                WinTerminal.Types.Theme theme = GetCurrentTheme() ?? new();
 
                 TerTitlebarActive.BackColor = theme.TabRow.Background;
                 TerTitlebarInactive.BackColor = theme.TabRow.UnfocusedBackground;
@@ -1292,7 +1369,6 @@ namespace WinPaletter
                 TerTabInactive.BackColor = theme.Tab.UnfocusedBackground;
                 TerMode.Checked = !((theme.Window.ApplicationTheme ?? "system").ToLower() == "light");
             }
-
             else
             {
                 TerThemesContainer.Enabled = false;
@@ -1302,107 +1378,92 @@ namespace WinPaletter
                 TerTabActive.BackColor = Color.FromArgb(0, 0, 0, 0);
                 TerTabInactive.BackColor = Color.FromArgb(0, 0, 0, 0);
 
-                if (TerThemes.SelectedIndex == 1)
-                    TerMode.Checked = true;
-                if (TerThemes.SelectedIndex == 2)
-                    TerMode.Checked = false;
+                if (TerThemes.SelectedIndex == 1) TerMode.Checked = true;
+                if (TerThemes.SelectedIndex == 2) TerMode.Checked = false;
 
                 switch (Program.WindowStyle)
                 {
                     case WindowStyle.W12:
-                        {
-                            if (TerThemes.SelectedIndex == 3)
-                                TerMode.Checked = !Program.TM.Windows12.AppMode_Light;
-                            break;
-                        }
+                        if (TerThemes.SelectedIndex == 3) TerMode.Checked = !Program.TM.Windows12.AppMode_Light;
+                        break;
 
                     case WindowStyle.W11:
-                        {
-                            if (TerThemes.SelectedIndex == 3)
-                                TerMode.Checked = !Program.TM.Windows11.AppMode_Light;
-                            break;
-                        }
+                        if (TerThemes.SelectedIndex == 3) TerMode.Checked = !Program.TM.Windows11.AppMode_Light;
+                        break;
 
                     case WindowStyle.W10:
-                        {
-                            if (TerThemes.SelectedIndex == 3)
-                                TerMode.Checked = !Program.TM.Windows10.AppMode_Light;
-                            break;
-                        }
+                        if (TerThemes.SelectedIndex == 3) TerMode.Checked = !Program.TM.Windows10.AppMode_Light;
+                        break;
 
                     default:
-                        {
-                            if (TerThemes.SelectedIndex == 3)
-                                TerMode.Checked = !Program.TM.Windows11.AppMode_Light;
-                            break;
-                        }
+                        if (TerThemes.SelectedIndex == 3) TerMode.Checked = !Program.TM.Windows11.AppMode_Light;
+                        break;
                 }
             }
 
-            if (TerThemes.SelectedIndex == 0)
-            {
-                _Terminal.Theme = null;
-            }
-            else if (TerThemes.SelectedIndex == 1)
-            {
-                _Terminal.Theme = "dark";
-            }
-            else if (TerThemes.SelectedIndex == 2)
-            {
-                _Terminal.Theme = "light";
-            }
-            else if (TerThemes.SelectedIndex == 3)
-            {
-                _Terminal.Theme = "system";
-            }
-            else
-            {
-                _Terminal.Theme = TerThemes.SelectedItem.ToString();
-            }
+            if (TerThemes.SelectedIndex == 0) _Terminal.Theme = null;
+            else if (TerThemes.SelectedIndex == 1) _Terminal.Theme = "dark";
+            else if (TerThemes.SelectedIndex == 2) _Terminal.Theme = "light";
+            else if (TerThemes.SelectedIndex == 3) _Terminal.Theme = "system";
+            else _Terminal.Theme = TerThemes.SelectedItem?.ToString();
 
             ApplyPreview(_Terminal);
         }
 
         private void TerEditThemeName_Click(object sender, EventArgs e)
         {
-            if (TerThemes.SelectedIndex > 3)
-            {
-                string s = InputBox(Program.Localization.Strings.Aspects.Terminals.TypeSchemeName, TerThemes.SelectedItem.ToString());
-                if ((s ?? string.Empty) != (TerThemes.SelectedItem.ToString() ?? string.Empty) & !string.IsNullOrEmpty(s) & !TerThemes.Items.Contains(s))
-                {
-                    int i = TerThemes.SelectedIndex;
-                    TerThemes.Items.RemoveAt(i);
-                    TerThemes.Items.Insert(i, s);
-                    TerThemes.SelectedIndex = i;
-                    _Terminal.Themes[i - 4].Name = s;
-                }
-            }
+            if (TerThemes.SelectedIndex <= 3) return;
+
+            int i = TerThemes.SelectedIndex;
+            int modelIndex = i - 4;
+
+            if (_Terminal?.Themes == null || modelIndex < 0 || modelIndex >= _Terminal.Themes.Count) return;
+
+            string current = TerThemes.SelectedItem?.ToString() ?? string.Empty;
+            string s = InputBox(Program.Localization.Strings.Aspects.Terminals.TypeSchemeName, current);
+
+            if (string.IsNullOrEmpty(s) || s == current || TerThemes.Items.Contains(s)) return;
+
+            _Terminal.Themes[modelIndex].Name = s;
+            TerThemes.Items.RemoveAt(i);
+            TerThemes.Items.Insert(i, s);
+            TerThemes.SelectedIndex = i;
         }
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            string s = InputBox(Program.Localization.Strings.Aspects.Terminals.TypeSchemeName, TerSchemes.SelectedItem.ToString());
-            if ((s ?? string.Empty) != (TerSchemes.SelectedItem.ToString() ?? string.Empty) & !string.IsNullOrEmpty(s) & !TerSchemes.Items.Contains(s))
-            {
-                int i = TerSchemes.SelectedIndex;
-                TerSchemes.Items.RemoveAt(i);
-                TerSchemes.Items.Insert(i, s);
-                TerSchemes.SelectedIndex = i;
-                _Terminal.Schemes[i - 1].Name = s;
-            }
+            if (TerSchemes.SelectedIndex <= 0) return;
+            if (_Terminal?.Schemes == null) return;
+
+            int i = TerSchemes.SelectedIndex;
+            int modelIndex = i - 1;
+
+            if (modelIndex < 0 || modelIndex >= _Terminal.Schemes.Count) return;
+
+            string current = TerSchemes.SelectedItem?.ToString() ?? string.Empty;
+            string s = InputBox(Program.Localization.Strings.Aspects.Terminals.TypeSchemeName, current);
+
+            if (string.IsNullOrEmpty(s) || s == current || TerSchemes.Items.Contains(s)) return;
+
+            _Terminal.Schemes[modelIndex].Name = s;
+            TerSchemes.Items.RemoveAt(i);
+            TerSchemes.Items.Insert(i, s);
+            TerSchemes.SelectedIndex = i;
         }
 
         private void Button14_Click(object sender, EventArgs e)
         {
-            Forms.TerminalInfo.Profile = TerProfiles.SelectedIndex == 0 ? _Terminal.Profiles.Defaults : _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1];
+            WinTerminal.Types.Profile current = GetCurrentProfile();
+            if (current == null) return;
+
+            Forms.TerminalInfo.Profile = current;
 
             if (Forms.TerminalInfo.OpenDialog(TerProfiles.SelectedIndex == 0) == DialogResult.OK)
             {
-                WinTerminal.Types.Profile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.Profiles.Defaults : _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1];
-                temp.Name = Forms.TerminalInfo.Profile.Name;
-                temp.TabTitle = Forms.TerminalInfo.Profile.TabTitle;
-                temp.Icon = Forms.TerminalInfo.Profile.Icon;
-                temp.TabColor = Forms.TerminalInfo.Profile.TabColor;
+                current.Name = Forms.TerminalInfo.Profile.Name;
+                current.TabTitle = Forms.TerminalInfo.Profile.TabTitle;
+                current.Icon = Forms.TerminalInfo.Profile.Icon;
+                current.TabColor = Forms.TerminalInfo.Profile.TabColor;
 
                 int i = TerProfiles.SelectedIndex;
                 FillTerminalProfiles(_Terminal, TerProfiles);
@@ -1418,59 +1479,44 @@ namespace WinPaletter
 
             if (!IsShown) return;
 
-            WinTerminal.Types.Profile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.Profiles.Defaults : _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1];
-            temp.UseAcrylic = TerAcrylic.Checked;
+            WinTerminal.Types.Profile temp = GetCurrentProfile();
+            if (temp != null) temp.UseAcrylic = TerAcrylic.Checked;
+
+            ApplyPreview(_Terminal);
         }
 
         private void Button13_Click(object sender, EventArgs e)
         {
-            _Terminal.Profiles.List.Add(new() { Name = $"{Program.Localization.Strings.General.NewProfile} #{TerProfiles.Items.Count}", ColorScheme = _Terminal.Profiles.Defaults.ColorScheme });
+            if (_Terminal?.Profiles?.List == null) return;
+
+            _Terminal.Profiles.List.Add(new()
+            {
+                Name = $"{Program.Localization.Strings.General.NewProfile} #{TerProfiles.Items.Count}",
+                ColorScheme = _Terminal.Profiles.Defaults?.ColorScheme
+            });
+
             FillTerminalProfiles(_Terminal, TerProfiles);
             TerProfiles.SelectedIndex = TerProfiles.Items.Count - 1;
         }
 
         private void Button15_Click(object sender, EventArgs e)
         {
-            string TerDir;
-            string TerPreDir;
-
-            if (!Program.Settings.WindowsTerminals.Path_Deflection)
-            {
-                TerDir = SysPaths.TerminalJSON;
-                TerPreDir = SysPaths.TerminalPreviewJSON;
-            }
-            else
-            {
-                if (File.Exists(Program.Settings.WindowsTerminals.Terminal_Stable_Path))
-                {
-                    TerDir = Program.Settings.WindowsTerminals.Terminal_Stable_Path;
-                }
-                else
-                {
-                    TerDir = SysPaths.TerminalJSON;
-                }
-
-                if (File.Exists(Program.Settings.WindowsTerminals.Terminal_Preview_Path))
-                {
-                    TerPreDir = Program.Settings.WindowsTerminals.Terminal_Preview_Path;
-                }
-                else
-                {
-                    TerPreDir = SysPaths.TerminalPreviewJSON;
-                }
-            }
+            string TerDir = ResolveTerminalPath(WinTerminal.Version.Stable);
+            string TerPreDir = ResolveTerminalPath(WinTerminal.Version.Preview);
 
             switch (Mode)
             {
                 case WinTerminal.Version.Stable:
                     {
-                        if (File.Exists(TerDir)) Program.SendCommand(@$"{SysPaths.Explorer} shell:appsFolder\Microsoft.WindowsTerminal_8wekyb3d8bbwe!App", false);
+                        if (File.Exists(TerDir))
+                            Program.SendCommand(@$"{SysPaths.Explorer} shell:appsFolder\Microsoft.WindowsTerminal_8wekyb3d8bbwe!App", false);
                         break;
                     }
 
                 case WinTerminal.Version.Preview:
                     {
-                        if (File.Exists(TerPreDir)) Program.SendCommand(@$"{SysPaths.Explorer} shell:appsFolder\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe!App", false);
+                        if (File.Exists(TerPreDir))
+                            Program.SendCommand(@$"{SysPaths.Explorer} shell:appsFolder\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe!App", false);
                         break;
                     }
             }
@@ -1483,24 +1529,30 @@ namespace WinPaletter
 
         private void TerBackImage_TextChanged(object sender, EventArgs e)
         {
-            if (TerBackImage.Text == "desktopWallpaper")
+            try
             {
-                Terminal1.BackImage = Program.WallpaperMonitor.Get(Program.TM, Program.WindowStyle);
+                if (TerBackImage.Text == "desktopWallpaper")
+                {
+                    Terminal1.BackImage = Program.WallpaperMonitor.Get(Program.TM, Program.WindowStyle);
+                }
+                else if (File.Exists(TerBackImage.Text))
+                {
+                    Terminal1.BackImage = BitmapMgr.Load(TerBackImage.Text).FillInSize(new(Terminal1.Width - 2, Terminal1.Height - 32));
+                }
+                else
+                {
+                    Terminal1.BackImage = null;
+                }
             }
-            else if (File.Exists(TerBackImage.Text))
-            {
-                Terminal1.BackImage = BitmapMgr.Load(TerBackImage.Text).FillInSize(new(Terminal1.Width - 2, Terminal1.Height - 32));
-            }
-
-            else
+            catch
             {
                 Terminal1.BackImage = null;
             }
 
             if (!IsShown) return;
 
-            WinTerminal.Types.Profile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.Profiles.Defaults : _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1];
-            temp.BackgroundImage = TerBackImage.Text;
+            WinTerminal.Types.Profile temp = GetCurrentProfile();
+            if (temp != null) temp.BackgroundImage = TerBackImage.Text;
 
             Terminal1.Invalidate();
         }
@@ -1518,9 +1570,10 @@ namespace WinPaletter
 
         private void TerMode_CheckedChanged(object sender, EventArgs e)
         {
-            if (TerThemes.SelectedIndex > 3)
+            WinTerminal.Types.Theme theme = GetCurrentTheme();
+            if (theme != null)
             {
-                _Terminal.Themes[TerThemes.SelectedIndex - 4].Window.ApplicationTheme = !TerMode.Checked ? "light" : "dark";
+                theme.Window.ApplicationTheme = !TerMode.Checked ? "light" : "dark";
             }
 
             if (IsShown) ApplyPreview(_Terminal);
@@ -1534,70 +1587,58 @@ namespace WinPaletter
                 {
                     case WinTerminal.Version.Stable:
                         {
-                            Program.TM.Terminal = _TerminalDefault;
+                            if (_TerminalDefault != null) Program.TM.Terminal = _TerminalDefault;
                             break;
                         }
 
                     case WinTerminal.Version.Preview:
                         {
-                            Program.TM.TerminalPreview = _TerminalDefault;
+                            if (_TerminalDefault != null) Program.TM.TerminalPreview = _TerminalDefault;
                             break;
                         }
-
                 }
             }
 
-            DialogResult = DialogResult.Cancel;
+            if (DialogResult != DialogResult.OK) DialogResult = DialogResult.Cancel;
         }
 
         private void Button11_Click(object sender, EventArgs e)
         {
-            if (OS.W12 || OS.W11 || OS.W10)
+            if (!(OS.W12 || OS.W11 || OS.W10)) return;
+
+            string TerDir = ResolveTerminalPath(WinTerminal.Version.Stable);
+            string TerPreDir = ResolveTerminalPath(WinTerminal.Version.Preview);
+
+            if (File.Exists(TerDir) & Mode == WinTerminal.Version.Stable)
             {
-                string TerDir;
-                string TerPreDir;
+                Process.Start(TerDir);
+            }
 
-                TerDir = SysPaths.TerminalJSON;
-                TerPreDir = SysPaths.TerminalPreviewJSON;
-
-
-                if (File.Exists(TerDir) & Mode == WinTerminal.Version.Stable)
-                {
-                    Process.Start(TerDir);
-                }
-
-                if (File.Exists(TerPreDir) & Mode == WinTerminal.Version.Preview)
-                {
-                    Process.Start(TerPreDir);
-                }
-
+            if (File.Exists(TerPreDir) & Mode == WinTerminal.Version.Preview)
+            {
+                Process.Start(TerPreDir);
             }
         }
 
         private void Button9_Click(object sender, EventArgs e)
         {
-            if (OS.W12 || OS.W11 || OS.W10)
+            if (!(OS.W12 || OS.W11 || OS.W10)) return;
+
+            using (SaveFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Localization.Strings.Extensions.SaveJSON })
             {
-                using (SaveFileDialog dlg = new() { Filter = Program.Filters.JSON, Title = Program.Localization.Strings.Extensions.SaveJSON })
+                if (dlg.ShowDialog() == DialogResult.OK)
                 {
-                    if (dlg.ShowDialog() == DialogResult.OK)
+                    string TerDir = ResolveTerminalPath(WinTerminal.Version.Stable);
+                    string TerPreDir = ResolveTerminalPath(WinTerminal.Version.Preview);
+
+                    if (File.Exists(TerDir) & Mode == WinTerminal.Version.Stable)
                     {
+                        File.Copy(TerDir, dlg.FileName, true);
+                    }
 
-                        string TerDir;
-                        string TerPreDir;
-
-                        TerDir = SysPaths.TerminalJSON;
-                        TerPreDir = SysPaths.TerminalPreviewJSON;
-
-                        if (File.Exists(TerDir) & Mode == WinTerminal.Version.Stable)
-                        {
-                            File.Copy(TerDir, dlg.FileName);
-                        }
-
-                        if (File.Exists(TerPreDir) & Mode == WinTerminal.Version.Preview)
-                        {
-                            File.Copy(TerPreDir, dlg.FileName);
-                        }
+                    if (File.Exists(TerPreDir) & Mode == WinTerminal.Version.Preview)
+                    {
+                        File.Copy(TerPreDir, dlg.FileName, true);
                     }
                 }
             }
@@ -1605,29 +1646,37 @@ namespace WinPaletter
 
         private void Button17_Click(object sender, EventArgs e)
         {
+            if (TerSchemes.SelectedIndex <= 0) return;
+            if (_Terminal?.Schemes == null) return;
+
+            int idx = TerSchemes.SelectedIndex - 1;
+            if (idx < 0 || idx >= _Terminal.Schemes.Count) return;
+
+            WinTerminal.Types.Scheme src = _Terminal.Schemes[idx];
+
             WinTerminal.Types.Scheme scheme = new()
             {
                 Name = $"{TerSchemes.SelectedItem} Clone #{TerSchemes.Items.Count - 1}",
-                Background = _Terminal.Schemes[TerSchemes.SelectedIndex - 1].Background,
-                Black = _Terminal.Schemes[TerSchemes.SelectedIndex - 1].Black,
-                Blue = _Terminal.Schemes[TerSchemes.SelectedIndex - 1].Blue,
-                BrightBlack = _Terminal.Schemes[TerSchemes.SelectedIndex - 1].BrightBlack,
-                BrightBlue = _Terminal.Schemes[TerSchemes.SelectedIndex - 1].BrightBlue,
-                BrightCyan = _Terminal.Schemes[TerSchemes.SelectedIndex - 1].BrightCyan,
-                BrightGreen = _Terminal.Schemes[TerSchemes.SelectedIndex - 1].BrightGreen,
-                BrightPurple = _Terminal.Schemes[TerSchemes.SelectedIndex - 1].BrightPurple,
-                BrightRed = _Terminal.Schemes[TerSchemes.SelectedIndex - 1].BrightRed,
-                BrightWhite = _Terminal.Schemes[TerSchemes.SelectedIndex - 1].BrightWhite,
-                BrightYellow = _Terminal.Schemes[TerSchemes.SelectedIndex - 1].BrightYellow,
-                CursorColor = _Terminal.Schemes[TerSchemes.SelectedIndex - 1].CursorColor,
-                Cyan = _Terminal.Schemes[TerSchemes.SelectedIndex - 1].Cyan,
-                Foreground = _Terminal.Schemes[TerSchemes.SelectedIndex - 1].Foreground,
-                Green = _Terminal.Schemes[TerSchemes.SelectedIndex - 1].Green,
-                Purple = _Terminal.Schemes[TerSchemes.SelectedIndex - 1].Purple,
-                Red = _Terminal.Schemes[TerSchemes.SelectedIndex - 1].Red,
-                SelectionBackground = _Terminal.Schemes[TerSchemes.SelectedIndex - 1].SelectionBackground,
-                White = _Terminal.Schemes[TerSchemes.SelectedIndex - 1].White,
-                Yellow = _Terminal.Schemes[TerSchemes.SelectedIndex - 1].Yellow
+                Background = src.Background,
+                Black = src.Black,
+                Blue = src.Blue,
+                BrightBlack = src.BrightBlack,
+                BrightBlue = src.BrightBlue,
+                BrightCyan = src.BrightCyan,
+                BrightGreen = src.BrightGreen,
+                BrightPurple = src.BrightPurple,
+                BrightRed = src.BrightRed,
+                BrightWhite = src.BrightWhite,
+                BrightYellow = src.BrightYellow,
+                CursorColor = src.CursorColor,
+                Cyan = src.Cyan,
+                Foreground = src.Foreground,
+                Green = src.Green,
+                Purple = src.Purple,
+                Red = src.Red,
+                SelectionBackground = src.SelectionBackground,
+                White = src.White,
+                Yellow = src.Yellow
             };
 
             _Terminal.Schemes.Add(scheme);
@@ -1643,21 +1692,28 @@ namespace WinPaletter
                 return;
             }
 
+            if (_Terminal?.Profiles?.List == null) return;
+
+            int idx = TerProfiles.SelectedIndex - 1;
+            if (idx < 0 || idx >= _Terminal.Profiles.List.Count) return;
+
+            WinTerminal.Types.Profile src = _Terminal.Profiles.List[idx];
+
             WinTerminal.Types.Profile P = new()
             {
-                Name = $"{_Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].Name} {Program.Localization.Strings.General.Clone} #{TerProfiles.Items.Count}",
-                BackgroundImage = _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].BackgroundImage,
-                BackgroundImageOpacity = _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].BackgroundImageOpacity,
-                ColorScheme = _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].ColorScheme,
-                Commandline = _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].Commandline,
-                CursorHeight = _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].CursorHeight,
-                CursorShape = _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].CursorShape,
-                Font = _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].Font,
-                Icon = _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].Icon,
-                Opacity = _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].Opacity,
-                TabColor = _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].TabColor,
-                TabTitle = _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].TabTitle,
-                UseAcrylic = _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].UseAcrylic
+                Name = $"{src.Name} {Program.Localization.Strings.General.Clone} #{TerProfiles.Items.Count}",
+                BackgroundImage = src.BackgroundImage,
+                BackgroundImageOpacity = src.BackgroundImageOpacity,
+                ColorScheme = src.ColorScheme,
+                Commandline = src.Commandline,
+                CursorHeight = src.CursorHeight,
+                CursorShape = src.CursorShape,
+                Font = src.Font.Clone() as WinTerminal.Types.FontSettings,
+                Icon = src.Icon,
+                Opacity = src.Opacity,
+                TabColor = src.TabColor,
+                TabTitle = src.TabTitle,
+                UseAcrylic = src.UseAcrylic
             };
 
             _Terminal.Profiles.List.Add(P);
@@ -1667,22 +1723,29 @@ namespace WinPaletter
 
         private void Button19_Click(object sender, EventArgs e)
         {
-            if (TerThemes.SelectedIndex < 4)
+            if (TerThemes.SelectedIndex <= 3)
             {
                 MsgBox(Program.Localization.Strings.Aspects.Terminals.ThemeNotCloneable, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
+            if (_Terminal?.Themes == null) return;
+
+            int idx = TerThemes.SelectedIndex - 4;
+            if (idx < 0 || idx >= _Terminal.Themes.Count) return;
+
+            WinTerminal.Types.Theme src = _Terminal.Themes[idx];
+
             WinTerminal.Types.Theme Th = new()
             {
-                Name = $"{_Terminal.Themes[TerThemes.SelectedIndex - 4].Name} {Program.Localization.Strings.General.Clone} #{TerThemes.Items.Count}",
+                Name = $"{src.Name} {Program.Localization.Strings.General.Clone} #{TerThemes.Items.Count}",
             };
 
-            Th.Window.ApplicationTheme = _Terminal.Themes[TerThemes.SelectedIndex - 4].Window.ApplicationTheme;
-            Th.Tab.Background = _Terminal.Themes[TerThemes.SelectedIndex - 4].Tab.Background;
-            Th.Tab.UnfocusedBackground = _Terminal.Themes[TerThemes.SelectedIndex - 4].Tab.UnfocusedBackground;
-            Th.TabRow.Background = _Terminal.Themes[TerThemes.SelectedIndex - 4].TabRow.Background;
-            Th.TabRow.UnfocusedBackground = _Terminal.Themes[TerThemes.SelectedIndex - 4].TabRow.UnfocusedBackground;
+            Th.Window.ApplicationTheme = src.Window.ApplicationTheme;
+            Th.Tab.Background = src.Tab.Background;
+            Th.Tab.UnfocusedBackground = src.Tab.UnfocusedBackground;
+            Th.TabRow.Background = src.TabRow.Background;
+            Th.TabRow.UnfocusedBackground = src.TabRow.UnfocusedBackground;
 
             _Terminal.Themes.Add(Th);
             FillTerminalThemes(_Terminal, TerThemes);
@@ -1699,12 +1762,15 @@ namespace WinPaletter
 
             if (Forms.WindowsTerminalCopycat.ShowDialog() == DialogResult.OK)
             {
+                if (string.IsNullOrWhiteSpace(CCat)) return;
+
                 for (int x = 0, loopTo = TerProfiles.Items.Count - 1; x <= loopTo; x++)
                 {
-                    if ((TerProfiles.Items[x].ToString().ToLower() ?? string.Empty) == (CCat.ToLower() ?? string.Empty))
+                    if (string.Equals(TerProfiles.Items[x]?.ToString(), CCat, StringComparison.OrdinalIgnoreCase))
                     {
                         WinTerminal.Types.Profile CCatFrom = x == 0 ? _Terminal.Profiles.Defaults : _Terminal.Profiles.List[x - 1];
-                        WinTerminal.Types.Profile temp1 = TerProfiles.SelectedIndex == 0 ? _Terminal.Profiles.Defaults : _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1];
+                        WinTerminal.Types.Profile temp1 = GetCurrentProfile();
+                        if (temp1 == null) return;
 
                         temp1.BackgroundImage = CCatFrom.BackgroundImage;
                         temp1.BackgroundImageOpacity = CCatFrom.BackgroundImageOpacity;
@@ -1724,24 +1790,27 @@ namespace WinPaletter
                         else TerSchemes.SelectedIndex = 0;
 
                         TerBackImage.Text = CCatFrom.BackgroundImage;
-                        TerImageOpacity.Value = (int)(CCatFrom.BackgroundImageOpacity * 100f);
+                        TerImageOpacity.Value = Math.Min(TerImageOpacity.Maximum, Math.Max(TerImageOpacity.Minimum, (int)(CCatFrom.BackgroundImageOpacity * 100f)));
 
-                        TerCursorStyle.SelectedIndex = (int)CCatFrom.CursorShape;
-                        TerCursorHeightBar.Value = CCatFrom.CursorHeight;
+                        TerCursorStyle.SelectedIndex = Math.Min(TerCursorStyle.Items.Count - 1, Math.Max(0, (int)CCatFrom.CursorShape));
+                        TerCursorHeightBar.Value = Math.Min(TerCursorHeightBar.Maximum, Math.Max(TerCursorHeightBar.Minimum, CCatFrom.CursorHeight));
 
                         TerFontName.Text = CCatFrom.Font.Face;
                         GDI32.LOGFONT fx = new();
                         Font f_cmd = new(CCatFrom.Font.Face, CCatFrom.Font.Size);
                         f_cmd.ToLogFont(fx);
                         fx.lfWeight = (int)CCatFrom.Font.Weight * 100;
-                        f_cmd = new(f_cmd.Name, f_cmd.Size, Font.FromLogFont(fx).Style);
+                        using (Font temp_s = Font.FromLogFont(fx))
+                        {
+                            f_cmd = new(f_cmd.Name, f_cmd.Size, temp_s.Style);
+                        }
                         TerFontName.Font = new(f_cmd.Name, 9f, f_cmd.Style);
 
-                        TerFontSizeBar.Value = (int)CCatFrom.Font.Size;
-                        TerFontWeight.SelectedIndex = (int)CCatFrom.Font.Weight;
+                        TerFontSizeBar.Value = Math.Min(TerFontSizeBar.Maximum, Math.Max(TerFontSizeBar.Minimum, (int)CCatFrom.Font.Size));
+                        TerFontWeight.SelectedIndex = Math.Min(TerFontWeight.Items.Count - 1, Math.Max(0, (int)CCatFrom.Font.Weight));
 
                         TerAcrylic.Checked = CCatFrom.UseAcrylic;
-                        TerOpacityBar.Value = CCatFrom.Opacity;
+                        TerOpacityBar.Value = Math.Min(TerOpacityBar.Maximum, Math.Max(TerOpacityBar.Minimum, CCatFrom.Opacity));
 
                         Terminal1.Opacity = CCatFrom.Opacity;
                         Terminal1.OpacityBackImage = (float)CCatFrom.BackgroundImageOpacity * 100f;
@@ -1766,8 +1835,8 @@ namespace WinPaletter
                         if (File.Exists(CCatFrom.Icon))
                         {
                             Terminal1.TabIcon = BitmapMgr.Load(CCatFrom.Icon);
+                            Terminal1.TabIconButItIsString = null;
                         }
-
                         else
                         {
                             IntPtr intPtr = IntPtr.Zero;
@@ -1775,11 +1844,12 @@ namespace WinPaletter
                             string path = string.Empty;
                             if (CCatFrom.Commandline is not null)
                                 path = CCatFrom.Commandline.Replace("%SystemRoot%", SysPaths.Windows);
-                            Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
+                            Kernel32.Wow64RevertWow64FsRedirection(intPtr);
 
                             if (File.Exists(path))
                             {
                                 Terminal1.TabIcon = ((Icon)NativeMethods.Helpers.ExtractSmallIcon(path)).ToBitmap();
+                                Terminal1.TabIconButItIsString = null;
                             }
                             else
                             {
@@ -1798,67 +1868,74 @@ namespace WinPaletter
 
         private void Button20_Click(object sender, EventArgs e)
         {
+            if (TerSchemes.SelectedIndex <= 0) return;
+            if (_Terminal?.Schemes == null) return;
+
             UI.WP.ComboBox temp = Forms.WindowsTerminalCopycat.ComboBox1;
             temp.Items.Clear();
             CCat = null;
 
-            if (temp != null)
+            foreach (object x in TerSchemes.Items)
             {
-                foreach (object x in TerSchemes.Items) { if (x != TerSchemes.SelectedItem && x != TerSchemes.Items[0]) temp.Items.Add(x); }
+                if (x != TerSchemes.SelectedItem && x != TerSchemes.Items[0]) temp.Items.Add(x);
             }
 
             if (Forms.WindowsTerminalCopycat.ShowDialog() == DialogResult.OK)
             {
-                for (int x = 0, loopTo = TerSchemes.Items.Count - 1; x <= loopTo; x++)
+                if (string.IsNullOrWhiteSpace(CCat)) return;
+
+                WinTerminal.Types.Scheme target = GetCurrentScheme();
+                if (target == null) return;
+
+                for (int x = 1, loopTo = TerSchemes.Items.Count - 1; x <= loopTo; x++)
                 {
-                    if ((TerSchemes.Items[x].ToString().ToLower() ?? string.Empty) == (CCat.ToLower() ?? string.Empty))
+                    if (string.Equals(TerSchemes.Items[x]?.ToString(), CCat, StringComparison.OrdinalIgnoreCase))
                     {
                         WinTerminal.Types.Scheme CCatFrom = _Terminal.Schemes[x - 1];
-                        WinTerminal.Types.Scheme temp1 = _Terminal.Schemes[TerSchemes.SelectedIndex - 1];
 
-                        temp1.Background = CCatFrom.Background;
-                        temp1.Black = CCatFrom.Black;
-                        temp1.Blue = CCatFrom.Blue;
-                        temp1.BrightBlack = CCatFrom.BrightBlack;
-                        temp1.BrightBlue = CCatFrom.BrightBlue;
-                        temp1.BrightCyan = CCatFrom.BrightCyan;
-                        temp1.BrightGreen = CCatFrom.BrightGreen;
-                        temp1.BrightPurple = CCatFrom.BrightPurple;
-                        temp1.BrightRed = CCatFrom.BrightRed;
-                        temp1.BrightWhite = CCatFrom.BrightWhite;
-                        temp1.BrightYellow = CCatFrom.BrightYellow;
-                        temp1.CursorColor = CCatFrom.CursorColor;
-                        temp1.Cyan = CCatFrom.Cyan;
-                        temp1.Foreground = CCatFrom.Foreground;
-                        temp1.Green = CCatFrom.Green;
-                        temp1.Purple = CCatFrom.Purple;
-                        temp1.Red = CCatFrom.Red;
-                        temp1.SelectionBackground = CCatFrom.SelectionBackground;
-                        temp1.White = CCatFrom.White;
-                        temp1.Yellow = CCatFrom.Yellow;
+                        target.Background = CCatFrom.Background;
+                        target.Black = CCatFrom.Black;
+                        target.Blue = CCatFrom.Blue;
+                        target.BrightBlack = CCatFrom.BrightBlack;
+                        target.BrightBlue = CCatFrom.BrightBlue;
+                        target.BrightCyan = CCatFrom.BrightCyan;
+                        target.BrightGreen = CCatFrom.BrightGreen;
+                        target.BrightPurple = CCatFrom.BrightPurple;
+                        target.BrightRed = CCatFrom.BrightRed;
+                        target.BrightWhite = CCatFrom.BrightWhite;
+                        target.BrightYellow = CCatFrom.BrightYellow;
+                        target.CursorColor = CCatFrom.CursorColor;
+                        target.Cyan = CCatFrom.Cyan;
+                        target.Foreground = CCatFrom.Foreground;
+                        target.Green = CCatFrom.Green;
+                        target.Purple = CCatFrom.Purple;
+                        target.Red = CCatFrom.Red;
+                        target.SelectionBackground = CCatFrom.SelectionBackground;
+                        target.White = CCatFrom.White;
+                        target.Yellow = CCatFrom.Yellow;
 
-                        TerBackground.BackColor = temp1.Background;
-                        TerForeground.BackColor = temp1.Foreground;
-                        TerSelection.BackColor = temp1.SelectionBackground;
-                        TerCursor.BackColor = temp1.CursorColor;
+                        TerBackground.BackColor = target.Background;
+                        TerForeground.BackColor = target.Foreground;
+                        TerSelection.BackColor = target.SelectionBackground;
+                        TerCursor.BackColor = target.CursorColor;
 
-                        TerBlack.BackColor = temp1.Black;
-                        TerBlue.BackColor = temp1.Blue;
-                        TerGreen.BackColor = temp1.Green;
-                        TerCyan.BackColor = temp1.Cyan;
-                        TerRed.BackColor = temp1.Red;
-                        TerPurple.BackColor = temp1.Purple;
-                        TerYellow.BackColor = temp1.Yellow;
-                        TerWhite.BackColor = temp1.White;
+                        TerBlack.BackColor = target.Black;
+                        TerBlue.BackColor = target.Blue;
+                        TerGreen.BackColor = target.Green;
+                        TerCyan.BackColor = target.Cyan;
+                        TerRed.BackColor = target.Red;
+                        TerPurple.BackColor = target.Purple;
+                        TerYellow.BackColor = target.Yellow;
+                        TerWhite.BackColor = target.White;
 
-                        TerBlackB.BackColor = temp1.BrightBlack;
-                        TerBlueB.BackColor = temp1.BrightBlue;
-                        TerGreenB.BackColor = temp1.BrightGreen;
-                        TerCyanB.BackColor = temp1.BrightCyan;
-                        TerRedB.BackColor = temp1.BrightRed;
-                        TerPurpleB.BackColor = temp1.BrightPurple;
-                        TerYellowB.BackColor = temp1.BrightYellow;
-                        TerWhiteB.BackColor = temp1.BrightWhite;
+                        TerBlackB.BackColor = target.BrightBlack;
+                        TerBlueB.BackColor = target.BrightBlue;
+                        TerGreenB.BackColor = target.BrightGreen;
+                        TerCyanB.BackColor = target.BrightCyan;
+                        TerRedB.BackColor = target.BrightRed;
+                        TerPurpleB.BackColor = target.BrightPurple;
+                        TerYellowB.BackColor = target.BrightYellow;
+                        TerWhiteB.BackColor = target.BrightWhite;
 
                         ApplyPreview(_Terminal);
 
@@ -1870,11 +1947,13 @@ namespace WinPaletter
 
         private void Button21_Click(object sender, EventArgs e)
         {
-            if (TerThemes.SelectedIndex < 4)
+            if (TerThemes.SelectedIndex <= 3)
             {
                 MsgBox(Program.Localization.Strings.Aspects.Terminals.ThemeNotCloneable, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
+            if (_Terminal?.Themes == null) return;
 
             UI.WP.ComboBox temp = Forms.WindowsTerminalCopycat.ComboBox1;
             temp.Items.Clear();
@@ -1884,24 +1963,32 @@ namespace WinPaletter
 
             if (Forms.WindowsTerminalCopycat.ShowDialog() == DialogResult.OK)
             {
-                for (int x = 0, loopTo = TerThemes.Items.Count - 4; x <= loopTo; x++)
-                {
-                    if ((TerThemes.Items[x].ToString().ToLower() ?? string.Empty) == (CCat.ToLower() ?? string.Empty))
-                    {
-                        WinTerminal.Types.Theme CCatFrom = _Terminal.Themes[x - 3];
-                        WinTerminal.Types.Theme temp1 = _Terminal.Themes[TerThemes.SelectedIndex - 4];
+                if (string.IsNullOrWhiteSpace(CCat)) return;
 
-                        temp1.Window.ApplicationTheme = CCatFrom.Window.ApplicationTheme;
-                        temp1.Tab.Background = CCatFrom.Tab.Background;
-                        temp1.Tab.UnfocusedBackground = CCatFrom.Tab.UnfocusedBackground;
-                        temp1.TabRow.Background = CCatFrom.TabRow.Background;
-                        temp1.TabRow.UnfocusedBackground = CCatFrom.TabRow.UnfocusedBackground;
+                WinTerminal.Types.Theme target = GetCurrentTheme();
+                if (target == null) return;
+
+                // Start at 4: the first 4 combo entries are built-ins.
+                for (int x = 4, loopTo = TerThemes.Items.Count - 1; x <= loopTo; x++)
+                {
+                    if (string.Equals(TerThemes.Items[x]?.ToString(), CCat, StringComparison.OrdinalIgnoreCase))
+                    {
+                        int modelIndex = x - 4;
+                        if (modelIndex < 0 || modelIndex >= _Terminal.Themes.Count) break;
+
+                        WinTerminal.Types.Theme CCatFrom = _Terminal.Themes[modelIndex];
+
+                        target.Window.ApplicationTheme = CCatFrom.Window.ApplicationTheme;
+                        target.Tab.Background = CCatFrom.Tab.Background;
+                        target.Tab.UnfocusedBackground = CCatFrom.Tab.UnfocusedBackground;
+                        target.TabRow.Background = CCatFrom.TabRow.Background;
+                        target.TabRow.UnfocusedBackground = CCatFrom.TabRow.UnfocusedBackground;
 
                         TerTitlebarActive.BackColor = CCatFrom.TabRow.Background;
                         TerTitlebarInactive.BackColor = CCatFrom.TabRow.UnfocusedBackground;
                         TerTabActive.BackColor = CCatFrom.Tab.Background;
                         TerTabInactive.BackColor = CCatFrom.Tab.UnfocusedBackground;
-                        TerMode.Checked = !(CCatFrom.Window.ApplicationTheme.ToLower() == "light");
+                        TerMode.Checked = !(CCatFrom.Window.ApplicationTheme?.ToLower() == "light");
 
                         break;
                     }
@@ -1920,25 +2007,22 @@ namespace WinPaletter
                     TerFontName.Text = dlg.Font.Name;
                     GDI32.LOGFONT fx = new();
                     dlg.Font.ToLogFont(fx);
-                    fx.lfWeight = TerFontWeight.SelectedIndex * 100;
+                    fx.lfWeight = Math.Max(100, TerFontWeight.SelectedIndex * 100);
                     {
-                        Font temp = Font.FromLogFont(fx);
-                        Terminal1.Font = new(dlg.Font.Name, dlg.Font.Size, temp.Style);
+                        using (Font temp = Font.FromLogFont(fx))
+                        {
+                            Terminal1.Font = new(dlg.Font.Name, dlg.Font.Size, temp.Style);
+                        }
                     }
                     TerFontName.Font = new(dlg.Font.Name, 9f, Terminal1.Font.Style);
-                    TerFontSizeBar.Value = (int)(dlg.Font.Size);
+                    TerFontSizeBar.Value = Math.Min(TerFontSizeBar.Maximum, Math.Max(TerFontSizeBar.Minimum, dlg.Font.Size));
 
-                    if (TerProfiles.SelectedIndex == 0)
+                    WinTerminal.Types.Profile current = GetCurrentProfile();
+                    if (current?.Font != null)
                     {
-                        _Terminal.Profiles.Defaults.Font.Face = dlg.Font.Name;
-                        _Terminal.Profiles.Defaults.Font.Weight = (WinTerminal.Types.FontWeight)TerFontWeight.SelectedIndex;
-                        _Terminal.Profiles.Defaults.Font.Size = dlg.Font.Size;
-                    }
-                    else if (TerProfiles.SelectedIndex > 0 && _Terminal.Profiles.List.Count > 0)
-                    {
-                        _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].Font.Face = dlg.Font.Name;
-                        _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].Font.Weight = (WinTerminal.Types.FontWeight)TerFontWeight.SelectedIndex;
-                        _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].Font.Size = dlg.Font.Size;
+                        current.Font.Face = dlg.Font.Name;
+                        current.Font.Weight = (WinTerminal.Types.FontWeight)TerFontWeight.SelectedIndex;
+                        current.Font.Size = dlg.Font.Size;
                     }
                 }
             }
@@ -1950,8 +2034,8 @@ namespace WinPaletter
 
             if (!IsShown) return;
 
-            WinTerminal.Types.Profile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.Profiles.Defaults : _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1];
-            temp.CursorHeight = (int)(sender as TrackBarX).Value;
+            WinTerminal.Types.Profile temp = GetCurrentProfile();
+            if (temp != null) temp.CursorHeight = (int)(sender as TrackBarX).Value;
         }
 
         private void trackBarX1_ValueChanged(object sender, EventArgs e)
@@ -1960,8 +2044,8 @@ namespace WinPaletter
 
             if (!IsShown) return;
 
-            WinTerminal.Types.Profile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.Profiles.Defaults : _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1];
-            temp.BackgroundImageOpacity = (float)(TerImageOpacity.Value / 100d);
+            WinTerminal.Types.Profile temp = GetCurrentProfile();
+            if (temp != null) temp.BackgroundImageOpacity = (float)(TerImageOpacity.Value / 100d);
         }
 
         private void trackBarX1_ValueChanged_1(object sender, EventArgs e)
@@ -1970,8 +2054,8 @@ namespace WinPaletter
 
             if (IsShown)
             {
-                WinTerminal.Types.Profile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.Profiles.Defaults : _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1];
-                temp.Opacity = (int)TerOpacityBar.Value;
+                WinTerminal.Types.Profile temp = GetCurrentProfile();
+                if (temp != null) temp.Opacity = (int)TerOpacityBar.Value;
             }
         }
 
@@ -1981,95 +2065,68 @@ namespace WinPaletter
 
             Terminal1.Font = new(Terminal1.Font.Name, TerFontSizeBar.Value, Terminal1.Font.Style);
 
-            WinTerminal.Types.Profile temp = TerProfiles.SelectedIndex == 0 ? _Terminal.Profiles.Defaults : _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1];
-            temp.Font.Size = TerFontSizeBar.Value;
+            WinTerminal.Types.Profile temp = GetCurrentProfile();
+            if (temp?.Font != null) temp.Font.Size = TerFontSizeBar.Value;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (TerThemes.SelectedIndex > 3 && MsgBox(string.Format(Program.Localization.Strings.Messages.TerminalDeleteTheme, TerThemes.SelectedItem), MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                int i = TerThemes.SelectedIndex;
-                TerThemes.Items.RemoveAt(i);
-                TerThemes.SelectedIndex = i > TerThemes.Items.Count - 1 ? TerThemes.Items.Count - 1 : i;
-                _Terminal.Themes.RemoveAt(i - 4);
-            }
+            if (TerThemes.SelectedIndex <= 3) return;
+            if (_Terminal?.Themes == null) return;
+
+            if (MsgBox(string.Format(Program.Localization.Strings.Messages.TerminalDeleteTheme, TerThemes.SelectedItem), MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+
+            int i = TerThemes.SelectedIndex;
+            int modelIndex = i - 4;
+
+            if (modelIndex < 0 || modelIndex >= _Terminal.Themes.Count) return;
+
+            _Terminal.Themes.RemoveAt(modelIndex);
+            TerThemes.Items.RemoveAt(i);
+            TerThemes.SelectedIndex = i > TerThemes.Items.Count - 1 ? TerThemes.Items.Count - 1 : i;
         }
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            if (TerSchemes.SelectedIndex > 0 && MsgBox(string.Format(Program.Localization.Strings.Messages.TerminalDeleteScheme, TerSchemes.SelectedItem), MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                int i = TerSchemes.SelectedIndex;
-                TerSchemes.Items.RemoveAt(i);
-                TerSchemes.SelectedIndex = i > TerSchemes.Items.Count - 1 ? TerSchemes.Items.Count - 1 : i;
-                _Terminal.Schemes.RemoveAt(i - 1);
-            }
+            if (TerSchemes.SelectedIndex <= 0) return;
+            if (_Terminal?.Schemes == null) return;
+
+            if (MsgBox(string.Format(Program.Localization.Strings.Messages.TerminalDeleteScheme, TerSchemes.SelectedItem), MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+
+            int i = TerSchemes.SelectedIndex;
+            int modelIndex = i - 1;
+
+            if (modelIndex < 0 || modelIndex >= _Terminal.Schemes.Count) return;
+
+            _Terminal.Schemes.RemoveAt(modelIndex);
+            TerSchemes.Items.RemoveAt(i);
+            TerSchemes.SelectedIndex = i > TerSchemes.Items.Count - 1 ? TerSchemes.Items.Count - 1 : i;
         }
 
         private void TerWhiteB_ContextMenuMadeColorChangeInvoker(object sender, ColorItem.ContextMenuMadeColorChangeEventArgs e)
         {
             Color cx = e.Color;
 
-            WinTerminal.Types.Scheme scheme = new();
-            WinTerminal.Types.Theme theme = new();
+            WinTerminal.Types.Scheme scheme = GetCurrentScheme();
+            WinTerminal.Types.Theme theme = GetCurrentTheme();
 
-            if (TerProfiles.SelectedIndex == 0)
-            {
-                scheme = _Terminal.Schemes
-                    .FirstOrDefault(s => string.Equals(s.Name, _Terminal.Profiles.Defaults.ColorScheme?.ToString() ?? string.Empty, StringComparison.OrdinalIgnoreCase));
-            }
-            else if (TerProfiles.SelectedIndex > 0)
-            {
-                string schemeName = _Terminal.Profiles.List[TerProfiles.SelectedIndex - 1].ColorScheme?.ToString() ?? string.Empty;
-                scheme = _Terminal.Schemes.FirstOrDefault(s => string.Equals(s.Name, schemeName, StringComparison.OrdinalIgnoreCase));
-            }
-
-            if (TerThemes.SelectedIndex > 3)
-            {
-                theme = _Terminal.Themes[TerThemes.SelectedIndex - 4] ?? new();
-            }
+            if (scheme == null) return;
 
             if (ColorClipboard.Event != ColorClipboard.MenuEvent.None)
             {
-                if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerBackground.Name.ToLower()))
-                {
-                    scheme.Background = cx;
-                }
+                string name = ((ColorItem)sender).Name.ToString().ToLower();
 
-                if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerForeground.Name.ToLower()))
-                {
-                    scheme.Foreground = cx;
-                }
+                if (name.Contains(TerBackground.Name.ToLower())) scheme.Background = cx;
+                if (name.Contains(TerForeground.Name.ToLower())) scheme.Foreground = cx;
+                if (name.Contains(TerSelection.Name.ToLower())) scheme.SelectionBackground = cx;
+                if (name.Contains(TerCursor.Name.ToLower())) scheme.CursorColor = cx;
 
-                if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerSelection.Name.ToLower()))
+                if (theme != null)
                 {
-                    scheme.SelectionBackground = cx;
-                }
-
-                if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerCursor.Name.ToLower()))
-                {
-                    scheme.CursorColor = cx;
-                }
-
-                if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerTabActive.Name.ToLower()))
-                {
-                    theme.Tab.Background = cx;
-                }
-
-                if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerTabInactive.Name.ToLower()))
-                {
-                    theme.Tab.UnfocusedBackground = cx;
-                }
-
-                if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerTitlebarActive.Name.ToLower()))
-                {
-                    theme.TabRow.Background = cx;
-                }
-
-                if (((ColorItem)sender).Name.ToString().ToLower().Contains(TerTitlebarInactive.Name.ToLower()))
-                {
-                    theme.TabRow.UnfocusedBackground = cx;
+                    if (name.Contains(TerTabActive.Name.ToLower())) theme.Tab.Background = cx;
+                    if (name.Contains(TerTabInactive.Name.ToLower())) theme.Tab.UnfocusedBackground = cx;
+                    if (name.Contains(TerTitlebarActive.Name.ToLower())) theme.TabRow.Background = cx;
+                    if (name.Contains(TerTitlebarInactive.Name.ToLower())) theme.TabRow.UnfocusedBackground = cx;
                 }
 
                 ApplyPreview(_Terminal);
