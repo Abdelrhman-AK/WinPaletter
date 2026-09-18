@@ -230,7 +230,7 @@ namespace WinPaletter
                 case WinTerminal.Version.Stable:
                     {
                         _Terminal = Program.TM.Terminal;
-                        _TerminalDefault = (WinTerminal)Program.TM.Terminal.Clone();
+                        _TerminalDefault = Program.TM.Terminal.Clone();
                         Text = Program.Localization.Strings.Aspects.TerminalStable;
                         AspectEnabled = Program.TM.Terminal.Enabled;
                         break;
@@ -239,7 +239,7 @@ namespace WinPaletter
                 case WinTerminal.Version.Preview:
                     {
                         _Terminal = Program.TM.TerminalPreview;
-                        _TerminalDefault = (WinTerminal)Program.TM.TerminalPreview.Clone();
+                        _TerminalDefault = Program.TM.TerminalPreview.Clone();
                         Text = Program.Localization.Strings.Aspects.TerminalPreview;
                         AspectEnabled = Program.TM.TerminalPreview.Enabled;
                         break;
@@ -328,18 +328,21 @@ namespace WinPaletter
                         TerTitlebarInactive.BackColor = temp.TabRow.UnfocusedBackground;
                         TerTabActive.BackColor = temp.Tab.Background;
                         TerTabInactive.BackColor = temp.Tab.UnfocusedBackground;
-                        TerMode.Checked = !(temp.Window.ApplicationTheme?.ToLower() == "light");
-                        Terminal1.Light = !(temp.Window.ApplicationTheme?.ToLower() == "light");
-                        Terminal2.Light = !(temp.Window.ApplicationTheme?.ToLower() == "light");
+                        bool isLightTheme = temp.Window.ApplicationTheme.Equals("light", StringComparison.OrdinalIgnoreCase);
+                        TerMode.Checked = !isLightTheme;
+                        Terminal1.Light = !isLightTheme;
+                        Terminal2.Light = !isLightTheme;
                     }
                 }
                 else
                 {
+                    TerThemes.SelectedIndex = 0;
                     ApplySystemThemeToPreview();
                 }
             }
             else
             {
+                TerThemes.SelectedIndex = 0;
                 ApplySystemThemeToPreview();
             }
 
@@ -422,10 +425,6 @@ namespace WinPaletter
             }
         }
 
-        // --------------------------------------------------------------------
-        // Profile resolution helpers
-        // --------------------------------------------------------------------
-
         /// <summary>
         /// Returns the current profile (or defaults) from the model, or null if the index is out of range.
         /// </summary>
@@ -451,9 +450,8 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Returns an effective profile: the selected profile with any unset field filled in from
-        /// profiles.defaults. If the selected profile IS defaults (index 0), it is returned as-is.
-        /// A non-null instance is always returned (a fresh empty profile if the model has nothing).
+        /// Returns an effective profile: the selected profile with any unset field filled in from profiles.defaults.
+        /// If the selected profile IS defaults (index 0), it is returned as-is. A non-null instance is always returned (a fresh empty profile if the model has nothing).
         /// </summary>
         private WinTerminal.Types.Profile GetEffectiveProfile()
         {
@@ -490,9 +488,7 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Returns the current scheme (or null if none / out of range).
-        /// The "default" scheme (index 0) resolves via the effective profile's ColorScheme name,
-        /// falling back to the first available scheme.
+        /// Returns the current scheme (or null if none / out of range). The "default" scheme (index 0) resolves via the effective profile's ColorScheme name, falling back to the first available scheme.
         /// </summary>
         private WinTerminal.Types.Scheme GetCurrentScheme()
         {
@@ -500,14 +496,11 @@ namespace WinPaletter
 
             if (TerSchemes.SelectedIndex <= 0)
             {
-                string schemeName =
-                    GetEffectiveProfile()?.ColorScheme?.ToString()
-                    ?? _Terminal.Profiles?.Defaults?.ColorScheme?.ToString();
+                string schemeName = GetEffectiveProfile()?.ColorScheme?.ToString() ?? _Terminal.Profiles?.Defaults?.ColorScheme?.ToString();
 
                 if (string.IsNullOrWhiteSpace(schemeName)) return _Terminal.Schemes.FirstOrDefault();
 
-                return _Terminal.Schemes.FirstOrDefault(s => string.Equals(s.Name, schemeName, StringComparison.OrdinalIgnoreCase))
-                    ?? _Terminal.Schemes.FirstOrDefault();
+                return _Terminal.Schemes.FirstOrDefault(s => string.Equals(s.Name, schemeName, StringComparison.OrdinalIgnoreCase)) ?? _Terminal.Schemes.FirstOrDefault();
             }
 
             int idx = TerSchemes.SelectedIndex - 1;
@@ -561,8 +554,7 @@ namespace WinPaletter
 
             SetDefaultsToScheme(TerSchemes.SelectedItem?.ToString());
 
-            // Never mutate the live model just by changing the combo-box selection.
-            // Only mutate when the user actually edits a color (via the color handlers).
+            // Never mutate the live model just by changing the combo-box selection. Only mutate when the user actually edits a color (via the color handlers).
             WinTerminal.Types.Scheme scheme = GetCurrentScheme() ?? new();
 
             TerBackground.BackColor = scheme.Background;
@@ -593,8 +585,7 @@ namespace WinPaletter
 
         private void TerProfiles_SelectedIndexChanged(object sender, EventArgs e)
         {
-            // Use the effective profile so any field the profile left unset is filled in from
-            // profiles.defaults (same layering Windows Terminal itself performs at runtime).
+            // Use the effective profile so any field the profile left unset is filled in from profiles.defaults (same layering Windows Terminal itself performs at runtime).
             WinTerminal.Types.Profile profile = GetEffectiveProfile();
 
             if (profile == null) return;
@@ -626,7 +617,7 @@ namespace WinPaletter
             using (Font f_cmd = new(profile.Font?.Face ?? "Cascadia Mono", profile.Font?.Size ?? 12f))
             {
                 f_cmd.ToLogFont(fx);
-                fx.lfWeight = (int)(profile.Font?.Weight ?? WinTerminal.Types.FontWeight.Normal) * 100;
+                fx.lfWeight = (int)(profile.Font?.Weight ?? FontWeight.Normal) * 100;
 
                 using (Font temp = Font.FromLogFont(fx))
                 using (Font f_cmd_x = new(f_cmd.Name, f_cmd.Size, temp.Style))
@@ -636,7 +627,7 @@ namespace WinPaletter
             }
 
             TerFontSizeBar.Value = Math.Min(TerFontSizeBar.Maximum, Math.Max(TerFontSizeBar.Minimum, (int)(profile.Font?.Size ?? 12f)));
-            TerFontWeight.SelectedIndex = Math.Min(TerFontWeight.Items.Count - 1, Math.Max(0, (int)(profile.Font?.Weight ?? WinTerminal.Types.FontWeight.Normal)));
+            TerFontWeight.SelectedIndex = Math.Min(TerFontWeight.Items.Count - 1, Math.Max(0, (int)(profile.Font?.Weight ?? FontWeight.Normal)));
 
             TerAcrylic.Checked = profile.UseAcrylic;
             TerOpacityBar.Value = Math.Min(TerOpacityBar.Maximum, Math.Max(TerOpacityBar.Minimum, profile.Opacity));
@@ -671,8 +662,7 @@ namespace WinPaletter
                 IntPtr intPtr = IntPtr.Zero;
                 Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
                 string path = string.Empty;
-                if (profile.Commandline is not null)
-                    path = profile.Commandline.Replace("%SystemRoot%", SysPaths.Windows);
+                if (profile.Commandline is not null) path = profile.Commandline.Replace("%SystemRoot%", SysPaths.Windows);
                 Kernel32.Wow64RevertWow64FsRedirection(intPtr);
 
                 if (File.Exists(path))
@@ -1117,8 +1107,8 @@ namespace WinPaletter
 
             if (scheme == null) return;
 
-            // Don't mutate the model from a combo-box-driven selection unless the user actually edits.
-            // For schemes, GetCurrentScheme() returns a live reference; for themes, GetCurrentTheme() may be null.
+            // Don't mutate the model from a combo-box-driven selection unless the user actually edits. For schemes, GetCurrentScheme() returns
+            // a live reference; for themes, GetCurrentTheme() may be null.
             string name = ((ColorItem)sender).Name.ToString().ToLower();
 
             if (e is DragEventArgs)
@@ -1656,7 +1646,7 @@ namespace WinPaletter
 
             WinTerminal.Types.Scheme scheme = new()
             {
-                Name = $"{TerSchemes.SelectedItem} Clone #{TerSchemes.Items.Count - 1}",
+                Name = $"{TerSchemes.SelectedItem} {Program.Localization.Strings.General.Clone} #{TerSchemes.Items.Count - 1}",
                 Background = src.Background,
                 Black = src.Black,
                 Blue = src.Blue,
