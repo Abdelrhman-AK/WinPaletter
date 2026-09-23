@@ -104,6 +104,23 @@ namespace WinPaletter.UI.Style
         /// <param name="IgnoreTitleBar">Flag indicating whether to ignore the title bar when applying the style.</param>
         public static void ApplyStyle(System.Windows.Forms.Form Form = null, bool IgnoreTitleBar = false)
         {
+            // Marshal form/control mutations onto the UI thread that owns them.
+            System.Windows.Forms.Form marshalHost = Form;
+            if (marshalHost is null || marshalHost.IsDisposed)
+            {
+                if (Application.OpenForms.Count > 0)
+                    marshalHost = Application.OpenForms[0];
+            }
+            if (marshalHost is null || marshalHost.IsDisposed)
+            {
+                try { marshalHost = Forms.MainForm; } catch { marshalHost = null; }
+            }
+            if (marshalHost is not null && !marshalHost.IsDisposed && marshalHost.IsHandleCreated && marshalHost.InvokeRequired)
+            {
+                marshalHost.Invoke(new Action(() => ApplyStyle(Form, IgnoreTitleBar)));
+                return;
+            }
+
             Program.Log?.Write(LogEventLevel.Information, $"WinPaletter is loading style for {Form?.Name ?? "whole application"}");
 
             bool DarkMode;

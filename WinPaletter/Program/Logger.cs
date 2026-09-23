@@ -60,10 +60,13 @@ namespace WinPaletter
 
         private void StyleChanged()
         {
-            MainForm mainForm = Application.OpenForms.OfType<MainForm>().FirstOrDefault();
-            if (mainForm is null || mainForm.IsDisposed) return;
-
-            ApplyStatusColor(mainForm, LogEventLevel.Information);
+            // Marshal onto UI thread — SchemeChanged can fire from a worker during theme apply.
+            InvokeOnMainForm(() =>
+            {
+                MainForm mainForm = Application.OpenForms.OfType<MainForm>().FirstOrDefault();
+                if (mainForm is null || mainForm.IsDisposed) return;
+                ApplyStatusColor(mainForm, LogEventLevel.Information);
+            });
         }
 
         /// <summary>
