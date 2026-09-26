@@ -78,6 +78,15 @@ namespace WinPaletter.NativeMethods
         public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, SetWindowsPosition Flags);
 
         /// <summary>
+        /// Retrieves a handle to a window that has the specified relationship (Z order or owner) to the specified window.
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <param name="uCmd"></param>
+        /// <returns></returns>
+        [DllImport(_user32, SetLastError = true)]
+        internal static extern IntPtr GetWindow(IntPtr hWnd, uint uCmd);
+
+        /// <summary>
         /// Get a handle to the ancestor of the specified window. The ancestor window is determined based on the specified flags, which can indicate a parent, root, or root owner window. This method is useful for navigating the window hierarchy and retrieving related windows based on their relationships.
         /// </summary>
         /// <param name="hWnd"></param>

@@ -490,6 +490,16 @@ namespace WinPaletter.NativeMethods
         public static extern int SetBkMode(IntPtr hdc, int mode);
 
         /// <summary>
+        /// Draws a polygon defined by an array of points in the specified device context. The polygon is filled using the current brush and outlined using the current pen.
+        /// </summary>
+        /// <param name="hdc"></param>
+        /// <param name="lpPoints"></param>
+        /// <param name="nCount"></param>
+        /// <returns></returns>
+        [DllImport(_gdi32, SetLastError = true)]
+        public static extern bool Polygon(IntPtr hdc, [In] User32.POINT[] lpPoints, int nCount);
+
+        /// <summary>
         /// Performs a bit-block transfer of color data from a source device context to a destination device context.
         /// </summary>
         /// <remarks>This method is a P/Invoke signature for the native BitBlt function in gdi32.dll. The

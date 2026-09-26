@@ -356,6 +356,8 @@ namespace WinPaletter.UI.Dark
             {
                 Win32Control ctrl = new(wParam);
 
+                if (Program.Style.DarkMode) Program.Log?.Debug($"[DarkWin32] CbtProc nCode={nCode} hWnd=0x{wParam:X} type={ctrl.Type}");
+
                 if (ctrl.Type == Win32Control.ControlType.AutoSuggestDropdown)
                 {
                     ApplyDarkModeToAutoSuggestDropdown(wParam);
@@ -484,6 +486,7 @@ namespace WinPaletter.UI.Dark
                         FontDialogDarkHandler.SUBCLASS_ID_FONTLIST => _fontDialogHandler.ListProcDelegate,
                         FontDialogDarkHandler.SUBCLASS_ID_FONTSAMPLE => _fontDialogHandler.SampleProcDelegate,
                         FontDialogDarkHandler.SUBCLASS_ID_FONTCOMBO => _fontDialogHandler.ComboProcDelegate,
+                        FontDialogDarkHandler.SUBCLASS_ID_SCRIPTLIST => _fontDialogHandler.ScriptListProcDelegate,
                         _ => _listViewAggressiveSubclass,
                     };
                     Comctl32.RemoveWindowSubclass(entry.Key, proc, entry.Value);
