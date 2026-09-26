@@ -16,8 +16,10 @@ namespace WinPaletter.UI.Dark
     ///  - Font / Style / Size are ComboBoxes; their dropdown list is a 'ComboLBox'
     ///    child. WM_DRAWITEM for the items is delivered to the ComboBox, with
     ///    dis.hwndItem = the ComboLBox.
-    ///  - Color combo is at ID 1139. Script combo has an unstable ID (1140 on Win11).
-    ///    We enumerate every ComboBox, never by ID.
+    ///  - Color combo is at ID 1139. Script combo has an unstable ID (1140 on
+    ///    Win11) and is identified by exclusion during combo enumeration — it gets only
+    ///    DarkMode_CFD/DarkMode_Explorer theming, no owner-draw subclassing, so both the
+    ///    closed combo and its dropdown ComboLBox render natively.
     ///  - Sample/preview is a plain Static painted by the "Sample" group box's paint
     ///    pass. We redraw it from the group-box proc.
     ///  - CBS_DROPDOWNLIST combos ignore DarkMode_CFD for their closed state; we
@@ -109,6 +111,9 @@ namespace WinPaletter.UI.Dark
         private IntPtr _fontComboHwnd = IntPtr.Zero;
         private IntPtr _styleComboHwnd = IntPtr.Zero;
         private IntPtr _sizeComboHwnd = IntPtr.Zero;
+        private IntPtr _colorComboHwnd = IntPtr.Zero;
+        private IntPtr _scriptComboHwnd = IntPtr.Zero;
+        private IntPtr _scriptListHwnd = IntPtr.Zero;
 
         // Cached sample preview text.
         private string _sampleText = string.Empty;
@@ -120,6 +125,7 @@ namespace WinPaletter.UI.Dark
         private IntPtr _foundSampleHwnd = IntPtr.Zero;
 
         private bool _disposed;
+        private const bool _debug = true;
 
         internal FontDialogDarkHandler(DarkWin32 owner)
         {
@@ -134,7 +140,7 @@ namespace WinPaletter.UI.Dark
             _findSampleDelegate = FindSampleStaticCallback;
             _enumCombosDelegate = EnumCombosCallback;
 
-            Program.Log?.Debug("[FontDialogDarkHandler] Constructed.");
+            if (_debug) Program.Log?.Debug("[FontDialogDarkHandler] Constructed.");
         }
 
         #region Detection
@@ -147,12 +153,20 @@ namespace WinPaletter.UI.Dark
 
             if ((cls == "ComboLBox" || cls == "ListBox") && IsDropdownListOfOurCombo(hWnd))
             {
-                Program.Log?.Debug($"[FontDialogDarkHandler] IsFontDialog hWnd=0x{hWnd:X} class='{cls}' recognised as combo dropdown, theming.");
+                IntPtr comboParent = User32.GetParent(hWnd);
+                bool isScriptDropdown = comboParent != IntPtr.Zero && comboParent == _scriptComboHwnd;
+
+                if (_debug) Program.Log?.Debug($"[FontDialogDarkHandler] IsFontDialog hWnd=0x{hWnd:X} class='{cls}' recognised as combo dropdown (script={isScriptDropdown}), theming.");
 
                 NativeMethods.Helpers.SetHWNDDarkMode(hWnd, true);
                 UxTheme.SetWindowTheme(hWnd, "", "");
                 UxTheme.SetWindowTheme(hWnd, "DarkMode_Explorer", null);
-                _owner.SubclassWindow(hWnd, _listProcDelegate, (UIntPtr)SUBCLASS_ID_FONTLIST);
+
+                if (isScriptDropdown)
+                    _scriptListHwnd = hWnd;                 // native theme only, no subclass
+                else
+                    _owner.SubclassWindow(hWnd, _listProcDelegate, (UIntPtr)SUBCLASS_ID_FONTLIST);
+
                 return true;
             }
 
@@ -161,7 +175,7 @@ namespace WinPaletter.UI.Dark
             IntPtr list = User32.GetDlgItem(hWnd, FONTDLG_ID_LIST_FONT);
             bool isFont = list != IntPtr.Zero;
 
-            Program.Log?.Debug($"[FontDialogDarkHandler] IsFontDialog hWnd=0x{hWnd:X} class='{cls}' list=0x{list:X} -> {isFont}");
+            if (_debug) Program.Log?.Debug($"[FontDialogDarkHandler] IsFontDialog hWnd=0x{hWnd:X} class='{cls}' list=0x{list:X} -> {isFont}");
             return isFont;
         }
 
@@ -193,12 +207,12 @@ namespace WinPaletter.UI.Dark
 
         internal void ApplyDarkMode(IntPtr hWnd)
         {
-            if (!Program.Style.DarkMode) { Program.Log?.Debug("[FontDialogDarkHandler] ApplyDarkMode skipped: DarkMode disabled."); return; }
-            if (OS.WXP || OS.WVista || OS.W7 || OS.W8x) { Program.Log?.Debug("[FontDialogDarkHandler] ApplyDarkMode skipped: unsupported OS."); return; }
-            if (hWnd == IntPtr.Zero) { Program.Log?.Debug("[FontDialogDarkHandler] ApplyDarkMode skipped: null hwnd."); return; }
+            if (!Program.Style.DarkMode) { if (_debug) Program.Log?.Debug("[FontDialogDarkHandler] ApplyDarkMode skipped: DarkMode disabled."); return; }
+            if (OS.WXP || OS.WVista || OS.W7 || OS.W8x) { if (_debug) Program.Log?.Debug("[FontDialogDarkHandler] ApplyDarkMode skipped: unsupported OS."); return; }
+            if (hWnd == IntPtr.Zero) { if (_debug) Program.Log?.Debug("[FontDialogDarkHandler] ApplyDarkMode skipped: null hwnd."); return; }
 
             _dialogHwnd = hWnd;
-            Program.Log?.Debug($"[FontDialogDarkHandler] ApplyDarkMode start hWnd=0x{hWnd:X}");
+            if (_debug) Program.Log?.Debug($"[FontDialogDarkHandler] ApplyDarkMode start hWnd=0x{hWnd:X}");
 
             NativeMethods.Helpers.SetHWNDDarkMode(hWnd, true);
             _owner.SubclassWindow(hWnd, _dialogProcDelegate, (UIntPtr)SUBCLASS_ID_FONTDLG);
@@ -207,7 +221,7 @@ namespace WinPaletter.UI.Dark
             foreach (int id in new[] { FONTDLG_ID_LIST_FONT, FONTDLG_ID_LIST_STYLE, FONTDLG_ID_LIST_SIZE })
             {
                 IntPtr lb = User32.GetDlgItem(hWnd, id);
-                if (lb == IntPtr.Zero) { Program.Log?.Debug($"[FontDialogDarkHandler]   list control id={id} not found."); continue; }
+                if (lb == IntPtr.Zero) { if (_debug) Program.Log?.Debug($"[FontDialogDarkHandler]   list control id={id} not found."); continue; }
 
                 string lbCls = GetClassName(lb);
 
@@ -221,20 +235,20 @@ namespace WinPaletter.UI.Dark
                 UxTheme.SetWindowTheme(lb, "DarkMode_CFD", null);
 
                 _owner.SubclassWindow(lb, _listProcDelegate, (UIntPtr)SUBCLASS_ID_FONTLIST);
-                Program.Log?.Debug($"[FontDialogDarkHandler]   list control id={id} hWnd=0x{lb:X} class='{lbCls}' subclassed.");
+                if (_debug) Program.Log?.Debug($"[FontDialogDarkHandler]   list control id={id} hWnd=0x{lb:X} class='{lbCls}' subclassed.");
             }
 
             // Generic combo pass.
             _comboCount = 0;
             User32.EnumChildWindows(hWnd, _enumCombosDelegate, IntPtr.Zero);
-            Program.Log?.Debug($"[FontDialogDarkHandler]   combobox enumeration complete, found={_comboCount}");
+            if (_debug) Program.Log?.Debug($"[FontDialogDarkHandler]   combobox enumeration complete, found={_comboCount}");
 
             // Sample preview.
             IntPtr sample = User32.GetDlgItem(hWnd, FONTDLG_ID_SAMPLE);
             if (sample == IntPtr.Zero)
             {
                 sample = FindSampleStatic(hWnd);
-                Program.Log?.Debug($"[FontDialogDarkHandler]   sample not found by ID 1142, enumerated -> 0x{sample:X}");
+                if (_debug) Program.Log?.Debug($"[FontDialogDarkHandler]   sample not found by ID 1142, enumerated -> 0x{sample:X}");
             }
 
             if (sample != IntPtr.Zero)
@@ -242,7 +256,7 @@ namespace WinPaletter.UI.Dark
                 _sampleHwnd = sample;
                 if (string.IsNullOrEmpty(_sampleText)) CacheSampleText(sample);
                 _owner.SubclassWindow(sample, _sampleProcDelegate, (UIntPtr)SUBCLASS_ID_FONTSAMPLE);
-                Program.Log?.Debug($"[FontDialogDarkHandler]   sample hWnd=0x{sample:X} subclassed (cachedText='{_sampleText}').");
+                if (_debug) Program.Log?.Debug($"[FontDialogDarkHandler]   sample hWnd=0x{sample:X} subclassed (cachedText='{_sampleText}').");
             }
 
             // Strikeout / underline checkboxes.
@@ -257,10 +271,10 @@ namespace WinPaletter.UI.Dark
             // Group boxes.
             _groupBoxCount = 0;
             User32.EnumChildWindows(hWnd, _enumChildDelegate, IntPtr.Zero);
-            Program.Log?.Debug($"[FontDialogDarkHandler]   group-box enumeration complete, found={_groupBoxCount}");
+            if (_debug) Program.Log?.Debug($"[FontDialogDarkHandler]   group-box enumeration complete, found={_groupBoxCount}");
 
             User32.RedrawWindow(hWnd, IntPtr.Zero, IntPtr.Zero, 0x0001 | 0x0004 | 0x0100);
-            Program.Log?.Debug($"[FontDialogDarkHandler] ApplyDarkMode done hWnd=0x{hWnd:X}");
+            if (_debug) Program.Log?.Debug($"[FontDialogDarkHandler] ApplyDarkMode done hWnd=0x{hWnd:X}");
         }
 
         #endregion
@@ -287,12 +301,33 @@ namespace WinPaletter.UI.Dark
             if (childHwnd == IntPtr.Zero) return true;
             if (GetClassName(childHwnd) != "ComboBox") return true;
 
+            // Font / Style / Size are already handled explicitly by ID — don't re-touch them here.
+            if (childHwnd == _fontComboHwnd || childHwnd == _styleComboHwnd || childHwnd == _sizeComboHwnd)
+                return true;
+
             _comboCount++;
+
+            int ctrlId = User32.GetDlgCtrlID(childHwnd);
+            bool isScript = ctrlId != FONTDLG_ID_COMBO_COLOR; // 1139 is the only stable, non-script ID left
+
+            if (isScript)
+            {
+                _scriptComboHwnd = childHwnd;
+                if (_debug) Program.Log?.Debug($"[FontDialogDarkHandler]   script combo hWnd=0x{childHwnd:X} id={ctrlId} -> native theme only, no subclass.");
+            }
+            else
+            {
+                _colorComboHwnd = childHwnd;
+            }
 
             NativeMethods.Helpers.SetHWNDDarkMode(childHwnd, true);
             UxTheme.SetWindowTheme(childHwnd, "", "");
             UxTheme.SetWindowTheme(childHwnd, "DarkMode_CFD", null);
-            _owner.SubclassWindow(childHwnd, _comboProcDelegate, (UIntPtr)SUBCLASS_ID_FONTCOMBO);
+
+            // Only the color combo still needs the manual closed-state redraw / owner-draw path;
+            // DarkMode_CFD theming alone renders the script combo natively.
+            if (!isScript)
+                _owner.SubclassWindow(childHwnd, _comboProcDelegate, (UIntPtr)SUBCLASS_ID_FONTCOMBO);
 
             User32.GetChildWindowHandles(childHwnd).ForEach(child =>
             {
@@ -309,14 +344,19 @@ namespace WinPaletter.UI.Dark
 
                     case "Static":
                         UxTheme.SetWindowTheme(child, "DarkMode_Explorer", null);
-                        _owner.SubclassWindow(child, _groupBoxProcDelegate, (UIntPtr)SUBCLASS_ID_FONTGROUPBOX);
+                        if (!isScript)
+                            _owner.SubclassWindow(child, _groupBoxProcDelegate, (UIntPtr)SUBCLASS_ID_FONTGROUPBOX);
                         break;
 
                     case "ComboLBox":
                     case "ListBox":
                         UxTheme.SetWindowTheme(child, "", "");
                         UxTheme.SetWindowTheme(child, "DarkMode_Explorer", null);
-                        _owner.SubclassWindow(child, _listProcDelegate, (UIntPtr)SUBCLASS_ID_FONTLIST);
+
+                        if (isScript)
+                            _scriptListHwnd = child;   // native theme only
+                        else
+                            _owner.SubclassWindow(child, _listProcDelegate, (UIntPtr)SUBCLASS_ID_FONTLIST);
                         break;
                 }
             });
@@ -377,16 +417,6 @@ namespace WinPaletter.UI.Dark
             if (GetClassName(hWnd) != "Button") return false;
             int style = (int)User32.GetWindowLong(hWnd, GWL_STYLE);
             return (style & 0x0000000F) == BS_GROUPBOX;
-        }
-
-        private static bool IsFontListBox(IntPtr hWnd)
-        {
-            if (hWnd == IntPtr.Zero) return false;
-            string cls = GetClassName(hWnd);
-            if (cls != "ListBox" && cls != "ComboLBox") return false;
-            int style = (int)User32.GetWindowLong(hWnd, GWL_STYLE);
-            int drawMode = style & 0x0030;
-            return drawMode == 0x0010 || drawMode == 0x0020;
         }
 
         #endregion
@@ -458,61 +488,70 @@ namespace WinPaletter.UI.Dark
         ///
         /// The caller is responsible for deleting the returned HFONT.
         /// </summary>
-        private IntPtr CreateFontForItem(IntPtr listbox, string faceName, int weight, bool italic)
+        private IntPtr CreateFontForItem(
+            IntPtr listbox,
+            string faceName,
+            int weight,
+            bool italic)
         {
-            int lfHeight = 0;
+            int lfHeight = -16;
             int lfWidth = 0;
 
-            // Read the listbox's current font metrics.
-            IntPtr currentFont = User32.SendMessage(listbox, WM_GETFONT, IntPtr.Zero, IntPtr.Zero);
+            IntPtr currentFont = User32.SendMessage(
+                listbox,
+                WM_GETFONT,
+                IntPtr.Zero,
+                IntPtr.Zero);
+
             if (currentFont != IntPtr.Zero)
             {
                 GDI32.LOGFONT existing = new();
-                if (GDI32.GetObjectFont(currentFont, Marshal.SizeOf<GDI32.LOGFONT>(), ref existing) != 0)
+
+                int result = GDI32.GetObjectFont(
+                    currentFont,
+                    Marshal.SizeOf<GDI32.LOGFONT>(),
+                    existing);
+
+                if (result != 0)
                 {
-                    lfHeight = existing.lfHeight;
+                    // Preserve the exact row font height.
+                    if (existing.lfHeight != 0)
+                        lfHeight = existing.lfHeight;
+
                     lfWidth = existing.lfWidth;
                 }
             }
 
-            // Fallback: if we couldn't read the listbox font, use a DPI-scaled 12pt
-            // height. This is what ChooseFont itself seeds the row with.
-            if (lfHeight == 0)
-            {
-                IntPtr screenDc = User32.GetDC(IntPtr.Zero);
-                if (screenDc != IntPtr.Zero)
-                {
-                    int dpi = GDI32.GetDeviceCaps(screenDc, 90); // LOGPIXELSY
-                    User32.ReleaseDC(IntPtr.Zero, screenDc);
-                    if (dpi <= 0) dpi = 96;
-                    lfHeight = -((DEFAULT_PREVIEW_POINTS * dpi) / 72);
-                }
-                else
-                {
-                    lfHeight = -16;
-                }
-            }
-
-            // lfFaceName is limited to 32 characters including the null terminator.
             string face = faceName ?? string.Empty;
-            if (face.Length > MAX_FACE_NAME) face = face.Substring(0, MAX_FACE_NAME);
+
+            if (face.Length > MAX_FACE_NAME)
+                face = face.Substring(0, MAX_FACE_NAME);
 
             GDI32.LOGFONT lf = new()
             {
                 lfHeight = lfHeight,
                 lfWidth = lfWidth,
+
                 lfEscapement = 0,
                 lfOrientation = 0,
+
                 lfWeight = weight,
+
                 lfItalic = (byte)(italic ? 1 : 0),
                 lfUnderline = 0,
                 lfStrikeOut = 0,
-                lfCharSet = 1,       // DEFAULT_CHARSET
+
+                lfCharSet = 1, // DEFAULT_CHARSET
+
                 lfOutPrecision = 0,
                 lfClipPrecision = 0,
+
+                // Let GDI choose the appropriate rendering.
                 lfQuality = 0,
+
                 lfPitchAndFamily = 0,
-                lfFaceName = face,
+
+                lfFaceName = face
             };
 
             return GDI32.CreateFontIndirect(lf);
@@ -541,12 +580,19 @@ namespace WinPaletter.UI.Dark
                         return Comctl32.DefSubclassProc(hWnd, uMsg, wParam, lParam);
                     }
 
-                    bool byStyle = IsFontListBox(dis.hwndItem);
-                    bool byId = dis.CtlID is FONTDLG_ID_LIST_FONT
-                                             or FONTDLG_ID_LIST_STYLE
-                                             or FONTDLG_ID_LIST_SIZE;
+                    bool isFontCombo =
+                        dis.hwndItem == _fontComboHwnd ||
+                        User32.GetParent(dis.hwndItem) == _fontComboHwnd;
 
-                    if (byStyle || byId)
+                    bool isStyleCombo =
+                        dis.hwndItem == _styleComboHwnd ||
+                        User32.GetParent(dis.hwndItem) == _styleComboHwnd;
+
+                    bool isSizeCombo =
+                        dis.hwndItem == _sizeComboHwnd ||
+                        User32.GetParent(dis.hwndItem) == _sizeComboHwnd;
+
+                    if (isFontCombo || isStyleCombo || isSizeCombo)
                         return DrawFontListItem(ref dis);
                 }
 
@@ -909,53 +955,107 @@ namespace WinPaletter.UI.Dark
         /// </summary>
         private IntPtr DrawFontListItem(ref User32.DRAWITEMSTRUCT dis)
         {
-            if (dis.hDC == IntPtr.Zero || dis.hwndItem == IntPtr.Zero) return (IntPtr)1;
-            if (dis.itemID == unchecked((uint)-1)) return (IntPtr)1;
+            if (dis.hDC == IntPtr.Zero || dis.hwndItem == IntPtr.Zero)
+                return (IntPtr)1;
+
+            if (dis.itemID == unchecked((uint)-1))
+                return (IntPtr)1;
 
             bool selected = (dis.itemState & 0x0001) != 0;
             bool disabled = (dis.itemState & 0x0004) != 0;
 
-            // Background.
-            User32.FillRect(dis.hDC, ref dis.rcItem, selected ? _owner.SelectionBrush : _owner.DarkBrush);
+            User32.FillRect(
+                dis.hDC,
+                ref dis.rcItem,
+                selected
+                    ? _owner.SelectionBrush
+                    : _owner.DarkBrush);
 
-            // Text.
             IntPtr buf = Marshal.AllocHGlobal(MAX_ITEM_TEXT * 2);
+
             try
             {
-                for (int i = 0; i < MAX_ITEM_TEXT * 2; i++) Marshal.WriteByte(buf, i, 0);
+                for (int i = 0; i < MAX_ITEM_TEXT * 2; i++)
+                    Marshal.WriteByte(buf, i, 0);
 
-                int len = (int)User32.SendMessage(dis.hwndItem, LB_GETTEXT, (IntPtr)dis.itemID, buf);
-                if (len <= 0) return (IntPtr)1;
+                int len = (int)User32.SendMessage(
+                    dis.hwndItem,
+                    LB_GETTEXT,
+                    (IntPtr)dis.itemID,
+                    buf);
+
+                if (len <= 0)
+                    return (IntPtr)1;
 
                 string text = Marshal.PtrToStringUni(buf);
 
-                // Pick the font for this item.
-                IntPtr itemFont = BuildItemFont(dis.CtlID, text, dis.hwndItem);
+                // Determine Font / Style / Size from the actual combo
+                // owning this ComboLBox.
+                IntPtr itemFont = BuildItemFont(
+                    text,
+                    dis.hwndItem);
+
                 IntPtr hOld = IntPtr.Zero;
 
                 if (itemFont != IntPtr.Zero)
-                    hOld = GDI32.SelectObject(dis.hDC, itemFont);
+                {
+                    hOld = GDI32.SelectObject(
+                        dis.hDC,
+                        itemFont);
+                }
                 else
                 {
-                    // Fall back to the listbox's current font.
-                    IntPtr hFont = User32.SendMessage(dis.hwndItem, WM_GETFONT, IntPtr.Zero, IntPtr.Zero);
-                    if (hFont != IntPtr.Zero) hOld = GDI32.SelectObject(dis.hDC, hFont);
+                    IntPtr hFont = User32.SendMessage(
+                        dis.hwndItem,
+                        WM_GETFONT,
+                        IntPtr.Zero,
+                        IntPtr.Zero);
+
+                    if (hFont != IntPtr.Zero)
+                    {
+                        hOld = GDI32.SelectObject(
+                            dis.hDC,
+                            hFont);
+                    }
                 }
 
-                GDI32.SetTextColor(dis.hDC, disabled ? 0x00808080 : 0x00FFFFFF);
-                GDI32.SetBkMode(dis.hDC, 1);
+                GDI32.SetTextColor(
+                    dis.hDC,
+                    disabled
+                        ? 0x00808080
+                        : 0x00FFFFFF);
+
+                GDI32.SetBkMode(
+                    dis.hDC,
+                    GDI32.TRANSPARENT);
 
                 var rc = dis.rcItem;
                 rc.left += 4;
                 rc.right -= 4;
-                User32.DrawText(dis.hDC, text, -1, ref rc,
-                    GDI32.DT_LEFT | GDI32.DT_VCENTER | GDI32.DT_SINGLELINE | GDI32.DT_NOPREFIX);
 
-                if (hOld != IntPtr.Zero) GDI32.SelectObject(dis.hDC, hOld);
-                if (itemFont != IntPtr.Zero) GDI32.DeleteObject(itemFont);
+                User32.DrawText(
+                    dis.hDC,
+                    text,
+                    -1,
+                    ref rc,
+                    GDI32.DT_LEFT |
+                    GDI32.DT_VCENTER |
+                    GDI32.DT_SINGLELINE |
+                    GDI32.DT_NOPREFIX);
 
-                if (selected && (dis.itemState & 0x0010) != 0)
-                    User32.DrawFocusRect(dis.hDC, ref dis.rcItem);
+                if (hOld != IntPtr.Zero)
+                    GDI32.SelectObject(dis.hDC, hOld);
+
+                if (itemFont != IntPtr.Zero)
+                    GDI32.DeleteObject(itemFont);
+
+                if (selected &&
+                    (dis.itemState & 0x0010) != 0)
+                {
+                    User32.DrawFocusRect(
+                        dis.hDC,
+                        ref dis.rcItem);
+                }
             }
             finally
             {
@@ -965,25 +1065,102 @@ namespace WinPaletter.UI.Dark
             return (IntPtr)1;
         }
 
+        private enum FontListKind
+        {
+            Unknown,
+            Font,
+            Style,
+            Size
+        }
+
+        private FontListKind GetFontListKind(IntPtr listbox)
+        {
+            if (listbox == IntPtr.Zero)
+                return FontListKind.Unknown;
+
+            IntPtr combo = User32.GetParent(listbox);
+
+            if (combo == _fontComboHwnd)
+                return FontListKind.Font;
+
+            if (combo == _styleComboHwnd)
+                return FontListKind.Style;
+
+            if (combo == _sizeComboHwnd)
+                return FontListKind.Size;
+
+            // Some builds can give us a different list window.
+            // Fall back to the control ID of the parent ComboBox.
+            if (combo != IntPtr.Zero)
+            {
+                int id = User32.GetDlgCtrlID(combo);
+
+                return id switch
+                {
+                    FONTDLG_ID_LIST_FONT => FontListKind.Font,
+                    FONTDLG_ID_LIST_STYLE => FontListKind.Style,
+                    FONTDLG_ID_LIST_SIZE => FontListKind.Size,
+                    _ => FontListKind.Unknown
+                };
+            }
+
+            return FontListKind.Unknown;
+        }
+
         /// <summary>
         /// Chooses (and creates) the HFONT to draw a given list item with.
         /// The caller must delete the returned HFONT.
         /// </summary>
-        private IntPtr BuildItemFont(uint ctlId, string text, IntPtr listbox)
+        private IntPtr BuildItemFont(string text, IntPtr listbox)
         {
-            if (string.IsNullOrEmpty(text)) return IntPtr.Zero;
+            if (string.IsNullOrEmpty(text))
+                return IntPtr.Zero;
 
-            if (ctlId == FONTDLG_ID_LIST_FONT)
-                return CreateFontForItem(listbox, text, 400, false);
+            FontListKind kind = GetFontListKind(listbox);
 
-            if (ctlId == FONTDLG_ID_LIST_STYLE)
+            if (_debug) Program.Log?.Debug(
+                $"[FontDialogDarkHandler] BuildItemFont " +
+                $"list=0x{listbox:X}, " +
+                $"parent=0x{User32.GetParent(listbox):X}, " +
+                $"kind={kind}, " +
+                $"text='{text}'");
+
+            switch (kind)
             {
-                ParseStyleString(text, out int weight, out bool italic);
-                return CreateFontForItem(listbox, null, weight, italic);
-            }
+                case FontListKind.Font:
+                    return CreateFontForItem(
+                        listbox,
+                        text,
+                        400,
+                        false);
 
-            // Size combo: nothing special.
-            return IntPtr.Zero;
+                case FontListKind.Style:
+                    {
+                        string face =
+                            GetComboSelectionText(_fontComboHwnd);
+
+                        ParseStyleString(
+                            text,
+                            out int weight,
+                            out bool italic);
+
+                        if (_debug) Program.Log?.Debug(
+                            $"[FontDialogDarkHandler] Style item " +
+                            $"face='{face}', " +
+                            $"weight={weight}, " +
+                            $"italic={italic}");
+
+                        return CreateFontForItem(
+                            listbox,
+                            face,
+                            weight,
+                            italic);
+                    }
+
+                case FontListKind.Size:
+                default:
+                    return IntPtr.Zero;
+            }
         }
 
         /// <summary>
@@ -1017,7 +1194,7 @@ namespace WinPaletter.UI.Dark
             if (hOld != IntPtr.Zero) GDI32.SelectObject(hdc, hOld);
             if (previewFont != IntPtr.Zero) GDI32.DeleteObject(previewFont);
 
-            Program.Log?.Debug($"[FontDialogDarkHandler] sample preview drawn text='{text}'");
+            if (_debug) Program.Log?.Debug($"[FontDialogDarkHandler] sample preview drawn text='{text}'");
         }
 
         /// <summary>
@@ -1084,7 +1261,7 @@ namespace WinPaletter.UI.Dark
         {
             if (_disposed) return;
 
-            Program.Log?.Debug($"[FontDialogDarkHandler] Dispose (dialog=0x{_dialogHwnd:X} sample=0x{_sampleHwnd:X}).");
+            if (_debug) Program.Log?.Debug($"[FontDialogDarkHandler] Dispose (dialog=0x{_dialogHwnd:X} sample=0x{_sampleHwnd:X}).");
 
             _dialogHwnd = IntPtr.Zero;
             _sampleHwnd = IntPtr.Zero;
@@ -1092,6 +1269,9 @@ namespace WinPaletter.UI.Dark
             _styleComboHwnd = IntPtr.Zero;
             _sizeComboHwnd = IntPtr.Zero;
             _foundSampleHwnd = IntPtr.Zero;
+            _colorComboHwnd = IntPtr.Zero;
+            _scriptComboHwnd = IntPtr.Zero;
+            _scriptListHwnd = IntPtr.Zero;
             _sampleText = string.Empty;
 
             _disposed = true;

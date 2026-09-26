@@ -342,7 +342,7 @@ namespace WinPaletter.NativeMethods
         /// <param name="lpObject"></param>
         /// <returns></returns>
         [DllImport(_gdi32, SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "GetObjectW")]
-        public static extern int GetObjectFont(IntPtr hObject, int nCount, ref LOGFONT lpObject);
+        public static extern int GetObjectFont(IntPtr hObject, int nCount, [Out] LOGFONT lpObject);
 
         /// <summary>
         /// Retrieves the dimensions of a specified string of text when rendered in the specified device context. The function calculates the width and height of the text based on the current font selected into the device context.
