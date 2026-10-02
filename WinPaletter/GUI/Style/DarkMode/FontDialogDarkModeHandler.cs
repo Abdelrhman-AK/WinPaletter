@@ -219,7 +219,7 @@ namespace WinPaletter.UI.Dark
 
                 NativeMethods.Helpers.SetHWNDDarkMode(hWnd, true);
 
-                UxTheme.SetWindowTheme(hWnd, "", "");
+                UxTheme.SetWindowTheme(hWnd, string.Empty, string.Empty);
                 UxTheme.SetWindowTheme(hWnd, "DarkMode_Explorer", null);
 
                 if (isScriptDropdown)
@@ -270,7 +270,7 @@ namespace WinPaletter.UI.Dark
             _scriptListThemedHwnd = listHwnd;
 
             NativeMethods.Helpers.SetHWNDDarkMode(listHwnd, true);
-            UxTheme.SetWindowTheme(listHwnd, "", "");
+            UxTheme.SetWindowTheme(listHwnd, string.Empty, string.Empty);
             UxTheme.SetWindowTheme(listHwnd, "DarkMode_Explorer", null);
 
             _owner.SubclassWindow(listHwnd, _scriptListProcDelegate, (UIntPtr)SUBCLASS_ID_SCRIPTLIST);
@@ -396,7 +396,7 @@ namespace WinPaletter.UI.Dark
                 if (id == FONTDLG_ID_LIST_SIZE) _sizeComboHwnd = lb;
 
                 NativeMethods.Helpers.SetHWNDDarkMode(lb, true);
-                UxTheme.SetWindowTheme(lb, "", "");
+                UxTheme.SetWindowTheme(lb, string.Empty, string.Empty);
                 UxTheme.SetWindowTheme(lb, "DarkMode_CFD", null);
 
                 _owner.SubclassWindow(lb, _listProcDelegate, (UIntPtr)SUBCLASS_ID_FONTLIST);
@@ -483,7 +483,7 @@ namespace WinPaletter.UI.Dark
 
                 NativeMethods.Helpers.SetHWNDDarkMode(_scriptComboHwnd, true);
 
-                UxTheme.SetWindowTheme(_scriptComboHwnd, "", "");
+                UxTheme.SetWindowTheme(_scriptComboHwnd, string.Empty, string.Empty);
 
                 UxTheme.SetWindowTheme(_scriptComboHwnd, "DarkMode_CFD", null);
 
@@ -497,12 +497,12 @@ namespace WinPaletter.UI.Dark
             {
                 _colorComboHwnd = childHwnd;
                 NativeMethods.Helpers.SetHWNDDarkMode(childHwnd, true);
-                UxTheme.SetWindowTheme(childHwnd, "", "");
+                UxTheme.SetWindowTheme(childHwnd, string.Empty, string.Empty);
                 UxTheme.SetWindowTheme(childHwnd, "DarkMode_CFD", null);
             }
 
             NativeMethods.Helpers.SetHWNDDarkMode(childHwnd, true);
-            UxTheme.SetWindowTheme(childHwnd, "", "");
+            UxTheme.SetWindowTheme(childHwnd, string.Empty, string.Empty);
             UxTheme.SetWindowTheme(childHwnd, "DarkMode_CFD", null);
 
             // Only the color combo still needs the manual closed-state redraw / owner-draw path;
@@ -535,13 +535,13 @@ namespace WinPaletter.UI.Dark
                             _scriptListHwnd = child;
                             if (_debug) Program.Log?.Debug($"[FontDialogDarkHandler]   script ComboLBox found via EnumCombosCallback hWnd=0x{child:X}, subclassing.");
                             NativeMethods.Helpers.SetHWNDDarkMode(child, true);
-                            UxTheme.SetWindowTheme(child, "", "");
+                            UxTheme.SetWindowTheme(child, string.Empty, string.Empty);
                             UxTheme.SetWindowTheme(child, "DarkMode_Explorer", null);
                             _owner.SubclassWindow(child, _scriptListProcDelegate, (UIntPtr)SUBCLASS_ID_SCRIPTLIST);
                         }
                         else
                         {
-                            UxTheme.SetWindowTheme(child, "", "");
+                            UxTheme.SetWindowTheme(child, string.Empty, string.Empty);
                             UxTheme.SetWindowTheme(child, "DarkMode_Explorer", null);
                             _owner.SubclassWindow(child, _listProcDelegate, (UIntPtr)SUBCLASS_ID_FONTLIST);
                         }
@@ -674,19 +674,19 @@ namespace WinPaletter.UI.Dark
 
             if (_faceCache.TryGetValue(key, out var cached)) return cached;
 
-            string normalized = Regex.Replace( style, @"\s+", " ").Trim();
+            string normalized = Regex.Replace(style, @"\s+", " ").Trim();
 
             string lower = normalized.ToLowerInvariant();
 
             bool italic = lower.Contains("italic") || lower.Contains("oblique");
 
             // Remove italic/oblique from the style to obtain the weight/style name.
-            string variant = Regex.Replace( normalized, @"\b(italic|oblique)\b", "", RegexOptions.IgnoreCase).Trim();
+            string variant = Regex.Replace(normalized, @"\b(italic|oblique)\b", string.Empty, RegexOptions.IgnoreCase).Trim();
 
             variant = Regex.Replace(variant, @"\s+", " ").Trim();
 
             // Common/basic styles stay in the base family.
-            if (variant.Length == 0 ||  variant.Equals("regular", StringComparison.OrdinalIgnoreCase))
+            if (variant.Length == 0 || variant.Equals("regular", StringComparison.OrdinalIgnoreCase))
             {
                 var result = (family, 400, italic);
 
@@ -769,7 +769,7 @@ namespace WinPaletter.UI.Dark
             int lfHeight = -16;
             int lfWidth = 0;
 
-            IntPtr currentFont = User32.SendMessage( listbox, User32.WindowsMessage.GetFont, IntPtr.Zero, IntPtr.Zero);
+            IntPtr currentFont = User32.SendMessage(listbox, User32.WindowsMessage.GetFont, IntPtr.Zero, IntPtr.Zero);
 
             if (currentFont != IntPtr.Zero)
             {
@@ -1021,7 +1021,7 @@ namespace WinPaletter.UI.Dark
 
                     if (cls == "ComboLBox" || cls == "ListBox")
                     {
-                        UxTheme.SetWindowTheme(child, "", "");
+                        UxTheme.SetWindowTheme(child, string.Empty, string.Empty);
                         UxTheme.SetWindowTheme(child, "DarkMode_Explorer", null);
                         _owner.SubclassWindow(child, _listProcDelegate, (UIntPtr)SUBCLASS_ID_FONTLIST);
                     }

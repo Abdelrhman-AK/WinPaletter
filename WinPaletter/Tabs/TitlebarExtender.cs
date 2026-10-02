@@ -51,6 +51,18 @@ namespace WinPaletter.Tabs
             UpdateBackDrop();
         }
 
+        /// <summary>
+        /// Gets or sets the background color of the control.
+        /// Overridden to guarantee that a transparent color is never passed to
+        /// <see cref="Control.BackColor"/>, which would throw
+        /// <see cref="ArgumentException"/> on a <see cref="ContainerControl"/>.
+        /// </summary>
+        public override Color BackColor
+        {
+            get => base.BackColor;
+            set => base.BackColor = ToOpaque(value);
+        }
+
         public static bool AccentOnTitlebars
         {
             get => accentOnTitlebars;
@@ -231,6 +243,15 @@ namespace WinPaletter.Tabs
             base.OnHandleDestroyed(e);
         }
 
+        /// <summary>
+        /// Sanitizes a color for use as a <see cref="Control.BackColor"/>.
+        /// WinForms controls do not support <see cref="Color.Transparent"/> unless
+        /// <see cref="ControlStyles.SupportsTransparentBackColor"/> is set, and even
+        /// then it can throw for container controls. This converts any color with
+        /// alpha &lt; 255 into its opaque version so the assignment never throws.
+        /// </summary>
+        private static Color ToOpaque(Color color) => Color.FromArgb(255, color);
+
         private void Config_DarkModeChanged()
         {
             if (this is null || !IsHandleCreated) return;
@@ -276,24 +297,26 @@ namespace WinPaletter.Tabs
         {
             if (TitlebarType == TitlebarTypes.ColorPrevalence)
             {
-                activeTtl = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", Color.Black.Reverse()).Reverse();
-                inactiveTtl = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", Color.Black.Reverse()).Reverse();
+                activeTtl = ToOpaque(ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", Color.Black.Reverse()).Reverse());
+
+                inactiveTtl = ToOpaque(ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", Color.Black.Reverse()).Reverse());
+
                 activeTtlG = activeTtl;
                 inactiveTtlG = inactiveTtl;
             }
             else if (TitlebarType == TitlebarTypes.Basic && !Program.ClassicThemeRunning)
             {
-                activeTtl = _basicActive ?? _basicActive_Fallback;
-                inactiveTtl = _basicInactive ?? _basicInactive_Fallback;
-                activeTtlG = _basicActive ?? _basicActive_Fallback;
-                inactiveTtlG = _basicInactive ?? _basicInactive_Fallback;
+                activeTtl = ToOpaque(_basicActive ?? _basicActive_Fallback);
+                inactiveTtl = ToOpaque(_basicInactive ?? _basicInactive_Fallback);
+                activeTtlG = ToOpaque(_basicActive ?? _basicActive_Fallback);
+                inactiveTtlG = ToOpaque(_basicInactive ?? _basicInactive_Fallback);
             }
             else
             {
-                activeTtl = SystemColors.ActiveCaption;
-                inactiveTtl = SystemColors.InactiveCaption;
-                activeTtlG = SystemColors.GradientActiveCaption;
-                inactiveTtlG = SystemColors.GradientInactiveCaption;
+                activeTtl = ToOpaque(SystemColors.ActiveCaption);
+                inactiveTtl = ToOpaque(SystemColors.InactiveCaption);
+                activeTtlG = ToOpaque(SystemColors.GradientActiveCaption);
+                inactiveTtlG = ToOpaque(SystemColors.GradientInactiveCaption);
             }
         }
 
@@ -392,7 +415,7 @@ namespace WinPaletter.Tabs
 
             if (Flag == Flags.Tabs_Extended)
             {
-                BackColor = scheme.Colors.Back_Hover(0);
+                BackColor = ToOpaque(scheme.Colors.Back_Hover(0));
                 return;
             }
 
@@ -415,14 +438,8 @@ namespace WinPaletter.Tabs
 
             UpdateColors();
 
-            // ALWAYS process DWM effects if the form is visible.
-            // Don't skip based on _firstBackdropUpdate alone.
             bool needsRedraw = _firstBackdropUpdate || _lastBackdropType == null || type != _lastBackdropType || p != _lastBackdropPadding;
-
-            // For DWM types, always apply the effect when the form is visible
             bool isDwmType = type == TitlebarTypes.DWM || type == TitlebarTypes.DWM_Aero;
-
-            // On Windows 7 with DWM, we need to reapply the effect every time the form is shown
             bool forceApply = isDwmType && form.Visible && !_firstBackdropUpdate;
 
             _firstBackdropUpdate = false;
@@ -434,17 +451,21 @@ namespace WinPaletter.Tabs
                     if ((needsRedraw || forceApply) && p != Padding.Empty)
                         form.DropEffect(p, FormStyle: Program.Style.DarkMode ? DWM.DWMStyles.Mica : DWM.DWMStyles.Tabbed);
                     break;
+
                 case TitlebarTypes.DWM_Aero:
                     BackColor = Color.Black;
                     if ((needsRedraw || forceApply) && p != Padding.Empty)
                         form.DropEffect(p, false, DWM.DWMStyles.Aero);
                     break;
+
                 case TitlebarTypes.ColorPrevalence:
                     BackColor = _formFocused ? activeTtl : inactiveTtl;
                     break;
+
                 case TitlebarTypes.AppMode:
                     BackColor = Program.Style.DarkMode ? Color.FromArgb(32, 32, 32) : OS.W10 ? Color.White : Color.FromArgb(243, 243, 243);
                     break;
+
                 case TitlebarTypes.Basic:
                 case TitlebarTypes.Classic:
                     BackColor = _formFocused ? activeTtl : inactiveTtl;
