@@ -97,6 +97,26 @@ namespace WinPaletter.NativeMethods
             public string lfFaceName = lfFaceName;
         }
 
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+        public struct ENUMLOGFONTEX
+        {
+            public LOGFONT elfLogFont;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
+            public string elfFullName;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
+            public string elfStyle;
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
+            public string elfScript;
+        }
+
+        public delegate int EnumFontExDelegate(ref ENUMLOGFONTEX lpelfe, IntPtr lpntme, uint fontType, IntPtr lParam);
+
+        [DllImport(_gdi32, CharSet = CharSet.Unicode)]
+        public static extern int EnumFontFamiliesEx(IntPtr hdc, ref LOGFONT lpLogfont, EnumFontExDelegate lpEnumFontFamExProc, IntPtr lParam, uint dwFlags);
+
+        public const int TRUETYPE_FONTTYPE = 0x0004;
+        public const int RASTER_FONTTYPE = 0x0001;
+
         /// <summary>
         /// Represents font precision values.
         /// </summary>

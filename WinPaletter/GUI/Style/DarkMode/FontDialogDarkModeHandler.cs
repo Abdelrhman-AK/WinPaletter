@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using WinPaletter.NativeMethods;
 using static WinPaletter.NativeMethods.UxTheme;
@@ -34,7 +36,7 @@ namespace WinPaletter.UI.Dark
     /// </summary>
     internal sealed class FontDialogDarkHandler : IDisposable
     {
-        // --- Font dialog control IDs (comdlg32.dll / ChooseFont) ---
+        // Font dialog control IDs (comdlg32.dll / ChooseFont)
         internal const int FONTDLG_ID_LIST_FONT = 0x0470; // 1136 - font ComboBox
         internal const int FONTDLG_ID_LIST_STYLE = 0x0471; // 1137 - style ComboBox
         internal const int FONTDLG_ID_LIST_SIZE = 0x0472; // 1138 - size ComboBox
@@ -182,7 +184,7 @@ namespace WinPaletter.UI.Dark
 
             bool belowCombo = popupRc.top >= comboRc.bottom - 8 && popupRc.top <= comboRc.bottom + 32;
 
-            bool widthMatches = popupWidth >= comboWidth - 16 &&  popupWidth <= comboWidth + 64;
+            bool widthMatches = popupWidth >= comboWidth - 16 && popupWidth <= comboWidth + 64;
 
             return horizontalOverlap && belowCombo && widthMatches;
         }
@@ -255,21 +257,8 @@ namespace WinPaletter.UI.Dark
         }
 
         private const int CBN_DROPDOWN = 7;
-        private const int CBN_CLOSEUP = 8;
-
-        private const uint GW_OWNER = 4;
-        private const uint GW_CHILD = 5;
-        private const uint GW_HWNDNEXT = 2;
 
         private IntPtr FindScriptComboDropdown() => GetComboListHwnd(_scriptComboHwnd);
-
-        private static bool IsComboLBox(IntPtr hWnd)
-        {
-            if (hWnd == IntPtr.Zero) return false;
-
-            string cls = GetClassName(hWnd);
-            return cls == "ComboLBox" || cls == "ListBox";
-        }
 
         private IntPtr _scriptListThemedHwnd = IntPtr.Zero;
 
@@ -286,7 +275,7 @@ namespace WinPaletter.UI.Dark
 
             _owner.SubclassWindow(listHwnd, _scriptListProcDelegate, (UIntPtr)SUBCLASS_ID_SCRIPTLIST);
 
-            User32.RedrawWindow(listHwnd, IntPtr.Zero, IntPtr.Zero, User32.RedrawWindowFlags.Invalidate | User32.RedrawWindowFlags.Erase| User32.RedrawWindowFlags.Frame | User32.RedrawWindowFlags.UpdateNow);
+            User32.RedrawWindow(listHwnd, IntPtr.Zero, IntPtr.Zero, User32.RedrawWindowFlags.Invalidate | User32.RedrawWindowFlags.Erase | User32.RedrawWindowFlags.Frame | User32.RedrawWindowFlags.UpdateNow);
 
             if (_debug) Program.Log?.Debug($"[FontDialogDarkHandler] Script dropdown themed hWnd=0x{listHwnd:X}");
         }
@@ -650,13 +639,100 @@ namespace WinPaletter.UI.Dark
         }
 
         /// <summary>
+        /// Maps (family, style) to the GDI face name + lfWeight that actually renders it.
+        /// Light/Semilight/Semibold/Black... are separate GDI families ("Segoe UI Light"),
+        /// each of which is "Regular" (400) inside itself.
+        /// </summary>
+        private readonly Dictionary<string, (string Face, int Weight, bool Italic)> _faceCache = [with(StringComparer.OrdinalIgnoreCase)];
+
+        /// <summary>
+        /// Resolves the style into either:
+        ///
+        ///   1. The base family + GDI weight for common styles:
+        ///        Segoe UI + Regular       -> Segoe UI, 400
+        ///        Segoe UI + Italic        -> Segoe UI, 400, italic
+        ///        Segoe UI + Bold          -> Segoe UI, 700
+        ///        Segoe UI + Bold Italic   -> Segoe UI, 700, italic
+        ///
+        ///   2. A full font face for non-basic named variants:
+        ///        Segoe UI + Light         -> Segoe UI Light, 400
+        ///        Segoe UI + Light Italic  -> Segoe UI Light Italic, 400
+        ///        Segoe UI + Semilight     -> Segoe UI Semilight, 400
+        ///        etc.
+        ///
+        /// The important distinction is that Light/Semilight/etc. are treated
+        /// as separate face names rather than asking GDI to synthesize them by
+        /// changing lfWeight on the base family.
+        /// </summary>
+        private (string Face, int Weight, bool Italic) ResolveGdiFace(string family, string style, int weight)
+        {
+            if (string.IsNullOrWhiteSpace(family)) return (family, weight, false);
+
+            style = string.IsNullOrWhiteSpace(style) ? "Regular" : style.Trim();
+
+            string key = family + "|" + style;
+
+            if (_faceCache.TryGetValue(key, out var cached)) return cached;
+
+            string normalized = Regex.Replace( style, @"\s+", " ").Trim();
+
+            string lower = normalized.ToLowerInvariant();
+
+            bool italic = lower.Contains("italic") || lower.Contains("oblique");
+
+            // Remove italic/oblique from the style to obtain the weight/style name.
+            string variant = Regex.Replace( normalized, @"\b(italic|oblique)\b", "", RegexOptions.IgnoreCase).Trim();
+
+            variant = Regex.Replace(variant, @"\s+", " ").Trim();
+
+            // Common/basic styles stay in the base family.
+            if (variant.Length == 0 ||  variant.Equals("regular", StringComparison.OrdinalIgnoreCase))
+            {
+                var result = (family, 400, italic);
+
+                _faceCache[key] = result;
+                return result;
+            }
+
+            if (variant.Equals("bold", StringComparison.OrdinalIgnoreCase))
+            {
+                var result = (family, 700, italic);
+
+                _faceCache[key] = result;
+                return result;
+            }
+
+            // Named non-basic variants become their own GDI face.
+            //
+            // Examples:
+            //   Segoe UI + Light
+            //       -> Segoe UI Light
+            //
+            //   Segoe UI + Semilight
+            //       -> Segoe UI Semilight
+            //
+            //   Segoe UI + Light Italic
+            //       -> Segoe UI Light Italic
+
+            string fullFace = family + " " + variant;
+
+            if (italic) fullFace += " Italic";
+
+            var namedResult = (Face: fullFace, Weight: 400, Italic: false);
+
+            _faceCache[key] = namedResult;
+
+            return namedResult;
+        }
+
+        /// <summary>
         /// Parses a style item string ("Regular", "Italic", "Bold", "SemiBold",
         /// "Bold Italic", "Light Italic", …) into weight + italic flags.
         /// Order matters: "semibold" and "extrabold" must be checked before "bold".
         /// </summary>
         private static void ParseStyleString(string style, out int weight, out bool italic)
         {
-            weight = 400;   // FW_NORMAL
+            weight = 400;
             italic = false;
 
             if (string.IsNullOrEmpty(style)) return;
@@ -665,13 +741,14 @@ namespace WinPaletter.UI.Dark
 
             if (s.Contains("italic") || s.Contains("oblique")) italic = true;
 
-            if (s.Contains("thin")) weight = 100;
-            else if (s.Contains("extralight") || s.Contains("ultralight")) weight = 200;
-            else if (s.Contains("semilight") || s.Contains("demilight")) weight = 350;
+            // Order matters: longest/most-specific first.
+            if (s.Contains("thin") || s.Contains("hairline")) weight = 100;
+            else if (s.Contains("extralight") || s.Contains("ultralight") || s.Contains("extra light") || s.Contains("ultra light")) weight = 200;
+            else if (s.Contains("semilight") || s.Contains("demilight") || s.Contains("semi light") || s.Contains("demi light")) weight = 350;
             else if (s.Contains("light")) weight = 300;
             else if (s.Contains("medium")) weight = 500;
-            else if (s.Contains("semibold") || s.Contains("demibold")) weight = 600;
-            else if (s.Contains("extrabold") || s.Contains("ultrabold")) weight = 800;
+            else if (s.Contains("semibold") || s.Contains("demibold") || s.Contains("semi bold") || s.Contains("demi bold")) weight = 600;
+            else if (s.Contains("extrabold") || s.Contains("ultrabold") || s.Contains("extra bold") || s.Contains("ultra bold")) weight = 800;
             else if (s.Contains("bold")) weight = 700;
             else if (s.Contains("black") || s.Contains("heavy")) weight = 900;
         }
@@ -692,7 +769,7 @@ namespace WinPaletter.UI.Dark
             int lfHeight = -16;
             int lfWidth = 0;
 
-            IntPtr currentFont = User32.SendMessage(listbox, User32.WindowsMessage.GetFont, IntPtr.Zero, IntPtr.Zero);
+            IntPtr currentFont = User32.SendMessage( listbox, User32.WindowsMessage.GetFont, IntPtr.Zero, IntPtr.Zero);
 
             if (currentFont != IntPtr.Zero)
             {
@@ -702,42 +779,24 @@ namespace WinPaletter.UI.Dark
 
                 if (result != 0)
                 {
-                    // Preserve the exact row font height.
                     if (existing.lfHeight != 0) lfHeight = existing.lfHeight - 2;
 
                     lfWidth = existing.lfWidth;
                 }
             }
 
-            string face = faceName ?? string.Empty;
-
-            if (face.Length > MAX_FACE_NAME) face = face.Substring(0, MAX_FACE_NAME);
+            if (faceName.Length > MAX_FACE_NAME) faceName = faceName.Substring(0, MAX_FACE_NAME);
 
             GDI32.LOGFONT lf = new()
             {
                 lfHeight = lfHeight,
                 lfWidth = lfWidth,
-
-                lfEscapement = 0,
-                lfOrientation = 0,
-
                 lfWeight = weight,
-
                 lfItalic = (byte)(italic ? 1 : 0),
-                lfUnderline = 0,
-                lfStrikeOut = 0,
-
-                lfCharSet = 1, // DEFAULT_CHARSET
-
-                lfOutPrecision = 0,
-                lfClipPrecision = 0,
-
-                // Let GDI choose the appropriate rendering.
-                lfQuality = 0,
-
-                lfPitchAndFamily = 0,
-
-                lfFaceName = face
+                lfCharSet = 1,
+                lfOutPrecision = 7,
+                lfQuality = 5,
+                lfFaceName = faceName,
             };
 
             return GDI32.CreateFontIndirect(lf);
@@ -1407,7 +1466,7 @@ namespace WinPaletter.UI.Dark
                 string text = Marshal.PtrToStringUni(buf);
 
                 // Determine Font / Style / Size from the actual combo owning this ComboLBox.
-                IntPtr itemFont = BuildItemFont( text, dis.hwndItem);
+                IntPtr itemFont = BuildItemFont(text, dis.hwndItem);
 
                 IntPtr hOld = IntPtr.Zero;
 
@@ -1510,17 +1569,33 @@ namespace WinPaletter.UI.Dark
             switch (kind)
             {
                 case FontListKind.Font:
+                    // Font list: face name IS the full name already (EnumFontFamilies gives full names).
                     return CreateFontForItem(listbox, text, 400, false);
 
                 case FontListKind.Style:
                     {
-                        string face = GetComboSelectionText(_fontComboHwnd);
+                        string family = GetComboSelectionText(_fontComboHwnd);
 
                         ParseStyleString(text, out int weight, out bool italic);
 
-                        if (_debug) Program.Log?.Debug($"[FontDialogDarkHandler] Style item " + $"face='{face}', " + $"weight={weight}, " + $"italic={italic}");
+                        var resolved = ResolveGdiFace(family, text, weight);
 
-                        return CreateFontForItem(listbox, face, weight, italic);
+                        if (_debug)
+                        {
+                            Program.Log?.Debug(
+                                $"[FontDialogDarkHandler] STYLE FONT " +
+                                $"family='{family}', " +
+                                $"style='{text}', " +
+                                $"face='{resolved.Face}', " +
+                                $"weight={resolved.Weight}, " +
+                                $"italic={resolved.Italic}");
+                        }
+
+                        return CreateFontForItem(
+                            listbox,
+                            resolved.Face,
+                            resolved.Weight,
+                            resolved.Italic);
                     }
 
                 case FontListKind.Size:
@@ -1633,20 +1708,34 @@ namespace WinPaletter.UI.Dark
             string style = GetComboSelectionText(_styleComboHwnd);
             string sizeText = GetComboSelectionText(_sizeComboHwnd);
 
-            if (string.IsNullOrEmpty(face) && string.IsNullOrEmpty(style) && string.IsNullOrEmpty(sizeText)) return IntPtr.Zero;
+            if (string.IsNullOrEmpty(face) && string.IsNullOrEmpty(style) && string.IsNullOrEmpty(sizeText))
+            {
+                return IntPtr.Zero;
+            }
 
             ParseStyleString(style, out int weight, out bool italic);
 
+            var resolved = ResolveGdiFace(face, style, weight);
+
             int pointSize = DEFAULT_PREVIEW_POINTS;
-            if (!string.IsNullOrEmpty(sizeText) && int.TryParse(sizeText.Trim(), out int parsed) && parsed > 0) pointSize = parsed;
+
+            if (!string.IsNullOrEmpty(sizeText) && int.TryParse(sizeText.Trim(), out int parsedSize) && parsedSize > 0)
+            {
+                pointSize = parsedSize;
+            }
 
             int lfHeight;
+
             IntPtr screenDc = User32.GetDC(IntPtr.Zero);
+
             if (screenDc != IntPtr.Zero)
             {
                 int dpi = GDI32.GetDeviceCaps(screenDc, 90); // LOGPIXELSY
+
                 User32.ReleaseDC(IntPtr.Zero, screenDc);
+
                 if (dpi <= 0) dpi = 96;
+
                 lfHeight = -((pointSize * dpi) / 72);
             }
             else
@@ -1654,25 +1743,16 @@ namespace WinPaletter.UI.Dark
                 lfHeight = -((pointSize * 96) / 72);
             }
 
-            string faceName = face ?? string.Empty;
-            if (faceName.Length > MAX_FACE_NAME) faceName = faceName.Substring(0, MAX_FACE_NAME);
-
             GDI32.LOGFONT lf = new()
             {
                 lfHeight = lfHeight,
                 lfWidth = 0,
-                lfEscapement = 0,
-                lfOrientation = 0,
-                lfWeight = weight,
-                lfItalic = (byte)(italic ? 1 : 0),
-                lfUnderline = 0,
-                lfStrikeOut = 0,
-                lfCharSet = 1,       // DEFAULT_CHARSET
-                lfOutPrecision = 0,
-                lfClipPrecision = 0,
-                lfQuality = 0,
-                lfPitchAndFamily = 0,
-                lfFaceName = faceName,
+                lfWeight = resolved.Weight,
+                lfItalic = (byte)(resolved.Italic ? 1 : 0),
+                lfCharSet = 1,
+                lfOutPrecision = 7,
+                lfQuality = 5,
+                lfFaceName = resolved.Face
             };
 
             return GDI32.CreateFontIndirect(lf);
