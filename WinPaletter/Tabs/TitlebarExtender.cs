@@ -60,7 +60,7 @@ namespace WinPaletter.Tabs
         public override Color BackColor
         {
             get => base.BackColor;
-            set => base.BackColor = ToOpaque(value);
+            set => base.BackColor = value.ToOpaque();
         }
 
         public static bool AccentOnTitlebars
@@ -243,15 +243,6 @@ namespace WinPaletter.Tabs
             base.OnHandleDestroyed(e);
         }
 
-        /// <summary>
-        /// Sanitizes a color for use as a <see cref="Control.BackColor"/>.
-        /// WinForms controls do not support <see cref="Color.Transparent"/> unless
-        /// <see cref="ControlStyles.SupportsTransparentBackColor"/> is set, and even
-        /// then it can throw for container controls. This converts any color with
-        /// alpha &lt; 255 into its opaque version so the assignment never throws.
-        /// </summary>
-        private static Color ToOpaque(Color color) => Color.FromArgb(255, color);
-
         private void Config_DarkModeChanged()
         {
             if (this is null || !IsHandleCreated) return;
@@ -297,26 +288,26 @@ namespace WinPaletter.Tabs
         {
             if (TitlebarType == TitlebarTypes.ColorPrevalence)
             {
-                activeTtl = ToOpaque(ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", Color.Black.Reverse()).Reverse());
+                activeTtl = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColor", Color.Black.Reverse()).Reverse().ToOpaque();
 
-                inactiveTtl = ToOpaque(ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", Color.Black.Reverse()).Reverse());
+                inactiveTtl = ReadReg(@"HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\DWM", "AccentColorInactive", Color.Black.Reverse()).Reverse().ToOpaque();
 
                 activeTtlG = activeTtl;
                 inactiveTtlG = inactiveTtl;
             }
             else if (TitlebarType == TitlebarTypes.Basic && !Program.ClassicThemeRunning)
             {
-                activeTtl = ToOpaque(_basicActive ?? _basicActive_Fallback);
-                inactiveTtl = ToOpaque(_basicInactive ?? _basicInactive_Fallback);
-                activeTtlG = ToOpaque(_basicActive ?? _basicActive_Fallback);
-                inactiveTtlG = ToOpaque(_basicInactive ?? _basicInactive_Fallback);
+                activeTtl = (_basicActive ?? _basicActive_Fallback).ToOpaque();
+                inactiveTtl = (_basicInactive ?? _basicInactive_Fallback).ToOpaque();
+                activeTtlG = (_basicActive ?? _basicActive_Fallback).ToOpaque();
+                inactiveTtlG = (_basicInactive ?? _basicInactive_Fallback).ToOpaque();
             }
             else
             {
-                activeTtl = ToOpaque(SystemColors.ActiveCaption);
-                inactiveTtl = ToOpaque(SystemColors.InactiveCaption);
-                activeTtlG = ToOpaque(SystemColors.GradientActiveCaption);
-                inactiveTtlG = ToOpaque(SystemColors.GradientInactiveCaption);
+                activeTtl = SystemColors.ActiveCaption.ToOpaque();
+                inactiveTtl = SystemColors.InactiveCaption.ToOpaque();
+                activeTtlG = SystemColors.GradientActiveCaption.ToOpaque();
+                inactiveTtlG = SystemColors.GradientInactiveCaption.ToOpaque();
             }
         }
 
@@ -415,7 +406,7 @@ namespace WinPaletter.Tabs
 
             if (Flag == Flags.Tabs_Extended)
             {
-                BackColor = ToOpaque(scheme.Colors.Back_Hover(0));
+                BackColor = scheme.Colors.Back_Hover(0).ToOpaque();
                 return;
             }
 

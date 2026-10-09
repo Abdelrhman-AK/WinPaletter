@@ -15,6 +15,15 @@ namespace WinPaletter.TypesExtensions
     public static class ColorsExtensions
     {
         /// <summary>
+        /// Sanitizes a color for use as a <see cref="Control.BackColor"/>.
+        /// WinForms controls do not support <see cref="Color.Transparent"/> unless
+        /// <see cref="ControlStyles.SupportsTransparentBackColor"/> is set, and even
+        /// then it can throw for container controls. This converts any color with
+        /// alpha &lt; 255 into its opaque version so the assignment never throws.
+        /// </summary>
+        public static Color ToOpaque(this Color color) => Color.FromArgb(255, color);
+
+        /// <summary>
         /// Converts a <see cref="Color"/> to string in the specified <see cref="Formats"/>.
         /// </summary>
         public static string ToString(this Color color, Formats format, bool hexHash = false, bool shortForm = false)
@@ -180,7 +189,7 @@ namespace WinPaletter.TypesExtensions
 
             return Color.Empty;
         }
-        
+
         /// <summary>
         /// Converts a <see cref="Color"/> to its integer representation. 
         /// <br></br>Includes the Alpha channel if it represents transparency (A < 255).

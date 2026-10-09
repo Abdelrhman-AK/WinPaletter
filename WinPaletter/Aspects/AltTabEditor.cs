@@ -28,17 +28,20 @@ namespace WinPaletter
 
         private void SystemWallpaperChanged(object sender, Program.WallpaperMonitor.WallpaperSnapshot e)
         {
-            if (!Program.TM.Wallpaper.Enabled)
-            {
-                Invoke(() =>
-                {
-                    pnl_preview1.BackgroundImage = Program.WallpaperMonitor.Get(Program.TM, Program.WindowStyle);
-                    Classic_Preview1.BackgroundImage = pnl_preview1.BackgroundImage.Clone() as Bitmap;
+            if (Program.TM.Wallpaper.Enabled || !IsHandleCreated || IsDisposed) return;
 
+            try
+            {
+                BeginInvoke(() =>
+                {
+                    Bitmap bg = Program.WallpaperMonitor.Get(Program.TM, Program.WindowStyle);
+                    pnl_preview1.BackgroundImage = bg?.Clone() as Bitmap;
+                    Classic_Preview1.BackgroundImage = bg?.Clone() as Bitmap;
                     pnl_preview1.BackColor = e.BackgroundColor;
                     Classic_Preview1.BackColor = e.BackgroundColor;
                 });
             }
+            catch (InvalidOperationException) { } // handle destroyed mid-call
         }
 
         private void Form_HelpButtonClicked(object sender, CancelEventArgs e)
@@ -200,16 +203,8 @@ namespace WinPaletter
             RadioImage2.Image = WinLogos.WinXP;
 
             Bitmap bg = Program.WallpaperMonitor.Get(Program.TM, Program.WindowStyle);
-            if (bg != null)
-            {
-                pnl_preview1.BackgroundImage = bg;
-                Classic_Preview1.BackgroundImage = bg.Clone() as Bitmap;
-            }
-            else
-            {
-                pnl_preview1.BackgroundImage = null;
-                Classic_Preview1.BackgroundImage = null;
-            }
+            pnl_preview1.BackgroundImage = bg?.Clone() as Bitmap;
+            Classic_Preview1.BackgroundImage = bg?.Clone() as Bitmap;
 
             pnl_preview1.BackColor = Program.TM.Win32.Background;
             Classic_Preview1.BackColor = Program.TM.Win32.Background;
