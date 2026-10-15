@@ -652,7 +652,7 @@ namespace WinPaletter.Theme.Structures
                     WriteReg(treeView, HDef_CPL_Colors, "Desktop", Desktop.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);
                 }
 
-                 WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\ClassicColors", nameof(CTRL_ALT_DEL_Troubleshoot), CTRL_ALT_DEL_Troubleshoot, RegistryValueKind.DWord);
+                WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\Aspects\WindowsColorsThemes\ClassicColors", nameof(CTRL_ALT_DEL_Troubleshoot), CTRL_ALT_DEL_Troubleshoot, RegistryValueKind.DWord);
 
                 // Override some colors in the HKEY_Local_Machine registry if overriden in WinPaletter settings
                 if (CTRL_ALT_DEL_Troubleshoot == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)

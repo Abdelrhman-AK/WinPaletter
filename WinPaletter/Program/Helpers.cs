@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Threading;
@@ -304,21 +305,29 @@ namespace WinPaletter
         /// </summary>
         private static void DeleteUpdateResiduals()
         {
+            string baseDir = AppContext.BaseDirectory;
+
+            TryDelete(Path.Combine(baseDir, "oldWinpaletter.trash"));
+            TryDelete(Path.Combine(baseDir, "oldWinpaletter_2.trash"));
+        }
+
+        private static void TryDelete(string path)
+        {
             try
             {
-                if (File.Exists("oldWinpaletter.trash"))
-                {
-                    Program.Log?.Write(LogEventLevel.Information, $"Deleting old WinPaletter executable file: oldWinpaletter.trash");
-                    File.Delete("oldWinpaletter.trash");
-                }
-                if (File.Exists("oldWinpaletter_2.trash"))
-                {
-                    Program.Log?.Write(LogEventLevel.Information, $"Deleting old WinPaletter executable file: oldWinpaletter_2.trash");
-                    File.Delete("oldWinpaletter_2.trash");
-                }
+                if (!File.Exists(path)) return; // Fast exit: the normal case, nothing to clean
 
+                File.Delete(path);
+                LogDeleted(path);
             }
-            catch { } // Ignore deleting old executable files if they are in use
+            catch { } // In use or access denied; try again next launch
+        }
+
+        // Kept separate so the JIT only touches Serilog / Program.Log when a file was actually deleted
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        private static void LogDeleted(string path)
+        {
+            Program.Log?.Write(LogEventLevel.Information, $"Old WinPaletter executable file: {Path.GetFileName(path)} has been deleted.");
         }
 
         /// <summary>

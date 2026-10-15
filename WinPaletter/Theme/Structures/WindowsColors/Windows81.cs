@@ -113,7 +113,7 @@ namespace WinPaletter.Theme.Structures
 
                     IntPtr result;
                     User32.SendMessageTimeout(new IntPtr(User32.HWND_BROADCAST), (uint)User32.WindowsMessage.SettingChange, IntPtr.Zero, IntPtr.Zero, User32.SMTO_ABORTIFHUNG, 100, out result);
-                    User32.NotifySettingChanged("ImmersiveColorSet"); 
+                    User32.NotifySettingChanged("ImmersiveColorSet");
                     User32.NotifySettingChanged("WindowsThemeElement");
 
                     wic.Undo();

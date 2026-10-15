@@ -91,16 +91,16 @@ namespace WinPaletter
                 {
                     // HKEY_CURRENT_USER, HKEY_CLASSES_ROOT, HKEY_CURRENT_CONFIG
                     if (Key.StartsWith(HKCUPrefix, StringComparison.OrdinalIgnoreCase))
-                    { 
+                    {
                         scope = RegScope.HKEY_CURRENT_USER; Key = Key.Substring(HKCUPrefix.Length);
                     }
                     else if (Key.StartsWith(HKCRPrefix, StringComparison.OrdinalIgnoreCase))
-                    { 
-                        scope = RegScope.HKEY_CLASSES_ROOT; Key = Key.Substring(HKCRPrefix.Length); 
+                    {
+                        scope = RegScope.HKEY_CLASSES_ROOT; Key = Key.Substring(HKCRPrefix.Length);
                     }
                     else if (Key.StartsWith(HKCCPrefix, StringComparison.OrdinalIgnoreCase))
-                    { 
-                        scope = RegScope.HKEY_CURRENT_CONFIG; Key = Key.Substring(HKCCPrefix.Length); 
+                    {
+                        scope = RegScope.HKEY_CURRENT_CONFIG; Key = Key.Substring(HKCCPrefix.Length);
                     }
                 }
                 else if (c == 'L')
