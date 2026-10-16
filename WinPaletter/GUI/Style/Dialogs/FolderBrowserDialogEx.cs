@@ -26,7 +26,7 @@ namespace WinPaletter.UI.WP
         /// </summary>
         public FolderBrowserDialogEx()
         {
-            if (OS.WXP) _downlevelDialog = new FolderBrowserDialog();
+            if (OS.W9x || OS.WXP) _downlevelDialog = new FolderBrowserDialog();
             else Reset();
         }
 

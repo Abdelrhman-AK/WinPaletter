@@ -195,7 +195,7 @@ namespace WinPaletter.NativeMethods
                 hbmBanner = IntPtr.Zero
             };
 
-            if (!OS.WXP)
+            if (!OS.W9x && !OS.WXP)
             {
                 uint authPackage = 0;
                 IntPtr inCredBuffer = IntPtr.Zero, outCredBuffer;

@@ -101,7 +101,7 @@ namespace WinPaletter
             {
                 try
                 {
-                    if (!OS.WXP && File.Exists($"{SysPaths.appData}\\WindowsStartup_Backup.wav"))
+                    if (!OS.W9x && !OS.WXP && File.Exists($"{SysPaths.appData}\\WindowsStartup_Backup.wav"))
                     {
                         string file = $"{SysPaths.appData}\\WindowsStartup_Backup.wav";
 
@@ -120,7 +120,7 @@ namespace WinPaletter
             // Restore the cursors
             if (checkBox5.Checked)
             {
-                if (!OS.WXP)
+                if (!OS.W9x && !OS.WXP)
                 {
                     Theme.Structures.Cursors.ResetCursorsToAero();
                     if (Program.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)
@@ -352,7 +352,7 @@ namespace WinPaletter
         /// <param name="e"></param>
         private void button19_Click(object sender, EventArgs e)
         {
-            if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8x)
+            if (!OS.W9x && !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8x)
             {
                 Program.SendCommand($"{SysPaths.Explorer} ms-settings:display");
             }

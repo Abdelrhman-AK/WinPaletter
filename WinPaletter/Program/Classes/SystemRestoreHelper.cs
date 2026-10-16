@@ -131,8 +131,9 @@ namespace WinPaletter
 
                     Program.Log?.Write(LogEventLevel.Information, $"Creating system restore point with description: {taggedDescription}");
 
-                    if (OS.WXP)
+                    if (OS.W9x || OS.WXP)
                     {
+                        // Windows 9x does not support System Restore, so this path is only relevant for Windows XP.
                         // Windows XP's srclient.dll only exports the ANSI SRSetRestorePointA entry point.
                         // The unicode SRSetRestorePointW export used by CreateRestorePointNative() was
                         // introduced in Windows Vista, so calling it on XP would just throw and waste a
@@ -312,8 +313,9 @@ namespace WinPaletter
 
                 int result;
 
-                if (OS.WXP)
+                if (OS.W9x || OS.WXP)
                 {
+                    // Windows 9x does not support System Restore, so this path is only relevant for Windows XP.
                     // SRRemoveRestorePoint is documented as supported since Windows XP, but in practice
                     // it has been externally reported to return ERROR_SUCCESS on XP without actually
                     // removing the restore point (e.g. the "System Restore Explorer" tool author found
@@ -332,8 +334,9 @@ namespace WinPaletter
 
                 Program.Log?.Debug($"Restore point removal call returned code {result} for #{sequenceNumber}");
 
-                if (OS.WXP && result == 0)
+                if ((OS.W9x || OS.WXP) && result == 0)
                 {
+                    // Windows 9x does not support System Restore, so this path is only relevant for Windows XP.
                     // Neither removal path above can be fully trusted on XP, so confirm the restore
                     // point is actually gone before reporting success - this is exactly what was
                     // reported as broken (a success result with the restore point still present).
@@ -433,14 +436,15 @@ namespace WinPaletter
                 // so only XP needs the adjusted string; the plain "drive" value is still used everywhere
                 // else (logging, verification) so registry lookups in IsSystemRestoreEnabledForDrive keep
                 // working unchanged.
-                string srClientDrive = OS.WXP ? driveLetter + @":\" : drive;
+                string srClientDrive = OS.W9x || OS.WXP ? driveLetter + @":\" : drive;
 
                 Program.Log?.Write(LogEventLevel.Information, $"Setting system restore status for drive {drive} to {enable}");
-                Program.Log?.Debug($"SetSystemRestoreStatus called for drive {drive} (SrClient drive string: \"{srClientDrive}\"), enable: {enable}, OS.WXP: {OS.WXP}");
+                Program.Log?.Debug($"SetSystemRestoreStatus called for drive {drive} (SrClient drive string: \"{srClientDrive}\"), enable: {enable}, OS.W9x || OS.WXP: {OS.W9x || OS.WXP}");
 
                 int result = enable ? SrClient.EnableSR(srClientDrive) : SrClient.DisableSR(srClientDrive);
                 Program.Log?.Debug($"{(enable ? "EnableSR" : "DisableSR")} returned code {result} for drive string \"{srClientDrive}\"");
 
+                // Windows 9x does not support System Restore, so this path is only relevant for Windows XP.
                 // Windows XP's EnableSR/DisableSR start or stop the "srservice" system service under the
                 // hood, and the underlying service-control call fails if the service is already in the
                 // requested state:
@@ -449,7 +453,7 @@ namespace WinPaletter
                 // Neither is really a failure - the drive already ends up in the state the caller asked
                 // for - so on XP these two codes are treated as success rather than thrown as errors.
                 // Vista and later don't drive srservice this way and aren't affected.
-                if (OS.WXP && ((enable && result == 1056) || (!enable && result == 1062)))
+                if ((OS.W9x || OS.WXP) && ((enable && result == 1056) || (!enable && result == 1062)))
                 {
                     Program.Log?.Debug($"{(enable ? "EnableSR" : "DisableSR")} returned {result} on XP ({(enable ? "ERROR_SERVICE_ALREADY_RUNNING" : "ERROR_SERVICE_NOT_ACTIVE")}); System Restore is already in the requested state, treating as success.");
                     result = 0;
@@ -679,8 +683,9 @@ namespace WinPaletter
                     return false; // System Restore is globally disabled
                 }
 
-                if (OS.WXP)
+                if (OS.W9x || OS.WXP)
                 {
+                    // Windows 9x does not support System Restore, so this path is only relevant for Windows XP.
                     // On Windows XP, DisableSR is the only reliable registry-based signal for enablement.
                     // The per-drive value this method checks further down isn't populated on XP the way
                     // it's assumed here (drive monitoring state on XP is tracked via the
@@ -750,9 +755,9 @@ namespace WinPaletter
         /// </summary>
         private static long? TryGetSystemVolumeShadowStorageUsedBytes()
         {
-            if (OS.WXP)
+            if (OS.W9x || OS.WXP)
             {
-                Program.Log?.Debug("TryGetSystemVolumeShadowStorageUsedBytes: OS.WXP is true, returning null (Win32_ShadowStorage is a VSS construct, not applicable to XP restore points).");
+                Program.Log?.Debug("TryGetSystemVolumeShadowStorageUsedBytes: OS.W9x || OS.WXP is true, returning null (Win32_ShadowStorage is a VSS construct, not applicable to 9x/XP restore points).");
                 return null;
             }
 

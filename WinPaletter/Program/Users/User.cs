@@ -22,6 +22,7 @@ namespace WinPaletter
 {
     /// <summary>
     /// Class for handling multiple users for WinPaletter
+    /// <br>- On Windows 9x (<c>OS.W9x</c>) there are no SIDs, tokens, impersonation or user enumeration. Only the current user is supported, and its logon name is used in place of a SID.</br>
     /// </summary>
     public static class User
     {
@@ -32,7 +33,7 @@ namespace WinPaletter
         public class UserChangeEventArgs : EventArgs
         {
             /// <summary>
-            /// User SID that invoked the change event
+            /// User SID that invoked the change event (the logon name on Windows 9x)
             /// </summary>
             public string SID { get; set; }
 
@@ -49,12 +50,12 @@ namespace WinPaletter
             /// <summary>
             /// Name of user who invoked the event
             /// </summary>
-            public string UserName { get { return new SecurityIdentifier(SID).Translate(typeof(NTAccount)).ToString().Split('\\').Last(); ; } }
+            public string UserName => AccountName(SID);
 
             /// <summary>
-            /// Name of domain hosting users
+            /// Name of domain hosting users (the computer name on Windows 9x)
             /// </summary>
-            public string Domain { get { return new SecurityIdentifier(SID).Translate(typeof(NTAccount)).ToString().Split('\\').First(); ; } }
+            public string Domain => AccountDomain(SID);
 
             /// <summary>
             /// Return if user that invoked the event is administrator or not
@@ -62,9 +63,9 @@ namespace WinPaletter
             public bool Administrator => IsAdmin(SID);
 
             /// <summary>
-            /// FileSystem of user profile picture that invoked the event
+            /// FileSystem of user profile picture that invoked the event (null on Windows 9x)
             /// </summary>
-            public string ProfilePicturePath => Shell32.GetUserTilePath(UserName);
+            public string ProfilePicturePath => OS.W9x ? null : Shell32.GetUserTilePath(UserName);
 
             /// <summary>
             /// Get path of user profile
@@ -122,9 +123,13 @@ namespace WinPaletter
                         // Change Windows cursor into wait cursor to indicate that the application is busy changing user
                         Cursor.Current = Cursors.WaitCursor;
 
-                        // Impersonate the selected user to do operations on his profile
-                        using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+                        // Impersonate the selected user to do operations on his profile (not available on Windows 9x)
+                        WindowsImpersonationContext wic = null;
+
+                        try
                         {
+                            if (!OS.W9x && User.Identity is not null) wic = User.Identity.Impersonate();
+
                             // Check if main form is opened or not
                             bool MainFormIsOpened = Application.OpenForms[Forms.MainForm.Name] is not null;
 
@@ -165,20 +170,23 @@ namespace WinPaletter
                             // Load data for Home form if it is opened
                             if (MainFormIsOpened) { Forms.Home.LoadData(); }
 
-                            // Hide opened forms after switching user
+                            // Show the forms that were hidden before switching user
                             foreach (System.Windows.Forms.Form f in OpenForms)
                             {
                                 f.Visible = true;
                             }
-
-                            // Change Windows cursor into default cursor to indicate that the application is ready
+                        }
+                        finally
+                        {
+                            // Change Windows cursor into default cursor to indicate that the application is ready (even if an error occurred)
                             Cursor.Current = Cursors.Default;
 
                             // Undo impersonation after finishing operations on user profile
-                            wic.Undo();
-
-                            Program.Log?.Write(LogEventLevel.Information, @$"User selected: `{Domain}\{Name}`.");
+                            wic?.Undo();
+                            wic?.Dispose();
                         }
+
+                        Program.Log?.Write(LogEventLevel.Information, @$"User selected: `{Domain}\{Name}`.");
 
                         break;
                     }
@@ -189,9 +197,26 @@ namespace WinPaletter
 
         #region Security identifiers
 
-        private static string _sid = GetActiveSessionSID();
+        // IMPORTANT: static fields are initialized in textual order. These three must stay in this order,
+        // because GetActiveSessionSID() falls back to AdminSID_GrantedUAC.
+
+        /// <summary>
+        /// Administrator user security identifier that opened WinPaletter after granting UAC dialog
+        /// <br>- On Windows 9x, this is the logon name of the current user</br>
+        /// </summary>
+        public static readonly string AdminSID_GrantedUAC = GetCurrentUserId();
+
+        /// <summary>
+        /// User's SID who opened WinPaletter before granting UAC dialog
+        /// <br>- On Windows 9x, this is the logon name of the current user</br>
+        /// </summary>
+        public static readonly string UserSID_OpenedWP = GetActiveSessionSID();
+
+        private static string _sid = UserSID_OpenedWP;
+
         /// <summary>
         /// Current selected user security identifier for WinPaletter, to be operated on it (read\write registry)
+        /// <br>- On Windows 9x, this is the logon name of the current user</br>
         /// </summary>
         public static string SID
         {
@@ -199,15 +224,14 @@ namespace WinPaletter
 
             set
             {
+                // Copy the handler to avoid a race if someone unsubscribes in the middle
+                UserChangeEventHandler handler = UserSwitch;
+
                 // Check if user is changed or not
-                bool changed = false;
+                bool changed = handler != null && _sid != value;
 
                 // Raise user change event before switching user
-                if (UserSwitch != null && _sid != value)
-                {
-                    changed = true;
-                    UserSwitch(new UserChangeEventArgs() { SID = _sid, Timing = UserChangeEventArgs.Timings.BeforeChange });
-                }
+                if (changed) handler(new UserChangeEventArgs() { SID = _sid, Timing = UserChangeEventArgs.Timings.BeforeChange });
 
                 // Update user SID
                 _sid = value;
@@ -215,49 +239,43 @@ namespace WinPaletter
                 // Reset user password after switching user
                 Password = string.Empty;
 
-                // Raise user change event after switching user
-                if (changed && UserSwitch != null)
+                if (!changed) return;
+
+                // Windows 9x has no tokens, impersonation or other users. Just notify that the (only) user is selected
+                if (OS.W9x)
                 {
-                    // Check if user is system profile or not
-                    // THIS IS A SPECIAL CASE FOR SYSTEM PROFILES (NT AUTHORITY)
-                    // IT IS HIGHLY RISKY AND NOT RECOMMENDED TO LOGIN INTO SYSTEM PROFILES
-                    if (value == "S-1-5-18" || value == "S-1-5-19" || value == "S-1-5-20")
-                    {
-                        // Try to login into system profile without password
-                        try { UpdateToken(Domain, Name, null, false); } catch (Exception ex) { Forms.BugReport.Throw(ex); }
+                    handler(new UserChangeEventArgs() { SID = value, Timing = UserChangeEventArgs.Timings.AfterChange });
+                    return;
+                }
 
+                // Check if user is system profile or not
+                // THIS IS A SPECIAL CASE FOR SYSTEM PROFILES (NT AUTHORITY)
+                // IT IS HIGHLY RISKY AND NOT RECOMMENDED TO LOGIN INTO SYSTEM PROFILES
+                if (value is "S-1-5-18" or "S-1-5-19" or "S-1-5-20")
+                {
+                    // Try to login into system profile without password
+                    try { UpdateToken(Domain, Name, null, false); } catch (Exception ex) { Forms.BugReport.Throw(ex); }
+
+                    // Raise user change event after switching user
+                    handler(new UserChangeEventArgs() { SID = value, Timing = UserChangeEventArgs.Timings.AfterChange });
+                }
+                else
+                {
+                    // Selected user must differ from the user who opened WinPaletter after granting UAC dialog, and the login must succeed
+                    bool switched = value != AdminSID_GrantedUAC && UpdateToken(Domain, Name, Password, true) && Password != null;
+
+                    if (switched)
+                    {
                         // Raise user change event after switching user
-                        UserSwitch(new UserChangeEventArgs() { SID = value, Timing = UserChangeEventArgs.Timings.AfterChange });
+                        handler(new UserChangeEventArgs() { SID = value, Timing = UserChangeEventArgs.Timings.AfterChange });
                     }
-
-                    // Check if selected user is the same as the user who opened WinPaletter after granting UAC dialog
-                    else if (_sid != AdminSID_GrantedUAC)
-                    {
-                        if (UpdateToken(Domain, Name, Password, true) && Password != null)
-                        {
-                            // Raise user change event after switching user
-                            UserSwitch(new UserChangeEventArgs() { SID = value, Timing = UserChangeEventArgs.Timings.AfterChange });
-                        }
-                        else
-                        {
-                            // Ignore password and continue using current user that opened WinPaletter
-                            Token = IntPtr.Zero;
-                            Identity = WindowsIdentity.GetCurrent();
-
-                            // Raise user change event after switching user
-                            UserSwitch(new UserChangeEventArgs() { SID = AdminSID_GrantedUAC, Timing = UserChangeEventArgs.Timings.AfterChange });
-                        }
-                    }
-
-                    // The user couldn't be processed. Continue using current user that opened WinPaletter
                     else
                     {
-                        // Ignore password and continue using current user that opened WinPaletter
-                        Token = IntPtr.Zero;
-                        Identity = WindowsIdentity.GetCurrent();
+                        // The user couldn't be processed. Ignore password and continue using current user that opened WinPaletter
+                        ResetToCurrentIdentity();
 
                         // Raise user change event after switching user
-                        UserSwitch(new UserChangeEventArgs() { SID = AdminSID_GrantedUAC, Timing = UserChangeEventArgs.Timings.AfterChange });
+                        handler(new UserChangeEventArgs() { SID = AdminSID_GrantedUAC, Timing = UserChangeEventArgs.Timings.AfterChange });
                     }
                 }
             }
@@ -265,6 +283,7 @@ namespace WinPaletter
 
         /// <summary>
         /// Update user token provided by a password
+        /// <br>- On Windows 9x there are no logon tokens, so this does nothing and returns true</br>
         /// </summary>
         /// <param name="Domain"></param>
         /// <param name="UserName"></param>
@@ -286,32 +305,54 @@ namespace WinPaletter
         /// <exception cref="Exception"></exception>
         public static bool UpdateToken(string Domain, string UserName, string Password, bool ignoreError = false)
         {
-            // Close previous token if it is opened
-            if (Token != IntPtr.Zero) { Kernel32.CloseHandle(Token); }
+            // Windows 9x: no LogonUser, no tokens
+            if (OS.W9x)
+            {
+                ResetToCurrentIdentity();
+                return true;
+            }
 
-            // Reset token and identity
+            // Close previous token if it is opened
+            if (Token != IntPtr.Zero)
+            {
+                Kernel32.CloseHandle(Token);
+                Token = IntPtr.Zero;
+            }
+
             IntPtr token = IntPtr.Zero;
             int error;
+            bool result;
 
             // Check if user is system profile or not
-            bool SystemProfile = Domain.ToUpper() == "NT AUTHORITY";
+            bool SystemProfile = Domain.Equals("NT AUTHORITY", StringComparison.OrdinalIgnoreCase);
+
+            const string lsaKey = "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Lsa";
 
             // Disable LimitBlankPasswordUse to allow login without password
-            bool OldValue = ReadReg("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Lsa", "LimitBlankPasswordUse", true);
-            WriteReg("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Lsa", "LimitBlankPasswordUse", false);
+            bool OldValue = ReadReg(lsaKey, "LimitBlankPasswordUse", true);
 
-            bool result;
-            if (!SystemProfile)
+            try
             {
-                // Logon user with password if it is not a system profile
-                result = ADVAPI.LogonUser(UserName, Domain, Password, ADVAPI.LOGON32_LOGON_INTERACTIVE, ADVAPI.LOGON32_PROVIDER_DEFAULT, ref token);
+                WriteReg(lsaKey, "LimitBlankPasswordUse", false);
+
+                if (!SystemProfile)
+                {
+                    // Logon user with password if it is not a system profile
+                    result = ADVAPI.LogonUser(UserName, Domain, Password, ADVAPI.LOGON32_LOGON_INTERACTIVE, ADVAPI.LOGON32_PROVIDER_DEFAULT, ref token);
+                }
+                else
+                {
+                    // Logon user without password if it is a system profile
+                    result = ADVAPI.LogonUser(UserName, Domain, string.Empty, ADVAPI.LOGON32_LOGON_SERVICE, ADVAPI.LOGON32_PROVIDER_DEFAULT, ref token);
+                }
+
+                // Must be read right after LogonUser
                 error = Marshal.GetLastWin32Error();
             }
-            else
+            finally
             {
-                // Logon user without password if it is a system profile
-                result = ADVAPI.LogonUser(UserName, Domain, string.Empty, ADVAPI.LOGON32_LOGON_SERVICE, ADVAPI.LOGON32_PROVIDER_DEFAULT, ref token);
-                error = Marshal.GetLastWin32Error();
+                // Restore LimitBlankPasswordUse to its original value, whatever happens
+                WriteReg(lsaKey, "LimitBlankPasswordUse", OldValue);
             }
 
             if (result)
@@ -319,121 +360,66 @@ namespace WinPaletter
                 // Logon user is successful. Update token and identity
                 Token = token;
                 Identity = new(Token);
-
-                // Restore LimitBlankPasswordUse to its original value
-                WriteReg("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Lsa", "LimitBlankPasswordUse", OldValue);
                 return true;
             }
-            else
+
+            // Couldn't logon user. Reset token and identity
+            ResetToCurrentIdentity();
+
+            // Raise exception based on error code if error should not be ignored
+            if (!ignoreError) ThrowLogonError(error);
+
+            // Couldn't logon user. Return false
+            return false;
+        }
+
+        /// <summary>
+        /// Throws the exception that matches a LogonUser Win32 error code
+        /// </summary>
+        private static void ThrowLogonError(int error)
+        {
+            switch (error)
             {
-                // Couldn't logon user. Reset token and identity
-                Token = IntPtr.Zero;
-                Identity = WindowsIdentity.GetCurrent();
+                case 5: throw new UnauthorizedAccessException($"ERROR_LOGON_ACCESS_DENIED ({error}): {Program.Localization.Strings.Users.ERROR_LOGON_ACCESS_DENIED}");
+                case 87: throw new UnauthorizedAccessException($"ERROR_INVALID_PARAMETER ({error}): {Program.Localization.Strings.Users.ERROR_INVALID_PARAMETER}");
+                case 1008: throw new NoTokenException($"ERROR_NO_TOKEN ({error}): {Program.Localization.Strings.Users.ERROR_NO_TOKEN}");
+                case 1311: throw new NoLogonServersException($"ERROR_NO_LOGON_SERVERS ({error}): {Program.Localization.Strings.Users.ERROR_NO_LOGON_SERVERS}");
+                case 1317: throw new NoSuchUserException($"ERROR_NO_SUCH_USER ({error}): {Program.Localization.Strings.Users.ERROR_NO_SUCH_USER}");
+                case 1326: throw new LogonFailureException($"ERROR_LOGON_FAILURE ({error}): {Program.Localization.Strings.Users.ERROR_LOGON_FAILURE}");
+                case 1327: throw new AccountRestrictionException($"ERROR_ACCOUNT_RESTRICTION ({error}): {Program.Localization.Strings.Users.ERROR_ACCOUNT_RESTRICTION}");
+                case 1328: throw new InvalidLogonHoursException($"ERROR_INVALID_LOGON_HOURS ({error}): {Program.Localization.Strings.Users.ERROR_INVALID_LOGON_HOURS}");
+                case 1330: throw new PasswordExpiredException($"ERROR_PASSWORD_EXPIRED ({error}): {Program.Localization.Strings.Users.ERROR_PASSWORD_EXPIRED}");
+                case 1331: throw new AccountDisabledException($"ERROR_ACCOUNT_DISABLED ({error}): {Program.Localization.Strings.Users.ERROR_ACCOUNT_DISABLED}");
+                case 1385: throw new LogonTypeNotGrantedException($"ERROR_LOGON_TYPE_NOT_GRANTED ({error}): {Program.Localization.Strings.Users.ERROR_LOGON_TYPE_NOT_GRANTED}");
+                case 1907: throw new PasswordMustChangeException($"ERROR_PASSWORD_MUST_CHANGE ({error}): {Program.Localization.Strings.Users.ERROR_PASSWORD_MUST_CHANGE}");
+                case 1909: throw new AccountLockedOutException($"ERROR_ACCOUNT_LOCKED_OUT ({error}): {Program.Localization.Strings.Users.ERROR_ACCOUNT_LOCKED_OUT}");
 
-                // Restore LimitBlankPasswordUse to its original value
-                WriteReg("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Lsa", "LimitBlankPasswordUse", OldValue);
+                // Error 0 means LogonUser failed without setting a code
+                case 0: throw new LogonFailureException($"ERROR_LOGON_FAILURE ({error}): {Program.Localization.Strings.Users.ERROR_LOGON_FAILURE}");
 
-                // Check if error should be ignored or not
-                if (!ignoreError)
-                {
-                    // Raise exception based on error code
-
-                    if (error == 5)
-                    {
-                        // Access denied. User is not allowed to logon
-                        throw new UnauthorizedAccessException($"ERROR_LOGON_ACCESS_DENIED ({error}): {Program.Localization.Strings.Users.ERROR_LOGON_ACCESS_DENIED}");
-                    }
-                    if (error == 87)
-                    {
-                        // Invalid parameter. User is not allowed to logon
-                        throw new UnauthorizedAccessException($"ERROR_INVALID_PARAMETER ({error}): {Program.Localization.Strings.Users.ERROR_INVALID_PARAMETER}");
-                    }
-                    else if (error == 1008)
-                    {
-                        // No token. User is not allowed to logon
-                        throw new NoTokenException($"ERROR_NO_TOKEN ({error}): {Program.Localization.Strings.Users.ERROR_NO_TOKEN}");
-                    }
-                    else if (error == 1326)
-                    {
-                        // Logon failure. User is not allowed to logon
-                        throw new LogonFailureException($"ERROR_LOGON_FAILURE ({error}): {Program.Localization.Strings.Users.ERROR_LOGON_FAILURE}");
-                    }
-                    else if (error == 1327)
-                    {
-                        // Account restriction. User is not allowed to logon
-                        throw new AccountRestrictionException($"ERROR_ACCOUNT_RESTRICTION ({error}): {Program.Localization.Strings.Users.ERROR_ACCOUNT_RESTRICTION}");
-                    }
-                    else if (error == 1328)
-                    {
-                        // Invalid logon hours. User is not allowed to logon
-                        throw new InvalidLogonHoursException($"ERROR_INVALID_LOGON_HOURS ({error}): {Program.Localization.Strings.Users.ERROR_INVALID_LOGON_HOURS}");
-                    }
-                    else if (error == 1330)
-                    {
-                        // Password expired. User is not allowed to logon
-                        throw new PasswordExpiredException($"ERROR_PASSWORD_EXPIRED ({error}): {Program.Localization.Strings.Users.ERROR_PASSWORD_EXPIRED}");
-                    }
-                    else if (error == 1331)
-                    {
-                        // Account disabled. User is not allowed to logon
-                        throw new AccountDisabledException($"ERROR_ACCOUNT_DISABLED ({error}): {Program.Localization.Strings.Users.ERROR_ACCOUNT_DISABLED}");
-                    }
-                    else if (error == 1385)
-                    {
-                        // Logon type not granted. User is not allowed to logon
-                        throw new LogonTypeNotGrantedException($"ERROR_LOGON_TYPE_NOT_GRANTED ({error}): {Program.Localization.Strings.Users.ERROR_LOGON_TYPE_NOT_GRANTED}");
-                    }
-                    else if (error == 1909)
-                    {
-                        // Account locked out. User is not allowed to logon
-                        throw new AccountLockedOutException($"ERROR_ACCOUNT_LOCKED_OUT ({error}): {Program.Localization.Strings.Users.ERROR_ACCOUNT_LOCKED_OUT}");
-                    }
-                    else if (error == 1317)
-                    {
-                        // No such user. User is not allowed to logon
-                        throw new NoSuchUserException($"ERROR_NO_SUCH_USER ({error}): {Program.Localization.Strings.Users.ERROR_NO_SUCH_USER}");
-                    }
-                    else if (error == 1311)
-                    {
-                        // No logon servers. User is not allowed to logon
-                        throw new NoLogonServersException($"ERROR_NO_LOGON_SERVERS ({error}): {Program.Localization.Strings.Users.ERROR_NO_LOGON_SERVERS}");
-                    }
-                    else if (error == 1907)
-                    {
-                        // Password must change. User is not allowed to logon
-                        throw new PasswordMustChangeException($"ERROR_PASSWORD_MUST_CHANGE ({error}): {Program.Localization.Strings.Users.ERROR_PASSWORD_MUST_CHANGE}");
-                    }
-                    else if (error == 0)
-                    {
-                        // Unknown error. User is not allowed to logon
-                        throw new LogonFailureException($"ERROR_LOGON_FAILURE ({error}): {Program.Localization.Strings.Users.ERROR_LOGON_FAILURE}");
-                    }
-                    else if (token == IntPtr.Zero)
-                    {
-                        // No token. User is not allowed to logon
-                        throw new Exception($"ERROR ({error}): {Program.Localization.Strings.Users.ERROR_UNKNOWN}");
-                    }
-                    else
-                    {
-                        // Unknown error. User is not allowed to logon
-                        throw new Exception($"ERROR ({error}): {Program.Localization.Strings.Users.ERROR_UNKNOWN}");
-                    }
-                }
-
-                // Couldn't logon user. Return false
-                return false;
+                default: throw new Exception($"ERROR ({error}): {Program.Localization.Strings.Users.ERROR_UNKNOWN}");
             }
         }
 
         /// <summary>
-        /// Administrator user security identifier that opened WinPaletter after granting UAC dialog
+        /// Drops the selected user's token and goes back to the identity of the user who opened WinPaletter
+        /// <br>- Identity is null on Windows 9x</br>
         /// </summary>
-        public static readonly string AdminSID_GrantedUAC = WindowsIdentity.GetCurrent().User.Value;
+        private static void ResetToCurrentIdentity()
+        {
+            Token = IntPtr.Zero;
+            Identity = GetCurrentIdentity();
+        }
 
         /// <summary>
-        /// User's SID who opened WinPaletter before granting UAC dialog
+        /// Gets the current Windows identity, or null on Windows 9x where <see cref="WindowsIdentity"/> is not supported
         /// </summary>
-        public static readonly string UserSID_OpenedWP = GetActiveSessionSID();
+        private static WindowsIdentity GetCurrentIdentity() => OS.W9x ? null : WindowsIdentity.GetCurrent();
+
+        /// <summary>
+        /// Gets the SID of the current process user (the logon name on Windows 9x)
+        /// </summary>
+        private static string GetCurrentUserId() => OS.W9x ? GetW9xUserName() : WindowsIdentity.GetCurrent().User.Value;
 
         #endregion
 
@@ -473,8 +459,11 @@ namespace WinPaletter
         private static Bitmap github_avatar;
         private static Task avatarTask;
         private static readonly object avatarLock = new();
-        private static readonly string AvatarCache = Path.Combine(SysPaths.appData, "GitHub", "Avatar.png");
-        private static readonly string ETagPath = Path.Combine(SysPaths.appData, "GitHub", "Avatar.etag");
+
+        // These are computed on every access (not static readonly), because SysPaths.appData changes when another user is selected
+        private static string AvatarCache => Path.Combine(SysPaths.appData, "GitHub", "Avatar.png");
+        private static string ETagPath => Path.Combine(SysPaths.appData, "GitHub", "Avatar.etag");
+
         private static volatile bool avatarLoading;
         private static string _lastAvatarUser;
         private static int _refreshVersion;
@@ -530,11 +519,12 @@ namespace WinPaletter
 
             try
             {
+                string cache = AvatarCache;
                 bool hadCache = false;
 
-                if (File.Exists(AvatarCache))
+                if (File.Exists(cache))
                 {
-                    using (Bitmap bmp = BitmapMgr.Load(AvatarCache))
+                    using (Bitmap bmp = BitmapMgr.Load(cache))
                     {
                         // Only apply if this task is still the latest
                         lock (avatarLock)
@@ -550,9 +540,9 @@ namespace WinPaletter
 
                 if (updated || !hadCache)
                 {
-                    if (File.Exists(AvatarCache))
+                    if (File.Exists(cache))
                     {
-                        using (Bitmap bmp = BitmapMgr.Load(AvatarCache))
+                        using (Bitmap bmp = BitmapMgr.Load(cache))
                         {
                             lock (avatarLock)
                             {
@@ -586,9 +576,16 @@ namespace WinPaletter
                 return false;
             }
 
-            Directory.CreateDirectory(Path.GetDirectoryName(AvatarCache)!);
+            // Capture values once, as the user may log out while the download is running
+            string url = gitHub?.AvatarUrl;
+            if (string.IsNullOrEmpty(url)) return false;
 
-            string savedETag = File.Exists(ETagPath) ? File.ReadAllText(ETagPath) : null;
+            string cache = AvatarCache;
+            string etagPath = ETagPath;
+
+            Directory.CreateDirectory(Path.GetDirectoryName(cache)!);
+
+            string savedETag = File.Exists(etagPath) ? File.ReadAllText(etagPath) : null;
 
             using (HttpClient client = new())
             {
@@ -597,27 +594,28 @@ namespace WinPaletter
                     client.DefaultRequestHeaders.IfNoneMatch.ParseAdd(savedETag);
                 }
 
-                HttpResponseMessage response = await client.GetAsync(GitHub.AvatarUrl).ConfigureAwait(false);
-
-                if (response.StatusCode == HttpStatusCode.NotModified)
+                using (HttpResponseMessage response = await client.GetAsync(url).ConfigureAwait(false))
                 {
-                    return false;
+                    if (response.StatusCode == HttpStatusCode.NotModified) return false;
+
+                    // Don't try to decode an error page as an image
+                    if (!response.IsSuccessStatusCode) return false;
+
+                    byte[] data = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+
+                    using (MemoryStream ms = new(data))
+                    using (Bitmap bmp = Image.FromStream(ms) as Bitmap)
+                    {
+                        bmp.Save(cache, ImageFormat.Png);
+                    }
+
+                    if (response.Headers.ETag != null)
+                    {
+                        File.WriteAllText(etagPath, response.Headers.ETag.Tag);
+                    }
+
+                    return true;
                 }
-
-                byte[] data = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
-
-                using (MemoryStream ms = new(data))
-                using (Bitmap bmp = Image.FromStream(ms) as Bitmap)
-                {
-                    bmp.Save(AvatarCache, ImageFormat.Png);
-                }
-
-                if (response.Headers.ETag != null)
-                {
-                    File.WriteAllText(ETagPath, response.Headers.ETag.Tag);
-                }
-
-                return true;
             }
         }
 
@@ -679,27 +677,28 @@ namespace WinPaletter
         /// <summary>
         /// Name of current user
         /// </summary>
-        public static string Name => new SecurityIdentifier(SID).Translate(typeof(NTAccount)).ToString().Split('\\').Last();
+        public static string Name => AccountName(SID);
 
         /// <summary>
         /// Name of computer hosting current user
         /// </summary>
-        public static string Domain => new SecurityIdentifier(SID).Translate(typeof(NTAccount)).ToString().Split('\\').First();
+        public static string Domain => AccountDomain(SID);
 
         /// <summary>
         /// Return if current user is administrator or not
+        /// <br>- Always true on Windows 9x, which has no privilege separation</br>
         /// </summary>
         public static bool Administrator => IsAdmin(SID);
 
         /// <summary>
-        /// FileSystem of current user profile picture
+        /// FileSystem of current user profile picture (null on Windows 9x, which has no user tiles)
         /// </summary>
-        public static string ProfilePicturePath => Shell32.GetUserTilePath(Name);
+        public static string ProfilePicturePath => OS.W9x ? null : Shell32.GetUserTilePath(Name);
 
         /// <summary>
-        /// FileSystem of current user profile picture
+        /// Current user profile picture (null on Windows 9x, which has no user tiles)
         /// </summary>
-        public static Bitmap ProfilePicture => Shell32.GetUserAccountPicture(Name) as Bitmap;
+        public static Bitmap ProfilePicture => OS.W9x ? null : Shell32.GetUserAccountPicture(Name) as Bitmap;
 
         /// <summary>
         /// Handle to current user profile
@@ -713,13 +712,15 @@ namespace WinPaletter
 
         /// <summary>
         /// Current user Windows identity, used to impersonate user profile to do codes and operations on this user.
+        /// <br>- Null on Windows 9x</br>
         /// </summary>
-        public static WindowsIdentity Identity = WindowsIdentity.GetCurrent();
+        public static WindowsIdentity Identity = GetCurrentIdentity();
 
         /// <summary>
         /// Administrator user Windows identity, used to impersonate administrator to do codes and operations require elevation.
+        /// <br>- Null on Windows 9x</br>
         /// </summary>
-        public static WindowsIdentity Identity_Admin = WindowsIdentity.GetCurrent();
+        public static WindowsIdentity Identity_Admin = GetCurrentIdentity();
 
         /// <summary>
         /// Get path of current user profile
@@ -741,20 +742,56 @@ namespace WinPaletter
         }
 
         /// <summary>
-        /// Get dictionary of SID, USERNAME\DOMAIN of all users
+        /// Translates a SID into <c>DOMAIN\Name</c>
+        /// <br>- On Windows 9x the "SID" is the logon name, and the computer name is used as the domain</br>
+        /// </summary>
+        private static string TranslateSID(string sid)
+        {
+            if (OS.W9x) return $"{Environment.MachineName}\\{sid}";
+
+            return new SecurityIdentifier(sid).Translate(typeof(NTAccount)).ToString();
+        }
+
+        private static string AccountName(string sid) => TranslateSID(sid).Split('\\').Last();
+
+        private static string AccountDomain(string sid) => TranslateSID(sid).Split('\\').First();
+
+        /// <summary>
+        /// Finds the SID of a user by his name (case-insensitive). Returns null if not found.
+        /// </summary>
+        private static string FindSidByUserName(string userName)
+        {
+            if (string.IsNullOrEmpty(userName)) return null;
+
+            string name = userName.Split('\\').Last();
+
+            return GetUsers().FirstOrDefault(x => x.Value.Split('\\').Last().Equals(name, StringComparison.OrdinalIgnoreCase)).Key;
+        }
+
+        /// <summary>
+        /// Get dictionary of SID, DOMAIN\USERNAME of all users
+        /// <br>- On Windows 9x, only the current user is returned (key is the logon name)</br>
         /// </summary>
         /// <param name="includeSystemProfiles"></param>
         /// <returns></returns>
         public static Dictionary<string, string> GetUsers(bool includeSystemProfiles = false)
         {
-            // Build up a list of SIDs and their corresponding USERNAME\DOMAIN
+            // Build up a list of SIDs and their corresponding DOMAIN\USERNAME
             Dictionary<string, string> result = [];
+
+            // Windows 9x: no SIDs and no profile enumeration. Only the current user
+            if (OS.W9x)
+            {
+                string current = GetW9xUserName();
+                result.Add(current, $"{Environment.MachineName}\\{current}");
+                return result;
+            }
 
             // List of found SIDs
             List<string> FoundSIDs = [];
 
             // Get all user profiles from using WMI or registry if WMI has failed
-            if (!OS.WXP)
+            if (!OS.W9x && !OS.WXP)
             {
                 try
                 {
@@ -771,7 +808,7 @@ namespace WinPaletter
                     // WMI method has failed. Use registry method
 
                     // Clear list of found SIDs before adding new SIDs to clear any previous SIDs
-                    FoundSIDs?.Clear();
+                    FoundSIDs.Clear();
 
                     // Get all user profiles from registry
                     foreach (string SID in GetSubKeys("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\ProfileList")) { FoundSIDs.Add(SID); }
@@ -779,9 +816,12 @@ namespace WinPaletter
             }
             else
             {
-                // Use registry method as WMI is not available in Windows XP
+                // Use registry method as WMI is not available in Windows 9x/XP
                 foreach (string SID in GetSubKeys("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\ProfileList")) { FoundSIDs.Add(SID); }
             }
+
+            // Checks if a user hive is currently loaded into HKEY_USERS
+            static bool IsHiveLoaded(string sid) => Registry.Users.GetSubKeyNames().Contains(sid, StringComparer.OrdinalIgnoreCase);
 
             // Process all found SIDs
             foreach (string sid in FoundSIDs)
@@ -792,13 +832,13 @@ namespace WinPaletter
                     string username = new SecurityIdentifier(sid).Translate(typeof(NTAccount)).ToString();
 
                     // Check if user is system profile or not
-                    bool condition_base = includeSystemProfiles |
-                        !(username.ToUpper().StartsWith("NT AUTHORITY", StringComparison.OrdinalIgnoreCase) ||
-                          username.ToUpper().StartsWith("NT SERVICE", StringComparison.OrdinalIgnoreCase) ||
-                          username.ToUpper().Split('\\')[1].StartsWith("WSIACCOUNT", StringComparison.OrdinalIgnoreCase));
+                    bool condition_base = includeSystemProfiles ||
+                        !(username.StartsWith("NT AUTHORITY", StringComparison.OrdinalIgnoreCase) ||
+                          username.StartsWith("NT SERVICE", StringComparison.OrdinalIgnoreCase) ||
+                          username.Split('\\').Last().StartsWith("WSIACCOUNT", StringComparison.OrdinalIgnoreCase));
 
                     // Check if user profile is loaded or not
-                    bool condition_DAT_Loaded = includeSystemProfiles || (condition_base && RegistryKey.OpenBaseKey(RegistryHive.Users, RegistryView.Registry32).GetSubKeyNames().Contains(sid));
+                    bool condition_DAT_Loaded = includeSystemProfiles || (condition_base && IsHiveLoaded(sid));
 
                     // Check if user profile is unloaded or not
                     bool condition_DAT_Unloaded = !condition_DAT_Loaded && condition_base && File.Exists($"{User.GetUserProfilePath(sid)}\\NTUSER.DAT");
@@ -809,7 +849,7 @@ namespace WinPaletter
                         Program.SendCommand($"reg load HKU\\{sid} \"{User.GetUserProfilePath(sid)}\\NTUSER.DAT\"");
 
                         // Recheck if user profile is loaded or not
-                        condition_DAT_Loaded = includeSystemProfiles || (condition_base && RegistryKey.OpenBaseKey(RegistryHive.Users, RegistryView.Registry32).GetSubKeyNames().Contains(sid));
+                        condition_DAT_Loaded = includeSystemProfiles || (condition_base && IsHiveLoaded(sid));
                         condition_DAT_Unloaded = !condition_DAT_Loaded && condition_base && File.Exists($"{User.GetUserProfilePath(sid)}\\NTUSER.DAT");
                     }
 
@@ -831,11 +871,19 @@ namespace WinPaletter
         /// <br>- If there is only one user, it will be used without showing the user switch form</br>
         /// <br>- If there are multiple users, the user switch form will be shown to pick a user</br>
         /// <br>- If there are multiple users and the user switch form is forced to show, it will be shown to pick a user</br>
+        /// <br>- On Windows 9x, the current user is always used</br>
         /// <param name="ForceShow">Force showing user switch form even if there is only one user</param>
         /// <param name="SkipToCurrentUser">Skip showing user switch form and use current user</param>
         /// </summary>
         public static void Login(bool ForceShow = false, bool SkipToCurrentUser = false)
         {
+            // Windows 9x: no user switching, only the current user
+            if (OS.W9x)
+            {
+                User.SID = GetW9xUserName();
+                return;
+            }
+
             // Get list of all users
             Dictionary<string, string> UsersList = GetUsers();
 
@@ -849,21 +897,27 @@ namespace WinPaletter
             else if (ForceShow || UsersList.Count > 1) { Forms.UserSwitch.PickUser(UsersList); }
 
             // If one user if found, there is no need to login, use current windows identity
-            else { User.SID = WindowsIdentity.GetCurrent().User.Value; }
+            else { User.SID = GetCurrentUserId(); }
         }
 
         /// <summary>
         /// Login into user profile using SID
+        /// <br>- On Windows 9x there are no passwords to check, so this returns true</br>
         /// </summary>
         /// <param name="_sid"></param>
         /// <returns></returns>
         public static bool SID_Credentials_Result(string _sid)
         {
-            bool result = false;
-            string userName = new SecurityIdentifier(_sid).Translate(typeof(NTAccount)).ToString().Split('\\').Last();
-            string doamin = new SecurityIdentifier(_sid).Translate(typeof(NTAccount)).ToString().Split('\\').First();
+            // Windows 9x: no per-account passwords to verify
+            if (OS.W9x) return true;
 
-            (string domain, string username, string password, bool isPasswordCorrect, bool canceled) credsResult = (doamin, userName, null, false, false);
+            bool result = false;
+
+            string account = TranslateSID(_sid);
+            string userName = account.Split('\\').Last();
+            string domainName = account.Split('\\').First();
+
+            (string domain, string username, string password, bool isPasswordCorrect, bool canceled) credsResult = (domainName, userName, null, false, false);
 
             // When password is incorrect, show the password dialog until the user enters the correct password or cancel the dialog
 
@@ -882,7 +936,7 @@ namespace WinPaletter
                 credsResult = Credui.Login(Forms.UserSwitch.Handle,
                     !userEnteredWrongPassword ? string.Format(Program.Localization.Strings.Users.EnterPassword_Caption, userName) : Program.Localization.Strings.Users.IncorrectPassword,
                     !userEnteredWrongPassword ? Program.Localization.Strings.Users.WindowsHello_NotSupported : string.Format(Program.Localization.Strings.Users.EnterPassword_Caption, userName) + "\r\n\r\n" + Program.Localization.Strings.Users.WindowsHello_NotSupported,
-                    doamin, userName);
+                    domainName, userName);
 
                 // The bool is repeated to avoid printing the alert twice
                 userEnteredWrongPassword = !credsResult.isPasswordCorrect;
@@ -900,41 +954,47 @@ namespace WinPaletter
         /// <summary>
         /// Get active user SID who opened WinPaletter before granting UAC dialog
         /// <br>- After granting UAC dialog, the current user becomes the administrator one. This may cause a conflict between multiple users and so this method is created.</br>
+        /// <br>- On Windows 9x, returns the logon name of the current user</br>
         /// </summary>
         /// <returns></returns>
         private static string GetActiveSessionSID()
         {
-            string result = User.AdminSID_GrantedUAC;
+            // Windows 9x has no SIDs, no WMI and no LogonUI keys. The "user id" is just the logon name
+            if (OS.W9x) return GetW9xUserName();
 
-            // Attempt using WMI if possible (fallback)
-            if (IsWMIAvailable())
+            string result = null;
+
+            // Attempt using WMI if possible
+            try
             {
-                ManagementObjectSearcher searcher = new("SELECT * FROM Win32_ComputerSystem");
-                foreach (ManagementObject queryObj in searcher.Get().Cast<ManagementObject>())
+                using (ManagementObjectSearcher searcher = new("SELECT UserName FROM Win32_ComputerSystem"))
                 {
-                    string currentUser = queryObj["UserName"]?.ToString();
-                    if (!string.IsNullOrEmpty(currentUser))
+                    foreach (ManagementObject queryObj in searcher.Get().Cast<ManagementObject>())
                     {
-                        // Extract the username from domain\username format
-                        string username = currentUser.Split('\\').Last();
-                        result = GetUsers().FirstOrDefault(x => x.Value.Split('\\').Last().ToLower() == username.ToLower()).Key;
-                        break;
+                        string currentUser = queryObj["UserName"]?.ToString();
+
+                        if (!string.IsNullOrEmpty(currentUser))
+                        {
+                            // Extract the username from domain\username format
+                            result = FindSidByUserName(currentUser);
+                            break;
+                        }
                     }
                 }
             }
+            catch { } // WMI is not available. Use registry checks below
 
             // Fall back to additional registry checks if WMI fails
             if (string.IsNullOrEmpty(result))
             {
-                if (!OS.WXP && !OS.WVista && !OS.W7)
+                if (OS.W9x || OS.WXP && !OS.WVista && !OS.W7)
                 {
-                    result = ReadReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Authentication\\LogonUI", "LastLoggedOnUserSID", result);
+                    result = ReadReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Authentication\\LogonUI", "LastLoggedOnUserSID", string.Empty);
                 }
                 else
                 {
                     string username = ReadReg("HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Authentication\\LogonUI", "LastLoggedOnUser", string.Empty);
-                    username = username.Split('\\').Last();
-                    result = GetUsers().FirstOrDefault(x => x.Value.Split('\\').Last().ToLower() == username.ToLower()).Key;
+                    result = FindSidByUserName(username);
                 }
             }
 
@@ -942,25 +1002,42 @@ namespace WinPaletter
             return string.IsNullOrEmpty(result) ? User.AdminSID_GrantedUAC : result;
         }
 
-        private static bool IsWMIAvailable()
+        /// <summary>
+        /// Gets the logon name of the current user on Windows 9x, which has no SIDs
+        /// </summary>
+        private static string GetW9xUserName()
         {
-            try
+            string name = string.Empty;
+
+            // Logon name written by the Windows 9x logon dialog (exists when a network client / user profiles are used)
+            try { name = ReadReg(@"HKEY_LOCAL_MACHINE\Network\Logon", "username", string.Empty); } catch { }
+
+            // Win32 GetUserName via .NET
+            if (string.IsNullOrWhiteSpace(name))
             {
-                ManagementObjectSearcher searcher = new("SELECT * FROM Win32_ComputerSystem");
-                return searcher.Get() != null;
+                try { name = Environment.UserName; } catch { }
             }
-            catch
+
+            // Last resort: the owner name entered during Windows setup (not necessarily the current user)
+            if (string.IsNullOrWhiteSpace(name))
             {
-                return false;
+                try { name = ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion", "RegisteredOwner", string.Empty); } catch { }
             }
+
+            // The name is used as a key/ID, so it must never be empty
+            return string.IsNullOrWhiteSpace(name) ? "User" : name.Trim();
         }
 
         /// <summary>
         /// Get path of user profile
         /// <br>- For example: C:\Users\...</br>
+        /// <br>- On Windows 9x, <paramref name="SID"/> is the logon name</br>
         /// </summary>
         public static string GetUserProfilePath(string SID = null)
         {
+            // Windows 9x: profiles are under HKLM\...\Windows\CurrentVersion\ProfileList\<name>
+            if (OS.W9x) return GetW9xProfilePath(SID);
+
             try
             {
                 string result = ReadReg($"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\ProfileList\\{SID}", "ProfileImagePath", string.Empty);
@@ -981,6 +1058,29 @@ namespace WinPaletter
         }
 
         /// <summary>
+        /// Get path of user profile on Windows 9x
+        /// <br>- With user profiles enabled: C:\WINDOWS\Profiles\&lt;name&gt;</br>
+        /// <br>- With user profiles disabled (single user), the Windows directory is shared by everyone</br>
+        /// </summary>
+        private static string GetW9xProfilePath(string userName)
+        {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(userName))
+                {
+                    string path = ReadReg($@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\ProfileList\{userName}", "ProfileImagePath", string.Empty);
+
+                    if (!string.IsNullOrWhiteSpace(path)) return Environment.ExpandEnvironmentVariables(path);
+                }
+            }
+            catch { }
+
+            // SpecialFolder.UserProfile is not supported on Windows 9x, so don't use it here
+            string windir = Environment.GetEnvironmentVariable("windir");
+            return string.IsNullOrWhiteSpace(windir) ? @"C:\WINDOWS" : windir;
+        }
+
+        /// <summary>
         /// Update WinPaletter paths variables from user SID
         /// </summary>
         public static void UpdatePathsFromSID(string SID = null)
@@ -992,84 +1092,110 @@ namespace WinPaletter
                 SysPaths.UserProfile = $"{GetUserProfilePath(SID)}";
 
                 // Set application data path based on Windows version
-                if (!OS.WXP)
+                if (OS.W9x)
+                {
+                    // Windows 9x has a single "Application Data" folder (no AppData\Local, no Local Settings)
+                    SysPaths.LocalAppData = $"{SysPaths.UserProfile}\\Application Data";
+                }
+                else if (!OS.WXP)
                 {
                     SysPaths.LocalAppData = $"{SysPaths.UserProfile}\\AppData\\Local";
-                    SysPaths.appData = $"{SysPaths.LocalAppData}\\{Application.CompanyName}\\{Application.ProductName}";
                 }
                 else
                 {
                     SysPaths.LocalAppData = $"{SysPaths.UserProfile}\\Local Settings\\Application Data";
-                    SysPaths.appData = $"{SysPaths.LocalAppData}\\{Application.CompanyName}\\{Application.ProductName}";
                 }
 
-                // Impersonate an administrator user to set full control to the user profile directory
-                using (WindowsImpersonationContext wic = Identity_Admin.Impersonate())
-                {
-                    // Create a DirectoryInfo object
-                    DirectoryInfo directoryInfo = new(SysPaths.ProgramFilesData);
+                SysPaths.appData = $"{SysPaths.LocalAppData}\\{Application.CompanyName}\\{Application.ProductName}";
 
-                    // Get the existing access control settings
-                    DirectorySecurity directorySecurity = directoryInfo.GetAccessControl();
-
-                    // Define the security rules (example: allow full control to administrators)
-                    SecurityIdentifier allUsers = new(WellKnownSidType.BuiltinUsersSid, null);
-                    FileSystemAccessRule rule = new(allUsers, FileSystemRights.FullControl, InheritanceFlags.ObjectInherit | InheritanceFlags.ContainerInherit, PropagationFlags.None, AccessControlType.Allow);
-
-                    // Add the rule to the security settings
-                    directorySecurity.AddAccessRule(rule);
-
-                    // Process the new security settings to the directory
-                    directoryInfo.SetAccessControl(directorySecurity);
-
-                    // Undo impersonation after finishing operations on user profile
-                    wic.Undo();
-                }
+                // Windows 9x has no NTFS permissions
+                if (!OS.W9x) GrantUsersFullControl(SysPaths.ProgramFilesData);
             }
             else
             {
                 // Get user profile path from current user as SID is not provided
-                SysPaths.UserProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-                SysPaths.LocalAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-                SysPaths.appData = Directory.GetParent(Application.LocalUserAppDataPath).FullName;
+                SysPaths.UserProfile = OS.W9x ? GetW9xProfilePath(null) : Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+                SysPaths.LocalAppData = OS.W9x ? $"{SysPaths.UserProfile}\\Application Data" : Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                SysPaths.appData = OS.W9x ? $"{SysPaths.LocalAppData}\\{Application.CompanyName}\\{Application.ProductName}" : Directory.GetParent(Application.LocalUserAppDataPath).FullName;
             }
 
             // Create directories if they are not exist
-            if (!Directory.Exists(SysPaths.UserProfile)) { Directory.CreateDirectory(SysPaths.UserProfile); }
-            if (!Directory.Exists(SysPaths.LocalAppData)) { Directory.CreateDirectory(SysPaths.LocalAppData); }
-            if (!Directory.Exists(SysPaths.appData)) { Directory.CreateDirectory(SysPaths.appData); }
+            if (!string.IsNullOrEmpty(SysPaths.UserProfile) && !Directory.Exists(SysPaths.UserProfile)) { Directory.CreateDirectory(SysPaths.UserProfile); }
+            if (!string.IsNullOrEmpty(SysPaths.LocalAppData) && !Directory.Exists(SysPaths.LocalAppData)) { Directory.CreateDirectory(SysPaths.LocalAppData); }
+            if (!string.IsNullOrEmpty(SysPaths.appData) && !Directory.Exists(SysPaths.appData)) { Directory.CreateDirectory(SysPaths.appData); }
+        }
+
+        /// <summary>
+        /// Gives all local users full control over a directory (NTFS only), impersonating an administrator
+        /// </summary>
+        private static void GrantUsersFullControl(string path)
+        {
+            if (Identity_Admin is null || string.IsNullOrEmpty(path) || !Directory.Exists(path)) return;
+
+            WindowsImpersonationContext wic = null;
+
+            try
+            {
+                // Impersonate an administrator user to set full control to the directory
+                wic = Identity_Admin.Impersonate();
+
+                // Create a DirectoryInfo object
+                DirectoryInfo directoryInfo = new(path);
+
+                // Get the existing access control settings
+                DirectorySecurity directorySecurity = directoryInfo.GetAccessControl();
+
+                // Define the security rules (allow full control to all local users)
+                SecurityIdentifier allUsers = new(WellKnownSidType.BuiltinUsersSid, null);
+                FileSystemAccessRule rule = new(allUsers, FileSystemRights.FullControl, InheritanceFlags.ObjectInherit | InheritanceFlags.ContainerInherit, PropagationFlags.None, AccessControlType.Allow);
+
+                // Add the rule to the security settings
+                directorySecurity.AddAccessRule(rule);
+
+                // Process the new security settings to the directory
+                directoryInfo.SetAccessControl(directorySecurity);
+            }
+            catch (Exception ex)
+            {
+                Program.Log?.Write(LogEventLevel.Warning, $"Couldn't set permissions on `{path}`.", ex);
+            }
+            finally
+            {
+                // Undo impersonation after finishing operations on user profile
+                wic?.Undo();
+                wic?.Dispose();
+            }
         }
 
         /// <summary>
         /// Determines whether an User is an administrator, in the current machine.
+        /// <br>- Windows 9x has no accounts or groups, so every user is treated as an administrator</br>
         /// </summary>
         /// <returns><c>true</c> if user is an administrator, <c>false</c> otherwise.</returns>
         public static bool IsAdmin(string SID)
         {
+            if (OS.W9x) return true;
+
             try
             {
                 // Get user groups of Administrators
                 SecurityIdentifier AdminGroupSID = new("S-1-5-32-544");
-                PrincipalContext pContext = new(ContextType.Machine);
-                UserPrincipal pUser = new(pContext);
-                PrincipalSearcher pSearcher = new(pUser);
-                Principal User = (from u in pSearcher.FindAll() where u.Sid.ToString().Equals(SID, StringComparison.OrdinalIgnoreCase) select u).FirstOrDefault();
 
-                // Check if user is system profile or not. System profiles are always administrators
-                if (User is null)
+                using (PrincipalContext pContext = new(ContextType.Machine))
+                using (UserPrincipal pUser = new(pContext))
+                using (PrincipalSearcher pSearcher = new(pUser))
                 {
-                    return SID.ToUpper() is "S-1-5-18" or "S-1-5-19" or "S-1-5-20";
+                    Principal principal = pSearcher.FindAll().FirstOrDefault(u => u.Sid.ToString().Equals(SID, StringComparison.OrdinalIgnoreCase));
+
+                    // Check if user is system profile or not. System profiles are always administrators
+                    if (principal is null)
+                    {
+                        return SID.ToUpperInvariant() is "S-1-5-18" or "S-1-5-19" or "S-1-5-20";
+                    }
+
+                    // Check if user is an administrator or not
+                    return principal.GetGroups().Any(g => g.Sid == AdminGroupSID);
                 }
-
-                // Check if user is an administrator or not
-                bool IsAdmin = (from Group in User.GetGroups() where Group.Sid == AdminGroupSID select Group).Any();
-
-                // Dispose objects
-                pContext?.Dispose();
-                pSearcher?.Dispose();
-                pUser?.Dispose();
-
-                return IsAdmin;
             }
             catch { return false; } // Couldn't get user groups, return false and we will assume that the user is not administrator
         }

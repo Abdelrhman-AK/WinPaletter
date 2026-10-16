@@ -94,11 +94,11 @@ namespace WinPaletter.NativeMethods
         /// <param name="wholeWindow">A boolean value indicating whether to apply the dark mode setting to the entire window. Default is <see langword="true"/>.</param>
         public static void SetHWNDDarkMode(IntPtr hWnd, bool darkMode)
         {
-            // Check if the operating system is Windows XP, Vista, 7, 8, or 8.1
-            if (OS.WXP || OS.WVista || OS.W7 || OS.W8x) return;
+            // Check if the operating system is Windows 9x, XP, Vista, 7, 8, or 8.1
+            if (OS.W9x || OS.WXP || OS.WVista || OS.W7 || OS.W8x) return;
 
             // Determine if custom styling is applicable based on program settings and operating system
-            bool useRoundedCorners = Program.Settings.Appearance.ManagedByTheme && Program.Settings.Appearance.CustomColors && !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8x && !OS.W10;
+            bool useRoundedCorners = Program.Settings.Appearance.ManagedByTheme && Program.Settings.Appearance.CustomColors && !OS.W9x && !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8x && !OS.W10;
             int attributeValue = darkMode ? 1 : 0;
             int backdropType = OS.W10 ? 3 : 2;
             int mica = darkMode ? (int)DWMAPI.DWM_SYSTEMBACKDROP_TYPE.DWMSBT_MAINWINDOW : (int)DWMAPI.DWM_SYSTEMBACKDROP_TYPE.DWMSBT_TABBEDWINDOW;
@@ -147,8 +147,7 @@ namespace WinPaletter.NativeMethods
             if (handle == IntPtr.Zero) return;
 
             // XP or older -> not supported
-            if (Environment.OSVersion.Version.Major < 6)
-                return;
+            if (OS.W9x || OS.WXP) return;
 
             UxTheme.WTA_OPTIONS options = new();
             uint flags = UxTheme.WTNCA_NODRAWCAPTION | UxTheme.WTNCA_NODRAWICON;

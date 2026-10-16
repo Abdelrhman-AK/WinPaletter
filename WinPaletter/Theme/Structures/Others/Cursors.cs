@@ -252,7 +252,7 @@ namespace WinPaletter.Theme.Structures
 
             else if (Program.Settings.ThemeApplyingBehavior.ResetCursorsToAero)
             {
-                if (!OS.WXP)
+                if (!OS.W9x && !OS.WXP)
                 {
                     ResetCursorsToAero("HKEY_CURRENT_USER", ReportProgress_Detailed ? treeView : null);
                     if (Program.Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)

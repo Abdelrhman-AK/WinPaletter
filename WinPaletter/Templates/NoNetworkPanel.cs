@@ -78,7 +78,7 @@ namespace WinPaletter.Templates
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (OS.WXP || OS.WVista || OS.W7)
+            if (OS.W9x || OS.WXP || OS.WVista || OS.W7)
             {
                 // Open Network Connections
                 Program.SendCommand($"{SysPaths.System32}\\ncpa.cpl", false);

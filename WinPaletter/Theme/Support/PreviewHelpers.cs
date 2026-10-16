@@ -35,7 +35,13 @@ namespace WinPaletter
             /// <summary>Windows Vista</summary>
             WVista,
             /// <summary>Windows XP</summary>
-            WXP
+            WXP,
+            /// <summary>Windows Me</summary>
+            WMe,
+            /// <summary>Windows 98</summary>
+            W98,
+            /// <summary>Windows 95</summary>
+            W95,
         }
 
         /// <summary>
@@ -484,6 +490,10 @@ namespace WinPaletter
         {
             if (!File.Exists(WT.Image))
             {
+                if (OS.W9x)
+                {
+                    WT.Image = string.Empty; // No default wallpaper for Windows 9x.
+                }
                 if (OS.WXP)
                 {
                     WT.Image = $@"{SysPaths.Windows}\Web\Wallpaper\Bliss.bmp";

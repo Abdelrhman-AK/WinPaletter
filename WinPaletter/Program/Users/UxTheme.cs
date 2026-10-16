@@ -212,7 +212,7 @@ namespace WinPaletter.NativeMethods
                     bool advapi_switched = false;
 
                     // Impersonate the selected user and attempt to set the system visual style
-                    using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+                    using (WindowsImpersonationContext wic = !OS.W9x ? User.Identity.Impersonate() : null)
                     {
                         try
                         {
@@ -228,7 +228,7 @@ namespace WinPaletter.NativeMethods
                             if (advapi_switched) { ADVAPI.RevertToSelf(); }
 
                             // Undo impersonation
-                            wic.Undo();
+                            wic?.Undo();
                         }
                     }
                 }
@@ -289,7 +289,7 @@ namespace WinPaletter.NativeMethods
                     bool advapi_switched = false;
 
                     // Impersonate the selected user and attempt to enable or disable theming
-                    using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+                    using (WindowsImpersonationContext wic = !OS.W9x ? User.Identity.Impersonate() : null)
                     {
                         try
                         {
@@ -305,7 +305,7 @@ namespace WinPaletter.NativeMethods
                             if (advapi_switched) { ADVAPI.RevertToSelf(); }
 
                             // Undo impersonation
-                            wic.Undo();
+                            wic?.Undo();
                         }
                     }
                 }
@@ -391,7 +391,7 @@ namespace WinPaletter.NativeMethods
                     bool advapi_switched = false;
 
                     // Impersonate the selected user and attempt to get the current theme name, color name, and size name
-                    using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+                    using (WindowsImpersonationContext wic = !OS.W9x ? User.Identity.Impersonate() : null)
                     {
                         try
                         {
@@ -409,7 +409,7 @@ namespace WinPaletter.NativeMethods
                             // Revert impersonation
                             if (advapi_switched) { ADVAPI.RevertToSelf(); }
 
-                            wic.Undo();
+                            wic?.Undo();
                         }
                     }
                 }

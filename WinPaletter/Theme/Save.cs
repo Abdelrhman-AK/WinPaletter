@@ -37,7 +37,7 @@ namespace WinPaletter.Theme
                 case Source.Registry:
 
                     // Impersonate the user to apply the theme into the correct user registry
-                    using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+                    using (WindowsImpersonationContext wic = !OS.W9x ? User.Identity.Impersonate() : null)
                     {
                         Program.Log?.Write(LogEventLevel.Information, $"Applying WinPaletter theme to registry for user `{User.Domain}\\{User.Name}`.");
                         Program.Log?.Write(LogEventLevel.Information, $"Theme name: {Info.ThemeName}");
@@ -726,7 +726,7 @@ namespace WinPaletter.Theme
 
                         sw_all.Reset();
                         sw_all.Stop();
-                        wic.Undo();
+                        wic?.Undo();
                     }
 
                     // UpdatePerUserSystemParameters MUST run outside impersonation.

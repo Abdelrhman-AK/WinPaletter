@@ -46,7 +46,7 @@ namespace WinPaletter.UI.Style
             {
                 Program.Log?.Write(Serilog.Events.LogEventLevel.Information, "InputBox query");
 
-                if (!OS.WXP)
+                if (!OS.W9x && !OS.WXP)
                 {
                     string response = InputBox_Native(Instruction, Value, Notice, Title, out bool canceled);
 
@@ -192,7 +192,7 @@ namespace WinPaletter.UI.Style
         private static void ApplyDarkModeToInputDialog(InputDialogState state, IntPtr hwnd)
         {
             if (!Program.Style.DarkMode) return;
-            if (OS.WXP || OS.WVista || OS.W7 || OS.W8x) return;
+            if (OS.W9x || OS.WXP || OS.WVista || OS.W7 || OS.W8x) return;
             if (hwnd == IntPtr.Zero) return;
 
             NativeMethods.Helpers.SetHWNDDarkMode(hwnd, Program.Style.DarkMode);

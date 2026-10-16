@@ -226,7 +226,7 @@ namespace WinPaletter.Theme.Structures
         {
             Program.Log?.Write(LogEventLevel.Information, $"Saving Windows {_signature} colors and appearance preferences into registry.");
 
-            using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+            using (WindowsImpersonationContext wic = !OS.W9x ? User.Identity.Impersonate() : null)
             {
                 SaveToggleState(treeView);
 
@@ -382,7 +382,7 @@ namespace WinPaletter.Theme.Structures
             Program.Log?.Write(LogEventLevel.Information, "Broadcasting system message to notify about the setting change (User32.UpdatePerUserSystemParameters(1, true)).");
             User32.UpdatePerUserSystemParameters(1, true);
 
-            using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+            using (WindowsImpersonationContext wic = !OS.W9x ? User.Identity.Impersonate() : null)
             {
                 Program.Log?.Write(LogEventLevel.Information, "Broadcasting system message to notify about the setting change (User32.SendMessageTimeout).");
 
@@ -393,7 +393,7 @@ namespace WinPaletter.Theme.Structures
                 User32.NotifySettingChangedTimeout("WindowsThemeElement", 3000);
                 User32.NotifySettingChangedTimeout("TraySettings", 3000);
 
-                wic.Undo();
+                wic?.Undo();
             }
         }
 

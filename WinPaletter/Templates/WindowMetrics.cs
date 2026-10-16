@@ -72,7 +72,7 @@ namespace WinPaletter.Templates
             // Get correct information message icon to be shown as siumlation for a message box, according to current Windows edition.
             if (!DesignMode)
             {
-                if (OS.WXP)
+                if (OS.W9x || OS.WXP)
                 {
                     pic.Image = SystemIcons.Information.ToBitmap();
                 }

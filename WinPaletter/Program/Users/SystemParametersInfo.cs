@@ -253,7 +253,7 @@ namespace WinPaletter.NativeMethods
                 bool advapi_switched = false;
 
                 // Impersonate the selected user
-                using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+                using (WindowsImpersonationContext wic = !OS.W9x ? User.Identity.Impersonate() : null)
                 {
                     // If the user has a token, impersonate the user using Advapi32
                     if (User.Token != IntPtr.Zero) { advapi_switched = ADVAPI.ImpersonateLoggedOnUser(User.Token); }
@@ -265,7 +265,7 @@ namespace WinPaletter.NativeMethods
                     if (advapi_switched) { ADVAPI.RevertToSelf(); }
 
                     // Undo the impersonation
-                    wic.Undo();
+                    wic?.Undo();
                 }
             }
 
@@ -327,7 +327,7 @@ namespace WinPaletter.NativeMethods
                 bool advapi_switched = false;
 
                 // Impersonate the selected user
-                using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+                using (WindowsImpersonationContext wic = !OS.W9x ? User.Identity.Impersonate() : null)
                 {
                     // If the user has a token, impersonate the user using Advapi32
                     if (User.Token != IntPtr.Zero) { advapi_switched = ADVAPI.ImpersonateLoggedOnUser(User.Token); }
@@ -339,7 +339,7 @@ namespace WinPaletter.NativeMethods
                     if (advapi_switched) { ADVAPI.RevertToSelf(); }
 
                     // Undo the impersonation
-                    wic.Undo();
+                    wic?.Undo();
                 }
             }
 
@@ -402,7 +402,7 @@ namespace WinPaletter.NativeMethods
                 bool advapi_switched = false;
 
                 // Impersonate the selected user
-                using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+                using (WindowsImpersonationContext wic = !OS.W9x ? User.Identity.Impersonate() : null)
                 {
                     // If the user has a token, impersonate the user using Advapi32
                     if (User.Token != IntPtr.Zero) { advapi_switched = ADVAPI.ImpersonateLoggedOnUser(User.Token); }
@@ -414,7 +414,7 @@ namespace WinPaletter.NativeMethods
                     if (advapi_switched) { ADVAPI.RevertToSelf(); }
 
                     // Undo the impersonation
-                    wic.Undo();
+                    wic?.Undo();
                 }
             }
 
@@ -477,7 +477,7 @@ namespace WinPaletter.NativeMethods
                 bool advapi_switched = false;
 
                 // Impersonate the selected user
-                using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+                using (WindowsImpersonationContext wic = !OS.W9x ? User.Identity.Impersonate() : null)
                 {
                     // If the user has a token, impersonate the user using Advapi32
                     if (User.Token != IntPtr.Zero) { advapi_switched = ADVAPI.ImpersonateLoggedOnUser(User.Token); }
@@ -489,7 +489,7 @@ namespace WinPaletter.NativeMethods
                     if (advapi_switched) { ADVAPI.RevertToSelf(); }
 
                     // Undo the impersonation
-                    wic.Undo();
+                    wic?.Undo();
                 }
             }
 
@@ -552,7 +552,7 @@ namespace WinPaletter.NativeMethods
                 bool advapi_switched = false;
 
                 // Impersonate the selected user
-                using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+                using (WindowsImpersonationContext wic = !OS.W9x ? User.Identity.Impersonate() : null)
                 {
                     // If the user has a token, impersonate the user using Advapi32
                     if (User.Token != IntPtr.Zero) { advapi_switched = ADVAPI.ImpersonateLoggedOnUser(User.Token); }
@@ -564,7 +564,7 @@ namespace WinPaletter.NativeMethods
                     if (advapi_switched) { ADVAPI.RevertToSelf(); }
 
                     // Undo the impersonation
-                    wic.Undo();
+                    wic?.Undo();
                 }
             }
 
@@ -627,7 +627,7 @@ namespace WinPaletter.NativeMethods
                 bool advapi_switched = false;
 
                 // Impersonate the selected user
-                using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+                using (WindowsImpersonationContext wic = !OS.W9x ? User.Identity.Impersonate() : null)
                 {
                     // If the user has a token, impersonate the user using Advapi32
                     if (User.Token != IntPtr.Zero) { advapi_switched = ADVAPI.ImpersonateLoggedOnUser(User.Token); }
@@ -639,7 +639,7 @@ namespace WinPaletter.NativeMethods
                     if (advapi_switched) { ADVAPI.RevertToSelf(); }
 
                     // Undo the impersonation
-                    wic.Undo();
+                    wic?.Undo();
                 }
             }
 
@@ -702,7 +702,7 @@ namespace WinPaletter.NativeMethods
                 bool advapi_switched = false;
 
                 // Impersonate the selected user
-                using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+                using (WindowsImpersonationContext wic = !OS.W9x ? User.Identity.Impersonate() : null)
                 {
                     // If the user has a token, impersonate the user using Advapi32
                     if (User.Token != IntPtr.Zero) { advapi_switched = ADVAPI.ImpersonateLoggedOnUser(User.Token); }
@@ -714,7 +714,7 @@ namespace WinPaletter.NativeMethods
                     if (advapi_switched) { ADVAPI.RevertToSelf(); }
 
                     // Undo the impersonation
-                    wic.Undo();
+                    wic?.Undo();
                 }
             }
 
@@ -777,7 +777,7 @@ namespace WinPaletter.NativeMethods
                 bool advapi_switched = false;
 
                 // Impersonate the selected user
-                using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+                using (WindowsImpersonationContext wic = !OS.W9x ? User.Identity.Impersonate() : null)
                 {
                     // If the user has a token, impersonate the user using Advapi32
                     if (User.Token != IntPtr.Zero) { advapi_switched = ADVAPI.ImpersonateLoggedOnUser(User.Token); }
@@ -789,7 +789,7 @@ namespace WinPaletter.NativeMethods
                     if (advapi_switched) { ADVAPI.RevertToSelf(); }
 
                     // Undo the impersonation
-                    wic.Undo();
+                    wic?.Undo();
                 }
             }
 
@@ -852,7 +852,7 @@ namespace WinPaletter.NativeMethods
                 bool advapi_switched = false;
 
                 // Impersonate the selected user
-                using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+                using (WindowsImpersonationContext wic = !OS.W9x ? User.Identity.Impersonate() : null)
                 {
                     // If the user has a token, impersonate the user using Advapi32
                     if (User.Token != IntPtr.Zero) { advapi_switched = ADVAPI.ImpersonateLoggedOnUser(User.Token); }
@@ -864,7 +864,7 @@ namespace WinPaletter.NativeMethods
                     if (advapi_switched) { ADVAPI.RevertToSelf(); }
 
                     // Undo the impersonation
-                    wic.Undo();
+                    wic?.Undo();
                 }
             }
 
@@ -927,7 +927,7 @@ namespace WinPaletter.NativeMethods
                 bool advapi_switched = false;
 
                 // Impersonate the selected user
-                using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+                using (WindowsImpersonationContext wic = !OS.W9x ? User.Identity.Impersonate() : null)
                 {
                     // If the user has a token, impersonate the user using Advapi32
                     if (User.Token != IntPtr.Zero) { advapi_switched = ADVAPI.ImpersonateLoggedOnUser(User.Token); }
@@ -939,7 +939,7 @@ namespace WinPaletter.NativeMethods
                     if (advapi_switched) { ADVAPI.RevertToSelf(); }
 
                     // Undo the impersonation
-                    wic.Undo();
+                    wic?.Undo();
                 }
             }
 
@@ -1002,7 +1002,7 @@ namespace WinPaletter.NativeMethods
                 bool advapi_switched = false;
 
                 // Impersonate the selected user
-                using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+                using (WindowsImpersonationContext wic = !OS.W9x ? User.Identity.Impersonate() : null)
                 {
                     // If the user has a token, impersonate the user using Advapi32
                     if (User.Token != IntPtr.Zero) { advapi_switched = ADVAPI.ImpersonateLoggedOnUser(User.Token); }
@@ -1014,7 +1014,7 @@ namespace WinPaletter.NativeMethods
                     if (advapi_switched) { ADVAPI.RevertToSelf(); }
 
                     // Undo the impersonation
-                    wic.Undo();
+                    wic?.Undo();
                 }
             }
 
@@ -1077,7 +1077,7 @@ namespace WinPaletter.NativeMethods
                 bool advapi_switched = false;
 
                 // Impersonate the selected user
-                using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+                using (WindowsImpersonationContext wic = !OS.W9x ? User.Identity.Impersonate() : null)
                 {
                     // If the user has a token, impersonate the user using Advapi32
                     if (User.Token != IntPtr.Zero) { advapi_switched = ADVAPI.ImpersonateLoggedOnUser(User.Token); }
@@ -1089,7 +1089,7 @@ namespace WinPaletter.NativeMethods
                     if (advapi_switched) { ADVAPI.RevertToSelf(); }
 
                     // Undo the impersonation
-                    wic.Undo();
+                    wic?.Undo();
                 }
             }
 
@@ -1152,7 +1152,7 @@ namespace WinPaletter.NativeMethods
                 bool advapi_switched = false;
 
                 // Impersonate the selected user
-                using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+                using (WindowsImpersonationContext wic = !OS.W9x ? User.Identity.Impersonate() : null)
                 {
                     // If the user has a token, impersonate the user using Advapi32
                     if (User.Token != IntPtr.Zero) { advapi_switched = ADVAPI.ImpersonateLoggedOnUser(User.Token); }
@@ -1164,7 +1164,7 @@ namespace WinPaletter.NativeMethods
                     if (advapi_switched) { ADVAPI.RevertToSelf(); }
 
                     // Undo the impersonation
-                    wic.Undo();
+                    wic?.Undo();
                 }
             }
 

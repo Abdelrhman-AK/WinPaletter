@@ -168,7 +168,7 @@ namespace WinPaletter
         {
             if (hwnd == IntPtr.Zero || !User32.IsWindow(hwnd)) return;
 
-            if (OS.WXP) return; // Unsupported OS
+            if (OS.W9x || OS.WXP) return; // Unsupported OS
 
             if (hwnd == IntPtr.Zero) return;
 
@@ -261,7 +261,7 @@ namespace WinPaletter
         {
             if (hwnd == IntPtr.Zero || !User32.IsWindow(hwnd)) return;
 
-            if (OS.WXP || OS.WVista || OS.W7 || OS.W8x) return; // Unsupported OS
+            if (OS.W9x || OS.WXP || OS.WVista || OS.W7 || OS.W8x) return; // Unsupported OS
 
             if (OS.W10 || useOldMethod)
             {
@@ -319,7 +319,7 @@ namespace WinPaletter
         {
             if (hwnd == IntPtr.Zero || !User32.IsWindow(hwnd)) return;
 
-            if (OS.WXP) return; // Unsupported OS
+            if (OS.W9x || OS.WXP) return; // Unsupported OS
 
             Margins = Margins == default || Margins == null || Margins == Padding.Empty || Margins == new Padding(0) ? new(-1) : Margins;
 

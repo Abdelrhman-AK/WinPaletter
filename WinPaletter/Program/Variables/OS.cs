@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Drawing.Text;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using static WinPaletter.PreviewHelpers;
 
 namespace WinPaletter.GlobalVariables
@@ -23,6 +25,88 @@ namespace WinPaletter.GlobalVariables
         private static bool IsRedirecting => Program.Settings?.ThemeApplyingBehavior?.OS_Redirection_Enabled ?? false;
 
         private static bool IsRedirected(WindowStyle style) => IsRedirecting && Program.Settings.ThemeApplyingBehavior.OS_Redirection_Version == style;
+
+        private static readonly Regex _w95Regex = new(@"\bWindows\s+95\b", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+
+        private static readonly Regex _w98Regex = new( @"\bWindows\s+98\b", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+
+        private static readonly Regex _wMeRegex = new( @"\bWindows\s+(Me|Millennium)\b", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant);
+
+        // Must be declared BEFORE the static readonly bool fields that use it.
+        private static readonly string _description = GetOSDescription();
+
+        private static string GetOSDescription()
+        {
+            // NT family (NT4/2000/XP/…/11)
+            string name = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ProductName", "")?.ToString() ?? "";
+            if (!string.IsNullOrEmpty(name)) return name;
+
+            // Win9x family (95/98/98 SE/ME)
+            const string key9x = @"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion";
+
+            name = Registry.GetValue(key9x, "ProductName", "")?.ToString() ?? "";  // e.g. "Microsoft Windows 98"
+            if (string.IsNullOrEmpty(name))
+                name = Registry.GetValue(key9x, "Version", "")?.ToString() ?? "";  // e.g. "Windows 98"
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                // Distinguish 98 SE: SubVersionNumber is " A" on SE, and build is 2222
+                string sub = (Registry.GetValue(key9x, "SubVersionNumber", "")?.ToString() ?? "").Trim();
+                if (name.EndsWith("98", StringComparison.OrdinalIgnoreCase) && (sub.Equals("A", StringComparison.OrdinalIgnoreCase) || Environment.OSVersion.Version.Build == 2222))
+                {
+                    name += " Second Edition";
+                }
+                return name;
+            }
+
+            // Last resort: derive from Environment.OSVersion
+            return FromOSVersion();
+        }
+
+        private static string FromOSVersion()
+        {
+            OperatingSystem os = Environment.OSVersion;
+            if (os.Platform == PlatformID.Win32Windows)
+            {
+                Version v = os.Version;
+                if (v.Major == 4)
+                {
+                    switch (v.Minor)
+                    {
+                        case 0: return "Microsoft Windows 95";
+                        case 10:
+                            return v.Build == 2222
+                                        ? "Microsoft Windows 98 Second Edition"
+                                        : "Microsoft Windows 98";
+                        case 90: return "Microsoft Windows Millennium Edition";
+                    }
+                }
+            }
+            return os.VersionString; // generic fallback
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the current operating system is Windows 9x.
+        /// </summary>
+        public static bool W9x => W95 || W98 || WMe;
+
+        /// <summary>
+        /// Gets a value indicating whether the current operating system is Windows 95.
+        /// </summary>
+        public static bool W95 => IsRedirecting ? IsRedirected(WindowStyle.W95) : _w95;
+        private static readonly bool _w95 = _w95Regex.IsMatch(_description ?? "");
+
+        /// <summary>
+        /// Gets a value indicating whether the current operating system is Windows 98.
+        /// </summary>
+        public static bool W98 => IsRedirecting ? IsRedirected(WindowStyle.W98) : _w98;
+        private static readonly bool _w98 = _w98Regex.IsMatch(_description ?? "");
+
+        /// <summary>
+        /// Gets a value indicating whether the current operating system is Windows Me.
+        /// </summary>
+        public static bool WMe => IsRedirecting ? IsRedirected(WindowStyle.WMe) : _wme;
+        private static readonly bool _wme = _wMeRegex.IsMatch(_description ?? "");
 
         /// <summary>
         /// Gets a value indicating whether the current operating system is Windows XP.

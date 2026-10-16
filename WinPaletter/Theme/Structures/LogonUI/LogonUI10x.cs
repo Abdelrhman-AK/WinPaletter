@@ -84,13 +84,13 @@ namespace WinPaletter.Theme.Structures
                     DeleteValue(treeView, $@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\PersonalizationCSP", "LockScreenImageStatus");
                 }
 
-                using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+                using (WindowsImpersonationContext wic = !OS.W9x ? User.Identity.Impersonate() : null)
                 {
                     // Broadcast the system message to notify about the setting change
                     Program.Log?.Write(LogEventLevel.Information, "Broadcasting system message to notify about the setting change (User32.UpdatePerUserSystemParameters(1, true)).");
                     User32.UpdatePerUserSystemParameters(1, true);
 
-                    wic.Undo();
+                    wic?.Undo();
                 }
             }
         }

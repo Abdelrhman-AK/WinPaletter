@@ -51,7 +51,10 @@ namespace WinPaletter
 
             if (Program.BootStatus == BootStatuses.SafeMode) Forms.SOS.Show();
 
-            SingleInstanceApplication.Run(Forms.MainForm, StartupNextInstanceEventHandler);
+            if (OS.W9x)
+                Application.Run(Forms.MainForm);
+            else
+                SingleInstanceApplication.Run(Forms.MainForm, StartupNextInstanceEventHandler);
         }
 
         /// <summary>
@@ -85,20 +88,23 @@ namespace WinPaletter
         public static void InitializeApplication()
         {
             // Impersonate the selected user to access the user's data
-            using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+            using (WindowsImpersonationContext wic = !OS.W9x ? User.Identity.Impersonate() : null)
             {
                 // Placing user switching event here fixed CLR20R3 error on Windows 7
                 User.UserSwitch -= User.OnUserSwitch;
                 User.UserSwitch += User.OnUserSwitch;
 
-                Log = new();
-                Log?.Write(LogEventLevel.Information, $"WinPaletter started: {DateTime.Now}");
-                Log?.Write(LogEventLevel.Information, $"WinPaletter version: {Version}");
-                Log?.Write(LogEventLevel.Information, $"WinPaletter file size: {Length} bytes.");
-                Log?.Write(LogEventLevel.Information, $"WinPaletter file path: {AppFile}.");
-                Log?.Write(LogEventLevel.Information, $"WinPaletter MD5: {Program.CalculateMD5(AppFile)}");
-                Log?.Write(LogEventLevel.Information, $"WinPaletter log file path: {LogFile}");
-                Log?.Write(LogEventLevel.Information, $"WinPaletter has started with user: {User.Identity.Name}.");
+                if (!OS.W9x)
+                {
+                    Log = new();
+                    Log?.Write(LogEventLevel.Information, $"WinPaletter started: {DateTime.Now}");
+                    Log?.Write(LogEventLevel.Information, $"WinPaletter version: {Version}");
+                    Log?.Write(LogEventLevel.Information, $"WinPaletter file size: {Length} bytes.");
+                    Log?.Write(LogEventLevel.Information, $"WinPaletter file path: {AppFile}.");
+                    Log?.Write(LogEventLevel.Information, $"WinPaletter MD5: {Program.CalculateMD5(AppFile)}");
+                    Log?.Write(LogEventLevel.Information, $"WinPaletter log file path: {LogFile}");
+                    Log?.Write(LogEventLevel.Information, $"WinPaletter has started with user: {User.Identity.Name}.");
+                }
 
                 // Create the data directory if it does not exist
                 if (!Directory.Exists(SysPaths.ProgramFilesData))
@@ -152,10 +158,10 @@ namespace WinPaletter
         /// <param name="e"></param>
         public static void StartupNextInstanceEventHandler(object sender, Microsoft.VisualBasic.ApplicationServices.StartupNextInstanceEventArgs e)
         {
-            using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+            using (WindowsImpersonationContext wic = !OS.W9x ? User.Identity.Impersonate() : null)
             {
                 ExecuteArgs([.. e.CommandLine], false);
-                wic.Undo();
+                wic?.Undo();
             }
         }
     }

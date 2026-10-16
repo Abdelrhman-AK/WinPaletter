@@ -47,7 +47,7 @@ namespace WinPaletter.UI.WP
         #region Fields
 
         // Taskbar
-        private readonly ITaskbarList3 taskbarList = !OS.WXP && !OS.WVista ? (ITaskbarList3)new CTaskbarList() : null;
+        private readonly ITaskbarList3 taskbarList = !OS.W9x && !OS.WXP && !OS.WVista ? (ITaskbarList3)new CTaskbarList() : null;
         private IntPtr _formHwnd = IntPtr.Zero;
         private DateTime _lastTaskbarUpdate = DateTime.MinValue;
 

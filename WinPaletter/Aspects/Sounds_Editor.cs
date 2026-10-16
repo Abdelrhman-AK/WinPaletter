@@ -121,7 +121,7 @@ namespace WinPaletter
 
             if (TextBox2.Text.ToUpper().Trim() == "CURRENT")
             {
-                if (!OS.WXP)
+                if (!OS.W9x && !OS.WXP)
                 {
 
                     byte[] SoundBytes = PE.GetResource(SysPaths.imageres, "WAVE", OS.WVista ? 5051 : 5080);
@@ -148,7 +148,7 @@ namespace WinPaletter
 
             else if (TextBox2.Text.ToUpper().Trim() == "DEFAULT")
             {
-                if (!OS.WXP)
+                if (!OS.W9x && !OS.WXP)
                 {
                     try
                     {

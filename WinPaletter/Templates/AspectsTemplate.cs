@@ -572,7 +572,7 @@ namespace WinPaletter
 
         private void applyWithRP_Click(object sender, EventArgs e)
         {
-            using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+            using (WindowsImpersonationContext wic = !OS.W9x ? User.Identity.Impersonate() : null)
             {
                 bool advapi_switched = false;
 
@@ -597,7 +597,7 @@ namespace WinPaletter
                 // Revert impersonation
                 if (advapi_switched) { ADVAPI.RevertToSelf(); }
 
-                wic.Undo();
+                wic?.Undo();
             }
         }
 

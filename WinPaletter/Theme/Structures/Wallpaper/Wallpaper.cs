@@ -193,7 +193,7 @@ namespace WinPaletter.Theme.Structures
 
                     else if (WallpaperType == WallpaperTypes.Picture)
                     {
-                        if (OS.WXP | OS.WVista | OS.W7 && File.Exists(ImageFile) && !new FileInfo(ImageFile).FullName.StartsWith($@"{SysPaths.Windows}\Web", StringComparison.OrdinalIgnoreCase))
+                        if (OS.W9x | OS.WXP | OS.WVista | OS.W7 && File.Exists(ImageFile) && !new FileInfo(ImageFile).FullName.StartsWith($@"{SysPaths.Windows}\Web", StringComparison.OrdinalIgnoreCase))
                         {
                             using (Bitmap bmp = new(BitmapMgr.Load(ImageFile)))
                             {
@@ -223,8 +223,8 @@ namespace WinPaletter.Theme.Structures
 
                 WriteReg(treeView, @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\Wallpapers", "BackgroundType", WallpaperType);
 
-                // Windows XP and Vista don't support slideshow
-                if (!OS.WXP && !OS.WVista)
+                // Windows 9x, XP, and Vista don't support slideshow
+                if (!OS.W9x && !OS.WXP && !OS.WVista)
                 {
                     if (!SkipSettingWallpaper)
                     {

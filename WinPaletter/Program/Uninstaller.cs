@@ -60,7 +60,7 @@ namespace WinPaletter
             // Restore Windows startup sound if it was changed by the application
             try
             {
-                if (!OS.WXP && File.Exists($"{SysPaths.appData}\\WindowsStartup_Backup.wav"))
+                if (!OS.W9x && !OS.WXP && File.Exists($"{SysPaths.appData}\\WindowsStartup_Backup.wav"))
                 {
                     string file = $"{SysPaths.appData}\\WindowsStartup_Backup.wav";
 
@@ -78,7 +78,7 @@ namespace WinPaletter
             // Delete the application data folder and restore the system cursors as WinPaletter cursors are rendered in this folder
             if (Directory.Exists(SysPaths.appData))
             {
-                if (!OS.WXP)
+                if (!OS.W9x && !OS.WXP)
                 {
                     Theme.Structures.Cursors.ResetCursorsToAero();
                     if (Settings.ThemeApplyingBehavior.Cursors_HKU_DEFAULT_Prefs == Settings.Structures.ThemeApplyingBehavior.OverwriteOptions.Overwrite)

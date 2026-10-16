@@ -105,7 +105,7 @@ namespace WinPaletter.Theme.Structures
             }
 
             string path;
-            if (!OS.WXP & !OS.WVista)
+            if (!OS.W9x && !OS.WXP && !OS.WVista)
             {
                 path = Path.Combine(SysPaths.appData, "TintedWallpaper.bmp");
             }

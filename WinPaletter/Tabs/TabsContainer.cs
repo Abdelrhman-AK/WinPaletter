@@ -141,7 +141,7 @@ namespace WinPaletter.Tabs
 
         private void UpdateForeColor()
         {
-            if (OS.WXP || OS.WVista || OS.W7 || OS.W8x)
+            if (OS.W9x || OS.WXP || OS.WVista || OS.W7 || OS.W8x)
             {
                 _foreColor = SystemColors.ActiveCaptionText;
                 _foreColorInactive = SystemColors.InactiveCaptionText;

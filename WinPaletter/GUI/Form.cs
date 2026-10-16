@@ -886,7 +886,7 @@ namespace WinPaletter.UI.WP
         {
             if (DesignMode) return 1;
 
-            if (_bordersThickness != null && (OS.WXP || OS.WVista || OS.W7 || OS.W8x))
+            if (_bordersThickness != null && (OS.W9x || OS.WXP || OS.WVista || OS.W7 || OS.W8x))
             {
                 if (_bordersThickness == -1 && ShouldUpdateBorders()) return GetDWMBorderWidth_Internal(); else return _bordersThickness ?? GetDWMBorderWidth_Internal();
             }
@@ -896,7 +896,7 @@ namespace WinPaletter.UI.WP
 
         private int GetDWMBorderWidth_Internal()
         {
-            if (OS.WXP) return Math.Max(1, User32.GetSystemMetrics(5)); // SM_CXBORDER = 5
+            if (OS.W9x || OS.WXP) return Math.Max(1, User32.GetSystemMetrics(5)); // SM_CXBORDER = 5
 
             if (OS.WVista || OS.W7 || OS.W8 || OS.W81)
             {

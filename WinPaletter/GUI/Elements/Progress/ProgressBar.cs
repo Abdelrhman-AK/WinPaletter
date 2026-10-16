@@ -36,7 +36,7 @@ namespace WinPaletter.UI.WP
         #region Variables
         private bool CanAnimate => !DesignMode && Program.Style.Animations && this != null && Visible && Parent != null && Parent.Visible && FindForm() != null && FindForm().Visible;
 
-        readonly ITaskbarList3 taskbarList = !OS.WXP && !OS.WVista ? (ITaskbarList3)new CTaskbarList() : null;
+        readonly ITaskbarList3 taskbarList = !OS.W9x && !OS.WXP && !OS.WVista ? (ITaskbarList3)new CTaskbarList() : null;
         private IntPtr FormHwnd = IntPtr.Zero;
         private static readonly TextureBrush Noise = new(Resources.Noise);
         private DateTime _lastTaskbarUpdate = DateTime.MinValue;

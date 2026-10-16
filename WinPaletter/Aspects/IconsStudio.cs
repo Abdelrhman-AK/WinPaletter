@@ -150,7 +150,7 @@ namespace WinPaletter
             }
 
             winIcon2.Text = User.Name;
-            winIcon1.Text = OS.W8x || OS.W10 || OS.W11 || OS.W12 ? Program.Localization.Strings.Previewer.Preview_ThisPC : !OS.WXP ? Program.Localization.Strings.Previewer.Preview_Computer : Program.Localization.Strings.Previewer.Preview_MyComputer;
+            winIcon1.Text = OS.W8x || OS.W10 || OS.W11 || OS.W12 ? Program.Localization.Strings.Previewer.Preview_ThisPC : !OS.WXP && !OS.W9x ? Program.Localization.Strings.Previewer.Preview_Computer : Program.Localization.Strings.Previewer.Preview_MyComputer;
             label3.Text = winIcon1.Text;
 
             LoadFromTM(Program.TM);
@@ -176,7 +176,7 @@ namespace WinPaletter
                 return null;
             }
 
-            if (!OS.WXP)
+            if (!OS.W9x && !OS.WXP)
             {
                 using (Icon sysdrv = PE.GetIcon(SysPaths.imageres, -36))
                 {
@@ -189,7 +189,7 @@ namespace WinPaletter
                 if (bmp != null)
                 {
                     SetPictureBoxImage(pictureBox6, bmp.Clone() as Bitmap);
-                    if (OS.WXP) SetPictureBoxImage(pictureBox1, bmp.Clone() as Bitmap);
+                    if (OS.W9x || OS.WXP) SetPictureBoxImage(pictureBox1, bmp.Clone() as Bitmap);
                 }
             }
 

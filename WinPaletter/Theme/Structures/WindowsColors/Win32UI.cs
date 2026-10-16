@@ -420,7 +420,7 @@ namespace WinPaletter.Theme.Structures
                 }
 
                 // Impersonate the selected user to apply the colors correctly
-                using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+                using (WindowsImpersonationContext wic = !OS.W9x ? User.Identity.Impersonate() : null)
                 {
                     List<int> C1 = [];
                     List<uint> C2 = [];
@@ -527,7 +527,7 @@ namespace WinPaletter.Theme.Structures
                     SystemParametersInfo(treeView, SPI.SPI_SETFLATMENU, 0, EnableTheming, SPIF.SPIF_UPDATEINIFILE);
                     SystemParametersInfo(treeView, SPI.SPI_SETGRADIENTCAPTIONS, 0, EnableGradient, SPIF.SPIF_UPDATEINIFILE);
 
-                    wic.Undo();
+                    wic?.Undo();
                 }
 
                 WriteReg(treeView, HKEY_CPL_Colors, "ActiveBorder", ActiveBorder.ToString(Settings.Structures.NerdStats.Formats.RGB, false, true), RegistryValueKind.String);

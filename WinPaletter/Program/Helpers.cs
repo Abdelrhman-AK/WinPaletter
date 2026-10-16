@@ -13,6 +13,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Security.Principal;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -181,7 +182,7 @@ namespace WinPaletter
                     string formattedTime = startTime.ToString("HH:mm");
 
                     // Create task
-                    string createCmd = $"schtasks /Create /TN \"{taskName}\" /TR \"{command}\" /SC ONCE /ST {formattedTime} {(!OS.WXP ? "/RL LIMITED" : string.Empty)} /F /RU \"{userName}\"";
+                    string createCmd = $"schtasks /Create /TN \"{taskName}\" /TR \"{command}\" /SC ONCE /ST {formattedTime} {(!OS.W9x && !OS.WXP ? "/RL LIMITED" : string.Empty)} /F /RU \"{userName}\"";
                     SendCommand(createCmd);
 
                     // Run the task
@@ -337,8 +338,6 @@ namespace WinPaletter
         {
             try
             {
-                Program.Log?.Write(LogEventLevel.Information, $"Loading JetBrains Mono font from memory.");
-
                 Fonts.Console?.Dispose();
                 Fonts.ConsoleMedium?.Dispose();
                 Fonts.ConsoleLarge?.Dispose();
@@ -356,18 +355,115 @@ namespace WinPaletter
                 Fonts.ConsoleMedium = MemoryFonts.GetFont(0, 9f);
                 Fonts.ConsoleLarge = MemoryFonts.GetFont(0, 10f);
             }
+            catch (Exception ex)
+            {
+                // 1) Build a full report from the exception (and all inner exceptions).
+                string report = BuildFontErrorReport(ex);
+
+                // 2) Keep it on disk no matter what — this survives a dead UI.
+                TryWriteReportToFile(report);
+
+                // 3) Show it. Wrapped so a dead UI can't mask the original error.
+                TryShowReport(report);
+
+                // 4) Fall back to Lucida Console, each step independent.
+                TryDispose(Fonts.Console);
+                TryDispose(Fonts.ConsoleMedium);
+                TryDispose(Fonts.ConsoleLarge);
+
+                Fonts.Console = TryCreateFallback(7.5f) ?? Fonts.Console;
+                Fonts.ConsoleMedium = TryCreateFallback(9f) ?? Fonts.ConsoleMedium;
+                Fonts.ConsoleLarge = TryCreateFallback(10f) ?? Fonts.ConsoleLarge;
+            }
+        }
+
+        private static string BuildFontErrorReport(Exception ex)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine("Failed to load JetBrains Mono font from memory.");
+            sb.AppendLine("Falling back to Lucida Console.");
+            sb.AppendLine();
+            sb.AppendLine("Timestamp : " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff zzz"));
+            sb.AppendLine("OS        : " + Environment.OSVersion);
+            sb.AppendLine("CLR       : " + Environment.Version);
+            sb.AppendLine("64-bit    : " + Environment.Is64BitProcess);
+            sb.AppendLine();
+
+            int i = 0;
+            for (Exception e = ex; e != null; e = e.InnerException)
+            {
+                sb.AppendLine($"--- Exception #{i++} ---");
+                sb.AppendLine("Type       : " + e.GetType().FullName);
+                sb.AppendLine("Message    : " + e.Message);
+                sb.AppendLine("HResult    : 0x" + e.HResult.ToString("X8"));
+                sb.AppendLine("Source     : " + e.Source);
+                sb.AppendLine("TargetSite : " + (e.TargetSite?.ToString() ?? "<null>"));
+                sb.AppendLine("StackTrace :");
+                sb.AppendLine(e.StackTrace ?? "<no stack trace>");
+                sb.AppendLine();
+            }
+
+            // AggregateException children aren't on the InnerException chain.
+            if (ex is AggregateException agg)
+            {
+                foreach (var inner in agg.Flatten().InnerExceptions)
+                {
+                    sb.AppendLine("--- Aggregate child ---");
+                    sb.AppendLine(inner.ToString());
+                    sb.AppendLine();
+                }
+            }
+
+            return sb.ToString();
+        }
+
+        private static void TryShowReport(string report)
+        {
+            try
+            {
+                MessageBox.Show(
+                    report,
+                    "Font load failed",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
             catch
             {
-                Program.Log?.Write(LogEventLevel.Warning, $"Failed to load JetBrains Mono font from memory, falling back to Lucida Console.");
-
-                Fonts.Console?.Dispose();
-                Fonts.ConsoleMedium?.Dispose();
-                Fonts.ConsoleLarge?.Dispose();
-
-                Fonts.Console = new(Fonts.FallbackConsoleFont, 7.5f);
-                Fonts.ConsoleMedium = new(Fonts.FallbackConsoleFont, 9f);
-                Fonts.ConsoleLarge = new(Fonts.FallbackConsoleFont, 10f);
+                // UI is unavailable (no message pump, GDI+ broken, etc.).
+                // The report is already on disk — nothing more to do here.
             }
+        }
+
+        private static void TryWriteReportToFile(string report)
+        {
+            try
+            {
+                string path = Path.Combine(
+                    AppDomain.CurrentDomain.BaseDirectory,
+                    "font-load-error.txt");
+                File.AppendAllText(path, report + Environment.NewLine +
+                                         new string('-', 60) + Environment.NewLine);
+            }
+            catch
+            {
+                try
+                {
+                    string alt = Path.Combine(Path.GetTempPath(), "font-load-error.txt");
+                    File.AppendAllText(alt, report);
+                }
+                catch { /* last resort failed too */ }
+            }
+        }
+
+        private static void TryDispose(Font f)
+        {
+            try { f?.Dispose(); } catch { }
+        }
+
+        private static Font TryCreateFallback(float size)
+        {
+            try { return new Font(Fonts.FallbackConsoleFont, size); }
+            catch { return null; }
         }
 
         /// <summary>
@@ -653,7 +749,7 @@ namespace WinPaletter
         /// file.</remarks>
         private static void BackupWindowsStartupSound()
         {
-            if (OS.WXP) return;
+            if (OS.W9x || OS.WXP) return;
 
             string backupPath = Path.Combine(SysPaths.appData, "WindowsStartup_Backup.wav");
             if (File.Exists(backupPath)) return;
@@ -712,7 +808,7 @@ namespace WinPaletter
         {
             Task.Run(() =>
             {
-                using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+                using (WindowsImpersonationContext wic = !OS.W9x ? User.Identity.Impersonate() : null)
                 {
                     Program.Log?.Write(LogEventLevel.Information, $"Refreshing DWM colorization parameters from the given Theme Manager for user `{User.Domain}\\{User.Name}`.");
 
@@ -768,7 +864,7 @@ namespace WinPaletter
                             DWMAPI.DwmSetColorizationParameters(ref colorizationParams, false);
                         }
                     }
-                    wic.Undo();
+                    wic?.Undo();
                 }
             });
         }
@@ -793,7 +889,7 @@ namespace WinPaletter
             {
                 try
                 {
-                    if (OS.WXP) return Wininet.CheckNet(); // XP fallback
+                    if (OS.W9x || OS.WXP) return Wininet.CheckNet(); // XP fallback
 
                     NetworkInterface[] nics = NetworkInterface.GetAllNetworkInterfaces();
                     foreach (NetworkInterface nic in nics)
@@ -819,7 +915,7 @@ namespace WinPaletter
             {
                 try
                 {
-                    if (OS.WXP) return true; // Assume XP has at least 1 interface
+                    if (OS.W9x || OS.WXP) return true; // Assume 9x/XP has at least 1 interface
 
                     var interfaces = NetworkInterface.GetAllNetworkInterfaces();
                     return interfaces?.Any(nic => nic.OperationalStatus == OperationalStatus.Up) ?? false;
@@ -837,7 +933,7 @@ namespace WinPaletter
             {
                 try
                 {
-                    if (OS.WXP) return true; // XP fallback
+                    if (OS.W9x || OS.WXP) return true; // 9x/XP fallback
 
                     var interfaces = NetworkInterface.GetAllNetworkInterfaces();
                     return interfaces?.Any(nic =>
@@ -932,7 +1028,7 @@ namespace WinPaletter
             bool resolved = false;
 
             // Windows 10 1607+ : DPI for the specific window, tracks whichever monitor it's currently on.
-            if (hWnd != IntPtr.Zero && !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8x)
+            if (hWnd != IntPtr.Zero && !OS.W9x && !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8x)
             {
                 try
                 {
@@ -975,7 +1071,7 @@ namespace WinPaletter
                 Forms.MainForm.LoggingOff = true;
                 Forms.MainForm.Close();
                 process.Kill();
-                wic.Undo();  // :)
+                wic?.Undo();  // :)
             }
         }
     }

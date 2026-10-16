@@ -39,7 +39,7 @@ namespace WinPaletter.Theme
                 case Source.Registry:
                     {
                         // Imperonate the current user to get the theme data from the registry
-                        using (User.Identity.Impersonate())
+                        using (!OS.W9x ? User.Identity.Impersonate() : null)
                         {
                             // Get the theme data from the registry and use @default to help WinPaletter know the default values
                             using (Manager @default = Default.FromOS(Program.WindowStyle))

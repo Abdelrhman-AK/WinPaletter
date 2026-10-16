@@ -487,7 +487,7 @@ namespace WinPaletter.Theme.Structures
                 }
 
                 // Patching Windows startup sound in imageres.dll if Windows is not Windows XP
-                if (!OS.WXP)
+                if (!OS.W9x && !OS.WXP)
                 {
                     if (File.Exists(Snd_Imageres_SystemStart) && Path.GetExtension(Snd_Imageres_SystemStart).ToUpper() == ".WAV")
                     {
@@ -558,7 +558,7 @@ namespace WinPaletter.Theme.Structures
                     WriteReg(treeView, string.Format(Scope, "MessageNudge"), string.Empty, Snd_Win_MessageNudge, RegistryValueKind.String);
                     WriteReg(treeView, string.Format(Scope, "Minimize"), string.Empty, Snd_Win_Minimize, RegistryValueKind.String);
 
-                    if (!OS.WXP && !OS.WVista && !OS.W7)
+                    if (!OS.W9x && !OS.WXP && !OS.WVista && !OS.W7)
                     {
                         WriteReg(treeView, string.Format(Scope, "Notification.Default"), string.Empty, Snd_Win_Notification_Default, RegistryValueKind.String);
                         WriteReg(treeView, string.Format(Scope, "Notification.IM"), string.Empty, Snd_Win_Notification_IM, RegistryValueKind.String);
@@ -623,7 +623,7 @@ namespace WinPaletter.Theme.Structures
                     WriteReg(treeView, string.Format(Scope, "FaxSent"), string.Empty, Snd_Explorer_FaxSent, RegistryValueKind.String);
                 }
 
-                if (OS.WXP)
+                if (OS.W9x || OS.WXP)
                 {
                     foreach (string Scope in Scope_NetMeeting)
                     {
@@ -634,7 +634,7 @@ namespace WinPaletter.Theme.Structures
                     }
                 }
 
-                if (!OS.WXP)
+                if (!OS.W9x && !OS.WXP)
                 {
                     foreach (string Scope in Scope_SpeechRec)
                     {

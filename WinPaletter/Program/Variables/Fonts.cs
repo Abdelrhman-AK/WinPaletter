@@ -28,7 +28,7 @@ namespace WinPaletter.GlobalVariables
         /// <summary>
         /// Main font for application titles
         /// </summary>
-        public static FontFamily Title { get; set; } = Exists("Segoe UI Variable Display") ? new("Segoe UI Variable Display") : Exists("Segoe UI") ? new("Segoe UI") : new("Trebuchet MS");
+        public static FontFamily Title { get; set; } = Exists("Segoe UI Variable Display") ? new("Segoe UI Variable Display") : Exists("Segoe UI") ? new("Segoe UI") : Exists("Trebuchet MS") ? new("Trebuchet MS") : new("Tahoma");
 
         /// <summary>
         /// Checks if a font is installed or not (by its name)

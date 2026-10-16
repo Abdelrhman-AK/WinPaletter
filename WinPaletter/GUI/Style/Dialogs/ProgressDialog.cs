@@ -75,10 +75,10 @@ namespace WinPaletter.UI.WP
             ShowCancelButton = true;
             MinimizeBox = true;
 
-            // Windows XP has no native marquee support on this dialog and looks bare without
+            // Windows 9x\XP has no native marquee support on this dialog and looks bare without
             // an animation, so default to the shell's flying-papers animation there, exactly
             // like the underlying shell IProgressDialog behaves when hosted from old apps.
-            if (OS.WXP)
+            if (OS.W9x || OS.WXP)
             {
                 Animation = AnimationResource.GetShellAnimation(ShellAnimation.FlyingPapers);
             }
@@ -515,7 +515,7 @@ namespace WinPaletter.UI.WP
                         flags |= Interop.ProgressDialogFlags.NoProgressBar;
                         break;
                     case ProgressBarStyle.MarqueeProgressBar:
-                        if (!OS.WXP)
+                        if (!OS.W9x && !OS.WXP)
                         {
                             flags |= Interop.ProgressDialogFlags.MarqueeProgress;
                         }

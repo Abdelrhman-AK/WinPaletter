@@ -61,13 +61,13 @@ namespace WinPaletter
 
             public static void Start()
             {
-                try { if (!OS.WXP && !OS.WVista) StartWallpaperFileWatcher(); else StartWmiWallpaperWatcher_XP_Vista(); }
+                try { if (!OS.W9x && !OS.WXP && !OS.WVista) StartWallpaperFileWatcher(); else StartWmiWallpaperWatcher_XP_Vista(); }
                 catch (Exception ex) { Log?.Write(LogEventLevel.Error, "Wallpaper file watcher failed", ex); }
 
                 try { StartWmiWatchers(); }
                 catch (Exception ex) { Log?.Write(LogEventLevel.Error, "WMI watchers failed", ex); }
 
-                if (OS.WXP || OS.WVista) SystemEvents.UserPreferenceChanged += OnUserPreferenceChanged;
+                if (OS.W9x || OS.WXP || OS.WVista) SystemEvents.UserPreferenceChanged += OnUserPreferenceChanged;
 
                 FireWallpaperChanged(); // initial state, synchronous
             }

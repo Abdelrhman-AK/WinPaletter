@@ -32,7 +32,7 @@ namespace WinPaletter
                 RegisterRegistryChangeEvent(sid, Transparency, "EnableTransparency", Transparency_Changed_EventHandler);
             }
 
-            if (!OS.WXP)
+            if (!OS.W9x && !OS.WXP)
             {
                 RegisterRegistryChangeEvent(sid, Personalize, "EnableTransparency", PreferencesRelatedToTitlebarExtenderChanged);
                 RegisterRegistryChangeEvent(sid, DWM, "ColorPrevalence", PreferencesRelatedToTitlebarExtenderChanged);

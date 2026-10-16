@@ -172,7 +172,7 @@ namespace WinPaletter
             StartInfo = new()
             {
                 FileName = $@"{SysPaths.System32}\taskkill.exe",
-                Verb = !OS.WXP ? "runas" : string.Empty,
+                Verb = !OS.W9x && !OS.WXP ? "runas" : string.Empty,
                 Arguments = "/F /IM explorer.exe",
                 WindowStyle = ProcessWindowStyle.Hidden,
                 UseShellExecute = true

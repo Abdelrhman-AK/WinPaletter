@@ -126,7 +126,7 @@ namespace WinPaletter
 
                     Invalidate();
                 }
-                else if (!OS.WXP && !OS.W8x)
+                else if (!OS.W9x && !OS.WXP && !OS.W8x)
                 {
                     blurActive = false;
 
@@ -134,7 +134,7 @@ namespace WinPaletter
 
                     if (shownOverAParent && (OS.W12 || OS.W11))
                     {
-                        bool useRoundedCorners = Program.Settings.Appearance.ManagedByTheme && Program.Settings.Appearance.CustomColors && !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8x && !OS.W10;
+                        bool useRoundedCorners = Program.Settings.Appearance.ManagedByTheme && Program.Settings.Appearance.CustomColors && !OS.W9x && !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8x && !OS.W10;
 
                         int argpvAttribute = (int)DWMAPI.FormCornersType.Round;
                         DWMAPI.DwmSetWindowAttribute(Handle, DWMAPI.DWMWINDOWATTRIBUTE.WINDOW_CORNER_PREFERENCE, ref argpvAttribute, Marshal.SizeOf(typeof(int)));

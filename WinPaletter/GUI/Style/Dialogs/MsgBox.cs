@@ -105,8 +105,8 @@ namespace WinPaletter.UI.Style
         {
             try
             {
-                // Windows XP does not support the modern task dialog.
-                if (!OS.WXP)
+                // Windows 9x/XP does not support the modern task dialog.
+                if (!OS.W9x && !OS.WXP)
                 {
                     // Initialize state
                     _TDState = new TaskDialogState();
@@ -369,7 +369,7 @@ namespace WinPaletter.UI.Style
         private static void ApplyDarkMode(IntPtr hwnd)
         {
             if (!Program.Style.DarkMode) return;
-            if (OS.WXP || OS.WVista || OS.W7 || OS.W8x) return;
+            if (OS.W9x || OS.WXP || OS.WVista || OS.W7 || OS.W8x) return;
             if (hwnd == IntPtr.Zero) return;
 
             NativeMethods.Helpers.SetHWNDDarkMode(hwnd, true);

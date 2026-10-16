@@ -142,7 +142,7 @@ namespace WinPaletter.NativeMethods
         /// <returns>The path to the user's account picture.</returns>
         public static string GetUserTilePath(string username)
         {
-            if (!OS.WXP)
+            if (!OS.W9x && !OS.WXP)
             {
                 StringBuilder sb = new(1000);
                 GetUserTilePath(username, 0x80000000, sb, sb.Capacity);

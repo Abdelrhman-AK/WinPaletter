@@ -106,7 +106,7 @@ namespace WinPaletter.Theme.Structures
 
                 Program.RefreshDWM(TM);
 
-                using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+                using (WindowsImpersonationContext wic = !OS.W9x ? User.Identity.Impersonate() : null)
                 {
                     // Broadcast the system message to notify about the setting change
                     Program.Log?.Write(LogEventLevel.Information, "Broadcasting system message to notify about the setting change (User32.SendMessageTimeout(HWND_BROADCAST, User32.WindowsMessages.WM_SETTINGCHANGE, IntPtr.Zero, IntPtr.Zero)).");
@@ -116,7 +116,7 @@ namespace WinPaletter.Theme.Structures
                     User32.NotifySettingChanged("ImmersiveColorSet");
                     User32.NotifySettingChanged("WindowsThemeElement");
 
-                    wic.Undo();
+                    wic?.Undo();
                 }
             }
         }

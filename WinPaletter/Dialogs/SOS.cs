@@ -93,7 +93,7 @@ namespace WinPaletter.Dialogs
 
         private void button12_Click(object sender, EventArgs e)
         {
-            if (!OS.WXP)
+            if (!OS.W9x && !OS.WXP)
             {
                 Task.Run(new Action(() => 
                 { 
@@ -110,7 +110,7 @@ namespace WinPaletter.Dialogs
 
         private void button10_Click(object sender, EventArgs e)
         {
-            if (!OS.WXP)
+            if (!OS.W9x && !OS.WXP)
             {
                 Task.Run(new Action(() =>
                 {
@@ -206,7 +206,7 @@ namespace WinPaletter.Dialogs
 
         private void button14_Click(object sender, EventArgs e)
         {
-            if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8x)
+            if (!OS.W9x && !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8x)
             {
                 Process.Start($"{SysPaths.Explorer}", "ms-settings:windowsupdate");
             }

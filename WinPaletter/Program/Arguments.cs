@@ -312,14 +312,14 @@ namespace WinPaletter
 
                         try
                         {
-                            using (System.Security.Principal.WindowsImpersonationContext wic = User.Identity.Impersonate())
+                            using (System.Security.Principal.WindowsImpersonationContext wic = !OS.W9x ? User.Identity.Impersonate() : null)
                             {
                                 // LoadVault reads from HKCU of the target user and populates the instance properties.
                                 if (OS.W12) TM.Windows12.LoadVault();
                                 else if (OS.W11) TM.Windows11.LoadVault();
                                 else if (OS.W10) TM.Windows10.LoadVault();
 
-                                wic.Undo();
+                                wic?.Undo();
                             }
 
                             // Process runs outside impersonation — same pattern as Windows10xBase<T>.Process():
@@ -345,11 +345,11 @@ namespace WinPaletter
 
                         try
                         {
-                            using (System.Security.Principal.WindowsImpersonationContext wic = User.Identity.Impersonate())
+                            using (System.Security.Principal.WindowsImpersonationContext wic = !OS.W9x ? User.Identity.Impersonate() : null)
                             {
                                 // LoadVault reads from HKCU of the target user and populates the instance properties.
                                 TM.Win32.LoadVault();
-                                wic.Undo();
+                                wic?.Undo();
                             }
 
                             TM.Win32.Apply();
@@ -370,12 +370,12 @@ namespace WinPaletter
 
                         try
                         {
-                            using (System.Security.Principal.WindowsImpersonationContext wic = User.Identity.Impersonate())
+                            using (System.Security.Principal.WindowsImpersonationContext wic = !OS.W9x ? User.Identity.Impersonate() : null)
                             {
                                 // LoadVault reads from HKCU of the target user and populates the instance properties.
                                 TM.MetricsFonts.LoadVault();
 
-                                wic.Undo();
+                                wic?.Undo();
                             }
 
                             TM.MetricsFonts.Apply();

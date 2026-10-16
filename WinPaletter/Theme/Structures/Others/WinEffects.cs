@@ -235,7 +235,7 @@ namespace WinPaletter.Theme.Structures
                 WindowUIEffects = windowUIEffects;
 
             bool animateControlsInsideWindow = AnimateControlsInsideWindow;
-            if (!OS.WXP && !SystemParametersInfo(SPI.SPI_GETCLIENTAREAANIMATION, 0, ref animateControlsInsideWindow, SPIF.SPIF_NONE))
+            if (!OS.W9x && !OS.WXP && !SystemParametersInfo(SPI.SPI_GETCLIENTAREAANIMATION, 0, ref animateControlsInsideWindow, SPIF.SPIF_NONE))
                 AnimateControlsInsideWindow = @default.AnimateControlsInsideWindow;
             else
                 AnimateControlsInsideWindow = animateControlsInsideWindow;
@@ -447,7 +447,7 @@ namespace WinPaletter.Theme.Structures
                         SystemParametersInfo(treeView, SPI.SPI_SETUIEFFECTS, 0, WE.WindowUIEffects, SPIF.SPIF_UPDATEINIFILE);
                         SystemParametersInfo(treeView, SPI.SPI_SETDROPSHADOW, 0, WE.WindowShadow, SPIF.SPIF_UPDATEINIFILE);
 
-                        if (!OS.WXP) SystemParametersInfo(treeView, SPI.SPI_SETCLIENTAREAANIMATION, 0, WE.AnimateControlsInsideWindow, SPIF.SPIF_UPDATEINIFILE);
+                        if (!OS.W9x && !OS.WXP) SystemParametersInfo(treeView, SPI.SPI_SETCLIENTAREAANIMATION, 0, WE.AnimateControlsInsideWindow, SPIF.SPIF_UPDATEINIFILE);
 
                         SystemParametersInfo(treeView, SPI.SPI_SETDRAGFULLWINDOWS, WE.ShowWinContentDrag, 0, SPIF.SPIF_UPDATEINIFILE);        // use uiParam not pvParam
                         SystemParametersInfo(treeView, SPI.SPI_SETMENUANIMATION, 0, WE.MenuAnimation, SPIF.SPIF_UPDATEINIFILE);
@@ -593,7 +593,7 @@ namespace WinPaletter.Theme.Structures
                         }
                     }
 
-                    if (!OS.WXP && !OS.WVista)
+                    if (!OS.W9x && !OS.WXP && !OS.WVista)
                     {
                         if (SysListView32)
                         {

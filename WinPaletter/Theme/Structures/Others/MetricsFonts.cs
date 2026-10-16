@@ -170,8 +170,8 @@ namespace WinPaletter.Theme.Structures
             SmCaptionHeight = ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionHeight", @default.SmCaptionHeight * -15) / -15;
             SmCaptionWidth = ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "SmCaptionWidth", @default.SmCaptionWidth * -15) / -15;
 
-            // Get Shell Icon Size and Shell Small Icon Size only on Windows XP
-            if (OS.WXP)
+            // Get Shell Icon Size and Shell Small Icon Size only on Windows 9x/XP
+            if (OS.W9x || OS.WXP)
             {
                 try { ShellIconSize = ReadReg(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", @default.ShellIconSize); }
                 catch { ShellIconSize = @default.ShellIconSize; }
@@ -378,8 +378,8 @@ namespace WinPaletter.Theme.Structures
                         SystemParametersInfo(treeView, SPI.SPI_SETICONMETRICS, Marshal.SizeOf(ICO), ref ICO, SPIF.SPIF_WRITEANDNOTIFY);
                     }).ConfigureAwait(false);
 
-                    // Process Shell Icon Size and Shell Small Icon Size only on Windows XP
-                    if (OS.WXP)
+                    // Process Shell Icon Size and Shell Small Icon Size only on Windows 9x/XP
+                    if (OS.W9x || OS.WXP)
                     {
                         WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Icon Size", ShellIconSize, RegistryValueKind.String);
                         WriteReg(treeView, @"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics", "Shell Small Icon Size", ShellSmallIconSize, RegistryValueKind.String);
@@ -661,7 +661,7 @@ namespace WinPaletter.Theme.Structures
                 WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Desktop"), "FontSmoothing", !Fonts_SingleBitPP ? 2 : 0);
                 WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Desktop"), "FontSmoothingType", !Fonts_SingleBitPP ? 2 : 1);
 
-                if (OS.WXP)
+                if (OS.W9x || OS.WXP)
                 {
                     WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics"), "Shell Icon Size", ShellIconSize, RegistryValueKind.String);
                     WriteReg(treeView, ToVaultPath(@"HKEY_CURRENT_USER\Control Panel\Desktop\WindowMetrics"), "Shell Small Icon Size", ShellSmallIconSize, RegistryValueKind.String);
@@ -704,7 +704,7 @@ namespace WinPaletter.Theme.Structures
                 SmCaptionHeight = ReadReg(wm, "SmCaptionHeight", SmCaptionHeight * -15) / -15;
                 SmCaptionWidth = ReadReg(wm, "SmCaptionWidth", SmCaptionWidth * -15) / -15;
 
-                if (OS.WXP)
+                if (OS.W9x || OS.WXP)
                 {
                     ShellIconSize = ReadReg(wm, "Shell Icon Size", ShellIconSize);
                     ShellSmallIconSize = ReadReg(wm, "Shell Small Icon Size", ShellSmallIconSize);

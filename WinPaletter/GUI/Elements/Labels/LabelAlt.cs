@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
@@ -105,38 +106,77 @@ namespace WinPaletter.UI.WP
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics G = e.Graphics;
+
+            // Nothing to draw into — bail before touching GDI+.
+            if (Width <= 0 || Height <= 0) return;
+
             G.SmoothingMode = SmoothingMode.AntiAlias;
             G.TextRenderingHint = DesignMode ? TextRenderingHint.ClearTypeGridFit : Program.Style.TextRenderingHint;
 
-            //Makes background drawn properly, and transparent
+            // Transparent background: ask the parent chain to paint through us.
             InvokePaintBackground(this, e);
 
-            using (SolidBrush br_0 = new(BackColor))
+            Rectangle bounds = new(0, 0, Width, Height);
+
+            using (SolidBrush backBrush = new(BackColor))
+            using (SolidBrush foreBrush = new(ForeColor))
             using (StringFormat sf = TextAlign.ToStringFormat())
-            using (SolidBrush br = new(ForeColor))
             {
-                G.FillRectangle(br_0, new Rectangle(0, 0, Width, Height));
+                G.FillRectangle(backBrush, bounds);
+
+                bool drew = false;
+                Exception firstFailure = null;
 
                 try
                 {
                     if (DesignMode || !DrawOnGlass)
                     {
-                        G.DrawString(Text, Font, br, new Rectangle(0, 0, Width, Height), sf);
+                        G.DrawString(Text, Font, foreBrush, bounds, sf);
+                        drew = true;
                     }
-
-                    else if (!DesignMode & DrawOnGlass)
+                    else if (!DesignMode && DrawOnGlass)
                     {
-                        G.DrawCompositedText(Text, Font, new Rectangle(0, 0, Width, Height), Padding, ForeColor, 7, ReturnFormatFlags(Text), false);
+                        G.DrawCompositedText(Text, Font, bounds, Padding, ForeColor, 7, ReturnFormatFlags(Text), false);
+                        drew = true;
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
-                    G.DrawString(Text, Font, br, new Rectangle(0, 0, Width, Height), sf);
+                    // Record the real cause once. Do NOT retry GDI+ with the same Graphics —
+                    // on Win9x the same GDI+ status will just be returned again.
+                    firstFailure = ex;
                 }
 
-                // Don't use base.OnPaint(e) to avoid doubling graphics bug
-                //// base.OnPaint(e);
+                if (!drew)
+                {
+                    // GDI fallback: TextRenderer uses user32/gdi32, not gdiplus.dll,
+                    // so it succeeds even when the Graphics / Font / DC are in a state
+                    // that GDI+ 5.1 rejects with a generic error.
+                    try
+                    {
+                        TextRenderer.DrawText(e.Graphics, Text, Font, bounds, ForeColor, ReturnFormatFlags(Text));
+                    }
+                    catch
+                    {
+                        // Give up silently. A paint failure must never propagate out of
+                        // OnPaint or it will kill the message pump.
+                    }
+                }
+
+                if (firstFailure != null)
+                {
+                    try
+                    {
+                        Program.Log?.Write(Serilog.Events.LogEventLevel.Warning, $"LabelAlt GDI+ draw failed (fell back to GDI): {firstFailure}");
+                    }
+                    catch
+                    {
+                        // Logging must never take the app down either.
+                    }
+                }
             }
+
+            // Don't use base.OnPaint(e) — the base Label paint would draw the text again.
         }
     }
 }

@@ -2187,7 +2187,7 @@ namespace WinPaletter
                         {
                             string fontName;
 
-                            if (OS.WXP) { fontName = "Tahoma"; }
+                            if (OS.W9x || OS.WXP) { fontName = "Tahoma"; }
                             else if (OS.W7 | OS.WVista) { fontName = "Segoe UI"; }
                             else { fontName = Fonts.Exists("Segoe UI Black") ? "Segoe UI Black" : "Segoe UI"; }
 

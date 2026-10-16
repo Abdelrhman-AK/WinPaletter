@@ -45,7 +45,7 @@ namespace WinPaletter.UI.Style
                 return true; // Rounded by default
             if (OS.W10 || OS.W8x)
                 return false; // Sharp by default
-            if (OS.W7 || OS.WVista || OS.WXP)
+            if (OS.W7 || OS.WVista || OS.WXP || OS.W9x)
                 return !Program.ClassicThemeRunning; // Rounded unless classic theme
             return false; // Default to sharp corners
         }
@@ -73,7 +73,7 @@ namespace WinPaletter.UI.Style
                         // Attempt to determine dark mode based on settings and operating system
                         if (Program.Settings.Appearance.AutoDarkMode)
                         {
-                            if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8x)
+                            if (!OS.W9x && !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8x)
                             {
                                 Program.Style.DarkMode = !(ReadReg(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 0) == 1);
                             }
@@ -150,7 +150,7 @@ namespace WinPaletter.UI.Style
                 Disabled = Program.Settings.Appearance.DisabledColor;
                 Disabled_Background = Program.Settings.Appearance.DisabledBackColor;
 
-                CustomR = !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8x && !OS.W10;
+                CustomR = !OS.W9x && !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8x && !OS.W10;
             }
             else
             {
@@ -176,7 +176,7 @@ namespace WinPaletter.UI.Style
                 TextRenderingHint = textRenderingHint
             };
 
-            if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8x)
+            if (!OS.W9x && !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8x)
             {
                 // try is used as a fallback for Windows 10 1809 and below
                 try
@@ -270,7 +270,7 @@ namespace WinPaletter.UI.Style
 
             if (!skip)
             {
-                if (!OS.WXP && !OS.WVista && !OS.W7 && !OS.W8x)
+                if (!OS.W9x && !OS.WXP && !OS.WVista && !OS.W7 && !OS.W8x)
                 {
                     SetControlTheme(ctrl.Handle, DarkMode ? CtrlTheme.DarkExplorer : CtrlTheme.Default, true);
                 }
@@ -400,6 +400,7 @@ namespace WinPaletter.UI.Style
         /// <returns>Zero if successful, otherwise an error code.</returns>
         public static int SetControlTheme(IntPtr handle, CtrlTheme theme, bool recursive = false)
         {
+            if (OS.W9x) return 0; // No theming support on Windows 9x
             if (handle == IntPtr.Zero) return 0;
 
             // Determine the appTheme and subAppName arguments for UxTheme.SetWindowTheme

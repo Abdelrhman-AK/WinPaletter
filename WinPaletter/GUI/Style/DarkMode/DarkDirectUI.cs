@@ -1275,7 +1275,7 @@ namespace WinPaletter.UI.Dark
         public static void DarkenProgressDialog(IntPtr hwndPD)
         {
             if (!Program.Style.DarkMode) return;
-            if (OS.WXP || OS.WVista || OS.W7 || OS.W8x) return;
+            if (OS.W98 || OS.WXP || OS.WVista || OS.W7 || OS.W8x) return;
             if (hwndPD == IntPtr.Zero) return;
 
             // Clean up any existing state for this window first
@@ -1374,7 +1374,7 @@ namespace WinPaletter.UI.Dark
         public static void DarkenTaskDialog(IntPtr hwndTD, IntPtr pCfg)
         {
             if (!Program.Style.DarkMode) return;
-            if (OS.WXP || OS.WVista || OS.W7 || OS.W8x) return;
+            if (OS.W98 || OS.WXP || OS.WVista || OS.W7 || OS.W8x) return;
             if (hwndTD == IntPtr.Zero) return;
 
             s_hasNativeTheme = IsDarkThemeActive("DarkMode_Explorer::TaskDialog", "TaskDialog") || IsDarkThemeActive("DarkMode_DarkTheme::TaskDialog", "TaskDialog");

@@ -674,7 +674,7 @@ namespace WinPaletter
                 {
                     try
                     {
-                        using (WindowsImpersonationContext wic = User.Identity.Impersonate())
+                        using (WindowsImpersonationContext wic = !OS.W9x ? User.Identity.Impersonate() : null)
                         {
                             if (DWMAPI.IsCompositionEnabled())
                             {
@@ -685,7 +685,7 @@ namespace WinPaletter
 
                                 DWMAPI.DwmSetColorizationParameters(ref colorizationParams, false);
                             }
-                            wic.Undo();
+                            wic?.Undo();
                         }
                     }
                     catch { }
