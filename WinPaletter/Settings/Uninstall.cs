@@ -315,7 +315,7 @@ namespace WinPaletter
 
                     IntPtr intPtr = IntPtr.Zero;
                     // Disable file system redirection to prevent the logoff.exe file from being redirected to SysWOW64
-                    Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
+                    if (!OS.W9x) Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
                     if (File.Exists($@"{SysPaths.System32}\logoff.exe"))
                     {
                         Forms.MainForm.LoggingOff = true;
@@ -325,6 +325,7 @@ namespace WinPaletter
                     {
                         MsgBox(string.Format(Program.Localization.Strings.Messages.LogoffNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     }
+                    if (!OS.W9x) Kernel32.Wow64RevertWow64FsRedirection(intPtr);
                 }
             }
         }

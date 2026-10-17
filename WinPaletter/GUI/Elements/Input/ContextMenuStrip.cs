@@ -164,7 +164,11 @@ namespace WinPaletter.UI.WP
         private readonly System.Windows.Forms.Timer _animationTimer;
         private ToolStripItem _previouslySelectedItem;
 
+        protected override AccessibleObject CreateAccessibilityInstance() => OS.W9x ? new() : base.CreateAccessibilityInstance();
+
         AnimateWindowFlags AnimationType => Program.TM.WindowsEffects.MenuFade == WinEffects.MenuAnimType.Fade ? AnimateWindowFlags.AW_BLEND : AnimateWindowFlags.AW_HOR_POSITIVE;
+
+        private static readonly System.Reflection.FieldInfo _itemAccField = typeof(ToolStripItem).GetField("accessibilityObject", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
 
         private class AnimatedItemState
         {
@@ -187,9 +191,9 @@ namespace WinPaletter.UI.WP
 
         public ContextMenuStrip()
         {
-            AllowTransparency = true;
+            AllowTransparency = !OS.W9x;
             AutoClose = true;
-            DropShadowEnabled = true;
+            DropShadowEnabled = !OS.W9x;
 
             SetStyle(ControlStyles.UserPaint | ControlStyles.SupportsTransparentBackColor | ControlStyles.AllPaintingInWmPaint, true);
             DoubleBuffered = true;
@@ -243,6 +247,8 @@ namespace WinPaletter.UI.WP
         protected override void OnItemAdded(ToolStripItemEventArgs e)
         {
             base.OnItemAdded(e);
+
+            if (OS.W9x && _itemAccField != null) _itemAccField.SetValue(e.Item, new AccessibleObject());
 
             if (e.Item is not ToolStripSeparator)
             {
@@ -473,6 +479,7 @@ namespace WinPaletter.UI.WP
         protected override void OnOpened(EventArgs e)
         {
             base.OnOpened(e);
+            if (OS.W9x) return;
 
             if (_firstOpen && Program.Style.Animations && Handle != IntPtr.Zero)
             {
@@ -481,6 +488,40 @@ namespace WinPaletter.UI.WP
                 AnimateWindow(Handle, 80, AnimationType | AnimateWindowFlags.AW_ACTIVATE);
                 NativeMethods.User32.ShowWindow(Handle, NativeMethods.User32.ShowWindowFlags.ShowActivate);
             }
+        }
+
+        protected override void OnMouseMove(MouseEventArgs mea)
+        {
+            if (OS.W9x)
+            {
+                try { base.OnMouseMove(mea); }
+                catch (DllNotFoundException) { }
+                catch (NullReferenceException) { }
+
+                ToolStripItem it = GetItemAt(mea.Location);
+                if (it != null && it is not ToolStripSeparator) UpdateItemSelection(it);
+                return;
+            }
+            base.OnMouseMove(mea);
+        }
+
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            if (OS.W9x)
+            {
+                try { base.OnMouseLeave(e); }
+                catch (DllNotFoundException) { }
+                catch (NullReferenceException) { }
+
+                if (_previouslySelectedItem != null && _itemStates.TryGetValue(_previouslySelectedItem, out var st))
+                {
+                    st.TargetAlpha = 0f;
+                    st.LastUpdate = DateTime.Now;
+                    StartAnimationIfNeeded();
+                }
+                return;
+            }
+            base.OnMouseLeave(e);
         }
 
         protected override void WndProc(ref Message m)
@@ -493,6 +534,14 @@ namespace WinPaletter.UI.WP
                 {
                     AnimateWindow(Handle, 80, AnimationType | (showing ? AnimateWindowFlags.AW_ACTIVATE : AnimateWindowFlags.AW_HIDE));
                 }
+            }
+
+            if (OS.W9x)
+            {
+                try { base.WndProc(ref m); }
+                catch (DllNotFoundException) { }
+                catch (NullReferenceException) { }
+                return;
             }
 
             base.WndProc(ref m);

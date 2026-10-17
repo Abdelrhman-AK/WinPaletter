@@ -49,6 +49,13 @@ namespace WinPaletter
             // Initialize the application
             InitializeApplication();
 
+            if (OS.W9x)
+            {
+                AppContext.SetSwitch("Switch.UseLegacyAccessibilityFeatures", true);
+                AppContext.SetSwitch("Switch.UseLegacyAccessibilityFeatures.2", true);
+                AppContext.SetSwitch("Switch.UseLegacyAccessibilityFeatures.3", true);
+            }
+
             if (Program.BootStatus == BootStatuses.SafeMode) Forms.SOS.Show();
 
             if (OS.W9x)

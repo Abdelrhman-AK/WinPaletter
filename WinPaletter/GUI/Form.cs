@@ -49,6 +49,8 @@ namespace WinPaletter.UI.WP
         /// </summary>
         public event EventHandler FormTabUnpinned;
 
+        protected override AccessibleObject CreateAccessibilityInstance() => OS.W9x ? new() : base.CreateAccessibilityInstance();
+
         public Form()
         {
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);

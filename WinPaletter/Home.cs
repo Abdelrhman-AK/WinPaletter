@@ -911,7 +911,7 @@ namespace WinPaletter
             {
                 // Disable the file system redirection to access the system32 folder.
                 IntPtr intPtr = IntPtr.Zero;
-                Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
+                if (!OS.W9x) Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
                 if (System.IO.File.Exists($@"{SysPaths.System32}\logoff.exe"))
                 {
                     // Set the logging off flag to true to make WinPaletter exits without confirmation.
@@ -922,6 +922,7 @@ namespace WinPaletter
                 {
                     MsgBox(string.Format(Program.Localization.Strings.Messages.LogoffNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
+                if (!OS.W9x) Kernel32.Wow64RevertWow64FsRedirection(intPtr);
             }
         }
 

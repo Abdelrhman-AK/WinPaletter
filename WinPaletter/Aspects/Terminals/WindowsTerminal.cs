@@ -663,10 +663,10 @@ namespace WinPaletter
             else
             {
                 IntPtr intPtr = IntPtr.Zero;
-                Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
+                if (!OS.W9x) Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
                 string path = string.Empty;
                 if (profile.Commandline is not null) path = profile.Commandline.Replace("%SystemRoot%", SysPaths.Windows);
-                Kernel32.Wow64RevertWow64FsRedirection(intPtr);
+                if (!OS.W9x) Kernel32.Wow64RevertWow64FsRedirection(intPtr);
 
                 if (File.Exists(path))
                 {
@@ -1838,11 +1838,11 @@ namespace WinPaletter
                         else
                         {
                             IntPtr intPtr = IntPtr.Zero;
-                            Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
+                            if (!OS.W9x) Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
                             string path = string.Empty;
                             if (CCatFrom.Commandline is not null)
                                 path = CCatFrom.Commandline.Replace("%SystemRoot%", SysPaths.Windows);
-                            Kernel32.Wow64RevertWow64FsRedirection(intPtr);
+                            if (!OS.W9x) Kernel32.Wow64RevertWow64FsRedirection(intPtr);
 
                             if (File.Exists(path))
                             {

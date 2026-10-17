@@ -1253,7 +1253,7 @@ namespace WinPaletter
         private void Button4_Click(object sender, EventArgs e)
         {
             IntPtr intPtr = IntPtr.Zero;
-            Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
+            if (!OS.W9x) Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
             string tempcmd = SysPaths.appData + "\\testcolors.cmd";
 
             if (_Edition == Edition.CMD)
@@ -1438,7 +1438,7 @@ while ($true) {{
                 using (Process.Start(psi)) { }
             }
 
-            Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
+            if (!OS.W9x) Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
         }
 
         private void CMD_RasterToggle_CheckedChanged(object sender, EventArgs e)

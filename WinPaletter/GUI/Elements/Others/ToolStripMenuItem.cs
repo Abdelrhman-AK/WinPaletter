@@ -13,6 +13,8 @@ namespace WinPaletter.UI.WP
 
         }
 
+        protected override AccessibleObject CreateAccessibilityInstance() => OS.W9x ? new() : base.CreateAccessibilityInstance();
+
         protected override void OnPaint(PaintEventArgs e)
         {
             Graphics G = e.Graphics;

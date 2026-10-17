@@ -36,6 +36,8 @@ namespace WinPaletter.UI.WP
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(false)]
         public override Color BackColor { get; set; }
 
+        protected override AccessibleObject CreateAccessibilityInstance() => OS.W9x ? new() : base.CreateAccessibilityInstance();
+
         private static TextureBrush _noiseBrush = new(Resources.Noise.Fade(0.3f));
         private TextureBrush _noiseBrush2 = new(Resources.Noise.Fade(0.9f));
 
@@ -66,7 +68,7 @@ namespace WinPaletter.UI.WP
 
             protected override void WndProc(ref Message m)
             {
-                if (m.Msg == (int)User32.WindowsMessage.WindowPosChanging && !_isAnimating)
+                if (!OS.W9x && m.Msg == (int)User32.WindowsMessage.WindowPosChanging && !_isAnimating)
                 {
                     User32.WINDOWPOS windowPos = (User32.WINDOWPOS)Marshal.PtrToStructure(m.LParam, typeof(User32.WINDOWPOS));
 
@@ -117,9 +119,18 @@ namespace WinPaletter.UI.WP
         }
 
         #endregion
-
+    
         protected override void WndProc(ref Message m)
         {
+            if (OS.W9x)
+            {
+                if (m.Msg == (int)User32.WindowsMessage.EraseBkgnd) { m.Result = (IntPtr)1; return; }
+
+                try { base.WndProc(ref m); }
+                catch {}
+                return;
+            }
+
             if (m.Msg == (int)User32.WindowsMessage.EraseBkgnd)
             {
                 m.Result = (IntPtr)1;
@@ -127,7 +138,7 @@ namespace WinPaletter.UI.WP
             }
 
             // Let base handle all messages first
-            if (m.Msg == (int)User32.WindowsMessage.CtlColorListBox)
+            if (!OS.W9x && m.Msg == (int)User32.WindowsMessage.CtlColorListBox)
             {
                 // Call base first to apply dark mode theme
                 base.WndProc(ref m);
@@ -263,6 +274,13 @@ namespace WinPaletter.UI.WP
             if (CanAnimate) Transition.With(this, nameof(alpha2), 0).CriticalDamp(Program.AnimationSpan);
             else alpha2 = 0;
 
+            if (OS.W9x)
+            {
+                try { base.OnDropDown(e); }
+                catch (DllNotFoundException) { }
+                catch (NullReferenceException) { }
+                return;
+            }
             base.OnDropDown(e);
         }
 
@@ -272,7 +290,15 @@ namespace WinPaletter.UI.WP
             else alpha2 = 255;
 
             ReleaseDropDownAnimator();
-            _lastThemedListBox = IntPtr.Zero; // Reset so next open is re-themed.
+            _lastThemedListBox = IntPtr.Zero;
+
+            if (OS.W9x)
+            {
+                try { base.OnDropDownClosed(e); }
+                catch (DllNotFoundException) { }
+                catch (NullReferenceException) { }
+                return;
+            }
             base.OnDropDownClosed(e);
         }
 

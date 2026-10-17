@@ -973,7 +973,7 @@ namespace WinPaletter
 
             try
             {
-                Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
+                if (!OS.W9x) Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
 
                 string arguments;
                 if (System.IO.File.Exists(File))
@@ -1013,7 +1013,7 @@ namespace WinPaletter
             }
             finally
             {
-                Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
+                if (!OS.W9x) Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
             }
         }
 

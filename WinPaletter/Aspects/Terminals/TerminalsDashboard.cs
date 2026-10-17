@@ -133,7 +133,7 @@ namespace WinPaletter
             else
             {
                 IntPtr intPtr = IntPtr.Zero;
-                Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
+                if (!OS.W9x) Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
                 string Dir = $@"{Environment.GetEnvironmentVariable("WINDIR")}\System32\WindowsPowerShell\v1.0";
 
                 if (Directory.Exists(Dir))
@@ -147,7 +147,7 @@ namespace WinPaletter
                     MsgBox(Program.Localization.Strings.Aspects.Consoles.PowerShellx86_notFound, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, $"{Program.Localization.Strings.Aspects.Terminals.PathSupposed}\"{Dir}\"", Program.Localization.Strings.General.CollapseNote, Program.Localization.Strings.General.ExpandNote, Program.Localization.Strings.Aspects.Terminals.Bypass);
                 }
 
-                Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
+                if (!OS.W9x) Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
             }
         }
 
@@ -162,7 +162,7 @@ namespace WinPaletter
             else
             {
                 IntPtr intPtr = IntPtr.Zero;
-                Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
+                if (!OS.W9x) Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
                 string Dir = $@"{Environment.GetEnvironmentVariable("WINDIR")}\SysWOW64\WindowsPowerShell\v1.0";
 
                 if (Directory.Exists(Dir))
@@ -176,7 +176,7 @@ namespace WinPaletter
                     MsgBox(Program.Localization.Strings.Aspects.Consoles.PowerShellx64_notFound, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, $"{Program.Localization.Strings.Aspects.Terminals.PathSupposed}\"{Dir}\"", Program.Localization.Strings.General.CollapseNote, Program.Localization.Strings.General.ExpandNote, Program.Localization.Strings.Aspects.Terminals.Bypass);
                 }
 
-                Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
+                if (!OS.W9x) Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
             }
         }
 

@@ -8,6 +8,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Reflection;
+using System.Security.Principal;
 using System.Windows.Forms;
 using WinPaletter.Theme.Structures;
 
@@ -39,7 +40,7 @@ namespace WinPaletter.Theme
                 case Source.Registry:
                     {
                         // Imperonate the current user to get the theme data from the registry
-                        using (!OS.W9x ? User.Identity.Impersonate() : null)
+                        using (WindowsImpersonationContext wic = !OS.W9x ? User.Identity.Impersonate() : null)
                         {
                             // Get the theme data from the registry and use @default to help WinPaletter know the default values
                             using (Manager @default = Default.FromOS(Program.WindowStyle))

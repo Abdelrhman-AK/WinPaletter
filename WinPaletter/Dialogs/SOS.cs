@@ -38,7 +38,7 @@ namespace WinPaletter.Dialogs
                 Forms.MainForm.LoggingOff = false;
 
                 IntPtr intPtr = IntPtr.Zero;
-                Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
+                if (!OS.W9x) Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
                 if (File.Exists($@"{SysPaths.System32}\logoff.exe"))
                 {
                     Forms.MainForm.LoggingOff = true;
@@ -48,6 +48,7 @@ namespace WinPaletter.Dialogs
                 {
                     MsgBox(string.Format(Program.Localization.Strings.Messages.LogoffNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
+                if (!OS.W9x) Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
             }
         }
 
@@ -58,7 +59,7 @@ namespace WinPaletter.Dialogs
                 Forms.MainForm.LoggingOff = false;
 
                 IntPtr intPtr = IntPtr.Zero;
-                Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
+                if (!OS.W9x) Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
                 if (File.Exists($@"{SysPaths.System32}\shutdown.exe"))
                 {
                     Forms.MainForm.LoggingOff = true;
@@ -68,6 +69,7 @@ namespace WinPaletter.Dialogs
                 {
                     MsgBox(string.Format(Program.Localization.Strings.Messages.ShutdownNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
+                if (!OS.W9x) Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
             }
         }
 
@@ -78,7 +80,7 @@ namespace WinPaletter.Dialogs
                 Forms.MainForm.LoggingOff = false;
 
                 IntPtr intPtr = IntPtr.Zero;
-                Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
+                if (!OS.W9x) Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
                 if (File.Exists($@"{SysPaths.System32}\shutdown.exe"))
                 {
                     Forms.MainForm.LoggingOff = true;
@@ -88,6 +90,7 @@ namespace WinPaletter.Dialogs
                 {
                     MsgBox(string.Format(Program.Localization.Strings.Messages.ShutdownNotFound, SysPaths.System32), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
+                if (!OS.W9x) Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
             }
         }
 
@@ -115,7 +118,7 @@ namespace WinPaletter.Dialogs
                 Task.Run(new Action(() =>
                 {
                     IntPtr intPtr = IntPtr.Zero;
-                    Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
+                    if (!OS.W9x) Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
 
                     using (Process process = new()
                     {
@@ -177,8 +180,7 @@ namespace WinPaletter.Dialogs
                         }
                     }
 
-                    Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
-
+                    if (!OS.W9x) Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
                 }));
             }
 
@@ -252,7 +254,7 @@ namespace WinPaletter.Dialogs
                 Forms.MainForm.LoggingOff = false;
 
                 IntPtr intPtr = IntPtr.Zero;
-                Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
+                if (!OS.W9x) Kernel32.Wow64DisableWow64FsRedirection(ref intPtr);
 
                 if (OS.W8x || OS.W10 || OS.W11 || OS.W12)
                 {
@@ -291,6 +293,8 @@ namespace WinPaletter.Dialogs
                 {
                     MsgBox(string.Format(Program.Localization.Strings.Messages.RecoveryNotAvailable, OS.WVista ? Program.Localization.Strings.Windows.WVista : Program.Localization.Strings.Windows.WXP), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
+
+                if (!OS.W9x) Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
             }
         }
 

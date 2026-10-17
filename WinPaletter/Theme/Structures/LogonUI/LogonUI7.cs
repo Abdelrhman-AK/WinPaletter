@@ -133,7 +133,7 @@ namespace WinPaletter.Theme.Structures
                 IntPtr wow64Value = IntPtr.Zero;
 
                 // Disable WOW64 redirection to access system32 folder correctly
-                Kernel32.Wow64DisableWow64FsRedirection(ref wow64Value);
+                if (!OS.W9x) Kernel32.Wow64DisableWow64FsRedirection(ref wow64Value);
 
                 string DirX = $@"{SysPaths.System32}\oobe\info\backgrounds";
 
@@ -287,7 +287,7 @@ namespace WinPaletter.Theme.Structures
                 Program.Log?.Write(LogEventLevel.Information, $"Generating LogonUI screen image\\s is done.");
 
                 // Restore WOW64 redirection
-                Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
+                if (!OS.W9x) Kernel32.Wow64RevertWow64FsRedirection(IntPtr.Zero);
             }
         }
 
