@@ -88,6 +88,7 @@ namespace WinPaletter.Theme
                                 WallpaperTone_W7.Load();
                                 WallpaperTone_WVista.Load();
                                 WallpaperTone_WXP.Load();
+                                WallpaperTone_W9x.Load();
                                 Wallpaper.Load(@default.Wallpaper);
 
                                 Program.Log?.Write(LogEventLevel.Information, $"Targeting Console: Command Prompt");

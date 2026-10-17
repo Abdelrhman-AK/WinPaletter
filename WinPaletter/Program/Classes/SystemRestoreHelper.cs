@@ -87,6 +87,12 @@ namespace WinPaletter
         /// <param name="description">The description of the restore point. The WinPaletter tag is added automatically.</param>
         public static bool CreateRestorePoint(string description, bool waitForFlushing = false)
         {
+            if (OS.W9x && !OS.WMe)
+            {
+                MsgBox(Program.Localization.Strings.General.RestorePoint_Win95_98, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
             UI.WP.ProgressDialog dlg = null;
             bool result = false;
 
@@ -300,6 +306,12 @@ namespace WinPaletter
         /// <param name="sequenceNumber">The sequence number of the restore point, as returned by <see cref="GetWinPaletterRestorePoints"/>.</param>
         public static bool DeleteRestorePoint(uint sequenceNumber, bool waitForFlushing)
         {
+            if (OS.W9x && !OS.WMe)
+            {
+                MsgBox(Program.Localization.Strings.General.RestorePoint_Win95_98, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
             try
             {
                 Program.Log?.Debug($"DeleteRestorePoint called for #{sequenceNumber}, waitForFlushing: {waitForFlushing}, OS.WXP: {OS.WXP}");
@@ -375,6 +387,12 @@ namespace WinPaletter
         /// <returns>The count of restore points successfully deleted and the count that failed.</returns>
         public static (int Succeeded, int Failed) DeleteAllWinPaletterRestorePoints(bool waitForFlushing)
         {
+            if (OS.W9x && !OS.WMe)
+            {
+                MsgBox(Program.Localization.Strings.General.RestorePoint_Win95_98, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return (0, 0);
+            }
+
             Program.Log?.Debug("DeleteAllWinPaletterRestorePoints called");
 
             int succeeded = 0;
@@ -425,6 +443,12 @@ namespace WinPaletter
         /// </summary>
         public static void SetSystemRestoreStatus(char driveLetter, bool enable)
         {
+            if (OS.W9x && !OS.WMe)
+            {
+                MsgBox(Program.Localization.Strings.General.RestorePoint_Win95_98, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             try
             {
                 string drive = driveLetter + ":";

@@ -183,6 +183,14 @@ namespace WinPaletter.Theme
         public WallpaperTone WallpaperTone_WXP { get; set; } = new("WinXP") { Image = $"{SysPaths.Windows}\\Web\\Wallpaper\\Bliss.bmp" };
 
         /// <summary>
+        /// Structure instance that contains data about Wallpaper Tone, and it can be customized.
+        /// <br></br>This property targets Windows 9x (to avoid overlapping).
+        /// <br></br><br></br><br>- Wallpaper Tone is a feature by WinPaletter. It modifies images' HSL filter to alter wallpaper colors.</br>
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(nameof(WallpaperTone_W9x))]
+        public WallpaperTone WallpaperTone_W9x { get; set; } = new("Win9x");
+
+        /// <summary>
         /// Structure instance that contains data about WinPaletter cursors, and it can be customized.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(nameof(Cursors))]

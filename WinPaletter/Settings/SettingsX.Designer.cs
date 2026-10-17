@@ -807,10 +807,11 @@ namespace WinPaletter
             // 
             // titlebarExtender1
             // 
-            this.titlebarExtender1.BackColor = System.Drawing.Color.Black;
+            this.titlebarExtender1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.titlebarExtender1.Controls.Add(this.flowLayoutPanel1);
             this.titlebarExtender1.Dock = System.Windows.Forms.DockStyle.Top;
             this.titlebarExtender1.Flag = WinPaletter.Tabs.TitlebarExtender.Flags.Tabs_Extended;
+            this.titlebarExtender1.FormFocused = true;
             this.titlebarExtender1.Location = new System.Drawing.Point(0, 0);
             this.titlebarExtender1.Name = "titlebarExtender1";
             this.titlebarExtender1.Size = new System.Drawing.Size(1039, 51);

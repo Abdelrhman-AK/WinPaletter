@@ -93,19 +93,19 @@ namespace WinPaletter.GlobalVariables
         /// <summary>
         /// Gets a value indicating whether the current operating system is Windows 95.
         /// </summary>
-        public static bool W95 => IsRedirecting ? IsRedirected(WindowStyle.W95) : _w95;
+        public static bool W95 => IsRedirecting ? IsRedirected(WindowStyle.W9x) : _w95;
         private static readonly bool _w95 = _w95Regex.IsMatch(_description ?? "");
 
         /// <summary>
         /// Gets a value indicating whether the current operating system is Windows 98.
         /// </summary>
-        public static bool W98 => IsRedirecting ? IsRedirected(WindowStyle.W98) : _w98;
+        public static bool W98 => IsRedirecting ? IsRedirected(WindowStyle.W9x) : _w98;
         private static readonly bool _w98 = _w98Regex.IsMatch(_description ?? "");
 
         /// <summary>
         /// Gets a value indicating whether the current operating system is Windows Me.
         /// </summary>
-        public static bool WMe => IsRedirecting ? IsRedirected(WindowStyle.WMe) : _wme;
+        public static bool WMe => IsRedirecting ? IsRedirected(WindowStyle.W9x) : _wme;
         private static readonly bool _wme = _wMeRegex.IsMatch(_description ?? "");
 
         /// <summary>
@@ -220,6 +220,9 @@ namespace WinPaletter.GlobalVariables
                 else if (W7) { return Program.Localization.Strings.Windows.W7; }
                 else if (WVista) { return Program.Localization.Strings.Windows.WVista; }
                 else if (WXP) { return Program.Localization.Strings.Windows.WXP; }
+                else if (WMe) { return Program.Localization.Strings.Windows.WMe; }
+                else if (W98) { return Program.Localization.Strings.Windows.W98; }
+                else if (W95) { return Program.Localization.Strings.Windows.W95; }
                 else { return Program.Localization.Strings.Windows.Undefined; }
             }
         }
@@ -245,6 +248,7 @@ namespace WinPaletter.GlobalVariables
                 PreviewHelpers.WindowStyle.W7 => Program.Localization.Strings.Windows.W7,
                 PreviewHelpers.WindowStyle.WVista => Program.Localization.Strings.Windows.WVista,
                 PreviewHelpers.WindowStyle.WXP => Program.Localization.Strings.Windows.WXP,
+                PreviewHelpers.WindowStyle.W9x => Program.Localization.Strings.Windows.W9x,
                 _ => Program.Localization.Strings.Windows.Undefined,
             };
         }
@@ -264,6 +268,9 @@ namespace WinPaletter.GlobalVariables
                 else if (W7) { return "Windows 7"; }
                 else if (WVista) { return "Windows Vista"; }
                 else if (WXP) { return "Windows XP"; }
+                else if (WMe) { return "Windows Millennium Edition"; }
+                else if (W98) { return "Windows 98"; }
+                else if (W95) { return "Windows 95"; }
                 else { return "Windows 12 or higher"; }
             }
         }

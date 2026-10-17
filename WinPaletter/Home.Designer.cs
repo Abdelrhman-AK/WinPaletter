@@ -504,7 +504,7 @@
             // 
             // titlebarExtender2
             // 
-            this.titlebarExtender2.BackColor = System.Drawing.Color.Black;
+            this.titlebarExtender2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.titlebarExtender2.Controls.Add(this.flowLayoutPanel2);
             this.titlebarExtender2.Controls.Add(this.userButton);
             this.titlebarExtender2.Controls.Add(this.winEdition);

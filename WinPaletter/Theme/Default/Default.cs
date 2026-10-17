@@ -24,6 +24,7 @@ namespace WinPaletter.Theme
                 WindowStyle.W7 => Windows7,
                 WindowStyle.WVista => WindowsVista,
                 WindowStyle.WXP => WindowsXP,
+                WindowStyle.W9x => Windows9x,
                 _ => Windows11,
             };
         }
@@ -59,6 +60,9 @@ namespace WinPaletter.Theme
 
                 else if (OS.WXP)
                     return WindowsXP;
+
+                else if (OS.W9x)
+                    return Windows9x;
 
                 else
                     return Windows12;

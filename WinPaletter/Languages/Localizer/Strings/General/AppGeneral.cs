@@ -105,6 +105,7 @@
                 public string RestorePoint_Theme { get; set; } = "Before applying theme '{0}'";
                 public string RestorePoint_FirstTime { get; set; } = "First time System Restore Point";
                 public string RestorePoint_DialogTitle { get; set; } = "System Restore Point";
+                public string RestorePoint_Win95_98 { get; set; } = "System Restore is not supported on Windows 95 or 98. Restore point creation is only available on Windows Me and later.";
                 public string Help { get; set; } = "Help (from online GitHub Wiki)";
                 public string ThanksTo { get; set; } = "Thanks to";
                 public string SamplingPixels { get; set; } = "Sampling pixels";

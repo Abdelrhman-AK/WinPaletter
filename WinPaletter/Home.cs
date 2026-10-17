@@ -76,6 +76,13 @@ namespace WinPaletter
             // Double buffer the flow layout panels to prevent flickering.
             flowLayoutPanel3.DoubleBuffer();
 
+            if (OS.W9x)
+            {
+                winEdition.Left = userButton.Left;
+                userButton.Visible = false;
+                flowLayoutPanel2.Width += winEdition.Width;
+            }
+
             // Set the compact mode it it is enabled.
             processCompactMode();
 
@@ -359,6 +366,10 @@ namespace WinPaletter
                     winEdition.Image = WinLogos.WinXP;
                     break;
 
+                case WindowStyle.W9x:
+                    winEdition.Image = WinLogos.Win9x;                   
+                    break;
+
                 default:
                     card1.Image = Themes_Banners.Theme_11;
                     card3.Image = Themes_Banners.LogonUI_11;
@@ -369,8 +380,10 @@ namespace WinPaletter
             }
 
             card12.Visible = Program.WindowStyle != WindowStyle.WXP && Program.WindowStyle != WindowStyle.WVista;
-            card3.Visible = Program.WindowStyle != WindowStyle.WVista && Program.WindowStyle != WindowStyle.W8;
-            //card14.Visible = Program.WindowStyle != WindowStyle.WXP;
+            card3.Visible = Program.WindowStyle != WindowStyle.WVista && Program.WindowStyle != WindowStyle.W8 && Program.WindowStyle != WindowStyle.W9x;
+            card1.Visible = Program.WindowStyle != WindowStyle.W9x;
+            card12.Visible = Program.WindowStyle != WindowStyle.W9x;
+            card15.Visible = Program.WindowStyle != WindowStyle.W9x;
 
             LoadOSData_ToolTip();
         }
@@ -411,6 +424,10 @@ namespace WinPaletter
 
                 case WindowStyle.WXP:
                     OS = Program.Localization.Strings.Windows.WXP;
+                    break;
+
+                case WindowStyle.W9x:
+                    OS = Program.Localization.Strings.Windows.W9x;
                     break;
 
                 default:
@@ -753,6 +770,10 @@ namespace WinPaletter
             {
                 Forms.Wallpaper_Editor.WT = Program.TM.WallpaperTone_WXP;
             }
+            else if (Program.WindowStyle == WindowStyle.W9x)
+            {
+                Forms.Wallpaper_Editor.WT = Program.TM.WallpaperTone_W9x;
+            }
             else
             {
                 Forms.Wallpaper_Editor.WT = Program.TM.WallpaperTone_W11;
@@ -782,7 +803,7 @@ namespace WinPaletter
 
         private void card12_Click(object sender, EventArgs e)
         {
-            if (Program.WindowStyle != WindowStyle.WXP && Program.WindowStyle != WindowStyle.WVista)
+            if (Program.WindowStyle != WindowStyle.WXP && Program.WindowStyle != WindowStyle.WVista && Program.WindowStyle != WindowStyle.W9x)
             {
                 Forms.MainForm.BackgroundImage = (sender as Card).Image;
                 Forms.MainForm.AddTab(Forms.AltTabEditor);
@@ -793,6 +814,8 @@ namespace WinPaletter
                     MsgBox(string.Format(Program.Localization.Strings.Messages.AltTab_Unsupported, Program.Localization.Strings.Windows.WXP), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 if (Program.WindowStyle == WindowStyle.WVista)
                     MsgBox(string.Format(Program.Localization.Strings.Messages.AltTab_Unsupported, Program.Localization.Strings.Windows.WVista), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                if (Program.WindowStyle == WindowStyle.W9x)
+                    MsgBox(string.Format(Program.Localization.Strings.Messages.AltTab_Unsupported, Program.Localization.Strings.Windows.W9x), MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 

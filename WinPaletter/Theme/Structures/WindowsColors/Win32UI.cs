@@ -707,6 +707,10 @@ namespace WinPaletter.Theme.Structures
                     {
                         @default = Default.WindowsXP.Win32;
                     }
+                    else if (Program.WindowStyle == WindowStyle.W9x)
+                    {
+                        @default = Default.Windows9x.Win32;
+                    }
                     else
                     {
                         @default = Default.Windows11.Win32;

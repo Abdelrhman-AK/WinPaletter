@@ -64,6 +64,12 @@ namespace WinPaletter
 
         private void Setup()
         {
+            if (OS.W9x)
+            {
+                MsgBox(Program.Localization.Strings.Services.Windows9xNotSupported, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             textBox1.SetText(string.Empty);
 
             Button1.Enabled = false;
@@ -119,6 +125,12 @@ namespace WinPaletter
 
         private void Remove()
         {
+            if (OS.W9x)
+            {
+                MsgBox(Program.Localization.Strings.Services.Windows9xNotSupported, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             textBox1.SetText(string.Empty);
 
             Button1.Enabled = false;
@@ -179,6 +191,12 @@ namespace WinPaletter
         /// <param name="quietUninstall">If run method is uninstall, make the process quiet without output</param>
         public void Run(string serviceName, string serviceDescription, string destinationPath, byte[] PE, RunMethods @_runMethod, bool quietUninstall = false)
         {
+            if (OS.W9x)
+            {
+                MsgBox(Program.Localization.Strings.Services.Windows9xNotSupported, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }   
+            
             runMethod = @_runMethod;
             _serviceName = serviceName;
             _PE = PE;

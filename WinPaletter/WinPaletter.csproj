@@ -991,6 +991,7 @@
     <Compile Include="Theme\Default\Windows8.cs" />
     <Compile Include="Theme\Default\Windows81.cs" />
     <Compile Include="Theme\Default\WindowsVista.cs" />
+    <Compile Include="Theme\Default\Windows9x.cs" />
     <Compile Include="Theme\Default\WindowsXP.cs" />
     <Compile Include="Theme\Save.cs" />
     <Compile Include="Theme\ManagerBase.cs" />

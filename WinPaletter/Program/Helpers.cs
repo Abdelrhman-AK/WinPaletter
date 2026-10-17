@@ -247,6 +247,9 @@ namespace WinPaletter
 
             else if (OS.WVista) WindowStyle = PreviewHelpers.WindowStyle.WVista;
 
+            // Windows 9x with KernelEx reports as Windows XP, so we need to check for Windows 9x first
+            else if (OS.W9x) WindowStyle = PreviewHelpers.WindowStyle.W9x;
+
             else if (OS.WXP) WindowStyle = PreviewHelpers.WindowStyle.WXP;
 
             else WindowStyle = PreviewHelpers.WindowStyle.W11;

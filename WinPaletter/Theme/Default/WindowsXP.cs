@@ -14,7 +14,7 @@ namespace WinPaletter.Theme
         {
             get
             {
-                if (_windowsXP == null) _windowsXP = w10();
+                if (_windowsXP == null) _windowsXP = wxp();
                 return _windowsXP;
             }
         }

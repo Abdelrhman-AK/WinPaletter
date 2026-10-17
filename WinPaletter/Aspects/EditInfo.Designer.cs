@@ -114,6 +114,9 @@ namespace WinPaletter
             this.AlertBox21 = new WinPaletter.UI.WP.AlertBox();
             this.PictureBox42 = new System.Windows.Forms.PictureBox();
             this.pin_button = new WinPaletter.UI.WP.Button();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.pictureBox20 = new System.Windows.Forms.PictureBox();
+            this.checkBox7 = new WinPaletter.UI.WP.CheckBox();
             this.TabControl1.SuspendLayout();
             this.TabPage1.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -154,6 +157,8 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox18)).BeginInit();
             this.groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox42)).BeginInit();
+            this.panel9.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox20)).BeginInit();
             this.SuspendLayout();
             // 
             // titlebarExtender1
@@ -183,8 +188,8 @@ namespace WinPaletter
             // TabPage1
             // 
             this.TabPage1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(25)))), ((int)(((byte)(25)))));
-            this.TabPage1.Controls.Add(this.groupBox5);
             this.TabPage1.Controls.Add(this.groupBox4);
+            this.TabPage1.Controls.Add(this.groupBox5);
             this.TabPage1.Controls.Add(this.groupBox3);
             this.TabPage1.Controls.Add(this.groupBox2);
             this.TabPage1.Controls.Add(this.groupBox1);
@@ -319,9 +324,10 @@ namespace WinPaletter
             this.smoothFlowLayoutPanel1.Controls.Add(this.panel6);
             this.smoothFlowLayoutPanel1.Controls.Add(this.panel7);
             this.smoothFlowLayoutPanel1.Controls.Add(this.panel8);
+            this.smoothFlowLayoutPanel1.Controls.Add(this.panel9);
             this.smoothFlowLayoutPanel1.Location = new System.Drawing.Point(6, 37);
             this.smoothFlowLayoutPanel1.Name = "smoothFlowLayoutPanel1";
-            this.smoothFlowLayoutPanel1.Size = new System.Drawing.Size(457, 37);
+            this.smoothFlowLayoutPanel1.Size = new System.Drawing.Size(457, 35);
             this.smoothFlowLayoutPanel1.TabIndex = 155;
             // 
             // panel4
@@ -339,7 +345,7 @@ namespace WinPaletter
             // 
             this.pictureBox19.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.pictureBox19.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureBox19.Image = global::WinPaletter.UI.Controllers.StoreItem.Badge_designed_for_w12;
+            this.pictureBox19.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox19.Image")));
             this.pictureBox19.Location = new System.Drawing.Point(3, 3);
             this.pictureBox19.Name = "pictureBox19";
             this.pictureBox19.Size = new System.Drawing.Size(24, 24);
@@ -374,7 +380,7 @@ namespace WinPaletter
             // 
             this.PictureBox9.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.PictureBox9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox9.Image = global::WinPaletter.UI.Controllers.StoreItem.Badge_designed_for_w11;
+            this.PictureBox9.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox9.Image")));
             this.PictureBox9.Location = new System.Drawing.Point(3, 3);
             this.PictureBox9.Name = "PictureBox9";
             this.PictureBox9.Size = new System.Drawing.Size(24, 24);
@@ -409,7 +415,7 @@ namespace WinPaletter
             // 
             this.PictureBox10.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.PictureBox10.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox10.Image = global::WinPaletter.UI.Controllers.StoreItem.Badge_designed_for_w10;
+            this.PictureBox10.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox10.Image")));
             this.PictureBox10.Location = new System.Drawing.Point(3, 3);
             this.PictureBox10.Name = "PictureBox10";
             this.PictureBox10.Size = new System.Drawing.Size(24, 24);
@@ -444,7 +450,7 @@ namespace WinPaletter
             // 
             this.PictureBox11.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.PictureBox11.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox11.Image = global::WinPaletter.UI.Controllers.StoreItem.Badge_designed_for_w81;
+            this.PictureBox11.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox11.Image")));
             this.PictureBox11.Location = new System.Drawing.Point(3, 3);
             this.PictureBox11.Name = "PictureBox11";
             this.PictureBox11.Size = new System.Drawing.Size(24, 24);
@@ -479,7 +485,7 @@ namespace WinPaletter
             // 
             this.pictureBox7.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.pictureBox7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.pictureBox7.Image = global::WinPaletter.UI.Controllers.StoreItem.Badge_designed_for_w8;
+            this.pictureBox7.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox7.Image")));
             this.pictureBox7.Location = new System.Drawing.Point(3, 3);
             this.pictureBox7.Name = "pictureBox7";
             this.pictureBox7.Size = new System.Drawing.Size(24, 24);
@@ -514,7 +520,7 @@ namespace WinPaletter
             // 
             this.PictureBox12.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.PictureBox12.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox12.Image = global::WinPaletter.UI.Controllers.StoreItem.Badge_designed_for_w7;
+            this.PictureBox12.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox12.Image")));
             this.PictureBox12.Location = new System.Drawing.Point(3, 3);
             this.PictureBox12.Name = "PictureBox12";
             this.PictureBox12.Size = new System.Drawing.Size(24, 24);
@@ -549,7 +555,7 @@ namespace WinPaletter
             // 
             this.PictureBox13.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.PictureBox13.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox13.Image = global::WinPaletter.UI.Controllers.StoreItem.Badge_designed_for_wvista;
+            this.PictureBox13.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox13.Image")));
             this.PictureBox13.Location = new System.Drawing.Point(3, 3);
             this.PictureBox13.Name = "PictureBox13";
             this.PictureBox13.Size = new System.Drawing.Size(24, 24);
@@ -584,7 +590,7 @@ namespace WinPaletter
             // 
             this.PictureBox14.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.PictureBox14.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.PictureBox14.Image = global::WinPaletter.UI.Controllers.StoreItem.Badge_designed_for_wxp;
+            this.PictureBox14.Image = ((System.Drawing.Image)(resources.GetObject("PictureBox14.Image")));
             this.PictureBox14.Location = new System.Drawing.Point(3, 3);
             this.PictureBox14.Name = "PictureBox14";
             this.PictureBox14.Size = new System.Drawing.Size(24, 24);
@@ -1231,6 +1237,40 @@ namespace WinPaletter
             this.pin_button.Visible = false;
             this.pin_button.Click += new System.EventHandler(this.pin_button_Click);
             // 
+            // panel9
+            // 
+            this.panel9.BackColor = System.Drawing.Color.Transparent;
+            this.panel9.Controls.Add(this.pictureBox20);
+            this.panel9.Controls.Add(this.checkBox7);
+            this.panel9.Location = new System.Drawing.Point(167, 39);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(71, 30);
+            this.panel9.TabIndex = 159;
+            // 
+            // pictureBox20
+            // 
+            this.pictureBox20.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.pictureBox20.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pictureBox20.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox20.Image")));
+            this.pictureBox20.Location = new System.Drawing.Point(3, 3);
+            this.pictureBox20.Name = "pictureBox20";
+            this.pictureBox20.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox20.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox20.TabIndex = 34;
+            this.pictureBox20.TabStop = false;
+            // 
+            // checkBox7
+            // 
+            this.checkBox7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.checkBox7.Checked = true;
+            this.checkBox7.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.checkBox7.ForeColor = System.Drawing.Color.White;
+            this.checkBox7.Location = new System.Drawing.Point(28, 4);
+            this.checkBox7.Name = "checkBox7";
+            this.checkBox7.Size = new System.Drawing.Size(39, 22);
+            this.checkBox7.TabIndex = 28;
+            this.checkBox7.Text = "9x";
+            // 
             // EditInfo
             // 
             this.AllowDrop = true;
@@ -1295,6 +1335,8 @@ namespace WinPaletter
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox18)).EndInit();
             this.groupBox6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PictureBox42)).EndInit();
+            this.panel9.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox20)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1377,5 +1419,8 @@ namespace WinPaletter
         private UI.WP.GroupBox groupBox6;
         private UI.WP.Toggle toggle1;
         internal Label label7;
+        private Panel panel9;
+        internal PictureBox pictureBox20;
+        internal UI.WP.CheckBox checkBox7;
     }
 }

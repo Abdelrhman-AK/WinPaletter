@@ -67,10 +67,19 @@ namespace WinPaletter
         /// <param name="TM"></param>
         public void Adjust_Preview(Manager TM)
         {
-            windowsDesktop1.WindowStyle = Program.WindowStyle;
-            windowsDesktop1.BackgroundImage = Program.WallpaperMonitor.Get(TM, Program.WindowStyle);
-            windowsDesktop1.LoadFromTM(TM);
-            windowsDesktop1.LoadClassicColors(TM.Win32);
+            if (Program.WindowStyle != WindowStyle.W9x)
+            {
+                windowsDesktop1.WindowStyle = Program.WindowStyle;
+                windowsDesktop1.BackgroundImage = Program.WallpaperMonitor.Get(TM, Program.WindowStyle);
+                windowsDesktop1.LoadFromTM(TM);
+                windowsDesktop1.LoadClassicColors(TM.Win32);
+                windowsDesktop1.Visible = true;
+            }
+            else
+            {
+                windowsDesktop1.Visible = false;
+            }
+
             retroDesktopColors1.LoadColors(TM);
             retroDesktopColors1.LoadMetrics(TM);
         }
@@ -368,8 +377,8 @@ namespace WinPaletter
                 toggle_lockScreen.Text = $"{Program.Localization.Strings.Aspects.LockScreen}\r\n-{Program.Localization.Strings.Aspects.LockScreen_Description}";
             }
 
-            toggle_altTab.Visible = Program.WindowStyle != WindowStyle.WXP && Program.WindowStyle != WindowStyle.WVista;
-            toggle_lockScreen.Visible = Program.WindowStyle != WindowStyle.WVista && Program.WindowStyle != WindowStyle.W8;
+            toggle_altTab.Visible = Program.WindowStyle != WindowStyle.WXP && Program.WindowStyle != WindowStyle.WVista && Program.WindowStyle != WindowStyle.W9x;
+            toggle_lockScreen.Visible = Program.WindowStyle != WindowStyle.WVista && Program.WindowStyle != WindowStyle.W8 && Program.WindowStyle != WindowStyle.W9x;
         }
 
         private async void Save_as_Click(object sender, EventArgs e)
@@ -1213,6 +1222,8 @@ namespace WinPaletter
                         windowsDesktop1.Visible = selectedItem.TM.WindowsVista.Enabled;
                     else if (Program.WindowStyle == PreviewHelpers.WindowStyle.WXP)
                         windowsDesktop1.Visible = selectedItem.TM.WindowsXP.Enabled;
+                    else if (Program.WindowStyle == PreviewHelpers.WindowStyle.W9x)
+                        windowsDesktop1.Visible = false;
 
                     retroDesktopColors1.Visible = selectedItem.TM.Win32.Enabled;
                     CMD1.Visible = selectedItem.TM.CommandPrompt.Enabled;

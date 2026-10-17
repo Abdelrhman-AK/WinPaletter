@@ -14,6 +14,10 @@
                 public string W7 { get; set; } = "Windows 7";
                 public string WVista { get; set; } = "Windows Vista";
                 public string WXP { get; set; } = "Windows XP";
+                public string WMe { get; set; } = "Windows Millennium Edition";
+                public string W98 { get; set; } = "Windows 98";
+                public string W95 { get; set; } = "Windows 95";
+                public string W9x { get; set; } = "Windows 9x";
                 public string Undefined { get; set; } = "Windows 12 or higher";
                 public string Arc_32Bit { get; set; } = "32-bit";
                 public string Arc_64Bit { get; set; } = "64-bit";

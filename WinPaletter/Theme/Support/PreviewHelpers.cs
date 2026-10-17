@@ -36,12 +36,8 @@ namespace WinPaletter
             WVista,
             /// <summary>Windows XP</summary>
             WXP,
-            /// <summary>Windows Me</summary>
-            WMe,
-            /// <summary>Windows 98</summary>
-            W98,
-            /// <summary>Windows 95</summary>
-            W95,
+            /// <summary>Windows 9x</summary>
+            W9x,
         }
 
         /// <summary>

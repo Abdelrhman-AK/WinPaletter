@@ -112,6 +112,12 @@ namespace WinPaletter.Theme
 
                             else if (OS.WXP) { OS_str = Program.Localization.Strings.Windows.WXP; }
 
+                            else if (OS.WMe) { OS_str = Program.Localization.Strings.Windows.WMe; }
+
+                            else if (OS.W98) { OS_str = Program.Localization.Strings.Windows.W98; }
+
+                            else if (OS.W95) { OS_str = Program.Localization.Strings.Windows.W95; }
+
                             else { OS_str = Program.Localization.Strings.Windows.Undefined; }
 
                             ThemeLog.AddNode(treeView, $"{string.Format(Program.Localization.Strings.ThemeManager.Actions.ApplyOS, OS_str)}", "info");
@@ -177,6 +183,7 @@ namespace WinPaletter.Theme
                         WallpaperTone_W7.SaveToggleState(tv);
                         WallpaperTone_WVista.SaveToggleState(tv);
                         WallpaperTone_WXP.SaveToggleState(tv);
+                        WallpaperTone_W9x.SaveToggleState(tv);
                         Cursors.SaveToggleState(tv);
                         WindowsEffects.SaveToggleState(tv);
                         CommandPrompt.SaveToggleState(tv);
@@ -421,6 +428,7 @@ namespace WinPaletter.Theme
                             WallpaperTone_W7.Save(tv);
                             WallpaperTone_WVista.Save(tv);
                             WallpaperTone_WXP.Save(tv);
+                            WallpaperTone_W9x.Save(tv);
 
                             if (Wallpaper.Enabled)
                             {
@@ -447,6 +455,9 @@ namespace WinPaletter.Theme
 
                                 if (OS.WXP & WallpaperTone_WXP.Enabled)
                                     WallpaperTone_WXP.Process(tv);
+
+                                if (OS.W9x & WallpaperTone_W9x.Enabled)
+                                    WallpaperTone_W9x.Process(tv);
                             }
 
                         }, treeView,

@@ -92,6 +92,12 @@ namespace WinPaletter.Theme.Structures
         public bool DesignedFor_WinXP { get; set; } = true;
 
         /// <summary>
+        /// This theme is designed especially for Windows 9x
+        /// <br>- This does not inhibit using the theme in other Windows editions, but the theme might not be applied correctly.</br>
+        /// </summary>
+        public bool DesignedFor_Win9x { get; set; } = true;
+
+        /// <summary>
         /// Creates a new instance of Info structure
         /// </summary>
         public Info() { }
@@ -123,6 +129,7 @@ namespace WinPaletter.Theme.Structures
             DesignedFor_Win7 = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win7", true);
             DesignedFor_WinVista = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_WinVista", true);
             DesignedFor_WinXP = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_WinXP", true);
+            DesignedFor_Win9x = ReadReg(@"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win9x", true);
         }
 
         /// <summary>
@@ -153,6 +160,7 @@ namespace WinPaletter.Theme.Structures
             WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win7", DesignedFor_Win7 ? 1 : 0, RegistryValueKind.DWord);
             WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_WinVista", DesignedFor_WinVista ? 1 : 0, RegistryValueKind.DWord);
             WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_WinXP", DesignedFor_WinXP ? 1 : 0, RegistryValueKind.DWord);
+            WriteReg(treeView, @"HKEY_CURRENT_USER\Software\WinPaletter\ThemeInfo\Store", "DesignedFor_Win9x", DesignedFor_Win9x ? 1 : 0, RegistryValueKind.DWord);
         }
     }
 }

@@ -47,6 +47,7 @@ namespace WinPaletter
                 else if (Program.WindowStyle == WindowStyle.W7) return "Win7";
                 else if (Program.WindowStyle == WindowStyle.WVista) return "Vista";
                 else if (Program.WindowStyle == WindowStyle.WXP) return "WinXP";
+                else if (Program.WindowStyle == WindowStyle.W9x) return "Win9x";
                 else return "Win11";
             }
         }
@@ -101,6 +102,7 @@ namespace WinPaletter
                 TMx.WallpaperTone_W7.Load();
                 TMx.WallpaperTone_WVista.Load();
                 TMx.WallpaperTone_WXP.Load();
+                TMx.WallpaperTone_W9x.Load();
                 LoadFromTM(TMx);
             }
         }
@@ -118,6 +120,7 @@ namespace WinPaletter
                 TMx.WallpaperTone_W7 = new("Win7");
                 TMx.WallpaperTone_WVista = new("WinVista");
                 TMx.WallpaperTone_WXP = new("WinXP");
+                TMx.WallpaperTone_W9x = new("Win9x");
                 LoadFromTM(TMx);
             }
         }
@@ -236,7 +239,11 @@ namespace WinPaletter
                         AlertBox3.Text = string.Format(Program.Localization.Strings.Tips.WallpaperTone_Notice, Program.Localization.Strings.Windows.WXP);
                         break;
                     }
-
+                case WindowStyle.W9x:
+                    {
+                        AlertBox3.Text = string.Format(Program.Localization.Strings.Tips.WallpaperTone_Notice, Program.Localization.Strings.Windows.W9x);
+                        break;
+                    }
                 default:
                     {
                         AlertBox3.Text = string.Format(Program.Localization.Strings.Tips.WallpaperTone_Notice, Program.Localization.Strings.Windows.Undefined);
@@ -475,7 +482,11 @@ namespace WinPaletter
                         Program.TM.WallpaperTone_WXP = WT;
                         break;
                     }
-
+                case WindowStyle.W9x:
+                    {
+                        Program.TM.WallpaperTone_W9x = WT;
+                        break;
+                    }
                 default:
                     {
                         Program.TM.WallpaperTone_W11 = WT;
@@ -501,6 +512,10 @@ namespace WinPaletter
             if (Program.WindowStyle == WindowStyle.WXP)
             {
                 TextBox1.Text = $@"{SysPaths.Windows}\Web\Wallpaper\Bliss.bmp";
+            }
+            else if (Program.WindowStyle == WindowStyle.W9x)
+            {
+                TextBox1.Text = string.Empty;
             }
             else
             {
@@ -931,6 +946,10 @@ namespace WinPaletter
                 {
                     WallpaperPath = $@"{SysPaths.Windows}\Web\Wallpaper\Bliss.bmp";
                 }
+                else if (Program.WindowStyle == WindowStyle.W9x)
+                {
+                    TextBox3.Text = string.Empty;
+                }
                 else
                 {
                     WallpaperPath = $@"{SysPaths.Windows}\Web\Wallpaper\Windows\img0.jpg";
@@ -946,6 +965,10 @@ namespace WinPaletter
             if (Program.WindowStyle == WindowStyle.WXP)
             {
                 TextBox3.Text = $@"{SysPaths.Windows}\Web\Wallpaper\Bliss.bmp";
+            }
+            else if (Program.WindowStyle == WindowStyle.W9x)
+            {
+                TextBox3.Text = string.Empty;
             }
             else
             {

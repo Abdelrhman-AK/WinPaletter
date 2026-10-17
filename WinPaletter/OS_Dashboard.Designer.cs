@@ -47,6 +47,7 @@ namespace WinPaletter
             this.radioImage2 = new WinPaletter.UI.WP.RadioImage();
             this.radioImage7 = new WinPaletter.UI.WP.RadioImage();
             this.radioImage8 = new WinPaletter.UI.WP.RadioImage();
+            this.radioImage9 = new WinPaletter.UI.WP.RadioImage();
             this.SuspendLayout();
             // 
             // radioImage6
@@ -57,7 +58,7 @@ namespace WinPaletter
             this.radioImage6.ForeColor = System.Drawing.Color.White;
             this.radioImage6.Image = global::WinPaletter.Assets.WinLogos.Win11;
             this.radioImage6.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage6.Location = new System.Drawing.Point(386, 39);
+            this.radioImage6.Location = new System.Drawing.Point(449, 39);
             this.radioImage6.Name = "radioImage6";
             this.radioImage6.Size = new System.Drawing.Size(57, 68);
             this.radioImage6.TabIndex = 109;
@@ -73,7 +74,7 @@ namespace WinPaletter
             this.radioImage5.ForeColor = System.Drawing.Color.White;
             this.radioImage5.Image = global::WinPaletter.Assets.WinLogos.Win10;
             this.radioImage5.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage5.Location = new System.Drawing.Point(323, 39);
+            this.radioImage5.Location = new System.Drawing.Point(386, 39);
             this.radioImage5.Name = "radioImage5";
             this.radioImage5.Size = new System.Drawing.Size(57, 68);
             this.radioImage5.TabIndex = 108;
@@ -92,7 +93,7 @@ namespace WinPaletter
             this.button7.Image = null;
             this.button7.ImageGlyph = ((System.Drawing.Image)(resources.GetObject("button7.ImageGlyph")));
             this.button7.ImageGlyphEnabled = true;
-            this.button7.Location = new System.Drawing.Point(485, 10);
+            this.button7.Location = new System.Drawing.Point(548, 10);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(20, 20);
             this.button7.TabIndex = 103;
@@ -108,7 +109,7 @@ namespace WinPaletter
             this.radioImage4.ForeColor = System.Drawing.Color.White;
             this.radioImage4.Image = global::WinPaletter.Assets.WinLogos.Win8_1;
             this.radioImage4.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage4.Location = new System.Drawing.Point(260, 39);
+            this.radioImage4.Location = new System.Drawing.Point(323, 39);
             this.radioImage4.Name = "radioImage4";
             this.radioImage4.Size = new System.Drawing.Size(57, 68);
             this.radioImage4.TabIndex = 107;
@@ -124,7 +125,7 @@ namespace WinPaletter
             this.radioImage3.ForeColor = System.Drawing.Color.White;
             this.radioImage3.Image = global::WinPaletter.Assets.WinLogos.Win7;
             this.radioImage3.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage3.Location = new System.Drawing.Point(134, 39);
+            this.radioImage3.Location = new System.Drawing.Point(197, 39);
             this.radioImage3.Name = "radioImage3";
             this.radioImage3.Size = new System.Drawing.Size(57, 68);
             this.radioImage3.TabIndex = 106;
@@ -140,7 +141,7 @@ namespace WinPaletter
             this.radioImage1.ForeColor = System.Drawing.Color.White;
             this.radioImage1.Image = global::WinPaletter.Assets.WinLogos.WinXP;
             this.radioImage1.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage1.Location = new System.Drawing.Point(8, 39);
+            this.radioImage1.Location = new System.Drawing.Point(71, 39);
             this.radioImage1.Name = "radioImage1";
             this.radioImage1.Size = new System.Drawing.Size(57, 68);
             this.radioImage1.TabIndex = 104;
@@ -156,7 +157,7 @@ namespace WinPaletter
             this.radioImage2.ForeColor = System.Drawing.Color.White;
             this.radioImage2.Image = global::WinPaletter.Assets.WinLogos.WinVista;
             this.radioImage2.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage2.Location = new System.Drawing.Point(71, 39);
+            this.radioImage2.Location = new System.Drawing.Point(134, 39);
             this.radioImage2.Name = "radioImage2";
             this.radioImage2.Size = new System.Drawing.Size(57, 68);
             this.radioImage2.TabIndex = 105;
@@ -172,7 +173,7 @@ namespace WinPaletter
             this.radioImage7.ForeColor = System.Drawing.Color.White;
             this.radioImage7.Image = global::WinPaletter.Assets.WinLogos.Win12;
             this.radioImage7.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage7.Location = new System.Drawing.Point(449, 39);
+            this.radioImage7.Location = new System.Drawing.Point(512, 39);
             this.radioImage7.Name = "radioImage7";
             this.radioImage7.Size = new System.Drawing.Size(57, 68);
             this.radioImage7.TabIndex = 110;
@@ -188,7 +189,7 @@ namespace WinPaletter
             this.radioImage8.ForeColor = System.Drawing.Color.White;
             this.radioImage8.Image = global::WinPaletter.Assets.WinLogos.Win8;
             this.radioImage8.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.radioImage8.Location = new System.Drawing.Point(197, 39);
+            this.radioImage8.Location = new System.Drawing.Point(260, 39);
             this.radioImage8.Name = "radioImage8";
             this.radioImage8.Size = new System.Drawing.Size(57, 68);
             this.radioImage8.TabIndex = 111;
@@ -196,14 +197,30 @@ namespace WinPaletter
             this.radioImage8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.radioImage8.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             // 
+            // radioImage9
+            // 
+            this.radioImage9.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.radioImage9.Checked = false;
+            this.radioImage9.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.radioImage9.ForeColor = System.Drawing.Color.White;
+            this.radioImage9.Image = global::WinPaletter.Assets.WinLogos.Win9x;
+            this.radioImage9.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radioImage9.Location = new System.Drawing.Point(8, 39);
+            this.radioImage9.Name = "radioImage9";
+            this.radioImage9.Size = new System.Drawing.Size(57, 68);
+            this.radioImage9.TabIndex = 112;
+            this.radioImage9.Text = "9x";
+            this.radioImage9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.radioImage9.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            // 
             // OS_Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
-            this.BorderThickness = -1;
             this.CancelButton = this.button7;
-            this.ClientSize = new System.Drawing.Size(513, 115);
+            this.ClientSize = new System.Drawing.Size(576, 115);
+            this.Controls.Add(this.radioImage9);
             this.Controls.Add(this.radioImage8);
             this.Controls.Add(this.radioImage7);
             this.Controls.Add(this.radioImage6);
@@ -215,7 +232,6 @@ namespace WinPaletter
             this.Controls.Add(this.radioImage2);
             this.Name = "OS_Dashboard";
             this.Text = "";
-            this.WindowState = System.Windows.Forms.FormWindowState.Normal;
             this.Load += new System.EventHandler(this.OS_Dashboard_Load);
             this.ResumeLayout(false);
 
@@ -230,5 +246,6 @@ namespace WinPaletter
         private UI.WP.RadioImage radioImage1;
         private UI.WP.RadioImage radioImage7;
         private UI.WP.RadioImage radioImage8;
+        private UI.WP.RadioImage radioImage9;
     }
 }

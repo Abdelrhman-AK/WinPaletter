@@ -1103,10 +1103,19 @@ namespace WinPaletter
         /// <param name="TM"></param>
         public void Adjust_Preview(Manager TM)
         {
-            windowsDesktop1.WindowStyle = Program.WindowStyle;
-            windowsDesktop1.BackgroundImage = Program.WallpaperMonitor.Get(TM, Program.WindowStyle);
-            windowsDesktop1.LoadFromTM(TM);
-            windowsDesktop1.LoadClassicColors(TM.Win32);
+            if (Program.WindowStyle != WindowStyle.W9x)
+            {
+                windowsDesktop1.WindowStyle = Program.WindowStyle;
+                windowsDesktop1.BackgroundImage = Program.WallpaperMonitor.Get(TM, Program.WindowStyle);
+                windowsDesktop1.LoadFromTM(TM);
+                windowsDesktop1.LoadClassicColors(TM.Win32);
+                windowsDesktop1.Visible = true;
+            }
+            else
+            {
+                windowsDesktop1.Visible = false;
+            }
+
             retroDesktopColors1.LoadColors(TM);
             retroDesktopColors1.LoadMetrics(TM);
 

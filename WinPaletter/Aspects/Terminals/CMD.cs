@@ -158,6 +158,11 @@ namespace WinPaletter
             using (Manager TMx = Default.FromOS(WindowStyle.WXP)) { LoadFromTM(TMx, _Edition); }
         }
 
+        private void ImportWin9xPreset(object sender, EventArgs e)
+        {
+            using (Manager TMx = Default.FromOS(WindowStyle.W9x)) { LoadFromTM(TMx, _Edition); }
+        }
+
         private void Apply(object sender, EventArgs e)
         {
             if (Program.Settings.AspectsControl.Enabled && !Program.Settings.AspectsControl.Consoles)
@@ -237,6 +242,7 @@ namespace WinPaletter
                 OnImportFromScheme_7 = ImportWin7Preset,
                 OnImportFromScheme_Vista = ImportWinVistaPreset,
                 OnImportFromScheme_XP = ImportWinXPPreset,
+                OnImportFromScheme_9x = ImportWin9xPreset,
             };
 
             switch (_Edition)

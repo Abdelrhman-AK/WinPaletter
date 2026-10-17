@@ -18,6 +18,7 @@
                 public string InstallCompleted { get; set; } = "Service installation is completed.";
                 public string UninstallCompleted { get; set; } = "Service uninstallation is completed.";
                 public string MissingInstallutil { get; set; } = "Couldn't find installutil.exe in the .NET Framework directory. Try reinstalling or repairing .NET Framework and try again.";
+                public string Windows9xNotSupported { get; set; } = "Windows 9x is not supported for services. Please use Windows NT.";
             }
         }
     }

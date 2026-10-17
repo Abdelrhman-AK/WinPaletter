@@ -778,6 +778,16 @@ namespace WinPaletter.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap StartBtn_9x {
+            get {
+                object obj = ResourceManager.GetObject("StartBtn_9x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap StartBtn_XP {
             get {
                 object obj = ResourceManager.GetObject("StartBtn_XP", resourceCulture);

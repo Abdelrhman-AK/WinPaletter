@@ -62,6 +62,10 @@ namespace WinPaletter
                     radioImage1.Checked = true;
                     break;
 
+                case WindowStyle.W9x:
+                    radioImage9.Checked = true;
+                    break;
+
                 default:
                     radioImage6.Checked = true;
                     break;
@@ -94,6 +98,7 @@ namespace WinPaletter
             else if (radioImage3.Checked) Program.WindowStyle = WindowStyle.W7;
             else if (radioImage2.Checked) Program.WindowStyle = WindowStyle.WVista;
             else if (radioImage1.Checked) Program.WindowStyle = WindowStyle.WXP;
+            else if (radioImage9.Checked) Program.WindowStyle = WindowStyle.W9x;
             else Program.WindowStyle = WindowStyle.W11;
 
             DialogResult = DialogResult.OK;

@@ -104,6 +104,10 @@ namespace WinPaletter
             {
                 os = Assets.WinLogos.WinXP;
             }
+            else if (windowStyle == WindowStyle.W9x)
+            {
+                os = Assets.WinLogos.Win9x;
+            }
             else
             {
                 os = Assets.WinLogos.Win11;
@@ -195,6 +199,7 @@ namespace WinPaletter
             ToolStripMenuItem import_scheme_7 = new();
             ToolStripMenuItem import_scheme_Vista = new();
             ToolStripMenuItem import_scheme_XP = new();
+            ToolStripMenuItem import_scheme_9x = new();
             ToolStripMenuItem saveTheme_oneAspect = new();
             ToolStripMenuItem applyThemeWithRP = new();
 
@@ -210,6 +215,7 @@ namespace WinPaletter
             import_scheme_7.Text = Program.Localization.Strings.Windows.W7;
             import_scheme_Vista.Text = Program.Localization.Strings.Windows.WVista;
             import_scheme_XP.Text = Program.Localization.Strings.Windows.WXP;
+            import_scheme_9x.Text = Program.Localization.Strings.Windows.W9x;
             //import_scheme_12.Text = Program.Localization.Strings.Windows.W12;
             applyThemeWithRP.Text = Program.Localization.Strings.Previewer.Apply_RestorePoint;
 
@@ -231,6 +237,7 @@ namespace WinPaletter
             import_scheme_7.Image?.Dispose();
             import_scheme_Vista.Image?.Dispose();
             import_scheme_XP.Image?.Dispose();
+            import_scheme_9x.Image?.Dispose();
 
             //import_scheme_12.Image = AddFileOSImage(WindowStyle.W12);
             import_scheme_11.Image = AddFileOSImage(WindowStyle.W11);
@@ -240,6 +247,7 @@ namespace WinPaletter
             import_scheme_7.Image = AddFileOSImage(WindowStyle.W7);
             import_scheme_Vista.Image = AddFileOSImage(WindowStyle.WVista);
             import_scheme_XP.Image = AddFileOSImage(WindowStyle.WXP);
+            import_scheme_9x.Image = AddFileOSImage(WindowStyle.W9x);
 
             import_JSON.Image = AspectsResources.JSON;
             applyThemeWithRP.Image = AspectsResources.Restorepoint;
@@ -253,6 +261,7 @@ namespace WinPaletter
             import_scheme.DropDown.Items.Add(import_scheme_7);
             import_scheme.DropDown.Items.Add(import_scheme_Vista);
             import_scheme.DropDown.Items.Add(import_scheme_XP);
+            import_scheme.DropDown.Items.Add(import_scheme_9x);
 
             button_import.Menu.Items.Add(import_current);
             button_import.Menu.Items.Add(import_defaultWindows);
@@ -341,6 +350,9 @@ namespace WinPaletter
             if (import_scheme_XP != null)
                 import_scheme_XP.Click += _data.OnImportFromScheme_XP;
 
+            if (import_scheme_9x != null)
+                import_scheme_9x.Click += _data.OnImportFromScheme_9x;
+
             if (import_theme != null)
                 import_theme.Click += _data.OnImportFromTHEME ?? null;
 
@@ -420,6 +432,9 @@ namespace WinPaletter
 
                 if (import_scheme_XP != null)
                     import_scheme_XP.Click -= _data.OnImportFromScheme_XP;
+
+                if (import_scheme_9x != null)
+                    import_scheme_9x.Click -= _data.OnImportFromScheme_9x;
 
                 if (import_theme != null)
                     import_theme.Click -= _data.OnImportFromTHEME ?? null;
@@ -760,6 +775,11 @@ namespace WinPaletter
         /// EventHandler associated with clicking on 'Import from scheme > Windows XP' button
         /// </summary>
         public EventHandler OnImportFromScheme_XP { get; set; }
+
+        /// <summary>
+        /// EventHandler associated with clicking on 'Import from scheme > Windows 9x' button
+        /// </summary>
+        public EventHandler OnImportFromScheme_9x { get; set; }
 
         /// <summary>
         /// Gets or sets the event handler that is triggered to open the control panel.

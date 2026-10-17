@@ -2285,11 +2285,23 @@ namespace WinPaletter.Templates
                         break;
                     }
 
+                case WindowStyle.W9x:
+                    {
+                        taskbar.Height = 30;
+                        start.Width = 150;
+                        start.Height = 190;
+                        start.Left = 0;
+                        start.Top = taskbar.Top - start.Height;
+
+                        ButtonR2.Image = Properties.Resources.StartBtn_9x;
+                        break;
+                    }
+
                 default:
                     break;
             }
 
-            if (_windowStyle != WindowStyle.WVista & _windowStyle != WindowStyle.WXP)
+            if (_windowStyle != WindowStyle.WVista & _windowStyle != WindowStyle.WXP & _windowStyle != WindowStyle.W9x)
             {
                 ClassicTaskbar.Height = 44;
                 ButtonR3.Image = Resources.SampleApp_Active;

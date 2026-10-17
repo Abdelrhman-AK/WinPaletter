@@ -172,6 +172,7 @@ namespace WinPaletter
             CheckBox4.Checked = TM.Info.DesignedFor_Win7;
             CheckBox5.Checked = TM.Info.DesignedFor_WinVista;
             CheckBox6.Checked = TM.Info.DesignedFor_WinXP;
+            checkBox7.Checked = TM.Info.DesignedFor_Win9x;
         }
 
         public void ApplyToTM(Manager TM)
@@ -196,6 +197,7 @@ namespace WinPaletter
             TM.Info.DesignedFor_Win7 = CheckBox4.Checked;
             TM.Info.DesignedFor_WinVista = CheckBox5.Checked;
             TM.Info.DesignedFor_WinXP = CheckBox6.Checked;
+            TM.Info.DesignedFor_Win9x = checkBox7.Checked;
         }
 
         private void Color1_2_DragDrop(object sender, DragEventArgs e)

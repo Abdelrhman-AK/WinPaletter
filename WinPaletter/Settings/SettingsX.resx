@@ -125,7 +125,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABu
-        YQAAAk1TRnQBSQFMAgEBEAEAARABBgEQAQYBFAEAARQBAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAFQ
+        YQAAAk1TRnQBSQFMAgEBEAEAARgBBgEYAQYBFAEAARQBAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAFQ
         AwABZAMAAQEBAAEgBgABff8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A
         /wD/AP8A/wD/ACkAAwQBBQMfASwDLQFEAysBQgMgAS0EAnQAAwUBBgM8AWYDRAF3A0QBdwNEAXcDRAF3
         A0QBdwNEAXcDRAF3A0QBdwNEAXcDRAF3A0QBdwNEAXcDPAFmAwUBBhwAAwIBAwMNAREDDQERAw0BEQMN
@@ -200,8 +200,8 @@
         AdECawFaAfIB7QG5AS8B/wHtAbkBLwH/A2IB4QMmAThwAAMuAUYDSAGEA0kBiANJAYgDSQGIA0kBiANJ
         AYgDSQGIA0kBiANJAYgDSAGEAy0BRWwAAlUBUwGqAksBSgGLAwwBEANJAYUCZgFfAeUB7QG3AS4B/wHt
         AbgBLgH/Ae0BuAEvAf8B7QG5AS8B/wJlAV4B4gNGAX4DCQEM/wARAAMYASEMAAQBAx4BKgMrAUEDKwFB
-        Ax0BKQQB/wD/AP8A/wA4AAMwAUsCWgFYAbcCZQFeAd0CbAFhAesCYwFIAfYBewFfATIB+wF7AV8BMQH7
-        An4BKwH8AoABZQH+AdIBoQE6Af8DgAH+AWoBaAFTAfkBfgErAX4B/AG+AUABnAH9A2cB6gMwAUpgAAMT
+        Ax0BKQQB/wD/AP8A/wA4AAMwAUsCWgFYAbcCZQFeAd0CbAFhAesCYwFIAfYBeQFfATIB+wF5AV8BMQH7
+        An4BKwH8AoABZgH+AdIBoQE6Af8DgAH+AWoBaAFTAfkBfgErAX4B/AG+AUABnAH9A2cB6gMwAUpgAAMT
         ARkDGAEhAxgBIQMfASwDIwEyAyMBMgMjATIDIwEyAyMBMgMjATIDIwEyAyMBMgMfASwDGAEhAxgBIQMT
         ARkQAAMaASQCQAE/AW4CRAFDAXcCRAFDAXcCRAFDAXcCRAFDAXcCRAFDAXcCRAFDAXcCRAFDAXcCRAFD
         AXcCRAFDAXcCRAFDAXcCRAFDAXcCRAFDAXcCQAE/AW4CGgEZASMQAAJHAUYBgAJhAV0BzwHlAasBJgH/
@@ -313,7 +313,7 @@
         AeMB/wEAAZ8B4wH/AU4CTwGXBAIwAAMlATcCYwFIAfYB8gGiASgB/wHyAaEBJwH/AfIBoQEnAf8B8gGg
         ASYB/wHxAaABJgH/AfEBnwElAf8B8QGfASUB/wHxAZ8BJQH/AfABngEkAf8B8AGeASQB/wHwAZ0BIwH/
         Ae8BnQEjAf8B7wGcASIB/wHvAZwBIgH/AmMBSAH2AyQBNRgAAzgBWwFZAVcBWQG5A2IB7gNiAe4DYgHu
-        A2IB7gNiAe4DYgHuAWoBQQFqAfkBggFsAYAB/gHLAVoBpQH/A3AB8QMwAUpcAAQBAxgBIQMZASIDGQEi
+        A2IB7gNiAe4DYgHuAWoBQQFqAfkBgAFtAYAB/gHLAVoBpQH/A3AB8QMwAUpcAAQBAxgBIQMZASIDGQEi
         AxkBIgMPARM8AAMaASQCQgFBAXIDSQGIA0kBiANJAYgDSQGIA0kBiANJAYgDSQGIA0kBiANJAYgDSQGI
         A0kBiANJAYgCQgFBAXIDGgEj/wD/AP8A/wBwAAMCAQMDBwQJAQsDCQELAwkBCwMJAQsDCQELAwkBCwMJ
         AQsDCQELAwkBCwMJAQsDCQELAwkBCwMJAQsDCQELAwgBCgMDAQQQAAMPARMDLQFEAjEBMAFMAjwBOwFl
@@ -1076,7 +1076,7 @@
 </value>
   </data>
   <data name="alertBox27.Text" xml:space="preserve">
-    <value>This allows WinPaletter to apply customization rules based on a selected Windows edition profile. This is useful for Windows mods and transformations that make Windows 11/10 look and behave like older versions such as Windows 8.1, Windows 8, Windows 7, Windows Vista, or Windows XP.</value>
+    <value>This allows WinPaletter to apply customization rules based on a selected Windows edition profile. This is useful for Windows mods and transformations that make Windows 11/10 look and behave like older versions such as Windows 8.1, Windows 8, Windows 7, Windows Vista, Windows XP, or Windows 9x.</value>
   </data>
   <data name="pictureBox91.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

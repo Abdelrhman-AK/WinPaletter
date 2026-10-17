@@ -123,6 +123,16 @@ namespace WinPaletter.Assets {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap Win9x {
+            get {
+                object obj = ResourceManager.GetObject("Win9x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap WinVista {
             get {
                 object obj = ResourceManager.GetObject("WinVista", resourceCulture);
