@@ -180,6 +180,12 @@ namespace WinPaletter
 
         private void ApplyLayeredAlpha()
         {
+            if (OS.W9x)
+            {
+                // Windows 9x has no support for layered window alpha blending. Opacity is a no-op here. Leave the window fully opaque.
+                return;
+            }
+
             Win32Control.AppendExtendedStyle(Handle, Win32Control.ControlExtendedStyles.Layered);
             User32.SetLayeredWindowAttributes(Handle, 0, 128, NativeMethods.User32.LWA_ALPHA);
         }
@@ -200,7 +206,6 @@ namespace WinPaletter
             this.ClientSize = new System.Drawing.Size(484, 351);
             this.Name = "GlassWindow";
             this.ResumeLayout(false);
-
         }
     }
 }
