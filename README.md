@@ -59,7 +59,7 @@ While significant new features are not anticipated, the goal is to place the pro
 | **2000**            | `Unsupported yet`                 | No method of running .NET Framework 4.8 on Windows 2000 has been tested yet |
 | **Me**              | `1.1.0.0`                         | Requires custom setup that you must read - [see guide](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Compatibility-9x) |
 | **98**              | `1.1.0.0`                         | Requires custom setup that you must read - [see guide](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Compatibility-9x) |
-| **95**              | `Untedted: 1.1.0.0`               | Untested, requires custom setup that you must read - [see guide](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Compatibility-9x) |
+| **95**              | `Untested: 1.1.0.0`               | Untested, requires custom setup that you must read - [see guide](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Compatibility-9x) |
 
 3. **Download:** 
    
