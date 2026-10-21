@@ -358,18 +358,8 @@ namespace WinPaletter
                 Fonts.ConsoleMedium = MemoryFonts.GetFont(0, 9f);
                 Fonts.ConsoleLarge = MemoryFonts.GetFont(0, 10f);
             }
-            catch (Exception ex)
+            catch
             {
-                // 1) Build a full report from the exception (and all inner exceptions).
-                string report = BuildFontErrorReport(ex);
-
-                // 2) Keep it on disk no matter what — this survives a dead UI.
-                TryWriteReportToFile(report);
-
-                // 3) Show it. Wrapped so a dead UI can't mask the original error.
-                TryShowReport(report);
-
-                // 4) Fall back to Lucida Console, each step independent.
                 TryDispose(Fonts.Console);
                 TryDispose(Fonts.ConsoleMedium);
                 TryDispose(Fonts.ConsoleLarge);
@@ -377,84 +367,6 @@ namespace WinPaletter
                 Fonts.Console = TryCreateFallback(7.5f) ?? Fonts.Console;
                 Fonts.ConsoleMedium = TryCreateFallback(9f) ?? Fonts.ConsoleMedium;
                 Fonts.ConsoleLarge = TryCreateFallback(10f) ?? Fonts.ConsoleLarge;
-            }
-        }
-
-        private static string BuildFontErrorReport(Exception ex)
-        {
-            var sb = new StringBuilder();
-            sb.AppendLine("Failed to load JetBrains Mono font from memory.");
-            sb.AppendLine("Falling back to Lucida Console.");
-            sb.AppendLine();
-            sb.AppendLine("Timestamp : " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff zzz"));
-            sb.AppendLine("OS        : " + Environment.OSVersion);
-            sb.AppendLine("CLR       : " + Environment.Version);
-            sb.AppendLine("64-bit    : " + Environment.Is64BitProcess);
-            sb.AppendLine();
-
-            int i = 0;
-            for (Exception e = ex; e != null; e = e.InnerException)
-            {
-                sb.AppendLine($"--- Exception #{i++} ---");
-                sb.AppendLine("Type       : " + e.GetType().FullName);
-                sb.AppendLine("Message    : " + e.Message);
-                sb.AppendLine("HResult    : 0x" + e.HResult.ToString("X8"));
-                sb.AppendLine("Source     : " + e.Source);
-                sb.AppendLine("TargetSite : " + (e.TargetSite?.ToString() ?? "<null>"));
-                sb.AppendLine("StackTrace :");
-                sb.AppendLine(e.StackTrace ?? "<no stack trace>");
-                sb.AppendLine();
-            }
-
-            // AggregateException children aren't on the InnerException chain.
-            if (ex is AggregateException agg)
-            {
-                foreach (var inner in agg.Flatten().InnerExceptions)
-                {
-                    sb.AppendLine("--- Aggregate child ---");
-                    sb.AppendLine(inner.ToString());
-                    sb.AppendLine();
-                }
-            }
-
-            return sb.ToString();
-        }
-
-        private static void TryShowReport(string report)
-        {
-            try
-            {
-                MessageBox.Show(
-                    report,
-                    "Font load failed",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
-            }
-            catch
-            {
-                // UI is unavailable (no message pump, GDI+ broken, etc.).
-                // The report is already on disk — nothing more to do here.
-            }
-        }
-
-        private static void TryWriteReportToFile(string report)
-        {
-            try
-            {
-                string path = Path.Combine(
-                    AppDomain.CurrentDomain.BaseDirectory,
-                    "font-load-error.txt");
-                File.AppendAllText(path, report + Environment.NewLine +
-                                         new string('-', 60) + Environment.NewLine);
-            }
-            catch
-            {
-                try
-                {
-                    string alt = Path.Combine(Path.GetTempPath(), "font-load-error.txt");
-                    File.AppendAllText(alt, report);
-                }
-                catch { /* last resort failed too */ }
             }
         }
 
@@ -878,12 +790,15 @@ namespace WinPaletter
         /// <param name="treeView"></param>
         public static void RestartExplorer(TreeView treeView = null)
         {
-            Program.Log?.Write(LogEventLevel.Information, $"Restarting Windows Explorer process for user `{User.Domain}\\{User.Name}` as non-administrator account.");
+            if (System.IO.File.Exists(Program.ExplorerKiller.StartInfo.FileName))
+            {
+                Program.Log?.Write(LogEventLevel.Information, $"Restarting Windows Explorer process for user `{User.Domain}\\{User.Name}` as non-administrator account.");
 
-            Program.ExplorerKiller?.Start();
-            Program.ExplorerKiller?.WaitForExit();
+                Program.ExplorerKiller?.Start();
+                Program.ExplorerKiller?.WaitForExit();
 
-            SendCommand(SysPaths.Explorer, false, true);
+                SendCommand(SysPaths.Explorer, false, true);
+            }
         }
 
         public static bool IsNetworkAvailable

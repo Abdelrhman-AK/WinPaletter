@@ -1671,7 +1671,7 @@ namespace WinPaletter.Tabs
         protected override void OnFontChanged(EventArgs e)
         {
             selectedFont?.Dispose();
-            selectedFont = new(Font.Name, Font.Size, FontStyle.Bold);
+            selectedFont = new(SystemFonts.CaptionFont.Name, SystemFonts.CaptionFont.Size, FontStyle.Bold);
             base.OnFontChanged(e);
         }
 
@@ -2648,7 +2648,7 @@ namespace WinPaletter.Tabs
             {
                 if ((OS.WVista || OS.W7) && _isCompositEnabled)
                 {
-                    DrawTextOnGlass(G, tabData.Text, tabData.Selected ? selectedFont : Font, FormFocused ? tabData.Selected ? ForeColor : _foreColor : _foreColorInactive, textRect, tabData.Selected ? 0 : 7, sf);
+                    DrawTextOnGlass(G, tabData.Text, tabData.Selected ? selectedFont : SystemFonts.CaptionFont, FormFocused ? tabData.Selected ? ForeColor : _foreColor : _foreColorInactive, textRect, tabData.Selected ? 0 : 7, sf);
                 }
                 else
                 {
@@ -2656,10 +2656,10 @@ namespace WinPaletter.Tabs
                     int selected = tabData.SelectionAlpha;
 
                     if (unselected > 0)
-                        DrawTextOnGlass(G, tabData.Text, tabData.Selected ? selectedFont : Font, Color.FromArgb(unselected, FormFocused ? _foreColor : _foreColorInactive), textRect, 0, sf);
+                        DrawTextOnGlass(G, tabData.Text, tabData.Selected ? selectedFont : SystemFonts.CaptionFont, Color.FromArgb(unselected, FormFocused ? _foreColor : _foreColorInactive), textRect, 0, sf);
 
                     if (selected > 0)
-                        DrawTextOnGlass(G, tabData.Text, tabData.Selected ? selectedFont : Font, Color.FromArgb(selected, FormFocused ? ForeColor : _foreColorInactive), textRect, 0, sf);
+                        DrawTextOnGlass(G, tabData.Text, tabData.Selected ? selectedFont : SystemFonts.CaptionFont, Color.FromArgb(selected, FormFocused ? ForeColor : _foreColorInactive), textRect, 0, sf);
                 }
             }
 

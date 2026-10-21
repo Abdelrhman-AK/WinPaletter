@@ -2095,6 +2095,172 @@ namespace WinPaletter.NativeMethods
         }
 
         /// <summary>
+        /// Contains parameters that describe the non-client area metrics of a window, such as the caption height, border width, and the system font.
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential)]
+        public struct NONCLIENTMETRICS_Legacy
+        {
+            /// <summary>
+            /// The size, in bytes, of this structure.
+            /// </summary>
+            public uint cbSize;
+
+            /// <summary>
+            /// The width of the window border, in pixels.
+            /// </summary>
+            public int iBorderWidth;
+
+            /// <summary>
+            /// The width of the scroll box, in pixels.
+            /// </summary>
+            public int iScrollWidth;
+
+            /// <summary>
+            /// The height of the scroll box, in pixels.
+            /// </summary>
+            public int iScrollHeight;
+
+            /// <summary>
+            /// The width of the caption or title bar, in pixels.
+            /// </summary>
+            public int iCaptionWidth;
+
+            /// <summary>
+            /// The height of the caption or title bar, in pixels.
+            /// </summary>
+            public int iCaptionHeight;
+
+            /// <summary>
+            /// A LOGFONT structure that defines the font of the caption or title bar.
+            /// </summary>
+            public LOGFONT lfCaptionFont;
+
+            /// <summary>
+            /// The width of the small caption, in pixels.
+            /// </summary>
+            public int iSMCaptionWidth;
+
+            /// <summary>
+            /// The height of the small caption, in pixels.
+            /// </summary>
+            public int iSMCaptionHeight;
+
+            /// <summary>
+            /// A LOGFONT structure that defines the font of the small caption.
+            /// </summary>
+            public LOGFONT lfSMCaptionFont;
+
+            /// <summary>
+            /// The width of the menu bar, in pixels.
+            /// </summary>
+            public int iMenuWidth;
+
+            /// <summary>
+            /// The height of the menu bar, in pixels.
+            /// </summary>
+            public int iMenuHeight;
+
+            /// <summary>
+            /// A LOGFONT structure that defines the font of the menu bar.
+            /// </summary>
+            public LOGFONT lfMenuFont;
+
+            /// <summary>
+            /// A LOGFONT structure that defines the font of the status bar.
+            /// </summary>
+            public LOGFONT lfStatusFont;
+
+            /// <summary>
+            /// A LOGFONT structure that defines the font of the message box window.
+            /// </summary>
+            public LOGFONT lfMessageFont;
+
+            /// <summary>
+            /// Convert a byte array to a NONCLIENTMETRICS structure.
+            /// </summary>
+            /// <param name="bytes"></param>
+            public NONCLIENTMETRICS_Legacy(byte[] bytes)
+            {
+                int intSize = sizeof(int);
+                int uintSize = sizeof(uint);
+                int logFontSize = 60; //Marshal.SizeOf(typeof(LOGFONT));
+                int cursor = 0;
+
+                cbSize = BitConverter.ToUInt32(bytes, cursor);
+                cursor += uintSize;
+
+                iBorderWidth = BitConverter.ToInt32(bytes, cursor);
+                cursor += intSize;
+
+                iScrollWidth = BitConverter.ToInt32(bytes, cursor);
+                cursor += intSize;
+
+                iScrollHeight = BitConverter.ToInt32(bytes, cursor);
+                cursor += intSize;
+
+                iCaptionWidth = BitConverter.ToInt32(bytes, cursor);
+                cursor += intSize;
+
+                iCaptionHeight = BitConverter.ToInt32(bytes, cursor);
+                cursor += intSize;
+
+                lfCaptionFont = bytes.SubArray(cursor, logFontSize).ToLogFont();
+                cursor += logFontSize;
+
+                iSMCaptionWidth = BitConverter.ToInt32(bytes, cursor);
+                cursor += intSize;
+
+                iSMCaptionHeight = BitConverter.ToInt32(bytes, cursor);
+                cursor += intSize;
+
+                lfSMCaptionFont = bytes.SubArray(cursor, logFontSize).ToLogFont();
+                cursor += logFontSize;
+
+                iMenuWidth = BitConverter.ToInt32(bytes, cursor);
+                cursor += intSize;
+
+                iMenuHeight = BitConverter.ToInt32(bytes, cursor);
+                cursor += intSize;
+
+                lfMenuFont = bytes.SubArray(cursor, logFontSize).ToLogFont();
+                cursor += logFontSize;
+
+                lfStatusFont = bytes.SubArray(cursor, logFontSize).ToLogFont();
+                cursor += logFontSize;
+
+                lfMessageFont = bytes.SubArray(cursor, logFontSize).ToLogFont();
+                cursor += logFontSize;
+            }
+
+            /// <summary>
+            /// Convert a NONCLIENTMETRICS structure to a byte array.
+            /// </summary>
+            /// <returns></returns>
+            public readonly byte[] ToByteArray()
+            {
+                List<byte> byteArray =
+                [
+                    .. BitConverter.GetBytes(cbSize),
+                    .. BitConverter.GetBytes(iBorderWidth),
+                    .. BitConverter.GetBytes(iScrollWidth),
+                    .. BitConverter.GetBytes(iScrollHeight),
+                    .. BitConverter.GetBytes(iCaptionWidth),
+                    .. BitConverter.GetBytes(iCaptionHeight),
+                    .. lfCaptionFont.ToBytes(60),
+                    .. BitConverter.GetBytes(iSMCaptionWidth),
+                    .. BitConverter.GetBytes(iSMCaptionHeight),
+                    .. lfSMCaptionFont.ToBytes(60),
+                    .. BitConverter.GetBytes(iMenuWidth),
+                    .. BitConverter.GetBytes(iMenuHeight),
+                    .. lfMenuFont.ToBytes(60),
+                    .. lfStatusFont.ToBytes(60),
+                    .. lfMessageFont.ToBytes(60),
+                ];
+                return [.. byteArray];
+            }
+        }
+
+        /// <summary>
         /// Contains parameters that describe the metrics of icons displayed by the Shell.
         /// </summary>
         public struct ICONMETRICS

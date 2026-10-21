@@ -37,6 +37,18 @@ namespace WinPaletter.NativeMethods
             /// <returns></returns>
             [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
+            public static extern bool SystemParametersInfo(SPI uAction, int uParam, ref NONCLIENTMETRICS_Legacy lpvParam, SPIF fuWinIni);
+
+            /// <summary>
+            /// Retrieves or sets the value of a system parameter. This method is designed to interact with the user32.dll library's SystemParametersInfo function.
+            /// </summary>
+            /// <param name="uAction"></param>
+            /// <param name="uParam"></param>
+            /// <param name="lpvParam"></param>
+            /// <param name="fuWinIni"></param>
+            /// <returns></returns>
+            [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+            [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SystemParametersInfo(SPI uAction, int uParam, ref ICONMETRICS lpvParam, SPIF fuWinIni);
 
             /// <summary>
@@ -290,7 +302,80 @@ namespace WinPaletter.NativeMethods
         /// <remarks>
         /// This method performs the SystemParametersInfo function in an elevated context if the user has administrative privileges. If not, it impersonates the user to perform the action. 
         /// </remarks>
+        public static bool SystemParametersInfo(SPI uAction, int uParam, ref NONCLIENTMETRICS_Legacy lpvParam, SPIF fuWinIni, TreeView treeView = null)
+        {
+            bool result = false;
+
+            // If the selected user is the same as current Windows user, perform the function call directly
+            if (User.SID == User.AdminSID_GrantedUAC)
+            {
+                result = PrivateFunctions.SystemParametersInfo(uAction, uParam, ref lpvParam, fuWinIni);
+            }
+
+            // If curent Windows user is not the same as the selected user, impersonate the selected user to perform the action
+            else
+            {
+                // Create a boolean to track if the user has been impersonated
+                bool advapi_switched = false;
+
+                // Impersonate the selected user
+                using (WindowsImpersonationContext wic = !OS.W9x ? User.Identity.Impersonate() : null)
+                {
+                    // If the user has a token, impersonate the user using Advapi32
+                    if (User.Token != IntPtr.Zero) { advapi_switched = ADVAPI.ImpersonateLoggedOnUser(User.Token); }
+
+                    // Perform the SystemParametersInfo function
+                    result = PrivateFunctions.SystemParametersInfo(uAction, uParam, ref lpvParam, fuWinIni);
+
+                    // If the user was impersonated, revert to the original user
+                    if (advapi_switched) { ADVAPI.RevertToSelf(); }
+
+                    // Undo the impersonation
+                    wic?.Undo();
+                }
+            }
+
+            // Log the function call details
+            Verboser_SPI(treeView, result, uAction, uParam, lpvParam, fuWinIni);
+
+            // Return the result of the function call
+            return result;
+        }
+
+        /// <summary>
+        /// Retrieves or sets the value of a system parameter. This method is designed to interact with the user32.dll library's SystemParametersInfo function.
+        /// </summary>
+        /// <param name="uAction">The system parameter to query or set. This can be one of the SPI_* constants defined in the Windows API.</param>
+        /// <param name="uParam">Additional information about the system parameter. The meaning of this parameter depends on the uAction being performed.</param>
+        /// <param name="lpvParam">A reference to a NONCLIENTMETRICS structure, which contains information about the non-client area of a window. This parameter is used based on the uAction being performed.</param>
+        /// <param name="fuWinIni">Flags specifying whether the system should write the information to the user profile. This can be a combination of SPIF_UPDATEINIFILE and SPIF_SENDCHANGE.</param>
+        /// <param name="treeView">An optional TreeView control for logging purposes. If provided, logs the function call details.</param>
+        /// <returns>
+        /// <c>true</c> if the system parameter is successfully retrieved or set; otherwise, <c>false</c>.
+        /// </returns>
+        /// <remarks>
+        /// This method performs the SystemParametersInfo function in an elevated context if the user has administrative privileges. If not, it impersonates the user to perform the action. 
+        /// </remarks>
         public static bool SystemParametersInfo(TreeView treeView, SPI uAction, int uParam, ref NONCLIENTMETRICS lpvParam, SPIF fuWinIni)
+        {
+            return SystemParametersInfo(uAction, uParam, ref lpvParam, fuWinIni, treeView);
+        }
+
+        /// <summary>
+        /// Retrieves or sets the value of a system parameter. This method is designed to interact with the user32.dll library's SystemParametersInfo function.
+        /// </summary>
+        /// <param name="uAction">The system parameter to query or set. This can be one of the SPI_* constants defined in the Windows API.</param>
+        /// <param name="uParam">Additional information about the system parameter. The meaning of this parameter depends on the uAction being performed.</param>
+        /// <param name="lpvParam">A reference to a NONCLIENTMETRICS structure, which contains information about the non-client area of a window. This parameter is used based on the uAction being performed.</param>
+        /// <param name="fuWinIni">Flags specifying whether the system should write the information to the user profile. This can be a combination of SPIF_UPDATEINIFILE and SPIF_SENDCHANGE.</param>
+        /// <param name="treeView">An optional TreeView control for logging purposes. If provided, logs the function call details.</param>
+        /// <returns>
+        /// <c>true</c> if the system parameter is successfully retrieved or set; otherwise, <c>false</c>.
+        /// </returns>
+        /// <remarks>
+        /// This method performs the SystemParametersInfo function in an elevated context if the user has administrative privileges. If not, it impersonates the user to perform the action. 
+        /// </remarks>
+        public static bool SystemParametersInfo(TreeView treeView, SPI uAction, int uParam, ref NONCLIENTMETRICS_Legacy lpvParam, SPIF fuWinIni)
         {
             return SystemParametersInfo(uAction, uParam, ref lpvParam, fuWinIni, treeView);
         }

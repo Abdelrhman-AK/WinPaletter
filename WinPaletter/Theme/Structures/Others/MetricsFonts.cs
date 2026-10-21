@@ -185,21 +185,53 @@ namespace WinPaletter.Theme.Structures
             FontSubstitute_MSShellDlg2 = ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "MS Shell Dlg 2", @default.FontSubstitute_MSShellDlg2);
             FontSubstitute_SegoeUI = ReadReg(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\FontSubstitutes", "Segoe UI", @default.FontSubstitute_SegoeUI);
 
-            NONCLIENTMETRICS NCM = new();
-            NCM.cbSize = (uint)Marshal.SizeOf(NCM);
+            static Font LoadFont(LOGFONT lf, Font fallback)
+            {
+                try { return Font.FromLogFont(lf); }
+                catch { return fallback; }
+            }
+
+            bool font_ok;
+            LOGFONT caption, menu, message, smCaption, status;
+
+            if (!OS.W9x)
+            {
+                NONCLIENTMETRICS ncm = new() { cbSize = (uint)Marshal.SizeOf<NONCLIENTMETRICS>() };
+                font_ok = SystemParametersInfo(SPI.SPI_GETNONCLIENTMETRICS, (int)ncm.cbSize, ref ncm, 0);
+
+                (caption, menu, message, smCaption, status) = (ncm.lfCaptionFont, ncm.lfMenuFont, ncm.lfMessageFont, ncm.lfSMCaptionFont, ncm.lfStatusFont);
+            }
+            else
+            {
+                NONCLIENTMETRICS_Legacy ncm = new() { cbSize = (uint)Marshal.SizeOf<NONCLIENTMETRICS_Legacy>() };
+                font_ok = SystemParametersInfo(SPI.SPI_GETNONCLIENTMETRICS, (int)ncm.cbSize, ref ncm, 0);
+
+                (caption, menu, message, smCaption, status) = (ncm.lfCaptionFont, ncm.lfMenuFont, ncm.lfMessageFont, ncm.lfSMCaptionFont, ncm.lfStatusFont);
+            }
+
+            if (font_ok)
+            {
+                CaptionFont = LoadFont(caption, SystemFonts.CaptionFont);
+                MenuFont = LoadFont(menu, SystemFonts.MenuFont);
+                MessageFont = LoadFont(message, SystemFonts.MessageBoxFont);
+                SmCaptionFont = LoadFont(smCaption, SystemFonts.SmallCaptionFont);
+                StatusFont = LoadFont(status, SystemFonts.StatusFont);
+            }
+            else
+            {
+                CaptionFont = SystemFonts.CaptionFont;
+                MenuFont = SystemFonts.MenuFont;
+                MessageFont = SystemFonts.MessageBoxFont;
+                SmCaptionFont = SystemFonts.SmallCaptionFont;
+                StatusFont = SystemFonts.StatusFont;
+            }
 
             ICONMETRICS ICO = new();
             ICO.cbSize = (uint)Marshal.SizeOf(ICO);
 
             // Get fonts by using SystemParametersInfo
             SystemParametersInfo(null, SPI.SPI_GETICONMETRICS, (int)ICO.cbSize, ref ICO, SPIF.SPIF_NONE);
-            SystemParametersInfo(null, SPI.SPI_GETNONCLIENTMETRICS, (int)NCM.cbSize, ref NCM, SPIF.SPIF_NONE);
 
-            try { CaptionFont = Font.FromLogFont(NCM.lfCaptionFont); } catch { CaptionFont = SystemFonts.CaptionFont; }
-            try { MenuFont = Font.FromLogFont(NCM.lfMenuFont); } catch { MenuFont = SystemFonts.MenuFont; }
-            try { MessageFont = Font.FromLogFont(NCM.lfMessageFont); } catch { MessageFont = SystemFonts.MessageBoxFont; }
-            try { SmCaptionFont = Font.FromLogFont(NCM.lfSMCaptionFont); } catch { SmCaptionFont = SystemFonts.SmallCaptionFont; }
-            try { StatusFont = Font.FromLogFont(NCM.lfStatusFont); } catch { StatusFont = SystemFonts.StatusFont; }
             try { IconFont = Font.FromLogFont(ICO.lfFont); } catch { IconFont = SystemFonts.IconTitleFont; }
 
             // Get font smoothing state by using both registry and SystemParametersInfo
@@ -345,37 +377,70 @@ namespace WinPaletter.Theme.Structures
                         Program.Log?.Write(LogEventLevel.Information, $"Using User32.SystemParametersInfo to apply Metrics and Fonts settings asynchronously to avoid bugs of crashing WinPaletter and active apps.");
                         Program.Log?.Write(LogEventLevel.Information, $"You may notice that User32.SystemParametersInfo logs items are wrongly places. That is because of the asynchronous nature of this method. It is not a bug, it is a feature.");
 
-                        NONCLIENTMETRICS NCM = new();
-                        NCM.cbSize = (uint)Marshal.SizeOf(NCM);
                         ICONMETRICS ICO = new();
                         ICO.cbSize = (uint)Marshal.SizeOf(ICO);
 
                         SystemParametersInfo(treeView, SPI.SPI_GETICONMETRICS, (int)ICO.cbSize, ref ICO, SPIF.SPIF_NONE);
 
-                        NCM.lfCaptionFont = lfCaptionFont;
-                        NCM.lfSMCaptionFont = lfSMCaptionFont;
-                        NCM.lfStatusFont = lfStatusFont;
-                        NCM.lfMenuFont = lfMenuFont;
-                        NCM.lfMessageFont = lfMessageFont;
-
-                        NCM.iBorderWidth = MF.BorderWidth;
-                        NCM.iScrollWidth = MF.ScrollWidth;
-                        NCM.iScrollHeight = MF.ScrollHeight;
-                        NCM.iCaptionWidth = MF.CaptionWidth;
-                        NCM.iCaptionHeight = MF.CaptionHeight;
-                        NCM.iSMCaptionWidth = MF.SmCaptionWidth;
-                        NCM.iSMCaptionHeight = MF.SmCaptionHeight;
-                        NCM.iMenuWidth = MF.MenuWidth;
-                        NCM.iMenuHeight = MF.MenuHeight;
-                        NCM.iPaddedBorderWidth = MF.PaddedBorderWidth;
-
                         ICO.iHorzSpacing = MF.IconSpacing;
                         ICO.iVertSpacing = MF.IconVerticalSpacing;
                         ICO.lfFont = lfIconFont;
 
-                        // Broadcast changes to all windows
-                        SystemParametersInfo(treeView, SPI.SPI_SETNONCLIENTMETRICS, Marshal.SizeOf(NCM), ref NCM, SPIF.SPIF_WRITEANDNOTIFY);
                         SystemParametersInfo(treeView, SPI.SPI_SETICONMETRICS, Marshal.SizeOf(ICO), ref ICO, SPIF.SPIF_WRITEANDNOTIFY);
+
+                        bool font_ok;
+
+                        if (!OS.W9x)
+                        {
+                            NONCLIENTMETRICS ncm = new()
+                            {
+                                cbSize = (uint)Marshal.SizeOf<NONCLIENTMETRICS>(),
+
+                                lfCaptionFont = lfCaptionFont,
+                                lfSMCaptionFont = lfSMCaptionFont,
+                                lfStatusFont = lfStatusFont,
+                                lfMenuFont = lfMenuFont,
+                                lfMessageFont = lfMessageFont,
+
+                                iBorderWidth = MF.BorderWidth,
+                                iScrollWidth = MF.ScrollWidth,
+                                iScrollHeight = MF.ScrollHeight,
+                                iCaptionWidth = MF.CaptionWidth,
+                                iCaptionHeight = MF.CaptionHeight,
+                                iSMCaptionWidth = MF.SmCaptionWidth,
+                                iSMCaptionHeight = MF.SmCaptionHeight,
+                                iMenuWidth = MF.MenuWidth,
+                                iMenuHeight = MF.MenuHeight,
+                                iPaddedBorderWidth = MF.PaddedBorderWidth
+                            };
+
+                            font_ok = SystemParametersInfo(treeView, SPI.SPI_SETNONCLIENTMETRICS, (int)ncm.cbSize, ref ncm, SPIF.SPIF_WRITEANDNOTIFY);
+                        }
+                        else
+                        {
+                            NONCLIENTMETRICS_Legacy ncm = new()
+                            {
+                                cbSize = (uint)Marshal.SizeOf<NONCLIENTMETRICS_Legacy>(),
+
+                                lfCaptionFont = lfCaptionFont,
+                                lfSMCaptionFont = lfSMCaptionFont,
+                                lfStatusFont = lfStatusFont,
+                                lfMenuFont = lfMenuFont,
+                                lfMessageFont = lfMessageFont,
+
+                                iBorderWidth = MF.BorderWidth,
+                                iScrollWidth = MF.ScrollWidth,
+                                iScrollHeight = MF.ScrollHeight,
+                                iCaptionWidth = MF.CaptionWidth,
+                                iCaptionHeight = MF.CaptionHeight,
+                                iSMCaptionWidth = MF.SmCaptionWidth,
+                                iSMCaptionHeight = MF.SmCaptionHeight,
+                                iMenuWidth = MF.MenuWidth,
+                                iMenuHeight = MF.MenuHeight
+                            };
+
+                            font_ok = SystemParametersInfo(treeView, SPI.SPI_SETNONCLIENTMETRICS, (int)ncm.cbSize, ref ncm, SPIF.SPIF_WRITEANDNOTIFY);
+                        }
                     }).ConfigureAwait(false);
 
                     // Process Shell Icon Size and Shell Small Icon Size only on Windows 9x/XP

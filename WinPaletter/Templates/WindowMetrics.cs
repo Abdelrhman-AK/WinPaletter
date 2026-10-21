@@ -1353,7 +1353,7 @@ namespace WinPaletter.Templates
             Win8x = WindowStyle == WindowStyle.W81 || WindowStyle == WindowStyle.W8;
             Win7 = WindowStyle == WindowStyle.W7;
             WinVista = WindowStyle == WindowStyle.WVista;
-            WinXP = WindowStyle == WindowStyle.WXP;
+            WinXP = WindowStyle == WindowStyle.WXP || WindowStyle == WindowStyle.W9x;
 
             if (!WinXP && !WinVista && !Win7 && !Win8x)
             {
@@ -1374,11 +1374,18 @@ namespace WinPaletter.Templates
             SetControlTheme(StatusStrip1.Handle, theme);
 
             WXP_Alert.Visible = false;
+            SetTheme();
         }
 
         private void SetTheme()
         {
-            if (_windowStyle == WindowStyle.WXP)
+            if (_windowStyle == WindowStyle.W9x)
+            {
+                Preview = Preview_Enum.WXP;
+                Classic = true;
+            }
+
+            else if (_windowStyle == WindowStyle.WXP)
             {
                 Preview = Preview_Enum.WXP;
 

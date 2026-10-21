@@ -131,7 +131,7 @@ namespace WinPaletter
                 // New method of restarting Explorer
                 if (Program.Settings.ThemeApplyingBehavior.AutoRestartExplorer)
                 {
-                    if (User.SID == User.UserSID_OpenedWP && User.SID == User.AdminSID_GrantedUAC)
+                    if (System.IO.File.Exists(Program.ExplorerKiller.StartInfo.FileName) && User.SID == User.UserSID_OpenedWP && User.SID == User.AdminSID_GrantedUAC)
                     {
                         Program.ExplorerKiller?.Start();
                         Program.ExplorerKiller?.WaitForExit();

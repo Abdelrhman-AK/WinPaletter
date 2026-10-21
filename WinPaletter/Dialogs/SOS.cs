@@ -22,8 +22,11 @@ namespace WinPaletter.Dialogs
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Program.ExplorerKiller.Start();
-            Program.ExplorerKiller.WaitForExit();
+            if (System.IO.File.Exists(Program.ExplorerKiller.StartInfo.FileName))
+            {
+                Program.ExplorerKiller.Start();
+                Program.ExplorerKiller.WaitForExit();
+            }
         }
 
         private void button3_Click(object sender, EventArgs e)

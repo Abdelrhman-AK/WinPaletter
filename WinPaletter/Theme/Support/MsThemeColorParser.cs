@@ -8,7 +8,7 @@ namespace WinPaletter.Theme
     {
         internal static IEnumerable<string> ExtractRgbValues(string text)
         {
-            foreach (string line in text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries))
+            foreach (string line in text.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries))
             {
                 string[] fields = line.Split('=');
                 if (fields.Length < 2) continue;
