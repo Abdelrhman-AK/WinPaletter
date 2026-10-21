@@ -1006,6 +1006,7 @@
     <Compile Include="Theme\Structures\WindowsColors\Windows8.cs" />
     <Compile Include="Theme\Support\Editions.cs" />
     <Compile Include="Theme\Support\Functions.cs" />
+    <Compile Include="Theme\Support\MsThemeColorParser.cs" />
     <Compile Include="Theme\Support\JSON_Helpers.cs" />
     <Compile Include="Theme\Properties.cs" />
     <Compile Include="Theme\Structures\Others\AltTab.cs" />
