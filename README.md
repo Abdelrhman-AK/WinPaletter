@@ -56,6 +56,10 @@ While significant new features are not anticipated, the goal is to place the pro
 | **7**               | `1.0.5.0+`                        | Install from [Microsoft](https://dotnet.microsoft.com/en-us/download/dotnet-framework/net48) |
 | **Vista**           | `1.0.7.1+`                        | Requires repacked version — [see guide](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Compatibility-Vista) |
 | **XP**              | `1.0.7.1+`                        | Requires OneCoreAPI + repacked version — [see guide](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Compatibility-XP) |
+| **2000**            | `Unsupported yet`                 | No method of running .NET Framework 4.8 on Windows 2000 has been tested yet |
+| **Me**              | `1.1.0.0`                         | Requires custom setup that you must read - [see guide](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Compatibility-9x) |
+| **98**              | `1.1.0.0`                         | Requires custom setup that you must read - [see guide](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Compatibility-9x) |
+| **95**              | `Untedted: 1.1.0.0`               | Untested, requires custom setup that you must read - [see guide](https://github.com/Abdelrhman-AK/WinPaletter/wiki/Compatibility-9x) |
 
 3. **Download:** 
    
