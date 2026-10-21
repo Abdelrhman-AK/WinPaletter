@@ -24,23 +24,7 @@ namespace WinPaletter.Theme
         {
             if (File.Exists(Filename))
             {
-                List<Color> ls = [];
-                ls.Clear();
-
-                foreach (string x in File.ReadAllText(Filename).Split('\r'))
-                {
-                    if (x.Contains("=") && x.Split('=').Count() >= 2 && x.Split('=')[1].Contains(" ") && x.Split('=')[1].Split(' ').Count() == 3)
-                    {
-                        string c = x.Split('=')[1];
-                        bool inx = true;
-                        foreach (string u in c.Split(' '))
-                        {
-                            if (!u.All(char.IsDigit)) inx = false;
-                        }
-                        if (inx) ls.Add(c.ToColorFromWin32());
-                    }
-                }
-
+                List<Color> ls = [.. MsThemeColorParser.ExtractRgbValues(File.ReadAllText(Filename)).Select(c => c.ToColorFromWin32())];
                 ls = [.. ls.Distinct()];
                 ls.Sort(colorComparer);
 
