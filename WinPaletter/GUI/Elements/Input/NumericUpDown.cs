@@ -250,7 +250,7 @@ namespace WinPaletter.UI.WP
             {
                 using (SolidBrush TextColor = new(ForeColor))
                 {
-                    G.DrawString($"{Value}", Fonts.ConsoleMedium, TextColor, new Rectangle(0, 1, Width - SideRect.Width, Height), sf);
+                    G.DrawStringSafe($"{Value}", Fonts.ConsoleMedium, TextColor, new Rectangle(0, 1, Width - SideRect.Width, Height), sf);
                 }
             }
 

@@ -20,6 +20,15 @@ namespace WinPaletter
         [STAThread]
         static void Main(string[] args)
         {
+            // MUST be first: WinForms caches these switches on first read (before any Control is created).
+            // Checks the actual capability instead of the OS class, which isn't initialized yet.
+            if (!NativeMethods.Kernel32.IsUIAutomationCoreAvailable())
+            {
+                AppContext.SetSwitch("Switch.UseLegacyAccessibilityFeatures", true);
+                AppContext.SetSwitch("Switch.UseLegacyAccessibilityFeatures.2", true);
+                AppContext.SetSwitch("Switch.UseLegacyAccessibilityFeatures.3", true);
+            }
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
@@ -48,13 +57,6 @@ namespace WinPaletter
 
             // Initialize the application
             InitializeApplication();
-
-            if (OS.W9x)
-            {
-                AppContext.SetSwitch("Switch.UseLegacyAccessibilityFeatures", true);
-                AppContext.SetSwitch("Switch.UseLegacyAccessibilityFeatures.2", true);
-                AppContext.SetSwitch("Switch.UseLegacyAccessibilityFeatures.3", true);
-            }
 
             if (Program.BootStatus == BootStatuses.SafeMode) Forms.SOS.Show();
 

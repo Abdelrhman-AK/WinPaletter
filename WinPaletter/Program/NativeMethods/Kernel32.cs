@@ -61,6 +61,17 @@ namespace WinPaletter.NativeMethods
         public static extern bool CloseHandle(IntPtr hObject);
 
         /// <summary>
+        /// True if UI Automation (uiautomationcore.dll) is available on this system.
+        /// </summary>
+        public static bool IsUIAutomationCoreAvailable()
+        {
+            IntPtr h = LoadLibrary("uiautomationcore.dll");
+            if (h == IntPtr.Zero) return false;
+            FreeLibrary(h);
+            return true;
+        }
+
+        /// <summary>
         /// Gets the thread identifier of the calling thread.
         /// </summary>
         /// <returns></returns>

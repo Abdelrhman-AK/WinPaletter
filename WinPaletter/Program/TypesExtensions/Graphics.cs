@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Drawing.Text;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -109,6 +110,61 @@ namespace WinPaletter.TypesExtensions
                 glowGraphics.FillRectangle(glowBrush, glowRect2);
             }
             G.DrawImage(glowBitmap, glowRect);
+        }
+     
+        // set once GDI+ text is known to fail, avoids an exception per paint
+        private static bool _useGdiOnly; 
+
+        /// <summary>
+        /// Draws safe strings for Windows 9x
+        /// </summary>
+        /// <param name="G"></param>
+        /// <param name="text"></param>
+        /// <param name="font"></param>
+        /// <param name="brush"></param>
+        /// <param name="rect"></param>
+        /// <param name="sf"></param>
+        public static void DrawStringSafe(this Graphics G, string text, Font font, Brush brush, Rectangle rect, StringFormat sf)
+        {
+            if (string.IsNullOrEmpty(text) || rect.Width <= 0 || rect.Height <= 0) return;
+
+            if (!_useGdiOnly)
+            {
+                try { G.DrawString(text, font, brush, rect, sf); return; }
+                catch (ExternalException) { }
+                catch (ArgumentException) { }
+
+                // Retry with a plain hint and a system font to see whether the font is the culprit
+                TextRenderingHint old = G.TextRenderingHint;
+                try
+                {
+                    G.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
+                    G.DrawString(text, SystemFonts.DefaultFont, brush, rect, sf);
+                    _useGdiOnly = true; // the original font is the problem, so stop trying it through GDI+
+                }
+                catch (ExternalException) { _useGdiOnly = true; }
+                finally { G.TextRenderingHint = old; }
+            }
+
+            // GDI fallback: no GDI+ involved
+            Color c = (brush as SolidBrush)?.Color ?? SystemColors.ControlText;
+
+            TextFormatFlags flags = TextFormatFlags.NoPadding | TextFormatFlags.SingleLine;
+            flags |= sf == null ? TextFormatFlags.Left : sf.Alignment switch
+            {
+                StringAlignment.Center => TextFormatFlags.HorizontalCenter,
+                StringAlignment.Far => TextFormatFlags.Right,
+                _ => TextFormatFlags.Left
+            };
+            flags |= sf == null ? TextFormatFlags.Top : sf.LineAlignment switch
+            {
+                StringAlignment.Center => TextFormatFlags.VerticalCenter,
+                StringAlignment.Far => TextFormatFlags.Bottom,
+                _ => TextFormatFlags.Top
+            };
+
+            try { TextRenderer.DrawText(G, text, font ?? SystemFonts.DefaultFont, rect, c, flags); }
+            catch (ArgumentException) { TextRenderer.DrawText(G, text, SystemFonts.DefaultFont, rect, c, flags); }
         }
 
         private static RectangleF GetRoundedRectangle(RectangleF rectangle, int radius)

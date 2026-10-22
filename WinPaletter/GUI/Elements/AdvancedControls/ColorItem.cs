@@ -1013,8 +1013,8 @@ namespace WinPaletter.UI.Controllers
                         : Program.Localization.Strings.General.Disabled;
                 }
 
-                using (SolidBrush br = new(fc0)) { G.DrawString(s, Font, br, rectX, middleCenter); }
-                using (SolidBrush br = new(fc1)) { G.DrawString(s, Font, br, rectX, middleCenter); }
+                using (SolidBrush br = new(fc0)) { G.DrawStringSafe(s, Font, br, rectX, middleCenter); }
+                using (SolidBrush br = new(fc1)) { G.DrawStringSafe(s, Font, br, rectX, middleCenter); }
 
                 if (!DesignMode && DragDropMouseHovering && CanAnimate)
                 {
@@ -1030,7 +1030,7 @@ namespace WinPaletter.UI.Controllers
 
                             using (SolidBrush br = new(DraggedColor.IsDark() ? DraggedColor.Light() : DraggedColor.Dark()))
                             {
-                                G.DrawString(s, Font, br, rectX, middleCenter);
+                                G.DrawStringSafe(s, Font, br, rectX, middleCenter);
                             }
 
                             G.ResetClip();
@@ -1041,8 +1041,8 @@ namespace WinPaletter.UI.Controllers
                 Rectangle chevronRect = new(rectX.X, rectX.Y, rectX.Width - 5, rectX.Height);
                 string chevron = ColorPickerOpened ? "▼" : string.Empty;
 
-                using (SolidBrush br = new(fc0)) { G.DrawString(chevron, Font, br, chevronRect, chevronSF); }
-                using (SolidBrush br = new(fc1)) { G.DrawString(chevron, Font, br, chevronRect, chevronSF); }
+                using (SolidBrush br = new(fc0)) { G.DrawStringSafe(chevron, Font, br, chevronRect, chevronSF); }
+                using (SolidBrush br = new(fc1)) { G.DrawStringSafe(chevron, Font, br, chevronRect, chevronSF); }
             }
 
             G.SmoothingMode = oldSmoothingMode;

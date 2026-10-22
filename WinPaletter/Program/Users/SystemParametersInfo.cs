@@ -15,6 +15,7 @@ namespace WinPaletter.NativeMethods
     {
         private partial class PrivateFunctions
         {
+            private const string _user32 = "user32.dll";
             /// <summary>
             /// Retrieves or sets the value of a system parameter. This method is designed to interact with the user32.dll library's SystemParametersInfo function.
             /// </summary>
@@ -23,7 +24,7 @@ namespace WinPaletter.NativeMethods
             /// <param name="lpvParam"></param>
             /// <param name="fuWinIni"></param>
             /// <returns></returns>
-            [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+            [DllImport(_user32, CharSet = CharSet.Auto, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SystemParametersInfo(SPI uAction, int uParam, ref NONCLIENTMETRICS lpvParam, SPIF fuWinIni);
 
@@ -35,7 +36,7 @@ namespace WinPaletter.NativeMethods
             /// <param name="lpvParam"></param>
             /// <param name="fuWinIni"></param>
             /// <returns></returns>
-            [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+            [DllImport(_user32, CharSet = CharSet.Auto, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SystemParametersInfo(SPI uAction, int uParam, ref NONCLIENTMETRICS_Legacy lpvParam, SPIF fuWinIni);
 
@@ -47,7 +48,7 @@ namespace WinPaletter.NativeMethods
             /// <param name="lpvParam"></param>
             /// <param name="fuWinIni"></param>
             /// <returns></returns>
-            [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+            [DllImport(_user32, CharSet = CharSet.Auto, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SystemParametersInfo(SPI uAction, int uParam, ref ICONMETRICS lpvParam, SPIF fuWinIni);
 
@@ -59,7 +60,7 @@ namespace WinPaletter.NativeMethods
             /// <param name="lpvParam"></param>
             /// <param name="fuWinIni"></param>
             /// <returns></returns>
-            [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+            [DllImport(_user32, CharSet = CharSet.Auto, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SystemParametersInfo(SPI uAction, int uParam, ref ANIMATIONINFO lpvParam, SPIF fuWinIni);
 
@@ -71,7 +72,7 @@ namespace WinPaletter.NativeMethods
             /// <param name="lpvParam"></param>
             /// <param name="fuWinIni"></param>
             /// <returns></returns>
-            [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+            [DllImport(_user32, CharSet = CharSet.Auto, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SystemParametersInfo(SPI uAction, int uParam, ref HIGHCONTRAST lpvParam, SPIF fuWinIni);
 
@@ -83,7 +84,7 @@ namespace WinPaletter.NativeMethods
             /// <param name="lpvParam"></param>
             /// <param name="fuWinIni"></param>
             /// <returns></returns>
-            [DllImport("user32.dll", EntryPoint = "SystemParametersInfoA", SetLastError = true)]
+            [DllImport(_user32, EntryPoint = "SystemParametersInfoA", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SystemParametersInfo(SPI uAction, int uParam, ref bool lpvParam, SPIF fuWinIni);
 
@@ -95,7 +96,7 @@ namespace WinPaletter.NativeMethods
             /// <param name="lpvParam"></param>
             /// <param name="fuWinIni"></param>
             /// <returns></returns>
-            [DllImport("user32.dll", EntryPoint = "SystemParametersInfoA", SetLastError = true)]
+            [DllImport(_user32, EntryPoint = "SystemParametersInfoA", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SystemParametersInfo(SPI uAction, int uParam, ref int lpvParam, SPIF fuWinIni);
 
@@ -107,7 +108,7 @@ namespace WinPaletter.NativeMethods
             /// <param name="lpvParam"></param>
             /// <param name="fuWinIni"></param>
             /// <returns></returns>
-            [DllImport("user32.dll", EntryPoint = "SystemParametersInfoA", SetLastError = true)]
+            [DllImport(_user32, EntryPoint = "SystemParametersInfoA", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SystemParametersInfo(SPI uAction, int uParam, ref uint lpvParam, SPIF fuWinIni);
 
@@ -119,7 +120,7 @@ namespace WinPaletter.NativeMethods
             /// <param name="lpvParam"></param>
             /// <param name="fuWinIni"></param>
             /// <returns></returns>
-            [DllImport("user32.dll", EntryPoint = "SystemParametersInfoA", SetLastError = true)]
+            [DllImport(_user32, EntryPoint = "SystemParametersInfoA", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SystemParametersInfo(SPI uAction, int uParam, int lpvParam, SPIF fuWinIni);
 
@@ -131,7 +132,7 @@ namespace WinPaletter.NativeMethods
             /// <param name="lpvParam"></param>
             /// <param name="fuWinIni"></param>
             /// <returns></returns>
-            [DllImport("user32.dll", EntryPoint = "SystemParametersInfoA", SetLastError = true)]
+            [DllImport(_user32, EntryPoint = "SystemParametersInfoA", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SystemParametersInfo(SPI uAction, int uParam, uint lpvParam, SPIF fuWinIni);
 
@@ -143,7 +144,7 @@ namespace WinPaletter.NativeMethods
             /// <param name="lpvParam"></param>
             /// <param name="fuWinIni"></param>
             /// <returns></returns>
-            [DllImport("user32.dll", EntryPoint = "SystemParametersInfoA", SetLastError = true)]
+            [DllImport(_user32, EntryPoint = "SystemParametersInfoA", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SystemParametersInfo(SPI uAction, uint uParam, int lpvParam, SPIF fuWinIni);
 
@@ -155,7 +156,7 @@ namespace WinPaletter.NativeMethods
             /// <param name="lpvParam"></param>
             /// <param name="fuWinIni"></param>
             /// <returns></returns>
-            [DllImport("user32.dll", EntryPoint = "SystemParametersInfoA", SetLastError = true)]
+            [DllImport(_user32, EntryPoint = "SystemParametersInfoA", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SystemParametersInfo(SPI uAction, int uParam, string lpvParam, SPIF fuWinIni);
 
@@ -167,7 +168,7 @@ namespace WinPaletter.NativeMethods
             /// <param name="lpvParam"></param>
             /// <param name="fuWinIni"></param>
             /// <returns></returns>
-            [DllImport("user32.dll", EntryPoint = "SystemParametersInfoA", SetLastError = true)]
+            [DllImport(_user32, EntryPoint = "SystemParametersInfoA", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SystemParametersInfo(SPI uAction, int uParam, bool lpvParam, SPIF fuWinIni);
 
@@ -179,7 +180,7 @@ namespace WinPaletter.NativeMethods
             /// <param name="lpvParam"></param>
             /// <param name="fuWinIni"></param>
             /// <returns></returns>
-            [DllImport("user32.dll", EntryPoint = "SystemParametersInfoA", SetLastError = true)]
+            [DllImport(_user32, EntryPoint = "SystemParametersInfoA", SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool SystemParametersInfo(SPI uAction, bool uParam, int lpvParam, SPIF fuWinIni);
         }
