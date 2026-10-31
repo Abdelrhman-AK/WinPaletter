@@ -4,12 +4,14 @@ from datetime import datetime
 from git import Repo
 import hashlib
 
+
 # Function to set GitHub Actions outputs
 def set_action_output(name: str, value: str):
     github_output = os.getenv("GITHUB_OUTPUT")
     if github_output:
         with open(github_output, "a") as f:
             f.write(f"{name}={value}\n")
+
 
 # Calculate MD5 hash of a file
 def calc_md5(file_path: str) -> str:
@@ -23,6 +25,50 @@ def calc_md5(file_path: str) -> str:
         return md5.hexdigest().upper()
     except Exception:
         return "0"
+
+
+def get_default_branch(repo: Repo) -> str:
+    """Detect the repo's default branch (main/master/etc.)."""
+    # 1. Ask the remote directly (most accurate)
+    try:
+        out = repo.git.ls_remote("--symref", "origin", "HEAD")
+        for line in out.splitlines():
+            if line.startswith("ref:"):
+                # "ref: refs/heads/main\tHEAD"
+                return line.split()[1].replace("refs/heads/", "")
+    except Exception:
+        pass
+
+    # 2. Local origin/HEAD symbolic ref
+    try:
+        ref = repo.git.symbolic_ref("refs/remotes/origin/HEAD")
+        return ref.replace("refs/remotes/origin/", "")
+    except Exception:
+        pass
+
+    # 3. Check which of the common branches exists on the remote
+    try:
+        remote_refs = {r.remote_head for r in repo.remotes[0].refs}
+        for candidate in ("main", "master"):
+            if candidate in remote_refs:
+                return candidate
+    except Exception:
+        pass
+
+    # 4. GitHub Actions branch name (only if it's a branch push)
+    if os.getenv("GITHUB_REF_TYPE") == "branch":
+        ref_name = os.getenv("GITHUB_REF_NAME")
+        if ref_name:
+            return ref_name
+
+    # 5. Fallback
+    return "main"
+
+
+def to_url_path(p: str) -> str:
+    """Use forward slashes in URLs (matters on Windows runners)."""
+    return p.replace(os.sep, "/")
+
 
 def main():
     if len(sys.argv) < 3:
@@ -38,6 +84,9 @@ def main():
     committer = os.getenv("GITHUB_ACTOR", "Unknown")
 
     repo = Repo('.', search_parent_directories=True)
+
+    branch = get_default_branch(repo)
+    print(f"Detected default branch: {branch}")
 
     print(f"Searching inside directory: {path} for {extension} files")
 
@@ -67,12 +116,19 @@ def main():
                 md5_file = calc_md5(targetfile)
                 md5_pack = calc_md5(targetpack) if os.path.exists(targetpack) else "0"
 
-                url_file = f'https://github.com/{owner}/{repo_name}/blob/main/{targetfile}?raw=true'
-                
+                url_file = f'https://github.com/{owner}/{repo_name}/blob/{branch}/{to_url_path(targetfile)}?raw=true'
+
                 # Only include URL if .wptp exists and is not in a hidden directory
-                include_url_pack = os.path.exists(targetpack) and not any(part.startswith(".") for part in os.path.relpath(targetpack, path).split(os.sep)[:-1])
-                url_pack = f'https://github.com/{owner}/{repo_name}/blob/main/{targetpack}?raw=true' if include_url_pack else ""
-                
+                include_url_pack = os.path.exists(targetpack) and not any(
+                    part.startswith(".")
+                    for part in os.path.relpath(targetpack, path).split(os.sep)[:-1]
+                )
+                url_pack = (
+                    f'https://github.com/{owner}/{repo_name}/blob/{branch}/{to_url_path(targetpack)}?raw=true'
+                    if include_url_pack
+                    else ""
+                )
+
                 entry = f"{md5_file}|{md5_pack}|{url_file}"
                 if url_pack:
                     entry += f"|{url_pack}"
@@ -92,7 +148,9 @@ def main():
     # Commit and push
     repo.index.add([outputfile])
     repo.index.commit(f'{committer} updated themes database on {datetime.utcnow().strftime("%d/%m/%Y %H:%M:%S")} UTC')
-    repo.remotes[0].push()
+    # Explicit refspec so it works from a detached HEAD (actions/checkout)
+    repo.git.push("origin", f"HEAD:{branch}")
+
 
 if __name__ == "__main__":
     main()
